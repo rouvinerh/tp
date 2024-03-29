@@ -77,45 +77,56 @@ public class Parser {
     }
 
     /**
-     * Parses and validates user input for the delete command. Returns a list of parsed user input containing the
-     * filter string and the index.
+     * Splits user input for Delete command into item and index.
+     *
+     * @param input A user-provided string.
+     * @return An array of strings containing the extracted delete command parameters.
+     * @throws CustomExceptions.InvalidInput If the user input is invalid.
+     */
+    public static String[] splitDeleteInput(String input) throws CustomExceptions.InvalidInput {
+        String[] results = new String[UiConstant.NUM_DELETE_PARAMETERS];
+        if (!input.contains(UiConstant.ITEM_FLAG) || !input.contains(UiConstant.INDEX_FLAG)) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INSUFFICIENT_DELETE_PARAMETERS_ERROR);
+        }
+        results[0] = extractSubstringFromSpecificIndex(input, UiConstant.ITEM_FLAG);
+        results[1] = extractSubstringFromSpecificIndex(input, UiConstant.INDEX_FLAG);
+        return results;
+    }
+
+    /**
+     * Validates the delete input details.
+     *
+     * @param deleteDetails A list containing the details for the delete command.
+     * @throws CustomExceptions.InvalidInput If the details specified are invalid.
+     */
+    public static void validateDeleteInput(String[] deleteDetails) throws CustomExceptions.InvalidInput {
+        if (deleteDetails[0].isEmpty() || deleteDetails[1].isEmpty()) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INSUFFICIENT_DELETE_PARAMETERS_ERROR);
+        }
+        validateFilter(deleteDetails[0].toLowerCase());
+
+        if (!deleteDetails[1].matches(UiConstant.VALID_POSITIVE_INTEGER_REGEX)) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_INDEX_ERROR);
+        }
+    }
+
+    /**
+     * Parses and validates user input for the delete command. Returns a list of parsed user input
+     * containing the filter string and the index to delete.
      *
      * @param userInput The user input string.
-     * @return The filter string, set to either 'gym', 'run', 'bmi' or 'period'.
+     * @return A list of strings containing the filter string and index to delete.
      */
-    public static String[] parseDeleteInput(String userInput) throws CustomExceptions.InvalidInput {
-        String[] parsedInputs = new String[2];
+    public static String[] parseDeleteInput(String userInput) {
         try {
-            String[] inputs = userInput.split(UiConstant.SPLIT_BY_SLASH);
-            if (inputs.length != 3) {
-                throw new CustomExceptions.InsufficientInput(ErrorConstant.INVALID_COMMAND_FORMAT_ERROR
-                        + System.lineSeparator()
-                        + ErrorConstant.CORRECT_DELETE_COMMAND_FORMAT);
-            }
-
-            String[] itemSplit = inputs[1].split(UiConstant.SPLIT_BY_COLON);
-            if (itemSplit.length != 2 || !itemSplit[0].equalsIgnoreCase("item")) {
-                throw new CustomExceptions.InvalidInput(ErrorConstant.NULL_ITEM_ERROR
-                        + System.lineSeparator()
-                        + ErrorConstant.CORRECT_ITEM_FORMAT);
-            }
-
-            validateFilter(itemSplit[1].trim());
-            String[] indexSplit = inputs[2].split(UiConstant.SPLIT_BY_COLON);
-            if (indexSplit.length != 2 || !indexSplit[0].equalsIgnoreCase("index")) {
-                throw new CustomExceptions.InvalidInput(ErrorConstant.NULL_INDEX_ERROR);
-            }
-
-            Integer.parseInt(indexSplit[1].trim());
-            parsedInputs[1] = indexSplit[1].trim();
-            return parsedInputs;
-
-        } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
+            String[] deleteDetails = splitDeleteInput(userInput);
+            validateDeleteInput(deleteDetails);
+            return deleteDetails;
+        } catch (CustomExceptions.InvalidInput e) {
             Output.printException(e.getMessage());
             return null;
-        } catch (NumberFormatException e) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.NEGATIVE_INDEX_ERROR);
         }
+
     }
 
     /**
@@ -201,11 +212,11 @@ public class Parser {
 
     //@@author syj02
     /**
-     * Split user input into Bmi command, height, weight and date.
+     * Split user input for Bmi command, height, weight and date.
      *
      * @param input A user-provided string.
      * @return An array of strings containing the extracted Bmi parameters.
-     * @throws CustomExceptions.InvalidInput If the user input is invalid or blank.
+     * @throws CustomExceptions.InvalidInput If the user input is invalid.
      */
     public static String[] splitBmiInput(String input) throws CustomExceptions.InvalidInput {
         String [] results = new String[HealthConstant.NUM_BMI_PARAMETERS];
