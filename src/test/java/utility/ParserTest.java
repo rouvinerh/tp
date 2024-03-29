@@ -118,6 +118,49 @@ class ParserTest {
         });
     }
 
+    @Test
+    public void splitDelete_correctInput_returnsCorrectDeleteValues() throws CustomExceptions.InvalidInput {
+        String input = "/item:appointment /index:1";
+        String[] expected = {"appointment", "1"};
+        String[] result = Parser.splitDeleteInput(input);
+        assertArrayEquals(expected, result);
+    }
+
+    @Test
+    public void splitDelete_missingParameter_throwsInvalidInputException() {
+        String input = "/item:appointment";
+        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.splitDeleteInput(input));
+    }
+
+
+    /**
+     * Tests the behaviour of correct parameters being passed to validateDate.
+     * Expects no exception to be thrown.
+     */
+    @Test
+    void validateDeleteInput_correctInput_noExceptionThrown() {
+        String[] input = {"appointment", "2"};
+        assertDoesNotThrow(() -> Parser.validateDeleteInput(input));
+    }
+
+    @Test
+    void validateDeleteInput_invalidItem_expectInvalidInputException() {
+        String[] input = {"free!", "2"};
+        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.validateDeleteInput(input));
+    }
+
+    @Test
+    void validateDeleteInput_invalidIndex_expectInvalidInputException() {
+        String[] input = {"item", "-a"};
+        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.validateDeleteInput(input));
+    }
+
+    @Test
+    void validateDeleteInput_emptyString_expectInvalidInputException() {
+        String[] input = {"item", ""};
+        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.validateDeleteInput(input));
+    }
+
     //@@author j013n3
     /**
      * Tests the behaviour of a correctly formatted user input being passed into splitBmi.
@@ -131,6 +174,7 @@ class ParserTest {
         assertArrayEquals(expected, result);
     }
 
+
     /**
      * Tests the behaviour of a string with missing parameter being passed into splitBmi.
      * Expects InvalidInput exception to be thrown.
@@ -141,6 +185,16 @@ class ParserTest {
         assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.splitBmiInput(input));
     }
     //@@author
+
+    /**
+     * Tests the behaviour of correct parameters being passed into validateBmi.
+     * Expects no exceptions to be thrown.
+     */
+    @Test
+    void validateBmi_correctParameters_noExceptionThrown() {
+        String[] input = {"1.71", "70.00", "22-02-2024"};
+        assertDoesNotThrow(() -> Parser.validateBmiInput(input));
+    }
 
     /**
      * Tests the behaviour of 1 decimal point weight number being passed into splitBmi.
