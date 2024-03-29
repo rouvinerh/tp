@@ -1,11 +1,8 @@
 package utility;
 
 import org.junit.jupiter.api.Test;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -25,18 +22,19 @@ class ParserTest {
 
     /**
      * Tests the behaviour of the parseDate function with an incorrectly formatted string.
+     * Expects null to be returned.
      */
     @Test
-    void parseDate_incorrectDateInput_throwException () {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        System.setErr(new PrintStream(outputStream));
-        String invalidDate = "2024-03-08";
-        Parser.parseDate(invalidDate);
-        String errorMessage = outputStream.toString().trim();
-        assertTrue(errorMessage.contains("Error parsing date"));
-        System.setErr(System.err);
+    void parseDate_incorrectDateInput_returnNull () {
+        String input = "2024-03-08";
+        LocalDate result = Parser.parseDate(input);
+        assertEquals(null, result);
     }
 
+    /**
+     * Tests the behaviour of the validateDateInput function with a correctly formatted string.
+     * Expects no exception to be thrown.
+     */
     @Test
     public void validateDateInput_validDate_noExceptionThrown() {
         String validDate = "09-11-2024";
@@ -45,6 +43,10 @@ class ParserTest {
         });
     }
 
+    /**
+     * Tests the behaviour of the validateDateInput function when an invalid day in date string is passed.
+     * Expects InvalidInput exception to be thrown.
+     */
     @Test
     public void validateDateInput_invalidDayFormat_throwInvalidInputException() {
         String invalidDate = "9-11-2024";
@@ -54,6 +56,10 @@ class ParserTest {
         });
     }
 
+    /**
+     * Tests the behaviour of the validateDateInput function when an invalid month in date string is passed.
+     * Expects InvalidInput exception to be thrown.
+     */
     @Test
     public void validateDateInput_invalidMonthFormat_throwInvalidInputException() {
         String invalidDate = "9-1-2024";
@@ -62,6 +68,10 @@ class ParserTest {
         });
     }
 
+    /**
+     * Tests the behaviour of the validateDateInput function when an invalid year in date string is passed.
+     * Expects InvalidInput exception to be thrown.
+     */
     @Test
     public void validateDateInput_invalidYearFormat_throwInvalidInputException() {
         String invalidDate = "9-11-24";
@@ -70,6 +80,10 @@ class ParserTest {
         });
     }
 
+    /**
+     * Tests the behaviour of the validateDateInput function when an illegal day in date string is passed.
+     * Expects InvalidInput exception to be thrown.
+     */
     @Test
     public void validateDateInput_illegalDayNumber_throwInvalidInputException() {
         String invalidDate = "32-11-2024";
@@ -78,6 +92,10 @@ class ParserTest {
         });
     }
 
+    /**
+     * Tests the behaviour of the validateDateInput function when 0 is passed in as day for date string.
+     * Expects InvalidInput exception to be thrown.
+     */
     @Test
     public void validateDateInput_zeroDayNumber_throwInvalidInputException() {
         String invalidDate = "00-11-2024";
@@ -86,6 +104,10 @@ class ParserTest {
         });
     }
 
+    /**
+     * Tests the behaviour of the validateDateInput function when an illegal month in date string is passed.
+     * Expects InvalidInput exception to be thrown.
+     */
     @Test
     public void validateDateInput_illegalMonthNumber_throwInvalidInputException() {
         String invalidDate = "09-13-2024";
@@ -94,6 +116,10 @@ class ParserTest {
         });
     }
 
+    /**
+     * Tests the behaviour of the validateDateInput function when 0 is passed in as month for date string.
+     * Expects InvalidInput exception to be thrown.
+     */
     @Test
     public void validateDateInput_zeroMonthNumber_throwInvalidInputException() {
         String invalidDate = "09-00-2024";
@@ -102,6 +128,10 @@ class ParserTest {
         });
     }
 
+    /**
+     * Tests the behaviour of the validateDateInput function when wrong delimiter is used.
+     * Expects InvalidInput exception to be thrown.
+     */
     @Test
     public void validateDateInput_wrongDateDelimiter_throwInvalidInputException() {
         String invalidDate = "09/12/2024";
@@ -110,12 +140,79 @@ class ParserTest {
         });
     }
 
+    /**
+     * Tests the behaviour of the validateDateInput function when the year is left out in date string.
+     * Expects InvalidInput exception to be thrown.
+     */
     @Test
     public void validateDateInput_invalidDateParameters_throwInvalidInputException() {
-        String invalidDate = "09/12";
+        String invalidDate = "09-12";
         assertThrows(CustomExceptions.InvalidInput.class, () -> {
             Parser.validateDateInput(invalidDate);
         });
+    }
+
+    /**
+     * Tests the behaviour of correct parameters being passed to validateDate.
+     * Expects the correct details to be returned as a list of strings.
+     */
+    @Test
+    public void splitDelete_correctInput_returnsCorrectDeleteValues() throws CustomExceptions.InsufficientInput {
+        String input = "/item:appointment /index:1";
+        String[] expected = {"appointment", "1"};
+        String[] result = Parser.splitDeleteInput(input);
+        assertArrayEquals(expected, result);
+    }
+
+    /**
+     * Tests the behaviour of insufficient parameters being passed to validateDate.
+     * Expects InvalidInput exception to be thrown.
+     */
+    @Test
+    public void splitDelete_missingParameter_throwsInsufficientParameterException() {
+        String input = "/item:appointment";
+        assertThrows(CustomExceptions.InsufficientInput.class, () -> Parser.splitDeleteInput(input));
+    }
+
+
+    /**
+     * Tests the behaviour of correct parameters being passed to validateDate.
+     * Expects no exception to be thrown.
+     */
+    @Test
+    void validateDeleteInput_correctInput_noExceptionThrown() {
+        String[] input = {"appointment", "2"};
+        assertDoesNotThrow(() -> Parser.validateDeleteInput(input));
+    }
+
+    /**
+     * Tests the behaviour of an invalid item string being passed to validateDeleteInput.
+     * Expects InvalidInput exception to be thrown.
+     */
+    @Test
+    void validateDeleteInput_invalidItem_expectInvalidInputException() {
+        String[] input = {"free!", "2"};
+        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.validateDeleteInput(input));
+    }
+
+    /**
+     * Tests the behaviour of an invalid index string being passed to validateDeleteInput.
+     * Expects InvalidInput exception to be thrown.
+     */
+    @Test
+    void validateDeleteInput_invalidIndex_expectInvalidInputException() {
+        String[] input = {"item", "-a"};
+        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.validateDeleteInput(input));
+    }
+
+    /**
+     * Tests the behaviour of an empty string being passed to validateDeleteInput.
+     * Expects InsufficientInput exception to be thrown.
+     */
+    @Test
+    void validateDeleteInput_emptyString_expectInsufficientInputException() {
+        String[] input = {"item", ""};
+        assertThrows(CustomExceptions.InsufficientInput.class, () -> Parser.validateDeleteInput(input));
     }
 
     //@@author j013n3
@@ -124,23 +221,35 @@ class ParserTest {
      * Expects no exception to be thrown.
      */
     @Test
-    void splitBmi_correctInput_returnsCorrectBmiValues() throws CustomExceptions.InvalidInput {
+    void splitBmi_correctInput_returnsCorrectBmiValues() throws CustomExceptions.InsufficientInput,
+            CustomExceptions.InvalidInput {
         String input = "/h:bmi /height:1.71 /weight:60.50 /date:19-03-2024";
         String[] expected = {"1.71", "60.50", "19-03-2024"};
         String[] result = Parser.splitBmiInput(input);
         assertArrayEquals(expected, result);
     }
 
+
     /**
      * Tests the behaviour of a string with missing parameter being passed into splitBmi.
-     * Expects InvalidInput exception to be thrown.
+     * Expects InsufficientInput exception to be thrown.
      */
     @Test
-    void splitBmi_missingParameter_throwsInvalidInputException() {
+    void splitBmi_missingParameter_throwsInsufficientInputException() {
         String input = "/h:bmi /height:1.71 /date:19-03-2024";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.splitBmiInput(input));
+        assertThrows(CustomExceptions.InsufficientInput.class, () -> Parser.splitBmiInput(input));
     }
     //@@author
+
+    /**
+     * Tests the behaviour of correct parameters being passed into validateBmi.
+     * Expects no exceptions to be thrown.
+     */
+    @Test
+    void validateBmi_correctParameters_noExceptionThrown() {
+        String[] input = {"1.71", "70.00", "22-02-2024"};
+        assertDoesNotThrow(() -> Parser.validateBmiInput(input));
+    }
 
     /**
      * Tests the behaviour of 1 decimal point weight number being passed into splitBmi.
@@ -177,7 +286,8 @@ class ParserTest {
      * Expects no exception to be thrown.
      */
     @Test
-    void splitPeriod_correctInput_noExceptionThrown() throws CustomExceptions.InvalidInput {
+    void splitPeriod_correctInput_noExceptionThrown() throws CustomExceptions.InvalidInput,
+            CustomExceptions.InsufficientInput {
         String input = "/h:period /start:29-04-2023 /end:30-04-2023";
         String[] expected = {"29-04-2023", "30-04-2023"};
         String[] result = Parser.splitPeriodInput(input);
@@ -186,12 +296,12 @@ class ParserTest {
 
     /**
      * Tests the behaviour of a string with a missing parameter being passed into splitPeriod.
-     * Expects InvalidInput exception to be thrown.
+     * Expects InsufficientInput exception to be thrown.
      */
     @Test
-    void splitPeriod_missingParameter_throwsInvalidInputException() {
+    void splitPeriod_missingParameter_throwsInsufficientInputException() {
         String input = "/h:period /start:29-04-2023";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.splitPeriodInput(input));
+        assertThrows(CustomExceptions.InsufficientInput.class, () -> Parser.splitPeriodInput(input));
     }
 
     /**
@@ -206,12 +316,12 @@ class ParserTest {
 
     /**
      * Tests the behaviour of a string with an empty string being passed into validatePeriod.
-     * Expects InvalidInput exception to be thrown.
+     * Expects InsufficientInput exception to be thrown.
      */
     @Test
-    void validatePeriod_emptyParameter_throwsInvalidInputException() {
+    void validatePeriod_emptyParameter_throwsInsufficientInputException() {
         String [] input = {"", "29-03-2024"};
-        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.validatePeriodInput(input));
+        assertThrows(CustomExceptions.InsufficientInput.class, () -> Parser.validatePeriodInput(input));
     }
 
     /**
@@ -259,7 +369,7 @@ class ParserTest {
      * Expects no exception to be thrown.
      */
     @Test
-    void splitAppointment_correctInput_noExceptionThrown() throws CustomExceptions.InvalidInput {
+    void splitAppointment_correctInput_noExceptionThrown() throws CustomExceptions.InsufficientInput {
         String input = "/h:appointment /date:30-03-2024 /time:19:30 /description:test";
         String[] expected = {"30-03-2024", "19:30", "test"};
         String[] result = Parser.splitAppointmentDetails(input);
@@ -268,12 +378,12 @@ class ParserTest {
 
     /**
      * Tests the behaviour of a correctly formatted string being passed into splitAppointment.
-     * Expects InvalidInput exception to be thrown.
+     * Expects InsufficientInput exception to be thrown.
      */
     @Test
-    void splitAppointment_missingParameter_throwsInvalidInputException() {
+    void splitAppointment_missingParameter_throwsInsufficientInputException() {
         String input = "/h:appointment /date:30-03-2024 /description:test";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.splitAppointmentDetails(input));
+        assertThrows(CustomExceptions.InsufficientInput.class, () -> Parser.splitAppointmentDetails(input));
     }
 
     /**
@@ -288,12 +398,12 @@ class ParserTest {
 
     /**
      * Tests the behaviour of an empty string being passed into validateAppointment.
-     * Expects InvalidInput exception to be thrown.
+     * Expects InsufficientInput exception to be thrown.
      */
     @Test
-    void validateAppointment_emptyParameters_throwsInvalidInputException() {
+    void validateAppointment_emptyParameters_throwsInsufficientInputException() {
         String[] input = {"29-04-2024", "19:30", ""};
-        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.validateAppointmentDetails(input));
+        assertThrows(CustomExceptions.InsufficientInput.class, () -> Parser.validateAppointmentDetails(input));
     }
 
     /**
