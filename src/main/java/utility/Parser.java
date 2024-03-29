@@ -81,12 +81,12 @@ public class Parser {
      *
      * @param input A user-provided string.
      * @return An array of strings containing the extracted delete command parameters.
-     * @throws CustomExceptions.InvalidInput If the user input is invalid.
+     * @throws CustomExceptions.InsufficientInput If not enough parameters are specified.
      */
-    public static String[] splitDeleteInput(String input) throws CustomExceptions.InvalidInput {
+    public static String[] splitDeleteInput(String input) throws CustomExceptions.InsufficientInput {
         String[] results = new String[UiConstant.NUM_DELETE_PARAMETERS];
         if (!input.contains(UiConstant.ITEM_FLAG) || !input.contains(UiConstant.INDEX_FLAG)) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INSUFFICIENT_DELETE_PARAMETERS_ERROR);
+            throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_DELETE_PARAMETERS_ERROR);
         }
         results[0] = extractSubstringFromSpecificIndex(input, UiConstant.ITEM_FLAG);
         results[1] = extractSubstringFromSpecificIndex(input, UiConstant.INDEX_FLAG);
@@ -98,10 +98,12 @@ public class Parser {
      *
      * @param deleteDetails A list containing the details for the delete command.
      * @throws CustomExceptions.InvalidInput If the details specified are invalid.
+     * @throws CustomExceptions.InsufficientInput If empty strings are used.
      */
-    public static void validateDeleteInput(String[] deleteDetails) throws CustomExceptions.InvalidInput {
+    public static void validateDeleteInput(String[] deleteDetails) throws CustomExceptions.InvalidInput,
+            CustomExceptions.InsufficientInput {
         if (deleteDetails[0].isEmpty() || deleteDetails[1].isEmpty()) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INSUFFICIENT_DELETE_PARAMETERS_ERROR);
+            throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_DELETE_PARAMETERS_ERROR);
         }
         validateFilter(deleteDetails[0].toLowerCase());
 
@@ -122,7 +124,7 @@ public class Parser {
             String[] deleteDetails = splitDeleteInput(userInput);
             validateDeleteInput(deleteDetails);
             return deleteDetails;
-        } catch (CustomExceptions.InvalidInput e) {
+        } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
             Output.printException(e.getMessage());
             return null;
         }
@@ -162,11 +164,11 @@ public class Parser {
             String type = extractSubstringFromSpecificIndex(userInput, UiConstant.ITEM_FLAG);
 
             if (type.isBlank()) {
-                throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_HISTORY_FILTER_ERROR);
+                throw new CustomExceptions.InsufficientInput(ErrorConstant.INVALID_HISTORY_FILTER_ERROR);
             }
             validateFilter(type.toLowerCase());
             return type.toLowerCase();
-        } catch (CustomExceptions.InvalidInput e) {
+        } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
             Output.printException(e.getMessage());
             return null;
         }
@@ -177,7 +179,8 @@ public class Parser {
      *
      * @param userInput The user input string.
      */
-    public static void parseBmiInput(String userInput) throws CustomExceptions.InvalidInput {
+    public static void parseBmiInput(String userInput) throws CustomExceptions.InvalidInput,
+            CustomExceptions.InsufficientInput {
         String[] bmiDetails = splitBmiInput(userInput);
         validateBmiInput(bmiDetails);
         Bmi newBmi = new Bmi(bmiDetails[0], bmiDetails[1], bmiDetails[2]);
@@ -191,11 +194,12 @@ public class Parser {
      * @param bmiDetails List of strings representing BMI details.
      * @throws CustomExceptions.InvalidInput If there are any errors in the details entered.
      */
-    public static void validateBmiInput(String[] bmiDetails) throws CustomExceptions.InvalidInput {
+    public static void validateBmiInput(String[] bmiDetails) throws CustomExceptions.InvalidInput,
+            CustomExceptions.InsufficientInput {
         if (bmiDetails[0].isEmpty()
                 || bmiDetails[1].isEmpty()
                 || bmiDetails[2].isEmpty()) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INSUFFICIENT_BMI_PARAMETERS_ERROR);
+            throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_BMI_PARAMETERS_ERROR);
         }
 
         if (!bmiDetails[0].matches(UiConstant.VALID_TWO_DP_NUMBER_REGEX) ||
@@ -218,12 +222,13 @@ public class Parser {
      * @return An array of strings containing the extracted Bmi parameters.
      * @throws CustomExceptions.InvalidInput If the user input is invalid.
      */
-    public static String[] splitBmiInput(String input) throws CustomExceptions.InvalidInput {
+    public static String[] splitBmiInput(String input) throws CustomExceptions.InvalidInput,
+            CustomExceptions.InsufficientInput {
         String [] results = new String[HealthConstant.NUM_BMI_PARAMETERS];
         if (!input.contains(HealthConstant.HEIGHT_FLAG)
                 || !input.contains(HealthConstant.WEIGHT_FLAG)
                 || !input.contains(HealthConstant.DATE_FLAG)) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INSUFFICIENT_BMI_PARAMETERS_ERROR);
+            throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_BMI_PARAMETERS_ERROR);
         }
         results[0] = extractSubstringFromSpecificIndex(input, HealthConstant.HEIGHT_FLAG);
         results[1] = extractSubstringFromSpecificIndex(input, HealthConstant.WEIGHT_FLAG);
@@ -237,7 +242,8 @@ public class Parser {
      *
      * @param userInput The user input string.
      */
-    public static void parsePeriodInput(String userInput) throws CustomExceptions.InvalidInput {
+    public static void parsePeriodInput(String userInput) throws CustomExceptions.InvalidInput,
+            CustomExceptions.InsufficientInput {
         String[] periodDetails = splitPeriodInput(userInput);
         validatePeriodInput(periodDetails);
         Period newPeriod = new Period(periodDetails[0], periodDetails[1]);
@@ -250,14 +256,14 @@ public class Parser {
      *
      * @param input A user-provided string.
      * @return An array of strings containing the extracted Period parameters.
-     * @throws CustomExceptions.InvalidInput If the user input is invalid or blank.
+     * @throws CustomExceptions.InsufficientInput If the user input is invalid or blank.
      */
-    public static String[] splitPeriodInput(String input) throws CustomExceptions.InvalidInput {
+    public static String[] splitPeriodInput(String input) throws CustomExceptions.InsufficientInput {
         String [] results = new String[HealthConstant.NUM_PERIOD_PARAMETERS];
 
         if (!input.contains(HealthConstant.START_FLAG)
                 || !input.contains(HealthConstant.END_FLAG)) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INSUFFICIENT_PERIOD_PARAMETERS_ERROR);
+            throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_PERIOD_PARAMETERS_ERROR);
         }
         results[0] = extractSubstringFromSpecificIndex(input, HealthConstant.START_FLAG);
         results[1] = extractSubstringFromSpecificIndex(input, HealthConstant.END_FLAG);
@@ -270,9 +276,10 @@ public class Parser {
      * @param periodDetails List of strings representing Period details.
      * @throws CustomExceptions.InvalidInput If there are any errors in the details entered.
      */
-    public static void validatePeriodInput(String[] periodDetails) throws CustomExceptions.InvalidInput {
+    public static void validatePeriodInput(String[] periodDetails) throws CustomExceptions.InvalidInput,
+            CustomExceptions.InsufficientInput {
         if (periodDetails[0].isEmpty() || periodDetails[1].isEmpty()) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INSUFFICIENT_PERIOD_PARAMETERS_ERROR);
+            throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_PERIOD_PARAMETERS_ERROR);
         }
 
         try {
@@ -385,11 +392,11 @@ public class Parser {
      * @throws CustomExceptions.InvalidInput If there are any errors in the details entered.
      */
     public static void validateAppointmentDetails(String[] appointmentDetails)
-            throws CustomExceptions.InvalidInput {
+            throws CustomExceptions.InvalidInput, CustomExceptions.InsufficientInput {
         if (appointmentDetails[0].isEmpty()
                 || appointmentDetails[1].isEmpty()
                 || appointmentDetails[2].isEmpty()) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant
+            throw new CustomExceptions.InsufficientInput( ErrorConstant
                     .INSUFFICIENT_APPOINTMENT_PARAMETERS_ERROR);
         }
         validateDateInput(appointmentDetails[0]);
@@ -405,15 +412,15 @@ public class Parser {
      *
      * @param input A user-provided string.
      * @return An array of strings containing the extracted Appointment parameters.
-     * @throws CustomExceptions.InvalidInput If the user input is invalid or blank.
+     * @throws CustomExceptions.InsufficientInput If the user input is invalid or blank.
      */
     public static String[] splitAppointmentDetails(String input)
-            throws CustomExceptions.InvalidInput {
+            throws CustomExceptions.InsufficientInput {
         String [] results = new String[HealthConstant.NUM_APPOINTMENT_PARAMETERS];
         if (!input.contains(HealthConstant.DATE_FLAG)
                 || !input.contains(HealthConstant.TIME_FLAG)
                 || !input.contains(HealthConstant.DESCRIPTION_FLAG)) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INSUFFICIENT_APPOINTMENT_PARAMETERS_ERROR);
+            throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_APPOINTMENT_PARAMETERS_ERROR);
         }
         results[0] = extractSubstringFromSpecificIndex(input, HealthConstant.DATE_FLAG);
         results[1] = extractSubstringFromSpecificIndex(input, HealthConstant.TIME_FLAG);
@@ -426,7 +433,8 @@ public class Parser {
      *
      * @param userInput The user input string.
      */
-    public static void parseAppointmentInput(String userInput) throws CustomExceptions.InvalidInput {
+    public static void parseAppointmentInput(String userInput) throws CustomExceptions.InvalidInput,
+            CustomExceptions.InsufficientInput {
         String[] appointmentDetails = splitAppointmentDetails(userInput);
         validateAppointmentDetails(appointmentDetails);
         Appointment newAppointment = new Appointment(appointmentDetails[0],

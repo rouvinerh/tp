@@ -27,9 +27,8 @@ class ParserTest {
     @Test
     void parseDate_incorrectDateInput_returnNull () {
         String input = "2024-03-08";
-        LocalDate expected = null;
         LocalDate result = Parser.parseDate(input);
-        assertEquals(expected, result);
+        assertEquals(null, result);
     }
 
     /**
@@ -158,7 +157,7 @@ class ParserTest {
      * Expects the correct details to be returned as a list of strings.
      */
     @Test
-    public void splitDelete_correctInput_returnsCorrectDeleteValues() throws CustomExceptions.InvalidInput {
+    public void splitDelete_correctInput_returnsCorrectDeleteValues() throws CustomExceptions.InsufficientInput {
         String input = "/item:appointment /index:1";
         String[] expected = {"appointment", "1"};
         String[] result = Parser.splitDeleteInput(input);
@@ -170,9 +169,9 @@ class ParserTest {
      * Expects InvalidInput exception to be thrown.
      */
     @Test
-    public void splitDelete_missingParameter_throwsInvalidInputException() {
+    public void splitDelete_missingParameter_throwsInsufficientParameterException() {
         String input = "/item:appointment";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.splitDeleteInput(input));
+        assertThrows(CustomExceptions.InsufficientInput.class, () -> Parser.splitDeleteInput(input));
     }
 
 
@@ -208,12 +207,12 @@ class ParserTest {
 
     /**
      * Tests the behaviour of an empty string being passed to validateDeleteInput.
-     * Expects InvalidInput exception to be thrown.
+     * Expects InsufficientInput exception to be thrown.
      */
     @Test
-    void validateDeleteInput_emptyString_expectInvalidInputException() {
+    void validateDeleteInput_emptyString_expectInsufficientInputException() {
         String[] input = {"item", ""};
-        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.validateDeleteInput(input));
+        assertThrows(CustomExceptions.InsufficientInput.class, () -> Parser.validateDeleteInput(input));
     }
 
     //@@author j013n3
@@ -222,7 +221,8 @@ class ParserTest {
      * Expects no exception to be thrown.
      */
     @Test
-    void splitBmi_correctInput_returnsCorrectBmiValues() throws CustomExceptions.InvalidInput {
+    void splitBmi_correctInput_returnsCorrectBmiValues() throws CustomExceptions.InsufficientInput,
+            CustomExceptions.InvalidInput {
         String input = "/h:bmi /height:1.71 /weight:60.50 /date:19-03-2024";
         String[] expected = {"1.71", "60.50", "19-03-2024"};
         String[] result = Parser.splitBmiInput(input);
@@ -232,12 +232,12 @@ class ParserTest {
 
     /**
      * Tests the behaviour of a string with missing parameter being passed into splitBmi.
-     * Expects InvalidInput exception to be thrown.
+     * Expects InsufficientInput exception to be thrown.
      */
     @Test
-    void splitBmi_missingParameter_throwsInvalidInputException() {
+    void splitBmi_missingParameter_throwsInsufficientInputException() {
         String input = "/h:bmi /height:1.71 /date:19-03-2024";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.splitBmiInput(input));
+        assertThrows(CustomExceptions.InsufficientInput.class, () -> Parser.splitBmiInput(input));
     }
     //@@author
 
@@ -286,7 +286,8 @@ class ParserTest {
      * Expects no exception to be thrown.
      */
     @Test
-    void splitPeriod_correctInput_noExceptionThrown() throws CustomExceptions.InvalidInput {
+    void splitPeriod_correctInput_noExceptionThrown() throws CustomExceptions.InvalidInput,
+            CustomExceptions.InsufficientInput {
         String input = "/h:period /start:29-04-2023 /end:30-04-2023";
         String[] expected = {"29-04-2023", "30-04-2023"};
         String[] result = Parser.splitPeriodInput(input);
@@ -295,12 +296,12 @@ class ParserTest {
 
     /**
      * Tests the behaviour of a string with a missing parameter being passed into splitPeriod.
-     * Expects InvalidInput exception to be thrown.
+     * Expects InsufficientInput exception to be thrown.
      */
     @Test
-    void splitPeriod_missingParameter_throwsInvalidInputException() {
+    void splitPeriod_missingParameter_throwsInsufficientInputException() {
         String input = "/h:period /start:29-04-2023";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.splitPeriodInput(input));
+        assertThrows(CustomExceptions.InsufficientInput.class, () -> Parser.splitPeriodInput(input));
     }
 
     /**
@@ -315,12 +316,12 @@ class ParserTest {
 
     /**
      * Tests the behaviour of a string with an empty string being passed into validatePeriod.
-     * Expects InvalidInput exception to be thrown.
+     * Expects InsufficientInput exception to be thrown.
      */
     @Test
-    void validatePeriod_emptyParameter_throwsInvalidInputException() {
+    void validatePeriod_emptyParameter_throwsInsufficientInputException() {
         String [] input = {"", "29-03-2024"};
-        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.validatePeriodInput(input));
+        assertThrows(CustomExceptions.InsufficientInput.class, () -> Parser.validatePeriodInput(input));
     }
 
     /**
@@ -368,7 +369,7 @@ class ParserTest {
      * Expects no exception to be thrown.
      */
     @Test
-    void splitAppointment_correctInput_noExceptionThrown() throws CustomExceptions.InvalidInput {
+    void splitAppointment_correctInput_noExceptionThrown() throws CustomExceptions.InsufficientInput {
         String input = "/h:appointment /date:30-03-2024 /time:19:30 /description:test";
         String[] expected = {"30-03-2024", "19:30", "test"};
         String[] result = Parser.splitAppointmentDetails(input);
@@ -377,12 +378,12 @@ class ParserTest {
 
     /**
      * Tests the behaviour of a correctly formatted string being passed into splitAppointment.
-     * Expects InvalidInput exception to be thrown.
+     * Expects InsufficientInput exception to be thrown.
      */
     @Test
-    void splitAppointment_missingParameter_throwsInvalidInputException() {
+    void splitAppointment_missingParameter_throwsInsufficientInputException() {
         String input = "/h:appointment /date:30-03-2024 /description:test";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.splitAppointmentDetails(input));
+        assertThrows(CustomExceptions.InsufficientInput.class, () -> Parser.splitAppointmentDetails(input));
     }
 
     /**
@@ -397,12 +398,12 @@ class ParserTest {
 
     /**
      * Tests the behaviour of an empty string being passed into validateAppointment.
-     * Expects InvalidInput exception to be thrown.
+     * Expects InsufficientInput exception to be thrown.
      */
     @Test
-    void validateAppointment_emptyParameters_throwsInvalidInputException() {
+    void validateAppointment_emptyParameters_throwsInsufficientInputException() {
         String[] input = {"29-04-2024", "19:30", ""};
-        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.validateAppointmentDetails(input));
+        assertThrows(CustomExceptions.InsufficientInput.class, () -> Parser.validateAppointmentDetails(input));
     }
 
     /**
