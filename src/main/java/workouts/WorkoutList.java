@@ -12,8 +12,8 @@ import java.util.ArrayList;
  */
 public class WorkoutList extends ArrayList<Workout> {
     private static final ArrayList<Workout> workouts = new ArrayList<>();
-    private static final ArrayList<Run> runs = new ArrayList<>();
-    private static final ArrayList<Gym> gyms = new ArrayList<>();
+    public static final ArrayList<Run> runs = new ArrayList<>();
+    public static final ArrayList<Gym> gyms = new ArrayList<>();
 
 
     /**
