@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 import health.Appointment;
 import health.Bmi;
+import health.Health;
 import health.Period;
 import utility.ErrorConstant;
 import workouts.Gym;
@@ -164,11 +165,11 @@ public class DataFile {
             LogFile.writeLog("Attempting to write data, name: " + name, false);
             writeName(dataFile, name);
             LogFile.writeLog("Written name", false);
-            writeHealthData(bmiArrayList,
+            writeHealthData(dataFile, bmiArrayList,
                     appointmentArrayList,
                     periodArrayList);
 
-            writeWorkoutData(runArrayList, gymArrayList);
+            writeWorkoutData(dataFile, runArrayList, gymArrayList);
 
             LogFile.writeLog("Write end", false);
             dataFile.close();
@@ -193,26 +194,39 @@ public class DataFile {
      *
      * // param healthData Health data to be written.
      */
-    public static void writeHealthData(ArrayList<Bmi> bmiArrayList,
+    public static void writeHealthData(FileWriter dataFile, ArrayList<Bmi> bmiArrayList,
                                        ArrayList<Appointment> appointmentArrayList,
-                                       ArrayList<Period> periodArrayList) {
+                                       ArrayList<Period> periodArrayList) throws IOException {
         /*
         // Write each bmi entry in a specific format
-        // bmi format: bmi|HEIGHT|WEIGHT|BMI_SCORE|DATE (NA if no date)
+        // bmi format: bmi:HEIGHT:WEIGHT:BMI_SCORE|DATE (NA if no date)
         for (Health bmiEntry : bmiArrayList) {
             // dataFile.write(task.getType() + UiConstant.LINE.trim() + task.getLabel() + UiConstant.LINE.trim()
             // + task.getRange() + UiConstant.LINE.trim() +
             //       task.getStatusIcon() + System.LineSeparator());
         }
-
-        // Write each appointment entry in a specific format
-        // appointment format: appointment|DATE|DESCRIPTION
-        for (Health appointmentEntry : appointmentArrayList) {
-            // dataFile.write(task.getType() + UiConstant.LINE.trim() + task.getLabel() + UiConstant.LINE.trim()
-            // + task.getRange() + UiConstant.LINE.trim() +
-            //       task.getStatusIcon() + System.LineSeparator());
+        */
+        if (!bmiArrayList.isEmpty()){
+            for (Bmi bmiEntry : bmiArrayList) {
+                dataFile.write(DataType.BMI + UiConstant.SPLIT_BY_COLON + bmiEntry.getHeight() +
+                        UiConstant.SPLIT_BY_COLON + bmiEntry.getWeight() +
+                        UiConstant.SPLIT_BY_COLON + bmiEntry.getBmiValue() +
+                        UiConstant.SPLIT_BY_COLON + bmiEntry.getDate() + System.lineSeparator());
+            }
         }
 
+        // Write each appointment entry in a specific format
+        // appointment format: appointment:DATE:TIME:DESCRIPTION
+        if (!appointmentArrayList.isEmpty()){
+            for (Appointment appointmentEntry : appointmentArrayList) {
+                dataFile.write(DataType.APPOINTMENT + UiConstant.SPLIT_BY_COLON + appointmentEntry.getDate() +
+                        UiConstant.SPLIT_BY_COLON + appointmentEntry.getTime() +
+                        UiConstant.SPLIT_BY_COLON + appointmentEntry.getDescription() + System.lineSeparator());
+            }
+        }
+
+
+        /*
         // Write each period entry in a specific format
         // period format: period|START|END|DURATION|NEXT
         for (Health periodEntry : periodArrayList) {
@@ -222,13 +236,24 @@ public class DataFile {
         }
 
          */
+        if (!periodArrayList.isEmpty()){
+            for (Period periodEntry : periodArrayList) {
+                dataFile.write(DataType.PERIOD + UiConstant.SPLIT_BY_COLON + periodEntry.getStartDate() +
+                        UiConstant.SPLIT_BY_COLON + periodEntry.getEndDate() +
+                        UiConstant.SPLIT_BY_COLON + periodEntry.getLastThreeCycleLengths() +
+                        UiConstant.SPLIT_BY_COLON + periodEntry.nextCyclePrediction() + System.lineSeparator());
+            }
+        }
+
     }
 
     /**
      * Writes Workout data to the data file.
      * // param workoutData Workout data to be written.
      */
-    public static void writeWorkoutData(ArrayList<Run> runArrayList, ArrayList<Gym> gymArrayList){
+    public static void writeWorkoutData(FileWriter dataFile,
+                                        ArrayList<Run> runArrayList,
+                                        ArrayList<Gym> gymArrayList) throws IOException {
         /*
         // Write each period entry in a specific format
         // run format: run|DISTANCE|TIME|PACE|DATE
@@ -237,6 +262,17 @@ public class DataFile {
             // + task.getRange() + UiConstant.LINE.trim() +
             //       task.getStatusIcon() + System.LineSeparator());
         }
+        */
+        if (!runArrayList.isEmpty()){
+            for (Run runEntry : runArrayList) {
+                dataFile.write(DataType.RUN + UiConstant.SPLIT_BY_COLON + runEntry.getDistance() +
+                        UiConstant.SPLIT_BY_COLON + runEntry.getTimes() +
+                        UiConstant.SPLIT_BY_COLON + runEntry.getPace() +
+                        UiConstant.SPLIT_BY_COLON + runEntry.getDate() + System.lineSeparator());
+            }
+        }
+
+        /*
 
         // Write each period entry in a specific format
 
@@ -249,7 +285,30 @@ public class DataFile {
             // + task.getRange() + UiConstant.LINE.trim() +
             //       task.getStatusIcon() + System.LineSeparator());
         }
-        */
+
+        for (Gym gymEntry : gymArrayList) {
+            StringBuilder gymDataBuilder = new StringBuilder();
+            gymDataBuilder.append(DataType.GYM).append(UiConstant.SPLIT_BY_COLON)
+                    .append(gymEntry.getStations()).append(UiConstant.SPLIT_BY_COLON)
+                    .append(gymEntry.getDate()).append(UiConstant.SPLIT_BY_COLON);
+
+            for (int i = 0; i < gymEntry.getStations().size(); i++) {
+                gymDataBuilder.append("gym_").append(i + 1).append(UiConstant.SPLIT_BY_COLON)
+                        .append(gymEntry.getStationNames().get(i)).append(UiConstant.SPLIT_BY_COLON)
+                        .append(gymEntry.getNumSets().get(i)).append(UiConstant.SPLIT_BY_COLON);
+
+                StringBuilder weightsBuilder = new StringBuilder();
+                for (int weight : gymEntry.getWeights().get(i)) {
+                    weightsBuilder.append(weight).append(",");
+                }
+                weightsBuilder.deleteCharAt(weightsBuilder.length() - 1); // Remove the trailing comma
+                gymDataBuilder.append(weightsBuilder.toString()).append(UiConstant.SPLIT_BY_COLON);
+            }
+
+            dataFile.write(gymDataBuilder.toString().trim() + System.lineSeparator());
+        }
+
+         */
     }
 
 }
