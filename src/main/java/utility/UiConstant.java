@@ -23,6 +23,7 @@ public class UiConstant {
     public static final String VALID_TWO_DP_NUMBER_REGEX = "^\\d+\\.\\d{2}$";
     public static final String VALID_TIME_REGEX = "^\\d{2}:\\d{2}$";
     public static final String VALID_TIME_WITH_HOURS_REGEX = "^\\d{2}:\\d{2}:\\d{2}$";
+    public static final String VALID_POSITIVE_INTEGER_REGEX = "^\\d+$";
 
 
     // PulsePilot UI replies
@@ -43,6 +44,9 @@ public class UiConstant {
     // History
     public static final String ITEM_FLAG = "/item:";
 
+    // Delete
+    public static final String INDEX_FLAG = "/index:";
+
 
     // Numerical values
     public static final Integer MAX_RUNTIME_ARRAY_LENGTH = 3;
@@ -59,5 +63,6 @@ public class UiConstant {
     public static final Integer MAX_HOURS = 23;
     public static final double POWER_OF_TWO = 2.0;
     public static final double ROUNDING_FACTOR = 100.0;
+    public static final int NUM_DELETE_PARAMETERS = 2;
 
 }

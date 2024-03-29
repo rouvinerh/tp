@@ -35,12 +35,14 @@ public class ErrorConstant {
     public static final String PARSING_TIME_ERROR = "Error parsing time!";
 
     //Delete Errors
+    public static final String INSUFFICIENT_DELETE_PARAMETERS_ERROR = "Insufficient parameters for delete! " +
+            "Example input: /item:item /index:index";
     public static final String INVALID_COMMAND_FORMAT_ERROR = "Invalid command format.";
     public static final String CORRECT_DELETE_COMMAND_FORMAT = "Usage: delete /item:filter /index:index";
     public static final String NULL_ITEM_ERROR = "No item specified.";
     public static final String CORRECT_ITEM_FORMAT = "Use /item:run/gym/period/bmi";
     public static final String NULL_INDEX_ERROR = "No index specified";
-    public static final String NEGATIVE_INDEX_ERROR = "Index must be a valid positive integer.";
+    public static final String INVALID_INDEX_ERROR = "Index must be a valid positive integer.";
 
     // EXERCISE ERRORS
     public static final String UNSPECIFIED_ERROR = "Unspecified error";
