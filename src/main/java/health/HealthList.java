@@ -16,13 +16,13 @@ public class HealthList extends ArrayList<Health> {
     static LogFile logFile = LogFile.getInstance();
 
     /** The list of Bmi records. */
-    private static final ArrayList<Bmi> bmis = new ArrayList<>();
+    public static final ArrayList<Bmi> bmis = new ArrayList<>();
 
     /** The list of Appointment records. */
-    private static final ArrayList<Appointment> appointments = new ArrayList<>();
+    public static final ArrayList<Appointment> appointments = new ArrayList<>();
 
     /** The list of Period records. */
-    private static final ArrayList<Period> periods = new ArrayList<>();
+    public static final ArrayList<Period> periods = new ArrayList<>();
 
     //@@author j013n3
     /**
