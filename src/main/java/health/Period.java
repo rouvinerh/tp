@@ -7,6 +7,7 @@ import utility.UiConstant;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Objects;
 
 /**
  * Represents a Period object to track user's menstrual cycle.
@@ -112,7 +113,7 @@ public class Period extends Health {
         assert endIndexForPrediction >= startIndexForPrediction : ErrorConstant.END_INDEX_GREATER_THAN_START_ERROR;
 
         for (int i = startIndexForPrediction; i <= endIndexForPrediction; i++) {
-            sumOfCycleLengths += HealthList.getPeriod(i).cycleLength;
+            sumOfCycleLengths += Objects.requireNonNull(HealthList.getPeriod(i)).cycleLength;
         }
 
         return sumOfCycleLengths;
