@@ -11,11 +11,12 @@ import java.util.Scanner;
 
 import health.Appointment;
 import health.Bmi;
-import health.Health;
+import health.HealthList;
 import health.Period;
 import utility.ErrorConstant;
 import workouts.Gym;
 import workouts.Run;
+import workouts.WorkoutList;
 import utility.CustomExceptions;
 import utility.UiConstant;
 
@@ -108,15 +109,15 @@ public class DataFile {
                     break;
 
                 case APPOINTMENT:
-                    // processAppointment(words);
+                    processAppointment(input);
                     break;
                 
                 case PERIOD:
-                    // processPeriod(words);
+                    processPeriod(input);
                     break;
 
                 case BMI:
-                    // processBmi(words);
+                    processBmi(input);
                     break;
 
                 case GYM:
@@ -124,7 +125,7 @@ public class DataFile {
                     break;
 
                 case RUN:
-                    // processRun(words);
+                    processRun(input);
                     break;
 
                 default:
@@ -141,11 +142,41 @@ public class DataFile {
         userName = name.trim();
     }
 
-    public static void processAppointment(){}
-    public static void processPeriod(){}
-    public static void processBmi(){}
+    // appointment format: appointment:DATE:TIME:DESCRIPTION
+    public static void processAppointment(String[] input) {
+        String date = input[1].trim(); // date
+        String time = input[2].trim(); // time
+        String description = input[3].trim(); // description
+        Appointment appointment = new Appointment(date, time, description);
+        HealthList.addAppointment(appointment);
+    }
+
+    // period format: period:START:END:DURATION
+    public static void processPeriod(String[] input) {
+        String startDate = input[1].trim(); // start
+        String endDate = input[2].trim(); // end, skip 3 duration
+        Period period = new Period(startDate, endDate);
+        HealthList.addPeriod(period);
+    }
+
+    // bmi format: bmi:HEIGHT:WEIGHT:BMI_SCORE:DATE (NA if no date)
+    public static void processBmi(String[] input) {
+        String height = input[1].trim(); // height
+        String weight = input[2].trim(); // weight
+        String date = input[4].trim();// skip 3, bmi score, 4 is date
+        Bmi bmi = new Bmi(height, weight, date);
+        HealthList.addBmi(bmi);
+    }
+
+    // run format: run:DISTANCE:TIME:PACE:DATE
+    public static void processRun(String[] input) throws CustomExceptions.InvalidInput {
+        String distance = input[1].trim(); //distance
+        String time = input[2].trim(); //time
+        String date = input[4].trim(); // skip 3, pace, 4 is date
+        Run run = new Run(time, distance, date);
+        WorkoutList.addRun(run);
+    }
     public static void processGym(){}
-    public static void processRun(){}
 
     /**
      * Saves the user data to a file.
@@ -197,15 +228,9 @@ public class DataFile {
     public static void writeHealthData(FileWriter dataFile, ArrayList<Bmi> bmiArrayList,
                                        ArrayList<Appointment> appointmentArrayList,
                                        ArrayList<Period> periodArrayList) throws IOException {
-        /*
+
         // Write each bmi entry in a specific format
-        // bmi format: bmi:HEIGHT:WEIGHT:BMI_SCORE|DATE (NA if no date)
-        for (Health bmiEntry : bmiArrayList) {
-            // dataFile.write(task.getType() + UiConstant.LINE.trim() + task.getLabel() + UiConstant.LINE.trim()
-            // + task.getRange() + UiConstant.LINE.trim() +
-            //       task.getStatusIcon() + System.LineSeparator());
-        }
-        */
+        // bmi format: bmi:HEIGHT:WEIGHT:BMI_SCORE:DATE (NA if no date)
         if (!bmiArrayList.isEmpty()){
             for (Bmi bmiEntry : bmiArrayList) {
                 dataFile.write(DataType.BMI + UiConstant.SPLIT_BY_COLON + bmiEntry.getHeight() +
@@ -226,22 +251,15 @@ public class DataFile {
         }
 
 
-        /*
         // Write each period entry in a specific format
-        // period format: period|START|END|DURATION|NEXT
-        for (Health periodEntry : periodArrayList) {
-            // dataFile.write(task.getType() + UiConstant.LINE.trim() + task.getLabel() + UiConstant.LINE.trim()
-            // + task.getRange() + UiConstant.LINE.trim() +
-            //       task.getStatusIcon() + System.LineSeparator());
-        }
-
-         */
+        // period format: period:START:END:DURATION
         if (!periodArrayList.isEmpty()){
             for (Period periodEntry : periodArrayList) {
+                LogFile.writeLog("Writing period to file", false);
                 dataFile.write(DataType.PERIOD + UiConstant.SPLIT_BY_COLON + periodEntry.getStartDate() +
                         UiConstant.SPLIT_BY_COLON + periodEntry.getEndDate() +
-                        UiConstant.SPLIT_BY_COLON + periodEntry.getLastThreeCycleLengths() +
-                        UiConstant.SPLIT_BY_COLON + periodEntry.nextCyclePrediction() + System.lineSeparator());
+                        UiConstant.SPLIT_BY_COLON + periodEntry.getPeriodLength() + System.lineSeparator());
+                LogFile.writeLog("Wrote period to file", false);
             }
         }
 
@@ -254,15 +272,9 @@ public class DataFile {
     public static void writeWorkoutData(FileWriter dataFile,
                                         ArrayList<Run> runArrayList,
                                         ArrayList<Gym> gymArrayList) throws IOException {
-        /*
-        // Write each period entry in a specific format
-        // run format: run|DISTANCE|TIME|PACE|DATE
-        for (Workout runEntry : runArrayList) {
-            // dataFile.write(task.getType() + UiConstant.LINE.trim() + task.getLabel() + UiConstant.LINE.trim()
-            // + task.getRange() + UiConstant.LINE.trim() +
-            //       task.getStatusIcon() + System.LineSeparator());
-        }
-        */
+
+        // Write each run entry in a specific format
+        // run format: run:DISTANCE:TIME:PACE:DATE
         if (!runArrayList.isEmpty()){
             for (Run runEntry : runArrayList) {
                 dataFile.write(DataType.RUN + UiConstant.SPLIT_BY_COLON + runEntry.getDistance() +
