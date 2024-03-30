@@ -11,9 +11,9 @@ import java.util.ArrayList;
  * Represents the WorkoutList object.
  */
 public class WorkoutList extends ArrayList<Workout> {
-    private static final ArrayList<Workout> workouts = new ArrayList<>();
-    private static final ArrayList<Run> runs = new ArrayList<>();
-    private static final ArrayList<Gym> gyms = new ArrayList<>();
+    public static final ArrayList<Workout> WORKOUTS = new ArrayList<>();
+    public static final ArrayList<Run> RUNS = new ArrayList<>();
+    public static final ArrayList<Gym> GYMS = new ArrayList<>();
 
 
     /**
@@ -22,7 +22,7 @@ public class WorkoutList extends ArrayList<Workout> {
      * @param workout Workout object to be added.
      */
     private static void addWorkout(Workout workout) {
-        workouts.add(workout);
+        WORKOUTS.add(workout);
     }
 
     /**
@@ -31,7 +31,7 @@ public class WorkoutList extends ArrayList<Workout> {
      * @param run Run object to be added.
      */
     public static void addRun(Run run) {
-        runs.add(run);
+        RUNS.add(run);
         addWorkout(run);
     }
 
@@ -41,7 +41,7 @@ public class WorkoutList extends ArrayList<Workout> {
      * @param gym Gym object to be added.
      */
     public static void addGym(Gym gym) {
-        gyms.add(gym);
+        GYMS.add(gym);
         addWorkout(gym);
     }
 
@@ -64,22 +64,22 @@ public class WorkoutList extends ArrayList<Workout> {
                 && !filter.equals(WorkoutConstant.GYM)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_HISTORY_FILTER_ERROR);
         }
-        if(filter.equals(WorkoutConstant.RUN) && runs.isEmpty()){
+        if(filter.equals(WorkoutConstant.RUN) && RUNS.isEmpty()){
             throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_RUN_EMPTY_ERROR);
         }
-        if(filter.equals(WorkoutConstant.ALL) && workouts.isEmpty()){
+        if(filter.equals(WorkoutConstant.ALL) && WORKOUTS.isEmpty()){
             throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_WORKOUTS_EMPTY_ERROR);
         }
-        if(filter.equals(WorkoutConstant.GYM) && gyms.isEmpty()){
+        if(filter.equals(WorkoutConstant.GYM) && GYMS.isEmpty()){
             throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_GYM_EMPTY_ERROR);
         }
 
         if(filter.equals(WorkoutConstant.RUN)){
-            return runs;
+            return RUNS;
         } else if (filter.equals(WorkoutConstant.GYM)) {
-            return gyms;
+            return GYMS;
         } else {
-            return workouts;
+            return WORKOUTS;
         }
 
     }
@@ -91,17 +91,17 @@ public class WorkoutList extends ArrayList<Workout> {
      * @throws CustomExceptions.OutOfBounds If no runs are found in the list.
      */
     public static Run getLatestRun() throws CustomExceptions.OutOfBounds {
-        if (runs.isEmpty()) {
+        if (RUNS.isEmpty()) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_RUN_EMPTY_ERROR);
         }
-        return runs.get(runs.size() - 1);
+        return RUNS.get(RUNS.size() - 1);
     }
 
     public static Gym getLatestGym() throws CustomExceptions.OutOfBounds {
-        if (gyms.isEmpty()) {
+        if (GYMS.isEmpty()) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_GYM_EMPTY_ERROR);
         }
-        return gyms.get(gyms.size() - 1);
+        return GYMS.get(GYMS.size() - 1);
     }
 
     /**
@@ -110,7 +110,7 @@ public class WorkoutList extends ArrayList<Workout> {
      * @return The number of runs.
      */
     public static int getRunSize() {
-        return runs.size();
+        return RUNS.size();
     }
 
     /**
@@ -119,7 +119,7 @@ public class WorkoutList extends ArrayList<Workout> {
      * @return The number of gyms.
      */
     public static int getGymSize() {
-        return gyms.size();
+        return GYMS.size();
     }
 
     /**
@@ -127,16 +127,16 @@ public class WorkoutList extends ArrayList<Workout> {
      * @param index Index of the Gym object to be deleted.
      */
     public static void deleteGym(int index) throws CustomExceptions.OutOfBounds {
-        assert !gyms.isEmpty() : "Gym list is empty.";
-        if (index < 0 || index >= gyms.size()) {
+        assert !GYMS.isEmpty() : "Gym list is empty.";
+        if (index < 0 || index >= GYMS.size()) {
             throw new CustomExceptions.OutOfBounds("Invalid index to delete!");
         }
-        Gym deletedGym = gyms.get(index);
+        Gym deletedGym = GYMS.get(index);
         System.out.println("Removed Gym entry with " +
                 deletedGym.stations.size() +
                 " stations.");
-        workouts.remove(deletedGym);
-        gyms.remove(index);
+        WORKOUTS.remove(deletedGym);
+        GYMS.remove(index);
         LogFile.writeLog("Removed gym with index: " + index, false);
     }
 
@@ -145,18 +145,18 @@ public class WorkoutList extends ArrayList<Workout> {
      * @param index Index of the Run object to be deleted.
      */
     public static void deleteRun(int index) throws CustomExceptions.OutOfBounds {
-        assert !runs.isEmpty() : "Run list is empty.";
-        if (index < 0 || index >= runs.size()) {
+        assert !RUNS.isEmpty() : "Run list is empty.";
+        if (index < 0 || index >= RUNS.size()) {
             throw new CustomExceptions.OutOfBounds("Invalid index to delete!");
         }
-        Run deletedRun = runs.get(index);
+        Run deletedRun = RUNS.get(index);
         System.out.println("Removed Run entry with " +
                 deletedRun.distance +
                 "km at " +
                 deletedRun.getPace() +
                 ".");
-        workouts.remove(deletedRun);
-        runs.remove(index);
+        WORKOUTS.remove(deletedRun);
+        RUNS.remove(index);
         LogFile.writeLog("Removed run with index: " + index, false);
     }
 
@@ -164,8 +164,8 @@ public class WorkoutList extends ArrayList<Workout> {
      * Clears the workouts, runs and gyms ArrayLists.
      */
     public static void clearWorkoutsRunGym() {
-        workouts.clear();
-        runs.clear();
-        gyms.clear();
+        WORKOUTS.clear();
+        RUNS.clear();
+        GYMS.clear();
     }
 }

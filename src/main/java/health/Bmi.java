@@ -59,6 +59,15 @@ public class Bmi extends Health {
     }
 
     /**
+     * Returns BMI Value recorded in Bmi object.
+     *
+     * @return The BMI Value recorded in the Bmi object.
+     */
+    public String getBmiValue() {
+        return String.format(HealthConstant.TWO_DECIMAL_PLACE_FORMAT, bmiValue);
+    }
+
+    /**
      * Returns height recorded in Bmi object.
      *
      * @return The height recorded in the Bmi object.
