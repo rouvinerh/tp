@@ -29,6 +29,15 @@ public class Period extends Health {
      */
     protected long cycleLength;
 
+    /**
+     * Retrieves the length of the period.
+     *
+     * @return The period length.
+     */
+    public long getPeriodLength() {
+        return periodLength;
+    }
+
     //@@author syj02
     /**
      * Constructs a Period object with the given start and end dates in string format.
