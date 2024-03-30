@@ -30,15 +30,6 @@ public class Period extends Health {
      */
     protected long cycleLength;
 
-    /**
-     * Retrieves the length of the period.
-     *
-     * @return The period length.
-     */
-    public long getPeriodLength() {
-        return periodLength;
-    }
-
     //@@author syj02
     /**
      * Constructs a Period object with the given start and end dates in string format.
@@ -73,6 +64,15 @@ public class Period extends Health {
     public LocalDate getEndDate() {
         assert endPeriodDate != null : ErrorConstant.NULL_END_DATE_ERROR;
         return endPeriodDate;
+    }
+
+    /**
+     * Retrieves the length of the period.
+     *
+     * @return The period length.
+     */
+    public long getPeriodLength() {
+        return periodLength;
     }
 
     /**

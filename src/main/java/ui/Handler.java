@@ -1,6 +1,5 @@
 package ui;
 
-import health.Appointment;
 import health.HealthList;
 import storage.DataFile;
 import utility.CustomExceptions;
@@ -390,8 +389,8 @@ public class Handler {
         LogFile.writeLog("User terminating PulsePilot", false);
         try {
             LogFile.writeLog("Attempting to save data file", false);
-            DataFile.saveDataFile(DataFile.userName, HealthList.bmis, HealthList.appointments,
-                    HealthList.periods, WorkoutList.runs, WorkoutList.gyms);
+            DataFile.saveDataFile(DataFile.userName, HealthList.BMIS, HealthList.APPOINTMENTS,
+                    HealthList.PERIODS, WorkoutList.RUNS, WorkoutList.GYMS);
             LogFile.writeLog("File saved", false);
         } catch (CustomExceptions.FileWriteError e) {
             LogFile.writeLog("File write error", true);
