@@ -185,7 +185,7 @@ public class DataFile {
      * // param healthData Health data to be written.
      */
     public static void writeName(FileWriter dataFile, String name) throws IOException {
-        dataFile.write(DataType.NAME + UiConstant.SPLIT_BY_COLON + name.trim());
+        dataFile.write(DataType.NAME + UiConstant.SPLIT_BY_COLON + name.trim() + System.lineSeparator());
         LogFile.writeLog("Wrote name to file", false);
     }
 
