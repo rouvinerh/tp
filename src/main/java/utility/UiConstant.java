@@ -15,6 +15,7 @@ public class UiConstant {
     public static final String DASH = "-";
     public static final String COMMAS = ",";
     public static final String LINE = " | ";
+    public static final String PIPE = "|";
     public static final String PARTITION_LINE = "____________________________________________________________";
     public static final String EMPTY_STRING = "";
 

@@ -154,6 +154,59 @@ public class Gym extends Workout {
 
 
     /**
+     * Converts the Gym Object into the String format for writing into a file.
+     * The format that this output is
+     *  gym|NUM_STATIONS|DATE|STATION1_NAME|NUM_SETS|REPS|WEIGHT1,WEIGHT2,WEIGHT3,WEIGHT4
+     *  |STATION2_NAME|NUM_SETS|REPS|WEIGHT1,WEIGHT2,WEIGHT3,WEIGHT4 ....
+     *
+     *  Example: "gym|2|1997-11-11|bench press|4|4,4,4,4|10,20,30,40|squats|4|3,3,3,3|20,30,40,50"
+     *  Can refer to GymTest {@Code toFileString_correctInput_expectedCorrectString()} for more examples
+     *
+     * @return A formatted string in the format specified above.
+     */
+    public String toFileString(){
+
+        StringBuilder fileString = new StringBuilder();
+
+        ArrayList<GymStation> stations = this.getStations();
+        String type = WorkoutConstant.GYM;
+        String numOfStation = String.valueOf(stations.size());
+        String date = "";
+        if(this.getDate() == null){
+            date = ErrorConstant.NO_DATE_SPECIFIED_ERROR;
+        } else {
+            date = this.getDate().toString();
+        }
+
+        fileString.append(type);
+        fileString.append(UiConstant.PIPE);
+        fileString.append(numOfStation);
+        fileString.append(UiConstant.PIPE);
+        fileString.append(date);
+        fileString.append(UiConstant.PIPE);
+
+        for (GymStation station : stations) {
+            String stationName = station.getStationName();
+            String numOfSets = String.valueOf(station.getNumberOfSets());
+            StringBuilder[] repsAndWeightArray = this.buildGymRepAndWeightString(station);
+            String gymRepString = repsAndWeightArray[0].toString();
+            String gymWeightString = repsAndWeightArray[1].toString();
+            fileString.append(stationName);
+            fileString.append(UiConstant.PIPE);
+            fileString.append(numOfSets);
+            fileString.append(UiConstant.PIPE);
+            fileString.append(gymRepString);
+            fileString.append(UiConstant.PIPE);
+            fileString.append(gymWeightString);
+            if (stations.indexOf(station) != stations.size() - 1) {
+                fileString.append(UiConstant.PIPE);
+            }
+        }
+
+        return fileString.toString();
+    }
+
+    /**
      * Used when printing all the workouts. This method takes in two parameters {@code isFirstIteration} and {@code i}
      * @param index indicates which particular gymStation is being queried.
      * @return
