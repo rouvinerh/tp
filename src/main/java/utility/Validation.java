@@ -158,6 +158,10 @@ public class Validation {
         if (!runDetails[2].isEmpty()) {
             validateDateInput(runDetails[2]);
         }
+        LocalDate date = Parser.parseDate(runDetails[2]);
+        if (date.isAfter(LocalDate.now())) {
+            throw new CustomExceptions.InvalidInput("Date specified cannot be in the future");
+        }
     }
 
     public static void validateGymInput(String[] gymDetails) throws CustomExceptions.InvalidInput,
@@ -173,6 +177,11 @@ public class Validation {
 
         if (!gymDetails[1].isEmpty()) {
             validateDateInput(gymDetails[1]);
+        }
+
+        LocalDate date = Parser.parseDate(gymDetails[1]);
+        if (date.isAfter(LocalDate.now())) {
+            throw new CustomExceptions.InvalidInput("Date specified cannot be in the future");
         }
     }
 
@@ -260,6 +269,10 @@ public class Validation {
 
         if (appointmentDetails[2].length() > HealthConstant.MAX_DESCRIPTION_LENGTH) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.DESCRIPTION_LENGTH_ERROR);
+        }
+        if (!appointmentDetails[2].matches(UiConstant.VALID_APPOINTMENT_DESCRIPTION_REGEX)) {
+            throw new CustomExceptions.InvalidInput("Appointment description can only " +
+                    "contain alphanumeric characters, hyphens and spaces!");
         }
     }
 
