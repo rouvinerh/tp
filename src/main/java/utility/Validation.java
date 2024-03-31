@@ -147,19 +147,18 @@ public class Validation {
     public static void validateRunInput(String[] runDetails) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
         if (runDetails[0].isEmpty() || runDetails[1].isEmpty()) {
-            throw new CustomExceptions.InsufficientInput("Insufficient parameters for run! " +
-                    "Example input: /e:run /d:5.25 /t:25:23 [/date:DATE]");
+            throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_RUN_PARAMETERS_ERROR);
         }
         validateRunTimeInput(runDetails[0]);
         if (!runDetails[1].matches(UiConstant.VALID_TWO_DP_NUMBER_REGEX)) {
-            throw new CustomExceptions.InvalidInput("Distance is a 2 decimal point positive number!");
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_RUN_DISTANCE_ERROR);
         }
 
         if (runDetails[2] != null) {
             validateDateInput(runDetails[2]);
             LocalDate date = Parser.parseDate(runDetails[2]);
             if (date.isAfter(LocalDate.now())) {
-                throw new CustomExceptions.InvalidInput("Date specified cannot be in the future");
+                throw new CustomExceptions.InvalidInput(ErrorConstant.DATE_IN_FUTURE_ERROR);
             }
         }
 
@@ -175,19 +174,18 @@ public class Validation {
     public static void validateGymInput(String[] gymDetails) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
         if (gymDetails[0].isEmpty()) {
-            throw new CustomExceptions.InsufficientInput("Insufficient parameters for gym!" +
-                    "Example input: /e:gym /n:2 [/date:DATE]");
+            throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_GYM_PARAMETERS_ERROR);
         }
 
         if (!gymDetails[0].matches(UiConstant.VALID_POSITIVE_INTEGER_REGEX)) {
-            throw new CustomExceptions.InvalidInput("Number of stations is a positive number!");
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_NUMBER_OF_STATIONS_ERROR);
         }
 
         if (gymDetails[1] != null) {
             validateDateInput(gymDetails[1]);
             LocalDate date = Parser.parseDate(gymDetails[1]);
             if (date.isAfter(LocalDate.now())) {
-                throw new CustomExceptions.InvalidInput("Date specified cannot be in the future");
+                throw new CustomExceptions.InvalidInput(ErrorConstant.DATE_IN_FUTURE_ERROR);
             }
         }
     }
@@ -226,10 +224,9 @@ public class Validation {
     public static void validateRunTimeInput(String time) throws CustomExceptions.InvalidInput {
         if (!time.matches(UiConstant.VALID_TIME_REGEX) &&
                 !time.matches(UiConstant.VALID_TIME_WITH_HOURS_REGEX)) {
-            throw new CustomExceptions.InvalidInput("Invalid time format. " +
-                    "Format is HH:MM:SS or MM:SS with integers");
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_RUN_TIME_ERROR);
         }
-        String [] parts = time.split(":");
+        String [] parts = time.split(UiConstant.SPLIT_BY_COLON);
         int hours = WorkoutConstant.NO_HOURS_PRESENT;
         int minutes;
         int seconds;
@@ -242,18 +239,18 @@ public class Validation {
             minutes = Integer.parseInt(parts[1]);
             seconds = Integer.parseInt(parts[2]);
         } else {
-            throw new CustomExceptions.InvalidInput("Invalid time format. Format is HH:MM:SS or MM:SS with integers");
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_RUN_TIME_ERROR);
         }
         if (minutes < 1 || minutes > 60) {
-            throw new CustomExceptions.InvalidInput("Minutes must be a positive integer between 01 and 59.");
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_MINUTE_ERROR);
         }
 
         if (seconds < 1 || seconds > 60) {
-            throw new CustomExceptions.InvalidInput("Minutes must be a positive integer between 01 and 59.");
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_SECOND_ERROR);
         }
 
         if (hours == 0) {
-            throw new CustomExceptions.InvalidInput("Hours cannot be 0. Use MM:SS instead");
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_HOUR_ERROR);
         }
     }
     //@@author
@@ -278,8 +275,7 @@ public class Validation {
             throw new CustomExceptions.InvalidInput(ErrorConstant.DESCRIPTION_LENGTH_ERROR);
         }
         if (!appointmentDetails[2].matches(UiConstant.VALID_APPOINTMENT_DESCRIPTION_REGEX)) {
-            throw new CustomExceptions.InvalidInput("Appointment description can only " +
-                    "contain alphanumeric characters and spaces!");
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_DESCRIPTION_ERROR);
         }
     }
 
@@ -296,15 +292,14 @@ public class Validation {
     public static void validateExerciseName(String exerciseName) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
         if (exerciseName.isEmpty()) {
-            throw new CustomExceptions.InsufficientInput("Exercise name cannot be blank!");
+            throw new CustomExceptions.InsufficientInput(ErrorConstant.EMPTY_EXERCISE_NAME_ERROR);
         }
-        String validNameRegex = "^[A-Za-z\\s]+$";
-        if (!exerciseName.matches(validNameRegex)) {
-            throw new CustomExceptions.InvalidInput("Exercise name can only have letters!");
+        if (!exerciseName.matches(UiConstant.VALID_EXERCISE_NAME_REGEX)) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_EXERCISE_NAME_ERROR);
         }
 
         if (exerciseName.length() > 40) {
-            throw new CustomExceptions.InvalidInput("Exercise name cannot bne more than 40 characters!");
+            throw new CustomExceptions.InvalidInput(ErrorConstant.EXERCISE_NAME_LENGTH_ERROR);
         }
     }
 
@@ -323,21 +318,21 @@ public class Validation {
 
         String sets = Parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.SPLIT_BY_SETS);
         if (!sets.matches(UiConstant.VALID_POSITIVE_INTEGER_REGEX)) {
-            throw new CustomExceptions.InvalidInput("Number of sets must be a positive integer!");
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_SETS_ERROR);
         }
 
         String reps = Parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.SPLIT_BY_REPS);
         if (!reps.matches(UiConstant.VALID_POSITIVE_INTEGER_REGEX)) {
-            throw new CustomExceptions.InvalidInput("Number of reps must be a positive integer!");
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_REPS_ERROR);
         }
 
         String weights = Parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.SPLIT_BY_WEIGHTS);
         if (!weights.contains(UiConstant.SPLIT_BY_COMMAS)) {
-            throw new CustomExceptions.InvalidInput("Enter the weight done for each set separated by commas!");
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_WEIGHTS_ERROR);
         }
         String[] weightsArray = weights.split(UiConstant.SPLIT_BY_COMMAS);
         if (weightsArray.length == 0) {
-            throw new CustomExceptions.InvalidInput("Weights array cannot be empty");
+            throw new CustomExceptions.InvalidInput(ErrorConstant.EMPTY_WEIGHTS_ARRAY_ERROR);
         }
 
         if (weightsArray.length != Integer.parseInt(sets)) {
