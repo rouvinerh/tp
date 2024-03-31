@@ -138,10 +138,11 @@ public class Validation {
 
     //@@author JustinSoh
     /**
-     * TO DO.
-     * @param runDetails
-     * @throws CustomExceptions.InvalidInput
-     * @throws CustomExceptions.InsufficientInput
+     * Validates the details for adding a Run.
+     *
+     * @param runDetails A list containing Run details.
+     * @throws CustomExceptions.InvalidInput If the details specified are invalid.
+     * @throws CustomExceptions.InsufficientInput If empty strings are used.
      */
     public static void validateRunInput(String[] runDetails) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
@@ -164,6 +165,13 @@ public class Validation {
 
     }
 
+    /**
+     * Validates the details for adding a Gym.
+     *
+     * @param gymDetails A list containing Gym details.
+     * @throws CustomExceptions.InvalidInput If the details specified are invalid.
+     * @throws CustomExceptions.InsufficientInput If empty strings are used.
+     */
     public static void validateGymInput(String[] gymDetails) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
         if (gymDetails[0].isEmpty()) {
@@ -182,8 +190,6 @@ public class Validation {
                 throw new CustomExceptions.InvalidInput("Date specified cannot be in the future");
             }
         }
-
-
     }
 
     //@@author
@@ -277,6 +283,15 @@ public class Validation {
         }
     }
 
+
+    /**
+     * Validates the string for an exercise name, and that it has no special characters.
+     * Only alphanumeric and space characters can be in the name.
+     *
+     * @param exerciseName The exercise name string.
+     * @throws CustomExceptions.InvalidInput If the details specified are invalid.
+     * @throws CustomExceptions.InsufficientInput If empty strings are used.
+     */
     //@@author JustinSoh
     public static void validateExerciseName(String exerciseName) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
@@ -293,6 +308,14 @@ public class Validation {
         }
     }
 
+    /**
+     * Splits and validates the user input for adding a station to a Gym object.
+     *
+     * @param input The user input string.
+     * @return A list of validated parameters for adding a GymStation.
+     * @throws CustomExceptions.InvalidInput If the details specified are invalid.
+     * @throws CustomExceptions.InsufficientInput If empty strings are used.
+     */
     public static String[] splitAndValidateGymStationInput(String input) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
         String exerciseName = input.split(UiConstant.SPLIT_BY_SLASH)[WorkoutConstant.STATION_NAME_INDEX].trim();

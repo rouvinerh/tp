@@ -140,7 +140,7 @@ public class Parser {
      *
      * @param input A user-provided string.
      * @return An array of strings containing the extracted Bmi parameters.
-     * @throws CustomExceptions.InvalidInput If the user input is invalid.
+     * @throws CustomExceptions.InsufficientInput If the height, weight or date parameters are missing.
      */
     public static String[] splitBmiInput(String input) throws CustomExceptions.InsufficientInput {
         if (!input.contains(HealthConstant.HEIGHT_FLAG)
@@ -263,6 +263,13 @@ public class Parser {
 
     //@@author JustinSoh
 
+    /**
+     * Splits the user input when adding a Gym.
+     *
+     * @param input The user input string.
+     * @return The Gym parameters split from the user input.
+     * @throws CustomExceptions.InsufficientInput If the number of stations is missing.
+     */
     public static String[] splitGymInput(String input) throws CustomExceptions.InsufficientInput {
         if (!input.contains(WorkoutConstant.SPLIT_BY_NUMBER_OF_STATIONS)) {
             throw new CustomExceptions.InsufficientInput("Insufficient parameters for gym! " +
@@ -278,12 +285,13 @@ public class Parser {
     }
 
     /**
-     * TO DO.
-     * @param input
+     * Parses input for the Gym command. Adds Gym object if valid.
+     *
+     * @param userInput The user input string.
      */
-    public static void parseGymInput(String input) throws CustomExceptions.InsufficientInput,
+    public static void parseGymInput(String userInput) throws CustomExceptions.InsufficientInput,
             CustomExceptions.InvalidInput {
-        String[] gymDetails = splitGymInput(input);
+        String[] gymDetails = splitGymInput(userInput);
         Validation.validateGymInput(gymDetails);
         Gym newGym;
         if (gymDetails[1] == null) {
@@ -295,6 +303,13 @@ public class Parser {
         parseGymStationInput(numberOfStations, newGym);
     }
 
+    /**
+     * Splits the user input for adding a run.
+     *
+     * @param input The user input string.
+     * @return The Run parameters split from the user input.
+     * @throws CustomExceptions.InsufficientInput If the distance and time taken for the run are missing.
+     */
     public static String[] splitRunInput(String input) throws CustomExceptions.InsufficientInput {
         if (!input.contains(WorkoutConstant.SPLIT_BY_DISTANCE) ||
             !input.contains(WorkoutConstant.SPLIT_BY_TIME)) {
@@ -312,8 +327,9 @@ public class Parser {
     }
 
     /**
-     * TO DO.
-     * @param input
+     * Parses input for the Run command. Adds a Run object if valid.
+     *
+     * @param input The user input string.
      */
     public static void parseRunInput(String input) throws CustomExceptions.InsufficientInput,
             CustomExceptions.InvalidInput {
