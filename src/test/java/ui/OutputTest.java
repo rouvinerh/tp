@@ -11,8 +11,9 @@ import java.util.Arrays;
 
 import utility.ErrorConstant;
 import utility.UiConstant;
-import utility.CustomExceptions;
 import utility.WorkoutConstant;
+import utility.CustomExceptions;
+
 import workouts.Gym;
 import workouts.Run;
 import workouts.WorkoutList;
@@ -382,4 +383,6 @@ class OutputTest {
         }
 
     }
+
+
 }

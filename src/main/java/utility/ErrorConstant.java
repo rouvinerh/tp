@@ -13,6 +13,13 @@ public class ErrorConstant {
     public static final String CREATE_FILE_ERROR = "Unable to create file.";
     public static final String CORRUPT_ERROR = "File is corrupted. Ceasing any further data imports.";
 
+    // Storage Error for Gym
+    public static final String LOAD_GYM_FORMAT_ERROR = LOAD_ERROR + "Format of gym entry is incorrect/corrupted";
+    public static final String LOAD_GYM_TYPE_ERROR = LOAD_ERROR + "Format of gym type is incorrect/corrupted";
+    public static final String LOAD_NUMBER_OF_STATION_ERROR = LOAD_ERROR + "Number of stations is corrupted";
+    public static final String LOAD_NUMBER_OF_SETS_ERROR = LOAD_ERROR
+            + "Number of weights doesn't match number of sets";
+    public static final String LOAD_WEIGHTS_ERROR = LOAD_ERROR + "Weights are corrupted";
 
     // Input Errors
     public static final String INVALID_COMMAND_ERROR = "Invalid command. Enter 'help' to view available commands.";
