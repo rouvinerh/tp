@@ -262,4 +262,56 @@ public class Validation {
             throw new CustomExceptions.InvalidInput(ErrorConstant.DESCRIPTION_LENGTH_ERROR);
         }
     }
+
+    //@@author JustinSoh
+    public static void validateExerciseName(String exerciseName) throws CustomExceptions.InvalidInput,
+            CustomExceptions.InsufficientInput {
+        if (exerciseName.isEmpty()) {
+            throw new CustomExceptions.InsufficientInput("Exercise name cannot be blank!");
+        }
+        String validNameRegex = "^[A-Za-z\\s]+$";
+        if (!exerciseName.matches(validNameRegex)) {
+            throw new CustomExceptions.InvalidInput("Exercise name can only have letters!");
+        }
+
+        if (exerciseName.length() > 40) {
+            throw new CustomExceptions.InvalidInput("Exercise name cannot bne more than 40 characters!");
+        }
+    }
+
+    public static String[] splitAndValidateGymStationInput(String input) throws CustomExceptions.InvalidInput,
+            CustomExceptions.InsufficientInput {
+        String exerciseName = input.split(UiConstant.SPLIT_BY_SLASH)[WorkoutConstant.STATION_NAME_INDEX].trim();
+        validateExerciseName(exerciseName);
+
+        String sets = Parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.SPLIT_BY_SETS);
+        if (!sets.matches(UiConstant.VALID_POSITIVE_INTEGER_REGEX)) {
+            throw new CustomExceptions.InvalidInput("Number of sets must be a positive integer!");
+        }
+
+        String reps = Parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.SPLIT_BY_REPS);
+        if (!reps.matches(UiConstant.VALID_POSITIVE_INTEGER_REGEX)) {
+            throw new CustomExceptions.InvalidInput("Number of reps must be a positive integer!");
+        }
+
+        String weights = Parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.SPLIT_BY_WEIGHTS);
+        if (!weights.contains(UiConstant.SPLIT_BY_COMMAS)) {
+            throw new CustomExceptions.InvalidInput("Enter the weight done for each set separated by commas!");
+        }
+        String[] weightsArray = weights.split(UiConstant.SPLIT_BY_COMMAS);
+        if (weightsArray.length == 0) {
+            throw new CustomExceptions.InvalidInput("Weights array cannot be empty");
+        }
+
+        if (weightsArray.length != Integer.parseInt(sets)) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.GYM_WEIGHTS_INCORRECT_NUMBER_ERROR);
+        }
+
+        String[] results = new String[4];
+        results[0] = exerciseName;
+        results[1] = weights;
+        results[2] = sets;
+        results[3] = reps;
+        return results;
+    }
 }

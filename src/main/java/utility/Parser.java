@@ -99,27 +99,6 @@ public class Parser {
 
     }
 
-    /**
-     * Validates whether the filter string is either 'run', 'gym', 'bmi', 'period'
-     * or 'appointment'.
-     *
-     * @param filter The filter string to be checked.
-     * @throws CustomExceptions.InvalidInput If the filter string is none of them.
-     */
-    public static void validateFilter (String filter) throws CustomExceptions.InvalidInput {
-        if (filter.equals(WorkoutConstant.RUN)
-                || filter.equals(WorkoutConstant.GYM)
-                || filter.equals(HealthConstant.BMI)
-                || filter.equals(HealthConstant.PERIOD)
-                || filter.equals(HealthConstant.APPOINTMENT)
-                || filter.equals(WorkoutConstant.ALL)) {
-            return;
-        }
-        throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_ITEM_ERROR
-                + System.lineSeparator()
-                + ErrorConstant.CORRECT_FILTER_ITEM_FORMAT);
-    }
-
     //@@author JustinSoh
     /**
      * Function validates and parses the user input for the history and latest commands.
@@ -262,163 +241,6 @@ public class Parser {
         HealthList.addAppointment(newAppointment);
         Output.printAddAppointment(newAppointment);
     }
-    //@@author L5-Z
-    /**
-     * Splits the Gym File Input that comes from Storage.
-     * Validates the numberOfStation and Date input.
-     * @param input
-     * @return String[] containing the gym details
-     * @throws CustomExceptions.FileReadError
-     */
-    private static String[] splitGymFileInput (String input) throws CustomExceptions.FileReadError {
-
-        String [] gymDetails = input.split(UiConstant.SPLIT_BY_COLON);
-        String gymType;
-        String numOfStationStr;
-        int numOfStation;
-        String date;
-
-        // checks if there are enough parameters in the gym file + if numOfStation is a digit
-        try {
-            gymType = gymDetails[WorkoutConstant.GYM_FILE_INDEX];
-            numOfStationStr = gymDetails[WorkoutConstant.NUM_OF_STATIONS_FILE_INDEX];
-            numOfStation = Integer.parseInt(numOfStationStr);
-            date = gymDetails[WorkoutConstant.DATE_FILE_INDEX];
-        } catch (ArrayIndexOutOfBoundsException e) {
-            throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_GYM_FORMAT_ERROR);
-        } catch (NumberFormatException e) {
-            throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_NUMBER_OF_STATION_ERROR);
-        }
-
-        // Check if the gym type is correct (e.g. storage starts with gym| ...)
-        if (!gymDetails[WorkoutConstant.GYM_FILE_INDEX].equals(WorkoutConstant.GYM)) {
-            throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_GYM_TYPE_ERROR);
-        }
-
-        // Check if the number of station is blank
-        if (numOfStationStr.isBlank()){
-            throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_NUMBER_OF_STATION_ERROR);
-        }
-
-        // Check if the date is correct
-        if (date.isBlank()){
-            throw new CustomExceptions.FileReadError(ErrorConstant.INVALID_DATE_ERROR);
-        }
-
-        // if the date is not NA, then validate and make sure it is correct
-        try{
-            if (!date.equals(ErrorConstant.NO_DATE_SPECIFIED_ERROR)){
-                validateDateInput(date);
-            }
-        } catch (CustomExceptions.InvalidInput e){
-            throw new CustomExceptions.FileReadError(ErrorConstant.INVALID_DATE_ERROR);
-        }
-
-        return gymDetails;
-    }
-
-    /**
-     * Adds a station to the gym object based of the file input.
-     * This method is used in the {@Code parseGymFileInput} method.
-     * How the method works is that it will check if the station details are valid
-     * and then add the station to the gym.
-     * @param gym the gym object that the station will be added to
-     * @param gymDetails the array of strings containing the gym details
-     * @param baseCounter the base counter to start adding the station
-     * @return the new base counter after adding the station
-     * @throws CustomExceptions.FileReadError if there is an error in the file input
-     * @throws CustomExceptions.InvalidInput if the input is invalid
-     */
-    private static int addStationFromFile(Gym gym, String[] gymDetails, int baseCounter)
-            throws CustomExceptions.FileReadError,
-            CustomExceptions.InvalidInput {
-
-        String currentStationName;
-        String numberOfSetsStr;
-        String repsStr;
-        String weightStrings;
-
-        int numberOfSets;
-        int reps;
-        ArrayList<Integer> weights = new ArrayList<>();
-        try {
-            currentStationName = gymDetails[baseCounter];
-            numberOfSetsStr = gymDetails[baseCounter + WorkoutConstant.SETS_OFFSET];
-            repsStr = gymDetails[baseCounter + WorkoutConstant.REPS_OFFSET];
-            weightStrings = gymDetails[baseCounter + WorkoutConstant.WEIGHTS_OFFSET];
-        } catch (ArrayIndexOutOfBoundsException e) {
-            throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_GYM_FORMAT_ERROR);
-        }
-
-        if(currentStationName.isBlank() ||
-            numberOfSetsStr.isBlank() ||
-            repsStr.isBlank() ||
-            weightStrings.isBlank()){
-            throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_GYM_FORMAT_ERROR);
-        }
-
-        // Check if valid numbers
-        try {
-            numberOfSets = Integer.parseInt(numberOfSetsStr);
-            reps = Integer.parseInt(repsStr);
-        } catch (NumberFormatException e) {
-            throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_GYM_FORMAT_ERROR);
-        }
-
-        // Check if weights able to split
-        String[] weight = weightStrings.split(UiConstant.SPLIT_BY_COMMAS);
-        if (weight.length != numberOfSets){
-            throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_NUMBER_OF_SETS_ERROR);
-        }
-
-        // Check if weights are valid numbers
-        try {
-            for (String weightString : weight) {
-                weights.add(Integer.parseInt(weightString));
-            }
-        } catch (NumberFormatException e) {
-            throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_GYM_FORMAT_ERROR);
-        }
-
-        gym.addStation(currentStationName, weights, numberOfSets, reps);
-        baseCounter += WorkoutConstant.INCREMENT_OFFSET;
-
-        return baseCounter;
-    }
-
-
-    /**
-     * Parses the gym input from the storage file and returns a Gym object.
-     * The input of the storage file needs to be in the following format
-     * gym:NUM_STATIONS:DATE:STATION1_NAME:NUM_SETS:REPS:WEIGHT1,WEIGHT2,WEIGHT3,WEIGHT4
-     * :STATION2_NAME:NUM_SETS:REPS:WEIGHT1,WEIGHT2,WEIGHT3,WEIGHT4 ....
-     *
-     * @param input in the format specified above
-     * @return gym object created from the input
-     * @throws CustomExceptions.InvalidInput
-     * @throws CustomExceptions.FileReadError
-     */
-    public static Gym parseGymFileInput(String input)
-            throws CustomExceptions.InvalidInput,
-            CustomExceptions.FileReadError {
-
-        // does initial round of input checking
-        String[] gymDetails = splitGymFileInput(input);
-        Gym gym;
-        String date = gymDetails[WorkoutConstant.DATE_FILE_INDEX];
-
-        if (date.equals(ErrorConstant.NO_DATE_SPECIFIED_ERROR)) {
-            gym = new Gym();
-        } else {
-            gym = new Gym(date);
-        }
-
-        int counter = WorkoutConstant.GYM_FILE_BASE_COUNTER;
-        while (counter < gymDetails.length) {
-            counter = addStationFromFile(gym , gymDetails, counter);
-        }
-        return gym;
-    }
 
     /**
      * Extracts a substring from the given input string based on the provided delimiter.
@@ -508,37 +330,6 @@ public class Parser {
     }
 
     /**
-     * Retrieves the date from the input for a Gym output.
-     * Returns empty string if not specified.
-     *
-     * @param input The user input string.
-     * @return A string representing the date.
-     */
-    public static String getDateFromGym(String input) {
-        try {
-            return extractSubstringFromSpecificIndex(input, WorkoutConstant.SPLIT_BY_DATE);
-        } catch (Exception e) {
-            return "";
-        }
-    }
-
-    /**
-     * Retrieves the number of gym stations in one Gym object from user input.
-     *
-     * @param input The user input string.
-     * @throws CustomExceptions.InsufficientInput If the user input is insufficient.
-     * @throws CustomExceptions.InvalidInput      If the user input is invalid or blank.
-     */
-
-    public static int getNumberOfGymStations(String input) throws CustomExceptions.InsufficientInput,
-            CustomExceptions.InvalidInput {
-        String numberOfStationString = extractSubstringFromSpecificIndex(input,
-                WorkoutConstant.SPLIT_BY_NUMBER_OF_STATIONS);
-        assert Integer.parseInt(numberOfStationString) > 0 : ErrorConstant.NEGATIVE_VALUE_ERROR;
-        return Integer.parseInt(numberOfStationString);
-    }
-
-    /**
      * Retrieves the gym station details and adds a GymStation object to Gym.
      *
      * @param numberOfStations The number of stations in one gym session.
@@ -550,7 +341,9 @@ public class Parser {
             try {
                 Output.printGymStationPrompt(i + 1);
                 String userInput = Handler.in.nextLine();
-                GymStation.addGymStationInputValid(gym, userInput);
+                String[] validGymStationInput = Validation.splitAndValidateGymStationInput(userInput);
+                GymStation.addGymStation(gym, validGymStationInput);
+
                 i++;
             } catch (CustomExceptions.InsufficientInput | CustomExceptions.InvalidInput e) {
                 Output.printException(e.getMessage());
@@ -603,6 +396,165 @@ public class Parser {
         } else {
             return "";
         }
+    }
+
+    // FILE CODE STARTS HERE
+    //@@author L5-Z
+    /**
+     * Splits the Gym File Input that comes from Storage.
+     * Validates the numberOfStation and Date input.
+     * @param input
+     * @return String[] containing the gym details
+     * @throws CustomExceptions.FileReadError
+     */
+    private static String[] splitGymFileInput (String input) throws CustomExceptions.FileReadError {
+
+        String [] gymDetails = input.split(UiConstant.SPLIT_BY_COLON);
+        String gymType;
+        String numOfStationStr;
+        int numOfStation;
+        String date;
+
+        // checks if there are enough parameters in the gym file + if numOfStation is a digit
+        try {
+            gymType = gymDetails[WorkoutConstant.GYM_FILE_INDEX];
+            numOfStationStr = gymDetails[WorkoutConstant.NUM_OF_STATIONS_FILE_INDEX];
+            numOfStation = Integer.parseInt(numOfStationStr);
+            date = gymDetails[WorkoutConstant.DATE_FILE_INDEX];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_GYM_FORMAT_ERROR);
+        } catch (NumberFormatException e) {
+            throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_NUMBER_OF_STATION_ERROR);
+        }
+
+        // Check if the gym type is correct (e.g. storage starts with gym| ...)
+        if (!gymDetails[WorkoutConstant.GYM_FILE_INDEX].equals(WorkoutConstant.GYM)) {
+            throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_GYM_TYPE_ERROR);
+        }
+
+        // Check if the number of station is blank
+        if (numOfStationStr.isBlank()){
+            throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_NUMBER_OF_STATION_ERROR);
+        }
+
+        // Check if the date is correct
+        if (date.isBlank()){
+            throw new CustomExceptions.FileReadError(ErrorConstant.INVALID_DATE_ERROR);
+        }
+
+        // if the date is not NA, then validate and make sure it is correct
+        try{
+            if (!date.equals(ErrorConstant.NO_DATE_SPECIFIED_ERROR)){
+                Validation.validateDateInput(date);
+            }
+        } catch (CustomExceptions.InvalidInput e){
+            throw new CustomExceptions.FileReadError(ErrorConstant.INVALID_DATE_ERROR);
+        }
+
+        return gymDetails;
+    }
+
+    /**
+     * Adds a station to the gym object based of the file input.
+     * This method is used in the {@code parseGymFileInput} method.
+     * How the method works is that it will check if the station details are valid
+     * and then add the station to the gym.
+     * @param gym the gym object that the station will be added to
+     * @param gymDetails the array of strings containing the gym details
+     * @param baseCounter the base counter to start adding the station
+     * @return the new base counter after adding the station
+     * @throws CustomExceptions.FileReadError if there is an error in the file input
+     * @throws CustomExceptions.InvalidInput if the input is invalid
+     */
+    private static int addStationFromFile(Gym gym, String[] gymDetails, int baseCounter)
+            throws CustomExceptions.FileReadError,
+            CustomExceptions.InvalidInput {
+
+        String currentStationName;
+        String numberOfSetsStr;
+        String repsStr;
+        String weightStrings;
+
+        int numberOfSets;
+        int reps;
+        ArrayList<Integer> weights = new ArrayList<>();
+        try {
+            currentStationName = gymDetails[baseCounter];
+            numberOfSetsStr = gymDetails[baseCounter + WorkoutConstant.SETS_OFFSET];
+            repsStr = gymDetails[baseCounter + WorkoutConstant.REPS_OFFSET];
+            weightStrings = gymDetails[baseCounter + WorkoutConstant.WEIGHTS_OFFSET];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_GYM_FORMAT_ERROR);
+        }
+
+        if(currentStationName.isBlank() ||
+                numberOfSetsStr.isBlank() ||
+                repsStr.isBlank() ||
+                weightStrings.isBlank()){
+            throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_GYM_FORMAT_ERROR);
+        }
+
+        // Check if valid numbers
+        try {
+            numberOfSets = Integer.parseInt(numberOfSetsStr);
+            reps = Integer.parseInt(repsStr);
+        } catch (NumberFormatException e) {
+            throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_GYM_FORMAT_ERROR);
+        }
+
+        // Check if weights able to split
+        String[] weight = weightStrings.split(UiConstant.SPLIT_BY_COMMAS);
+        if (weight.length != numberOfSets){
+            throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_NUMBER_OF_SETS_ERROR);
+        }
+
+        // Check if weights are valid numbers
+        try {
+            for (String weightString : weight) {
+                weights.add(Integer.parseInt(weightString));
+            }
+        } catch (NumberFormatException e) {
+            throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_GYM_FORMAT_ERROR);
+        }
+
+        gym.addStation(currentStationName, weights, numberOfSets, reps);
+        baseCounter += WorkoutConstant.INCREMENT_OFFSET;
+
+        return baseCounter;
+    }
+
+
+    /**
+     * Parses the gym input from the storage file and returns a Gym object.
+     * The input of the storage file needs to be in the following format
+     * gym:NUM_STATIONS:DATE:STATION1_NAME:NUM_SETS:REPS:WEIGHT1,WEIGHT2,WEIGHT3,WEIGHT4
+     * :STATION2_NAME:NUM_SETS:REPS:WEIGHT1,WEIGHT2,WEIGHT3,WEIGHT4 ....
+     *
+     * @param input in the format specified above
+     * @return gym object created from the input
+     * @throws CustomExceptions.InvalidInput
+     * @throws CustomExceptions.FileReadError
+     */
+    public static Gym parseGymFileInput(String input)
+            throws CustomExceptions.InvalidInput,
+            CustomExceptions.FileReadError {
+
+        // does initial round of input checking
+        String[] gymDetails = splitGymFileInput(input);
+        Gym gym;
+        String date = gymDetails[WorkoutConstant.DATE_FILE_INDEX];
+
+        if (date.equals(ErrorConstant.NO_DATE_SPECIFIED_ERROR)) {
+            gym = new Gym();
+        } else {
+            gym = new Gym(date);
+        }
+
+        int counter = WorkoutConstant.GYM_FILE_BASE_COUNTER;
+        while (counter < gymDetails.length) {
+            counter = addStationFromFile(gym , gymDetails, counter);
+        }
+        return gym;
     }
     //@@author
 

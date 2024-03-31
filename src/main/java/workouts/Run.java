@@ -28,7 +28,7 @@ public class Run extends Workout {
      * @throws CustomExceptions.InvalidInput If there is invalid input.
      */
     public Run(String stringTime, String stringDistance) throws CustomExceptions.InvalidInput {
-        times = parseTime(stringTime);
+        times = splitRunTime(stringTime);
         distance = Double.parseDouble(stringDistance);
         pace = calculatePace();
         WorkoutList.addRun(this);
@@ -43,7 +43,7 @@ public class Run extends Workout {
      * @throws CustomExceptions.InvalidInput If there is invalid input.
      */
     public Run(String stringTime, String stringDistance, String stringDate) throws CustomExceptions.InvalidInput {
-        times = parseTime(stringTime);
+        times = splitRunTime(stringTime);
         distance = Double.parseDouble(stringDistance);
         date = Parser.parseDate(stringDate);
         pace = calculatePace();
@@ -82,21 +82,6 @@ public class Run extends Workout {
         assert !results[WorkoutConstant.TIME_INDEX].isEmpty() : "Time should not be empty";
 
         return results;
-    }
-
-    public static Run addRun(String[] runDetails) throws CustomExceptions.InvalidInput {
-        Run newRun;
-        if (runDetails[WorkoutConstant.DATE_INDEX].isEmpty()) {
-            newRun = new Run(
-                    runDetails[WorkoutConstant.TIME_INDEX],
-                    runDetails[WorkoutConstant.DISTANCE_INDEX]);
-        } else {
-            newRun = new Run(
-                    runDetails[WorkoutConstant.TIME_INDEX],
-                    runDetails[WorkoutConstant.DISTANCE_INDEX],
-                    runDetails[WorkoutConstant.DATE_INDEX]);
-        }
-        return newRun;
     }
 
     /**
@@ -147,7 +132,7 @@ public class Run extends Workout {
      * @param inputTime String variable representing time taken in either hh:mm:ss or mm:ss format
      * @return A list of integers representing the hours (if present), minutes and seconds.
      */
-    public Integer[] parseTime(String inputTime) throws CustomExceptions.InvalidInput {
+    public Integer[] splitRunTime(String inputTime) throws CustomExceptions.InvalidInput {
 
         String[] stringTimeParts = inputTime.split(":");
         int inputLength = stringTimeParts.length;
