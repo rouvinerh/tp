@@ -9,11 +9,10 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import utility.ErrorConstant;
-import utility.UiConstant;
-import utility.WorkoutConstant;
+import constants.ErrorConstant;
+import constants.UiConstant;
 import utility.CustomExceptions;
-
+import constants.WorkoutConstant;
 import workouts.Gym;
 import workouts.Run;
 import workouts.WorkoutList;

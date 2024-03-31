@@ -1,10 +1,9 @@
 package ui;
 
-import utility.Filters;
-import utility.ErrorConstant;
-import utility.UiConstant;
-import utility.WorkoutConstant;
-import utility.HealthConstant;
+import constants.ErrorConstant;
+import constants.UiConstant;
+import constants.WorkoutConstant;
+import constants.HealthConstant;
 import utility.CustomExceptions;
 
 import workouts.Gym;
@@ -16,6 +15,7 @@ import health.HealthList;
 import health.Bmi;
 import health.Period;
 import health.Appointment;
+import utility.Filters.HistoryAndLatestFilters;
 
 import java.util.ArrayList;
 
@@ -325,7 +325,7 @@ public class Output {
      */
     public static void printLatest(String filter) {
         try {
-            Filters parsedFilter = Filters.valueOf(filter.toUpperCase());
+            HistoryAndLatestFilters parsedFilter = HistoryAndLatestFilters.valueOf(filter.toUpperCase());
             switch (parsedFilter) {
             case RUN:
                 printLatestRun();
@@ -358,7 +358,7 @@ public class Output {
      */
     public static void printHistory(String filter) {
         try {
-            Filters parsedFilter = Filters.valueOf(filter.toUpperCase());
+            HistoryAndLatestFilters parsedFilter = HistoryAndLatestFilters.valueOf(filter.toUpperCase());
             switch (parsedFilter) {
             case WORKOUTS:
                 printWorkoutHistory();

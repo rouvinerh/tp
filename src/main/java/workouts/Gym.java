@@ -1,10 +1,10 @@
 package workouts;
 
 import utility.CustomExceptions;
-import utility.ErrorConstant;
+import constants.ErrorConstant;
 import utility.Parser;
-import utility.UiConstant;
-import utility.WorkoutConstant;
+import constants.UiConstant;
+import constants.WorkoutConstant;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -68,33 +68,6 @@ public class Gym extends Workout {
         return stations.get(index);
     }
 
-
-    /**
-     * Method checks if Gym values is valid
-     * Returns {@code true} if {@code numberOfStation} parameters is valid.
-     * Valid only if {@code numberOfStation} is a positive integer / not blank / and is digit.
-     * Otherwise, throw {@code CustomExceptions.InvalidInput}  or {@code CustomExceptions.InsufficientInput}
-     *
-     * @param numberOfStation String representing the number of Station
-     * @return {@code true} if all parameters are valid.
-     */
-
-    public static boolean checkIfGymIsValid(String numberOfStation) throws CustomExceptions.InvalidInput {
-        if (numberOfStation.isBlank()) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.NO_OF_STATION_BLANK_ERROR);
-        }
-
-        try {
-            int value = Integer.parseInt(numberOfStation);
-            if (value <= 0) {
-                throw new CustomExceptions.InvalidInput(ErrorConstant.NO_OF_STATION_POSITIVE_ERROR);
-            }
-        } catch (NumberFormatException e) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.NO_OF_STATION_DIGIT_ERROR);
-        }
-
-        return true;
-    }
 
     @Override
     public LocalDate getDate() {

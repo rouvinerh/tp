@@ -1,15 +1,46 @@
 package utility;
 
 /**
- * Enum representing the filters used for Workouts and Health.
+ * Class representing the filters used for PulsePilot.
  */
-public enum Filters {
+public class Filters {
 
-    RUN,
-    GYM,
-    PERIOD,
-    BMI,
-    APPOINTMENT,
-    PREDICTION,
-    WORKOUTS
+    public enum Command {
+        WORKOUT,
+        HISTORY,
+        LATEST,
+        HEALTH,
+        DELETE,
+        HELP,
+        EXIT
+    }
+
+    public enum DeleteFilters {
+        RUN,
+        GYM,
+        PERIOD,
+        BMI,
+        APPOINTMENT,
+    }
+
+    public enum HealthFilters {
+        PERIOD,
+        BMI,
+        APPOINTMENT,
+        PREDICTION,
+    }
+
+    public enum WorkoutFilters {
+        RUN,
+        GYM,
+    }
+
+    public enum HistoryAndLatestFilters {
+        RUN,
+        GYM,
+        PERIOD,
+        BMI,
+        APPOINTMENT,
+        WORKOUTS
+    }
 }

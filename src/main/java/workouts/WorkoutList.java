@@ -2,8 +2,8 @@ package workouts;
 
 import storage.LogFile;
 import utility.CustomExceptions;
-import utility.ErrorConstant;
-import utility.WorkoutConstant;
+import constants.ErrorConstant;
+import constants.WorkoutConstant;
 
 import java.util.ArrayList;
 
