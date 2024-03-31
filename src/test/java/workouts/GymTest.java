@@ -101,8 +101,8 @@ class GymTest {
 
     @Test
     void toFileString_correctInput_expectedCorrectString(){
-        String expected1 = "gym|2|1997-11-11|bench press|4|4,4,4,4|10,20,30,40|squats|4|3,3,3,3|20,30,40,50";
-        String expected2WithNoDate = "gym|2|NA|bench press|4|4,4,4,4|10,20,30,40|squats|4|3,3,3,3|20,30,40,50";
+        String expected1 = "gym:2:1997-11-11:bench press:4:4:10,20,30,40:squats:4:3:20,30,40,50";
+        String expected2WithNoDate = "gym:2:NA:bench press:4:4:10,20,30,40:squats:4:3:20,30,40,50";
         ArrayList<Integer> array1 = new ArrayList<>(Arrays.asList(10,20,30,40));
         ArrayList<Integer> array2 = new ArrayList<>(Arrays.asList(20,30,40,50));
         Gym newGym = new Gym("11-11-1997");
@@ -122,4 +122,6 @@ class GymTest {
             fail("Should not throw an exception");
         }
     }
+
+
 }
