@@ -7,6 +7,7 @@ import utility.Parser;
 import constants.ErrorConstant;
 import constants.UiConstant;
 import constants.WorkoutConstant;
+import utility.Validation;
 
 
 /**
@@ -207,7 +208,7 @@ public class Run extends Workout {
 
         // Check to see if date is valid
         if (!runDate.isBlank()) {
-            Parser.validateDateInput(runDate);
+            Validation.validateDate(runDate);
         }
         return true;
     }

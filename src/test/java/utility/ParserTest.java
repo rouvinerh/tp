@@ -39,7 +39,7 @@ class ParserTest {
     public void validateDateInput_validDate_noExceptionThrown() {
         String validDate = "09-11-2024";
         assertDoesNotThrow(() -> {
-            Parser.validateDateInput(validDate);
+            Validation.validateDate(validDate);
         });
     }
 
@@ -52,7 +52,7 @@ class ParserTest {
         String invalidDate = "9-11-2024";
 
         assertThrows(CustomExceptions.InvalidInput.class, () -> {
-            Parser.validateDateInput(invalidDate);
+            Validation.validateDate(invalidDate);
         });
     }
 
@@ -64,7 +64,7 @@ class ParserTest {
     public void validateDateInput_invalidMonthFormat_throwInvalidInputException() {
         String invalidDate = "9-1-2024";
         assertThrows(CustomExceptions.InvalidInput.class, () -> {
-            Parser.validateDateInput(invalidDate);
+            Validation.validateDate(invalidDate);
         });
     }
 
@@ -76,7 +76,7 @@ class ParserTest {
     public void validateDateInput_invalidYearFormat_throwInvalidInputException() {
         String invalidDate = "9-11-24";
         assertThrows(CustomExceptions.InvalidInput.class, () -> {
-            Parser.validateDateInput(invalidDate);
+            Validation.validateDate(invalidDate);
         });
     }
 
@@ -88,7 +88,7 @@ class ParserTest {
     public void validateDateInput_illegalDayNumber_throwInvalidInputException() {
         String invalidDate = "32-11-2024";
         assertThrows(CustomExceptions.InvalidInput.class, () -> {
-            Parser.validateDateInput(invalidDate);
+            Validation.validateDate(invalidDate);
         });
     }
 
@@ -100,7 +100,7 @@ class ParserTest {
     public void validateDateInput_zeroDayNumber_throwInvalidInputException() {
         String invalidDate = "00-11-2024";
         assertThrows(CustomExceptions.InvalidInput.class, () -> {
-            Parser.validateDateInput(invalidDate);
+            Validation.validateDate(invalidDate);
         });
     }
 
@@ -112,7 +112,7 @@ class ParserTest {
     public void validateDateInput_illegalMonthNumber_throwInvalidInputException() {
         String invalidDate = "09-13-2024";
         assertThrows(CustomExceptions.InvalidInput.class, () -> {
-            Parser.validateDateInput(invalidDate);
+            Validation.validateDate(invalidDate);
         });
     }
 
@@ -124,7 +124,7 @@ class ParserTest {
     public void validateDateInput_zeroMonthNumber_throwInvalidInputException() {
         String invalidDate = "09-00-2024";
         assertThrows(CustomExceptions.InvalidInput.class, () -> {
-            Parser.validateDateInput(invalidDate);
+            Validation.validateDate(invalidDate);
         });
     }
 
@@ -136,7 +136,7 @@ class ParserTest {
     public void validateDateInput_wrongDateDelimiter_throwInvalidInputException() {
         String invalidDate = "09/12/2024";
         assertThrows(CustomExceptions.InvalidInput.class, () -> {
-            Parser.validateDateInput(invalidDate);
+            Validation.validateDate(invalidDate);
         });
     }
 
@@ -148,7 +148,7 @@ class ParserTest {
     public void validateDateInput_invalidDateParameters_throwInvalidInputException() {
         String invalidDate = "09-12";
         assertThrows(CustomExceptions.InvalidInput.class, () -> {
-            Parser.validateDateInput(invalidDate);
+            Validation.validateDate(invalidDate);
         });
     }
 
@@ -182,7 +182,7 @@ class ParserTest {
     @Test
     void validateDeleteInput_correctInput_noExceptionThrown() {
         String[] input = {"appointment", "2"};
-        assertDoesNotThrow(() -> Parser.validateDeleteInput(input));
+        assertDoesNotThrow(() -> Validation.validateDeleteInput(input));
     }
 
     /**
@@ -192,7 +192,7 @@ class ParserTest {
     @Test
     void validateDeleteInput_invalidItem_expectInvalidInputException() {
         String[] input = {"free!", "2"};
-        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.validateDeleteInput(input));
+        assertThrows(CustomExceptions.InvalidInput.class, () -> Validation.validateDeleteInput(input));
     }
 
     /**
@@ -202,7 +202,7 @@ class ParserTest {
     @Test
     void validateDeleteInput_invalidIndex_expectInvalidInputException() {
         String[] input = {"item", "-a"};
-        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.validateDeleteInput(input));
+        assertThrows(CustomExceptions.InvalidInput.class, () -> Validation.validateDeleteInput(input));
     }
 
     /**
@@ -212,7 +212,7 @@ class ParserTest {
     @Test
     void validateDeleteInput_emptyString_expectInsufficientInputException() {
         String[] input = {"item", ""};
-        assertThrows(CustomExceptions.InsufficientInput.class, () -> Parser.validateDeleteInput(input));
+        assertThrows(CustomExceptions.InsufficientInput.class, () -> Validation.validateDeleteInput(input));
     }
 
     //@@author j013n3
@@ -248,7 +248,7 @@ class ParserTest {
     @Test
     void validateBmi_correctParameters_noExceptionThrown() {
         String[] input = {"1.71", "70.00", "22-02-2024"};
-        assertDoesNotThrow(() -> Parser.validateBmiInput(input));
+        assertDoesNotThrow(() -> Validation.validateBmiInput(input));
     }
 
     /**
@@ -258,7 +258,7 @@ class ParserTest {
     @Test
     void validateBmi_oneDecimalPointWeight_throwsInvalidInputException() {
         String[] input = {"1.71", "70.0", "29-04-2024"};
-        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.validateBmiInput(input));
+        assertThrows(CustomExceptions.InvalidInput.class, () -> Validation.validateBmiInput(input));
     }
 
     /**
@@ -268,7 +268,7 @@ class ParserTest {
     @Test
     void validateBmi_oneDecimalPointHeight_throwsInvalidInputException() {
         String[] input = {"1.7", "70.03", "29-04-2024"};
-        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.validateBmiInput(input));
+        assertThrows(CustomExceptions.InvalidInput.class, () -> Validation.validateBmiInput(input));
     }
 
     /**
@@ -278,7 +278,7 @@ class ParserTest {
     @Test
     void validateBmi_dateAfterToday_throwsInvalidInputException() {
         String[] input = {"1.70", "70.03", "28-03-2025"};
-        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.validateBmiInput(input));
+        assertThrows(CustomExceptions.InvalidInput.class, () -> Validation.validateBmiInput(input));
     }
 
     /**
@@ -311,7 +311,7 @@ class ParserTest {
     @Test
     void validatePeriod_correctParameters_noExceptionThrown()  {
         String [] input = {"23-03-2024", "30-03-2024"};
-        assertDoesNotThrow(() -> Parser.validatePeriodInput(input));
+        assertDoesNotThrow(() -> Validation.validatePeriodInput(input));
     }
 
     /**
@@ -321,7 +321,7 @@ class ParserTest {
     @Test
     void validatePeriod_emptyParameter_throwsInsufficientInputException() {
         String [] input = {"", "29-03-2024"};
-        assertThrows(CustomExceptions.InsufficientInput.class, () -> Parser.validatePeriodInput(input));
+        assertThrows(CustomExceptions.InsufficientInput.class, () -> Validation.validatePeriodInput(input));
     }
 
     /**
@@ -331,7 +331,7 @@ class ParserTest {
     @Test
     void validatePeriod_invalidStartDate_throwsInvalidInputException() {
         String [] input = {"32-04-2024", "29-04-2024"};
-        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.validatePeriodInput(input));
+        assertThrows(CustomExceptions.InvalidInput.class, () -> Validation.validatePeriodInput(input));
     }
 
     /**
@@ -341,7 +341,7 @@ class ParserTest {
     @Test
     void validatePeriod_invalidEndDate_throwsInvalidInputException() {
         String [] input = {"28-04-2024", "29-13-2024"};
-        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.validatePeriodInput(input));
+        assertThrows(CustomExceptions.InvalidInput.class, () -> Validation.validatePeriodInput(input));
     }
 
     /**
@@ -351,7 +351,7 @@ class ParserTest {
     @Test
     void validatePeriod_dateAfterToday_throwsInvalidInputException() {
         String [] input = {"28-04-2025", "29-13-2025"};
-        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.validatePeriodInput(input));
+        assertThrows(CustomExceptions.InvalidInput.class, () -> Validation.validatePeriodInput(input));
     }
 
     /**
@@ -361,7 +361,7 @@ class ParserTest {
     @Test
     void validatePeriod_endDateBeforeStartDate_throwsInvalidInputException() {
         String [] input = {"28-03-2024", "22-03-2024"};
-        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.validatePeriodInput(input));
+        assertThrows(CustomExceptions.InvalidInput.class, () -> Validation.validatePeriodInput(input));
     }
 
     /**
@@ -393,7 +393,7 @@ class ParserTest {
     @Test
     void validateAppointment_correctParameters_noExceptionThrown() {
         String[] input = {"29-04-2024", "19:30", "test description"};
-        assertDoesNotThrow(() -> Parser.validateAppointmentDetails(input));
+        assertDoesNotThrow(() -> Validation.validateAppointmentDetails(input));
     }
 
     /**
@@ -403,7 +403,7 @@ class ParserTest {
     @Test
     void validateAppointment_emptyParameters_throwsInsufficientInputException() {
         String[] input = {"29-04-2024", "19:30", ""};
-        assertThrows(CustomExceptions.InsufficientInput.class, () -> Parser.validateAppointmentDetails(input));
+        assertThrows(CustomExceptions.InsufficientInput.class, () -> Validation.validateAppointmentDetails(input));
     }
 
     /**
@@ -413,7 +413,7 @@ class ParserTest {
     @Test
     void validateAppointment_incorrectDateFormat_throwsInvalidInputException() {
         String[] input = {"32-04-2024", "19:30", "test description"};
-        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.validateAppointmentDetails(input));
+        assertThrows(CustomExceptions.InvalidInput.class, () -> Validation.validateAppointmentDetails(input));
     }
 
     /**
@@ -423,7 +423,7 @@ class ParserTest {
     @Test
     void validateAppointment_incorrectTimeFormat_throwsInvalidInputException() {
         String[] input = {"28-04-2024", "25:30", "test description"};
-        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.validateAppointmentDetails(input));
+        assertThrows(CustomExceptions.InvalidInput.class, () -> Validation.validateAppointmentDetails(input));
     }
 
     /**
@@ -435,7 +435,7 @@ class ParserTest {
         String[] input = {"28-04-2024", "22:30",
                           "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
                           "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"};
-        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.validateAppointmentDetails(input));
+        assertThrows(CustomExceptions.InvalidInput.class, () -> Validation.validateAppointmentDetails(input));
     }
 
     /**
@@ -445,7 +445,7 @@ class ParserTest {
     @Test
     void validateTimeInput_correctInput_noExceptionThrown() {
         String input = "23:50";
-        assertDoesNotThrow(() -> Parser.validateTimeInput(input));
+        assertDoesNotThrow(() -> Validation.validateTimeInput(input));
     }
 
     /**
@@ -455,7 +455,7 @@ class ParserTest {
     @Test
     void validateTimeInput_invalidDelimiter_throwsInvalidInputException() {
         String input = "23-50";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.validateTimeInput(input));
+        assertThrows(CustomExceptions.InvalidInput.class, () -> Validation.validateTimeInput(input));
     }
 
     /**
@@ -465,7 +465,7 @@ class ParserTest {
     @Test
     void validateTimeInput_invalidHours_throwsInvalidInputException() {
         String input = "24:50";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.validateTimeInput(input));
+        assertThrows(CustomExceptions.InvalidInput.class, () -> Validation.validateTimeInput(input));
     }
 
     /**
@@ -475,7 +475,7 @@ class ParserTest {
     @Test
     void validateTimeInput_invalidMinutes_throwsInvalidInputException() {
         String input = "21:60";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.validateTimeInput(input));
+        assertThrows(CustomExceptions.InvalidInput.class, () -> Validation.validateTimeInput(input));
     }
 
     /**
@@ -485,7 +485,7 @@ class ParserTest {
     @Test
     void validateTimeInput_invalidTimeWithLetters_throwsInvalidInputException() {
         String input = "12:2a";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.validateTimeInput(input));
+        assertThrows(CustomExceptions.InvalidInput.class, () -> Validation.validateTimeInput(input));
     }
 
 
@@ -496,7 +496,7 @@ class ParserTest {
     @Test
     void validateTimeInput_invalidTimeFormat_throwsInvalidInputException() {
         String input = "21:55:44";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> Parser.validateTimeInput(input));
+        assertThrows(CustomExceptions.InvalidInput.class, () -> Validation.validateTimeInput(input));
     }
 
     /**

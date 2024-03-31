@@ -18,6 +18,7 @@ public class WorkoutConstant {
     public static final int DISTANCE_INDEX = 1;
     public static final int TIME_INDEX = 2;
     public static final int DATE_INDEX = 3;
+    public static final int NO_HOURS_PRESENT = -1;
 
     // KEYWORDS
     public static final String RUN = "run";
