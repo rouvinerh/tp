@@ -1,4 +1,4 @@
-package utility;
+package constants;
 
 public class WorkoutConstant {
 
@@ -18,12 +18,23 @@ public class WorkoutConstant {
     public static final int DISTANCE_INDEX = 1;
     public static final int TIME_INDEX = 2;
     public static final int DATE_INDEX = 3;
+    public static final int NO_HOURS_PRESENT = -1;
 
     // KEYWORDS
     public static final String RUN = "run";
     public static final String GYM = "gym";
     public static final String ALL = "workouts";
 
+    // GYM FILE LOADING CONSTANTS
+    public static final int GYM_FILE_INDEX = 0;
+    public static final int NUM_OF_STATIONS_FILE_INDEX = 1;
+    public static final int DATE_FILE_INDEX = 2;
+
+    public static final int GYM_FILE_BASE_COUNTER = 3;
+    public static final int SETS_OFFSET = 1;
+    public static final int REPS_OFFSET = 2;
+    public static final int WEIGHTS_OFFSET = 3;
+    public static final int INCREMENT_OFFSET = 4;
 
     // HISTORY (ALL WORKOUTS) CONSTANTS
     public static final String HISTORY_WORKOUTS_HEADER = "Showing all workouts (runs and gyms):";

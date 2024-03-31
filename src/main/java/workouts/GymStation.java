@@ -1,10 +1,9 @@
 package workouts;
 
-import utility.Parser;
 import utility.CustomExceptions;
-import utility.ErrorConstant;
-import utility.UiConstant;
-import utility.WorkoutConstant;
+import constants.ErrorConstant;
+import constants.UiConstant;
+import constants.WorkoutConstant;
 
 
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ public class GymStation {
      * @param repetition   Number of reps done.
      * @param numberOfSets Number of sets done.
      */
-    public GymStation(String name, ArrayList<Integer> weightsList, int repetition, int numberOfSets) {
+    protected GymStation(String name, ArrayList<Integer> weightsList, int repetition, int numberOfSets) {
         this.stationName = name;
         this.numberOfSets = numberOfSets;
         processSets(weightsList, repetition);
@@ -86,29 +85,18 @@ public class GymStation {
     /**
      * Checks parameters from user input for adding a new GymStation.
      *
-     * @param inputs List of strings representing user input.
+     * @param splitInput List of strings representing user input.
      * @throws CustomExceptions.InsufficientInput If there is not enough parameters specified.
      * @throws CustomExceptions.InvalidInput      If there is invalid input.
      */
-    public static void addGymStationInputValid(Gym gym, String inputs) throws
+    public static void addGymStation(Gym gym, String[] splitInput) throws
             CustomExceptions.InsufficientInput,
             CustomExceptions.InvalidInput {
 
-        String exerciseName = inputs.split(UiConstant.SPLIT_BY_SLASH)[WorkoutConstant.STATION_NAME_INDEX].trim();
-        String sets = Parser.extractSubstringFromSpecificIndex(inputs, WorkoutConstant.SPLIT_BY_SETS);
-        String reps = Parser.extractSubstringFromSpecificIndex(inputs, WorkoutConstant.SPLIT_BY_REPS);
-        String weights = Parser.extractSubstringFromSpecificIndex(inputs, WorkoutConstant.SPLIT_BY_WEIGHTS);
-
-        String validExerciseName = checkIfExerciseNameIsValid(exerciseName);
-        int setsInteger = checkIfSetsAreValid(sets);
-        int repsInteger = checkIfRepsAreValid(reps);
-        ArrayList<Integer> weightsArray = checkIfWeightsAreValid(weights, Integer.parseInt(sets));
-
-
-        assert Integer.parseInt(sets) > 0 : ErrorConstant.NEGATIVE_VALUE_ERROR;
-        assert Integer.parseInt(reps) > 0 : ErrorConstant.NEGATIVE_VALUE_ERROR;
-
-        gym.addStation(exerciseName, weightsArray, setsInteger, repsInteger);
+        ArrayList<Integer> weightsArray = getValidatedWeightsArray(splitInput[1]);
+        int setsInteger = Integer.parseInt(splitInput[2]);
+        int repsInteger = Integer.parseInt(splitInput[3]);
+        gym.addStation(splitInput[0], weightsArray, setsInteger, repsInteger);
     }
 
     /**
@@ -130,67 +118,9 @@ public class GymStation {
         return returnString.toString();
     }
 
-    private static String checkIfExerciseNameIsValid(String exerciseName) throws CustomExceptions.InsufficientInput {
-        if (exerciseName.isBlank()) {
-            throw new CustomExceptions.InsufficientInput(ErrorConstant.GYM_EXERCISE_NAME_BLANK_ERROR);
-        }
-        return exerciseName;
-    }
-
-    private static int checkIfSetsAreValid(String sets) throws CustomExceptions.InsufficientInput,
-            CustomExceptions.InvalidInput {
-        if (sets.isBlank()) {
-            throw new CustomExceptions.InsufficientInput(ErrorConstant.GYM_SET_BLANK_ERROR);
-        }
-        int setInteger = 0;
-        try {
-            setInteger = Integer.parseInt(sets);
-            if (setInteger <= 0) {
-                throw new CustomExceptions.InvalidInput(ErrorConstant.GYM_SET_DIGIT_ERROR);
-            }
-        } catch (NumberFormatException e) {
-            throw new RuntimeException(e);
-        }
-        return setInteger;
-    }
-
-    private static int checkIfRepsAreValid(String reps) throws CustomExceptions.InsufficientInput,
-            CustomExceptions.InvalidInput {
-        if (reps.isBlank()) {
-            throw new CustomExceptions.InsufficientInput(ErrorConstant.GYM_REP_BLANK_ERROR);
-        }
-
-        int repInteger = 0;
-        try {
-            repInteger = Integer.parseInt(reps);
-            if (repInteger <= 0) {
-                throw new CustomExceptions.InvalidInput(ErrorConstant.GYM_REP_POSITIVE_ERROR);
-            }
-        } catch (NumberFormatException e) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.GYM_REP_DIGIT_ERROR);
-        }
-
-        return repInteger;
-    }
-
-    private static ArrayList<Integer> checkIfWeightsAreValid(String weights, int sets)
-            throws CustomExceptions.InsufficientInput,
-            CustomExceptions.InvalidInput {
-        if(weights.isBlank()){
-            throw new CustomExceptions.InsufficientInput(ErrorConstant.GYM_WEIGHT_BLANK_ERROR);
-        }
-        String [] weightsArray = weights.split(UiConstant.SPLIT_BY_COMMAS);
-
-        // if they give me too many values
-        if(weightsArray.length != sets){
-            throw new CustomExceptions.InvalidInput(ErrorConstant.GYM_WEIGHTS_INCORRECT_NUMBER_ERROR);
-        }
-
-        return getValidatedWeightsArray(weightsArray);
-    }
-
-    private static ArrayList<Integer> getValidatedWeightsArray(String[] weightsArray)
+    private static ArrayList<Integer> getValidatedWeightsArray(String weightsString)
             throws CustomExceptions.InvalidInput {
+        String[] weightsArray = weightsString.split(UiConstant.SPLIT_BY_COMMAS);
         ArrayList<Integer> validatedWeightsArray = new ArrayList<>();
 
         try{

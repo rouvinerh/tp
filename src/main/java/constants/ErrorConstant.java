@@ -1,4 +1,4 @@
-package utility;
+package constants;
 
 public class ErrorConstant {
 
@@ -13,6 +13,13 @@ public class ErrorConstant {
     public static final String CREATE_FILE_ERROR = "Unable to create file.";
     public static final String CORRUPT_ERROR = "File is corrupted. Ceasing any further data imports.";
 
+    // Storage Error for Gym
+    public static final String LOAD_GYM_FORMAT_ERROR = LOAD_ERROR + "Format of gym entry is incorrect/corrupted";
+    public static final String LOAD_GYM_TYPE_ERROR = LOAD_ERROR + "Format of gym type is incorrect/corrupted";
+    public static final String LOAD_NUMBER_OF_STATION_ERROR = LOAD_ERROR + "Number of stations is corrupted";
+    public static final String LOAD_NUMBER_OF_SETS_ERROR = LOAD_ERROR
+            + "Number of weights doesn't match number of sets";
+    public static final String LOAD_WEIGHTS_ERROR = LOAD_ERROR + "Weights are corrupted";
 
     // Input Errors
     public static final String INVALID_COMMAND_ERROR = "Invalid command. Enter 'help' to view available commands.";
@@ -20,7 +27,7 @@ public class ErrorConstant {
     public static final String INVALID_PARAMETER_ERROR = "Parameter(s) invalid or out of bounds";
     public static final String NO_DATE_SPECIFIED_ERROR = "NA";
     public static final String INVALID_ITEM_ERROR = "Invalid item specified.";
-    public static final String CORRECT_FILTER_ITEM_FORMAT = "/item:run/gym/workouts/bmi/period";
+    public static final String CORRECT_FILTER_ITEM_FORMAT = "/item:run/gym/workouts/bmi/period/appointment";
 
     // Date errors
     public static final String INVALID_DATE_ERROR = "Invalid date format. Format is DD-MM-YYYY in integers.";
@@ -66,7 +73,31 @@ public class ErrorConstant {
     public static final String RUN_TIME_SECONDS_RANGE_ERROR = "Seconds must be between 00 and 59! e.g. /t:00:40:10";
     public static final String RUN_DISTANCE_EMPTY_ERROR = "Distance cannot be blank! e.g. /d:10.32";
 
+    public static final String INSUFFICIENT_RUN_PARAMETERS_ERROR = "Insufficient parameters for run! "
+            + System.lineSeparator()
+            + "Example input: /e:run /d:5.25 /t:25:23 [/date:DATE]";
+    public static final String INVALID_RUN_DISTANCE_ERROR = "Distance is a 2 decimal point positive number!";
+    public static final String INVALID_RUN_TIME_ERROR = "Invalid time foramt. Format is either HH:MM:SS or" +
+            "MM:SS with integers.";
+    public static final String INVALID_MINUTE_ERROR = "Minutes must be a positive integer between 01 and 59";
+    public static final String INVALID_SECOND_ERROR = "Seconds must be a positive integer between 01 and 59";
+    public static final String INVALID_HOUR_ERROR = "Hours cannot be 0. Use MM:SS instead";
+
+
     // GYM ERRORS
+    public static final String INSUFFICIENT_GYM_PARAMETERS_ERROR = "Insufficient parameters for gym!"
+            + System.lineSeparator()
+            + "Example input: /e:gym /n:2 [/date:DATE]";
+    public static final String INVALID_NUMBER_OF_STATIONS_ERROR = "Number of stations is a positive number!";
+    public static final String EMPTY_EXERCISE_NAME_ERROR = "Exercise name cannot be blank!";
+
+    public static final String INVALID_EXERCISE_NAME_ERROR = "Exercise name can only have letters!";
+    public static final String EXERCISE_NAME_LENGTH_ERROR = "Exercise name cannot be more than 40 characters!";
+    public static final String INVALID_SETS_ERROR = "Number of sets must be a positive integer!";
+    public static final String INVALID_REPS_ERROR = "Number of reps must be a positive integer!";
+    public static final String INVALID_WEIGHTS_ERROR = "The weight done for each set is seperated by commas! " +
+            "Example: 10,20,30";
+    public static final String EMPTY_WEIGHTS_ARRAY_ERROR = "Weights array cannot be empty";
     public static final String NO_OF_STATION_BLANK_ERROR = "Number of stations cannot be blank! e.g. /n:3";
     public static final String NO_OF_STATION_POSITIVE_ERROR = "Number of stations must be positive! e.g. /n:4";
     public static final String NO_OF_STATION_DIGIT_ERROR = "Number of stations must be a number! e.g. /n:5";
@@ -94,8 +125,6 @@ public class ErrorConstant {
             + " e.g. " + WorkoutConstant.STATION_GYM_FORMAT;
 
     // HEALTH ERRORS
-    public static final String HEALTH_INPUT_BLANK_ERROR = "Type of health cannot be empty. " +
-            "Please input either /h:bmi, /h:period, /h:prediction or /h:appointment";
     public static final String INVALID_HEALTH_INPUT_ERROR = "Invalid input for health type! " +
             "Please input either /h:bmi, /h:period, /h:prediction or /h:appointment";
 
@@ -135,7 +164,9 @@ public class ErrorConstant {
             "End index must be greater than start index is negative";
     public static final String NULL_DATE_ERROR = "Date of appointment cannot be empty.";
     public static final String NULL_TIME_ERROR = "Time of appointment cannot be empty.";
-    public static final String DESCRIPTION_LENGTH_ERROR ="Description cannot be more than 100 characters";
+    public static final String DESCRIPTION_LENGTH_ERROR = "Description cannot be more than 100 characters";
+    public static final String INVALID_DESCRIPTION_ERROR = "Appointment description can only " +
+            "contain alphanumeric characters and spaces!";
 
     // HISTORY AND LATEST ERRORS
     public static final String INVALID_HISTORY_FORMAT_ERROR = "Invalid command format. " +

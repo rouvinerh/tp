@@ -1,10 +1,10 @@
 package workouts;
 
 import utility.CustomExceptions;
-import utility.ErrorConstant;
+import constants.ErrorConstant;
 import utility.Parser;
-import utility.UiConstant;
-import utility.WorkoutConstant;
+import constants.UiConstant;
+import constants.WorkoutConstant;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -69,33 +69,6 @@ public class Gym extends Workout {
     }
 
 
-    /**
-     * Method checks if Gym values is valid
-     * Returns {@code true} if {@code numberOfStation} parameters is valid.
-     * Valid only if {@code numberOfStation} is a positive integer / not blank / and is digit.
-     * Otherwise, throw {@code CustomExceptions.InvalidInput}  or {@code CustomExceptions.InsufficientInput}
-     *
-     * @param numberOfStation String representing the number of Station
-     * @return {@code true} if all parameters are valid.
-     */
-
-    public static boolean checkIfGymIsValid(String numberOfStation) throws CustomExceptions.InvalidInput {
-        if (numberOfStation.isBlank()) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.NO_OF_STATION_BLANK_ERROR);
-        }
-
-        try {
-            int value = Integer.parseInt(numberOfStation);
-            if (value <= 0) {
-                throw new CustomExceptions.InvalidInput(ErrorConstant.NO_OF_STATION_POSITIVE_ERROR);
-            }
-        } catch (NumberFormatException e) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.NO_OF_STATION_DIGIT_ERROR);
-        }
-
-        return true;
-    }
-
     @Override
     public LocalDate getDate() {
         return date;
@@ -152,6 +125,59 @@ public class Gym extends Workout {
         return repAndWeightArray;
     }
 
+
+    /**
+     * Converts the Gym Object into the String format for writing into a file.
+     * The format that this output is
+     *  gym:NUM_STATIONS:DATE:STATION1_NAME:NUM_SETS:REPS:WEIGHT1,WEIGHT2,WEIGHT3,WEIGHT4
+     *  :STATION2_NAME:NUM_SETS:REPS:WEIGHT1,WEIGHT2,WEIGHT3,WEIGHT4 ....
+     *
+     *  Example: "gym:2:1997-11-11:bench press:4:4,4,4,4:10,20,30,40:squats:4:3,3,3,3:20,30,40,50"
+     *  Can refer to GymTest {@Code toFileString_correctInput_expectedCorrectString()} for more examples
+     *
+     * @return A formatted string in the format specified above.
+     */
+    public String toFileString(){
+
+        StringBuilder fileString = new StringBuilder();
+
+        ArrayList<GymStation> stations = this.getStations();
+        String type = WorkoutConstant.GYM;
+        String numOfStation = String.valueOf(stations.size());
+        String date = "";
+        if(this.getDate() == null){
+            date = ErrorConstant.NO_DATE_SPECIFIED_ERROR;
+        } else {
+            date = this.getDate().toString();
+        }
+
+        fileString.append(type);
+        fileString.append(UiConstant.SPLIT_BY_COLON);
+        fileString.append(numOfStation);
+        fileString.append(UiConstant.SPLIT_BY_COLON);
+        fileString.append(date);
+        fileString.append(UiConstant.SPLIT_BY_COLON);
+
+        for (GymStation station : stations) {
+            String stationName = station.getStationName();
+            String numOfSets = String.valueOf(station.getNumberOfSets());
+            StringBuilder[] repsAndWeightArray = this.buildGymRepAndWeightString(station);
+            String gymRepString = String.valueOf(station.getSpecificSet(0).getRepetitions());
+            String gymWeightString = repsAndWeightArray[1].toString();
+            fileString.append(stationName);
+            fileString.append(UiConstant.SPLIT_BY_COLON);
+            fileString.append(numOfSets);
+            fileString.append(UiConstant.SPLIT_BY_COLON);
+            fileString.append(gymRepString);
+            fileString.append(UiConstant.SPLIT_BY_COLON);
+            fileString.append(gymWeightString);
+            if (stations.indexOf(station) != stations.size() - 1) {
+                fileString.append(UiConstant.SPLIT_BY_COLON);
+            }
+        }
+
+        return fileString.toString();
+    }
 
     /**
      * Used when printing all the workouts. This method takes in two parameters {@code isFirstIteration} and {@code i}

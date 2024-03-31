@@ -1,6 +1,6 @@
 package workouts;
 
-import utility.WorkoutConstant;
+import constants.WorkoutConstant;
 
 /**
  * Represents a GymSet object.

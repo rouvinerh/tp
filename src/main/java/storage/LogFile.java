@@ -5,7 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
-import utility.UiConstant;
+import constants.UiConstant;
 
 /**
  * Represents a Logfile object used to write information and error logs for PulsePilot.

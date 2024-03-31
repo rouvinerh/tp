@@ -1,7 +1,7 @@
 package health;
 
-import utility.ErrorConstant;
-import utility.HealthConstant;
+import constants.ErrorConstant;
+import constants.HealthConstant;
 import utility.Parser;
 
 import java.time.LocalDate;

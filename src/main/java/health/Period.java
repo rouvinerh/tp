@@ -1,12 +1,13 @@
 package health;
 
-import utility.ErrorConstant;
-import utility.HealthConstant;
+import constants.ErrorConstant;
+import constants.HealthConstant;
 import utility.Parser;
-import utility.UiConstant;
+import constants.UiConstant;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Objects;
 
 /**
  * Represents a Period object to track user's menstrual cycle.
@@ -66,6 +67,15 @@ public class Period extends Health {
     }
 
     /**
+     * Retrieves the length of the period.
+     *
+     * @return The period length.
+     */
+    public long getPeriodLength() {
+        return periodLength;
+    }
+
+    /**
      * Calculates the length of the period in days.
      *
      * @return The length of the period.
@@ -103,7 +113,7 @@ public class Period extends Health {
         assert endIndexForPrediction >= startIndexForPrediction : ErrorConstant.END_INDEX_GREATER_THAN_START_ERROR;
 
         for (int i = startIndexForPrediction; i <= endIndexForPrediction; i++) {
-            sumOfCycleLengths += HealthList.getPeriod(i).cycleLength;
+            sumOfCycleLengths += Objects.requireNonNull(HealthList.getPeriod(i)).cycleLength;
         }
 
         return sumOfCycleLengths;

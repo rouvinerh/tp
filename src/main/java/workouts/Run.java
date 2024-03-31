@@ -4,10 +4,9 @@ import java.time.LocalDate;
 
 import utility.CustomExceptions;
 import utility.Parser;
-import utility.ErrorConstant;
-import utility.UiConstant;
-import utility.WorkoutConstant;
-
+import constants.ErrorConstant;
+import constants.UiConstant;
+import constants.WorkoutConstant;
 
 /**
  * Represents a Run object.
@@ -27,7 +26,7 @@ public class Run extends Workout {
      * @throws CustomExceptions.InvalidInput If there is invalid input.
      */
     public Run(String stringTime, String stringDistance) throws CustomExceptions.InvalidInput {
-        times = parseTime(stringTime);
+        times = splitRunTime(stringTime);
         distance = Double.parseDouble(stringDistance);
         pace = calculatePace();
         WorkoutList.addRun(this);
@@ -42,7 +41,7 @@ public class Run extends Workout {
      * @throws CustomExceptions.InvalidInput If there is invalid input.
      */
     public Run(String stringTime, String stringDistance, String stringDate) throws CustomExceptions.InvalidInput {
-        times = parseTime(stringTime);
+        times = splitRunTime(stringTime);
         distance = Double.parseDouble(stringDistance);
         date = Parser.parseDate(stringDate);
         pace = calculatePace();
@@ -81,21 +80,6 @@ public class Run extends Workout {
         assert !results[WorkoutConstant.TIME_INDEX].isEmpty() : "Time should not be empty";
 
         return results;
-    }
-
-    public static Run addRun(String[] runDetails) throws CustomExceptions.InvalidInput {
-        Run newRun;
-        if (runDetails[WorkoutConstant.DATE_INDEX].isEmpty()) {
-            newRun = new Run(
-                    runDetails[WorkoutConstant.TIME_INDEX],
-                    runDetails[WorkoutConstant.DISTANCE_INDEX]);
-        } else {
-            newRun = new Run(
-                    runDetails[WorkoutConstant.TIME_INDEX],
-                    runDetails[WorkoutConstant.DISTANCE_INDEX],
-                    runDetails[WorkoutConstant.DATE_INDEX]);
-        }
-        return newRun;
     }
 
     /**
@@ -146,7 +130,7 @@ public class Run extends Workout {
      * @param inputTime String variable representing time taken in either hh:mm:ss or mm:ss format
      * @return A list of integers representing the hours (if present), minutes and seconds.
      */
-    public Integer[] parseTime(String inputTime) throws CustomExceptions.InvalidInput {
+    public Integer[] splitRunTime(String inputTime) throws CustomExceptions.InvalidInput {
 
         String[] stringTimeParts = inputTime.split(":");
         int inputLength = stringTimeParts.length;
@@ -166,96 +150,6 @@ public class Run extends Workout {
         }
         return integerTimes;
     }
-
-    /**
-     * Method checks if Run values is valid
-     * Returns {@code true} if {@code runDistance} and {@code runTime} parameters are valid.
-     * Valid only if {@code runDistance} is a positive double / not blank / and is digit.
-     * {@code runTime} is not blank.
-     * {@code runDate} is not blank.
-     * Otherwise, throw {@code CustomExceptions.InvalidInput}  or {@code CustomExceptions.InsufficientInput}
-     *
-     * @param runDistance String representing the distance of the run
-     * @param runTime     String representing the time taken for the run
-     * @param runDate     String representing the date of the run
-     * @return {@code true} if all parameters are valid.
-     */
-    public static boolean checkIfRunIsValid(String runDistance, String runTime, String runDate)
-            throws CustomExceptions.InvalidInput, CustomExceptions.InsufficientInput {
-
-        // Check to make sure there is sufficient input
-        if (runDistance.isBlank()) {
-            throw new CustomExceptions.InsufficientInput(ErrorConstant.RUN_DISTANCE_EMPTY_ERROR);
-        }
-
-        if (runTime.isBlank()) {
-            throw new CustomExceptions.InsufficientInput(ErrorConstant.RUN_TIME_EMPTY_ERROR);
-        }
-
-        // Check to see if distance is a double
-        try {
-            double value = Double.parseDouble(runDistance);
-            if (value <= 0) {
-                throw new CustomExceptions.InvalidInput(ErrorConstant.RUN_DISTANCE_POSITIVE_ERROR);
-            }
-        } catch (NumberFormatException e) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.RUN_DISTANCE_DOUBLE_ERROR);
-        }
-
-        // Check to see if time is valid
-        checkIfTimeIsValid(runTime);
-
-        // Check to see if date is valid
-        if (!runDate.isBlank()) {
-            Parser.validateDateInput(runDate);
-        }
-        return true;
-    }
-
-    public static void checkIfTimeIsValid(String inputTime) throws CustomExceptions.InsufficientInput,
-            CustomExceptions.InvalidInput {
-        String[] stringTimeParts = inputTime.split(UiConstant.SPLIT_BY_COLON);
-        int inputLength = stringTimeParts.length;
-        int hours = 0;
-        int minute;
-        int seconds;
-
-        // if it is neither in MM:SS nor HH:MM:SS format
-        if (inputLength != UiConstant.MAX_RUNTIME_ARRAY_LENGTH && inputLength != UiConstant.MIN_RUNTIME_ARRAY_LENGTH) {
-            throw new CustomExceptions.InsufficientInput(ErrorConstant.RUN_TIME_INVALID_FORMAT_ERROR);
-        }
-
-        // Check if the value provided is an integer
-        try {
-            if (inputLength == UiConstant.MAX_RUNTIME_ARRAY_LENGTH) {
-                hours = Integer.parseInt(stringTimeParts[0]);
-                minute = Integer.parseInt(stringTimeParts[1]);
-                seconds = Integer.parseInt(stringTimeParts[2]);
-            } else {
-                minute = Integer.parseInt(stringTimeParts[0]);
-                seconds = Integer.parseInt(stringTimeParts[1]);
-            }
-        } catch (NumberFormatException e) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.RUN_TIME_INTEGER_ERROR);
-        }
-
-        // Check if hour is within the range
-        if (hours < 0 || hours > 23) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.RUN_TIME_HOURS_RANGE_ERROR);
-        }
-
-        // Check if minute is within the range
-        if (minute < 0 || minute > 59) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.RUN_TIME_MINUTES_RANGE_ERROR);
-        }
-
-        // Check if seconds is within the range
-        if (seconds < 0 || seconds > 59) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.RUN_TIME_SECONDS_RANGE_ERROR);
-        }
-
-    }
-
 
     /**
      * Method checks if hour has been specified, then returns total seconds.
