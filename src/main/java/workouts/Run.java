@@ -208,7 +208,7 @@ public class Run extends Workout {
 
         // Check to see if date is valid
         if (!runDate.isBlank()) {
-            Validation.validateDate(runDate);
+            Validation.validateDateInput(runDate);
         }
         return true;
     }

@@ -17,7 +17,7 @@ public class Validation {
      * @param date The string date from user input.
      * @throws CustomExceptions.InvalidInput If there are invalid date inputs.
      */
-    public static void validateDate(String date) throws CustomExceptions.InvalidInput {
+    public static void validateDateInput(String date) throws CustomExceptions.InvalidInput {
         if (!date.matches(UiConstant.VALID_DATE_REGEX)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_DATE_ERROR);
         }
@@ -92,7 +92,7 @@ public class Validation {
                 !bmiDetails[1].matches(UiConstant.VALID_TWO_DP_NUMBER_REGEX)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.HEIGHT_WEIGHT_INPUT_ERROR);
         }
-        validateDate(bmiDetails[2]);
+        validateDateInput(bmiDetails[2]);
         LocalDate date = Parser.parseDate(bmiDetails[2]);
         if (date.isAfter(LocalDate.now())) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.DATE_IN_FUTURE_ERROR);
@@ -113,14 +113,14 @@ public class Validation {
         }
 
         try {
-            validateDate(periodDetails[0]);
+            validateDateInput(periodDetails[0]);
         } catch (CustomExceptions.InvalidInput e) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_START_DATE_ERROR
                     + System.lineSeparator()
                     + e.getMessage());
         }
         try {
-            validateDate(periodDetails[1]);
+            validateDateInput(periodDetails[1]);
         } catch (CustomExceptions.InvalidInput e) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_END_DATE_ERROR
                     + System.lineSeparator()
@@ -214,7 +214,7 @@ public class Validation {
             throw new CustomExceptions.InsufficientInput( ErrorConstant
                     .INSUFFICIENT_APPOINTMENT_PARAMETERS_ERROR);
         }
-        validateDate(appointmentDetails[0]);
+        validateDateInput(appointmentDetails[0]);
         validateTimeInput(appointmentDetails[1]);
 
         if (appointmentDetails[2].length() > HealthConstant.MAX_DESCRIPTION_LENGTH) {
