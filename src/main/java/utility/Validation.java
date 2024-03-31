@@ -272,7 +272,7 @@ public class Validation {
         }
         if (!appointmentDetails[2].matches(UiConstant.VALID_APPOINTMENT_DESCRIPTION_REGEX)) {
             throw new CustomExceptions.InvalidInput("Appointment description can only " +
-                    "contain alphanumeric characters, hyphens and spaces!");
+                    "contain alphanumeric characters and spaces!");
         }
     }
 
