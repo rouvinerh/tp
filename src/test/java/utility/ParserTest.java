@@ -1,11 +1,15 @@
 package utility;
 
 import org.junit.jupiter.api.Test;
+import workouts.Gym;
+
 import java.time.LocalDate;
 
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class ParserTest {
 
@@ -136,4 +140,44 @@ class ParserTest {
         String expected = "bmi";
         assertEquals(expected, result);
     }
+
+    @Test
+    void parseGymFileInput_correctInput_returnsGymObject() {
+        String input = "gym:2:11-11-1997:bench press:4:10:10,20,30,40:squats:2:5:20,30";
+        String input2 = "gym:2:NA:bench press:4:10:10,20,30,40:squats:2:5:20,30";
+
+        try{
+            Gym gymOutput = Parser.parseGymFileInput(input);
+            Gym gymOutput2 = Parser.parseGymFileInput(input2);
+            // make sure that there is two gym station created
+            assertEquals(2, gymOutput.getStations().size());
+            // make sure that the date is correct
+            assertEquals("1997-11-11", gymOutput.getDate().toString());
+            assertEquals(null, gymOutput2.getDate());
+            // make sure the gym exercise names are correct
+            assertEquals("bench press", gymOutput.getStationByIndex(0).getStationName());
+            assertEquals("squats", gymOutput.getStationByIndex(1).getStationName());
+            // make sure the number of sets are correct
+            assertEquals(4, gymOutput.getStationByIndex(0).getNumberOfSets());
+            assertEquals(2, gymOutput.getStationByIndex(1).getNumberOfSets());
+            // make sure the reps of each stations are correct
+            assertEquals(10, gymOutput.getStationByIndex(0).getSets().get(0).getRepetitions());
+            assertEquals(5, gymOutput.getStationByIndex(1).getSets().get(0).getRepetitions());
+            // make sure te weights of each stations are correct
+            assertEquals(10, gymOutput.getStationByIndex(0).getSets().get(0).getWeight());
+            assertEquals(20, gymOutput.getStationByIndex(0).getSets().get(1).getWeight());
+            assertEquals(30, gymOutput.getStationByIndex(0).getSets().get(2).getWeight());
+            assertEquals(40, gymOutput.getStationByIndex(0).getSets().get(3).getWeight());
+            assertEquals(20, gymOutput.getStationByIndex(1).getSets().get(0).getWeight());
+            assertEquals(30, gymOutput.getStationByIndex(1).getSets().get(1).getWeight());
+
+
+
+        } catch (Exception e) {
+            fail("Should not throw an exception");
+        }
+    }
+
+
+
 }

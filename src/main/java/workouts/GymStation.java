@@ -26,7 +26,7 @@ public class GymStation {
      * @param repetition   Number of reps done.
      * @param numberOfSets Number of sets done.
      */
-    public GymStation(String name, ArrayList<Integer> weightsList, int repetition, int numberOfSets) {
+    protected GymStation(String name, ArrayList<Integer> weightsList, int repetition, int numberOfSets) {
         this.stationName = name;
         this.numberOfSets = numberOfSets;
         processSets(weightsList, repetition);

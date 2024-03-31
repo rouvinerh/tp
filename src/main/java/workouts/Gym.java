@@ -156,10 +156,10 @@ public class Gym extends Workout {
     /**
      * Converts the Gym Object into the String format for writing into a file.
      * The format that this output is
-     *  gym|NUM_STATIONS|DATE|STATION1_NAME|NUM_SETS|REPS|WEIGHT1,WEIGHT2,WEIGHT3,WEIGHT4
-     *  |STATION2_NAME|NUM_SETS|REPS|WEIGHT1,WEIGHT2,WEIGHT3,WEIGHT4 ....
+     *  gym:NUM_STATIONS:DATE:STATION1_NAME:NUM_SETS:REPS:WEIGHT1,WEIGHT2,WEIGHT3,WEIGHT4
+     *  :STATION2_NAME:NUM_SETS:REPS:WEIGHT1,WEIGHT2,WEIGHT3,WEIGHT4 ....
      *
-     *  Example: "gym|2|1997-11-11|bench press|4|4,4,4,4|10,20,30,40|squats|4|3,3,3,3|20,30,40,50"
+     *  Example: "gym:2:1997-11-11:bench press:4:4,4,4,4:10,20,30,40:squats:4:3,3,3,3:20,30,40,50"
      *  Can refer to GymTest {@Code toFileString_correctInput_expectedCorrectString()} for more examples
      *
      * @return A formatted string in the format specified above.
@@ -179,27 +179,27 @@ public class Gym extends Workout {
         }
 
         fileString.append(type);
-        fileString.append(UiConstant.PIPE);
+        fileString.append(UiConstant.SPLIT_BY_COLON);
         fileString.append(numOfStation);
-        fileString.append(UiConstant.PIPE);
+        fileString.append(UiConstant.SPLIT_BY_COLON);
         fileString.append(date);
-        fileString.append(UiConstant.PIPE);
+        fileString.append(UiConstant.SPLIT_BY_COLON);
 
         for (GymStation station : stations) {
             String stationName = station.getStationName();
             String numOfSets = String.valueOf(station.getNumberOfSets());
             StringBuilder[] repsAndWeightArray = this.buildGymRepAndWeightString(station);
-            String gymRepString = repsAndWeightArray[0].toString();
+            String gymRepString = String.valueOf(station.getSpecificSet(0).getRepetitions());
             String gymWeightString = repsAndWeightArray[1].toString();
             fileString.append(stationName);
-            fileString.append(UiConstant.PIPE);
+            fileString.append(UiConstant.SPLIT_BY_COLON);
             fileString.append(numOfSets);
-            fileString.append(UiConstant.PIPE);
+            fileString.append(UiConstant.SPLIT_BY_COLON);
             fileString.append(gymRepString);
-            fileString.append(UiConstant.PIPE);
+            fileString.append(UiConstant.SPLIT_BY_COLON);
             fileString.append(gymWeightString);
             if (stations.indexOf(station) != stations.size() - 1) {
-                fileString.append(UiConstant.PIPE);
+                fileString.append(UiConstant.SPLIT_BY_COLON);
             }
         }
 
