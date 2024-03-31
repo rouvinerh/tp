@@ -1,10 +1,10 @@
 package ui;
 
 import utility.Filters;
-import utility.ErrorConstant;
-import utility.UiConstant;
-import utility.WorkoutConstant;
-import utility.HealthConstant;
+import constants.ErrorConstant;
+import constants.UiConstant;
+import constants.WorkoutConstant;
+import constants.HealthConstant;
 import utility.CustomExceptions;
 
 import workouts.Gym;

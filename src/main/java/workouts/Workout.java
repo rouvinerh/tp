@@ -3,7 +3,7 @@ import java.time.LocalDate;
 
 import utility.CustomExceptions;
 import utility.Parser;
-import utility.WorkoutConstant;
+import constants.WorkoutConstant;
 
 /**
  * Represents a Workout object for PulsePilot.

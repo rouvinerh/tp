@@ -1,4 +1,4 @@
-package utility;
+package constants;
 
 public class WorkoutConstant {
 

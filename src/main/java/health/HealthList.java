@@ -2,8 +2,8 @@ package health;
 
 import storage.LogFile;
 import utility.CustomExceptions;
-import utility.ErrorConstant;
-import utility.HealthConstant;
+import constants.ErrorConstant;
+import constants.HealthConstant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;

@@ -1,9 +1,9 @@
 package health;
 
 import utility.Parser;
-import utility.ErrorConstant;
-import utility.UiConstant;
-import utility.HealthConstant;
+import constants.ErrorConstant;
+import constants.UiConstant;
+import constants.HealthConstant;
 
 import java.time.LocalDate;
 

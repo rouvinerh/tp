@@ -2,9 +2,9 @@ package workouts;
 
 import utility.Parser;
 import utility.CustomExceptions;
-import utility.ErrorConstant;
-import utility.UiConstant;
-import utility.WorkoutConstant;
+import constants.ErrorConstant;
+import constants.UiConstant;
+import constants.WorkoutConstant;
 
 
 import java.util.ArrayList;

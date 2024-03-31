@@ -1,5 +1,9 @@
 package utility;
 
+import constants.ErrorConstant;
+import constants.HealthConstant;
+import constants.UiConstant;
+import constants.WorkoutConstant;
 import ui.Output;
 
 import health.Appointment;
@@ -139,9 +143,9 @@ public class Parser {
      * @throws CustomExceptions.InvalidInput If the filter string is none of them.
      */
     public static void validateFilter (String filter) throws CustomExceptions.InvalidInput {
-        if (filter.equals(WorkoutConstant.RUN) 
+        if (filter.equals(WorkoutConstant.RUN)
                 || filter.equals(WorkoutConstant.GYM) 
-                || filter.equals(HealthConstant.BMI) 
+                || filter.equals(HealthConstant.BMI)
                 || filter.equals(HealthConstant.PERIOD)
                 || filter.equals(HealthConstant.APPOINTMENT)
                 || filter.equals(WorkoutConstant.ALL)) {

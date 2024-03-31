@@ -13,12 +13,12 @@ import health.Appointment;
 import health.Bmi;
 import health.HealthList;
 import health.Period;
-import utility.ErrorConstant;
+import constants.ErrorConstant;
 import workouts.Gym;
 import workouts.Run;
 import workouts.WorkoutList;
 import utility.CustomExceptions;
-import utility.UiConstant;
+import constants.UiConstant;
 
 /**
  * Represents a DataFile object used to read and write data stored in PulsePilot to a file.

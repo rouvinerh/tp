@@ -1,9 +1,9 @@
 package health;
 
-import utility.ErrorConstant;
-import utility.HealthConstant;
+import constants.ErrorConstant;
+import constants.HealthConstant;
 import utility.Parser;
-import utility.UiConstant;
+import constants.UiConstant;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;

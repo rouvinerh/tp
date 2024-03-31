@@ -4,7 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import utility.CustomExceptions;
-import utility.WorkoutConstant;
+import constants.WorkoutConstant;
 
 import java.util.ArrayList;
 import java.util.Arrays;

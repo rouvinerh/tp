@@ -6,8 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import utility.CustomExceptions;
-import utility.ErrorConstant;
-import utility.WorkoutConstant;
+import constants.ErrorConstant;
+import constants.WorkoutConstant;
 import workouts.WorkoutList;
 
 import java.io.ByteArrayOutputStream;

@@ -2,7 +2,7 @@ package workouts;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import utility.UiConstant;
+import constants.UiConstant;
 import utility.CustomExceptions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
