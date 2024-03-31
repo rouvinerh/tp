@@ -7,8 +7,10 @@ import constants.ErrorConstant;
 import constants.UiConstant;
 import constants.HealthConstant;
 import constants.WorkoutConstant;
-import utility.Command;
-import utility.Filters;
+import utility.Filters.Command;
+import utility.Filters.DeleteFilters;
+import utility.Filters.HealthFilters;
+import utility.Filters.WorkoutFilters;
 import utility.Parser;
 import workouts.WorkoutList;
 import workouts.Gym;
@@ -137,7 +139,7 @@ public class Handler {
             return;
         }
         try {
-            Filters parsedFilter = Filters.valueOf(parsedInputs[0].toUpperCase());
+            DeleteFilters parsedFilter = DeleteFilters.valueOf(parsedInputs[0].toUpperCase());
             int index = Integer.parseInt(parsedInputs[1]) - 1;
             switch (parsedFilter) {
             case BMI:
@@ -173,7 +175,7 @@ public class Handler {
     public static void handleHealth(String userInput) {
         try {
             String typeOfHealth = Parser.extractSubstringFromSpecificIndex(userInput, HealthConstant.HEALTH_FLAG);
-            Filters parsedFilter = Filters.valueOf(typeOfHealth.toUpperCase());
+            HealthFilters parsedFilter = HealthFilters.valueOf(typeOfHealth.toUpperCase());
             switch(parsedFilter) {
             case BMI:
                 Parser.parseBmiInput(userInput);
