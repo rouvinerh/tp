@@ -7,6 +7,9 @@ import constants.WorkoutConstant;
 
 import java.time.LocalDate;
 
+/**
+ * Represents the validation class used to validate all inputs for PulsePilot.
+ */
 public class Validation {
     /**
      * Validates that the input date string is correctly formatted in DD-MM-YYYY.

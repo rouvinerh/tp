@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 /**
- * Represents the parser used for PulsePilot
+ * Represents the parser used to parse and split input for PulsePilot.
  */
 public class Parser {
 
