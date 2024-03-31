@@ -12,11 +12,9 @@ import utility.Filters;
 import utility.Parser;
 import workouts.WorkoutList;
 import workouts.Gym;
-import workouts.GymStation;
 import workouts.Run;
 import java.util.Scanner;
 import storage.LogFile;
-import workouts.Workout;
 
 /**
  * Represents user input parsing and handling
@@ -90,23 +88,23 @@ public class Handler {
      */
     public static void handleWorkout(String userInput) {
         try {
-            String typeOfExercise = checkTypeOfExercise(userInput);
+            String typeOfExercise = Parser.checkTypeOfExercise(userInput);
             if (typeOfExercise.equals(WorkoutConstant.RUN)) {
                 String[] runDetails = Run.getRun(userInput);
                 Run newRun = Run.addRun(runDetails);
                 Output.printAddRun(newRun);
 
             } else if (typeOfExercise.equals(WorkoutConstant.GYM)) {
-                int numberOfStations = getNumberOfGymStations(userInput);
+                int numberOfStations = Parser.getNumberOfGymStations(userInput);
 
-                String gymDate = getDateFromGym(userInput);
+                String gymDate = Parser.getDateFromGym(userInput);
                 Gym gym;
                 if (gymDate.isEmpty()) {
                     gym = new Gym();
                 } else {
                     gym = new Gym(gymDate);
                 }
-                getGymStation(numberOfStations, gym);
+                Parser.getGymStation(numberOfStations, gym);
             }
         } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
             Output.printException(e.getMessage());
@@ -199,64 +197,11 @@ public class Handler {
         } catch (CustomExceptions.InvalidInput |  CustomExceptions.InsufficientInput e) {
             Output.printException(e.getMessage());
         } catch (IllegalArgumentException e) {
-            Output.printException(ErrorConstant.HEALTH_INPUT_BLANK_ERROR);
+            Output.printException(ErrorConstant.INVALID_HEALTH_INPUT_ERROR);
         }
-    }
-
-    /**
-     * Retrieves the date from the input for a Gym output.
-     * Returns empty string if not specified.
-     *
-     * @param input The user input string.
-     * @return A string representing the date.
-     */
-    public static String getDateFromGym(String input) {
-        try {
-            return Parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.SPLIT_BY_DATE);
-        } catch (Exception e) {
-            return "";
-        }
-    }
-
-    /**
-     * Retrieves the number of gym stations in one Gym object from user input.
-     *
-     * @param input The user input string.
-     * @throws CustomExceptions.InsufficientInput If the user input is insufficient.
-     * @throws CustomExceptions.InvalidInput      If the user input is invalid or blank.
-     */
-    //@@author JustinSoh
-    public static int getNumberOfGymStations(String input) throws CustomExceptions.InsufficientInput,
-            CustomExceptions.InvalidInput {
-        String numberOfStationString = Parser.extractSubstringFromSpecificIndex(input,
-                WorkoutConstant.SPLIT_BY_NUMBER_OF_STATIONS);
-        assert Integer.parseInt(numberOfStationString) > 0 : ErrorConstant.NEGATIVE_VALUE_ERROR;
-        return Integer.parseInt(numberOfStationString);
     }
 
     //@@author JustinSoh
-
-    /**
-     * Retrieves the gym station details and adds a GymStation object to Gym.
-     *
-     * @param numberOfStations The number of stations in one gym session.
-     * @param gym              The Gym object.
-     */
-    private static void getGymStation(int numberOfStations, Gym gym) {
-        int i = 0;
-        while (i < numberOfStations) {
-            try {
-
-                Output.printGymStationPrompt(i + 1);
-                String userInput = in.nextLine();
-                GymStation.addGymStationInputValid(gym, userInput);
-                i++;
-            } catch (CustomExceptions.InsufficientInput | CustomExceptions.InvalidInput e) {
-                Output.printException(e.getMessage());
-            }
-        }
-        Output.printAddGym(gym);
-    }
 
     /**
      * Prints the latest run, gym, BMI entry or Period tracked.
@@ -271,53 +216,6 @@ public class Handler {
     }
 
     //@@author
-
-    /**
-     * Checks the type of exercise based on the user input.
-     * Usage: to use this method whenever the user enters a new exercise.
-     * Handles all the checks for input validity and sufficiency.
-     * Can assume input is valid and sufficient if no exceptions are thrown.
-     *
-     * @param userInput The user input string.
-     * @return The type of exercise {@code Constant.RUN} or {@code Constant.GYM}.
-     * @throws CustomExceptions.InvalidInput      If the user input is invalid or blank.
-     * @throws CustomExceptions.InsufficientInput If the user input is insufficient.
-     */
-    public static String checkTypeOfExercise(String userInput) throws
-            CustomExceptions.InvalidInput,
-            CustomExceptions.InsufficientInput {
-
-        boolean exerciseTypeIsValid = false;
-        boolean isRunValid = false;
-        boolean isGymValid = false;
-
-        String exerciseType = Parser.extractSubstringFromSpecificIndex(userInput,
-                WorkoutConstant.SPLIT_BY_EXERCISE_TYPE);
-
-        exerciseTypeIsValid = Workout.checkIfExerciseTypeIsValid(exerciseType);
-        boolean isRun = exerciseType.equals(WorkoutConstant.RUN);
-        boolean isGym = exerciseType.equals(WorkoutConstant.GYM);
-
-        if (isRun) {
-            String runDistance = Parser.extractSubstringFromSpecificIndex(userInput, WorkoutConstant.SPLIT_BY_DISTANCE);
-            String runTime = Parser.extractSubstringFromSpecificIndex(userInput, WorkoutConstant.SPLIT_BY_TIME);
-            String runDate = Parser.extractSubstringFromSpecificIndex(userInput, WorkoutConstant.SPLIT_BY_DATE);
-            isRunValid = Run.checkIfRunIsValid(runDistance, runTime, runDate);
-        } else if (isGym) {
-            String numberOfStations = Parser.extractSubstringFromSpecificIndex(userInput,
-                    WorkoutConstant.SPLIT_BY_NUMBER_OF_STATIONS);
-            isGymValid = Gym.checkIfGymIsValid(numberOfStations);
-        }
-
-        if (exerciseTypeIsValid && isRunValid) {
-            return WorkoutConstant.RUN;
-        } else if (exerciseTypeIsValid && isGymValid) {
-            return WorkoutConstant.GYM;
-        } else {
-            return "";
-        }
-
-    }
 
     /**
      * Get user's name, and print profile induction messages.

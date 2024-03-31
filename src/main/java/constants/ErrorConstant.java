@@ -94,8 +94,6 @@ public class ErrorConstant {
             + " e.g. " + WorkoutConstant.STATION_GYM_FORMAT;
 
     // HEALTH ERRORS
-    public static final String HEALTH_INPUT_BLANK_ERROR = "Type of health cannot be empty. " +
-            "Please input either /h:bmi, /h:period, /h:prediction or /h:appointment";
     public static final String INVALID_HEALTH_INPUT_ERROR = "Invalid input for health type! " +
             "Please input either /h:bmi, /h:period, /h:prediction or /h:appointment";
 
