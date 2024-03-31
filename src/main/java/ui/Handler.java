@@ -110,39 +110,7 @@ public class Handler {
             Output.printException("Invalid workout type! Please input either /e:run or /e:gy!");
         }
     }
-    //@@author
-    //
-    //    /**
-    //     * Constructs either a new Run or Gym object based on the user input.
-    //     *
-    //     * @param userInput The user input string.
-    //     */
-    //    public static void handleWorkout(String userInput) {
-    //        try {
-    //            String typeOfExercise = Parser.checkTypeOfExercise(userInput);
-    //            if (typeOfExercise.equals(WorkoutConstant.RUN)) {
-    //                String[] runDetails = Run.getRun(userInput);
-    //                Run newRun = Run.addRun(runDetails);
-    //                Output.printAddRun(newRun);
-    //
-    //            } else if (typeOfExercise.equals(WorkoutConstant.GYM)) {
-    //                int numberOfStations = Parser.getNumberOfGymStations(userInput);
-    //
-    //                String gymDate = Parser.getDateFromGym(userInput);
-    //                Gym gym;
-    //                if (gymDate.isEmpty()) {
-    //                    gym = new Gym();
-    //                } else {
-    //                    gym = new Gym(gymDate);
-    //                }
-    //                Parser.getGymStation(numberOfStations, gym);
-    //            }
-    //        } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
-    //            Output.printException(e.getMessage());
-    //        }
-    //    }
-    //
-    //
+
     /**
      * Handles history command.
      * Show history of all exercises, run or gym.

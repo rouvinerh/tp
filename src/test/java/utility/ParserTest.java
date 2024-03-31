@@ -38,7 +38,7 @@ class ParserTest {
      * Expects the correct details to be returned as a list of strings.
      */
     @Test
-    public void splitDelete_correctInput_returnsCorrectDeleteValues() throws CustomExceptions.InsufficientInput {
+    public void splitDeleteInput_correctInput_returnsCorrectDeleteValues() throws CustomExceptions.InsufficientInput {
         String input = "/item:appointment /index:1";
         String[] expected = {"appointment", "1"};
         String[] result = Parser.splitDeleteInput(input);
@@ -50,7 +50,7 @@ class ParserTest {
      * Expects InvalidInput exception to be thrown.
      */
     @Test
-    public void splitDelete_missingParameter_throwsInsufficientParameterException() {
+    public void splitDeleteInput_missingParameter_throwsInsufficientParameterException() {
         String input = "/item:appointment";
         assertThrows(CustomExceptions.InsufficientInput.class, () -> Parser.splitDeleteInput(input));
     }
@@ -62,8 +62,7 @@ class ParserTest {
      * Expects no exception to be thrown.
      */
     @Test
-    void splitBmi_correctInput_returnsCorrectBmiValues() throws CustomExceptions.InsufficientInput,
-            CustomExceptions.InvalidInput {
+    void splitBmiInput_correctInput_returnsCorrectBmiValues() throws CustomExceptions.InsufficientInput {
         String input = "/h:bmi /height:1.71 /weight:60.50 /date:19-03-2024";
         String[] expected = {"1.71", "60.50", "19-03-2024"};
         String[] result = Parser.splitBmiInput(input);
@@ -76,7 +75,7 @@ class ParserTest {
      * Expects InsufficientInput exception to be thrown.
      */
     @Test
-    void splitBmi_missingParameter_throwsInsufficientInputException() {
+    void splitBmiInput_missingParameter_throwsInsufficientInputException() {
         String input = "/h:bmi /height:1.71 /date:19-03-2024";
         assertThrows(CustomExceptions.InsufficientInput.class, () -> Parser.splitBmiInput(input));
     }
@@ -87,7 +86,7 @@ class ParserTest {
      * Expects no exception to be thrown.
      */
     @Test
-    void splitPeriod_correctInput_noExceptionThrown() throws CustomExceptions.InvalidInput,
+    void splitPeriodInput_correctInput_noExceptionThrown() throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
         String input = "/h:period /start:29-04-2023 /end:30-04-2023";
         String[] expected = {"29-04-2023", "30-04-2023"};
@@ -100,7 +99,7 @@ class ParserTest {
      * Expects InsufficientInput exception to be thrown.
      */
     @Test
-    void splitPeriod_missingParameter_throwsInsufficientInputException() {
+    void splitPeriodInput_missingParameter_throwsInsufficientInputException() {
         String input = "/h:period /start:29-04-2023";
         assertThrows(CustomExceptions.InsufficientInput.class, () -> Parser.splitPeriodInput(input));
     }
@@ -110,7 +109,7 @@ class ParserTest {
      * Expects no exception to be thrown.
      */
     @Test
-    void splitAppointment_correctInput_noExceptionThrown() throws CustomExceptions.InsufficientInput {
+    void splitAppointmentInput_correctInput_noExceptionThrown() throws CustomExceptions.InsufficientInput {
         String input = "/h:appointment /date:30-03-2024 /time:19:30 /description:test";
         String[] expected = {"30-03-2024", "19:30", "test"};
         String[] result = Parser.splitAppointmentDetails(input);
@@ -122,9 +121,114 @@ class ParserTest {
      * Expects InsufficientInput exception to be thrown.
      */
     @Test
-    void splitAppointment_missingParameter_throwsInsufficientInputException() {
+    void splitAppointmentInput_missingParameter_throwsInsufficientInputException() {
         String input = "/h:appointment /date:30-03-2024 /description:test";
         assertThrows(CustomExceptions.InsufficientInput.class, () -> Parser.splitAppointmentDetails(input));
+    }
+
+    /**
+     * Tests the behaviour of a correctly formatted string being
+     * passed into parseHistoryAndLatestInput.
+     * Expects no error thrown, and correct filter string returned.
+     */
+    @Test
+    void parseHistoryAndDeleteInput_correctInput_noExceptionThrown() {
+        String input = "/item:appointment";
+        String result = Parser.parseHistoryAndLatestInput(input);
+        String expected = "appointment";
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Tests the behaviour of an empty string being passed into parseHistoryAndLatestInput.
+     * Expects null to be returned.
+     */
+    @Test
+    void parseHistoryAndDeleteInput_emptyString_noExceptionThrown() {
+        String input = "/item:";
+        assertEquals(Parser.parseDeleteInput(input), null);
+    }
+
+    /**
+     * Tests the behaviour of a correctly formatted string without
+     * dates being passed to splitGymInput.
+     * Expects the list of strings to contain the correct parameters.
+     *
+     * @throws CustomExceptions.InsufficientInput If there is insufficient input.
+     */
+    @Test
+    void splitGymInput_correctInputWithoutDate_noExceptionThrown() throws CustomExceptions.InsufficientInput {
+        String input = "/e:gym /n:3";
+        String[] expected = {"3", null};
+        String[] result = Parser.splitGymInput(input);
+        assertArrayEquals(expected, result);
+    }
+
+    /**
+     * Tests the behaviour of a correctly formatted string being passed to splitGymInput.
+     * Expects the list of strings to contain the correct parameters.
+     *
+     * @throws CustomExceptions.InsufficientInput If there is insufficient input.
+     */
+    @Test
+    void splitGymInput_correctInputWithDate_noExceptionThrown() throws CustomExceptions.InsufficientInput {
+        String input = "/e:gym /n:3 /date:29-03-2024";
+        String[] expected = {"3", "29-03-2024"};
+        String[] result = Parser.splitGymInput(input);
+        assertArrayEquals(expected, result);
+    }
+
+    /**
+     * Tests the behaviour of an incorrectly formatted string with insufficient parameters
+     * being passed to splitGymInput.
+     * Expects an InsufficientInput exception to be thrown.
+     */
+    @Test
+    void splitGymInput_incorrectInput_expectInsufficientInputExceptionThrown() {
+        String input = "/e:gym";
+        assertThrows(CustomExceptions.InsufficientInput.class, () ->
+                Parser.splitGymInput(input));
+    }
+
+    /**
+     * Tests the behaviour of a correctly formatted string without
+     * dates being passed to splitGymInput.
+     * Expects the list of strings to contain the correct parameters.
+     *
+     * @throws CustomExceptions.InsufficientInput If there is insufficient input.
+     */
+    @Test
+    void splitRunInput_correctInputWithoutDate_noExceptionThrown() throws CustomExceptions.InsufficientInput {
+        String input = "/e:run /t:25:24 /d:5.15";
+        String[] expected = {"25:24", "5.15", null};
+        String[] result = Parser.splitRunInput(input);
+        assertArrayEquals(expected, result);
+    }
+
+    /**
+     * Tests the behaviour of a correctly formatted string being passed to splitGymInput.
+     * Expects the list of strings to contain the correct parameters.
+     *
+     * @throws CustomExceptions.InsufficientInput If there is insufficient input.
+     */
+    @Test
+    void splitRunInput_correctInputWithDate_noExceptionThrown() throws CustomExceptions.InsufficientInput {
+        String input = "/e:run /d:5.15 /t:25:24 /date:29-04-2024";
+        String[] expected = {"25:24", "5.15", "29-04-2024"};
+        String[] result = Parser.splitRunInput(input);
+        assertArrayEquals(expected, result);
+    }
+
+    /**
+     * Tests the behaviour of an incorrectly formatted string with insufficient parameters
+     * being passed to splitGymInput.
+     * Expects an InsufficientInput exception to be thrown.
+     */
+    @Test
+    void splitRunInput_incorrectInput_expectInsufficientInputExceptionThrown() {
+        String input = "/e:run /d:5.10";
+        assertThrows(CustomExceptions.InsufficientInput.class, () ->
+                Parser.splitRunInput(input));
     }
 
     /**
@@ -159,10 +263,10 @@ class ParserTest {
             // make sure the number of sets are correct
             assertEquals(4, gymOutput.getStationByIndex(0).getNumberOfSets());
             assertEquals(2, gymOutput.getStationByIndex(1).getNumberOfSets());
-            // make sure the reps of each stations are correct
+            // make sure the reps of each station are correct
             assertEquals(10, gymOutput.getStationByIndex(0).getSets().get(0).getRepetitions());
             assertEquals(5, gymOutput.getStationByIndex(1).getSets().get(0).getRepetitions());
-            // make sure te weights of each stations are correct
+            // make sure the weights of each station are correct
             assertEquals(10, gymOutput.getStationByIndex(0).getSets().get(0).getWeight());
             assertEquals(20, gymOutput.getStationByIndex(0).getSets().get(1).getWeight());
             assertEquals(30, gymOutput.getStationByIndex(0).getSets().get(2).getWeight());

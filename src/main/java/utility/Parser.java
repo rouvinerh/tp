@@ -14,7 +14,6 @@ import health.Period;
 import workouts.Gym;
 import workouts.GymStation;
 import workouts.Run;
-import workouts.Workout;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -350,52 +349,6 @@ public class Parser {
             }
         }
         Output.printAddGym(gym);
-    }
-
-    /**
-     * Checks the type of exercise based on the user input.
-     * Usage: to use this method whenever the user enters a new exercise.
-     * Handles all the checks for input validity and sufficiency.
-     * Can assume input is valid and sufficient if no exceptions are thrown.
-     *
-     * @param userInput The user input string.
-     * @return The type of exercise {@code Constant.RUN} or {@code Constant.GYM}.
-     * @throws CustomExceptions.InvalidInput      If the user input is invalid or blank.
-     * @throws CustomExceptions.InsufficientInput If the user input is insufficient.
-     */
-    public static String checkTypeOfExercise(String userInput) throws
-            CustomExceptions.InvalidInput,
-            CustomExceptions.InsufficientInput {
-
-        boolean exerciseTypeIsValid = false;
-        boolean isRunValid = false;
-        boolean isGymValid = false;
-
-        String exerciseType = extractSubstringFromSpecificIndex(userInput,
-                WorkoutConstant.SPLIT_BY_EXERCISE_TYPE);
-
-        exerciseTypeIsValid = Workout.checkIfExerciseTypeIsValid(exerciseType);
-        boolean isRun = exerciseType.equals(WorkoutConstant.RUN);
-        boolean isGym = exerciseType.equals(WorkoutConstant.GYM);
-
-        if (isRun) {
-            String runDistance = extractSubstringFromSpecificIndex(userInput, WorkoutConstant.SPLIT_BY_DISTANCE);
-            String runTime = extractSubstringFromSpecificIndex(userInput, WorkoutConstant.SPLIT_BY_TIME);
-            String runDate = extractSubstringFromSpecificIndex(userInput, WorkoutConstant.SPLIT_BY_DATE);
-            isRunValid = Run.checkIfRunIsValid(runDistance, runTime, runDate);
-        } else if (isGym) {
-            String numberOfStations = extractSubstringFromSpecificIndex(userInput,
-                    WorkoutConstant.SPLIT_BY_NUMBER_OF_STATIONS);
-            isGymValid = Gym.checkIfGymIsValid(numberOfStations);
-        }
-
-        if (exerciseTypeIsValid && isRunValid) {
-            return WorkoutConstant.RUN;
-        } else if (exerciseTypeIsValid && isGymValid) {
-            return WorkoutConstant.GYM;
-        } else {
-            return "";
-        }
     }
 
     // FILE CODE STARTS HERE
