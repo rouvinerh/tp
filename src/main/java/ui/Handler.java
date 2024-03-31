@@ -10,11 +10,9 @@ import constants.WorkoutConstant;
 import utility.Filters.Command;
 import utility.Filters.DeleteFilters;
 import utility.Filters.HealthFilters;
-import utility.Filters.WorkoutFilters;
 import utility.Parser;
+import utility.Filters.WorkoutFilters;
 import workouts.WorkoutList;
-import workouts.Gym;
-import workouts.Run;
 import java.util.Scanner;
 import storage.LogFile;
 
@@ -83,37 +81,68 @@ public class Handler {
         }
     }
 
+
     /**
-     * Constructs either a new Run or Gym object based on the user input.
-     *
-     * @param userInput The user input string.
+     * TO ADD.
+     * @param userInput
      */
+    //@@author JustinSoh
     public static void handleWorkout(String userInput) {
         try {
-            String typeOfExercise = Parser.checkTypeOfExercise(userInput);
-            if (typeOfExercise.equals(WorkoutConstant.RUN)) {
-                String[] runDetails = Run.getRun(userInput);
-                Run newRun = Run.addRun(runDetails);
-                Output.printAddRun(newRun);
+            String typeOfWorkout = Parser.extractSubstringFromSpecificIndex(userInput,
+                    WorkoutConstant.SPLIT_BY_EXERCISE_TYPE);
+            WorkoutFilters filter = WorkoutFilters.valueOf(typeOfWorkout.toUpperCase());
+            switch(filter) {
+            case RUN:
+                Parser.parseRunInput(userInput);
+                break;
 
-            } else if (typeOfExercise.equals(WorkoutConstant.GYM)) {
-                int numberOfStations = Parser.getNumberOfGymStations(userInput);
+            case GYM:
+                Parser.parseGymInput(userInput);
+                break;
 
-                String gymDate = Parser.getDateFromGym(userInput);
-                Gym gym;
-                if (gymDate.isEmpty()) {
-                    gym = new Gym();
-                } else {
-                    gym = new Gym(gymDate);
-                }
-                Parser.getGymStation(numberOfStations, gym);
+            default:
+                break;
             }
         } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
             Output.printException(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            Output.printException("Invalid workout type! Please input either /e:run or /e:gy!");
         }
     }
-
-
+    //@@author
+    //
+    //    /**
+    //     * Constructs either a new Run or Gym object based on the user input.
+    //     *
+    //     * @param userInput The user input string.
+    //     */
+    //    public static void handleWorkout(String userInput) {
+    //        try {
+    //            String typeOfExercise = Parser.checkTypeOfExercise(userInput);
+    //            if (typeOfExercise.equals(WorkoutConstant.RUN)) {
+    //                String[] runDetails = Run.getRun(userInput);
+    //                Run newRun = Run.addRun(runDetails);
+    //                Output.printAddRun(newRun);
+    //
+    //            } else if (typeOfExercise.equals(WorkoutConstant.GYM)) {
+    //                int numberOfStations = Parser.getNumberOfGymStations(userInput);
+    //
+    //                String gymDate = Parser.getDateFromGym(userInput);
+    //                Gym gym;
+    //                if (gymDate.isEmpty()) {
+    //                    gym = new Gym();
+    //                } else {
+    //                    gym = new Gym(gymDate);
+    //                }
+    //                Parser.getGymStation(numberOfStations, gym);
+    //            }
+    //        } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
+    //            Output.printException(e.getMessage());
+    //        }
+    //    }
+    //
+    //
     /**
      * Handles history command.
      * Show history of all exercises, run or gym.
@@ -139,9 +168,9 @@ public class Handler {
             return;
         }
         try {
-            DeleteFilters parsedFilter = DeleteFilters.valueOf(parsedInputs[0].toUpperCase());
+            DeleteFilters filter = DeleteFilters.valueOf(parsedInputs[0].toUpperCase());
             int index = Integer.parseInt(parsedInputs[1]) - 1;
-            switch (parsedFilter) {
+            switch (filter) {
             case BMI:
                 HealthList.deleteBmi(index);
                 break;
@@ -175,8 +204,8 @@ public class Handler {
     public static void handleHealth(String userInput) {
         try {
             String typeOfHealth = Parser.extractSubstringFromSpecificIndex(userInput, HealthConstant.HEALTH_FLAG);
-            HealthFilters parsedFilter = HealthFilters.valueOf(typeOfHealth.toUpperCase());
-            switch(parsedFilter) {
+            HealthFilters filter = HealthFilters.valueOf(typeOfHealth.toUpperCase());
+            switch(filter) {
             case BMI:
                 Parser.parseBmiInput(userInput);
                 break;

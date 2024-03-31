@@ -70,10 +70,10 @@ public class Parser {
      * @throws CustomExceptions.InsufficientInput If not enough parameters are specified.
      */
     public static String[] splitDeleteInput(String input) throws CustomExceptions.InsufficientInput {
-        String[] results = new String[UiConstant.NUM_DELETE_PARAMETERS];
         if (!input.contains(UiConstant.ITEM_FLAG) || !input.contains(UiConstant.INDEX_FLAG)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_DELETE_PARAMETERS_ERROR);
         }
+        String[] results = new String[UiConstant.NUM_DELETE_PARAMETERS];
         results[0] = extractSubstringFromSpecificIndex(input, UiConstant.ITEM_FLAG);
         results[1] = extractSubstringFromSpecificIndex(input, UiConstant.INDEX_FLAG);
         return results;
@@ -142,14 +142,13 @@ public class Parser {
      * @return An array of strings containing the extracted Bmi parameters.
      * @throws CustomExceptions.InvalidInput If the user input is invalid.
      */
-    public static String[] splitBmiInput(String input) throws CustomExceptions.InvalidInput,
-            CustomExceptions.InsufficientInput {
-        String [] results = new String[HealthConstant.NUM_BMI_PARAMETERS];
+    public static String[] splitBmiInput(String input) throws CustomExceptions.InsufficientInput {
         if (!input.contains(HealthConstant.HEIGHT_FLAG)
                 || !input.contains(HealthConstant.WEIGHT_FLAG)
                 || !input.contains(HealthConstant.DATE_FLAG)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_BMI_PARAMETERS_ERROR);
         }
+        String [] results = new String[HealthConstant.NUM_BMI_PARAMETERS];
         results[0] = extractSubstringFromSpecificIndex(input, HealthConstant.HEIGHT_FLAG);
         results[1] = extractSubstringFromSpecificIndex(input, HealthConstant.WEIGHT_FLAG);
         results[2] = extractSubstringFromSpecificIndex(input, HealthConstant.DATE_FLAG);
@@ -179,12 +178,11 @@ public class Parser {
      * @throws CustomExceptions.InsufficientInput If the user input is invalid or blank.
      */
     public static String[] splitPeriodInput(String input) throws CustomExceptions.InsufficientInput {
-        String [] results = new String[HealthConstant.NUM_PERIOD_PARAMETERS];
-
         if (!input.contains(HealthConstant.START_FLAG)
                 || !input.contains(HealthConstant.END_FLAG)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_PERIOD_PARAMETERS_ERROR);
         }
+        String [] results = new String[HealthConstant.NUM_PERIOD_PARAMETERS];
         results[0] = extractSubstringFromSpecificIndex(input, HealthConstant.START_FLAG);
         results[1] = extractSubstringFromSpecificIndex(input, HealthConstant.END_FLAG);
         return results;
@@ -242,7 +240,7 @@ public class Parser {
         HealthList.addAppointment(newAppointment);
         Output.printAddAppointment(newAppointment);
     }
-
+    //@@author L5-Z
     /**
      * Extracts a substring from the given input string based on the provided delimiter.
      *
@@ -264,6 +262,72 @@ public class Parser {
     }
 
     //@@author JustinSoh
+
+    public static String[] splitGymInput(String input) throws CustomExceptions.InsufficientInput {
+        if (!input.contains(WorkoutConstant.SPLIT_BY_NUMBER_OF_STATIONS)) {
+            throw new CustomExceptions.InsufficientInput("Insufficient parameters for gym! " +
+                    "Example input: /e:gym /n:2 [/date:DATE]");
+        }
+        String[] results = new String[2];
+        results[0] = extractSubstringFromSpecificIndex(input,WorkoutConstant.SPLIT_BY_NUMBER_OF_STATIONS);
+
+        if (input.contains(WorkoutConstant.SPLIT_BY_DATE)) {
+            results[1] = extractSubstringFromSpecificIndex(input, WorkoutConstant.SPLIT_BY_DATE);
+        }
+        return results;
+    }
+
+    /**
+     * TO DO.
+     * @param input
+     */
+    public static void parseGymInput(String input) throws CustomExceptions.InsufficientInput,
+            CustomExceptions.InvalidInput {
+        String[] gymDetails = splitGymInput(input);
+        Validation.validateGymInput(gymDetails);
+        Gym newGym;
+        if (gymDetails[1].isEmpty()) {
+            newGym = new Gym();
+        } else {
+            newGym = new Gym(gymDetails[1]);
+        }
+        int numberOfStations = Integer.parseInt(gymDetails[0]);
+        parseGymStationInput(numberOfStations, newGym);
+    }
+
+    public static String[] splitRunInput(String input) throws CustomExceptions.InsufficientInput {
+        if (!input.contains(WorkoutConstant.SPLIT_BY_DISTANCE) ||
+            !input.contains(WorkoutConstant.SPLIT_BY_TIME)) {
+            throw new CustomExceptions.InsufficientInput("Insufficient parameters for run! " +
+                    "Example input: /e:run /d:5.25 /t:25:23 [/date:DATE]");
+        }
+        String[] results = new String[3];
+        results[0] = extractSubstringFromSpecificIndex(input,WorkoutConstant.SPLIT_BY_TIME);
+        results[1] = extractSubstringFromSpecificIndex(input, WorkoutConstant.SPLIT_BY_DISTANCE);
+
+        if (input.contains(WorkoutConstant.SPLIT_BY_DATE)) {
+            results[2] = extractSubstringFromSpecificIndex(input, WorkoutConstant.SPLIT_BY_DATE);
+        }
+        return results;
+    }
+
+    /**
+     * TO DO.
+     * @param input
+     */
+    public static void parseRunInput(String input) throws CustomExceptions.InsufficientInput,
+            CustomExceptions.InvalidInput {
+        String[] runDetails = splitRunInput(input);
+        Validation.validateRunInput(runDetails);
+        Run newRun;
+        if (runDetails[2].isEmpty()) {
+            newRun = new Run(runDetails[0], runDetails[1]);
+        } else {
+            newRun = new Run(runDetails[0], runDetails[1], runDetails[2]);
+        }
+        Output.printAddRun(newRun);
+    }
+
     /**
      * Retrieves the date from the input for a Gym output.
      * Returns empty string if not specified.
@@ -301,11 +365,10 @@ public class Parser {
      * @param numberOfStations The number of stations in one gym session.
      * @param gym              The Gym object.
      */
-    public static void getGymStation(int numberOfStations, Gym gym) {
+    public static void parseGymStationInput(int numberOfStations, Gym gym) {
         int i = 0;
         while (i < numberOfStations) {
             try {
-
                 Output.printGymStationPrompt(i + 1);
                 String userInput = Handler.in.nextLine();
                 GymStation.addGymStationInputValid(gym, userInput);
@@ -362,4 +425,5 @@ public class Parser {
             return "";
         }
     }
+    //@@author
 }

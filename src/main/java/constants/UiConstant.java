@@ -24,7 +24,7 @@ public class UiConstant {
     public static final String VALID_TWO_DP_NUMBER_REGEX = "^\\d+\\.\\d{2}$";
     public static final String VALID_TIME_REGEX = "^\\d{2}:\\d{2}$";
     public static final String VALID_TIME_WITH_HOURS_REGEX = "^\\d{2}:\\d{2}:\\d{2}$";
-    public static final String VALID_POSITIVE_INTEGER_REGEX = "^\\d+$";
+    public static final String VALID_POSITIVE_INTEGER_REGEX = "^[1-9]+$";
 
 
     // PulsePilot UI replies

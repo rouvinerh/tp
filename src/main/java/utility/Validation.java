@@ -137,6 +137,47 @@ public class Validation {
         }
     }
 
+    //@@author JustinSoh
+    /**
+     * TO DO.
+     * @param runDetails
+     * @throws CustomExceptions.InvalidInput
+     * @throws CustomExceptions.InsufficientInput
+     */
+    public static void validateRunInput(String[] runDetails) throws CustomExceptions.InvalidInput,
+            CustomExceptions.InsufficientInput {
+        if (runDetails[0].isEmpty() || runDetails[1].isEmpty()) {
+            throw new CustomExceptions.InsufficientInput("Insufficient parameters for run! " +
+                    "Example input: /e:run /d:5.25 /t:25:23 [/date:DATE]");
+        }
+        validateRunTimeInput(runDetails[0]);
+        if (!runDetails[1].matches(UiConstant.VALID_TWO_DP_NUMBER_REGEX)) {
+            throw new CustomExceptions.InvalidInput("Distance is a 2 decimal point positive number!");
+        }
+
+        if (!runDetails[2].isEmpty()) {
+            validateDateInput(runDetails[2]);
+        }
+    }
+
+    public static void validateGymInput(String[] gymDetails) throws CustomExceptions.InvalidInput,
+            CustomExceptions.InsufficientInput {
+        if (gymDetails[0].isEmpty()) {
+            throw new CustomExceptions.InsufficientInput("Insufficient parameters for gym!" +
+                    "Example input: /e:gym /n:2 [/date:DATE]");
+        }
+
+        if (!gymDetails[0].matches(UiConstant.VALID_POSITIVE_INTEGER_REGEX)) {
+            throw new CustomExceptions.InvalidInput("Number of stations is a positive number!");
+        }
+
+        if (!gymDetails[1].isEmpty()) {
+            validateDateInput(gymDetails[1]);
+        }
+    }
+
+    //@@author
+
     /**
      * Validates the time used in HH:MM format.
      *

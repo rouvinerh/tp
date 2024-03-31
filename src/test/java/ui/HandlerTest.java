@@ -87,7 +87,7 @@ class HandlerTest {
      */
     @Test
     void processInput_workoutCommand_addRunExercise() {
-        String input = "WORKOUT /e:run /d:10.3 /t:00:40:10 /date:15-03-2024";
+        String input = "WORKOUT /e:run /d:10.30 /t:40:10 /date:15-03-2024";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
         Handler.initialiseScanner();
         Handler.processInput();
@@ -137,7 +137,7 @@ class HandlerTest {
      */
     @Test
     void processInput_latestCommand_printsLatestRun() {
-        String inputRun = "WORKOUT /e:run /d:10.3 /t:00:40:10 /date:15-03-2024";
+        String inputRun = "WORKOUT /e:run /d:10.30 /t:40:10 /date:15-03-2024";
         System.setIn(new ByteArrayInputStream(inputRun.getBytes()));
         Handler.initialiseScanner();
         Handler.processInput();
