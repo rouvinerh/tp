@@ -286,7 +286,7 @@ public class Parser {
         String[] gymDetails = splitGymInput(input);
         Validation.validateGymInput(gymDetails);
         Gym newGym;
-        if (gymDetails[1].isEmpty()) {
+        if (gymDetails[1] == null) {
             newGym = new Gym();
         } else {
             newGym = new Gym(gymDetails[1]);
@@ -320,7 +320,7 @@ public class Parser {
         String[] runDetails = splitRunInput(input);
         Validation.validateRunInput(runDetails);
         Run newRun;
-        if (runDetails[2].isEmpty()) {
+        if (runDetails[2] == null) {
             newRun = new Run(runDetails[0], runDetails[1]);
         } else {
             newRun = new Run(runDetails[0], runDetails[1], runDetails[2]);

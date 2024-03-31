@@ -27,7 +27,7 @@ public class ErrorConstant {
     public static final String INVALID_PARAMETER_ERROR = "Parameter(s) invalid or out of bounds";
     public static final String NO_DATE_SPECIFIED_ERROR = "NA";
     public static final String INVALID_ITEM_ERROR = "Invalid item specified.";
-    public static final String CORRECT_FILTER_ITEM_FORMAT = "/item:run/gym/workouts/bmi/period";
+    public static final String CORRECT_FILTER_ITEM_FORMAT = "/item:run/gym/workouts/bmi/period/appointment";
 
     // Date errors
     public static final String INVALID_DATE_ERROR = "Invalid date format. Format is DD-MM-YYYY in integers.";

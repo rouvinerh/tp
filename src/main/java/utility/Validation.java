@@ -54,8 +54,7 @@ public class Validation {
     }
 
     /**
-     * Validates whether the filter string is either 'run', 'gym', 'bmi', 'period'
-     * or 'appointment'.
+     * Validates whether the filter string is either 'run', 'gym', 'bmi', 'period' or 'appointment'.
      *
      * @param filter The filter string to be checked.
      * @throws CustomExceptions.InvalidInput If the filter string is none of them.
@@ -155,13 +154,14 @@ public class Validation {
             throw new CustomExceptions.InvalidInput("Distance is a 2 decimal point positive number!");
         }
 
-        if (!runDetails[2].isEmpty()) {
+        if (runDetails[2] != null) {
             validateDateInput(runDetails[2]);
+            LocalDate date = Parser.parseDate(runDetails[2]);
+            if (date.isAfter(LocalDate.now())) {
+                throw new CustomExceptions.InvalidInput("Date specified cannot be in the future");
+            }
         }
-        LocalDate date = Parser.parseDate(runDetails[2]);
-        if (date.isAfter(LocalDate.now())) {
-            throw new CustomExceptions.InvalidInput("Date specified cannot be in the future");
-        }
+
     }
 
     public static void validateGymInput(String[] gymDetails) throws CustomExceptions.InvalidInput,
@@ -175,14 +175,15 @@ public class Validation {
             throw new CustomExceptions.InvalidInput("Number of stations is a positive number!");
         }
 
-        if (!gymDetails[1].isEmpty()) {
+        if (gymDetails[1] != null) {
             validateDateInput(gymDetails[1]);
+            LocalDate date = Parser.parseDate(gymDetails[1]);
+            if (date.isAfter(LocalDate.now())) {
+                throw new CustomExceptions.InvalidInput("Date specified cannot be in the future");
+            }
         }
 
-        LocalDate date = Parser.parseDate(gymDetails[1]);
-        if (date.isAfter(LocalDate.now())) {
-            throw new CustomExceptions.InvalidInput("Date specified cannot be in the future");
-        }
+
     }
 
     //@@author
