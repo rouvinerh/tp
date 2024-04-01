@@ -128,10 +128,12 @@ public class ErrorConstant {
             "contain alphanumeric characters and spaces!";
 
     public static final String INVALID_HISTORY_FILTER_ERROR = "Missing/invalid filter used!" +
-            "Use /item:run/gym/workouts/period/bmi";
+            System.lineSeparator() +
+            "Use /item:run/gym/workouts/period/bmi/appointment";
 
     public static final String INVALID_LATEST_FILTER_ERROR = "Missing/invalid filter used!" +
-            "Use /item:run/gym/period/bmi";
+            System.lineSeparator() +
+            "Use /item:run/gym/period/bmi/appointment";
 
 
 }
