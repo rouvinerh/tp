@@ -92,7 +92,7 @@ public class Handler {
     public static void handleWorkout(String userInput) {
         try {
             String typeOfWorkout = Parser.extractSubstringFromSpecificIndex(userInput,
-                    WorkoutConstant.SPLIT_BY_EXERCISE_TYPE);
+                    WorkoutConstant.EXERCISE_FLAG);
             WorkoutFilters filter = WorkoutFilters.valueOf(typeOfWorkout.toUpperCase());
             switch(filter) {
             case RUN:

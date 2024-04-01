@@ -3,17 +3,17 @@ package constants;
 public class WorkoutConstant {
 
     // Workout Delimiter
-    public static final String SPLIT_BY_NUMBER_OF_STATIONS = "/n:";
-    public static final String SPLIT_BY_EXERCISE_TYPE = "/e:";
-    public static final String SPLIT_BY_DISTANCE = "/d:";
-    public static final String SPLIT_BY_TIME = "/t:";
-    public static final String SPLIT_BY_DATE = "/date:";
-    public static final String SPLIT_BY_SETS = "/s:";
-    public static final String SPLIT_BY_REPS = "/r:";
-    public static final String SPLIT_BY_WEIGHTS = "/w:";
+    public static final String NUMBER_OF_STATIONS_FLAG = "/n:";
+    public static final String EXERCISE_FLAG = "/e:";
+    public static final String DISTANCE_FLAG = "/d:";
+    public static final String RUN_TIME_FLAG = "/t:";
+    public static final String DATE_FLAG = "/date:";
+    public static final String SETS_FLAG = "/s:";
+    public static final String REPS_FLAG = "/r:";
+    public static final String WEIGHTS_FLAG = "/w:";
 
     // Integers
-    public static final int NUMBER_OF_RUN_PARAMETERS = 4;
+    public static final int NUMBER_OF_RUN_PARAMETERS = 3;
     public static final int NUMBER_OF_GYM_PARAMETERS = 2;
     public static final int NUMBER_OF_GYM_STATION_PARAMETERS = 4;
     public static final int NUMBER_OF_PARTS_FOR_RUN_TIME = 2;

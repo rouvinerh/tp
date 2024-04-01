@@ -285,16 +285,16 @@ public class Parser {
      * @throws CustomExceptions.InsufficientInput If the number of stations is missing.
      */
     public static String[] splitGymInput(String input) throws CustomExceptions.InsufficientInput {
-        if (!input.contains(WorkoutConstant.SPLIT_BY_NUMBER_OF_STATIONS)) {
+        if (!input.contains(WorkoutConstant.NUMBER_OF_STATIONS_FLAG)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_GYM_PARAMETERS_ERROR);
         }
         String[] results = new String[WorkoutConstant.NUMBER_OF_GYM_PARAMETERS];
         results[WorkoutConstant.GYM_NUMBER_OF_STATIONS_INDEX] = extractSubstringFromSpecificIndex(input,
-                WorkoutConstant.SPLIT_BY_NUMBER_OF_STATIONS).trim();
+                WorkoutConstant.NUMBER_OF_STATIONS_FLAG).trim();
 
-        if (input.contains(WorkoutConstant.SPLIT_BY_DATE)) {
+        if (input.contains(WorkoutConstant.DATE_FLAG)) {
             results[WorkoutConstant.GYM_DATE_INDEX] = extractSubstringFromSpecificIndex(input,
-                    WorkoutConstant.SPLIT_BY_DATE).trim();
+                    WorkoutConstant.DATE_FLAG).trim();
         }
         return results;
     }
@@ -326,19 +326,19 @@ public class Parser {
      * @throws CustomExceptions.InsufficientInput If the distance and time taken for the run are missing.
      */
     public static String[] splitRunInput(String input) throws CustomExceptions.InsufficientInput {
-        if (!input.contains(WorkoutConstant.SPLIT_BY_DISTANCE) ||
-            !input.contains(WorkoutConstant.SPLIT_BY_TIME)) {
+        if (!input.contains(WorkoutConstant.DISTANCE_FLAG) ||
+            !input.contains(WorkoutConstant.RUN_TIME_FLAG)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_RUN_PARAMETERS_ERROR);
         }
         String[] results = new String[WorkoutConstant.NUMBER_OF_RUN_PARAMETERS];
         results[WorkoutConstant.RUN_TIME_INDEX] = extractSubstringFromSpecificIndex(input,
-                WorkoutConstant.SPLIT_BY_TIME).trim();
+                WorkoutConstant.RUN_TIME_FLAG).trim();
         results[WorkoutConstant.RUN_DISTANCE_INDEX] = extractSubstringFromSpecificIndex(input,
-                WorkoutConstant.SPLIT_BY_DISTANCE).trim();
+                WorkoutConstant.DISTANCE_FLAG).trim();
 
-        if (input.contains(WorkoutConstant.SPLIT_BY_DATE)) {
+        if (input.contains(WorkoutConstant.DATE_FLAG)) {
             results[WorkoutConstant.RUN_DATE_INDEX] = extractSubstringFromSpecificIndex(input,
-                    WorkoutConstant.SPLIT_BY_DATE).trim();
+                    WorkoutConstant.DATE_FLAG).trim();
         }
         return results;
     }

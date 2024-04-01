@@ -199,7 +199,7 @@ class ParserTest {
      */
     @Test
     void splitRunInput_correctInputWithoutDate_noExceptionThrown() throws CustomExceptions.InsufficientInput {
-        String input = "/e:run /t:25:24 /d:5.15";
+        String input = "/t:25:24 /d:5.15";
         String[] expected = {"25:24", "5.15", null};
         String[] result = Parser.splitRunInput(input);
         assertArrayEquals(expected, result);

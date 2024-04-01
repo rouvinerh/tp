@@ -4,7 +4,6 @@ import constants.ErrorConstant;
 import constants.HealthConstant;
 import constants.UiConstant;
 import constants.WorkoutConstant;
-import workouts.Workout;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -180,7 +179,8 @@ public class Validation {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_GYM_PARAMETERS_ERROR);
         }
 
-        if (!gymDetails[WorkoutConstant.GYM_NUMBER_OF_STATIONS_INDEX].matches(UiConstant.VALID_POSITIVE_INTEGER_REGEX)) {
+        if (!gymDetails[WorkoutConstant.GYM_NUMBER_OF_STATIONS_INDEX]
+                .matches(UiConstant.VALID_POSITIVE_INTEGER_REGEX)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_NUMBER_OF_STATIONS_ERROR);
         }
 
@@ -347,17 +347,17 @@ public class Validation {
         String exerciseName = input.split(UiConstant.SPLIT_BY_SLASH)[WorkoutConstant.STATION_NAME_INDEX].trim();
         validateExerciseName(exerciseName);
 
-        String sets = Parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.SPLIT_BY_SETS).trim();
+        String sets = Parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.SETS_FLAG).trim();
         if (!sets.matches(UiConstant.VALID_POSITIVE_INTEGER_REGEX)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_SETS_ERROR);
         }
 
-        String reps = Parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.SPLIT_BY_REPS).trim();
+        String reps = Parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.REPS_FLAG).trim();
         if (!reps.matches(UiConstant.VALID_POSITIVE_INTEGER_REGEX)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_REPS_ERROR);
         }
 
-        String weights = Parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.SPLIT_BY_WEIGHTS).trim();
+        String weights = Parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.WEIGHTS_FLAG).trim();
         if (!weights.contains(UiConstant.SPLIT_BY_COMMAS)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_WEIGHTS_ERROR);
         }
