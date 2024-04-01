@@ -343,17 +343,17 @@ public class Validation {
         String exerciseName = input.split(UiConstant.SPLIT_BY_SLASH)[WorkoutConstant.STATION_NAME_INDEX].trim();
         validateExerciseName(exerciseName);
 
-        String sets = Parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.SPLIT_BY_SETS);
+        String sets = Parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.SPLIT_BY_SETS).trim();
         if (!sets.matches(UiConstant.VALID_POSITIVE_INTEGER_REGEX)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_SETS_ERROR);
         }
 
-        String reps = Parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.SPLIT_BY_REPS);
+        String reps = Parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.SPLIT_BY_REPS).trim();
         if (!reps.matches(UiConstant.VALID_POSITIVE_INTEGER_REGEX)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_REPS_ERROR);
         }
 
-        String weights = Parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.SPLIT_BY_WEIGHTS);
+        String weights = Parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.SPLIT_BY_WEIGHTS).trim();
         if (!weights.contains(UiConstant.SPLIT_BY_COMMAS)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_WEIGHTS_ERROR);
         }

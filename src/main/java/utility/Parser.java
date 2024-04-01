@@ -73,8 +73,8 @@ public class Parser {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_DELETE_PARAMETERS_ERROR);
         }
         String[] results = new String[UiConstant.NUM_DELETE_PARAMETERS];
-        results[0] = extractSubstringFromSpecificIndex(input, UiConstant.ITEM_FLAG);
-        results[1] = extractSubstringFromSpecificIndex(input, UiConstant.INDEX_FLAG);
+        results[0] = extractSubstringFromSpecificIndex(input, UiConstant.ITEM_FLAG).trim();
+        results[1] = extractSubstringFromSpecificIndex(input, UiConstant.INDEX_FLAG).trim();
         return results;
     }
 
@@ -148,9 +148,9 @@ public class Parser {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_BMI_PARAMETERS_ERROR);
         }
         String [] results = new String[HealthConstant.NUM_BMI_PARAMETERS];
-        results[0] = extractSubstringFromSpecificIndex(input, HealthConstant.HEIGHT_FLAG);
-        results[1] = extractSubstringFromSpecificIndex(input, HealthConstant.WEIGHT_FLAG);
-        results[2] = extractSubstringFromSpecificIndex(input, HealthConstant.DATE_FLAG);
+        results[0] = extractSubstringFromSpecificIndex(input, HealthConstant.HEIGHT_FLAG).trim();
+        results[1] = extractSubstringFromSpecificIndex(input, HealthConstant.WEIGHT_FLAG).trim();
+        results[2] = extractSubstringFromSpecificIndex(input, HealthConstant.DATE_FLAG).trim();
         return results;
     }
     //@@author
@@ -182,8 +182,8 @@ public class Parser {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_PERIOD_PARAMETERS_ERROR);
         }
         String [] results = new String[HealthConstant.NUM_PERIOD_PARAMETERS];
-        results[0] = extractSubstringFromSpecificIndex(input, HealthConstant.START_FLAG);
-        results[1] = extractSubstringFromSpecificIndex(input, HealthConstant.END_FLAG);
+        results[0] = extractSubstringFromSpecificIndex(input, HealthConstant.START_FLAG).trim();
+        results[1] = extractSubstringFromSpecificIndex(input, HealthConstant.END_FLAG).trim();
         return results;
     }
 
@@ -218,9 +218,9 @@ public class Parser {
                 || !input.contains(HealthConstant.DESCRIPTION_FLAG)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_APPOINTMENT_PARAMETERS_ERROR);
         }
-        results[0] = extractSubstringFromSpecificIndex(input, HealthConstant.DATE_FLAG);
-        results[1] = extractSubstringFromSpecificIndex(input, HealthConstant.TIME_FLAG);
-        results[2] = extractSubstringFromSpecificIndex(input, HealthConstant.DESCRIPTION_FLAG);
+        results[0] = extractSubstringFromSpecificIndex(input, HealthConstant.DATE_FLAG).trim();
+        results[1] = extractSubstringFromSpecificIndex(input, HealthConstant.TIME_FLAG).trim();
+        results[2] = extractSubstringFromSpecificIndex(input, HealthConstant.DESCRIPTION_FLAG).trim();
         return results;
     }
 
@@ -275,10 +275,10 @@ public class Parser {
                     "Example input: /e:gym /n:2 [/date:DATE]");
         }
         String[] results = new String[2];
-        results[0] = extractSubstringFromSpecificIndex(input,WorkoutConstant.SPLIT_BY_NUMBER_OF_STATIONS);
+        results[0] = extractSubstringFromSpecificIndex(input,WorkoutConstant.SPLIT_BY_NUMBER_OF_STATIONS).trim();
 
         if (input.contains(WorkoutConstant.SPLIT_BY_DATE)) {
-            results[1] = extractSubstringFromSpecificIndex(input, WorkoutConstant.SPLIT_BY_DATE);
+            results[1] = extractSubstringFromSpecificIndex(input, WorkoutConstant.SPLIT_BY_DATE).trim();
         }
         return results;
     }
@@ -316,11 +316,11 @@ public class Parser {
                     "Example input: /e:run /d:5.25 /t:25:23 [/date:DATE]");
         }
         String[] results = new String[3];
-        results[0] = extractSubstringFromSpecificIndex(input,WorkoutConstant.SPLIT_BY_TIME);
-        results[1] = extractSubstringFromSpecificIndex(input, WorkoutConstant.SPLIT_BY_DISTANCE);
+        results[0] = extractSubstringFromSpecificIndex(input,WorkoutConstant.SPLIT_BY_TIME).trim();
+        results[1] = extractSubstringFromSpecificIndex(input, WorkoutConstant.SPLIT_BY_DISTANCE).trim();
 
         if (input.contains(WorkoutConstant.SPLIT_BY_DATE)) {
-            results[2] = extractSubstringFromSpecificIndex(input, WorkoutConstant.SPLIT_BY_DATE);
+            results[2] = extractSubstringFromSpecificIndex(input, WorkoutConstant.SPLIT_BY_DATE).trim();
         }
         return results;
     }
@@ -358,10 +358,9 @@ public class Parser {
                 String[] validGymStationInput = Validation.splitAndValidateGymStationInput(userInput);
 
                 int numberOfSets = Integer.parseInt(validGymStationInput[1]);
-
                 int numberOfRepetitions = Integer.parseInt(validGymStationInput[2]);
-
                 ArrayList<Integer> weightsArray = Validation.validateWeightsArray(validGymStationInput[3]);
+
                 gym.addStation(validGymStationInput[0], numberOfSets,
                         numberOfRepetitions, weightsArray);
                 i++;
