@@ -368,9 +368,9 @@ public class Validation {
 
         String[] results = new String[4];
         results[0] = exerciseName;
-        results[1] = weights;
-        results[2] = sets;
-        results[3] = reps;
+        results[1] = sets;
+        results[2] = reps;
+        results[3] = weights;
         return results;
     }
 }

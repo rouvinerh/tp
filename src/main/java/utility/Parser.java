@@ -356,8 +356,11 @@ public class Parser {
                 Output.printGymStationPrompt(i + 1);
                 String userInput = Handler.in.nextLine();
                 String[] validGymStationInput = Validation.splitAndValidateGymStationInput(userInput);
+
                 int numberOfSets = Integer.parseInt(validGymStationInput[1]);
+
                 int numberOfRepetitions = Integer.parseInt(validGymStationInput[2]);
+
                 ArrayList<Integer> weightsArray = Validation.validateWeightsArray(validGymStationInput[3]);
                 gym.addStation(validGymStationInput[0], numberOfSets,
                         numberOfRepetitions, weightsArray);

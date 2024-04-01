@@ -482,7 +482,7 @@ public class ValidationTest {
     void splitAndValidateGymStationInput_validInput_correctParametersReturned() throws
             CustomExceptions.InsufficientInput, CustomExceptions.InvalidInput {
         String input = "Bench Press /s:2 /r:4 /w:10,20";
-        String[] expected = {"Bench Press", "10,20", "2", "4"};
+        String[] expected = {"Bench Press", "2", "4", "10,20"};
         String[] result = Validation.splitAndValidateGymStationInput(input);
         assertArrayEquals(expected, result);
     }
