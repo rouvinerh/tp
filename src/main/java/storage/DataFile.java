@@ -19,7 +19,7 @@ import ui.Output;
 import utility.Parser;
 import workouts.Gym;
 import workouts.Run;
-import workouts.WorkoutList;
+// import workouts.WorkoutList;
 import utility.CustomExceptions;
 import constants.UiConstant;
 
