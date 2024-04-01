@@ -4,7 +4,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.AfterAll;
+
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,13 +29,17 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 class OutputTest {
 
+
+    private static final ByteArrayInputStream inContent = new ByteArrayInputStream("".getBytes());
     private static final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private static final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+    private static final InputStream originalIn = System.in;
     private static final PrintStream originalOut = System.out;
     private static final PrintStream originalErr = System.err;
 
     @BeforeAll
     public static void setUpStreams() {
+        System.setIn(inContent);
         System.setOut(new PrintStream(outContent));
         System.setErr(new PrintStream(errContent));
     }
@@ -42,12 +49,18 @@ class OutputTest {
         WorkoutList.clearWorkoutsRunGym();
         HealthList.clearHealthLists();
         outContent.reset();
+        Handler.destroyScanner();
+        if (Handler.in == null) {
+            return;
+        }
+        assert HandlerTest.isScannerClosed(Handler.in) : "Scanner is not closed";
     }
 
     @AfterAll
     public static void restoreStreams() {
         System.setOut(originalOut);
         System.setErr(originalErr);
+        System.setIn(originalIn);
     }
 
     /**
@@ -382,6 +395,9 @@ class OutputTest {
         }
 
     }
+
+
+
 
 
 }
