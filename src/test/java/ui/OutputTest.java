@@ -517,12 +517,5 @@ class OutputTest {
         }
 
     }
-<<<<<<< HEAD
-=======
 
-
-
-
-
->>>>>>> origin/master
 }

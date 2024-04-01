@@ -69,8 +69,8 @@ public class IntegrationTest {
         try {
             ArrayList<Integer> array1 = new ArrayList<>(Arrays.asList(1));
             ArrayList<Integer> array2 = new ArrayList<>(Arrays.asList(1, 2));
-            newGym.addStation("Exercise 1", array1, 1, 10);
-            newGym.addStation("Exercise 2", array2, 2, 20);
+            newGym.addStation("Exercise 1", 1, 10, array1);
+            newGym.addStation("Exercise 2", 2, 20 , array2);
 
             // Save the expected output
             Output.printAddGym(newGym);
@@ -141,15 +141,14 @@ public class IntegrationTest {
             Run run2Expected = new Run("30:10", "40.30", "17-03-2024");
 
             Gym gym1expected = new Gym("18-03-2024");
-            gym1expected.addStation("benchpress", new ArrayList<>(Arrays.asList(40,60)),
-                    2, 4);
-            gym1expected.addStation("squats", new ArrayList<>(Arrays.asList(10,20,30)),
-                    3, 4);
+            gym1expected.addStation("benchpress", 2, 4,
+                    new ArrayList<>(Arrays.asList(40,60)));
+            gym1expected.addStation("squats", 3, 4,
+                    new ArrayList<>(Arrays.asList(10,20,30)));
 
             Gym gym2expected = new Gym("22-03-2024");
-            gym2expected.addStation("deadlift", new ArrayList<>(Arrays.asList(120,130,140,160)),
-                    4, 4);
-
+            gym2expected.addStation("deadlift",  4, 4,
+                    new ArrayList<>(Arrays.asList(120,130,140,160)));
 
             Output.printAddRun(run1Expected);
             Output.printAddRun(run2Expected);
