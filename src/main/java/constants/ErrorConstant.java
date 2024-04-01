@@ -133,4 +133,5 @@ public class ErrorConstant {
     public static final String INVALID_LATEST_FILTER_ERROR = "Missing/invalid filter used!" +
             "Use /item:run/gym/period/bmi";
 
+
 }

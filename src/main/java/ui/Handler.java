@@ -157,6 +157,10 @@ public class Handler {
                 WorkoutList.deleteRun(index);
                 break;
 
+            case APPOINTMENT:
+                HealthList.deleteAppointment(index);
+                break;
+
             default:
                 break;
             }
