@@ -1,11 +1,7 @@
 package workouts;
 
-import utility.CustomExceptions;
 import constants.UiConstant;
 import constants.WorkoutConstant;
-import utility.Validation;
-
-
 import java.util.ArrayList;
 
 /**
@@ -20,26 +16,26 @@ public class GymStation {
      * Constructs a new GymStation object that contains the name, weight, number of repetitions and number of sets done
      * in one station.
      *
-     * @param name         String name of the station
-     * @param weightsList  Weight used.
-     * @param repetition   Number of reps done.
-     * @param numberOfSets Number of sets done.
+     * @param name                String name of the station
+     * @param numberOfSets        Number of sets done.
+     * @param numberOfRepetitions Number of reps done.
+     * @param weightsList         Weight used.
      */
-    protected GymStation(String name, ArrayList<Integer> weightsList, int repetition, int numberOfSets) {
+    protected GymStation(String name, int numberOfSets, int numberOfRepetitions, ArrayList<Integer> weightsList) {
         this.stationName = name;
         this.numberOfSets = numberOfSets;
-        processSets(weightsList, repetition);
+        processSets(weightsList, numberOfRepetitions);
     }
 
     /**
      * Function which adds a GymSet object to GymStation.
      *
      * @param weightsList     The weight done for the particular set.
-     * @param repetition The number of repetitions done for the particular set.
+     * @param numberOfRepetitions The number of repetitions done for the particular set.
      */
-    public void processSets(ArrayList<Integer> weightsList, int repetition) {
+    public void processSets(ArrayList<Integer> weightsList, int numberOfRepetitions) {
         for (int i = 0; i < numberOfSets; i++) {
-            GymSet newSet = new GymSet(weightsList.get(i), repetition);
+            GymSet newSet = new GymSet(weightsList.get(i), numberOfRepetitions);
             sets.add(newSet);
         }
     }
@@ -63,40 +59,12 @@ public class GymStation {
     }
 
     /**
-     * Retrieves a specific GymSet using an index.
-     *
-     * @param index Index of the desired GymSet.
-     * @return Desired GymSet object.
-     */
-    public GymSet getSpecificSet(int index) {
-        return sets.get(index);
-    }
-
-
-    /**
      * Retrieves the number sets within the GymStation.
      *
      * @return The number of sets done.
      */
     public int getNumberOfSets() {
         return numberOfSets;
-    }
-
-    /**
-     * Checks parameters from user input for adding a new GymStation.
-     *
-     * @param splitInput List of strings representing user input.
-     * @throws CustomExceptions.InsufficientInput If there is not enough parameters specified.
-     * @throws CustomExceptions.InvalidInput      If there is invalid input.
-     */
-    public static void addGymStation(Gym gym, String[] splitInput) throws
-            CustomExceptions.InsufficientInput,
-            CustomExceptions.InvalidInput {
-
-        ArrayList<Integer> weightsArray = Validation.validateWeightsArray(splitInput[1]);
-        int setsInteger = Integer.parseInt(splitInput[2]);
-        int repsInteger = Integer.parseInt(splitInput[3]);
-        gym.addStation(splitInput[0], weightsArray, setsInteger, repsInteger);
     }
 
     /**
@@ -128,7 +96,7 @@ public class GymStation {
     public String toRepString(String delimiter) {
         StringBuilder repString = new StringBuilder();
         for (int i = 0; i < sets.size(); i++) {
-            String currentRep = String.valueOf(sets.get(i).getRepetitions());
+            String currentRep = String.valueOf(sets.get(i).getNumberOfRepetitions());
             repString.append(currentRep);
             if (i != sets.size() - 1) {
                 repString.append(delimiter);

@@ -107,7 +107,7 @@ public class Handler {
         } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
             Output.printException(e.getMessage());
         } catch (IllegalArgumentException e) {
-            Output.printException("Invalid workout type! Please input either /e:run or /e:gy!");
+            Output.printException("Invalid workout type! Please input either /e:run or /e:gym!");
         }
     }
 

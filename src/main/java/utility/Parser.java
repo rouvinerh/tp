@@ -12,7 +12,6 @@ import health.Bmi;
 import health.HealthList;
 import health.Period;
 import workouts.Gym;
-import workouts.GymStation;
 import workouts.Run;
 
 import java.time.LocalDate;
@@ -357,8 +356,11 @@ public class Parser {
                 Output.printGymStationPrompt(i + 1);
                 String userInput = Handler.in.nextLine();
                 String[] validGymStationInput = Validation.splitAndValidateGymStationInput(userInput);
-                GymStation.addGymStation(gym, validGymStationInput);
-
+                int numberOfSets = Integer.parseInt(validGymStationInput[1]);
+                int numberOfRepetitions = Integer.parseInt(validGymStationInput[2]);
+                ArrayList<Integer> weightsArray = Validation.validateWeightsArray(validGymStationInput[3]);
+                gym.addStation(validGymStationInput[0], numberOfSets,
+                        numberOfRepetitions, weightsArray);
                 i++;
             } catch (CustomExceptions.InsufficientInput | CustomExceptions.InvalidInput e) {
                 Output.printException(e.getMessage());
@@ -486,7 +488,7 @@ public class Parser {
             throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_GYM_FORMAT_ERROR);
         }
 
-        gym.addStation(currentStationName, weights, numberOfSets, reps);
+        gym.addStation(currentStationName, numberOfSets, reps, weights);
         baseCounter += WorkoutConstant.INCREMENT_OFFSET;
 
         return baseCounter;

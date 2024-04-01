@@ -133,12 +133,12 @@ class OutputTest {
             ArrayList<Integer> array1 = new ArrayList<>(Arrays.asList(1));
             ArrayList<Integer> array2 = new ArrayList<>(Arrays.asList(1,2));
 
-            gym1.addStation("Bench Press",  array1, 1, 10);
-            gym1.addStation("Shoulder Press", array2, 2, 10);
+            gym1.addStation("Bench Press", 1, 10, array1);
+            gym1.addStation("Shoulder Press", 2, 10, array2);
 
             Gym gym2 = new Gym();
-            gym2.addStation("Squat Press", array1, 1, 50);
-            gym2.addStation("Lat Press", array2, 2, 10);
+            gym2.addStation("Squat Press", 1, 50, array1);
+            gym2.addStation("Lat Press", 2, 10, array2);
 
 
             String expected = UiConstant.PARTITION_LINE +
@@ -262,12 +262,12 @@ class OutputTest {
             ArrayList<Integer> array2 = new ArrayList<>(Arrays.asList(1,2));
 
             Gym gym1 = new Gym();
-            gym1.addStation("Bench Press", array1, 1, 50);
-            gym1.addStation("Shoulder Press", array2, 2, 10);
+            gym1.addStation("Bench Press", 1, 50, array1);
+            gym1.addStation("Shoulder Press", 2, 10, array2);
 
             Gym gym2 = new Gym();
-            gym2.addStation("Squat Press", array1, 1, 50);
-            gym2.addStation("Lat Press", array2, 2, 10);
+            gym2.addStation("Squat Press", 1, 50, array1);
+            gym2.addStation("Lat Press", 2, 10, array2);
 
             String expected = UiConstant.PARTITION_LINE +
                     System.lineSeparator() +
@@ -320,8 +320,8 @@ class OutputTest {
         try {
             Run run1 = new Run("11:11:12", "10.24", "19-12-1923");
             Gym gym1 = new Gym("11-11-1992");
-            gym1.addStation("Bench Press", new ArrayList<>(Arrays.asList(10,20)), 2, 4);
-            gym1.addStation("Squat Press", new ArrayList<>(Arrays.asList(100,200)), 2, 4);
+            gym1.addStation("Bench Press", 2, 4, new ArrayList<>(Arrays.asList(10,20)));
+            gym1.addStation("Squat Press", 2, 4, new ArrayList<>(Arrays.asList(100,200)));
 
             String expectedRun1 = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
                     WorkoutConstant.RUN,

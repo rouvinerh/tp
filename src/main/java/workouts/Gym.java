@@ -37,15 +37,15 @@ public class Gym extends Workout {
      * Adds station to an ArrayList of GymStation object.
      *
      * @param name        Name of the gym station.
-     * @param weightsList Weights used for the station.
      * @param numberOfSet Number of sets done.
-     * @param repetitions Number of repetitions done.
+     * @param numberOfRepetitions Number of repetitions done.
+     * @param weightsList Weights used for the station.
      * @throws CustomExceptions.InvalidInput If there is invalid input in any parameter.
      */
-    public void addStation(String name, ArrayList<Integer> weightsList, int numberOfSet,
-                           int repetitions) throws CustomExceptions.InvalidInput {
+    public void addStation(String name, int numberOfSet, int numberOfRepetitions,
+                           ArrayList<Integer> weightsList) throws CustomExceptions.InvalidInput {
         try {
-            GymStation newStation = new GymStation(name, weightsList, repetitions, numberOfSet);
+            GymStation newStation = new GymStation(name, numberOfSet, numberOfRepetitions, weightsList);
             stations.add(newStation);
         } catch (Exception e) {
             throw new CustomExceptions.InvalidInput(WorkoutConstant.INVALID_GYM_INPUT);
