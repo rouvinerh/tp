@@ -73,8 +73,10 @@ public class Parser {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_DELETE_PARAMETERS_ERROR);
         }
         String[] results = new String[UiConstant.NUM_DELETE_PARAMETERS];
-        results[0] = extractSubstringFromSpecificIndex(input, UiConstant.ITEM_FLAG).trim();
-        results[1] = extractSubstringFromSpecificIndex(input, UiConstant.INDEX_FLAG).trim();
+        results[UiConstant.DELETE_ITEM_STRING_INDEX] = extractSubstringFromSpecificIndex(input,
+                UiConstant.ITEM_FLAG).trim();
+        results[UiConstant.DELETE_ITEM_NUMBER_INDEX] = extractSubstringFromSpecificIndex(input,
+                UiConstant.INDEX_FLAG).trim();
         return results;
     }
 
@@ -94,7 +96,6 @@ public class Parser {
             Output.printException(e.getMessage());
             return null;
         }
-
     }
 
     //@@author JustinSoh
@@ -128,7 +129,10 @@ public class Parser {
             CustomExceptions.InsufficientInput {
         String[] bmiDetails = splitBmiInput(userInput);
         Validation.validateBmiInput(bmiDetails);
-        Bmi newBmi = new Bmi(bmiDetails[0], bmiDetails[1], bmiDetails[2]);
+        Bmi newBmi = new Bmi(
+                bmiDetails[HealthConstant.BMI_HEIGHT_INDEX],
+                bmiDetails[HealthConstant.BMI_WEIGHT_INDEX],
+                bmiDetails[HealthConstant.BMI_DATE_INDEX]);
         HealthList.addBmi(newBmi);
         Output.printAddBmi(newBmi);
     }
@@ -148,9 +152,12 @@ public class Parser {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_BMI_PARAMETERS_ERROR);
         }
         String [] results = new String[HealthConstant.NUM_BMI_PARAMETERS];
-        results[0] = extractSubstringFromSpecificIndex(input, HealthConstant.HEIGHT_FLAG).trim();
-        results[1] = extractSubstringFromSpecificIndex(input, HealthConstant.WEIGHT_FLAG).trim();
-        results[2] = extractSubstringFromSpecificIndex(input, HealthConstant.DATE_FLAG).trim();
+        results[HealthConstant.BMI_HEIGHT_INDEX] = extractSubstringFromSpecificIndex(input,
+                HealthConstant.HEIGHT_FLAG).trim();
+        results[HealthConstant.BMI_WEIGHT_INDEX] = extractSubstringFromSpecificIndex(input,
+                HealthConstant.WEIGHT_FLAG).trim();
+        results[HealthConstant.BMI_DATE_INDEX] = extractSubstringFromSpecificIndex(input,
+                HealthConstant.DATE_FLAG).trim();
         return results;
     }
     //@@author
@@ -164,7 +171,9 @@ public class Parser {
             CustomExceptions.InsufficientInput {
         String[] periodDetails = splitPeriodInput(userInput);
         Validation.validatePeriodInput(periodDetails);
-        Period newPeriod = new Period(periodDetails[0], periodDetails[1]);
+        Period newPeriod = new Period(
+                periodDetails[HealthConstant.PERIOD_START_DATE_INDEX],
+                periodDetails[HealthConstant.PERIOD_END_DATE_INDEX]);
         HealthList.addPeriod(newPeriod);
         Output.printAddPeriod(newPeriod);
     }
@@ -182,8 +191,10 @@ public class Parser {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_PERIOD_PARAMETERS_ERROR);
         }
         String [] results = new String[HealthConstant.NUM_PERIOD_PARAMETERS];
-        results[0] = extractSubstringFromSpecificIndex(input, HealthConstant.START_FLAG).trim();
-        results[1] = extractSubstringFromSpecificIndex(input, HealthConstant.END_FLAG).trim();
+        results[HealthConstant.PERIOD_START_DATE_INDEX] = extractSubstringFromSpecificIndex(input,
+                HealthConstant.START_FLAG).trim();
+        results[HealthConstant.PERIOD_END_DATE_INDEX] = extractSubstringFromSpecificIndex(input,
+                HealthConstant.END_FLAG).trim();
         return results;
     }
 
@@ -218,9 +229,12 @@ public class Parser {
                 || !input.contains(HealthConstant.DESCRIPTION_FLAG)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_APPOINTMENT_PARAMETERS_ERROR);
         }
-        results[0] = extractSubstringFromSpecificIndex(input, HealthConstant.DATE_FLAG).trim();
-        results[1] = extractSubstringFromSpecificIndex(input, HealthConstant.TIME_FLAG).trim();
-        results[2] = extractSubstringFromSpecificIndex(input, HealthConstant.DESCRIPTION_FLAG).trim();
+        results[HealthConstant.APPOINTMENT_DATE_INDEX] = extractSubstringFromSpecificIndex(input,
+                HealthConstant.DATE_FLAG).trim();
+        results[HealthConstant.APPOINTMENT_TIME_INDEX] = extractSubstringFromSpecificIndex(input,
+                HealthConstant.TIME_FLAG).trim();
+        results[HealthConstant.APPOINTMENT_DESCRIPTION_INDEX] = extractSubstringFromSpecificIndex(input,
+                HealthConstant.DESCRIPTION_FLAG).trim();
         return results;
     }
 
@@ -233,9 +247,10 @@ public class Parser {
             CustomExceptions.InsufficientInput {
         String[] appointmentDetails = splitAppointmentDetails(userInput);
         Validation.validateAppointmentDetails(appointmentDetails);
-        Appointment newAppointment = new Appointment(appointmentDetails[0],
-                appointmentDetails[1],
-                appointmentDetails[2]);
+        Appointment newAppointment = new Appointment(
+                appointmentDetails[HealthConstant.APPOINTMENT_DATE_INDEX],
+                appointmentDetails[HealthConstant.APPOINTMENT_TIME_INDEX],
+                appointmentDetails[HealthConstant.APPOINTMENT_DESCRIPTION_INDEX]);
         HealthList.addAppointment(newAppointment);
         Output.printAddAppointment(newAppointment);
     }
@@ -273,11 +288,13 @@ public class Parser {
         if (!input.contains(WorkoutConstant.SPLIT_BY_NUMBER_OF_STATIONS)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_GYM_PARAMETERS_ERROR);
         }
-        String[] results = new String[2];
-        results[0] = extractSubstringFromSpecificIndex(input,WorkoutConstant.SPLIT_BY_NUMBER_OF_STATIONS).trim();
+        String[] results = new String[WorkoutConstant.NUMBER_OF_GYM_PARAMETERS];
+        results[WorkoutConstant.GYM_NUMBER_OF_STATIONS_INDEX] = extractSubstringFromSpecificIndex(input,
+                WorkoutConstant.SPLIT_BY_NUMBER_OF_STATIONS).trim();
 
         if (input.contains(WorkoutConstant.SPLIT_BY_DATE)) {
-            results[1] = extractSubstringFromSpecificIndex(input, WorkoutConstant.SPLIT_BY_DATE).trim();
+            results[WorkoutConstant.GYM_DATE_INDEX] = extractSubstringFromSpecificIndex(input,
+                    WorkoutConstant.SPLIT_BY_DATE).trim();
         }
         return results;
     }
@@ -292,12 +309,12 @@ public class Parser {
         String[] gymDetails = splitGymInput(userInput);
         Validation.validateGymInput(gymDetails);
         Gym newGym;
-        if (gymDetails[1] == null) {
+        if (gymDetails[WorkoutConstant.GYM_DATE_INDEX] == null) {
             newGym = new Gym();
         } else {
-            newGym = new Gym(gymDetails[1]);
+            newGym = new Gym(gymDetails[WorkoutConstant.GYM_DATE_INDEX]);
         }
-        int numberOfStations = Integer.parseInt(gymDetails[0]);
+        int numberOfStations = Integer.parseInt(gymDetails[WorkoutConstant.GYM_NUMBER_OF_STATIONS_INDEX]);
         parseGymStationInput(numberOfStations, newGym);
     }
 
@@ -313,12 +330,15 @@ public class Parser {
             !input.contains(WorkoutConstant.SPLIT_BY_TIME)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_RUN_PARAMETERS_ERROR);
         }
-        String[] results = new String[3];
-        results[0] = extractSubstringFromSpecificIndex(input,WorkoutConstant.SPLIT_BY_TIME).trim();
-        results[1] = extractSubstringFromSpecificIndex(input, WorkoutConstant.SPLIT_BY_DISTANCE).trim();
+        String[] results = new String[WorkoutConstant.NUMBER_OF_RUN_PARAMETERS];
+        results[WorkoutConstant.RUN_TIME_INDEX] = extractSubstringFromSpecificIndex(input,
+                WorkoutConstant.SPLIT_BY_TIME).trim();
+        results[WorkoutConstant.RUN_DISTANCE_INDEX] = extractSubstringFromSpecificIndex(input,
+                WorkoutConstant.SPLIT_BY_DISTANCE).trim();
 
         if (input.contains(WorkoutConstant.SPLIT_BY_DATE)) {
-            results[2] = extractSubstringFromSpecificIndex(input, WorkoutConstant.SPLIT_BY_DATE).trim();
+            results[WorkoutConstant.RUN_DATE_INDEX] = extractSubstringFromSpecificIndex(input,
+                    WorkoutConstant.SPLIT_BY_DATE).trim();
         }
         return results;
     }
@@ -333,10 +353,15 @@ public class Parser {
         String[] runDetails = splitRunInput(input);
         Validation.validateRunInput(runDetails);
         Run newRun;
-        if (runDetails[2] == null) {
-            newRun = new Run(runDetails[0], runDetails[1]);
+        if (runDetails[WorkoutConstant.RUN_DATE_INDEX] == null) {
+            newRun = new Run(
+                    runDetails[WorkoutConstant.RUN_TIME_INDEX],
+                    runDetails[WorkoutConstant.RUN_DISTANCE_INDEX]);
         } else {
-            newRun = new Run(runDetails[0], runDetails[1], runDetails[2]);
+            newRun = new Run(
+                    runDetails[WorkoutConstant.RUN_TIME_INDEX],
+                    runDetails[WorkoutConstant.RUN_DISTANCE_INDEX],
+                    runDetails[WorkoutConstant.RUN_DATE_INDEX]);
         }
         Output.printAddRun(newRun);
     }
@@ -355,11 +380,13 @@ public class Parser {
                 String userInput = Handler.in.nextLine();
                 String[] validGymStationInput = Validation.splitAndValidateGymStationInput(userInput);
 
-                int numberOfSets = Integer.parseInt(validGymStationInput[1]);
-                int numberOfRepetitions = Integer.parseInt(validGymStationInput[2]);
-                ArrayList<Integer> weightsArray = Validation.validateWeightsArray(validGymStationInput[3]);
+                int numberOfSets = Integer.parseInt(validGymStationInput[WorkoutConstant.GYM_STATION_SET_INDEX]);
+                int numberOfRepetitions = Integer.parseInt(
+                        validGymStationInput[WorkoutConstant.GYM_STATION_REPS_INDEX]);
+                ArrayList<Integer> weightsArray = Validation.validateWeightsArray(
+                        validGymStationInput[WorkoutConstant.GYM_STATION_WEIGHTS_INDEX]);
 
-                gym.addStation(validGymStationInput[0], numberOfSets,
+                gym.addStation(validGymStationInput[WorkoutConstant.GYM_STATION_NAME_INDEX], numberOfSets,
                         numberOfRepetitions, weightsArray);
                 i++;
             } catch (CustomExceptions.InsufficientInput | CustomExceptions.InvalidInput e) {

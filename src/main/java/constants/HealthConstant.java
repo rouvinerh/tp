@@ -70,4 +70,14 @@ public class HealthConstant {
     public static final String APPOINTMENT_ADDED_MESSAGE_PREFIX = "Added: appointment | ";
     public static final String APPOINTMENT_REMOVED_MESSAGE_PREFIX = "Removed appointment with index: ";
     public static final Integer MAX_DESCRIPTION_LENGTH = 100;
+
+    // SPLIT INDEX
+    public static final int BMI_HEIGHT_INDEX = 0;
+    public static final int BMI_WEIGHT_INDEX = 1;
+    public static final int BMI_DATE_INDEX = 2;
+    public static final int PERIOD_START_DATE_INDEX = 0;
+    public static final int PERIOD_END_DATE_INDEX = 1;
+    public static final int APPOINTMENT_DATE_INDEX = 0;
+    public static final int APPOINTMENT_TIME_INDEX = 1;
+    public static final int APPOINTMENT_DESCRIPTION_INDEX = 2;
 }
