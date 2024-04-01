@@ -74,7 +74,6 @@ public class ErrorConstant {
     public static final String RUN_DISTANCE_EMPTY_ERROR = "Distance cannot be blank! e.g. /d:10.32";
 
     public static final String INSUFFICIENT_RUN_PARAMETERS_ERROR = "Insufficient parameters for run! "
-            + System.lineSeparator()
             + "Example input: /e:run /d:5.25 /t:25:23 [/date:DATE]";
     public static final String INVALID_RUN_DISTANCE_ERROR = "Distance is a 2 decimal point positive number!";
     public static final String INVALID_RUN_TIME_ERROR = "Invalid time foramt. Format is either HH:MM:SS or" +
@@ -86,7 +85,6 @@ public class ErrorConstant {
 
     // GYM ERRORS
     public static final String INSUFFICIENT_GYM_PARAMETERS_ERROR = "Insufficient parameters for gym!"
-            + System.lineSeparator()
             + "Example input: /e:gym /n:2 [/date:DATE]";
     public static final String INVALID_NUMBER_OF_STATIONS_ERROR = "Number of stations is a positive number!";
     public static final String EMPTY_EXERCISE_NAME_ERROR = "Exercise name cannot be blank!";

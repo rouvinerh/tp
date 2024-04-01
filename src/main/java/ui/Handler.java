@@ -83,8 +83,10 @@ public class Handler {
 
 
     /**
-     * TO ADD.
-     * @param userInput
+     * Handles workout command.
+     * Adds a Run or Gym object to PulsePilot.
+     *
+     * @param userInput The user input string.
      */
     //@@author JustinSoh
     public static void handleWorkout(String userInput) {

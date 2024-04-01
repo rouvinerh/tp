@@ -271,8 +271,7 @@ public class Parser {
      */
     public static String[] splitGymInput(String input) throws CustomExceptions.InsufficientInput {
         if (!input.contains(WorkoutConstant.SPLIT_BY_NUMBER_OF_STATIONS)) {
-            throw new CustomExceptions.InsufficientInput("Insufficient parameters for gym! " +
-                    "Example input: /e:gym /n:2 [/date:DATE]");
+            throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_GYM_PARAMETERS_ERROR);
         }
         String[] results = new String[2];
         results[0] = extractSubstringFromSpecificIndex(input,WorkoutConstant.SPLIT_BY_NUMBER_OF_STATIONS).trim();
@@ -312,8 +311,7 @@ public class Parser {
     public static String[] splitRunInput(String input) throws CustomExceptions.InsufficientInput {
         if (!input.contains(WorkoutConstant.SPLIT_BY_DISTANCE) ||
             !input.contains(WorkoutConstant.SPLIT_BY_TIME)) {
-            throw new CustomExceptions.InsufficientInput("Insufficient parameters for run! " +
-                    "Example input: /e:run /d:5.25 /t:25:23 [/date:DATE]");
+            throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_RUN_PARAMETERS_ERROR);
         }
         String[] results = new String[3];
         results[0] = extractSubstringFromSpecificIndex(input,WorkoutConstant.SPLIT_BY_TIME).trim();
@@ -371,7 +369,6 @@ public class Parser {
         Output.printAddGym(gym);
     }
 
-    // FILE CODE STARTS HERE
     //@@author L5-Z
     /**
      * Splits the Gym File Input that comes from Storage.
