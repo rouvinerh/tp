@@ -1,15 +1,19 @@
 package ui;
 
+import health.Appointment;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.AfterAll;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-import utility.UiConstant;
+import constants.ErrorConstant;
+import constants.UiConstant;
 import utility.CustomExceptions;
-import utility.WorkoutConstant;
+import constants.WorkoutConstant;
 import workouts.Gym;
 import workouts.Run;
 import workouts.WorkoutList;
@@ -19,6 +23,7 @@ import health.HealthList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class OutputTest {
 
@@ -36,7 +41,7 @@ class OutputTest {
     @AfterEach
     public void cleanup() {
         WorkoutList.clearWorkoutsRunGym();
-        HealthList.clearBmisAndPeriods();
+        HealthList.clearHealthLists();
         outContent.reset();
     }
 
@@ -110,7 +115,7 @@ class OutputTest {
         String expected = UiConstant.PARTITION_LINE +
                 System.lineSeparator() +
                 "\u001B[31mError: " +
-                WorkoutConstant.NO_RUNS_FOUND +
+                ErrorConstant.HISTORY_RUN_EMPTY_ERROR +
                 "\u001B[0m" +
                 System.lineSeparator() +
                 UiConstant.PARTITION_LINE +
@@ -126,12 +131,16 @@ class OutputTest {
     void printLatestGym_twoGyms_expectOneGymPrinted() {
         try{
             Gym gym1 = new Gym();
-            gym1.addStation("Bench Press", 4, 10, 50);
-            gym1.addStation("Shoulder Press", 20, 4, 10);
+            ArrayList<Integer> array1 = new ArrayList<>(Arrays.asList(1));
+            ArrayList<Integer> array2 = new ArrayList<>(Arrays.asList(1,2));
+
+            gym1.addStation("Bench Press", 1, 10, array1);
+            gym1.addStation("Shoulder Press", 2, 10, array2);
 
             Gym gym2 = new Gym();
-            gym2.addStation("Squat Press", 4, 10, 50);
-            gym2.addStation("Lat Press", 20, 4, 10);
+            gym2.addStation("Squat Press", 1, 50, array1);
+            gym2.addStation("Lat Press", 2, 10, array2);
+
 
             String expected = UiConstant.PARTITION_LINE +
                     System.lineSeparator() +
@@ -139,11 +148,17 @@ class OutputTest {
                     System.lineSeparator() +
                     "Gym Session 2 (Date: NA)" +
                     System.lineSeparator() +
-                    String.format(WorkoutConstant.GYM_STATION_FORMAT, "Squat Press") +
-                    String.format(WorkoutConstant.INDIVIDUAL_GYM_STATION_FORMAT, 10, "50 reps at 4 KG") +
+                    String.format(WorkoutConstant.GYM_STATION_FORMAT, "Station 1 Squat Press") +
+                    String.format(WorkoutConstant.INDIVIDUAL_GYM_STATION_FORMAT, 1) +
                     System.lineSeparator() +
-                    String.format(WorkoutConstant.GYM_STATION_FORMAT, "Lat Press") +
-                    String.format(WorkoutConstant.INDIVIDUAL_GYM_STATION_FORMAT, 4, "10 reps at 20 KG") +
+                    String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, 1, "50 reps at 1 KG") +
+                    System.lineSeparator() +
+                    String.format(WorkoutConstant.GYM_STATION_FORMAT, "Station 2 Lat Press") +
+                    String.format(WorkoutConstant.INDIVIDUAL_GYM_STATION_FORMAT, 2) +
+                    System.lineSeparator() +
+                    String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, 1, "10 reps at 1 KG") +
+                    System.lineSeparator() +
+                    String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, 2, "10 reps at 2 KG") +
                     System.lineSeparator() +
                     UiConstant.PARTITION_LINE +
                     System.lineSeparator();
@@ -166,7 +181,7 @@ class OutputTest {
         String expected = UiConstant.PARTITION_LINE +
                 System.lineSeparator() +
                 "\u001B[31mError: " +
-                WorkoutConstant.NO_GYMS_FOUND +
+                ErrorConstant.HISTORY_GYM_EMPTY_ERROR +
                 "\u001B[0m" +
                 System.lineSeparator() +
                 UiConstant.PARTITION_LINE +
@@ -179,7 +194,8 @@ class OutputTest {
     /**
      * Tests the behaviour of the printLatestBmi function when two Bmi objects are added.
      */
-    @Test void printLatestBmi_twoBmis_expectOneBmiPrinted() {
+    @Test
+    void printLatestBmi_twoBmis_expectOneBmiPrinted() {
         Bmi firstBmi = new Bmi("1.75", "70.0", "18-03-2024");
         Bmi secondBmi = new Bmi("1.55", "55.0", "20-03-2024");
         HealthList.addBmi(firstBmi);
@@ -237,19 +253,143 @@ class OutputTest {
     }
 
     /**
+     * Tests the behaviour of the printLatestAppointment function when two Appointment objects are added.
+     */
+    @Test
+    void printLatestAppointment_twoAppointments_expectOneAppointmentPrinted() {
+        Appointment firstAppointment = new Appointment("29-03-2024", "17:00", "test");
+        Appointment secondAppointment = new Appointment("24-01-2026", "12:00", "test2");
+        HealthList.addAppointment(firstAppointment);
+        HealthList.addAppointment(secondAppointment);
+
+        Output.printLatestAppointment();
+        String expected = UiConstant.PARTITION_LINE +
+                System.lineSeparator() +
+                "On 2026-01-24 at 12:00: test2" +
+                System.lineSeparator() +
+                UiConstant.PARTITION_LINE +
+                System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+
+    /**
+     * Tests the behaviour of the printLatestAppointment function when no Appointment objects are added.
+     */
+    @Test
+    void printLatestAppointment_noAppointments_expectAssertionError() {
+        assertThrows(AssertionError.class, Output::printLatestAppointment);
+    }
+
+    /**
+     * Tests the behaviour of printAppointmentHistory when two Appointment objects are added.
+     * Expects two Appointment objects to be pritned.
+     *
+     * @throws CustomExceptions.OutOfBounds If there is out of bounds access.
+     * @throws CustomExceptions.InvalidInput If there is invalid input.
+     */
+    @Test
+    void printAppointmentHistory_twoAppointments_expectTwoAppointmentsPrinted() throws
+            CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
+        Appointment firstAppointment = new Appointment("29-03-2024", "17:00", "test");
+        Appointment secondAppointment = new Appointment("24-01-2026", "12:00", "test2");
+        HealthList.addAppointment(firstAppointment);
+        HealthList.addAppointment(secondAppointment);
+        Output.printAppointmentHistory();
+        String expected = UiConstant.PARTITION_LINE +
+                System.lineSeparator() +
+                "Your Appointment history:" +
+                System.lineSeparator() +
+                "1. On 2024-03-29 at 17:00: test" +
+                System.lineSeparator() +
+                "2. On 2026-01-24 at 12:00: test2" +
+                System.lineSeparator() +
+                UiConstant.PARTITION_LINE +
+                System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+
+    /**
+     * Tests the behaviour of the printPeriodHistory function when two Period objects are added.
+     */
+    @Test
+    void printPeriodHistory_twoPeriods_expectTwoPeriodsPrinted() throws
+            CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
+        Period firstPeriod = new Period("09-02-2023", "16-02-2023");
+        Period secondPeriod = new Period("09-03-2023", "16-03-2023");
+        HealthList.addPeriod(firstPeriod);
+        HealthList.addPeriod(secondPeriod);
+        Output.printPeriodHistory();
+        String expected = UiConstant.PARTITION_LINE +
+                System.lineSeparator() +
+                "Your Period history:" +
+                System.lineSeparator() +
+                "Period Start: 2023-02-09 Period End: 2023-02-16" +
+                System.lineSeparator() +
+                "Period Length: 8 days" +
+                System.lineSeparator() +
+                "Cycle Length: 28 days" +
+                System.lineSeparator() +
+                "Period Start: 2023-03-09 Period End: 2023-03-16" +
+                System.lineSeparator() +
+                "Period Length: 8 days" +
+                System.lineSeparator() +
+                UiConstant.PARTITION_LINE +
+                System.lineSeparator();
+
+        assertEquals(expected, outContent.toString());
+    }
+
+    /**
+     * Tests the behaviour of the printLatestBmi function when two Bmi objects are added.
+     */
+    @Test
+    void printBmiHistory_twoBmis_expectTwoBmisPrinted() throws CustomExceptions.OutOfBounds,
+            CustomExceptions.InvalidInput {
+        Bmi firstBmi = new Bmi("1.75", "70.0", "18-03-2024");
+        Bmi secondBmi = new Bmi("1.55", "55.0", "20-03-2024");
+        HealthList.addBmi(firstBmi);
+        HealthList.addBmi(secondBmi);
+        Output.printBmiHistory();
+        String expected = UiConstant.PARTITION_LINE +
+                System.lineSeparator() +
+                "Your BMI history:" +
+                System.lineSeparator() +
+                "2024-03-18" +
+                System.lineSeparator() +
+                "Your BMI is 22.86" +
+                System.lineSeparator() +
+                "Great! You're within normal range." +
+                System.lineSeparator() +
+                "2024-03-20" +
+                System.lineSeparator() +
+                "Your BMI is 22.89" +
+                System.lineSeparator() +
+                "Great! You're within normal range." +
+                System.lineSeparator() +
+                UiConstant.PARTITION_LINE +
+                System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+
+
+    /**
      * Tests the behaviour of the printGymHistory function, which should print both Gyms
      * added.
      */
     @Test
     void printGymHistory_correctInput_expectPrintGymHistory(){
         try{
+
+            ArrayList<Integer> array1 = new ArrayList<>(Arrays.asList(1));
+            ArrayList<Integer> array2 = new ArrayList<>(Arrays.asList(1,2));
+
             Gym gym1 = new Gym();
-            gym1.addStation("Bench Press", 4, 10, 50);
-            gym1.addStation("Shoulder Press", 20, 4, 10);
+            gym1.addStation("Bench Press", 1, 50, array1);
+            gym1.addStation("Shoulder Press", 2, 10, array2);
 
             Gym gym2 = new Gym();
-            gym2.addStation("Squat Press", 4, 10, 50);
-            gym2.addStation("Lat Press", 20, 4, 10);
+            gym2.addStation("Squat Press", 1, 50, array1);
+            gym2.addStation("Lat Press", 2, 10, array2);
 
             String expected = UiConstant.PARTITION_LINE +
                     System.lineSeparator() +
@@ -257,21 +397,33 @@ class OutputTest {
                     System.lineSeparator() +
                     "Gym Session 1 (Date: NA)"+
                     System.lineSeparator() +
-                    String.format(WorkoutConstant.GYM_STATION_FORMAT, "Bench Press") +
-                    String.format(WorkoutConstant.INDIVIDUAL_GYM_STATION_FORMAT, 10, "50 reps at 4 KG") +
+                    String.format(WorkoutConstant.GYM_STATION_FORMAT, "Station 1 Bench Press") +
+                    String.format(WorkoutConstant.INDIVIDUAL_GYM_STATION_FORMAT, 1) +
                     System.lineSeparator() +
-                    String.format(WorkoutConstant.GYM_STATION_FORMAT, "Shoulder Press") +
-                    String.format(WorkoutConstant.INDIVIDUAL_GYM_STATION_FORMAT, 4, "10 reps at 20 KG") +
+                    String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, 1, "50 reps at 1 KG") +
+                    System.lineSeparator() +
+                    String.format(WorkoutConstant.GYM_STATION_FORMAT, "Station 2 Shoulder Press") +
+                    String.format(WorkoutConstant.INDIVIDUAL_GYM_STATION_FORMAT, 2) +
+                    System.lineSeparator() +
+                    String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, 1, "10 reps at 1 KG") +
+                    System.lineSeparator() +
+                    String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, 2, "10 reps at 2 KG") +
                     System.lineSeparator() +
                     UiConstant.PARTITION_LINE +
                     System.lineSeparator() +
                     "Gym Session 2 (Date: NA)" +
                     System.lineSeparator() +
-                    String.format(WorkoutConstant.GYM_STATION_FORMAT, "Squat Press") +
-                    String.format(WorkoutConstant.INDIVIDUAL_GYM_STATION_FORMAT, 10, "50 reps at 4 KG") +
-                    System.lineSeparator()+
-                    String.format(WorkoutConstant.GYM_STATION_FORMAT, "Lat Press") +
-                    String.format(WorkoutConstant.INDIVIDUAL_GYM_STATION_FORMAT, 4, "10 reps at 20 KG") +
+                    String.format(WorkoutConstant.GYM_STATION_FORMAT, "Station 1 Squat Press") +
+                    String.format(WorkoutConstant.INDIVIDUAL_GYM_STATION_FORMAT, 1) +
+                    System.lineSeparator() +
+                    String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, 1, "50 reps at 1 KG") +
+                    System.lineSeparator() +
+                    String.format(WorkoutConstant.GYM_STATION_FORMAT, "Station 2 Lat Press") +
+                    String.format(WorkoutConstant.INDIVIDUAL_GYM_STATION_FORMAT, 2) +
+                    System.lineSeparator() +
+                    String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, 1, "10 reps at 1 KG") +
+                    System.lineSeparator() +
+                    String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, 2, "10 reps at 2 KG") +
                     System.lineSeparator() +
                     UiConstant.PARTITION_LINE +
                     System.lineSeparator();
@@ -280,5 +432,76 @@ class OutputTest {
         }  catch (CustomExceptions.InvalidInput e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    /**
+     * Test the behaviour of the printRunHistory function, which should print both Runs and Gyms
+     */
+    @Test
+    void printWorkoutHistory() {
+        try {
+            Run run1 = new Run("11:11:12", "10.24", "19-12-1923");
+            Gym gym1 = new Gym("11-11-1992");
+            gym1.addStation("Bench Press", 2, 4, new ArrayList<>(Arrays.asList(10,20)));
+            gym1.addStation("Squat Press", 2, 4, new ArrayList<>(Arrays.asList(100,200)));
+
+            String expectedRun1 = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
+                    WorkoutConstant.RUN,
+                    "1923-12-19",
+                    "10.24",
+                    "11:11:12",
+                    "65:33/km",
+                    UiConstant.DASH,
+                    UiConstant.DASH,
+                    UiConstant.DASH,
+                    UiConstant.DASH
+                    );
+
+
+            String expectedGym1Set1 = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
+                    WorkoutConstant.GYM,
+                    "1992-11-11",
+                    UiConstant.DASH,
+                    UiConstant.DASH,
+                    UiConstant.DASH,
+                    "Bench Press",
+                    "2",
+                    "4,4",
+                    "10,20"
+            );
+
+            String expectedGym1Set2 = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
+                    UiConstant.EMPTY_STRING,
+                    UiConstant.EMPTY_STRING,
+                    UiConstant.EMPTY_STRING,
+                    UiConstant.EMPTY_STRING,
+                    UiConstant.EMPTY_STRING,
+                    "Squat Press",
+                    "2",
+                    "4,4",
+                    "100,200"
+            );
+
+            String expected2 = String.format(
+                    WorkoutConstant.HISTORY_WORKOUTS_DATA_HEADER_FORMAT, "2", expectedGym1Set1)
+                    + System.lineSeparator() +
+                    String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_HEADER_FORMAT, "", expectedGym1Set2);
+
+
+            String expected1 = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_HEADER_FORMAT, "1", expectedRun1);
+
+            String expected = UiConstant.PARTITION_LINE + System.lineSeparator()
+                    + WorkoutConstant.HISTORY_WORKOUTS_HEADER + System.lineSeparator()
+                    + WorkoutConstant.HISTORY_WORKOUTS_HEADER_FORMAT + System.lineSeparator()
+                    + expected1 + System.lineSeparator()
+                    + expected2 + System.lineSeparator()
+                    + UiConstant.PARTITION_LINE + System.lineSeparator();
+
+            Output.printHistory(WorkoutConstant.ALL);
+            assertEquals(expected, outContent.toString());
+        } catch (CustomExceptions.InvalidInput e) {
+            fail("Shouldn't have failed");
+        }
+
     }
 }

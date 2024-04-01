@@ -1,10 +1,7 @@
 package workouts;
 
-import utility.CustomExceptions;
-import utility.ErrorConstant;
-import utility.UiConstant;
-import utility.WorkoutConstant;
-
+import constants.UiConstant;
+import constants.WorkoutConstant;
 import java.util.ArrayList;
 
 /**
@@ -19,25 +16,26 @@ public class GymStation {
      * Constructs a new GymStation object that contains the name, weight, number of repetitions and number of sets done
      * in one station.
      *
-     * @param name String name of the station
-     * @param weight Weight used.
-     * @param repetition Number of reps done.
-     * @param numberOfSets Number of sets done.
+     * @param name                String name of the station
+     * @param numberOfSets        Number of sets done.
+     * @param numberOfRepetitions Number of reps done.
+     * @param weightsList         Weight used.
      */
-    public GymStation(String name, int weight, int repetition , int numberOfSets) {
+    protected GymStation(String name, int numberOfSets, int numberOfRepetitions, ArrayList<Integer> weightsList) {
         this.stationName = name;
         this.numberOfSets = numberOfSets;
-        processSets(weight, repetition);
+        processSets(weightsList, numberOfRepetitions);
     }
 
     /**
      * Function which adds a GymSet object to GymStation.
-     * @param weight The weight done for the set.
-     * @param repetition The number of repetitions done for the set.
+     *
+     * @param weightsList     The weight done for the particular set.
+     * @param numberOfRepetitions The number of repetitions done for the particular set.
      */
-    public void processSets(int weight, int repetition){
+    public void processSets(ArrayList<Integer> weightsList, int numberOfRepetitions) {
         for (int i = 0; i < numberOfSets; i++) {
-            GymSet newSet = new GymSet(weight, repetition);
+            GymSet newSet = new GymSet(weightsList.get(i), numberOfRepetitions);
             sets.add(newSet);
         }
     }
@@ -56,20 +54,9 @@ public class GymStation {
      *
      * @return The ArrayList of GymSet objects.
      */
-    public  ArrayList<GymSet> getSets() {
+    public ArrayList<GymSet> getSets() {
         return sets;
     }
-
-    /**
-     * Retrieves a specific GymSet using an index.
-     *
-     * @param index Index of the desired GymSet.
-     * @return Desired GymSet object.
-     */
-    public GymSet getSpecificSet(int index) {
-        return sets.get(index);
-    }
-
 
     /**
      * Retrieves the number sets within the GymStation.
@@ -81,48 +68,85 @@ public class GymStation {
     }
 
     /**
-     * Checks parameters from user input for adding a new GymStation.
-     *
-     * @param inputs List of strings representing user input.
-     * @return Array of strings representing the parameters required for a new GymStation.
-     * @throws CustomExceptions.InsufficientInput If there is not enough parameters specified.
-     * @throws CustomExceptions.InvalidInput If there is invalid input.
-     */
-    public static String[] checkIfGymStationInputValid(String[] inputs) throws
-            CustomExceptions.InsufficientInput,
-            CustomExceptions.InvalidInput {
-
-        String exerciseName = inputs[WorkoutConstant.INDEX_OF_STATION_NAME].trim();
-        String sets = inputs[WorkoutConstant.INDEX_OF_STATION_SETS].split(UiConstant.SPLIT_BY_COLON)[1].trim();
-        String reps = inputs[WorkoutConstant.INDEX_OF_STATION_REPS].split(UiConstant.SPLIT_BY_COLON)[1].trim();
-        String weights = inputs[WorkoutConstant.INDEX_OF_STATION_WEIGHTS].split(UiConstant.SPLIT_BY_COLON)[1].trim();
-
-        try {
-            int setInteger = Integer.parseInt(sets);
-            int repInteger = Integer.parseInt(reps);
-            int weightInteger = Integer.parseInt(weights);
-            assert setInteger > 0 : ErrorConstant.NEGATIVE_VALUE_ERROR;
-            assert repInteger > 0 : ErrorConstant.NEGATIVE_VALUE_ERROR;
-            assert weightInteger > 0 : ErrorConstant.NEGATIVE_VALUE_ERROR;
-
-        } catch (NumberFormatException e) {
-            throw new CustomExceptions.InvalidInput(WorkoutConstant.NUMERIC_INPUT_REQUIRED_GYM_STATION);
-        }
-
-
-        return new String[]{exerciseName, sets, reps, weights};
-    }
-    /**
      * Retrieves the string representation of a GymStation object.
      *
      * @return A formatted string representing a GymStation object.
      */
     @Override
     public String toString() {
-        return String.format(WorkoutConstant.GYM_STATION_FORMAT,
+        StringBuilder returnString = new StringBuilder(String.format(WorkoutConstant.GYM_STATION_FORMAT,
                 this.getStationName()) + String.format(WorkoutConstant.INDIVIDUAL_GYM_STATION_FORMAT,
-                this.getNumberOfSets(),
-                this.getSpecificSet(0));
+                this.getNumberOfSets()));
+
+        for (int i = 0; i < this.getNumberOfSets(); i++) {
+            returnString.append(System.lineSeparator());
+            returnString.append(String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, i+1 ,
+                    this.getSets().get(i).toString()));
+        }
+        return returnString.toString();
     }
 
+    /**
+     * Retrieves the string representation of a GymStation object with a specified delimiter
+     * E.g. toRepString(",") returns "1,2,3"
+     * E.g. toRepString(":") returns "1:2:3"
+     * @param delimiter The delimiter to separate the repetitions.
+     * @return A formatted string representing a GymStation object with the specified delimiter.
+     */
+    public String toRepString(String delimiter) {
+        StringBuilder repString = new StringBuilder();
+        for (int i = 0; i < sets.size(); i++) {
+            String currentRep = String.valueOf(sets.get(i).getNumberOfRepetitions());
+            repString.append(currentRep);
+            if (i != sets.size() - 1) {
+                repString.append(delimiter);
+            }
+        }
+        return repString.toString();
+    }
+
+    /**
+     * Retrieves the string representation of a GymStation object with a specified delimiter
+     * E.g. toWeightString(",") returns "10,20,30"
+     * E.g. toWeightString(":") returns "10:20:30"
+     * @param delimiter The delimiter to separate the weights.
+     * @return A formatted string representing a GymStation object with the specified delimiter.
+     */
+    public String toWeightString(String delimiter){
+        StringBuilder weightString = new StringBuilder();
+        for (int i = 0; i < sets.size(); i++) {
+            String currentRep = String.valueOf(sets.get(i).getWeight());
+            weightString.append(currentRep);
+            if (i != sets.size() - 1) {
+                weightString.append(delimiter);
+            }
+        }
+        return weightString.toString();
+    }
+
+    /**
+     * Retrieves the string representation of a GymStation object for writing into a file.
+     * Formats the string in the following format
+     * "[Exercise Name]:[Number of Sets]:[Repetitions]:[Weights1, Weight2,Weight3 ...]"
+     * @return A formatted string representing a GymStation object with the format above.
+     */
+    public String toFileString(){
+        StringBuilder fileString = new StringBuilder();
+        String stationName = getStationName();
+        String numOfSets = String.valueOf(getNumberOfSets());
+        String gymRepString = toRepString(UiConstant.SPLIT_BY_COMMAS).split(UiConstant.SPLIT_BY_COMMAS)[0];
+        String gymWeightString = toWeightString(UiConstant.SPLIT_BY_COMMAS);
+        fileString.append(stationName);
+        fileString.append(UiConstant.SPLIT_BY_COLON);
+        fileString.append(numOfSets);
+        fileString.append(UiConstant.SPLIT_BY_COLON);
+        fileString.append(gymRepString);
+        fileString.append(UiConstant.SPLIT_BY_COLON);
+        fileString.append(gymWeightString);
+        return fileString.toString();
+    }
+
+
 }
+
+

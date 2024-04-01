@@ -1,64 +1,77 @@
 package health;
 
-import utility.CustomExceptions;
-import utility.ErrorConstant;
-import utility.HealthConstant;
+import constants.ErrorConstant;
+import constants.HealthConstant;
 import utility.Parser;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+/**
+ * The Appointment class extends the Health class.
+ * It contains information about the date, time, and description of the appointment.
+ */
 public class Appointment extends Health {
-    //@@author syj02
+    /**
+     * The date of the appointment.
+     */
     protected LocalDate date;
+    /**
+     * The time of the appointment.
+     */
     protected LocalTime time;
+    /**
+     * The description of the appointment.
+     */
     protected String description;
 
+    /**
+     * Constructor for Appointment object.
+     *
+     * @param stringDate A string representing the date of the appointment
+     * @param stringTime A string representing the time of the appointment
+     * @param description A string describing the appointment
+     */
     public Appointment(String stringDate, String stringTime, String description) {
         this.date = Parser.parseDate(stringDate);
         this.time = Parser.parseTime(stringTime);
         this.description = description;
     }
 
+    /**
+     * Retrieves the date of the appointment.
+     *
+     * @return The date of appointment in LocalDate
+     */
     public LocalDate getDate() {
+        assert date != null : ErrorConstant.NULL_DATE_ERROR;
         return this.date;
     }
 
+    /**
+     * Retrieves the time of the appointment
+     *
+     * @return The time of appointment in LocalTime
+     */
     public LocalTime getTime() {
+        assert time != null : ErrorConstant.NULL_TIME_ERROR;
         return this.time;
     }
-    public static String[] getAppointment(String input) throws CustomExceptions.InvalidInput {
-        String[] results = new String[HealthConstant.APPOINTMENT_PARAMETERS];
 
-        if (!input.contains(HealthConstant.HEALTH_FLAG)
-                || !input.contains(HealthConstant.DATE_FLAG)
-                || !input.contains(HealthConstant.TIME_FLAG)
-                || !input.contains(HealthConstant.DESCRIPTION_FLAG)) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.UNSPECIFIED_PARAMETER_ERROR);
-        }
-
-        int indexH = input.indexOf(HealthConstant.HEALTH_FLAG);
-        int indexDate = input.indexOf(HealthConstant.DATE_FLAG);
-        int indexTime = input.indexOf(HealthConstant.TIME_FLAG);
-        int indexDescription = input.indexOf(HealthConstant.DESCRIPTION_FLAG);
-
-        String command = input.substring(indexH + HealthConstant.H_OFFSET, indexDate).trim();
-        String dateSubstring = input.substring(indexDate + HealthConstant.DATE_OFFSET, indexTime).trim();
-        String timeSubstring = input.substring(indexTime + HealthConstant.TIME_OFFSET, indexDescription).trim();
-        String descriptionSubstring = input.substring(indexDescription + HealthConstant.DESCRIPTION_OFFSET).trim();
-
-        if (command.isEmpty() || dateSubstring.isEmpty() || timeSubstring.isEmpty() || descriptionSubstring.isEmpty()) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INSUFFICIENT_BMI_PARAMETERS_ERROR);
-        }
-
-        results[0] = command;
-        results[1] = dateSubstring;
-        results[2] = timeSubstring;
-        results[3] = descriptionSubstring;
-
-        return results;
+    /**
+     * Retrieves the description of the appointment.
+     *
+     * @return The description of appointment in String
+     */
+    public String getDescription() {
+        return this.description;
     }
 
+    /**
+     * Retrieves the string representation of an Appointment object.
+     *
+     * @return A formatted string representing an Appointment object.
+     */
     @Override
     public String toString() {
         return String.format(HealthConstant.PRINT_APPOINTMENT_FORMAT,

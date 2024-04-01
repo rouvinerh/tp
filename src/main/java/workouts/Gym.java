@@ -1,9 +1,10 @@
 package workouts;
 
 import utility.CustomExceptions;
+import constants.ErrorConstant;
 import utility.Parser;
-import utility.ErrorConstant;
-import utility.WorkoutConstant;
+import constants.UiConstant;
+import constants.WorkoutConstant;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -36,15 +37,15 @@ public class Gym extends Workout {
      * Adds station to an ArrayList of GymStation object.
      *
      * @param name        Name of the gym station.
-     * @param weight      Weight used for the station.
      * @param numberOfSet Number of sets done.
-     * @param repetitions Number of repetitions done.
+     * @param numberOfRepetitions Number of repetitions done.
+     * @param weightsList Weights used for the station.
      * @throws CustomExceptions.InvalidInput If there is invalid input in any parameter.
      */
-    public void addStation(String name, int weight, int numberOfSet,
-                           int repetitions) throws CustomExceptions.InvalidInput {
+    public void addStation(String name, int numberOfSet, int numberOfRepetitions,
+                           ArrayList<Integer> weightsList) throws CustomExceptions.InvalidInput {
         try {
-            GymStation newStation = new GymStation(name, weight, repetitions, numberOfSet);
+            GymStation newStation = new GymStation(name, numberOfSet, numberOfRepetitions, weightsList);
             stations.add(newStation);
         } catch (Exception e) {
             throw new CustomExceptions.InvalidInput(WorkoutConstant.INVALID_GYM_INPUT);
@@ -67,51 +68,14 @@ public class Gym extends Workout {
         return stations.get(index);
     }
 
-    /**
-     * Adds new gym station using validated parameters.
-     *
-     * @param validatedInputs Array representing validated GymStation parameters.
-     * @param gym             Gym object to add the GymStation to.
-     * @throws CustomExceptions.InsufficientInput If there is not enough parameters specified.
-     * @throws CustomExceptions.InvalidInput      If there is invalid input.
-     */
-    public static void addGymStationInput(String[] validatedInputs, Gym gym) throws
-            CustomExceptions.InsufficientInput,
-            CustomExceptions.InvalidInput {
 
-        String exerciseName = validatedInputs[WorkoutConstant.INDEX_OF_STATION_NAME];
-        int weights = Integer.parseInt(validatedInputs[WorkoutConstant.INDEX_OF_STATION_WEIGHTS]);
-        int numberOfSets = Integer.parseInt(validatedInputs[WorkoutConstant.INDEX_OF_STATION_SETS]);
-        int repetition = Integer.parseInt(validatedInputs[WorkoutConstant.INDEX_OF_STATION_REPS]);
-        gym.addStation(exerciseName, weights, numberOfSets, repetition);
-
+    @Override
+    public LocalDate getDate() {
+        return date;
     }
 
-    /**
-     * Method checks if Gym values is valid
-     * Returns {@code true} if {@code numberOfStation} parameters is valid.
-     * Valid only if {@code numberOfStation} is a positive integer / not blank / and is digit.
-     * Otherwise, throw {@code CustomExceptions.InvalidInput}  or {@code CustomExceptions.InsufficientInput}
-     *
-     * @param numberOfStation String representing the number of Station
-     * @return {@code true} if all parameters are valid.
-     */
-
-    public static boolean checkIfGymIsValid(String numberOfStation) throws CustomExceptions.InvalidInput {
-        if (numberOfStation.isBlank()) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.NO_OF_STATION_CANNOT_BE_BLANK_ERROR);
-        }
-
-        try {
-            int value = Integer.parseInt(numberOfStation);
-            if (value <= 0) {
-                throw new CustomExceptions.InvalidInput(ErrorConstant.NO_OF_STATION_MUST_BE_POSITIVE_ERROR);
-            }
-        } catch (NumberFormatException e) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.NO_OF_STATION_MUST_BE_DIGIT_ERROR);
-        }
-
-        return true;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     /**
@@ -129,4 +93,107 @@ public class Gym extends Workout {
             return " (Date: NA)";
         }
     }
+
+
+    /**
+     * Retrieves the string representation of a Gym object.
+     * Used for the formatting of the Gym Object before writing into a file.
+     *
+     * @return StringBuilder Object that contains the formatted string.
+     */
+    private StringBuilder formatFileString(){
+        StringBuilder fileString = new StringBuilder();
+        String type = WorkoutConstant.GYM;
+        String numOfStation = String.valueOf(stations.size());
+        String date = "";
+        if(this.getDate() == null){
+            date = ErrorConstant.NO_DATE_SPECIFIED_ERROR;
+        } else {
+            date = this.getDate().toString();
+        }
+
+        fileString.append(type);
+        fileString.append(UiConstant.SPLIT_BY_COLON);
+        fileString.append(numOfStation);
+        fileString.append(UiConstant.SPLIT_BY_COLON);
+        fileString.append(date);
+        fileString.append(UiConstant.SPLIT_BY_COLON);
+        return fileString;
+    }
+
+    /**
+     * Converts the Gym Object into the String format for writing into a file.
+     * The format that this output is
+     *  gym:NUM_STATIONS:DATE:STATION1_NAME:NUM_SETS:REPS:WEIGHT1,WEIGHT2,WEIGHT3,WEIGHT4
+     *  :STATION2_NAME:NUM_SETS:REPS:WEIGHT1,WEIGHT2,WEIGHT3,WEIGHT4 ....
+     *
+     *  Example: "gym:2:1997-11-11:bench press:4:4,4,4,4:10,20,30,40:squats:4:3,3,3,3:20,30,40,50"
+     *  Can refer to GymTest {@Code toFileString_correctInput_expectedCorrectString()} for more examples
+     *
+     * @return A formatted string in the format specified above.
+     */
+    public String toFileString(){
+
+        StringBuilder fileString = formatFileString();
+        ArrayList<GymStation> stations = getStations();
+        for (GymStation station : stations) {
+            fileString.append(station.toFileString());
+            if (stations.indexOf(station) != stations.size() - 1) {
+                fileString.append(UiConstant.SPLIT_BY_COLON);
+            }
+        }
+        return fileString.toString();
+    }
+
+    /**
+     * Used when printing all the workouts. This method takes in two parameters {@code isFirstIteration} and {@code i}
+     * @param index indicates which particular gymStation is being queried.
+     * @return
+     */
+    public String getHistoryFormatForSpecificGymStation(int index) {
+
+        StringBuilder gymDate = new StringBuilder();
+        if (date != null) {
+            gymDate.append(date);
+        } else {
+            gymDate.append(ErrorConstant.NO_DATE_SPECIFIED_ERROR);
+        }
+
+        // Get the string format for a specific gym station
+        GymStation station = getStations().get(index);
+        String gymStationString = station.getStationName();
+        String gymSetString = String.valueOf(station.getNumberOfSets());
+
+        // Process the reps and weights into string format
+        String gymRepString = station.toRepString(UiConstant.COMMAS);
+        String gymWeightString = station.toWeightString(UiConstant.COMMAS);
+
+        // If it is first iteration, includes dashes for irrelevant field
+        if (index == 0){
+            return String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
+                    WorkoutConstant.GYM, gymDate,
+                    UiConstant.DASH,
+                    UiConstant.DASH,
+                    UiConstant.DASH,
+                    gymStationString,
+                    gymSetString,
+                    gymRepString,
+                    gymWeightString);
+        } else {
+            // if it is not, then leave it blank
+            return String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
+                    UiConstant.EMPTY_STRING,
+                    UiConstant.EMPTY_STRING,
+                    UiConstant.EMPTY_STRING,
+                    UiConstant.EMPTY_STRING,
+                    UiConstant.EMPTY_STRING,
+                    gymStationString,
+                    gymSetString,
+                    gymRepString,
+                    gymWeightString
+            );
+
+        }
+    }
+
 }

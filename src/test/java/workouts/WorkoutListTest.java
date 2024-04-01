@@ -4,9 +4,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import utility.CustomExceptions;
-import utility.WorkoutConstant;
+import constants.WorkoutConstant;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -188,13 +189,16 @@ class WorkoutListTest {
     @Test
     void deleteGym_properList_listOfSizeOne() throws CustomExceptions.InvalidInput, CustomExceptions.OutOfBounds {
         Gym gym1 = new Gym();
-        gym1.addStation("Bench Press", 4, 10, 50);
-        gym1.addStation("Shoulder Press", 20, 4, 10);
+        ArrayList<Integer> array1 = new ArrayList<>(Arrays.asList(1));
+        ArrayList<Integer> array2 = new ArrayList<>(Arrays.asList(1,2));
+
+        gym1.addStation("Bench Press", 1, 50, array1);
+        gym1.addStation("Shoulder Press", 2, 10, array2);
 
         Gym gym2 = new Gym();
-        gym2.addStation("Squat Press", 4, 10, 50);
-        gym2.addStation("Lat Press", 20, 4, 10);
-        gym2.addStation("Bicep curls", 20, 4, 10);
+        gym2.addStation("Squat Press", 1, 50, array1);
+        gym2.addStation("Lat Press", 2, 10, array2);
+        gym2.addStation("Bicep curls", 1, 10, array1);
 
         int index = 1;
         WorkoutList.deleteGym(index);
@@ -220,8 +224,10 @@ class WorkoutListTest {
     @Test
     void deleteGym_properListInvalidIndex_throwOutOfBoundsForRun() throws CustomExceptions.InvalidInput {
         Gym gym1 = new Gym();
-        gym1.addStation("Bench Press", 4, 10, 50);
-        gym1.addStation("Shoulder Press", 20, 4, 10);
+        ArrayList<Integer> array1 = new ArrayList<>(Arrays.asList(1));
+        ArrayList<Integer> array2 = new ArrayList<>(Arrays.asList(1,2));
+        gym1.addStation("Bench Press", 1, 50, array1);
+        gym1.addStation("Shoulder Press", 2, 10, array2);
         int invalidIndex = 5;
         assertThrows (CustomExceptions.OutOfBounds.class, () ->
                 WorkoutList.deleteGym(invalidIndex));
