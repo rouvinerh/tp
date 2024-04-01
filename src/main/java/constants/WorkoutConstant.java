@@ -58,39 +58,15 @@ public class WorkoutConstant {
     public static final String ADD_RUN = "Successfully added a new run session";
     public static final String ADD_GYM = "Successfully added a new gym session";
 
-
-
-
-
-
-
-
-
-
-
     // Workout Errors
     // STANDARDISE FORMAT ACCORDING TO TELEGRAM MESSAGE : <ERROR_TYPE>_ERROR
     // EXAMPLE : UNSPECIFIED_PARAMETER_ERROR
     // EXAMPLE : LOAD_ERROR
     // ----------------V V V V V ---- PLEASE CHECK AND MOVE TO ERROR ---- V V V V V----------------
 
-
-    public static final String BLANK_INPUT_FOR_EXERCISE = "Type of exercise cannot be empty. " +
-            "Please input either /e:run or /e:gym";
     public static final String STATION_GYM_FORMAT = "e.g. Bench Press /s:2 /r:4 " +
             "/w:10,20";
-    public static final String BLANK_INPUT_FOR_GYM_STATION = "Fields cannot be empty" +
-            "Please input " + STATION_GYM_FORMAT;
-
-    public static final String INVALID_INPUT_FOR_EXERCISE = "Invalid input for exercise type! " +
-            "Please input either /e:run or /e:gym";
     public static final String INVALID_RUN_TIME = "Invalid run time!";
     public static final String INVALID_GYM_INPUT = "Invalid gym parameters!";
     public static final String INVALID_GYM_STATION_INDEX = "Invalid gym station index!";
-    public static final String INSUFFICIENT_PARAMETERS_FOR_RUN = "Insufficient parameters for run! " +
-            "Example input: new /e:run /d:DISTANCE /t:TIME [/date:DATE]";
-    public static final String INSUFFICIENT_PARAMETERS_FOR_GYM = "Insufficient parameters for gym! " +
-            "Example input: new /e:gym /n:<number of exercise>";
-    public static final String INSUFFICIENT_PARAMETERS_FOR_GYM_STATION = "Insufficient parameters for Gym Stations! " +
-            "Please input [name of exercise] /s:[sets] /r:[reps] /w:[weights]";
 }

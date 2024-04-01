@@ -22,24 +22,11 @@ public class HealthConstant {
     public static final Integer NUM_PERIOD_PARAMETERS = 2;
     public static final Integer NUM_APPOINTMENT_PARAMETERS = 3;
 
-
-    // Index
-    public static final Integer HEALTH_TYPE_INDEX = 1;
-
-
     // Threshold
     public static final double UNDERWEIGHT_BMI_THRESHOLD = 18.5;
     public static final double NORMAL_BMI_THRESHOLD = 24.9;
     public static final double OVERWEIGHT_BMI_THRESHOLD = 29.9;
     public static final double OBESE_BMI_THRESHOLD = 39.9;
-
-
-    // Input
-    public static final String BMI_INPUT = "h:bmi";
-    public static final String PERIOD_INPUT = "h:period";
-    public static final String PREDICT_INPUT = "h:predict";
-    public static final String APPOINTMENT_INPUT = "h:appointment";
-
 
     // Formatted Strings/Messages
     // BMI
