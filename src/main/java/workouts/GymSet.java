@@ -1,23 +1,23 @@
 package workouts;
 
-import utility.WorkoutConstant;
+import constants.WorkoutConstant;
 
 /**
  * Represents a GymSet object.
  */
 public class GymSet {
     int weight;
-    int repetitions;
+    int numberOfRepetitions;
 
     /**
      * Constructs a new GymSet object using the weight and reps for 1 set of a gym station.
      *
      * @param weight The weight done for the set.
-     * @param repetitions The number of reps done for the set.
+     * @param numberOfRepetitions The number of reps done for the set.
      */
-    public GymSet(int weight, int repetitions){
+    public GymSet(int weight, int numberOfRepetitions){
         this.weight = weight;
-        this.repetitions = repetitions;
+        this.numberOfRepetitions = numberOfRepetitions;
     }
 
     public int getWeight() {
@@ -28,12 +28,8 @@ public class GymSet {
         this.weight = weight;
     }
 
-    public int getRepetitions() {
-        return repetitions;
-    }
-
-    public void setRepetitions(int repetitions) {
-        this.repetitions = repetitions;
+    public int getNumberOfRepetitions() {
+        return numberOfRepetitions;
     }
 
     /**
@@ -43,7 +39,7 @@ public class GymSet {
      */
     @Override
     public String toString() {
-        return String.format(WorkoutConstant.GYM_SET_FORMAT, this.repetitions, this.weight);
+        return String.format(WorkoutConstant.GYM_SET_FORMAT, this.numberOfRepetitions, this.weight);
     }
 }
 

@@ -1,4 +1,4 @@
-package utility;
+package constants;
 
 public class HealthConstant {
 
@@ -22,24 +22,11 @@ public class HealthConstant {
     public static final Integer NUM_PERIOD_PARAMETERS = 2;
     public static final Integer NUM_APPOINTMENT_PARAMETERS = 3;
 
-
-    // Index
-    public static final Integer HEALTH_TYPE_INDEX = 1;
-
-
     // Threshold
     public static final double UNDERWEIGHT_BMI_THRESHOLD = 18.5;
     public static final double NORMAL_BMI_THRESHOLD = 24.9;
     public static final double OVERWEIGHT_BMI_THRESHOLD = 29.9;
     public static final double OBESE_BMI_THRESHOLD = 39.9;
-
-
-    // Input
-    public static final String BMI_INPUT = "h:bmi";
-    public static final String PERIOD_INPUT = "h:period";
-    public static final String PREDICT_INPUT = "h:predict";
-    public static final String APPOINTMENT_INPUT = "h:appointment";
-
 
     // Formatted Strings/Messages
     // BMI
@@ -83,4 +70,14 @@ public class HealthConstant {
     public static final String APPOINTMENT_ADDED_MESSAGE_PREFIX = "Added: appointment | ";
     public static final String APPOINTMENT_REMOVED_MESSAGE_PREFIX = "Removed appointment with index: ";
     public static final Integer MAX_DESCRIPTION_LENGTH = 100;
+
+    // SPLIT INDEX
+    public static final int BMI_HEIGHT_INDEX = 0;
+    public static final int BMI_WEIGHT_INDEX = 1;
+    public static final int BMI_DATE_INDEX = 2;
+    public static final int PERIOD_START_DATE_INDEX = 0;
+    public static final int PERIOD_END_DATE_INDEX = 1;
+    public static final int APPOINTMENT_DATE_INDEX = 0;
+    public static final int APPOINTMENT_TIME_INDEX = 1;
+    public static final int APPOINTMENT_DESCRIPTION_INDEX = 2;
 }

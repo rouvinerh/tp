@@ -5,9 +5,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import utility.CustomExceptions;
-import utility.ErrorConstant;
-import utility.WorkoutConstant;
+import constants.ErrorConstant;
 import workouts.WorkoutList;
 
 import java.io.ByteArrayOutputStream;
@@ -18,9 +16,6 @@ import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
-
 
 class HandlerTest {
     private final ByteArrayInputStream inContent = new ByteArrayInputStream("".getBytes());
@@ -45,7 +40,7 @@ class HandlerTest {
         WorkoutList.clearWorkoutsRunGym();
         HealthList.clearHealthLists();
         Handler.destroyScanner();
-        if (Handler.in == null){
+        if (Handler.in == null) {
             return;
         }
         assert isScannerClosed(Handler.in) : "Scanner is not closed";
@@ -86,7 +81,7 @@ class HandlerTest {
      */
     @Test
     void processInput_workoutCommand_addRunExercise() {
-        String input = "WORKOUT /e:run /d:10.3 /t:00:40:10 /date:15-03-2024";
+        String input = "WORKOUT /e:run /d:10.30 /t:40:10 /date:15-03-2024";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
         Handler.initialiseScanner();
         Handler.processInput();
@@ -136,7 +131,7 @@ class HandlerTest {
      */
     @Test
     void processInput_latestCommand_printsLatestRun() {
-        String inputRun = "WORKOUT /e:run /d:10.3 /t:00:40:10 /date:15-03-2024";
+        String inputRun = "WORKOUT /e:run /d:10.30 /t:40:10 /date:15-03-2024";
         System.setIn(new ByteArrayInputStream(inputRun.getBytes()));
         Handler.initialiseScanner();
         Handler.processInput();
@@ -167,7 +162,6 @@ class HandlerTest {
     }
 
 
-
     /**
      * Tests the processInput function's behaviour to an invalid command, which prints
      * an error.
@@ -196,79 +190,5 @@ class HandlerTest {
         Handler.initialiseScanner();
         Handler.processInput();
         assertTrue(errContent.toString().contains(ErrorConstant.INSUFFICIENT_BMI_PARAMETERS_ERROR));
-    }
-
-    /**
-     * Test the behavior of the checkTypeOfExercise method when the user input is valid.
-     * Expected behavior is to return {@code Constant.RUN} or {@code Constant.GYM}
-     * Does not expect EXCEPTION to be thrown.
-     */
-    @Test
-    void checkTypeOfExercise_correctUserInput_expectRunOrGym() {
-        try {
-            String input1 = "workout /e:run /d:10.3 /t:00:40:10 /date:15-03-2024";
-            String expected1 = WorkoutConstant.RUN;
-            String result1 = Handler.checkTypeOfExercise(input1);
-            assertEquals(result1, expected1);
-
-            String input2 = "workout /e:gym /n:4";
-            String expected2 = WorkoutConstant.GYM;
-            String result2 = Handler.checkTypeOfExercise(input2);
-            assertEquals(result2, expected2);
-
-        } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
-            e.printStackTrace();
-            fail(ErrorConstant.UNSPECIFIED_ERROR);
-        }
-    }
-
-    /**
-     * Test the behavior of the checkTypeOfExercise method when the user input has invalid parameters.
-     * Expected behavior is to raise {@code InvalidInput} exception.
-     * Does not test for insufficient parameters.
-     * Refer to {@code checkTypeOfExercise_insufficientUserInput_throwInsufficientInput()} for that.
-     */
-    @Test
-    void checkTypeOfExercise_invalidUserInput_throwInvalidInput() {
-
-
-        // with invalid exercise type
-        String input2 = "workout /e:wrong /d:10.3 /t:00:40:10 /date:15-03-2024";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> Handler.checkTypeOfExercise(input2));
-
-        // with invalid exercise type
-        String input3 = "workout /e:gymm /d:10.3 /t:00:40:10 /date:15-03-2024";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> Handler.checkTypeOfExercise(input3));
-    }
-
-    /**
-     * Test the behavior of the checkTypeOfExercise method when the user input has insufficient parameters.
-     * Expected behavior is to raise {@code InsufficientInput} exception.
-     * Does not test for invalid values.
-     * Refer to {@code checkTypeOfExercise_invalidUserInput_throwInvalidInput()} for that.
-     */
-    @Test
-    void checkTypeOfExercise_insufficientUserInput_throwInsufficientInput() {
-
-        // with invalid exercise type
-        String input1 = "workout /e";
-        assertThrows(CustomExceptions.InsufficientInput.class, () -> Handler.checkTypeOfExercise(input1));
-
-        // without distance, time, and date
-        String input2 = "workout /e:run";
-        assertThrows(CustomExceptions.InsufficientInput.class, () -> Handler.checkTypeOfExercise(input2));
-
-        // without time and date
-        String input3 = "workout /e:run /d:10.3";
-        assertThrows(CustomExceptions.InsufficientInput.class, () -> Handler.checkTypeOfExercise(input3));
-
-        // with invalid format
-        String input5 = "workout /e-gymm /d-10.3 /t:00:40:10 /date:15-03-2024";
-        assertThrows(CustomExceptions.InsufficientInput.class, () -> Handler.checkTypeOfExercise(input5));
-
-        // with wrong slash
-        String input6 = "workout \\e:run \\d:30:10 \\t:00:20:10 \\date:15-03-2024";
-        assertThrows(CustomExceptions.InsufficientInput.class, () -> Handler.checkTypeOfExercise(input6));
-
     }
 }

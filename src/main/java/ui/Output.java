@@ -1,10 +1,9 @@
 package ui;
 
-import utility.Filters;
-import utility.ErrorConstant;
-import utility.UiConstant;
-import utility.WorkoutConstant;
-import utility.HealthConstant;
+import constants.ErrorConstant;
+import constants.UiConstant;
+import constants.WorkoutConstant;
+import constants.HealthConstant;
 import utility.CustomExceptions;
 
 import workouts.Gym;
@@ -16,6 +15,7 @@ import health.HealthList;
 import health.Bmi;
 import health.Period;
 import health.Appointment;
+import utility.Filters.HistoryAndLatestFilters;
 
 import java.util.ArrayList;
 
@@ -162,8 +162,8 @@ public class Output {
             Workout workout = workoutList.get(i);
             if (workout instanceof Run) {
                 Run run = (Run) workout;
-                System.out.println(String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_HEADER_FORMAT,
-                        (i + 1), run.getFormatForAllHistory()));
+                System.out.printf((WorkoutConstant.HISTORY_WORKOUTS_DATA_HEADER_FORMAT) + "%n",
+                        (i + 1), run.getFormatForAllHistory());
             } else {
                 Gym gym = (Gym) workout;
                 int numberOfStation = gym.getStations().size();
@@ -265,6 +265,19 @@ public class Output {
     }
 
     /**
+     * Prints all Appointment objects recorded.
+     *
+     * @throws CustomExceptions.OutOfBounds  If there is access to a Appointment object that does not exist.
+     * @throws CustomExceptions.InvalidInput If there is invalid input.
+     */
+    protected static void printAppointmentHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
+        printLine();
+        System.out.println("Your Appointment history:");
+        HealthList.showAppointmentList();
+        printLine();
+    }
+
+    /**
      * Prints the latest Run recorded.
      */
     protected static void printLatestRun() {
@@ -319,13 +332,22 @@ public class Output {
     }
 
     /**
+     * Prints the latest Appointment entry recorded.
+     */
+    protected static void printLatestAppointment(){
+        printLine();
+        HealthList.showLatestAppointment();
+        printLine();
+    }
+
+    /**
      * Handler function to print the latest entry of Run, Gym, Period, or BMI objects recorded.
      *
      * @param filter String used to determine the latest Run, Gym, Period, or BMI objects is to be printed.
      */
     public static void printLatest(String filter) {
         try {
-            Filters parsedFilter = Filters.valueOf(filter.toUpperCase());
+            HistoryAndLatestFilters parsedFilter = HistoryAndLatestFilters.valueOf(filter.toUpperCase());
             switch (parsedFilter) {
             case RUN:
                 printLatestRun();
@@ -343,6 +365,10 @@ public class Output {
                 printLatestPeriod();
                 break;
 
+            case APPOINTMENT:
+                printLatestAppointment();
+                break;
+
             default:
                 throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_LATEST_FILTER_ERROR);
             }
@@ -358,7 +384,7 @@ public class Output {
      */
     public static void printHistory(String filter) {
         try {
-            Filters parsedFilter = Filters.valueOf(filter.toUpperCase());
+            HistoryAndLatestFilters parsedFilter = HistoryAndLatestFilters.valueOf(filter.toUpperCase());
             switch (parsedFilter) {
             case WORKOUTS:
                 printWorkoutHistory();
@@ -377,6 +403,10 @@ public class Output {
 
             case PERIOD:
                 printPeriodHistory();
+                break;
+
+            case APPOINTMENT:
+                printAppointmentHistory();
                 break;
 
             default:

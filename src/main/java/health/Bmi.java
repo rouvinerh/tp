@@ -1,9 +1,9 @@
 package health;
 
 import utility.Parser;
-import utility.ErrorConstant;
-import utility.UiConstant;
-import utility.HealthConstant;
+import constants.ErrorConstant;
+import constants.UiConstant;
+import constants.HealthConstant;
 
 import java.time.LocalDate;
 
@@ -56,6 +56,15 @@ public class Bmi extends Health {
 
         this.bmiValue = calculateBmiValue();
         this.bmiCategory = getBmiCategory(bmiValue);
+    }
+
+    /**
+     * Returns BMI Value recorded in Bmi object.
+     *
+     * @return The BMI Value recorded in the Bmi object.
+     */
+    public String getBmiValue() {
+        return String.format(HealthConstant.TWO_DECIMAL_PLACE_FORMAT, bmiValue);
     }
 
     /**

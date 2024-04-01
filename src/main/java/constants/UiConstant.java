@@ -1,4 +1,4 @@
-package utility;
+package constants;
 
 import java.io.File;
 
@@ -15,6 +15,7 @@ public class UiConstant {
     public static final String DASH = "-";
     public static final String COMMAS = ",";
     public static final String LINE = " | ";
+    public static final String PIPE = "|";
     public static final String PARTITION_LINE = "____________________________________________________________";
     public static final String EMPTY_STRING = "";
 
@@ -23,6 +24,10 @@ public class UiConstant {
     public static final String VALID_TWO_DP_NUMBER_REGEX = "^\\d+\\.\\d{2}$";
     public static final String VALID_TIME_REGEX = "^\\d{2}:\\d{2}$";
     public static final String VALID_TIME_WITH_HOURS_REGEX = "^\\d{2}:\\d{2}:\\d{2}$";
+    public static final String VALID_POSITIVE_INTEGER_REGEX = "^[1-9]+$";
+    public static final String VALID_APPOINTMENT_DESCRIPTION_REGEX = "^[0-9a-zA-Z\\s]+$";
+    public static final String VALID_EXERCISE_NAME_REGEX = "^[A-Za-z\\s]+$";
+    public static final String VALID_WEIGHTS_ARRAY_REGEX = "^\\d+(,\\d+)*$";
 
 
     // PulsePilot UI replies
@@ -43,6 +48,9 @@ public class UiConstant {
     // History
     public static final String ITEM_FLAG = "/item:";
 
+    // Delete
+    public static final String INDEX_FLAG = "/index:";
+
 
     // Numerical values
     public static final Integer MAX_RUNTIME_ARRAY_LENGTH = 3;
@@ -55,9 +63,16 @@ public class UiConstant {
     public static final Integer MAX_MONTH = 12;
     public static final Integer MIN_MINUTES = 0;
     public static final Integer MAX_MINUTES = 59;
+    public static final Integer MIN_SECONDS = 0;
+    public static final Integer MAX_SECONDS = 59;
     public static final Integer MIN_HOURS = 0;
     public static final Integer MAX_HOURS = 23;
     public static final double POWER_OF_TWO = 2.0;
     public static final double ROUNDING_FACTOR = 100.0;
+    public static final int NUM_DELETE_PARAMETERS = 2;
+
+    // SPLIT INDEX
+    public static final int DELETE_ITEM_STRING_INDEX = 0;
+    public static final int DELETE_ITEM_NUMBER_INDEX = 1;
 
 }
