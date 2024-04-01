@@ -97,6 +97,8 @@ public class ErrorConstant {
     public static final String INVALID_REPS_ERROR = "Number of reps must be a positive integer!";
     public static final String INVALID_WEIGHTS_ERROR = "The weight done for each set is seperated by commas! " +
             "Example: 10,20,30";
+    public static final String INVALID_WEIGHTS_ARRAY_FORMAT_ERROR = "Weights can only have integers and commas, with" +
+            "no spaces! Example: 10,20,30";
     public static final String EMPTY_WEIGHTS_ARRAY_ERROR = "Weights array cannot be empty";
     public static final String NO_OF_STATION_BLANK_ERROR = "Number of stations cannot be blank! e.g. /n:3";
     public static final String NO_OF_STATION_POSITIVE_ERROR = "Number of stations must be positive! e.g. /n:4";

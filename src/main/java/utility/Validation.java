@@ -357,6 +357,11 @@ public class Validation {
         if (!weights.contains(UiConstant.SPLIT_BY_COMMAS)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_WEIGHTS_ERROR);
         }
+
+        if (!weights.matches(UiConstant.VALID_WEIGHTS_ARRAY_REGEX)) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_WEIGHTS_ARRAY_FORMAT_ERROR);
+        }
+        
         String[] weightsArray = weights.split(UiConstant.SPLIT_BY_COMMAS);
         if (weightsArray.length == 0) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.EMPTY_WEIGHTS_ARRAY_ERROR);
