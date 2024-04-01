@@ -54,8 +54,8 @@ public class StorageTest {
         try {
             ArrayList<Integer> array1 = new ArrayList<>(Arrays.asList(1));
             ArrayList<Integer> array2 = new ArrayList<>(Arrays.asList(1, 2));
-            newGym.addStation("Exercise 1", array1, 1, 10);
-            newGym.addStation("Exercise 2", array2, 2, 20);
+            newGym.addStation("Exercise 1", 1, 10, array1);
+            newGym.addStation("Exercise 2", 2, 20, array2);
 
             // Save the expected output
             Output.printAddGym(newGym);

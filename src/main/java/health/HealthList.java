@@ -101,6 +101,8 @@ public class HealthList extends ArrayList<Health> {
         }
     }
 
+
+
     /**
      * Prints the latest three Period objects from the periods list.
      *
@@ -222,7 +224,7 @@ public class HealthList extends ArrayList<Health> {
     /**
      * Adds an Appointment to the list of Appointments whenever addAppointment is called.
      * Sorts all Appointment objects in the list by date and time of the appointments with
-     * the earliest appointment at the top..
+     * the earliest appointment at the top.
      *
      * @param appointment Appointment object
      * @throws AssertionError If Appointment object is null.
@@ -237,7 +239,7 @@ public class HealthList extends ArrayList<Health> {
      * Deletes Appointment object based on index.
      *
      * @param index Index of the Appointment object to be deleted.
-     * @throws CustomExceptions If the index is out of bounds
+     * @throws CustomExceptions.OutOfBounds If the index is out of bounds
      */
     public static void deleteAppointment(int index) throws CustomExceptions.OutOfBounds {
         assert !APPOINTMENTS.isEmpty() : ErrorConstant.EMPTY_APPOINTMENT_LIST_ERROR;
@@ -268,5 +270,16 @@ public class HealthList extends ArrayList<Health> {
             System.out.println(appointment);
             index += 1;
         }
+    }
+
+    /**
+     * Prints the latest Appointment object added.
+     *
+     * @throws AssertionError If Appointments list is empty.
+     */
+    public static void showLatestAppointment() {
+        assert !APPOINTMENTS.isEmpty(): ErrorConstant.EMPTY_APPOINTMENT_LIST_ERROR;
+        int currentIndex = APPOINTMENTS.size();
+        System.out.println(APPOINTMENTS.get(currentIndex - 1));
     }
 }

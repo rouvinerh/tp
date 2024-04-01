@@ -199,7 +199,7 @@ class ParserTest {
      */
     @Test
     void splitRunInput_correctInputWithoutDate_noExceptionThrown() throws CustomExceptions.InsufficientInput {
-        String input = "/e:run /t:25:24 /d:5.15";
+        String input = "/t:25:24 /d:5.15";
         String[] expected = {"25:24", "5.15", null};
         String[] result = Parser.splitRunInput(input);
         assertArrayEquals(expected, result);
@@ -264,8 +264,8 @@ class ParserTest {
             assertEquals(4, gymOutput.getStationByIndex(0).getNumberOfSets());
             assertEquals(2, gymOutput.getStationByIndex(1).getNumberOfSets());
             // make sure the reps of each station are correct
-            assertEquals(10, gymOutput.getStationByIndex(0).getSets().get(0).getRepetitions());
-            assertEquals(5, gymOutput.getStationByIndex(1).getSets().get(0).getRepetitions());
+            assertEquals(10, gymOutput.getStationByIndex(0).getSets().get(0).getNumberOfRepetitions());
+            assertEquals(5, gymOutput.getStationByIndex(1).getSets().get(0).getNumberOfRepetitions());
             // make sure the weights of each station are correct
             assertEquals(10, gymOutput.getStationByIndex(0).getSets().get(0).getWeight());
             assertEquals(20, gymOutput.getStationByIndex(0).getSets().get(1).getWeight());
