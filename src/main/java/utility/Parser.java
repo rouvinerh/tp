@@ -44,6 +44,27 @@ public class Parser {
     }
 
     /**
+     * Converts a LocalDate object to a formatted String representation.
+     * @param date LocalDate object representing the date.
+     * @return Formatted String representation of the date in the format "dd-MM-yyyy".
+     *
+     * @throws DateTimeParseException If there is an error parsing the date.
+     */
+    public static String parseFormattedDate(LocalDate date) {
+
+        DateTimeFormatter formatter = null;
+        try {
+            formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        } catch (DateTimeParseException e) {
+            Output.printException(ErrorConstant.PARSING_DATE_ERROR);
+        }
+        if (date == null || formatter == null) {
+            return "NA";
+        }
+        return date.format(formatter);
+    }
+
+    /**
      * Parses and converts String time to a LocalDate variable.
      * @param stringTime String representing the time.
      * @return LocalTime variable representing the time.
