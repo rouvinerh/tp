@@ -11,7 +11,11 @@ public class ErrorConstant {
     public static final String SAVE_ERROR = "File save failed. Write error occurred:";
     public static final String LOAD_ERROR = "File read error:" + "Error at ";
     public static final String CREATE_FILE_ERROR = "Unable to create file.";
-    public static final String CORRUPT_ERROR = "File is corrupted. Ceasing any further data imports.";
+    public static final String CORRUPT_ERROR = "File is corrupted! Ceasing any further data imports..." +
+            System.lineSeparator() + "Consider deleting 'pulsepilot_data.txt' and trying again!";
+    public static final String PARTIAL_CORRUPT_ERROR = "File is corrupted! Ceasing any further data imports..." +
+            System.lineSeparator() + "Some data may have been recovered. PulsePilot shall resume." +
+            System.lineSeparator() + UiConstant.PARTITION_LINE;
 
     // Storage Error for Gym
     public static final String LOAD_GYM_FORMAT_ERROR = LOAD_ERROR + "Format of gym entry is incorrect/corrupted";

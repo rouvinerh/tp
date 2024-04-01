@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 import health.Appointment;
@@ -14,6 +15,8 @@ import health.Bmi;
 import health.HealthList;
 import health.Period;
 import constants.ErrorConstant;
+import ui.Output;
+import utility.Parser;
 import workouts.Gym;
 import workouts.Run;
 import workouts.WorkoutList;
@@ -94,19 +97,30 @@ public class DataFile {
         int lineNumberCount = 0; // just for getting lineNumber, no other use
         try (final Scanner readFile = new Scanner(UiConstant.SAVE_FILE)) {
             LogFile.writeLog("Read begins", false);
+            try {
+                String [] input = readFile.nextLine().split(UiConstant.SPLIT_BY_COLON);
+                String dataType = input[UiConstant.DATA_TYPE_INDEX].trim();
+                if (dataType.equalsIgnoreCase(UiConstant.NAME_LABEL)) {
+                    String name = input[UiConstant.NAME_INDEX].trim();
+                    processName(name);
+                } else {
+                    Output.printException(ErrorConstant.CORRUPT_ERROR);
+                    System.exit(1);
+                }
+
+            } catch (Exception e) {
+                LogFile.writeLog("Data file is missing name, exiting." + e, true);
+                Output.printException(ErrorConstant.CORRUPT_ERROR);
+                System.exit(1);
+            }
 
             while (readFile.hasNextLine()) {
                 String [] input = readFile.nextLine().split(UiConstant.SPLIT_BY_COLON);
 
                 String dataType = input[UiConstant.DATA_TYPE_INDEX].trim();
-                String name = input[UiConstant.NAME_INDEX].trim();
 
                 DataType filter = DataType.valueOf(dataType);
                 switch (filter){
-
-                case NAME:
-                    processName(name);
-                    break;
 
                 case APPOINTMENT:
                     processAppointment(input);
@@ -121,7 +135,7 @@ public class DataFile {
                     break;
 
                 case GYM:
-                    // processGym(words);
+                    processGym(input);
                     break;
 
                 case RUN:
@@ -135,7 +149,7 @@ public class DataFile {
             }
         } catch (Exception e) {
             LogFile.writeLog("Invalid item read at line: " + (lineNumberCount + 1) + "! " + e, true);
-            throw new CustomExceptions.FileReadError(ErrorConstant.CORRUPT_ERROR);
+            throw new CustomExceptions.FileReadError(ErrorConstant.PARTIAL_CORRUPT_ERROR);
         }
     }
     public static void processName(String name){
@@ -219,7 +233,7 @@ public class DataFile {
      * // param healthData Health data to be written.
      */
     public static void writeName(FileWriter dataFile, String name) throws IOException {
-        dataFile.write(DataType.NAME + UiConstant.SPLIT_BY_COLON + name.trim() + System.lineSeparator());
+        dataFile.write(UiConstant.NAME_LABEL + UiConstant.SPLIT_BY_COLON + name.trim() + System.lineSeparator());
         LogFile.writeLog("Wrote name to file", false);
     }
 

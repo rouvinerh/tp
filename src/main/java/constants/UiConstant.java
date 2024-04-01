@@ -37,6 +37,7 @@ public class UiConstant {
     // Storage
     public static final int DATA_TYPE_INDEX = 0;
     public static final int NAME_INDEX = 1;
+    public static final String NAME_LABEL = "NAME";
     public static final String LOG_FILE_PATH = "./pulsepilot_log.txt";
     public static final String DATA_FILE_PATH = "./pulsepilot_data.txt";
     public static final File SAVE_FILE = new File(UiConstant.DATA_FILE_PATH);
