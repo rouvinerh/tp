@@ -1,5 +1,6 @@
 package ui;
 
+import health.Appointment;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
@@ -193,7 +194,8 @@ class OutputTest {
     /**
      * Tests the behaviour of the printLatestBmi function when two Bmi objects are added.
      */
-    @Test void printLatestBmi_twoBmis_expectOneBmiPrinted() {
+    @Test
+    void printLatestBmi_twoBmis_expectOneBmiPrinted() {
         Bmi firstBmi = new Bmi("1.75", "70.0", "18-03-2024");
         Bmi secondBmi = new Bmi("1.55", "55.0", "20-03-2024");
         HealthList.addBmi(firstBmi);
@@ -249,6 +251,126 @@ class OutputTest {
     void printLatestPeriod_noPeriod_expectAssertionError() {
         assertThrows(AssertionError.class, Output::printLatestPeriod);
     }
+
+    /**
+     * Tests the behaviour of the printLatestAppointment function when two Appointment objects are added.
+     */
+    @Test
+    void printLatestAppointment_twoAppointments_expectOneAppointmentPrinted() {
+        Appointment firstAppointment = new Appointment("29-03-2024", "17:00", "test");
+        Appointment secondAppointment = new Appointment("24-01-2026", "12:00", "test2");
+        HealthList.addAppointment(firstAppointment);
+        HealthList.addAppointment(secondAppointment);
+
+        Output.printLatestAppointment();
+        String expected = UiConstant.PARTITION_LINE +
+                System.lineSeparator() +
+                "On 2026-01-24 at 12:00: test2" +
+                System.lineSeparator() +
+                UiConstant.PARTITION_LINE +
+                System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+
+    /**
+     * Tests the behaviour of the printLatestAppointment function when no Appointment objects are added.
+     */
+    @Test
+    void printLatestAppointment_noAppointments_expectAssertionError() {
+        assertThrows(AssertionError.class, Output::printLatestAppointment);
+    }
+
+    /**
+     * Tests the behaviour of printAppointmentHistory when two Appointment objects are added.
+     * Expects two Appointment objects to be pritned.
+     *
+     * @throws CustomExceptions.OutOfBounds If there is out of bounds access.
+     * @throws CustomExceptions.InvalidInput If there is invalid input.
+     */
+    @Test
+    void printAppointmentHistory_twoAppointments_expectTwoAppointmentsPrinted() throws
+            CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
+        Appointment firstAppointment = new Appointment("29-03-2024", "17:00", "test");
+        Appointment secondAppointment = new Appointment("24-01-2026", "12:00", "test2");
+        HealthList.addAppointment(firstAppointment);
+        HealthList.addAppointment(secondAppointment);
+        Output.printAppointmentHistory();
+        String expected = UiConstant.PARTITION_LINE +
+                System.lineSeparator() +
+                "Your Appointment history:" +
+                System.lineSeparator() +
+                "1. On 2024-03-29 at 17:00: test" +
+                System.lineSeparator() +
+                "2. On 2026-01-24 at 12:00: test2" +
+                System.lineSeparator() +
+                UiConstant.PARTITION_LINE +
+                System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+
+    /**
+     * Tests the behaviour of the printPeriodHistory function when two Period objects are added.
+     */
+    @Test
+    void printPeriodHistory_twoPeriods_expectTwoPeriodsPrinted() throws
+            CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
+        Period firstPeriod = new Period("09-02-2023", "16-02-2023");
+        Period secondPeriod = new Period("09-03-2023", "16-03-2023");
+        HealthList.addPeriod(firstPeriod);
+        HealthList.addPeriod(secondPeriod);
+        Output.printPeriodHistory();
+        String expected = UiConstant.PARTITION_LINE +
+                System.lineSeparator() +
+                "Your Period history:" +
+                System.lineSeparator() +
+                "Period Start: 2023-02-09 Period End: 2023-02-16" +
+                System.lineSeparator() +
+                "Period Length: 8 days" +
+                System.lineSeparator() +
+                "Cycle Length: 28 days" +
+                System.lineSeparator() +
+                "Period Start: 2023-03-09 Period End: 2023-03-16" +
+                System.lineSeparator() +
+                "Period Length: 8 days" +
+                System.lineSeparator() +
+                UiConstant.PARTITION_LINE +
+                System.lineSeparator();
+
+        assertEquals(expected, outContent.toString());
+    }
+
+    /**
+     * Tests the behaviour of the printLatestBmi function when two Bmi objects are added.
+     */
+    @Test
+    void printBmiHistory_twoBmis_expectTwoBmisPrinted() throws CustomExceptions.OutOfBounds,
+            CustomExceptions.InvalidInput {
+        Bmi firstBmi = new Bmi("1.75", "70.0", "18-03-2024");
+        Bmi secondBmi = new Bmi("1.55", "55.0", "20-03-2024");
+        HealthList.addBmi(firstBmi);
+        HealthList.addBmi(secondBmi);
+        Output.printBmiHistory();
+        String expected = UiConstant.PARTITION_LINE +
+                System.lineSeparator() +
+                "Your BMI history:" +
+                System.lineSeparator() +
+                "2024-03-18" +
+                System.lineSeparator() +
+                "Your BMI is 22.86" +
+                System.lineSeparator() +
+                "Great! You're within normal range." +
+                System.lineSeparator() +
+                "2024-03-20" +
+                System.lineSeparator() +
+                "Your BMI is 22.89" +
+                System.lineSeparator() +
+                "Great! You're within normal range." +
+                System.lineSeparator() +
+                UiConstant.PARTITION_LINE +
+                System.lineSeparator();
+        assertEquals(expected, outContent.toString());
+    }
+
 
     /**
      * Tests the behaviour of the printGymHistory function, which should print both Gyms
@@ -382,6 +504,4 @@ class OutputTest {
         }
 
     }
-
-
 }
