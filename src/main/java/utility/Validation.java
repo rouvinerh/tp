@@ -305,11 +305,11 @@ public class Validation {
     }
 
     /**
-     * Validates the weight string such that it only has numbers
+     * Validates the weight string such that it only has numbers.
      *
      * @param weightsString The string representing the weights in the format "weight1,weight2,weight3..."
      * @return ArrayList of integers representing the weights in the format [weight1, weight2, weight3 ...]
-     * @throws CustomExceptions.InvalidInput
+     * @throws CustomExceptions.InvalidInput If an invalid weights string is passed in.
      */
     public static ArrayList<Integer> validateWeightsArray(String weightsString)
             throws CustomExceptions.InvalidInput {
@@ -361,7 +361,7 @@ public class Validation {
         if (!weights.matches(UiConstant.VALID_WEIGHTS_ARRAY_REGEX)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_WEIGHTS_ARRAY_FORMAT_ERROR);
         }
-        
+
         String[] weightsArray = weights.split(UiConstant.SPLIT_BY_COMMAS);
         if (weightsArray.length == 0) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.EMPTY_WEIGHTS_ARRAY_ERROR);
