@@ -1,9 +1,9 @@
 package workouts;
 
 import utility.CustomExceptions;
-import constants.ErrorConstant;
 import constants.UiConstant;
 import constants.WorkoutConstant;
+import utility.Validation;
 
 
 import java.util.ArrayList;
@@ -93,7 +93,7 @@ public class GymStation {
             CustomExceptions.InsufficientInput,
             CustomExceptions.InvalidInput {
 
-        ArrayList<Integer> weightsArray = getValidatedWeightsArray(splitInput[1]);
+        ArrayList<Integer> weightsArray = Validation.validateWeightsArray(splitInput[1]);
         int setsInteger = Integer.parseInt(splitInput[2]);
         int repsInteger = Integer.parseInt(splitInput[3]);
         gym.addStation(splitInput[0], weightsArray, setsInteger, repsInteger);
@@ -118,24 +118,67 @@ public class GymStation {
         return returnString.toString();
     }
 
-    private static ArrayList<Integer> getValidatedWeightsArray(String weightsString)
-            throws CustomExceptions.InvalidInput {
-        String[] weightsArray = weightsString.split(UiConstant.SPLIT_BY_COMMAS);
-        ArrayList<Integer> validatedWeightsArray = new ArrayList<>();
-
-        try{
-            for(String weight: weightsArray){
-                int weightInteger = Integer.parseInt(weight);
-                if (weightInteger < 0){
-                    throw new CustomExceptions.InvalidInput(ErrorConstant.GYM_WEIGHT_POSITIVE_ERROR);
-                }
-                validatedWeightsArray.add(weightInteger);
+    /**
+     * Retrieves the string representation of a GymStation object with a specified delimiter
+     * E.g. toRepString(",") returns "1,2,3"
+     * E.g. toRepString(":") returns "1:2:3"
+     * @param delimiter The delimiter to separate the repetitions.
+     * @return A formatted string representing a GymStation object with the specified delimiter.
+     */
+    public String toRepString(String delimiter) {
+        StringBuilder repString = new StringBuilder();
+        for (int i = 0; i < sets.size(); i++) {
+            String currentRep = String.valueOf(sets.get(i).getRepetitions());
+            repString.append(currentRep);
+            if (i != sets.size() - 1) {
+                repString.append(delimiter);
             }
-        } catch (NumberFormatException e){
-            throw new CustomExceptions.InvalidInput(ErrorConstant.GYM_WEIGHT_DIGIT_ERROR);
         }
-        return validatedWeightsArray;
+        return repString.toString();
     }
+
+    /**
+     * Retrieves the string representation of a GymStation object with a specified delimiter
+     * E.g. toWeightString(",") returns "10,20,30"
+     * E.g. toWeightString(":") returns "10:20:30"
+     * @param delimiter The delimiter to separate the weights.
+     * @return A formatted string representing a GymStation object with the specified delimiter.
+     */
+    public String toWeightString(String delimiter){
+        StringBuilder weightString = new StringBuilder();
+        for (int i = 0; i < sets.size(); i++) {
+            String currentRep = String.valueOf(sets.get(i).getWeight());
+            weightString.append(currentRep);
+            if (i != sets.size() - 1) {
+                weightString.append(delimiter);
+            }
+        }
+        return weightString.toString();
+    }
+
+    /**
+     * Retrieves the string representation of a GymStation object for writing into a file.
+     * Formats the string in the following format
+     * "[Exercise Name]:[Number of Sets]:[Repetitions]:[Weights1, Weight2,Weight3 ...]"
+     * @return A formatted string representing a GymStation object with the format above.
+     */
+    public String toFileString(){
+        StringBuilder fileString = new StringBuilder();
+        String stationName = getStationName();
+        String numOfSets = String.valueOf(getNumberOfSets());
+        String gymRepString = toRepString(UiConstant.SPLIT_BY_COMMAS).split(UiConstant.SPLIT_BY_COMMAS)[0];
+        String gymWeightString = toWeightString(UiConstant.SPLIT_BY_COMMAS);
+        fileString.append(stationName);
+        fileString.append(UiConstant.SPLIT_BY_COLON);
+        fileString.append(numOfSets);
+        fileString.append(UiConstant.SPLIT_BY_COLON);
+        fileString.append(gymRepString);
+        fileString.append(UiConstant.SPLIT_BY_COLON);
+        fileString.append(gymWeightString);
+        return fileString.toString();
+    }
+
+
 }
 
 
