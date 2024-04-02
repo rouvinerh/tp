@@ -1,23 +1,27 @@
 # Developer Guide
 
+## Table of Contents
+
+* [Table of Contents](#table-of-contents)
 * [Acknowledgements](#acknowledgements)
 * [Introduction](#introduction)
 * [Design](#design)
-  * [Overview of Components](#overview-of-components)
   * [Architecture](#architecture)
   * [UI component](#ui-component)
   * [Utility component](#utility-component)
   * [Health component](#health-component)
   * [Workout component](#workout-component)
   * [Storage component](#storage-component)
-  * [PulsePilot component](#pulsepilot-component)
-* [Product scope](#product-scope)
-  * [Target user profile](#target-user-profile)
-  * [Value proposition](#value-proposition)
-* [User Stories](#user-stories)
-* [Non-Functional Requirements](#non-functional-requirements)
-* [Glossary](#glossary)
-* [Instructions for manual testing](#instructions-for-manual-testing)
+* [Implementation](#implementation)
+* [Appendices](#appendices)
+  * [Appendix A: Product scope](#appendix-a-product-scope)
+    * [Target user profile](#target-user-profile)
+    * [Value proposition](#value-proposition)
+  * [Appendix B: User Stories](#appendix-b-user-stories)
+  * [Appendix C: Non-Functional Requirements](#appendix-c-non-functional-requirements)
+  * [Appendix D: Glossary](#appendix-d-glossary)
+  * [Appendix E: Instructions for manual testing](#appendix-e-instructions-for-manual-testing)
+* [Frequently Asked Questions (FAQs)](#frequently-asked-questions-faqs)
 
 ## Acknowledgements
 
@@ -30,9 +34,9 @@ and [Developer Guide (DG)](https://se-education.org/addressbook-level3/Developer
 - {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries
 -- include links to the original source as well}
 
+[Return to Table of Contents](#table-of-contents)
 
 ## Introduction
-
 
 The aim of this guide is to provide an explanation for all the functions and processing of information in PulsePilot. This is to enable any technical readers to get a detailed understanding of the application's internals.
 
@@ -53,6 +57,8 @@ The LogFile class is used for logging application events and user actions to a l
 {Describe the design and implementation of the product. Use UML diagrams and short code snippets where applicable.}
 
 This guide will include UML diagrams to better each component of our product. 
+
+[Return to Table of Contents](#table-of-contents)
 
 ## Design
 
@@ -149,18 +155,35 @@ and cycle length).
 5. `Appointment`class stores appointment attributes (i.e. date, time, appointment description). Primarily, `Appointment`
 has all necessary getter methods to access the attributes.
 
+_{Insert Sequence Diagrams}_
+
+[Return to Table of Contents](#table-of-contents)
+
 ### Workout component
+
+The Workout component consists of Workout, WorkoutList, Gym, GymSet, GymStation, and Run.
+
+[Return to Table of Contents](#table-of-contents)
 
 ### Storage component
 
-### PulsePilot component
+The Storage component consists of LogFile, DataFile, and DataType.
 
-## Product scope
-### Target user profile
+[Return to Table of Contents](#table-of-contents)
+
+## Implementation
+
+[Return to Table of Contents](#table-of-contents)
+
+## Appendices
+
+### Appendix A: Product scope
+
+#### Target user profile
 
 Outpatients who need to monitor their health activity and health parameters.
 
-### Value proposition
+#### Value proposition
 
 PulsePilot is a health monitoring application designed to bridge the gap between medical professionals 
 and patients during outpatient recovery. PulsePilot offers outpatients the capability to input and track a range of 
@@ -168,7 +191,9 @@ health activities, encompassing both aerobic and anaerobic exercises, alongside 
 BMI and menstrual cycles. Simultaneously, PulsePilot facilitates access to this vital data for various 
 healthcare professionals, ensuring comprehensive and seamless support in guiding outpatient recovery processes.
 
-## User Stories
+[Return to Table of Contents](#table-of-contents)
+
+### Appendix B: User Stories
 
 | Version | As a ...              | I want to ...       | So that I can ...                          |
 |---------|-----------------------|---------------------|--------------------------------------------|
@@ -183,7 +208,9 @@ healthcare professionals, ensuring comprehensive and seamless support in guiding
 | 2.0     | female user           | predict my next period start date | plan ahead and better manage my health | 
 | 2.0     | injured user          | track my medical appointments | remember the appointments I have  |
 
-## Non-Functional Requirements
+[Return to Table of Contents](#table-of-contents)
+
+### Appendix C: Non-Functional Requirements
 
 - **Usability**: The application should have a user-friendly command-line interface with 
 clear instructions and prompts for user input.
@@ -196,7 +223,9 @@ ensure correct functionality and enable easier maintenance and future enhancemen
 
 {Give non-functional requirements}
 
-## Glossary
+[Return to Table of Contents](#table-of-contents)
+
+### Appendix D: Glossary
 - **Run**: An exercise activity involving running or jogging, typically characterized by distance, duration, and date.
 -  **Gym**: An exercise activity involving various strength training exercises or 
 workouts performed at a gym or fitness center.
@@ -207,11 +236,16 @@ used to assess overall health and fitness.
 to meet at a certain time and place.
 * *glossary item* - Definition
 
-## Instructions for manual testing
+[Return to Table of Contents](#table-of-contents)
+
+### Appendix E: Instructions for manual testing
 
 {Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing}
 
-### Adding a new run
+[Return to Table of Contents](#table-of-contents)
+
+#### Adding a new run
+
 #### Expected Input: 
 ```java
 WORKOUT /e:run /d:<distance> /t:<time> /date:<date>
@@ -239,9 +273,9 @@ all the run details. These details are stored in `runDetails: String[]`.
    - Lastly, it will add the `newRun` object to the `runList` and `workoutList` in the `WorkoutList` class.
 6. The newly created `newRun` object is parsed into `Output.printAddRun()` and printed out to the user
 
-[Back to table of contents](#Developer-Guide)
+[Return to Table of Contents](#table-of-contents)
 
-### How to load sample data
+#### How to load sample data
 The application does not currently support loading sample data. However, you can manually test different scenarios 
 by entering commands and providing input through the command-line interface.
 
@@ -256,8 +290,11 @@ and a date of March 15, 2024.
 Similarly, you can test logging gym workouts, recording BMI and menstrual period information, tracking medical
 appointment, viewing the exercise history, and accessing the latest run details by entering the appropriate commands.
 
+[Return to Table of Contents](#table-of-contents)
+
 ## Frequently Asked Questions (FAQs)
 
 1. **Q: How do I setup the development environment for the project?**  
    A: You can set up the development environment by first cloning the repository to your local system. Then, load the project into your chosen IDE (we recommend IntelliJ IDEA).
 
+[Return to Table of Contents](#table-of-contents)
