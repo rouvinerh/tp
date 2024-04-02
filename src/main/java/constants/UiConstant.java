@@ -24,7 +24,7 @@ public class UiConstant {
     public static final String VALID_TWO_DP_NUMBER_REGEX = "^\\d+\\.\\d{2}$";
     public static final String VALID_TIME_REGEX = "^\\d{2}:\\d{2}$";
     public static final String VALID_TIME_WITH_HOURS_REGEX = "^\\d{2}:\\d{2}:\\d{2}$";
-    public static final String VALID_POSITIVE_INTEGER_REGEX = "^[1-9]+$";
+    public static final String VALID_POSITIVE_INTEGER_REGEX = "^[1-9]\\d*$";
     public static final String VALID_APPOINTMENT_DESCRIPTION_REGEX = "^[0-9a-zA-Z\\s]+$";
     public static final String VALID_EXERCISE_NAME_REGEX = "^[A-Za-z\\s]+$";
     public static final String VALID_WEIGHTS_ARRAY_REGEX = "^\\d+(,\\d+)*$";
