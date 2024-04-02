@@ -47,6 +47,7 @@ public class IntegrationTest {
         WorkoutList.clearWorkoutsRunGym();
         HealthList.clearHealthLists();
         outContent.reset();
+        errContent.reset();
         Handler.destroyScanner();
         if (Handler.in == null) {
             return;
@@ -176,14 +177,14 @@ public class IntegrationTest {
      * accordingly with a valid prediction on when the next cycle is.
      */
     @Test
-    void testPrediction_userInputsFourPeriods_expectPrediction() {
+    void testPrediction_userInputsFourPeriods_expectPrediction() throws CustomExceptions.InsufficientInput {
         String period1 = "health /h:period /start:18-12-2023 /end:26-12-2023";
         String period2 = "health /h:period /start:18-01-2024 /end:26-01-2024";
         String period3 = "health /h:period /start:21-02-2024 /end:28-02-2024";
         String period4 = "health /h:period /start:22-03-2024 /end:29-03-2024";
         String prediction = "health /h:prediction";
 
-        String inputString = period1 +System.lineSeparator()
+        String inputString = period1 + System.lineSeparator()
                 + period2 +System.lineSeparator()
                 + period3 + System.lineSeparator()
                 + period4 + System.lineSeparator()
@@ -193,54 +194,77 @@ public class IntegrationTest {
         Handler.initialiseScanner();
         Handler.processInput();
         String result = outContent.toString();
+        cleanup();
 
-        Period expectedPeriod1 = new Period("18-12-2024" , "26-12-2024");
+        Period expectedPeriod1 = new Period("18-12-2023" , "26-12-2023");
         Period expectedPeriod2 = new Period("18-01-2024" , "26-01-2024");
         Period expectedPeriod3 = new Period("21-02-2024", "28-02-2024");
         Period expectedPeriod4 = new Period("22-03-2024", "29-03-2024");
 
         HealthList.addPeriod(expectedPeriod1);
+        Output.printAddPeriod(expectedPeriod1);
+
         HealthList.addPeriod(expectedPeriod2);
+        Output.printAddPeriod(expectedPeriod2);
+
         HealthList.addPeriod(expectedPeriod3);
+        Output.printAddPeriod(expectedPeriod3);
+
         HealthList.addPeriod(expectedPeriod4);
+        Output.printAddPeriod(expectedPeriod4);
+        Parser.parsePredictionInput();
 
         String expected = outContent.toString();
         assertEquals(expected, result);
+
     }
 
     /**
-     * Tests the behaviour of the bot when 3 Period objects are added.
+     * Tests the behaviour of the bot when 3 Period objects are added and a prediction is attempted.
+     * Expects an exception thrown for prediction since there are insufficient Period objects added.
      */
     @Test
-    void testPrediction_userInputsThreePeriods_expectNoPredictionAndErrorMessagePrinted() {
+    void testPrediction_userInputsThreePeriods_expectNoPredictionPrintedAndErrorMessagePrinted() {
         String period1 = "health /h:period /start:18-12-2023 /end:26-12-2023";
         String period2 = "health /h:period /start:18-01-2024 /end:26-01-2024";
         String period3 = "health /h:period /start:21-02-2024 /end:28-02-2024";
         String prediction = "health /h:prediction";
 
         String inputString = period1 +System.lineSeparator()
-                + period2 +System.lineSeparator()
+                + period2 + System.lineSeparator()
                 + period3 + System.lineSeparator()
                 + prediction + System.lineSeparator();
 
         System.setIn(new ByteArrayInputStream(inputString.getBytes()));
         Handler.initialiseScanner();
         Handler.processInput();
-        String resultOut = outContent.toString();
+        String result = outContent.toString();
         String resultErr = errContent.toString();
+        cleanup();
 
-        Period expectedPeriod1 = new Period("18-12-2024" , "26-12-2024");
+        Period expectedPeriod1 = new Period("18-12-2023" , "26-12-2023");
         Period expectedPeriod2 = new Period("18-01-2024" , "26-01-2024");
         Period expectedPeriod3 = new Period("21-02-2024", "28-02-2024");
 
         HealthList.addPeriod(expectedPeriod1);
+        Output.printAddPeriod(expectedPeriod1);
+
         HealthList.addPeriod(expectedPeriod2);
+        Output.printAddPeriod(expectedPeriod2);
+
         HealthList.addPeriod(expectedPeriod3);
+        Output.printAddPeriod(expectedPeriod3);
 
-        String expectedOut = outContent.toString();
+        String expected = outContent.toString();
+        assertEquals(expected, result);
+
+        // expect error message
+        try {
+            Parser.parsePredictionInput();
+        } catch (CustomExceptions.InsufficientInput e) {
+            Output.printException(e.getMessage());
+        }
         String expectedErr = errContent.toString();
-        assertEquals(expectedOut, resultOut);
         assertEquals(expectedErr, resultErr);
-
     }
 }

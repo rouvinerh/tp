@@ -126,6 +126,11 @@ public class Output {
         System.out.println(newPeriod);
     }
 
+    /**
+     * Prints the message when a new Appointment is added.
+     *
+     * @param newAppointment The new Appointment object added.
+     */
     public static void printAddAppointment(Appointment newAppointment) {
         System.out.println(HealthConstant.APPOINTMENT_ADDED_MESSAGE_PREFIX
                 + newAppointment.getDate()
