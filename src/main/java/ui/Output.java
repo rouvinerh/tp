@@ -267,7 +267,7 @@ public class Output {
     /**
      * Prints all Appointment objects recorded.
      *
-     * @throws CustomExceptions.OutOfBounds  If there is access to a Appointment object that does not exist.
+     * @throws CustomExceptions.OutOfBounds  If there is access to an Appointment object that does not exist.
      * @throws CustomExceptions.InvalidInput If there is invalid input.
      */
     protected static void printAppointmentHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {

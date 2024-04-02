@@ -421,9 +421,9 @@ public class Parser {
     /**
      * Splits the Gym File Input that comes from Storage.
      * Validates the numberOfStation and Date input.
-     * @param input
+     * @param input The user input string.
      * @return String[] containing the gym details
-     * @throws CustomExceptions.FileReadError
+     * @throws CustomExceptions.FileReadError If the file cannot be read.
      */
     private static String[] splitGymFileInput (String input) throws CustomExceptions.FileReadError {
 
@@ -550,8 +550,8 @@ public class Parser {
      *
      * @param input in the format specified above
      * @return gym object created from the input
-     * @throws CustomExceptions.InvalidInput
-     * @throws CustomExceptions.FileReadError
+     * @throws CustomExceptions.InvalidInput If there is invalid input from the file.
+     * @throws CustomExceptions.FileReadError If the file cannot be read.
      */
     public static Gym parseGymFileInput(String input)
             throws CustomExceptions.InvalidInput,
