@@ -94,26 +94,51 @@ User -d-> [UI]
 @enduml
 ```
 
+The **_Architecture Diagram_** given above explains the high-level design of the PulsePilot.
+
+Given below is a quick overview of main components and how they interact with each other.
+
+**Main components of the architecture**
+
 `Main`
 
 - When PulsePilot is launched, it creates an instance of `PulsePilot`.
 
 `PulsePilot`
-
 - Upon creation, it initialises a `LogFile` and `DataFile` object to create log and data files for the bot.
-- The `initialiseBot()` function is called to retrieve the user's name. 
+- The `initialiseBot()` function is called to retrieve the user's name.
 
-### Architecture
+The bulk of the app’s work is done by the following five components:
+
+* `UI`: The UI of the PulsePilot which handles interactions with the user.
+* `Utility`: Parses the inputs and commands from the user.
+* `Health`: Contains the methods for health-related functionalities (i.e. appointment, bmi, and period), such as adders,
+getters, and managing lists of health objects.
+* `Workout`: Contains the methods for workout-related functionalities (i.e. gym and run), such as adders, getters, and 
+managing lists of workout objects.
+* `Storage`: Reads data from, and writes data to, the output file.
+
+`Constants` represents a collection of classes used by multiple other components
+
+[Return to Table of Contents](#table-of-contents)
 
 ### UI component
 
+The UI component consists of Handler and Output
+
+[Return to Table of Contents](#table-of-contents)
+
 ### Utility component
+
+The Utility component consists of Parser, Filters, Validation, and CustomExceptions.
+
+[Return to Table of Contents](#table-of-contents)
 
 ### Health component
 
 The Health component consists of Health, HealthList, Bmi, Period, and Appointment.
 
-{Insert class diagram -- half drawn in draw.io}
+_{Insert Class Diagram}_
 
 1. `Health` class stores date. 
 2. `HealthList`class stores separate lists for different `Health` objects using ArrayList.
