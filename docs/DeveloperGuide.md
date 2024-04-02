@@ -56,7 +56,43 @@ This guide will include UML diagrams to better each component of our product.
 
 ## Design
 
-### Overview of Components
+### Architecture
+
+```plantuml
+@startuml
+skinparam componentStyle rectangle
+actor User
+
+component {
+[UI]
+[Utility]
+[Health]
+[Workout]
+[PulsePilot]
+[Storage]
+[Constants]
+}
+
+User -d-> [UI]
+[PulsePilot] -r-> [UI]
+
+[UI] -d-> [Utility]
+[UI] -d-> [Health]
+[UI] -d-> [Workout]
+
+[Utility] -l-> [Health]
+[Utility] -r-> [Workout]
+[Utility] -d-> [Storage]
+ 
+[Storage] .u.> [Health]
+[Storage] .u.> [Workout]
+[Storage] .u.> [UI]
+
+[Storage] .r.> [Output File] 
+
+[Constants] -r[hidden]-> [Storage] 
+@enduml
+```
 
 `Main`
 
