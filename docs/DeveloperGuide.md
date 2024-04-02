@@ -356,7 +356,7 @@ WORKOUT /e:run /d:<distance> /t:<time> /date:<date>
 
 #### Sequence Diagram for Adding a New Run Exercise
 wip
-<!--![Sequence Diagram for Adding a New Run Exercise]()-->
+<!--![Sequence Diagram for Adding a New Gym Workout]()-->
 
 ###### [Back to table of contents](#table-of-contents)
 
