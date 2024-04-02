@@ -137,7 +137,19 @@ The Health component consists of `Health`, `HealthList`, `Bmi`, `Period`, and `A
 
 ###### [Back to table of contents](#table-of-contents)
 
+<<<<<<< HEAD
 #### Health List
+=======
+1. `Workout` is a class that stores the date of the workout.
+2. `Run` is a subclass of Workout and stores the distance, time, pace, and date of the run.
+3. `Gym` is a subclass of Workout and stores the date and an array of `GymStation` objects
+4. `GymStation` stores the name of the gym station, number of sets, and an array of `GymSet` objects.
+5. `GymSet` stores the weight and repetitions for a particular set.
+6. `WorkoutList` is a class that stores an array list different `Workout` objects using ArrayList.
+
+
+### Storage component
+>>>>>>> 439537e33112bcf68c58c2cef567f898aac37816
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -336,6 +348,7 @@ to meet at a certain time and place.
 
 {Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing}
 
+<<<<<<< HEAD
 ###### [Back to table of contents](#table-of-contents)
 
 ---
@@ -349,10 +362,24 @@ WORKOUT /e:run /d:[distance] /t:[time] /date:[date]
 
 - Replace `[distance]` with the distance cove#D85D43 to 2 decimal place  (e.g. if the distance is 5.123 km, enter 5.12).
 - Replace `[time]` with the duration of the run in the format `HH:MM:SS` (e.g. if you ran for an hour and 5 minutes,
+=======
+### Adding a new run
+#### Sequence Diagram for Adding a New Run Exercise
+wip
+<!--![Sequence Diagram for Adding a New Run Exercise]()-->
+
+#### Expected Input: 
+```java
+WORKOUT /e:run /d:<distance> /t:<time> /date:<date>
+```
+- Replace `<distance>` with the distance covered to 2 decimal place  (e.g. if the distance is 5.123 km, enter 5.12).
+- Replace `<time>` with the duration of the run in the format `HH:MM:SS` (e.g. if you ran for an hour and 5 minutes,
+>>>>>>> 439537e33112bcf68c58c2cef567f898aac37816
   enter 01:05:00).
 - Replace `[date]` with the date of the run in the format `DD-MM-YYYY` (e.g. if the date is 24/07/2024, enter
   24-07-2024).
 
+<<<<<<< HEAD
 ###### [Back to table of contents](#table-of-contents)
 
 #### Sequence Diagram for Adding a New Run Exercise
@@ -363,6 +390,71 @@ wip
 
 #### General Workflow of Adding a New Run Exercise
 1. User input is passed to `Handler.handleWorkout()`.
+=======
+#### General Workflow of Adding a New Run Exercise
+1. User input is passed to `Handler.handleWorkout()`.
+
+2. `Handler.handleWorkout()` calls `Parser.extractSubstringFromSpecificIndex()` to validate the input and determine the type of exercise.
+
+3. If the exercise type is `run`, the input is passed to `Parser.parseRunInput()`.
+
+4. `Parser.parseRunInput()` validates the input and creates a new `Run` object.
+    - It calls `Validation.validateRunInput()` to check the input's validity, throwing an exception if it's invalid.
+    - If the input is valid, a new `Run` object is created.
+
+5. The `Run` constructor adds the newly created object into `WorkoutList.WORKOUTS` and `WorkoutList.RUNS`.
+
+6. The `Run` object is passed to `Output.printAddRun()` and printed out to the user.
+
+
+---
+### Adding a new gym workout
+#### Sequence Diagram for Adding a New gym workout
+wip
+<!--![Sequence Diagram for Adding a New Gym Workout]()-->
+
+#### Expected Input for adding a new gym workout:
+```java
+WORKOUT /e:gym /n:<number of stations> /date:<date>
+```
+- Replace `<number of station>` with a positive integer. (e.g. If you want to log 5 gym stations, enter 5).
+- Replace `<date>` with the date of the workout in the format `DD-MM-YYYY` (e.g. if the date is 24/07/2024, enter
+  24-07-2024).
+
+#### Expected Input for adding a new gym station:
+```java
+<Station Name> /s:<number of sets> /r:<number of repetitions> /w:<weights>
+```
+- Replace `<Station Name>` with the name of the station. (e.g. If the station is 'Bench Press', enter Bench Press).
+- Replace `<number of sets>` with a positive integer. (e.g. If you did 3 sets, enter 3).
+- Replace `<number of repetitions>` with a positive integer. (e.g. If you did 10 repetitions, enter 10).
+- Replace `<weights>` with the weights used for each set separated by commas. 
+(e.g. If you did three sets and used 10kg, 15kg, and 20kg, enter `10,15,20`).
+
+> IMPORTANT: your number of sets must match the number of weights provided. Here is an example that 
+> would result in an error.
+<code style="color: #D85D43;">Bench Press /s:10 /r:3 /w:100,200 </code>
+#### General Workflow of Adding a New Gym Exercise
+
+1. User input is received by `Handler.handleWorkout()`.
+
+2. `Handler.handleWorkout()` validates the input and determines the type of exercise by calling `Parser.extractSubstringFromSpecificIndex()`.
+
+3. If the exercise type is identified as 'gym', the input is passed to `Parser.parseGymInput()`.
+
+4. `Parser.parseGymInput()` validates the input and creates a new `Gym` object.
+    - It calls `Validation.validateGymInput()` to ensure the input is valid. If it's invalid, an exception is thrown.
+    - If the input is valid, a new `Gym` object is instantiated.
+
+5. Within `parseGymInput()`, `parseGymStationInput()` is called to obtain details about each gym station.
+    - Based on the `numberOfStations`, the method iterates and prompts the user to input details for each station.
+    - Refer to the expected input format for each gym station [above](#expected-input-for-adding-a-new-gym-workout)
+   - Each user input is validated using `Validation.splitAndValidateGymStationInput()`.
+       - If the input is valid, a new `GymStation` object is created and added to the `Gym` object created in step 4.
+       - If the input is invalid, an exception is thrown.
+6. The newly created `Gym` object is added to `WorkoutList.WORKOUTS` and `WorkoutList.GYMS`.
+7. Finally, it is passed to `Output.printAddGym()` to be displayed to the user.
+>>>>>>> 439537e33112bcf68c58c2cef567f898aac37816
 
 2. `Handler.handleWorkout()` calls `Parser.extractSubstringFromSpecificIndex()` to validate the input and determine the type of exercise.
 
