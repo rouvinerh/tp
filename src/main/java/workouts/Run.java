@@ -49,40 +49,6 @@ public class Run extends Workout {
     }
 
     /**
-     * Parses a string containing run information, extracts the command, distance and end time before returning
-     * an array of strings containing the information.
-     *
-     * @param input A string containing the Run information in the format "new /e:run /d:DISTANCE /t:TIME [/date:DATE]".
-     * @return An array of strings containing the extracted command, distance, time taken and date(if given).
-     */
-    public static String[] getRun(String input) throws CustomExceptions.InvalidInput {
-
-        String[] results = new String[WorkoutConstant.NUMBER_OF_RUN_PARAMETERS];
-
-
-        if (!input.contains("/e:") || !input.contains("/d:") || !input.contains("/t:")) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.UNSPECIFIED_PARAMETER_ERROR);
-        }
-        // Command
-        results[WorkoutConstant.COMMAND_INDEX] = Parser.extractSubstringFromSpecificIndex(input, "/e:");
-        // Distance
-        results[WorkoutConstant.DISTANCE_INDEX] = Parser.extractSubstringFromSpecificIndex(input, "/d:");
-        // Time
-        results[WorkoutConstant.TIME_INDEX] = Parser.extractSubstringFromSpecificIndex(input, "/t:");
-        // Date
-        results[WorkoutConstant.DATE_INDEX] = Parser.extractSubstringFromSpecificIndex(input, "/date:");
-
-
-        assert !results[WorkoutConstant.COMMAND_INDEX].isEmpty() : "Command should not be empty";
-        assert !results[WorkoutConstant.DISTANCE_INDEX].isEmpty() : "Distance should not be empty";
-        assert results[WorkoutConstant.DISTANCE_INDEX].matches("\\d+(\\.\\d+)?") :
-                "Distance should be a valid numeric " + "value (assuming KM)";
-        assert !results[WorkoutConstant.TIME_INDEX].isEmpty() : "Time should not be empty";
-
-        return results;
-    }
-
-    /**
      * Returns string format of time taken for run.
      *
      * @return Formatted string of the time for the run.

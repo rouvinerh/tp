@@ -2,6 +2,8 @@ package utility;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
@@ -482,11 +484,16 @@ public class ValidationTest {
     void splitAndValidateGymStationInput_validInput_correctParametersReturned() throws
             CustomExceptions.InsufficientInput, CustomExceptions.InvalidInput {
         String input = "Bench Press /s:2 /r:4 /w:10,20";
-        String[] expected = {"Bench Press", "10,20", "2", "4"};
+        String[] expected = {"Bench Press", "2", "4", "10,20"};
         String[] result = Validation.splitAndValidateGymStationInput(input);
         assertArrayEquals(expected, result);
     }
 
+    /**
+     * Tests the behaviour of incorrect inputs being passed to
+     * splitAndValidateGymStationInput.
+     * Expects InvalidInput exception to be thrown.
+     */
     @Test
     void splitAndValidateGymStationInput_invalidInput_expectsInvalidInputException() {
         // number of sets is not a positive integer
@@ -499,7 +506,7 @@ public class ValidationTest {
         assertThrows(CustomExceptions.InvalidInput.class, () ->
                 Validation.splitAndValidateGymStationInput(input2));
 
-        // weights are not formatted properly
+        // weights does not have comma
         String input3 = "Bench Press /s:2 /r:a /w:1020";
         assertThrows(CustomExceptions.InvalidInput.class, () ->
                 Validation.splitAndValidateGymStationInput(input3));
@@ -509,5 +516,49 @@ public class ValidationTest {
         assertThrows(CustomExceptions.InvalidInput.class, () ->
                 Validation.splitAndValidateGymStationInput(input4));
 
+        // weights array has letters
+        String input5 = "Bench Press /s:2 /r:a /w:10,a";
+        assertThrows(CustomExceptions.InvalidInput.class, () ->
+                Validation.splitAndValidateGymStationInput(input5));
+
+        // weights array has spaces
+        String input6 = "Bench Press /s:2 /r:a /w:10, 20";
+        assertThrows(CustomExceptions.InvalidInput.class, () ->
+                Validation.splitAndValidateGymStationInput(input6));
+    }
+
+    /**
+    * Tests the behaviour of a correct weights array being passed to validateWeightsArray.
+    * Expects no exception to be thrown, and the correct ArrayList of integers to be
+    * returned.
+    * @throws CustomExceptions.InvalidInput If the input string does not have the right format.
+    */
+    @Test
+    void validateWeightsArray_correctInput_returnCorrectArrayList() throws CustomExceptions.InvalidInput {
+        String input = "1,2,50,60";
+        ArrayList<Integer> expected = new ArrayList<>();
+        expected.add(1);
+        expected.add(2);
+        expected.add(50);
+        expected.add(60);
+        ArrayList<Integer> result = Validation.validateWeightsArray(input);
+        assertArrayEquals(expected.toArray(), result.toArray());
+    }
+
+    /**
+     * Tests the behaviour of incorrect weights array being passed to validateWeightsArray.
+     * Expects InvalidInput exception to be thrown.
+     */
+    @Test
+    void validateWeightsArray_invalidInput_expectInvalidInputException() {
+        // negative weights
+        String input1 = "-1,2";
+        assertThrows(CustomExceptions.InvalidInput.class, () ->
+                Validation.validateWeightsArray(input1));
+
+        // non integer weights
+        String input2 = "1,a";
+        assertThrows(CustomExceptions.InvalidInput.class, () ->
+                Validation.validateWeightsArray(input2));
     }
 }

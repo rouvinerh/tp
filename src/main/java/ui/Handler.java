@@ -83,14 +83,16 @@ public class Handler {
 
 
     /**
-     * TO ADD.
-     * @param userInput
+     * Handles workout command.
+     * Adds a Run or Gym object to PulsePilot.
+     *
+     * @param userInput The user input string.
      */
     //@@author JustinSoh
     public static void handleWorkout(String userInput) {
         try {
             String typeOfWorkout = Parser.extractSubstringFromSpecificIndex(userInput,
-                    WorkoutConstant.SPLIT_BY_EXERCISE_TYPE);
+                    WorkoutConstant.EXERCISE_FLAG);
             WorkoutFilters filter = WorkoutFilters.valueOf(typeOfWorkout.toUpperCase());
             switch(filter) {
             case RUN:
@@ -107,7 +109,7 @@ public class Handler {
         } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
             Output.printException(e.getMessage());
         } catch (IllegalArgumentException e) {
-            Output.printException("Invalid workout type! Please input either /e:run or /e:gy!");
+            Output.printException("Invalid workout type! Please input either /e:run or /e:gym!");
         }
     }
 
@@ -153,6 +155,10 @@ public class Handler {
 
             case RUN:
                 WorkoutList.deleteRun(index);
+                break;
+
+            case APPOINTMENT:
+                HealthList.deleteAppointment(index);
                 break;
 
             default:

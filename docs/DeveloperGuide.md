@@ -194,3 +194,9 @@ and a date of March 15, 2024.
 
 Similarly, you can test logging gym workouts, recording BMI and menstrual period information, tracking medical
 appointment, viewing the exercise history, and accessing the latest run details by entering the appropriate commands.
+
+## Frequently Asked Questions (FAQs)
+
+1. **Q: How do I setup the development environment for the project?**  
+   A: You can set up the development environment by first cloning the repository to your local system. Then, load the project into your chosen IDE (we recommend IntelliJ IDEA).
+

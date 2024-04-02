@@ -162,8 +162,8 @@ public class Output {
             Workout workout = workoutList.get(i);
             if (workout instanceof Run) {
                 Run run = (Run) workout;
-                System.out.println(String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_HEADER_FORMAT,
-                        (i + 1), run.getFormatForAllHistory()));
+                System.out.printf((WorkoutConstant.HISTORY_WORKOUTS_DATA_HEADER_FORMAT) + "%n",
+                        (i + 1), run.getFormatForAllHistory());
             } else {
                 Gym gym = (Gym) workout;
                 int numberOfStation = gym.getStations().size();
@@ -265,6 +265,19 @@ public class Output {
     }
 
     /**
+     * Prints all Appointment objects recorded.
+     *
+     * @throws CustomExceptions.OutOfBounds  If there is access to a Appointment object that does not exist.
+     * @throws CustomExceptions.InvalidInput If there is invalid input.
+     */
+    protected static void printAppointmentHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
+        printLine();
+        System.out.println("Your Appointment history:");
+        HealthList.showAppointmentList();
+        printLine();
+    }
+
+    /**
      * Prints the latest Run recorded.
      */
     protected static void printLatestRun() {
@@ -319,6 +332,15 @@ public class Output {
     }
 
     /**
+     * Prints the latest Appointment entry recorded.
+     */
+    protected static void printLatestAppointment(){
+        printLine();
+        HealthList.showLatestAppointment();
+        printLine();
+    }
+
+    /**
      * Handler function to print the latest entry of Run, Gym, Period, or BMI objects recorded.
      *
      * @param filter String used to determine the latest Run, Gym, Period, or BMI objects is to be printed.
@@ -341,6 +363,10 @@ public class Output {
 
             case PERIOD:
                 printLatestPeriod();
+                break;
+
+            case APPOINTMENT:
+                printLatestAppointment();
                 break;
 
             default:
@@ -377,6 +403,10 @@ public class Output {
 
             case PERIOD:
                 printPeriodHistory();
+                break;
+
+            case APPOINTMENT:
+                printAppointmentHistory();
                 break;
 
             default:
