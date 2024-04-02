@@ -13,6 +13,8 @@ import java.util.Comparator;
  */
 public class HealthList extends ArrayList<Health> {
 
+    /** LogFile for logging health-related activities. */
+    static LogFile logFile = LogFile.getInstance();
 
     /** The list of Bmi records. */
     private static final ArrayList<Bmi> BMIS = new ArrayList<>();
@@ -23,8 +25,6 @@ public class HealthList extends ArrayList<Health> {
     /** The list of Period records. */
     private static final ArrayList<Period> PERIODS = new ArrayList<>();
 
-    /** LogFile for logging health-related activities. */
-    static LogFile logFile = LogFile.getInstance();
 
     //@@author j013n3
     /**

@@ -1,6 +1,5 @@
 package ui;
 
-import health.Health;
 import health.HealthList;
 import storage.DataFile;
 import utility.CustomExceptions;
@@ -13,11 +12,8 @@ import utility.Filters.DeleteFilters;
 import utility.Filters.HealthFilters;
 import utility.Parser;
 import utility.Filters.WorkoutFilters;
-import workouts.Run;
-import workouts.Workout;
 import workouts.WorkoutList;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 import storage.LogFile;
 
