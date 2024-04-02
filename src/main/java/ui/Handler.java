@@ -1,5 +1,6 @@
 package ui;
 
+import health.Health;
 import health.HealthList;
 import storage.DataFile;
 import utility.CustomExceptions;
@@ -12,7 +13,11 @@ import utility.Filters.DeleteFilters;
 import utility.Filters.HealthFilters;
 import utility.Parser;
 import utility.Filters.WorkoutFilters;
+import workouts.Run;
+import workouts.Workout;
 import workouts.WorkoutList;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 import storage.LogFile;
 
@@ -293,8 +298,10 @@ public class Handler {
         LogFile.writeLog("User terminating PulsePilot", false);
         try {
             LogFile.writeLog("Attempting to save data file", false);
-            DataFile.saveDataFile(DataFile.userName, HealthList.BMIS, HealthList.APPOINTMENTS,
-                    HealthList.PERIODS, WorkoutList.RUNS, WorkoutList.GYMS);
+
+
+            DataFile.saveDataFile(DataFile.userName, HealthList.getBmis(), HealthList.getAppointments(),
+                    HealthList.getPeriods(), WorkoutList.getRuns(), WorkoutList.getGyms());
             LogFile.writeLog("File saved", false);
         } catch (CustomExceptions.FileWriteError e) {
             LogFile.writeLog("File write error", true);
