@@ -2,6 +2,7 @@ package ui;
 
 import constants.WorkoutConstant;
 import health.HealthList;
+import health.Period;
 import utility.CustomExceptions;
 import utility.Parser;
 import workouts.Gym;
@@ -14,6 +15,7 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
@@ -67,7 +69,7 @@ public class IntegrationTest {
     void testSaveAndLoadGym_gymObjectInput_expectSamePrintHistory(){
         Gym newGym = new Gym();
         try {
-            ArrayList<Integer> array1 = new ArrayList<>(Arrays.asList(1));
+            ArrayList<Integer> array1 = new ArrayList<>(List.of(1));
             ArrayList<Integer> array2 = new ArrayList<>(Arrays.asList(1, 2));
             newGym.addStation("Exercise 1", 1, 10, array1);
             newGym.addStation("Exercise 2", 2, 20 , array2);
@@ -94,8 +96,8 @@ public class IntegrationTest {
     }
 
     /**
-     * Test to check if user inputs when creating run and gym objects is properly reflected in the output
-     * Test this by checking if Latest gym/run and History gym/run is properly displayed.
+     * Tests if the output of the bot when adding runs and gyms, using history and latest commands is correct.
+     * Two gyms and runs are added, followed by the history and latest commands to view it.
      */
     @Test
     void testLatestDisplay_userInputsTwoGymAndRuns_expectsLatestGymAndRun(){
@@ -113,25 +115,23 @@ public class IntegrationTest {
         String showHistoryAll = "HISTORY /item:workouts";
 
 
-        StringBuilder input = new StringBuilder();
-        input.append(run1).append(System.lineSeparator());
-        input.append(run2).append(System.lineSeparator());
-        input.append(gym1).append(System.lineSeparator());
-        input.append(gym1Station1).append(System.lineSeparator());
-        input.append(gym1Station2).append(System.lineSeparator());
-        input.append(gym2).append(System.lineSeparator());
-        input.append(gym2Station1).append(System.lineSeparator());
-        input.append(showLatestGym).append(System.lineSeparator());
-        input.append(showLatestRun).append(System.lineSeparator());
-        input.append(showHistoryGym).append(System.lineSeparator());
-        input.append(showHistoryRun).append(System.lineSeparator());
-        input.append(showHistoryAll).append(System.lineSeparator());
-        String inputString = input.toString();
+        String inputString = run1 +System.lineSeparator() 
+                + run2 +System.lineSeparator() 
+                + gym1 + System.lineSeparator() 
+                + gym1Station1 + System.lineSeparator() 
+                + gym1Station2 + System.lineSeparator() 
+                + gym2 + System.lineSeparator() 
+                + gym2Station1 + System.lineSeparator() 
+                + showLatestGym + System.lineSeparator() 
+                + showLatestRun + System.lineSeparator() 
+                + showHistoryGym + System.lineSeparator() 
+                + showHistoryRun + System.lineSeparator() 
+                + showHistoryAll + System.lineSeparator();
 
         System.setIn(new ByteArrayInputStream(inputString.getBytes()));
         Handler.initialiseScanner();
         Handler.processInput();
-        String output = outContent.toString();
+        String result = outContent.toString();
 
         cleanup();
 
@@ -164,10 +164,83 @@ public class IntegrationTest {
             Output.printHistory(WorkoutConstant.ALL);
 
             String expected = outContent.toString();
-            assertEquals(expected, output);
+            assertEquals(expected, result);
 
         } catch (CustomExceptions.InvalidInput e) {
             fail("Shouldn't have failed");
         }
+    }
+
+    /**
+     * Tests the behaviour of the bot when 4 Period objects are added, expects the four periods to be reflected
+     * accordingly with a valid prediction on when the next cycle is.
+     */
+    @Test
+    void testPrediction_userInputsFourPeriods_expectPrediction() {
+        String period1 = "health /h:period /start:18-12-2023 /end:26-12-2023";
+        String period2 = "health /h:period /start:18-01-2024 /end:26-01-2024";
+        String period3 = "health /h:period /start:21-02-2024 /end:28-02-2024";
+        String period4 = "health /h:period /start:22-03-2024 /end:29-03-2024";
+        String prediction = "health /h:prediction";
+
+        String inputString = period1 +System.lineSeparator()
+                + period2 +System.lineSeparator()
+                + period3 + System.lineSeparator()
+                + period4 + System.lineSeparator()
+                + prediction + System.lineSeparator();
+        
+        System.setIn(new ByteArrayInputStream(inputString.getBytes()));
+        Handler.initialiseScanner();
+        Handler.processInput();
+        String result = outContent.toString();
+
+        Period expectedPeriod1 = new Period("18-12-2024" , "26-12-2024");
+        Period expectedPeriod2 = new Period("18-01-2024" , "26-01-2024");
+        Period expectedPeriod3 = new Period("21-02-2024", "28-02-2024");
+        Period expectedPeriod4 = new Period("22-03-2024", "29-03-2024");
+
+        HealthList.addPeriod(expectedPeriod1);
+        HealthList.addPeriod(expectedPeriod2);
+        HealthList.addPeriod(expectedPeriod3);
+        HealthList.addPeriod(expectedPeriod4);
+
+        String expected = outContent.toString();
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Tests the behaviour of the bot when 3 Period objects are added.
+     */
+    @Test
+    void testPrediction_userInputsThreePeriods_expectNoPredictionAndErrorMessagePrinted() {
+        String period1 = "health /h:period /start:18-12-2023 /end:26-12-2023";
+        String period2 = "health /h:period /start:18-01-2024 /end:26-01-2024";
+        String period3 = "health /h:period /start:21-02-2024 /end:28-02-2024";
+        String prediction = "health /h:prediction";
+
+        String inputString = period1 +System.lineSeparator()
+                + period2 +System.lineSeparator()
+                + period3 + System.lineSeparator()
+                + prediction + System.lineSeparator();
+
+        System.setIn(new ByteArrayInputStream(inputString.getBytes()));
+        Handler.initialiseScanner();
+        Handler.processInput();
+        String resultOut = outContent.toString();
+        String resultErr = errContent.toString();
+
+        Period expectedPeriod1 = new Period("18-12-2024" , "26-12-2024");
+        Period expectedPeriod2 = new Period("18-01-2024" , "26-01-2024");
+        Period expectedPeriod3 = new Period("21-02-2024", "28-02-2024");
+
+        HealthList.addPeriod(expectedPeriod1);
+        HealthList.addPeriod(expectedPeriod2);
+        HealthList.addPeriod(expectedPeriod3);
+
+        String expectedOut = outContent.toString();
+        String expectedErr = errContent.toString();
+        assertEquals(expectedOut, resultOut);
+        assertEquals(expectedErr, resultErr);
+
     }
 }
