@@ -264,17 +264,69 @@ ____________________________________________________________
 
 ## Logging
 
-The latest logs are written to `pulsepilot_log.txt` once the bot exits. Each time the bot is run, the current `pulsepilot_log.txt` file is overwritten with the most recent logs. The logs record both info messages and any error messages.
+The latest logs are written to `pulsepilot_log.txt` once the bot exits. Each time the bot is run, the current 
+`pulsepilot_log.txt` file is overwritten with the most recent logs. The logs record both info messages and any error messages.
 
 ## Saving Data
 
-As of now, the bot does not write or read from any file. This feature will be implemented in v2.0. 
+Data is saved to `pulsepilot_data.txt` once the bot exits. Each time the bot exits, the current 
+`pulsepilot_data.txt` file is overwritten with the most recent data.
+
+**Warning:** Should this file be corrupted,there is a slim chance of recovery.
+**Tip:** Ensure that you always have a _backup copy stored safely_ to prevent permanent data loss.
 
 ## FAQ
 
 **1.** How do I transfer my data to another computer?
 
-As of now, it is not possible to do so. This feature will be implemented in `v2.0`. 
+Ensure that the `pulsepilot.jar` is placed in the **same folder** as `pulsepilot_data.txt`. PulsePilot should recognise
+and synchronise your data contents from `pulsepilot_data.txt` if done correctly.
+
+**Tip:** Create a _backup copy_ to prior to file transfer to avoid data corruption.
+
+**2.** What happens if my data is corrupted?
+
+Depending on the severity of corruption, you may experience 2 scenarios:
+- A full corruption
+```
+____________________________________________________________
+ _              _
+|_)    |  _  _ |_) o  |  _ _|_
+|  |_| | _> (/_|   |  | (_) |_
+Engaging orbital thrusters...
+PulsePilot on standby
+____________________________________________________________
+Exception Caught!
+File is corrupted! Ceasing any further data imports...
+Consider deleting 'pulsepilot_data.txt' and trying again!
+____________________________________________________________
+```
+- A partial corruption
+```
+____________________________________________________________
+ _              _
+|_)    |  _  _ |_) o  |  _ _|_
+|  |_| | _> (/_|   |  | (_) |_
+Engaging orbital thrusters...
+PulsePilot on standby
+____________________________________________________________
+Terminal primed. Command inputs are now accepted...
+____________________________________________________________
+Exception Caught!
+Error: File is corrupted! Ceasing any further data imports...
+Some data may have been recovered. PulsePilot shall resume.
+____________________________________________________________
+```
+
+In either case, you may want to overwrite/replace the current `pulsepilot_data.txt` with that of your backup in order to restory your data.
+
+
+A full corruption indicates permanent and complete data loss. Please delete `pulsepilot_data.txt` and relaunch Pulsepilot.
+
+A partial corruption indicates a partial recovery of data up until the point of corruption. We recommend utilising the `history` command to review and discrepencies
+and missing data. You may choose to re-enter the corrupted data to be saved again upon `exit`.
+
+(hyperlink for history and exit)
 
 ## Command Summary
 

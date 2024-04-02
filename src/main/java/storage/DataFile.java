@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 import health.Appointment;
@@ -14,9 +15,11 @@ import health.Bmi;
 import health.HealthList;
 import health.Period;
 import constants.ErrorConstant;
+import ui.Output;
+import utility.Parser;
 import workouts.Gym;
 import workouts.Run;
-import workouts.WorkoutList;
+// import workouts.WorkoutList;
 import utility.CustomExceptions;
 import constants.UiConstant;
 
@@ -94,19 +97,30 @@ public class DataFile {
         int lineNumberCount = 0; // just for getting lineNumber, no other use
         try (final Scanner readFile = new Scanner(UiConstant.SAVE_FILE)) {
             LogFile.writeLog("Read begins", false);
+            try {
+                String [] input = readFile.nextLine().split(UiConstant.SPLIT_BY_COLON);
+                String dataType = input[UiConstant.DATA_TYPE_INDEX].trim();
+                if (dataType.equalsIgnoreCase(UiConstant.NAME_LABEL)) {
+                    String name = input[UiConstant.NAME_INDEX].trim();
+                    processName(name);
+                } else {
+                    Output.printException(ErrorConstant.CORRUPT_ERROR);
+                    System.exit(1);
+                }
+
+            } catch (Exception e) {
+                LogFile.writeLog("Data file is missing name, exiting." + e, true);
+                Output.printException(ErrorConstant.CORRUPT_ERROR);
+                System.exit(1);
+            }
 
             while (readFile.hasNextLine()) {
                 String [] input = readFile.nextLine().split(UiConstant.SPLIT_BY_COLON);
 
                 String dataType = input[UiConstant.DATA_TYPE_INDEX].trim();
-                String name = input[UiConstant.NAME_INDEX].trim();
 
                 DataType filter = DataType.valueOf(dataType);
                 switch (filter){
-
-                case NAME:
-                    processName(name);
-                    break;
 
                 case APPOINTMENT:
                     processAppointment(input);
@@ -121,7 +135,7 @@ public class DataFile {
                     break;
 
                 case GYM:
-                    // processGym(words);
+                    processGym(input);
                     break;
 
                 case RUN:
@@ -135,7 +149,7 @@ public class DataFile {
             }
         } catch (Exception e) {
             LogFile.writeLog("Invalid item read at line: " + (lineNumberCount + 1) + "! " + e, true);
-            throw new CustomExceptions.FileReadError(ErrorConstant.CORRUPT_ERROR);
+            throw new CustomExceptions.FileReadError(ErrorConstant.PARTIAL_CORRUPT_ERROR);
         }
     }
     public static void processName(String name){
@@ -146,8 +160,9 @@ public class DataFile {
     public static void processAppointment(String[] input) {
         String date = input[1].trim(); // date
         String time = input[2].trim(); // time
+        String formattedTime = time.replace(".", ":");
         String description = input[3].trim(); // description
-        Appointment appointment = new Appointment(date, time, description);
+        Appointment appointment = new Appointment(date, formattedTime, description);
         HealthList.addAppointment(appointment);
     }
 
@@ -170,13 +185,15 @@ public class DataFile {
 
     // run format: run:DISTANCE:TIME:PACE:DATE
     public static void processRun(String[] input) throws CustomExceptions.InvalidInput {
-        String distance = input[1].trim(); //distance
-        String time = input[2].trim(); //time
-        String date = input[4].trim(); // skip 3, pace, 4 is date
-        Run run = new Run(time, distance, date);
-        WorkoutList.addRun(run);
+        String distance = input[1].trim(); // distance
+        String time = input[2].trim(); // time
+        String formattedTime = time.replace(".", ":");
+        String date = input[3].trim(); // 3 is date
+        new Run(formattedTime, distance, date);
     }
-    public static void processGym(){}
+    public static void processGym(String[] input) throws CustomExceptions.InvalidInput, CustomExceptions.FileReadError {
+        Parser.parseGymFileInput(Arrays.toString(input));
+    }
 
     /**
      * Saves the user data to a file.
@@ -216,7 +233,7 @@ public class DataFile {
      * // param healthData Health data to be written.
      */
     public static void writeName(FileWriter dataFile, String name) throws IOException {
-        dataFile.write(DataType.NAME + UiConstant.SPLIT_BY_COLON + name.trim() + System.lineSeparator());
+        dataFile.write(UiConstant.NAME_LABEL + UiConstant.SPLIT_BY_COLON + name.trim() + System.lineSeparator());
         LogFile.writeLog("Wrote name to file", false);
     }
 
@@ -233,10 +250,12 @@ public class DataFile {
         // bmi format: bmi:HEIGHT:WEIGHT:BMI_SCORE:DATE (NA if no date)
         if (!bmiArrayList.isEmpty()){
             for (Bmi bmiEntry : bmiArrayList) {
+                String formattedDate = Parser.parseFormattedDate(bmiEntry.getDate());
+
                 dataFile.write(DataType.BMI + UiConstant.SPLIT_BY_COLON + bmiEntry.getHeight() +
                         UiConstant.SPLIT_BY_COLON + bmiEntry.getWeight() +
                         UiConstant.SPLIT_BY_COLON + bmiEntry.getBmiValue() +
-                        UiConstant.SPLIT_BY_COLON + bmiEntry.getDate() + System.lineSeparator());
+                        UiConstant.SPLIT_BY_COLON + formattedDate + System.lineSeparator());
             }
         }
 
@@ -244,8 +263,12 @@ public class DataFile {
         // appointment format: appointment:DATE:TIME:DESCRIPTION
         if (!appointmentArrayList.isEmpty()){
             for (Appointment appointmentEntry : appointmentArrayList) {
-                dataFile.write(DataType.APPOINTMENT + UiConstant.SPLIT_BY_COLON + appointmentEntry.getDate() +
-                        UiConstant.SPLIT_BY_COLON + appointmentEntry.getTime() +
+                String formattedDate = Parser.parseFormattedDate(appointmentEntry.getDate());
+                String formattedTime = String.valueOf(appointmentEntry.getTime());
+                formattedTime = formattedTime.replace(":", ".");
+
+                dataFile.write(DataType.APPOINTMENT + UiConstant.SPLIT_BY_COLON + formattedDate +
+                        UiConstant.SPLIT_BY_COLON + formattedTime +
                         UiConstant.SPLIT_BY_COLON + appointmentEntry.getDescription() + System.lineSeparator());
             }
         }
@@ -256,8 +279,11 @@ public class DataFile {
         if (!periodArrayList.isEmpty()){
             for (Period periodEntry : periodArrayList) {
                 LogFile.writeLog("Writing period to file", false);
-                dataFile.write(DataType.PERIOD + UiConstant.SPLIT_BY_COLON + periodEntry.getStartDate() +
-                        UiConstant.SPLIT_BY_COLON + periodEntry.getEndDate() +
+                String formattedStartDate = Parser.parseFormattedDate(periodEntry.getStartDate());
+                String formattedEndDate = Parser.parseFormattedDate(periodEntry.getEndDate());
+
+                dataFile.write(DataType.PERIOD + UiConstant.SPLIT_BY_COLON + formattedStartDate +
+                        UiConstant.SPLIT_BY_COLON + formattedEndDate +
                         UiConstant.SPLIT_BY_COLON + periodEntry.getPeriodLength() + System.lineSeparator());
                 LogFile.writeLog("Wrote period to file", false);
             }
@@ -274,54 +300,20 @@ public class DataFile {
                                         ArrayList<Gym> gymArrayList) throws IOException {
 
         // Write each run entry in a specific format
-        // run format: run:DISTANCE:TIME:PACE:DATE
+        // run format: run:DISTANCE:TIME:DATE
         if (!runArrayList.isEmpty()){
             for (Run runEntry : runArrayList) {
+                String formattedDate = Parser.parseFormattedDate(runEntry.getDate());
+                String formattedTime = runEntry.getTimes().replace(":", ".");
+
                 dataFile.write(DataType.RUN + UiConstant.SPLIT_BY_COLON + runEntry.getDistance() +
-                        UiConstant.SPLIT_BY_COLON + runEntry.getTimes() +
-                        UiConstant.SPLIT_BY_COLON + runEntry.getPace() +
-                        UiConstant.SPLIT_BY_COLON + runEntry.getDate() + System.lineSeparator());
+                        UiConstant.SPLIT_BY_COLON + formattedTime +
+                        UiConstant.SPLIT_BY_COLON + formattedDate + System.lineSeparator());
             }
         }
 
-        /*
+        //dataFile.write(Gym.toFileString() + System.lineSeparator());
 
-        // Write each period entry in a specific format
-
-        Gym Format:
-        gym|NUM_STATIONS|DATE|gym_1|STATION1_NAME|NUM_SETS|WEIGHT1,WEIGHT2,WEIGHT3,WEIGHT4
-        |gym_2|STATION2_NAME...
-
-        for (Workout gymEntry : gymArrayList) {
-            // dataFile.write(task.getType() + UiConstant.LINE.trim() + task.getLabel() + UiConstant.LINE.trim()
-            // + task.getRange() + UiConstant.LINE.trim() +
-            //       task.getStatusIcon() + System.LineSeparator());
-        }
-
-        for (Gym gymEntry : gymArrayList) {
-            StringBuilder gymDataBuilder = new StringBuilder();
-            gymDataBuilder.append(DataType.GYM).append(UiConstant.SPLIT_BY_COLON)
-                    .append(gymEntry.getStations()).append(UiConstant.SPLIT_BY_COLON)
-                    .append(gymEntry.getDate()).append(UiConstant.SPLIT_BY_COLON);
-
-            for (int i = 0; i < gymEntry.getStations().size(); i++) {
-                gymDataBuilder.append("gym_").append(i + 1).append(UiConstant.SPLIT_BY_COLON)
-                        .append(gymEntry.getStationNames().get(i)).append(UiConstant.SPLIT_BY_COLON)
-                        .append(gymEntry.getNumSets().get(i)).append(UiConstant.SPLIT_BY_COLON);
-
-                StringBuilder weightsBuilder = new StringBuilder();
-                for (int weight : gymEntry.getWeights().get(i)) {
-                    weightsBuilder.append(weight).append(",");
-                }
-                weightsBuilder.deleteCharAt(weightsBuilder.length() - 1); // Remove the trailing comma
-                gymDataBuilder.append(weightsBuilder.toString()).append(UiConstant.SPLIT_BY_COLON);
-            }
-
-            dataFile.write(gymDataBuilder.toString().trim() + System.lineSeparator());
-        }
-
-         */
     }
-
 }
 
