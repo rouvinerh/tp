@@ -11,9 +11,9 @@ import java.util.ArrayList;
  * Represents the WorkoutList object.
  */
 public class WorkoutList extends ArrayList<Workout> {
-    public static final ArrayList<Workout> WORKOUTS = new ArrayList<>();
-    public static final ArrayList<Run> RUNS = new ArrayList<>();
-    public static final ArrayList<Gym> GYMS = new ArrayList<>();
+    private static final ArrayList<Workout> WORKOUTS = new ArrayList<>();
+    private static final ArrayList<Run> RUNS = new ArrayList<>();
+    private static final ArrayList<Gym> GYMS = new ArrayList<>();
 
 
     /**
@@ -83,6 +83,15 @@ public class WorkoutList extends ArrayList<Workout> {
         }
 
     }
+
+    public static ArrayList<Gym> getGyms() {
+        return GYMS;
+    }
+
+    public static ArrayList<Run> getRuns() {
+        return RUNS;
+    }
+
 
     /**
      * Returns latest run.

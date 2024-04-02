@@ -13,18 +13,18 @@ import java.util.Comparator;
  */
 public class HealthList extends ArrayList<Health> {
 
-
-    /** The list of Bmi records. */
-    public static final ArrayList<Bmi> BMIS = new ArrayList<>();
-
-    /** The list of Appointment records. */
-    public static final ArrayList<Appointment> APPOINTMENTS = new ArrayList<>();
-
-    /** The list of Period records. */
-    public static final ArrayList<Period> PERIODS = new ArrayList<>();
-
     /** LogFile for logging health-related activities. */
     static LogFile logFile = LogFile.getInstance();
+
+    /** The list of Bmi records. */
+    private static final ArrayList<Bmi> BMIS = new ArrayList<>();
+
+    /** The list of Appointment records. */
+    private static final ArrayList<Appointment> APPOINTMENTS = new ArrayList<>();
+
+    /** The list of Period records. */
+    private static final ArrayList<Period> PERIODS = new ArrayList<>();
+
 
     //@@author j013n3
     /**
@@ -117,6 +117,18 @@ public class HealthList extends ArrayList<Health> {
         for (int i = startIndex; i <= endIndex; i++) {
             System.out.println(PERIODS.get(i));
         }
+    }
+
+    public static ArrayList<Period> getPeriods(){
+        return PERIODS;
+    }
+
+    public static ArrayList<Bmi> getBmis(){
+        return BMIS;
+    }
+
+    public static ArrayList<Appointment> getAppointments(){
+        return APPOINTMENTS;
     }
 
     /**
