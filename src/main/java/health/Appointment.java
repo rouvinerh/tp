@@ -79,6 +79,6 @@ public class Appointment extends Health {
         return String.format(HealthConstant.PRINT_APPOINTMENT_FORMAT,
                 getDate(),
                 getTime(),
-                this.description);
+                getDescription());
     }
 }
