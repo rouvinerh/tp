@@ -191,7 +191,8 @@ public class DataFile {
         String date = input[3].trim(); // 3 is date
         new Run(formattedTime, distance, date);
     }
-    public static void processGym(String rawInput) throws CustomExceptions.InvalidInput, CustomExceptions.FileReadError {
+    public static void processGym(String rawInput)
+            throws CustomExceptions.InvalidInput, CustomExceptions.FileReadError {
         Parser.parseGymFileInput(rawInput);
     }
 
