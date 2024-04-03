@@ -40,10 +40,10 @@ class PeriodTest {
         String expected = "Period Start: "
                 + period.getStartDate()
                 + " Period End: "
-                + period.endPeriodDate
+                + period.getEndDate()
                 + System.lineSeparator()
                 + "Period Length: "
-                + period.periodLength
+                + period.getPeriodLength()
                 + " days"
                 + System.lineSeparator();
 
@@ -66,10 +66,10 @@ class PeriodTest {
         String expected = "Period Start: "
                 + secondPeriod.getStartDate()
                 + " Period End: "
-                + secondPeriod.endPeriodDate
+                + secondPeriod.getEndDate()
                 + System.lineSeparator()
                 + "Period Length: "
-                + secondPeriod.periodLength
+                + secondPeriod.getPeriodLength()
                 + " days"
                 + System.lineSeparator();
 
@@ -91,10 +91,10 @@ class PeriodTest {
         String expected = "Period Start: "
                 + firstPeriod.getStartDate()
                 + " Period End: "
-                + firstPeriod.endPeriodDate
+                + firstPeriod.getEndDate()
                 + System.lineSeparator()
                 + "Period Length: "
-                + firstPeriod.periodLength
+                + firstPeriod.getPeriodLength()
                 + " days"
                 + System.lineSeparator()
                 + "Cycle Length: "
@@ -104,10 +104,10 @@ class PeriodTest {
                 + "Period Start: "
                 + secondPeriod.getStartDate()
                 + " Period End: "
-                + secondPeriod.endPeriodDate
+                + secondPeriod.getEndDate()
                 + System.lineSeparator()
                 + "Period Length: "
-                + secondPeriod.periodLength
+                + secondPeriod.getPeriodLength()
                 + " days"
                 + System.lineSeparator();
 
@@ -234,10 +234,10 @@ class PeriodTest {
         String expected = "Period Start: "
                 + secondPeriod.getStartDate()
                 + " Period End: "
-                + secondPeriod.endPeriodDate
+                + secondPeriod.getEndDate()
                 + System.lineSeparator()
                 + "Period Length: "
-                + secondPeriod.periodLength
+                + secondPeriod.getPeriodLength()
                 + " days"
                 + System.lineSeparator()
                 + "Cycle Length: "
@@ -247,10 +247,10 @@ class PeriodTest {
                 + "Period Start: "
                 + thirdPeriod.getStartDate()
                 + " Period End: "
-                + thirdPeriod.endPeriodDate
+                + thirdPeriod.getEndDate()
                 + System.lineSeparator()
                 + "Period Length: "
-                + thirdPeriod.periodLength
+                + thirdPeriod.getPeriodLength()
                 + " days"
                 + System.lineSeparator()
                 + "Cycle Length: "
@@ -260,10 +260,10 @@ class PeriodTest {
                 + "Period Start: "
                 + fourthPeriod.getStartDate()
                 + " Period End: "
-                + fourthPeriod.endPeriodDate
+                + fourthPeriod.getEndDate()
                 + System.lineSeparator()
                 + "Period Length: "
-                + fourthPeriod.periodLength
+                + fourthPeriod.getPeriodLength()
                 + " days"
                 + System.lineSeparator();
 
