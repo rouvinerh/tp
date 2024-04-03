@@ -136,11 +136,6 @@ The `Output` class is responsible for printing messages, prompts, and informatio
 1. `Workout` is a class that stores the date of the workout.
 2. `Run` is a subclass of Workout and stores the distance, time, pace, and date of the run.
 3. `Gym` is a subclass of Workout and stores the date and an array of `GymStation` objects
-=======
-1. `Workout` is a class that stores the date of the workout.
-2. `Run` is a subclass of `Workout` and stores the distance, time, pace, and date of the run.
-3. `Gym` is a subclass of `Workout` and stores the date and an array of `GymStation` objects
->>>>>>> 3d89a42dd4aad05443e4528e1698511202eeb0af
 4. `GymStation` stores the name of the gym station, number of sets, and an array of `GymSet` objects.
 5. `GymSet` stores the weight and repetitions for a particular set.
 6. `WorkoutList` is a class that stores an array list different `Workout` objects using ArrayList.
@@ -178,7 +173,7 @@ The `Output` class is responsible for printing messages, prompts, and informatio
 ###### [Back to table of contents](#table-of-contents)
 
 ### Health Package
-
+![img_1.png](img_1.png)
 The Health component consists of `Health`, `HealthList`, `Bmi`, `Period`, and `Appointment`.
 
 1. `Health` class stores date.
@@ -191,25 +186,91 @@ The Health component consists of `Health`, `HealthList`, `Bmi`, `Period`, and `A
 
 #### Health List
 
-{Include `HealthList` description}
+**Attributes**
+1. logFile: Represents a log file for logging health-related activities. 
+2. BMIS: ArrayList containing BMI records. 
+3. APPOINTMENTS: ArrayList containing appointment records.
+4. PERIODS: ArrayList containing period records.
+
+**Methods:**
+1. addBmi(Bmi bmi): Adds a BMI object to the list of BMIs. 
+2. showCurrentBmi(): Prints the most recently added BMI record. 
+3. showBmiHistory(): Prints all BMI entries recorded. 
+4. addPeriod(Period period): Adds a period record to the list of periods. 
+5. showLatestPeriod(): Prints the latest period record added. 
+6. showPeriodHistory(): Prints all period entries tracked. 
+7. printLatestThreeCycles(): Prints the latest three period objects from the periods list. 
+8. getPeriods(): Retrieves the list of period records. 
+9. getBmis(): Retrieves the list of BMI records.
+10. getAppointments(): Retrieves the list of appointment records. 
+11. getPeriodSize(): Retrieves the number of periods recorded. 
+12. getPeriod(int index): Gets the period object at the specified index. 
+13. predictNextPeriodStartDate(): Predicts the start date of the next period based on the average cycle length of the last three cycles. 
+14. clearHealthLists(): Clears the lists of BMIs, periods, and appointments. 
+15. getPeriodsSize(): Retrieves the size of the periods list. 
+16. getBmisSize(): Retrieves the size of the BMIs list. 
+17. deleteBmi(int index): Deletes a BMI record based on the index. 
+18. deletePeriod(int index): Deletes a period record based on the index. 
+19. addAppointment(Appointment appointment): Adds an appointment to the list of appointments. 
+20. deleteAppointment(int index): Deletes an appointment based on the index.
+21. showAppointmentList(): Prints all appointment entries tracked. 
+22. showLatestAppointment(): Prints the latest appointment record added.
 
 ###### [Back to table of contents](#table-of-contents)
 
 #### BMI
+**Attributes**
+1. `height`: A double value representing the height.
+2. `weight`: A double value representing the weight.
+3. `bmiValue`: A double value representing the calculated BMI value.
+4. `bmiCategory`: A String representing the BMI category
+5. `date`: A LocalDate object representing the date.
 
-{Include `Bmi` description}
+**Methods:**
+1. `Bmi(String height, String weight, String date)`: The constructor of the Bmi class, which takes height, weight, and date as string parameters.
+2. `getBmiValue()`: Returns the calculated BMI value as a string.
+3. `getHeight()`: Returns the height value as a string.
+4. `getWeight()`: Returns the weight value as a string.
+5. `calculateBmiValue()`: Calculates the BMI value based on the provided height and weight.
+6. `getBmiCategory(double bmiValue)`: Determines and returns the BMI category as a string based on the calculated BMI value.
+7. `toString()`: Returns a string representation of the Bmi object.
 
 ###### [Back to table of contents](#table-of-contents)
 
 #### Period
 
-{Include `Period` description}
+**Attributes**
+1. `startDate`: Represents the start date of the period 
+2. `endDate`: Represents the end date of the period 
+3. `periodLength`: Stores the length of the period in days 
+4. `cycleLength`: Stores the length of the menstrual cycle.
+
+**Methods:**
+1. `Period(String stringStartDate, String stringEndDate)`: The constructor of Period class which takes start date and end date of period.
+2. `getStartDate()`: Retrieves the start date of the period.
+3. `getEndDate()`: Retrieves the end date of the period
+4. `getPeriodLength()`: Retrieves the length of the period
+5. `calculatePeriodLength()`: Calculates the length of the period in days.
+6. `setCycleLength(LocalDate nextStartDate)`: Sets the cycle length of the current period based on the start date of the next period.
+7. `nextCyclePrediction()`: Predicts the start date of the next period based on the average cycle length obtained from the sum of the latest three menstrual cycle lengths.
+8. `printNextCyclePrediction(LocalDate nextPeriodStartDate)`: Prints a message indicating the number of days until the predicted start date of the next period, or how many days late the period is.
+9. `toString()`: Returns a string representation of the Period object, including the start date, end date, and period length and cycle length if present.
 
 ###### [Back to table of contents](#table-of-contents)
 
 #### Appointment
 
-{Include `Appointment` description}
+**Attributes**
+1. date: Represents the date of the appointment.
+2. time: Represents the time of the appointment.
+3. description: Stores a description of the appointment.
+
+**Methods:**
+1. Appointment(String stringDate, String stringTime, String description): The constructor of Appointment which takes date, time, and description.
+2. getDate(): Retrieves the date of the appointment.
+3. getTime(): Retrieves the time of the appointment.
+4. getDescription(): Retrieves the description of the appointment.
+5. toString(): Returns a string representation of the Appointment object, including the date, time, and description.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -387,10 +448,25 @@ Example of Gym Station:
 ### Health
 
 #### Add Period
+<code style="color: #D85D43;">
+HEALTH /h:period /start:[start_date] /end:[end_date]
+</code>
+
+- `[start_date]`  and `[end_date]` are in DD-MM-YYYY format.
 
 ##### Period Sequence
 
-{Include Period Sequence Diagram}
+The sequence diagram below illustrates the process of period prediction.
+
+1. The Handler class receives `userInput` through `Handler.processInput()` which calls `Handler.handleHealth` to handle health-related operations.
+2. `Parser.extractSubstringaFromSpecificIndex()` is then called to extract `typeOfHealth`, in this case, `prediction`. 
+3. The Handler class then calls `Parser.parsePredictionInput()`.
+4. `HealthList.getPeriodSize()` is then called to retrieve the size of `Periods` to ensure sufficient `Period` inputs are present for prediction.
+5. `HealthList.printLatestThreeCycles()` prints the user's latest three menstrual cycles.
+6. `HealthList.predictNextPeriodStartDate()` gets the predicted start date by calling `Period.nextCyclePrediction()`.
+7. `Period.getLastThreeCycleLengths()` is called to find the sum of the latest three cycle lengths before returning to `Period.nextCyclePrediction()` for necessary calculation to obtain the predicted start date.
+8. The `Parser` class calls `Period.printNextCyclePrediction()` with the predicted start date as a parameter. This method prints a string indicating the number of days until the predicted start date of the next period, or how many days late the period is if the current date is after the predicted start date.
+![image-7.png](..%2F..%2FDesktop%2Fimage-7.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -398,7 +474,17 @@ Example of Gym Station:
 
 ##### BMI Sequence
 
-{Include BMI Sequence Diagram}
+The sequence diagram below shows how a `Bmi` object is added to `BMIS`.
+
+1. Upon receiving `userInput` in `Handler.processInput()`, `Handler.handleHealth()` is called.
+2. `Parser.extractSubstringaFromSpecificIndex()` is then called to extract `typeOfHealth`, in this case, `bmi`.
+3. The Handler class then calls `Parser.parseBmiInput()`, passing in `userInput`.
+4. `Parser.splitBmiInput` splits the input and returns `bmiDetails` which consists of height, weight and date.
+5. The `Parser` class calls `Validation.validateBmiInput` to validate `bmiDetails` using `Validation.validateDataInput()` and `Validation.validateDateNotAfterToday()` methods.
+6. Upon successful validation, a new `Bmi` object is created based on `bmiDetails` with `bmiValue` obtained from `Bmi.calculateBmiValue()` and the corresponding BMI category obtained from `Bmi.getBmiCategory()`.
+7. `HealthList.addBmi()` adds the newly created `Bmi` into `BMIS`.
+8. `Output.printAddBmi()` prints `Bmi` string containing height, weight, date, BMI and BMI category to user.
+![image-8.png](..%2F..%2FDesktop%2Fimage-8.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -411,6 +497,21 @@ Example of Gym Station:
 ###### [Back to table of contents](#table-of-contents)
 
 #### Make Period Prediction
+<code style="color: #D85D43;">
+HEALTH /h:prediction 
+</code>
+
+The sequence diagram below illustrates the process of period prediction.
+
+1. The Handler class receives `userInput` through `Handler.processInput()` which calls `Handler.handleHealth` to handle health-related operations.
+2. `Parser.extractSubstringaFromSpecificIndex()` is then called to extract `typeOfHealth`, in this case, `prediction`. 
+3. The Handler class then calls `Parser.parsePredictionInput()`.
+4. `HealthList.getPeriodSize()` is then called to retrieve the size of `Periods` to ensure sufficient `Period` inputs are present for prediction.
+5. `HealthList.printLatestThreeCycles()` prints the user's latest three menstrual cycles.
+6. `HealthList.predictNextPeriodStartDate()` gets the predicted start date by calling `Period.nextCyclePrediction()`.
+7. `Period.getLastThreeCycleLengths()` is called to find the sum of the latest three cycle lengths before returning to `Period.nextCyclePrediction()` for necessary calculation to obtain the predicted start date.
+8. The `Parser` class calls `Period.printNextCyclePrediction()` with the predicted start date as a parameter. This method prints a string indicating the number of days until the predicted start date of the next period, or how many days late the period is if the current date is after the predicted start date.
+![image-9.png](..%2F..%2FDesktop%2Fimage-9.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
