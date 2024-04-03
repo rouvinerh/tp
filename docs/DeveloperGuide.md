@@ -56,7 +56,45 @@ The purpose of this guide is to provide an explanation for all the functions and
 
 The application follows an Object-Oriented Design approach, with separate classes for handling different components of the application, such as user input, output, exercise logging, and health data management.
 
-{Include Component Diagram here}
+```plantuml
+@startuml
+skinparam componentStyle rectangle
+actor User
+
+component Main {
+[UI]
+[Utility]
+[Health]
+[Workout]
+[PulsePilot]
+[Storage]
+[Constants]
+}
+
+User -d-> [UI]
+[PulsePilot] -r-> [UI]
+
+[UI] -d-> [Utility]
+[UI] -d-> [Health]
+[UI] -d-> [Workout]
+
+[Utility] -l-> [Health]
+[Utility] -r-> [Workout]
+[Utility] -d-> [Storage]
+ 
+[Storage] .u.> [Health]
+[Storage] .u.> [Workout]
+[Storage] .u.> [UI]
+
+[Storage] .r.> [Output File] 
+
+[Constants] -r[hidden]-> [Storage] 
+@enduml
+```
+
+The **_Architecture Diagram_** given above explains the high-level design of the PulsePilot.
+
+Given below is a quick overview of main components and how they interact with each other.
 
 `Main` is responsible for the initialising, processing of user input and termination of the bot. It creates a `PulsePilot` instance.
 
@@ -75,7 +113,11 @@ The application can be further broken down into the following packages:
 
 The `UI` package contains `Handler` and `Output`, which are responsible for handling user input and printing of output fo the screen respectively.
 
+{Insert class diagram}
+
 #### Handler
+
+_{Insert Class Diagram}_
 
 The main entry point of the application is the `Handler` class, which contains the `processInput` method.
 
@@ -172,6 +214,8 @@ The `Utility` package includes classes and methods that handle exceptions, user 
 
 It consists of `CustomExceptions`, `Filters`, `Parser` and `Validation` classes.
 
+{Include `Utility` diagram}
+
 ###### [Back to table of contents](#table-of-contents)
 
 #### Parser
@@ -203,6 +247,8 @@ It consists of `CustomExceptions`, `Filters`, `Parser` and `Validation` classes.
 `Storage` contains `DataFile` and `LogFile`. This component handles all logging of commands used and writing of data stored within PulsePilot to an external data file. The reading of the data file is also done here.
 
 {Include Output class diagram}
+
+The Storage component consists of LogFile, DataFile, and DataType.
 
 ###### [Back to table of contents](#table-of-contents)
 
