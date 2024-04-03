@@ -187,34 +187,34 @@ The Health component consists of `Health`, `HealthList`, `Bmi`, `Period`, and `A
 #### Health List
 
 **Attributes**
-1. logFile: Represents a log file for logging health-related activities. 
-2. BMIS: ArrayList containing BMI records. 
-3. APPOINTMENTS: ArrayList containing appointment records.
-4. PERIODS: ArrayList containing period records.
+1. `logFile`: Represents a log file for logging health-related activities. 
+2. `BMIS`: ArrayList containing BMI records. 
+3. `APPOINTMENTS`: ArrayList containing appointment records.
+4. `PERIODS`: ArrayList containing period records.
 
 **Methods:**
-1. addBmi(Bmi bmi): Adds a BMI object to the list of BMIs. 
-2. showCurrentBmi(): Prints the most recently added BMI record. 
-3. showBmiHistory(): Prints all BMI entries recorded. 
-4. addPeriod(Period period): Adds a period record to the list of periods. 
-5. showLatestPeriod(): Prints the latest period record added. 
-6. showPeriodHistory(): Prints all period entries tracked. 
-7. printLatestThreeCycles(): Prints the latest three period objects from the periods list. 
-8. getPeriods(): Retrieves the list of period records. 
-9. getBmis(): Retrieves the list of BMI records.
-10. getAppointments(): Retrieves the list of appointment records. 
-11. getPeriodSize(): Retrieves the number of periods recorded. 
-12. getPeriod(int index): Gets the period object at the specified index. 
-13. predictNextPeriodStartDate(): Predicts the start date of the next period based on the average cycle length of the last three cycles. 
-14. clearHealthLists(): Clears the lists of BMIs, periods, and appointments. 
-15. getPeriodsSize(): Retrieves the size of the periods list. 
-16. getBmisSize(): Retrieves the size of the BMIs list. 
-17. deleteBmi(int index): Deletes a BMI record based on the index. 
-18. deletePeriod(int index): Deletes a period record based on the index. 
-19. addAppointment(Appointment appointment): Adds an appointment to the list of appointments. 
-20. deleteAppointment(int index): Deletes an appointment based on the index.
-21. showAppointmentList(): Prints all appointment entries tracked. 
-22. showLatestAppointment(): Prints the latest appointment record added.
+1. `addBmi(Bmi bmi)`: Adds a BMI object to the list of BMIs. 
+2. `showCurrentBmi()`: Prints the most recently added BMI record. 
+3. `showBmiHistory()`: Prints all BMI entries recorded. 
+4. `addPeriod(Period period)`: Adds a period record to the list of periods. 
+5. `showLatestPeriod()`: Prints the latest period record added. 
+6. `showPeriodHistory()`: Prints all period entries tracked. 
+7. `printLatestThreeCycles()`: Prints the latest three period objects from the periods list. 
+8. `getPeriods()`: Retrieves the list of period records. 
+9. `getBmis()`: Retrieves the list of BMI records.
+10. `getAppointments()`: Retrieves the list of appointment records. 
+11. `getPeriodSize()`: Retrieves the number of periods recorded. 
+12. `getPeriod(int index)`: Gets the period object at the specified index. 
+13. `predictNextPeriodStartDate()`: Predicts the start date of the next period based on the average cycle length of the last three cycles. 
+14. `clearHealthLists()`: Clears the lists of BMIs, periods, and appointments. 
+15. `getPeriodsSize()`: Retrieves the size of the periods list. 
+16. `getBmisSize()`: Retrieves the size of the BMIs list. 
+17. `deleteBmi(int index)`: Deletes a BMI record based on the index. 
+18. `deletePeriod(int index)`: Deletes a period record based on the index. 
+19. `addAppointment(Appointment appointment)`: Adds an appointment to the list of appointments. 
+20. `deleteAppointment(int index)`: Deletes an appointment based on the index.
+21. `showAppointmentList()`: Prints all appointment entries tracked. 
+22. `showLatestAppointment()`: Prints the latest appointment record added.
 
 ###### [Back to table of contents](#table-of-contents)
 
