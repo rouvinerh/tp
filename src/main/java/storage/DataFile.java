@@ -21,6 +21,7 @@ import workouts.Run;
 import workouts.Workout;
 import utility.CustomExceptions;
 import constants.UiConstant;
+import utility.Filters.DataType;
 
 /**
  * Represents a DataFile object used to read and write data stored in PulsePilot to a file.
