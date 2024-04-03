@@ -173,7 +173,7 @@ The `Output` class is responsible for printing messages, prompts, and informatio
 ###### [Back to table of contents](#table-of-contents)
 
 ### Health Package
-![img_5.png](img_5.png)
+![Class Diagram for Health Package](img/health_package.png)
 The Health component consists of `Health`, `HealthList`, `Bmi`, `Period`, and `Appointment`.
 
 1. `Health` class stores date.
@@ -466,7 +466,7 @@ The sequence diagram below illustrates the process of period prediction.
 6. `HealthList.predictNextPeriodStartDate()` gets the predicted start date by calling `Period.nextCyclePrediction()`.
 7. `Period.getLastThreeCycleLengths()` is called to find the sum of the latest three cycle lengths before returning to `Period.nextCyclePrediction()` for necessary calculation to obtain the predicted start date.
 8. The `Parser` class calls `Period.printNextCyclePrediction()` with the predicted start date as a parameter. This method prints a string indicating the number of days until the predicted start date of the next period, or how many days late the period is if the current date is after the predicted start date.
-![img_4.png](img_4.png)
+![Sequence Diagram for Period Prediction](img/period_sequence.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -484,7 +484,7 @@ The sequence diagram below shows how a `Bmi` object is added to `BMIS`.
 6. Upon successful validation, a new `Bmi` object is created based on `bmiDetails` with `bmiValue` obtained from `Bmi.calculateBmiValue()` and the corresponding BMI category obtained from `Bmi.getBmiCategory()`.
 7. `HealthList.addBmi()` adds the newly created `Bmi` into `BMIS`.
 8. `Output.printAddBmi()` prints `Bmi` string containing height, weight, date, BMI and BMI category to user.
-![img_3.png](img_3.png)
+![Sequence Diagram for Add Bmi](img/bmi_sequence.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -511,7 +511,7 @@ The sequence diagram below illustrates the process of period prediction.
 6. `HealthList.predictNextPeriodStartDate()` gets the predicted start date by calling `Period.nextCyclePrediction()`.
 7. `Period.getLastThreeCycleLengths()` is called to find the sum of the latest three cycle lengths before returning to `Period.nextCyclePrediction()` for necessary calculation to obtain the predicted start date.
 8. The `Parser` class calls `Period.printNextCyclePrediction()` with the predicted start date as a parameter. This method prints a string indicating the number of days until the predicted start date of the next period, or how many days late the period is if the current date is after the predicted start date.
-![img_2.png](img_2.png)
+![Sequence Diagram for Add Period](img/period_prediction.png)
 
 ###### [Back to table of contents](#table-of-contents)
 

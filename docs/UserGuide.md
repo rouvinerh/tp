@@ -174,7 +174,7 @@ Format: `health /h:period /start:START_DATE /end:END_DATE`
 
 * All parameters must be provided in correct order as shown above.
 * `START_DATE` is `DD-MM-YYYY` format (i.e. `19-03-2024`) representing the start of a cycle.
-* `END_DATE` is a `DD-MM-YYYY` format (i.e. `19-03-2024`) representing the end of a cycle.
+* `END_DATE` is `DD-MM-YYYY` format (i.e. `19-03-2024`) representing the end of a cycle.
 
 Examples:
 * `health /h:period /start:09-03-2022 /end:16-03-2022`
