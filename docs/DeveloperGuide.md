@@ -56,41 +56,7 @@ The purpose of this guide is to provide an explanation for all the functions and
 
 The application follows an Object-Oriented Design approach, with separate classes for handling different components of the application, such as user input, output, exercise logging, and health data management.
 
-```plantuml
-@startuml
-skinparam componentStyle rectangle
-actor User
-
-component Main {
-[UI]
-[Utility]
-[Health]
-[Workout]
-[PulsePilot]
-[Storage]
-[Constants]
-}
-
-User -d-> [UI]
-[PulsePilot] -r-> [UI]
-
-[UI] -d-> [Utility]
-[UI] -d-> [Health]
-[UI] -d-> [Workout]
-
-[Utility] -l-> [Health]
-[Utility] -r-> [Workout]
-[Utility] -d-> [Storage]
- 
-[Storage] .u.> [Health]
-[Storage] .u.> [Workout]
-[Storage] .u.> [UI]
-
-[Storage] .r.> [Output File] 
-
-[Constants] -r[hidden]-> [Storage] 
-@enduml
-```
+![ArchitectureDiagram](![img.png](img/architecture_diagram.png)
 
 The **_Architecture Diagram_** given above explains the high-level design of the PulsePilot.
 
@@ -472,6 +438,14 @@ The sequence diagram below illustrates the process of period prediction.
 
 #### Add BMI
 
+<code style="color: #D85D43;">
+HEALTH /h:bmi /height:[height] /weight:[weight] /date:[date]
+</code>
+
+- `[height]` is a 2 **decimal place positive number** representing the user's height.
+- `[weight]`is a 2 **decimal place positive number** representing the user's weight.
+- `[date]` is in `DD-MM-YYYY` format (i.e. `19-03-2024`).
+
 ##### BMI Sequence
 
 The sequence diagram below shows how a `Bmi` object is added to `BMIS`.
@@ -490,9 +464,31 @@ The sequence diagram below shows how a `Bmi` object is added to `BMIS`.
 
 #### Add Appointment
 
+<code style="color: #D85D43;">
+HEALTH /h:appointment /date:[date] /time:[time] /description:[description]
+</code>
+
+- `[date]` is in `DD-MM-YYYY` format representing the date of the appointment.
+- `[time]` is in `HH:mm` format representing the time of the appointment.
+- `[description]` is a string  representing the details of the appointment. The string can only contain alphanumeric characters and spaces.
+
 ##### Appointment Sequence
 
-{Include Appointment Sequence Diagram}
+1. User input is passed to `Handler.processInput()`, which determines the command used is `health`, thus passing the input to `Handler.handleHealth()`.
+
+2. `Handler.handleHealth()` determines the type of health which is `appointment`, and calls the `Parser.parseAppointmentInput()` method to process the user's input.
+
+3. `Parser.parseAppointmentInput()` splits the input using `Parser.splitAppointmentDetails()`. It then validates each input using `Validation.validateAppointmentDetails()`.
+    - `CustomExceptions.InsufficientInput` is thrown if either not enough parameters are specified or blank parameters are found.
+    - `CustomExceptions.InvalidInput` is thrown if the parameters passed in are invalid and do not follow the stipulated format.
+
+4. If valid, a new `Appointment` object is created with the split user input.
+
+5. The `Appointment` constructor adds the newly created object into `HealthList.APPOINTMENTS`.
+
+6. The `Appointment` object is passed to `Output.printAddAppointment()` and a message acknowledging the successful adding is printed to the screen.
+
+![AddAppointment](img/appointment_sequence.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
