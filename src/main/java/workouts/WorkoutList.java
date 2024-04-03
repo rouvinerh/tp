@@ -45,6 +45,10 @@ public class WorkoutList extends ArrayList<Workout> {
         addWorkout(gym);
     }
 
+    public static ArrayList<Workout> getWorkouts(){
+        return WORKOUTS;
+    }
+
     /**
      * Returns a list of workouts based on the filter.
      *

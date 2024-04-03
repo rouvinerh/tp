@@ -103,13 +103,13 @@ public class Gym extends Workout {
      */
     private StringBuilder formatFileString(){
         StringBuilder fileString = new StringBuilder();
-        String type = WorkoutConstant.GYM;
+        String type = WorkoutConstant.GYM.toUpperCase();
         String numOfStation = String.valueOf(stations.size());
         String date;
         if(this.getDate() == null){
             date = ErrorConstant.NO_DATE_SPECIFIED_ERROR;
         } else {
-            date = this.getDate().toString();
+            date = Parser.parseFormattedDate(this.getDate());
         }
 
         fileString.append(type);
