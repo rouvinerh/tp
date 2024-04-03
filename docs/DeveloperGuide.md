@@ -56,7 +56,7 @@ The purpose of this guide is to provide an explanation for all the functions and
 
 The application follows an Object-Oriented Design approach, with separate classes for handling different components of the application, such as user input, output, exercise logging, and health data management.
 
-![ArchitectureDiagram](http://www.plantuml.com/plantuml/png/PP71QiCm38RlUWgzGFe8ep0Ossc5KdOeEPX4jAQA7MJvKCRUVJ9XaM4NyUUJzEjFSYmQHEl2K1unhK72WbDUrfmewLcVJ2WqQKWt9WYJPi5B8G7OX_0RhfUFqOf6ZleqzKw1zMxYAyiZLpLrgbpe53ctXxFPX1kPUisfcBcM4Nu0cZCEy_22csEtX8FyOMXr6_ERplRhZZo7fyI1k-6UIx_XZStAioFi6W_ru5x_k7lrZVrj74g3drNNglWMsH3qdyYYNUzndYcDVHA48wMv_S9V)
+![ArchitectureDiagram](![img.png](img/architecture_diagram.png)
 
 The **_Architecture Diagram_** given above explains the high-level design of the PulsePilot.
 
@@ -397,7 +397,7 @@ HEALTH /h:appointment /date:[date] /time:[time] /description:[description]
 
 6. The `Appointment` object is passed to `Output.printAddAppointment()` and a message acknowledging the successful adding is printed to the screen.
 
-![AddAppointment](http://www.plantuml.com/plantuml/png/pLNDYjim4BxhASJsjh0lO9QmsuQm2uKjkFHIUfXQaqPKbeKq3kdRLx5HF94ZfuGUDX0OJRwVJsD5VWe4dlhM2E5YeHljm99y0QiCUWdXL3u-oay6Gf2hrHdq2_Wm85DL0huW6Dfzre4YcAzAX6zWj0BIdOq4llfl3cyzkVu8JXK72f6s_h2IgQoayrs38RpQY1VGaDu3uUdt3vlDn_XXt3FoRgZ6P49XYJwnl--qKcX_H9Lnl49S9oMiZ8vu81yPTVypaDVsryPtRUsmqLlTl5g5XqalaP9UMfzlWVuuVDkoBHJOUPnnUCVYsRbEMshH4fzYEG5N2CveOWfh9D0cND1OW_zTWsaxEv_q1Gzkuf5wRoNCRHGk6h74xBnMSZykS24u9wHih5LINCTlDaM6uzcuMAx6zrMWStx-I8SKouzWxCsTOu7NfigTkRNubm5zrUqx651CSUE0IBSt3wYGEfqlVbplAdOsx-JzVQIppfGz0oQfhFqmavp-LlLm4UMCGl228S_ER_fAWb8CBwVW37KIORsvVvd7pDERevBEHy_dWdk29O5nMJJDu4ltx1DQrRVcBm00)
+![AddAppointment](img/appointment_sequence.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
