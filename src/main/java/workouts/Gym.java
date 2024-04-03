@@ -105,7 +105,7 @@ public class Gym extends Workout {
         StringBuilder fileString = new StringBuilder();
         String type = WorkoutConstant.GYM;
         String numOfStation = String.valueOf(stations.size());
-        String date = "";
+        String date;
         if(this.getDate() == null){
             date = ErrorConstant.NO_DATE_SPECIFIED_ERROR;
         } else {
@@ -126,9 +126,8 @@ public class Gym extends Workout {
      * The format that this output is
      *  gym:NUM_STATIONS:DATE:STATION1_NAME:NUM_SETS:REPS:WEIGHT1,WEIGHT2,WEIGHT3,WEIGHT4
      *  :STATION2_NAME:NUM_SETS:REPS:WEIGHT1,WEIGHT2,WEIGHT3,WEIGHT4 ....
-     *
      *  Example: "gym:2:1997-11-11:bench press:4:4,4,4,4:10,20,30,40:squats:4:3,3,3,3:20,30,40,50"
-     *  Can refer to GymTest {@Code toFileString_correctInput_expectedCorrectString()} for more examples
+     *  Can refer to GymTest {@code toFileString_correctInput_expectedCorrectString()} for more examples
      *
      * @return A formatted string in the format specified above.
      */
@@ -148,7 +147,7 @@ public class Gym extends Workout {
     /**
      * Used when printing all the workouts. This method takes in two parameters {@code isFirstIteration} and {@code i}
      * @param index indicates which particular gymStation is being queried.
-     * @return
+     * @return A string representing the history format for gym.
      */
     public String getHistoryFormatForSpecificGymStation(int index) {
 

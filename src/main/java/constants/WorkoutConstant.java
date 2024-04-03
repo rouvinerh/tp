@@ -23,10 +23,6 @@ public class WorkoutConstant {
 
     // INDEX
     public static final Integer STATION_NAME_INDEX = 0;
-    public static final int COMMAND_INDEX = 0;
-    public static final int DISTANCE_INDEX = 1;
-    public static final int TIME_INDEX = 2;
-    public static final int DATE_INDEX = 3;
     public static final int NO_HOURS_PRESENT = -1;
 
     public static final int GYM_NUMBER_OF_STATIONS_INDEX = 0;

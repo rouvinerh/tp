@@ -4,6 +4,8 @@
 
 PulsePilot is a **desktop app for tracking health-related information, optimised for users via a Command Line Interface (CLI)**. If one can type fast, you can key in and track health-related information faster than traditional GUI applications installed on your phone or computer.
 
+## Table of Contents
+
 * [Quick Start](#quick-start)
 * [Notes About Command Format](#notes-about-command-format)
 * [Commands](#commands)
@@ -54,6 +56,8 @@ Terminal primed. Command inputs are now accepted...
 ____________________________________________________________
 ```
 
+###### [Back to table of contents](#table-of-contents)
+
 ## Notes About Command Format
 
 * Parameters in `UPPER_CASE` are the parameters to be **supplied by the user**.
@@ -87,6 +91,8 @@ run 	25:23		5.24		4:51/km		2024-03-19
 ____________________________________________________________
 ```
 
+###### [Back to table of contents](#table-of-contents)
+
 ### Workout: Gym
 
 Adds a new gym session to track. 
@@ -97,6 +103,8 @@ Format: `new /e:gym /n:NUMBER_OF_STATIONS`
 * `NUMBER_OF_STATIONS` is a **positive integer**  representing the number of stations for one Gym session.
 
 Examples: `new /e:gym /n:2`
+
+###### [Back to table of contents](#table-of-contents)
 
 #### Adding Gym Stations
 
@@ -130,6 +138,8 @@ Squat: 4 sets of 5 reps at 100 KG
 ____________________________________________________________
 ```
 
+###### [Back to table of contents](#table-of-contents)
+
 ### Health: BMI
 
 Calculates user's Body Mass Index (BMI).
@@ -153,6 +163,8 @@ Your BMI is 26.1
 You're overweight.
 ____________________________________________________________
 ```
+
+###### [Back to table of contents](#table-of-contents)
 
 ### Health: Period
 
@@ -197,6 +209,7 @@ Your next cycle's predicted start date is 2024-04-08, in 7 days.
 
 ### Health: Appointment
 
+###### [Back to table of contents](#table-of-contents)
 
 ### History
 
@@ -221,6 +234,8 @@ Index		Type	Time		Distance	Pace		Date
 ____________________________________________________________
 ```
 
+###### [Back to table of contents](#table-of-contents)
+
 ### Latest
 
 Prints the latest instance of `run`, `gym`, `bmi` or `period`.
@@ -241,6 +256,8 @@ Period Start: 2022-03-09 Period End: 2022-03-16
 Period Length: 8 days
 ____________________________________________________________
 ```
+
+###### [Back to table of contents](#table-of-contents)
 
 ### Help
 
@@ -266,6 +283,8 @@ exit - Exit the program
 ____________________________________________________________
 ```
 
+###### [Back to table of contents](#table-of-contents)
+
 ### Exit
 
 Exits the bot gracefully.
@@ -283,10 +302,14 @@ See you soon, Captain!
 ____________________________________________________________
 ```
 
+###### [Back to table of contents](#table-of-contents)
+
 ## Logging
 
 The latest logs are written to `pulsepilot_log.txt` once the bot exits. Each time the bot is run, the current 
 `pulsepilot_log.txt` file is overwritten with the most recent logs. The logs record both info messages and any error messages.
+
+###### [Back to table of contents](#table-of-contents)
 
 ## Saving Data
 
@@ -295,6 +318,8 @@ Data is saved to `pulsepilot_data.txt` once the bot exits. Each time the bot exi
 
 **Warning:** Should this file be corrupted,there is a slim chance of recovery.
 **Tip:** Ensure that you always have a _backup copy stored safely_ to prevent permanent data loss.
+
+###### [Back to table of contents](#table-of-contents)
 
 ## FAQ
 
@@ -349,6 +374,8 @@ and missing data. You may choose to re-enter the corrupted data to be saved agai
 
 (hyperlink for history and exit)
 
+###### [Back to table of contents](#table-of-contents)
+
 ## Command Summary
 
 | Action       | Format, Examples                                                                                                                     |
@@ -362,3 +389,4 @@ and missing data. You may choose to re-enter the corrupted data to be saved agai
 | View latest  | `latest /view:TYPE` <br/>Example:   `latest /view:bmi`                                                                               |
 | Exit bot     | `exit`                                                                                                                               |
 
+###### [Back to table of contents](#table-of-contents)
