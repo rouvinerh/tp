@@ -173,7 +173,7 @@ The `Output` class is responsible for printing messages, prompts, and informatio
 ###### [Back to table of contents](#table-of-contents)
 
 ### Health Package
-![Class Diagram for Health Package.png](img/health_package.png)
+![Class Diagram for Health Package](img/health_package.png)
 The Health component consists of `Health`, `HealthList`, `Bmi`, `Period`, and `Appointment`.
 
 1. `Health` class stores date.
