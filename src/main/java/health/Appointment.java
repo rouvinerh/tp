@@ -16,10 +16,12 @@ public class Appointment extends Health {
      * The date of the appointment.
      */
     protected LocalDate date;
+
     /**
      * The time of the appointment.
      */
     protected LocalTime time;
+
     /**
      * The description of the appointment.
      */
