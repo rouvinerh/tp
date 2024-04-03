@@ -190,8 +190,13 @@ public class DataFile {
         String time = input[2].trim(); // time
         String formattedTime = time.replace(".", ":");
         String date = input[3].trim(); // 3 is date
-        new Run(formattedTime, distance, date);
+        if (date.equals(ErrorConstant.NO_DATE_SPECIFIED_ERROR)) {
+            new Run(formattedTime, distance);
+        } else {
+            new Run(formattedTime, distance, date);
+        }
     }
+
     public static void processGym(String rawInput)
             throws CustomExceptions.InvalidInput, CustomExceptions.FileReadError {
         Parser.parseGymFileInput(rawInput);
