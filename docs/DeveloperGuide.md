@@ -2,26 +2,13 @@
 
 ## Table of Contents
 
-* [Table of Contents](#table-of-contents)
 * [Acknowledgements](#acknowledgements)
 * [Introduction](#introduction)
 * [Design](#design)
-  * [Architecture](#architecture)
-  * [UI component](#ui-component)
-  * [Utility component](#utility-component)
-  * [Health component](#health-component)
-  * [Workout component](#workout-component)
-  * [Storage component](#storage-component)
 * [Implementation](#implementation)
-* [Appendices](#appendices)
-  * [Appendix A: Product scope](#appendix-a-product-scope)
-    * [Target user profile](#target-user-profile)
-    * [Value proposition](#value-proposition)
-  * [Appendix B: User Stories](#appendix-b-user-stories)
-  * [Appendix C: Non-Functional Requirements](#appendix-c-non-functional-requirements)
-  * [Appendix D: Glossary](#appendix-d-glossary)
-  * [Appendix E: Instructions for manual testing](#appendix-e-instructions-for-manual-testing)
-* [Frequently Asked Questions (FAQs)](#frequently-asked-questions-faqs)
+* [Appendix: Requirements](#appendix-requirements)
+* [Appendix: Manual Testing](#appendix-manual-testing)
+* [Frequently Asked Questions](#frequently-asked-questions)
 
 ## Acknowledgements
 
@@ -34,42 +21,51 @@ and [Developer Guide (DG)](https://se-education.org/addressbook-level3/Developer
 - {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries
 -- include links to the original source as well}
 
-[Return to Table of Contents](#table-of-contents)
-
 ## Introduction
 
-The aim of this guide is to provide an explanation for all the functions and processing of information in PulsePilot. This is to enable any technical readers to get a detailed understanding of the application's internals.
+The purpose of this guide is to provide an explanation for all the functions and internal workings in PulsePilot. This enables any technical readers to get a detailed understanding of the application's implementation, making it easier for them to contribute to the project or adapt it according to their preferences. 
 
-The application follows an Object-Oriented Design approach, with separate classes for handling different components
-of the application, such as user input, output, exercise logging, and health data management.
-The main entry point of the application is the Handler class, which contains the processInput method. 
-This method is responsible for parsing user input, validating it, and delegating the appropriate actions 
-to other classes based on the command provided.
-
-The Output class is responsible for printing messages, prompts, and information to the console.
-
-The Run and Gym classes represent different types of exercises that the user can log. 
-The Health, Bmi, Period and Appointment classes are used to manage health-related data, such as Body Mass Index (BMI), 
-menstrual period information and medical appointment details. 
-
-The LogFile class is used for logging application events and user actions to a log file.
-
-{Describe the design and implementation of the product. Use UML diagrams and short code snippets where applicable.}
-
-This guide will include UML diagrams to better each component of our product. 
-
-[Return to Table of Contents](#table-of-contents)
+###### [Back to table of contents](#table-of-contents)
 
 ## Design
 
-### Architecture
+* [Overview of Components](#overview-of-components)
+* [UI](#ui)
+  * [Handler](#handler)
+  * [Output](#output)
+* [Workout](#workout)
+    * [WorkoutList](#workout-list)
+    * [Gym](#gym)
+        * [GymStation](#gym-station)
+        * [GymSet](#gym-set)
+    * [Run](#run)
+* [Health](#health)
+    * [HealthList](#health-list)
+    * [Bmi](#bmi)
+    * [Period](#period)
+    * [Appointment](#appointment)
+* [Utility](#utility)
+  * [Parser](#parser)
+  * [Validation](#validation)
+  * [CustomExceptions](#custom-exceptions)
+  * [Filters](#filters)
+* [Storage](#storage)
+  * [LogFile](#log-file)
+  * [DataFile](#data-file)
+* [PulsePilot](#pulsepilot)
+* [Constants](#constants)
+
+### Overview of Components
+
+The application follows an Object-Oriented Design approach, with separate classes for handling different components
+of the application, such as user input, output, exercise logging, and health data management.
 
 ```plantuml
 @startuml
 skinparam componentStyle rectangle
 actor User
 
-component {
+component Main {
 [UI]
 [Utility]
 [Health]
@@ -99,85 +95,231 @@ User -d-> [UI]
 [Constants] -r[hidden]-> [Storage] 
 @enduml
 ```
-
 The **_Architecture Diagram_** given above explains the high-level design of the PulsePilot.
 
 Given below is a quick overview of main components and how they interact with each other.
 
-**Main components of the architecture**
+`Main` is responsible for the initialising, processing of user input and termination of the bot. It creates a `PulsePilot` instance.
 
-`Main`
+The application can be further broken down into the following packages:
 
-- When PulsePilot is launched, it creates an instance of `PulsePilot`.
+- `Ui`: The user interface of PulsePilot.
+- `Storage`: Contains the data storage components for PulsePilot.
+- `Health`: Stores health-related information.
+- `Workout`: Stores workout-related information.
+- `Utility`: Contains utility functions, such as input parsing and validation.
+- `Constants`: Contains all constants used in PulsePilot.
 
-`PulsePilot`
-- Upon creation, it initialises a `LogFile` and `DataFile` object to create log and data files for the bot.
-- The `initialiseBot()` function is called to retrieve the user's name.
+###### [Back to table of contents](#table-of-contents)
 
-The bulk of the app’s work is done by the following five components:
-
-* `UI`: The UI of the PulsePilot which handles interactions with the user.
-* `Utility`: Parses the inputs and commands from the user.
-* `Health`: Contains the methods for health-related functionalities (i.e. appointment, bmi, and period), such as adders,
-getters, and managing lists of health objects.
-* `Workout`: Contains the methods for workout-related functionalities (i.e. gym and run), such as adders, getters, and 
-managing lists of workout objects.
-* `Storage`: Reads data from, and writes data to, the output file.
-
-`Constants` represents a collection of classes used by multiple other components
-
-[Return to Table of Contents](#table-of-contents)
-
-### UI component
+### UI
 
 The UI component consists of Handler and Output
 
-[Return to Table of Contents](#table-of-contents)
+{Insert class diagram}
 
-### Utility component
-
-The Utility component consists of Parser, Filters, Validation, and CustomExceptions.
-
-[Return to Table of Contents](#table-of-contents)
-
-### Health component
-
-The Health component consists of Health, HealthList, Bmi, Period, and Appointment.
+#### Handler
 
 _{Insert Class Diagram}_
 
-1. `Health` class stores date. 
-2. `HealthList`class stores separate lists for different `Health` objects using ArrayList.
-`HealthList`includes methods to add, delete, view history of the various `Health`lists.
-3. `Bmi`class stores bmi attributes (i.e. height, weight, date, bmi value and bmi category). 
-4. `Period`class stores period attributes (i.e. start date of period, end date of period, period length 
-and cycle length). 
-5. `Appointment`class stores appointment attributes (i.e. date, time, appointment description). Primarily, `Appointment`
-has all necessary getter methods to access the attributes.
+The main entry point of the application is the `Handler` class, which contains the `processInput` method.
+This method is responsible for parsing user input, validating it, and delegating the appropriate actions to other classes based on the command provided.
 
-_{Insert Sequence Diagrams}_
+###### [Back to table of contents](#table-of-contents)
 
-[Return to Table of Contents](#table-of-contents)
+#### Output
 
-### Workout component
+The `Output` class is responsible for printing messages, prompts, and information to the console.
+
+###### [Back to table of contents](#table-of-contents)
+
+### Workout
 
 The Workout component consists of Workout, WorkoutList, Gym, GymSet, GymStation, and Run.
 
-[Return to Table of Contents](#table-of-contents)
+{Insert class diagram}
 
-### Storage component
+1. `Workout` is a class that stores the date of the workout.
+2. `Run` is a subclass of Workout and stores the distance, time, pace, and date of the run.
+3. `Gym` is a subclass of Workout and stores the date and an array of `GymStation` objects
+4. `GymStation` stores the name of the gym station, number of sets, and an array of `GymSet` objects.
+5. `GymSet` stores the weight and repetitions for a particular set.
+6. `WorkoutList` is a class that stores an array list different `Workout` objects using ArrayList.
+
+The `Run` and `Gym` classes represent different types of exercises that the user can record.
+
+###### [Back to table of contents](#table-of-contents)
+
+#### Workout List
+
+###### [Back to table of contents](#table-of-contents)
+
+#### Gym
+
+###### [Back to table of contents](#table-of-contents)
+
+##### Gym Station
+
+###### [Back to table of contents](#table-of-contents)
+
+##### Gym Set
+
+###### [Back to table of contents](#table-of-contents)
+
+#### Run
+
+###### [Back to table of contents](#table-of-contents)
+
+### Health
+
+The Health component consists of `Health`, `HealthList`, `Bmi`, `Period`, and `Appointment`.
+
+{Insert class diagram}
+
+1. `Health` class stores date.
+2. `HealthList`class stores separate lists for different `Health` objects using ArrayList.
+   `HealthList`includes methods to add, delete, view history of the various `Health`lists.
+3. `Bmi`class stores bmi attributes (i.e. height, weight, date, bmi value and bmi category).
+4. `Period`class stores period attributes (i.e. start date of period, end date of period, period length
+   and cycle length).
+5. `Appointment`class stores appointment attributes (i.e. date, time, appointment description). Primarily, `Appointment`
+   has all necessary getter methods to access the attributes.
+
+###### [Back to table of contents](#table-of-contents)
+
+#### Health List
+
+###### [Back to table of contents](#table-of-contents)
+
+#### BMI
+
+###### [Back to table of contents](#table-of-contents)
+
+#### Period
+
+###### [Back to table of contents](#table-of-contents)
+
+#### Appointment
+
+###### [Back to table of contents](#table-of-contents)
+
+### Utility
+
+The Utility component consists of Parser, Filters, Validation, and CustomExceptions.
+
+{Insert class diagram}
+
+###### [Back to table of contents](#table-of-contents)
+
+#### Parser
+
+###### [Back to table of contents](#table-of-contents)
+
+#### Validation
+
+###### [Back to table of contents](#table-of-contents)
+
+#### Custom Exceptions
+
+###### [Back to table of contents](#table-of-contents)
+
+#### Filters
+
+###### [Back to table of contents](#table-of-contents)
+
+### Storage
 
 The Storage component consists of LogFile, DataFile, and DataType.
 
-[Return to Table of Contents](#table-of-contents)
+###### [Back to table of contents](#table-of-contents)
+
+#### Log File
+
+###### [Back to table of contents](#table-of-contents)
+
+#### Data File
+
+###### [Back to table of contents](#table-of-contents)
+
+### PulsePilot
+
+###### [Back to table of contents](#table-of-contents)
+
+### Constants
+
+###### [Back to table of contents](#table-of-contents)
 
 ## Implementation
 
-[Return to Table of Contents](#table-of-contents)
+* [Workout](#workout)
+  * [Add Run](#add-run)
+  * [Add Gym](#add-gym)
+* [Health](#health)
+  * [Add Period](#add-period)
+  * [Add BMI](#add-bmi)
+  * [Add Appointment](#add-appointment)
+  * [Make Period P#D85D43iction](#make-period-p#D85D43iction)
+* [View History](#view-history)
+* [View Latest](#view-latest)
+* [Delete Item](#delete-item)
+* [Storage of Data](#storage-of-data)
 
-## Appendices
+### Workout
 
-### Appendix A: Product scope
+#### Add Run
+
+###### [Back to table of contents](#table-of-contents)
+
+#### Add Gym
+
+###### [Back to table of contents](#table-of-contents)
+
+### Health
+
+#### Add Period
+
+###### [Back to table of contents](#table-of-contents)
+
+### Add BMI
+
+###### [Back to table of contents](#table-of-contents)
+
+### Add Appointment
+
+###### [Back to table of contents](#table-of-contents)
+
+### Make Period P#D85D43iction
+
+###### [Back to table of contents](#table-of-contents)
+
+### View History
+
+###### [Back to table of contents](#table-of-contents)
+
+### View Latest
+
+###### [Back to table of contents](#table-of-contents)
+
+### Delete Item
+
+###### [Back to table of contents](#table-of-contents)
+
+### Storage of Data
+
+###### [Back to table of contents](#table-of-contents)
+
+## Appendix: Requirements
+
+* [Product Scope](#product-scope)
+  * [Target User Profile](#target-user-profile)
+  * [Value Proposition](#value-proposition)
+* [User Stores](#user-stories)
+* [Non-Functional Requirements](#non-functional-requirements)
+* [Glossary](#glossary)
+
+### Product scope
+
+###### [Back to table of contents](#table-of-contents)
 
 #### Target user profile
 
@@ -185,47 +327,51 @@ Outpatients who need to monitor their health activity and health parameters.
 
 #### Value proposition
 
-PulsePilot is a health monitoring application designed to bridge the gap between medical professionals 
-and patients during outpatient recovery. PulsePilot offers outpatients the capability to input and track a range of 
-health activities, encompassing both aerobic and anaerobic exercises, alongside crucial health parameters such as 
-BMI and menstrual cycles. Simultaneously, PulsePilot facilitates access to this vital data for various 
+PulsePilot is a health monitoring application designed to bridge the gap between medical professionals and patients during outpatient recovery. 
+
+PulsePilot offers outpatients the capability to input and track a range of
+health activities, encompassing both aerobic and anaerobic exercises, alongside crucial health parameters such as
+BMI and menstrual cycles. 
+
+Simultaneously, PulsePilot facilitates access to this vital data for various
 healthcare professionals, ensuring comprehensive and seamless support in guiding outpatient recovery processes.
 
-[Return to Table of Contents](#table-of-contents)
+###### [Back to table of contents](#table-of-contents)
 
-### Appendix B: User Stories
+### User Stories
 
-| Version | As a ...              | I want to ...       | So that I can ...                          |
-|---------|-----------------------|---------------------|--------------------------------------------|
-| 1.0     | gym enthusiast        | enter my gym stats  | track my gym sessions                      |
-| 1.0     | runner                | see my running pace | see my relative speed for each run         |
-| 1.0     | runner                | log my runs         | track my running progress over time        |
-| 1.0     | health conscious user | calculate my BMI | track change in my weight over time        |
+| Version | As a ...              | I want to ...       | So that I can ...                         |
+|---------|-----------------------|---------------------|-------------------------------------------|
+| 1.0     | gym enthusiast        | enter my gym stats  | track my gym sessions                     |
+| 1.0     | runner                | see my running pace | see my relative speed for each run        |
+| 1.0     | runner                | log my runs         | track my running progress over time       |
+| 1.0     | health conscious user | calculate my BMI | track change in my weight over time       |
 | 1.0     | female user           | track my menstrual cycle | monitor any deviations from my normal menstrual cycle |
-| 2.0     | runner                | see my latest run | quickly view my most recent run details    |
-| 2.0     | gym enthusiast        | see my latest gym session | quickly view my most recent gym session    | 
+| 2.0     | runner                | see my latest run | quickly view my most recent run details   |
+| 2.0     | gym enthusiast        | see my latest gym session | quickly view my most recent gym session   | 
 | 2.0     | gym enthusiast        | enter varying weights for sets | accurately track my progress and strength gains | 
-| 2.0     | female user           | predict my next period start date | plan ahead and better manage my health | 
-| 2.0     | injured user          | track my medical appointments | remember the appointments I have  |
+| 2.0     | female user           | p#D85D43ict my next period start date | plan ahead and better manage my health | 
+| 2.0     | inju#D85D43 user          | track my medical appointments | remember the appointments I have |
 
-[Return to Table of Contents](#table-of-contents)
+###### [Back to table of contents](#table-of-contents)
 
-### Appendix C: Non-Functional Requirements
+### Non-Functional Requirements
 
-- **Usability**: The application should have a user-friendly command-line interface with 
-clear instructions and prompts for user input.
-- **Reliability**: The application should handle invalid or incomplete user input gracefully, 
-providing appropriate error messages and prompting the user for correct input.
-- **Maintainability**: The codebase should follow best practices for Object-Oriented Programming, 
-including proper separation of concerns, modularization, and code documentation.
-- **Testability**: The application should have comprehensive unit tests to 
-ensure correct functionality and enable easier maintenance and future enhancements.
+- **Usability**: The application should have a user-friendly command-line interface with
+  clear instructions and prompts for user input.
+- **Reliability**: The application should handle invalid or incomplete user input gracefully,
+  providing appropriate error messages and prompting the user for correct input.
+- **Maintainability**: The codebase should follow best practices for Object-Oriented Programming,
+  including proper separation of concerns, modularization, and code documentation.
+- **Testability**: The application should have comprehensive unit tests to
+  ensure correct functionality and enable easier maintenance and future enhancements.
 
 {Give non-functional requirements}
 
-[Return to Table of Contents](#table-of-contents)
+###### [Back to table of contents](#table-of-contents)
 
-### Appendix D: Glossary
+### Glossary
+
 - **Run**: An exercise activity involving running or jogging, typically characterized by distance, duration, and date.
 -  **Gym**: An exercise activity involving various strength training exercises or 
 workouts performed at a gym or fitness center.
@@ -234,55 +380,183 @@ used to assess overall health and fitness.
 - **Menstrual Period**: A recurring physiological event in females, characterized by the start and end dates.
 - **Medical Appointment**: An arrangement with a doctor, physiotherapist, or healthcare professional, 
 to meet at a certain time and place.
-* *glossary item* - Definition
 
-[Return to Table of Contents](#table-of-contents)
+###### [Back to table of contents](#table-of-contents)
 
-### Appendix E: Instructions for manual testing
+## Appendix: Manual Testing
+
+* [Adding a Run](#adding-a-run)
+* [Loading Sample Data](#loading-sample-data)
 
 {Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing}
 
-[Return to Table of Contents](#table-of-contents)
+###### [Back to table of contents](#table-of-contents)
 
-#### Adding a new run
+---
+### Adding a Run
 
-#### Expected Input: 
-```java
-WORKOUT /e:run /d:<distance> /t:<time> /date:<date>
-```
-- Replace `<distance>` with the distance covered to 2 decimal place  (e.g. if the distance is 5.123 km, enter 5.12).
-- Replace `<time>` with the duration of the run in the format `HH:MM:SS` (e.g. if you ran for an hour and 5 minutes,
+#### Expected Input for adding a run: 
+
+<code style="color: #D85D43;">
+WORKOUT /e:run /d:[distance] /t:[time] /date:[date]
+</code>
+
+- Replace `[distance]` with the distance cove#D85D43 to 2 decimal place  (e.g. if the distance is 5.123 km, enter 5.12).
+- Replace `[time]` with the duration of the run in the format `HH:MM:SS` (e.g. if you ran for an hour and 5 minutes,
   enter 01:05:00).
-- Replace `<date>` with the date of the run in the format `DD-MM-YYYY` (e.g. if the date is 24/07/2024, enter
+- Replace `[date]` with the date of the run in the format `DD-MM-YYYY` (e.g. if the date is 24/07/2024, enter
   24-07-2024).
+
+###### [Back to table of contents](#table-of-contents)
 
 #### Sequence Diagram for Adding a New Run Exercise
 wip
-<!--![Sequence Diagram for Adding a New Run Exercise]()-->
+<!--![Sequence Diagram for Adding a New Gym Workout]()-->
+
+###### [Back to table of contents](#table-of-contents)
 
 #### General Workflow of Adding a New Run Exercise
-1. User input is passed to `handleExercise()` of the `handler` class.
-2. `handleExercise()` will call `checkTypeOfExercise()` to validate the input and determine the type of exercise.
-3. If the exercise type is `run`, `checkTypeofExercise()` will return `WorkoutConstant.RUN`
-4. Upon receiving `WorkoutConstant.RUN`, `handlerExercise()` will call `Run.getRun()` to extract out
-all the run details. These details are stored in `runDetails: String[]`.
-5. `handlerExercise()` will then call `Run.addRun` to create a `newRun` object
-   - If there is a date provided, it will add the date to the `newRun` object.
-   - Else it will add `NA` to the date parameter. 
-   - It will also add the `distance`, `time`, and `pace` to the `newRun` object.
-   - Lastly, it will add the `newRun` object to the `runList` and `workoutList` in the `WorkoutList` class.
-6. The newly created `newRun` object is parsed into `Output.printAddRun()` and printed out to the user
+1. User input is passed to `Handler.handleWorkout()`.
+=======
+#### General Workflow of Adding a New Run Exercise
+1. User input is passed to `Handler.handleWorkout()`.
 
-[Return to Table of Contents](#table-of-contents)
+2. `Handler.handleWorkout()` calls `Parser.extractSubstringFromSpecificIndex()` to validate the input and determine the type of exercise.
 
-#### How to load sample data
+3. If the exercise type is `run`, the input is passed to `Parser.parseRunInput()`.
+
+4. `Parser.parseRunInput()` validates the input and creates a new `Run` object.
+    - It calls `Validation.validateRunInput()` to check the input's validity, throwing an exception if it's invalid.
+    - If the input is valid, a new `Run` object is created.
+
+5. The `Run` constructor adds the newly created object into `WorkoutList.WORKOUTS` and `WorkoutList.RUNS`.
+
+6. The `Run` object is passed to `Output.printAddRun()` and printed out to the user.
+
+---
+### Adding a new gym workout
+#### Sequence Diagram for Adding a New gym workout
+wip
+<!--![Sequence Diagram for Adding a New Gym Workout]()-->
+
+#### Expected Input for adding a new gym workout:
+```java
+WORKOUT /e:gym /n:<number of stations> /date:<date>
+```
+- Replace `<number of station>` with a positive integer. (e.g. If you want to log 5 gym stations, enter 5).
+- Replace `<date>` with the date of the workout in the format `DD-MM-YYYY` (e.g. if the date is 24/07/2024, enter
+  24-07-2024).
+
+#### Expected Input for adding a new gym station:
+```java
+<Station Name> /s:<number of sets> /r:<number of repetitions> /w:<weights>
+```
+- Replace `<Station Name>` with the name of the station. (e.g. If the station is 'Bench Press', enter Bench Press).
+- Replace `<number of sets>` with a positive integer. (e.g. If you did 3 sets, enter 3).
+- Replace `<number of repetitions>` with a positive integer. (e.g. If you did 10 repetitions, enter 10).
+- Replace `<weights>` with the weights used for each set separated by commas. 
+(e.g. If you did three sets and used 10kg, 15kg, and 20kg, enter `10,15,20`).
+
+> IMPORTANT: your number of sets must match the number of weights provided. Here is an example that 
+> would result in an error.
+<code style="color: #D85D43;">Bench Press /s:10 /r:3 /w:100,200 </code>
+#### General Workflow of Adding a New Gym Exercise
+
+1. User input is received by `Handler.handleWorkout()`.
+
+2. `Handler.handleWorkout()` validates the input and determines the type of exercise by calling `Parser.extractSubstringFromSpecificIndex()`.
+
+3. If the exercise type is identified as 'gym', the input is passed to `Parser.parseGymInput()`.
+
+4. `Parser.parseGymInput()` validates the input and creates a new `Gym` object.
+    - It calls `Validation.validateGymInput()` to ensure the input is valid. If it's invalid, an exception is thrown.
+    - If the input is valid, a new `Gym` object is instantiated.
+
+5. Within `parseGymInput()`, `parseGymStationInput()` is called to obtain details about each gym station.
+    - Based on the `numberOfStations`, the method iterates and prompts the user to input details for each station.
+    - Refer to the expected input format for each gym station [above](#expected-input-for-adding-a-new-gym-workout)
+   - Each user input is validated using `Validation.splitAndValidateGymStationInput()`.
+       - If the input is valid, a new `GymStation` object is created and added to the `Gym` object created in step 4.
+       - If the input is invalid, an exception is thrown.
+6. The newly created `Gym` object is added to `WorkoutList.WORKOUTS` and `WorkoutList.GYMS`.
+7. Finally, it is passed to `Output.printAddGym()` to be displayed to the user.
+>>>>>>> 439537e33112bcf68c58c2cef567f898aac37816
+
+2. `Handler.handleWorkout()` calls `Parser.extractSubstringFromSpecificIndex()` to validate the input and determine the type of exercise.
+
+3. If the exercise type is `run`, the input is passed to `Parser.parseRunInput()`.
+
+4. `Parser.parseRunInput()` validates the input and creates a new `Run` object.
+    - It calls `Validation.validateRunInput()` to check the input's validity, throwing an exception if it's invalid.
+    - If the input is valid, a new `Run` object is created.
+
+5. The `Run` constructor adds the newly created object into `WorkoutList.WORKOUTS` and `WorkoutList.RUNS`.
+
+6. The `Run` object is passed to `Output.printAddRun()` and printed out to the user.
+
+###### [Back to table of contents](#table-of-contents)
+
+---
+
+### Adding a Gym Workout
+#### Expected Input for adding a new gym workout:
+<code style="color: #D85D43;"> WORKOUT /e:gym /n:[number of stations] /date:[date] </code>
+
+- Replace `[number of station]` with a positive integer. (e.g. If you want to log 5 gym stations, enter 5).
+- Replace `[date]` with the date of the workout in the format `DD-MM-YYYY` (e.g. if the date is 24/07/2024, enter
+  24-07-2024).
+###### [Back to table of contents](#table-of-contents)
+
+#### Expected Input for adding a new gym station:
+<code style="color: #D85D43;"> [STATION NAME] /s:[number of sets] /r:[number of repetitions] /w:[weights] </code>
+
+- Replace `[Station Name]` with the name of the station. (e.g. If the station is 'Bench Press', enter Bench Press).
+- Replace `[number of sets]` with a positive integer. (e.g. If you did 3 sets, enter 3).
+- Replace `[number of repetitions]` with a positive integer. (e.g. If you did 10 repetitions, enter 10).
+- Replace `[weights]` with the weights used for each set separated by commas.
+  (e.g. If you did three sets and used 10kg, 15kg, and 20kg, enter `10,15,20`).
+
+> IMPORTANT: your number of sets must match the number of weights provided. Here is an example that
+> would result in an error.
+<code style="color: #D85D43;">Bench Press /s:10 /r:3 /w:100,200 </code>
+###### [Back to table of contents](#table-of-contents)
+#### General Workflow of Adding a New Gym Exercise
+1. User input is received by `Handler.handleWorkout()`.
+
+2. `Handler.handleWorkout()` validates the input and determines the type of exercise by calling `Parser.extractSubstringFromSpecificIndex()`.
+
+3. If the exercise type is identified as 'gym', the input is passed to `Parser.parseGymInput()`.
+
+4. `Parser.parseGymInput()` validates the input and creates a new `Gym` object.
+    - It calls `Validation.validateGymInput()` to ensure the input is valid. If it's invalid, an exception is thrown.
+    - If the input is valid, a new `Gym` object is instantiated.
+
+5. Within `parseGymInput()`, `parseGymStationInput()` is called to obtain details about each gym station.
+    - Based on the `numberOfStations`, the method iterates and prompts the user to input details for each station.
+    - Refer to the expected input format for each gym station [above](#expected-input-for-adding-a-new-gym-station)
+    - Each user input is validated using `Validation.splitAndValidateGymStationInput()`.
+        - If the input is valid, a new `GymStation` object is created and added to the `Gym` object created in step 4.
+        - If the input is invalid, an exception is thrown.
+6. The newly created `Gym` object is added to `WorkoutList.WORKOUTS` and `WorkoutList.GYMS`.
+7. Finally, it is passed to `Output.printAddGym()` to be displayed to the user.
+###### [Back to table of contents](#table-of-contents)
+#### Sequence Diagram for Adding a New Gym Exercise
+wip
+<!--![Sequence Diagram for Adding a New Gym Workout]()-->
+###### [Back to table of contents](#table-of-contents)
+
+---
+### Loading Sample Data
+
 The application does not currently support loading sample data. However, you can manually test different scenarios 
 by entering commands and providing input through the command-line interface.
 
 For example, to test logging a run exercise, you can enter the following command:
-```java
+
+<code style="color: #D85D43;">
 WORKOUT /e:run /d:10.3 /t:00:40:10 /date:15-03-2024
-```
+</code>
+
 
 This command will create a new run exercise with a distance of 10.3 units, a duration of 40 minutes and 10 seconds,
 and a date of March 15, 2024.
@@ -290,11 +564,11 @@ and a date of March 15, 2024.
 Similarly, you can test logging gym workouts, recording BMI and menstrual period information, tracking medical
 appointment, viewing the exercise history, and accessing the latest run details by entering the appropriate commands.
 
-[Return to Table of Contents](#table-of-contents)
+###### [Back to table of contents](#table-of-contents)
 
-## Frequently Asked Questions (FAQs)
+## Frequently Asked Questions
 
-1. **Q: How do I setup the development environment for the project?**  
+1. **Q: How do I set up the development environment for the project?**  
    A: You can set up the development environment by first cloning the repository to your local system. Then, load the project into your chosen IDE (we recommend IntelliJ IDEA).
 
-[Return to Table of Contents](#table-of-contents)
+###### [Back to table of contents](#table-of-contents)

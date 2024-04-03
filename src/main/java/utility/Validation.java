@@ -44,8 +44,7 @@ public class Validation {
      */
     public static void validateDeleteInput(String[] deleteDetails) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
-        if (deleteDetails[UiConstant.DELETE_ITEM_STRING_INDEX].isEmpty()
-                || deleteDetails[UiConstant.DELETE_ITEM_NUMBER_INDEX].isEmpty()) {
+        if (isEmptyParameterPresent(deleteDetails)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_DELETE_PARAMETERS_ERROR);
         }
         validateFilter(deleteDetails[UiConstant.DELETE_ITEM_STRING_INDEX].toLowerCase());
@@ -83,9 +82,7 @@ public class Validation {
      */
     public static void validateBmiInput(String[] bmiDetails) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
-        if (bmiDetails[HealthConstant.BMI_HEIGHT_INDEX].isEmpty()
-                || bmiDetails[HealthConstant.BMI_WEIGHT_INDEX].isEmpty()
-                || bmiDetails[HealthConstant.BMI_DATE_INDEX].isEmpty()) {
+        if (isEmptyParameterPresent(bmiDetails)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_BMI_PARAMETERS_ERROR);
         }
 
@@ -94,10 +91,7 @@ public class Validation {
             throw new CustomExceptions.InvalidInput(ErrorConstant.HEIGHT_WEIGHT_INPUT_ERROR);
         }
         validateDateInput(bmiDetails[HealthConstant.BMI_DATE_INDEX]);
-        LocalDate date = Parser.parseDate(bmiDetails[HealthConstant.BMI_DATE_INDEX]);
-        if (date.isAfter(LocalDate.now())) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.DATE_IN_FUTURE_ERROR);
-        }
+        validateDateNotAfterToday(bmiDetails[HealthConstant.BMI_DATE_INDEX]);
 
     }
 
@@ -109,8 +103,7 @@ public class Validation {
      */
     public static void validatePeriodInput(String[] periodDetails) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
-        if (periodDetails[HealthConstant.PERIOD_START_DATE_INDEX].isEmpty() ||
-                periodDetails[HealthConstant.PERIOD_END_DATE_INDEX].isEmpty()) {
+        if (isEmptyParameterPresent(periodDetails)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_PERIOD_PARAMETERS_ERROR);
         }
 
@@ -127,11 +120,11 @@ public class Validation {
                     + e.getMessage());
         }
 
+        validateDateNotAfterToday(periodDetails[HealthConstant.PERIOD_START_DATE_INDEX]);
+        validateDateNotAfterToday(periodDetails[HealthConstant.PERIOD_END_DATE_INDEX]);
+
         LocalDate startDate = Parser.parseDate(periodDetails[HealthConstant.PERIOD_START_DATE_INDEX]);
         LocalDate endDate = Parser.parseDate(periodDetails[HealthConstant.PERIOD_END_DATE_INDEX]);
-        if (startDate.isAfter(LocalDate.now())) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.START_DATE_IN_FUTURE_ERROR);
-        }
         if (startDate.isAfter(endDate)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.PERIOD_END_BEFORE_START_ERROR);
         }
@@ -147,8 +140,7 @@ public class Validation {
      */
     public static void validateRunInput(String[] runDetails) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
-        if (runDetails[WorkoutConstant.RUN_TIME_INDEX].isEmpty() ||
-                runDetails[WorkoutConstant.RUN_DISTANCE_INDEX].isEmpty()) {
+        if (isEmptyParameterPresent(runDetails)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_RUN_PARAMETERS_ERROR);
         }
         validateRunTimeInput(runDetails[WorkoutConstant.RUN_TIME_INDEX]);
@@ -158,12 +150,8 @@ public class Validation {
 
         if (runDetails[WorkoutConstant.RUN_DATE_INDEX] != null) {
             validateDateInput(runDetails[WorkoutConstant.RUN_DATE_INDEX]);
-            LocalDate date = Parser.parseDate(runDetails[WorkoutConstant.RUN_DATE_INDEX]);
-            if (date.isAfter(LocalDate.now())) {
-                throw new CustomExceptions.InvalidInput(ErrorConstant.DATE_IN_FUTURE_ERROR);
-            }
+            validateDateNotAfterToday(runDetails[WorkoutConstant.RUN_DATE_INDEX]);
         }
-
     }
 
     /**
@@ -175,7 +163,7 @@ public class Validation {
      */
     public static void validateGymInput(String[] gymDetails) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
-        if (gymDetails[WorkoutConstant.GYM_NUMBER_OF_STATIONS_INDEX].isEmpty()) {
+        if (isEmptyParameterPresent(gymDetails)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_GYM_PARAMETERS_ERROR);
         }
 
@@ -186,10 +174,7 @@ public class Validation {
 
         if (gymDetails[WorkoutConstant.GYM_DATE_INDEX] != null) {
             validateDateInput(gymDetails[WorkoutConstant.GYM_DATE_INDEX]);
-            LocalDate date = Parser.parseDate(gymDetails[WorkoutConstant.GYM_DATE_INDEX]);
-            if (date.isAfter(LocalDate.now())) {
-                throw new CustomExceptions.InvalidInput(ErrorConstant.DATE_IN_FUTURE_ERROR);
-            }
+            validateDateNotAfterToday(gymDetails[WorkoutConstant.GYM_DATE_INDEX]);
         }
     }
 
@@ -265,9 +250,7 @@ public class Validation {
      */
     public static void validateAppointmentDetails(String[] appointmentDetails)
             throws CustomExceptions.InvalidInput, CustomExceptions.InsufficientInput {
-        if (appointmentDetails[HealthConstant.APPOINTMENT_DATE_INDEX].isEmpty()
-                || appointmentDetails[HealthConstant.APPOINTMENT_TIME_INDEX].isEmpty()
-                || appointmentDetails[HealthConstant.APPOINTMENT_DESCRIPTION_INDEX].isEmpty()) {
+        if (isEmptyParameterPresent(appointmentDetails)) {
             throw new CustomExceptions.InsufficientInput( ErrorConstant
                     .INSUFFICIENT_APPOINTMENT_PARAMETERS_ERROR);
         }
@@ -319,8 +302,7 @@ public class Validation {
             throws CustomExceptions.InvalidInput {
         String[] weightsArray = weightsString.split(UiConstant.SPLIT_BY_COMMAS);
         ArrayList<Integer> validatedWeightsArray = new ArrayList<>();
-
-        try{
+        try {
             for(String weight: weightsArray){
                 int weightInteger = Integer.parseInt(weight);
                 if (weightInteger < WorkoutConstant.MIN_WEIGHT){
@@ -381,5 +363,35 @@ public class Validation {
         results[WorkoutConstant.GYM_STATION_REPS_INDEX] = reps;
         results[WorkoutConstant.GYM_STATION_WEIGHTS_INDEX] = weights;
         return results;
+    }
+
+    //@@author rouvinerh
+    /**
+     * Validates whether the list of input details contains any empty strings. If it does, return false.
+     * Otherwise, return true.
+     *
+     * @param input A list of strings representing command inputs.
+     * @return False if it contains empty strings. Otherwise, returns true.
+     */
+    public static boolean isEmptyParameterPresent(String[] input) {
+        for (String s : input) {
+            if (s != null && s.isEmpty()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Validates whether the date specified is after today. Throws an error if it is.
+     *
+     * @param dateString A string representing the date.
+     * @throws CustomExceptions.InvalidInput If the date specified is after today.
+     */
+    public static void validateDateNotAfterToday(String dateString) throws CustomExceptions.InvalidInput {
+        LocalDate date = Parser.parseDate(dateString);
+        if (date.isAfter(LocalDate.now())) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.DATE_IN_FUTURE_ERROR);
+        }
     }
 }
