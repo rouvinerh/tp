@@ -351,6 +351,9 @@ Example of Gym Station:
 
 ##### Gym Sequence
 
+![Gym Sequence Diagram](./img/gym_sequence_diagram.jpg)
+
+
 1. User input is passed to `Handler.processInput()`, which determines the command used is `workout`, thus passing the input to `Handler.handleWorkout()`.
 
 2. `Handler.handleWorkout()` determines the type of exercise which is `gym`, and calls the `Parser.parseGymInput()` method to process the user's input.
@@ -374,8 +377,6 @@ Example of Gym Station:
 8. If valid, parameters are converted into either `int` for the number of repetitions and sets, or `Arraylist<Integer>` for the weights array. The parameters are then passed to `gym.addStation` to add a `GymStation` object to the new `Gym` object.
 
 9. `Output.printAddGym()` is then called to print the message acknowledging the successful adding of a new `Gym` object.
-
-{Include Gym Sequence Diagram}
 
 ###### [Back to table of contents](#table-of-contents)
 
