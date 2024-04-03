@@ -17,6 +17,7 @@ public class Period extends Health {
      * The start date of period i.e. the first day of period flow which is also the first day of cycle.
      */
     protected LocalDate startDate;
+
     /**
      * The end date of period i.e. the last day of period flow.
      */
@@ -25,6 +26,7 @@ public class Period extends Health {
      * The number of days between the first day and last day of period flow.
      */
     protected long periodLength;
+
     /**
      * The number of days between the first day and last day of the period cycle.
      */
@@ -34,8 +36,8 @@ public class Period extends Health {
     /**
      * Constructs a Period object with the given start and end dates in string format.
      *
-     * @param stringStartDate A string representing the start date of the period
-     * @param stringEndDate   A string representing the end date of the period
+     * @param stringStartDate A string representing the start date of the period.
+     * @param stringEndDate   A string representing the end date of the period.
      */
     public Period(String stringStartDate, String stringEndDate) {
         this.startDate = Parser.parseDate(stringStartDate);
@@ -47,8 +49,8 @@ public class Period extends Health {
     /**
      * Retrieves the start date of the period.
      *
-     * @return The start date.
-     * @throws AssertionError if the start date is null
+     * @return The start date of period.
+     * @throws AssertionError if the start date is null.
      */
     public LocalDate getStartDate() {
         assert startDate != null : ErrorConstant.NULL_START_DATE_ERROR;
@@ -58,8 +60,8 @@ public class Period extends Health {
     /**
      * Retrieves the end date of the period.
      *
-     * @return The end date.
-     * @throws AssertionError if the end date is null
+     * @return The end date of period.
+     * @throws AssertionError if the end date is null.
      */
     public LocalDate getEndDate() {
         assert endPeriodDate != null : ErrorConstant.NULL_END_DATE_ERROR;
