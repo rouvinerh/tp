@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 import health.Appointment;
@@ -19,7 +18,7 @@ import ui.Output;
 import utility.Parser;
 import workouts.Gym;
 import workouts.Run;
-// import workouts.WorkoutList;
+import workouts.Workout;
 import utility.CustomExceptions;
 import constants.UiConstant;
 
@@ -115,7 +114,8 @@ public class DataFile {
             }
 
             while (readFile.hasNextLine()) {
-                String [] input = readFile.nextLine().split(UiConstant.SPLIT_BY_COLON);
+                String rawInput = readFile.nextLine();
+                String [] input = rawInput.split(UiConstant.SPLIT_BY_COLON);
 
                 String dataType = input[UiConstant.DATA_TYPE_INDEX].trim();
 
@@ -135,7 +135,7 @@ public class DataFile {
                     break;
 
                 case GYM:
-                    processGym(input);
+                    processGym(rawInput);
                     break;
 
                 case RUN:
@@ -191,8 +191,9 @@ public class DataFile {
         String date = input[3].trim(); // 3 is date
         new Run(formattedTime, distance, date);
     }
-    public static void processGym(String[] input) throws CustomExceptions.InvalidInput, CustomExceptions.FileReadError {
-        Parser.parseGymFileInput(Arrays.toString(input));
+    public static void processGym(String rawInput)
+            throws CustomExceptions.InvalidInput, CustomExceptions.FileReadError {
+        Parser.parseGymFileInput(rawInput);
     }
 
     /**
@@ -205,8 +206,7 @@ public class DataFile {
                                     ArrayList<Bmi> bmiArrayList,
                                     ArrayList<Appointment> appointmentArrayList,
                                     ArrayList<Period> periodArrayList,
-                                    ArrayList<Run> runArrayList,
-                                    ArrayList<Gym> gymArrayList
+                                    ArrayList<Workout> workoutArrayList
                                     ) throws CustomExceptions.FileWriteError {
 
         try (FileWriter dataFile = new FileWriter(UiConstant.DATA_FILE_PATH)) {
@@ -217,7 +217,7 @@ public class DataFile {
                     appointmentArrayList,
                     periodArrayList);
 
-            writeWorkoutData(dataFile, runArrayList, gymArrayList);
+            writeWorkoutData(dataFile, workoutArrayList);
 
             LogFile.writeLog("Write end", false);
             dataFile.close();
@@ -296,24 +296,27 @@ public class DataFile {
      * // param workoutData Workout data to be written.
      */
     public static void writeWorkoutData(FileWriter dataFile,
-                                        ArrayList<Run> runArrayList,
-                                        ArrayList<Gym> gymArrayList) throws IOException {
+                                        ArrayList<Workout> workoutArrayList) throws IOException {
 
         // Write each run entry in a specific format
         // run format: run:DISTANCE:TIME:DATE
-        if (!runArrayList.isEmpty()){
-            for (Run runEntry : runArrayList) {
-                String formattedDate = Parser.parseFormattedDate(runEntry.getDate());
-                String formattedTime = runEntry.getTimes().replace(":", ".");
+        if (!workoutArrayList.isEmpty()){
+            for (Workout workoutEntry : workoutArrayList) {
+                if (workoutEntry instanceof Run) {
+                    Run runEntry = (Run) workoutEntry;
+                    String formattedDate = Parser.parseFormattedDate(runEntry.getDate());
+                    String formattedTime = runEntry.getTimes().replace(":", ".");
 
-                dataFile.write(DataType.RUN + UiConstant.SPLIT_BY_COLON + runEntry.getDistance() +
-                        UiConstant.SPLIT_BY_COLON + formattedTime +
-                        UiConstant.SPLIT_BY_COLON + formattedDate + System.lineSeparator());
+                    dataFile.write(DataType.RUN + UiConstant.SPLIT_BY_COLON + runEntry.getDistance() +
+                            UiConstant.SPLIT_BY_COLON + formattedTime +
+                            UiConstant.SPLIT_BY_COLON + formattedDate + System.lineSeparator());
+                } else if (workoutEntry instanceof Gym) {
+                    Gym gymEntry = (Gym) workoutEntry;
+                    String gymString = gymEntry.toFileString();
+                    dataFile.write(gymString);
+                }
             }
         }
-
-        //dataFile.write(Gym.toFileString() + System.lineSeparator());
-
     }
 }
 

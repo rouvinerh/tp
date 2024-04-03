@@ -435,7 +435,7 @@ public class Parser {
 
         // checks if there are enough parameters in the gym file + if numOfStation is a digit
         try {
-            gymType = gymDetails[WorkoutConstant.GYM_FILE_INDEX];
+            gymType = gymDetails[WorkoutConstant.GYM_FILE_INDEX].toLowerCase();
             numOfStationStr = gymDetails[WorkoutConstant.NUM_OF_STATIONS_FILE_INDEX];
             numOfStation = Integer.parseInt(numOfStationStr);
             date = gymDetails[WorkoutConstant.DATE_FILE_INDEX];
@@ -446,7 +446,7 @@ public class Parser {
         }
 
         // Check if the gym type is correct (e.g. storage starts with gym| ...)
-        if (!gymDetails[WorkoutConstant.GYM_FILE_INDEX].equals(WorkoutConstant.GYM)) {
+        if (!gymType.equals(WorkoutConstant.GYM)) {
             throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_GYM_TYPE_ERROR);
         }
 

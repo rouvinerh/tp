@@ -297,7 +297,7 @@ public class Handler {
 
 
             DataFile.saveDataFile(DataFile.userName, HealthList.getBmis(), HealthList.getAppointments(),
-                    HealthList.getPeriods(), WorkoutList.getRuns(), WorkoutList.getGyms());
+                    HealthList.getPeriods(), WorkoutList.getWorkouts());
             LogFile.writeLog("File saved", false);
         } catch (CustomExceptions.FileWriteError e) {
             LogFile.writeLog("File write error", true);
