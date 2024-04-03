@@ -200,8 +200,7 @@ Format: `health /h:appointment /date:DATE /time:TIME /description:DESCRIPTION`
 * All parameters must be provided in correct order as shown above.
 * `DATE` is a `DD-MM-YYYY` format (i.e. `03-04-2024`) representing the date of the appointment.
 * `TIME` is a `HH:mm` format (i.e. `14:15`) representing the time of the appointment.
-* `DESCRIPTION` is a string (i.e. `review checkup with surgeon`) representing the details of the appointment.
-* `DESCRIPTION` can only contain alphanumeric characters and spaces.
+* `DESCRIPTION` is a string (i.e. `review checkup with surgeon`) representing the details of the appointment. The string can only contain alphanumeric characters and spaces.
 
 Examples:
 * `health /h:appointment /date:03-04-2024 /time:14:15 /description:review checkup with surgeon`
