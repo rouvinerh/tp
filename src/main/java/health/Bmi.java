@@ -139,7 +139,7 @@ public class Bmi extends Health {
     @Override
     public String toString() {
         return String.format(HealthConstant.PRINT_BMI_FORMAT,
-                this.date,
+                this.getDate(),
                 this.calculateBmiValue(),
                 getBmiCategory(bmiValue));
     }
