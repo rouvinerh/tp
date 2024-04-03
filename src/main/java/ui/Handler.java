@@ -256,6 +256,7 @@ public class Handler {
     public static void destroyScanner() {
         if (in != null) {
             in.close();
+            assert in == null : "Object should be null";
         }
     }
 
