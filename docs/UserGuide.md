@@ -177,6 +177,27 @@ Period Length: 8 days
 ____________________________________________________________
 ```
 
+Predicts user's next period start date. 
+
+Format: `health /h:prediction`
+
+Expected Output:
+```
+health /h:prediction
+Period Start: 2024-01-09 Period End: 2024-01-16
+Period Length: 8 days
+Cycle Length: 32 days
+Period Start: 2024-02-10 Period End: 2024-02-16
+Period Length: 7 days
+Cycle Length: 28 days
+Period Start: 2024-03-09 Period End: 2024-03-14
+Period Length: 6 days
+Your next cycle's predicted start date is 2024-04-08, in 7 days.
+```
+
+### Health: Appointment
+
+
 ### History
 
 Prints all tracked instances of `run`, `gym`, `bmi` or `period`.
