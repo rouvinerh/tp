@@ -21,7 +21,8 @@ public class Period extends Health {
     /**
      * The end date of period i.e. the last day of period flow.
      */
-    protected LocalDate endPeriodDate;
+    protected LocalDate endDate;
+
     /**
      * The number of days between the first day and last day of period flow.
      */
@@ -41,7 +42,7 @@ public class Period extends Health {
      */
     public Period(String stringStartDate, String stringEndDate) {
         this.startDate = Parser.parseDate(stringStartDate);
-        this.endPeriodDate = Parser.parseDate(stringEndDate);
+        this.endDate = Parser.parseDate(stringEndDate);
         this.periodLength = calculatePeriodLength();
         this.cycleLength = 0;
     }
@@ -64,8 +65,8 @@ public class Period extends Health {
      * @throws AssertionError if the end date is null.
      */
     public LocalDate getEndDate() {
-        assert endPeriodDate != null : ErrorConstant.NULL_END_DATE_ERROR;
-        return endPeriodDate;
+        assert endDate != null : ErrorConstant.NULL_END_DATE_ERROR;
+        return endDate;
     }
 
     /**
@@ -83,9 +84,9 @@ public class Period extends Health {
      * @return The length of the period.
      */
     public long calculatePeriodLength() {
-        assert startDate.isBefore(endPeriodDate) : ErrorConstant.PERIOD_END_BEFORE_START_ERROR;
+        assert startDate.isBefore(endDate) : ErrorConstant.PERIOD_END_BEFORE_START_ERROR;
         // Add 1 to include both start and end dates
-        return ChronoUnit.DAYS.between(startDate,endPeriodDate) + 1;
+        return ChronoUnit.DAYS.between(startDate,endDate) + 1;
     }
 
     /**
