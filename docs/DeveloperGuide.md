@@ -313,7 +313,7 @@ WORKOUT /e:run /d:[distance] /t:[time] /date:[date]
 
 6. The `Run` object is passed to `Output.printAddRun()` and a message acknowledging the successful adding is printed to the screen.
 
-{Include Run Sequence Diagram}
+![Sequence Diagram for Run](img/run_sequence.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
