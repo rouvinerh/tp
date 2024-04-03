@@ -257,7 +257,6 @@ public class Handler {
         if (in != null) {
             assert in != null : "Object cannot be null";
             in.close();
-            assert in == null : "Object should be null";
         }
     }
 
