@@ -43,21 +43,21 @@ public class AppointmentTest {
                 + " at "
                 + thirdAppointment.getTime()
                 + ": "
-                + thirdAppointment.description
+                + thirdAppointment.getDescription()
                 + System.lineSeparator()
                 + "2. On "
                 + secondAppointment.getDate()
                 + " at "
                 + secondAppointment.getTime()
                 + ": "
-                + secondAppointment.description
+                + secondAppointment.getDescription()
                 + System.lineSeparator()
                 + "3. On "
                 + firstAppointment.getDate()
                 + " at "
                 + firstAppointment.getTime()
                 + ": "
-                + firstAppointment.description
+                + firstAppointment.getDescription()
                 + System.lineSeparator();
 
         HealthList.showAppointmentList();
@@ -79,21 +79,21 @@ public class AppointmentTest {
                 + " at "
                 + secondAppointment.getTime()
                 + ": "
-                + secondAppointment.description
+                + secondAppointment.getDescription()
                 + System.lineSeparator()
                 + "1. On "
                 + thirdAppointment.getDate()
                 + " at "
                 + thirdAppointment.getTime()
                 + ": "
-                + thirdAppointment.description
+                + thirdAppointment.getDescription()
                 + System.lineSeparator()
                 + "2. On "
                 + firstAppointment.getDate()
                 + " at "
                 + firstAppointment.getTime()
                 + ": "
-                + firstAppointment.description
+                + firstAppointment.getDescription()
                 + System.lineSeparator();
 
         HealthList.deleteAppointment(2);

@@ -16,10 +16,12 @@ public class Appointment extends Health {
      * The date of the appointment.
      */
     protected LocalDate date;
+
     /**
      * The time of the appointment.
      */
     protected LocalTime time;
+
     /**
      * The description of the appointment.
      */
@@ -28,9 +30,9 @@ public class Appointment extends Health {
     /**
      * Constructor for Appointment object.
      *
-     * @param stringDate A string representing the date of the appointment
-     * @param stringTime A string representing the time of the appointment
-     * @param description A string describing the appointment
+     * @param stringDate A string representing the date of the appointment.
+     * @param stringTime A string representing the time of the appointment.
+     * @param description A string describing the appointment.
      */
     public Appointment(String stringDate, String stringTime, String description) {
         this.date = Parser.parseDate(stringDate);
@@ -41,7 +43,7 @@ public class Appointment extends Health {
     /**
      * Retrieves the date of the appointment.
      *
-     * @return The date of appointment in LocalDate
+     * @return The date of appointment in LocalDate.
      */
     public LocalDate getDate() {
         assert date != null : ErrorConstant.NULL_DATE_ERROR;
@@ -49,9 +51,9 @@ public class Appointment extends Health {
     }
 
     /**
-     * Retrieves the time of the appointment
+     * Retrieves the time of the appointment.
      *
-     * @return The time of appointment in LocalTime
+     * @return The time of appointment in LocalTime.
      */
     public LocalTime getTime() {
         assert time != null : ErrorConstant.NULL_TIME_ERROR;
@@ -61,7 +63,7 @@ public class Appointment extends Health {
     /**
      * Retrieves the description of the appointment.
      *
-     * @return The description of appointment in String
+     * @return The description of appointment in String.
      */
     public String getDescription() {
         return this.description;
@@ -77,6 +79,6 @@ public class Appointment extends Health {
         return String.format(HealthConstant.PRINT_APPOINTMENT_FORMAT,
                 getDate(),
                 getTime(),
-                this.description);
+                getDescription());
     }
 }

@@ -60,7 +60,44 @@ The purpose of this guide is to provide an explanation for all the functions and
 The application follows an Object-Oriented Design approach, with separate classes for handling different components
 of the application, such as user input, output, exercise logging, and health data management.
 
-{Include UML Diagram here}
+```plantuml
+@startuml
+skinparam componentStyle rectangle
+actor User
+
+component Main {
+[UI]
+[Utility]
+[Health]
+[Workout]
+[PulsePilot]
+[Storage]
+[Constants]
+}
+
+User -d-> [UI]
+[PulsePilot] -r-> [UI]
+
+[UI] -d-> [Utility]
+[UI] -d-> [Health]
+[UI] -d-> [Workout]
+
+[Utility] -l-> [Health]
+[Utility] -r-> [Workout]
+[Utility] -d-> [Storage]
+ 
+[Storage] .u.> [Health]
+[Storage] .u.> [Workout]
+[Storage] .u.> [UI]
+
+[Storage] .r.> [Output File] 
+
+[Constants] -r[hidden]-> [Storage] 
+@enduml
+```
+The **_Architecture Diagram_** given above explains the high-level design of the PulsePilot.
+
+Given below is a quick overview of main components and how they interact with each other.
 
 `Main` is responsible for the initialising, processing of user input and termination of the bot. It creates a `PulsePilot` instance.
 
@@ -77,9 +114,13 @@ The application can be further broken down into the following packages:
 
 ### UI
 
+The UI component consists of Handler and Output
+
 {Insert class diagram}
 
 #### Handler
+
+_{Insert Class Diagram}_
 
 The main entry point of the application is the `Handler` class, which contains the `processInput` method.
 This method is responsible for parsing user input, validating it, and delegating the appropriate actions to other classes based on the command provided.
@@ -94,7 +135,16 @@ The `Output` class is responsible for printing messages, prompts, and informatio
 
 ### Workout
 
+The Workout component consists of Workout, WorkoutList, Gym, GymSet, GymStation, and Run.
+
 {Insert class diagram}
+
+1. `Workout` is a class that stores the date of the workout.
+2. `Run` is a subclass of Workout and stores the distance, time, pace, and date of the run.
+3. `Gym` is a subclass of Workout and stores the date and an array of `GymStation` objects
+4. `GymStation` stores the name of the gym station, number of sets, and an array of `GymSet` objects.
+5. `GymSet` stores the weight and repetitions for a particular set.
+6. `WorkoutList` is a class that stores an array list different `Workout` objects using ArrayList.
 
 The `Run` and `Gym` classes represent different types of exercises that the user can record.
 
@@ -137,19 +187,7 @@ The Health component consists of `Health`, `HealthList`, `Bmi`, `Period`, and `A
 
 ###### [Back to table of contents](#table-of-contents)
 
-<<<<<<< HEAD
 #### Health List
-=======
-1. `Workout` is a class that stores the date of the workout.
-2. `Run` is a subclass of Workout and stores the distance, time, pace, and date of the run.
-3. `Gym` is a subclass of Workout and stores the date and an array of `GymStation` objects
-4. `GymStation` stores the name of the gym station, number of sets, and an array of `GymSet` objects.
-5. `GymSet` stores the weight and repetitions for a particular set.
-6. `WorkoutList` is a class that stores an array list different `Workout` objects using ArrayList.
-
-
-### Storage component
->>>>>>> 439537e33112bcf68c58c2cef567f898aac37816
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -166,6 +204,8 @@ The Health component consists of `Health`, `HealthList`, `Bmi`, `Period`, and `A
 ###### [Back to table of contents](#table-of-contents)
 
 ### Utility
+
+The Utility component consists of Parser, Filters, Validation, and CustomExceptions.
 
 {Insert class diagram}
 
@@ -188,6 +228,8 @@ The Health component consists of `Health`, `HealthList`, `Bmi`, `Period`, and `A
 ###### [Back to table of contents](#table-of-contents)
 
 ### Storage
+
+The Storage component consists of LogFile, DataFile, and DataType.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -329,6 +371,7 @@ healthcare professionals, ensuring comprehensive and seamless support in guiding
 ###### [Back to table of contents](#table-of-contents)
 
 ### Glossary
+
 - **Run**: An exercise activity involving running or jogging, typically characterized by distance, duration, and date.
 -  **Gym**: An exercise activity involving various strength training exercises or 
 workouts performed at a gym or fitness center.
@@ -337,7 +380,6 @@ used to assess overall health and fitness.
 - **Menstrual Period**: A recurring physiological event in females, characterized by the start and end dates.
 - **Medical Appointment**: An arrangement with a doctor, physiotherapist, or healthcare professional, 
 to meet at a certain time and place.
-
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -348,7 +390,6 @@ to meet at a certain time and place.
 
 {Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing}
 
-<<<<<<< HEAD
 ###### [Back to table of contents](#table-of-contents)
 
 ---
@@ -362,24 +403,10 @@ WORKOUT /e:run /d:[distance] /t:[time] /date:[date]
 
 - Replace `[distance]` with the distance cove#D85D43 to 2 decimal place  (e.g. if the distance is 5.123 km, enter 5.12).
 - Replace `[time]` with the duration of the run in the format `HH:MM:SS` (e.g. if you ran for an hour and 5 minutes,
-=======
-### Adding a new run
-#### Sequence Diagram for Adding a New Run Exercise
-wip
-<!--![Sequence Diagram for Adding a New Run Exercise]()-->
-
-#### Expected Input: 
-```java
-WORKOUT /e:run /d:<distance> /t:<time> /date:<date>
-```
-- Replace `<distance>` with the distance covered to 2 decimal place  (e.g. if the distance is 5.123 km, enter 5.12).
-- Replace `<time>` with the duration of the run in the format `HH:MM:SS` (e.g. if you ran for an hour and 5 minutes,
->>>>>>> 439537e33112bcf68c58c2cef567f898aac37816
   enter 01:05:00).
 - Replace `[date]` with the date of the run in the format `DD-MM-YYYY` (e.g. if the date is 24/07/2024, enter
   24-07-2024).
 
-<<<<<<< HEAD
 ###### [Back to table of contents](#table-of-contents)
 
 #### Sequence Diagram for Adding a New Run Exercise
@@ -405,7 +432,6 @@ wip
 5. The `Run` constructor adds the newly created object into `WorkoutList.WORKOUTS` and `WorkoutList.RUNS`.
 
 6. The `Run` object is passed to `Output.printAddRun()` and printed out to the user.
-
 
 ---
 ### Adding a new gym workout
