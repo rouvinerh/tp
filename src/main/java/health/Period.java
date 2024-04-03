@@ -17,14 +17,17 @@ public class Period extends Health {
      * The start date of period i.e. the first day of period flow which is also the first day of cycle.
      */
     protected LocalDate startDate;
+
     /**
      * The end date of period i.e. the last day of period flow.
      */
-    protected LocalDate endPeriodDate;
+    protected LocalDate endDate;
+
     /**
      * The number of days between the first day and last day of period flow.
      */
     protected long periodLength;
+
     /**
      * The number of days between the first day and last day of the period cycle.
      */
@@ -34,12 +37,12 @@ public class Period extends Health {
     /**
      * Constructs a Period object with the given start and end dates in string format.
      *
-     * @param stringStartDate A string representing the start date of the period
-     * @param stringEndDate   A string representing the end date of the period
+     * @param stringStartDate A string representing the start date of the period.
+     * @param stringEndDate   A string representing the end date of the period.
      */
     public Period(String stringStartDate, String stringEndDate) {
         this.startDate = Parser.parseDate(stringStartDate);
-        this.endPeriodDate = Parser.parseDate(stringEndDate);
+        this.endDate = Parser.parseDate(stringEndDate);
         this.periodLength = calculatePeriodLength();
         this.cycleLength = 0;
     }
@@ -47,8 +50,8 @@ public class Period extends Health {
     /**
      * Retrieves the start date of the period.
      *
-     * @return The start date.
-     * @throws AssertionError if the start date is null
+     * @return The start date of period.
+     * @throws AssertionError if the start date is null.
      */
     public LocalDate getStartDate() {
         assert startDate != null : ErrorConstant.NULL_START_DATE_ERROR;
@@ -58,12 +61,12 @@ public class Period extends Health {
     /**
      * Retrieves the end date of the period.
      *
-     * @return The end date.
-     * @throws AssertionError if the end date is null
+     * @return The end date of period.
+     * @throws AssertionError if the end date is null.
      */
     public LocalDate getEndDate() {
-        assert endPeriodDate != null : ErrorConstant.NULL_END_DATE_ERROR;
-        return endPeriodDate;
+        assert endDate != null : ErrorConstant.NULL_END_DATE_ERROR;
+        return endDate;
     }
 
     /**
@@ -81,9 +84,9 @@ public class Period extends Health {
      * @return The length of the period.
      */
     public long calculatePeriodLength() {
-        assert startDate.isBefore(endPeriodDate) : ErrorConstant.PERIOD_END_BEFORE_START_ERROR;
+        assert getStartDate().isBefore(getEndDate()) : ErrorConstant.PERIOD_END_BEFORE_START_ERROR;
         // Add 1 to include both start and end dates
-        return ChronoUnit.DAYS.between(startDate,endPeriodDate) + 1;
+        return ChronoUnit.DAYS.between(getStartDate(), getEndDate()) + 1;
     }
 
     /**
@@ -92,7 +95,7 @@ public class Period extends Health {
      * @param nextStartDate The start date of the next period.
      */
     public void setCycleLength(LocalDate nextStartDate) {
-        this.cycleLength = ChronoUnit.DAYS.between(startDate, nextStartDate);
+        this.cycleLength = ChronoUnit.DAYS.between(getStartDate(), nextStartDate);
     }
 
 
@@ -127,7 +130,7 @@ public class Period extends Health {
      */
     public LocalDate nextCyclePrediction() {
         long averageCycleLength = getLastThreeCycleLengths() / HealthConstant.LATEST_THREE_CYCLE_LENGTHS;
-        return this.startDate.plusDays(averageCycleLength);
+        return getStartDate().plusDays(averageCycleLength);
     }
 
     /**
@@ -165,7 +168,7 @@ public class Period extends Health {
         return String.format(HealthConstant.PRINT_PERIOD_FORMAT,
                 getStartDate(),
                 getEndDate(),
-                this.periodLength)
+                getPeriodLength())
                 + (this.cycleLength > 0 ? System.lineSeparator()
                 + String.format(HealthConstant.PRINT_CYCLE_FORMAT, this.cycleLength) : UiConstant.EMPTY_STRING);
     }

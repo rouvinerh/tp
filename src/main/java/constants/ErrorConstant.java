@@ -11,7 +11,12 @@ public class ErrorConstant {
     public static final String SAVE_ERROR = "File save failed. Write error occurred:";
     public static final String LOAD_ERROR = "File read error:" + "Error at ";
     public static final String CREATE_FILE_ERROR = "Unable to create file.";
-    public static final String CORRUPT_ERROR = "File is corrupted. Ceasing any further data imports.";
+    public static final String CORRUPT_ERROR = "File is corrupted! Ceasing any further data imports..." +
+            System.lineSeparator() + "Consider deleting 'pulsepilot_data.txt' and trying again!" +
+            System.lineSeparator() + UiConstant.PARTITION_LINE;
+    public static final String PARTIAL_CORRUPT_ERROR = "File is corrupted! Ceasing any further data imports..." +
+            System.lineSeparator() + "Some data may have been recovered. PulsePilot shall resume." +
+            System.lineSeparator() + UiConstant.PARTITION_LINE;
 
     // Storage Error for Gym
     public static final String LOAD_GYM_FORMAT_ERROR = LOAD_ERROR + "Format of gym entry is incorrect/corrupted";
@@ -22,7 +27,6 @@ public class ErrorConstant {
 
     // Input Errors
     public static final String INVALID_COMMAND_ERROR = "Invalid command. Enter 'help' to view available commands.";
-    public static final String UNSPECIFIED_PARAMETER_ERROR = "Parameter(s) unspecified.";
     public static final String NO_DATE_SPECIFIED_ERROR = "NA";
     public static final String INVALID_ITEM_ERROR = "Invalid item specified.";
     public static final String CORRECT_FILTER_ITEM_FORMAT = "/item:run/gym/workouts/bmi/period/appointment";
@@ -107,7 +111,6 @@ public class ErrorConstant {
     public static final String INVALID_END_DATE_ERROR = "Invalid end date!";
     public static final String EMPTY_PERIOD_LIST_ERROR = "Period List is empty.";
     public static final String PERIOD_LIST_UNCLEARED_ERROR = "Period list is not cleared.";
-    public static final String START_DATE_IN_FUTURE_ERROR = "Start date cannot be later than today's date.";
     public static final String DATE_IN_FUTURE_ERROR = "Date specified cannot be later than today's date.";
     public static final String PERIOD_END_BEFORE_START_ERROR = "Start date of period must be before end date.";
     public static final String UNABLE_TO_MAKE_PREDICTIONS_ERROR = "Insufficient period cycles to make prediction.";
@@ -128,10 +131,12 @@ public class ErrorConstant {
             "contain alphanumeric characters and spaces!";
 
     public static final String INVALID_HISTORY_FILTER_ERROR = "Missing/invalid filter used!" +
-            "Use /item:run/gym/workouts/period/bmi";
+            System.lineSeparator() +
+            "Use /item:run/gym/workouts/period/bmi/appointment";
 
     public static final String INVALID_LATEST_FILTER_ERROR = "Missing/invalid filter used!" +
-            "Use /item:run/gym/period/bmi";
+            System.lineSeparator() +
+            "Use /item:run/gym/period/bmi/appointment";
 
 
 }

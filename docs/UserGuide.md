@@ -4,6 +4,8 @@
 
 PulsePilot is a **desktop app for tracking health-related information, optimised for users via a Command Line Interface (CLI)**. If one can type fast, you can key in and track health-related information faster than traditional GUI applications installed on your phone or computer.
 
+## Table of Contents
+
 * [Quick Start](#quick-start)
 * [Notes About Command Format](#notes-about-command-format)
 * [Commands](#commands)
@@ -54,6 +56,8 @@ Terminal primed. Command inputs are now accepted...
 ____________________________________________________________
 ```
 
+###### [Back to table of contents](#table-of-contents)
+
 ## Notes About Command Format
 
 * Parameters in `UPPER_CASE` are the parameters to be **supplied by the user**.
@@ -87,6 +91,8 @@ run 	25:23		5.24		4:51/km		2024-03-19
 ____________________________________________________________
 ```
 
+###### [Back to table of contents](#table-of-contents)
+
 ### Workout: Gym
 
 Adds a new gym session to track. 
@@ -97,6 +103,8 @@ Format: `new /e:gym /n:NUMBER_OF_STATIONS`
 * `NUMBER_OF_STATIONS` is a **positive integer**  representing the number of stations for one Gym session.
 
 Examples: `new /e:gym /n:2`
+
+###### [Back to table of contents](#table-of-contents)
 
 #### Adding Gym Stations
 
@@ -130,6 +138,8 @@ Squat: 4 sets of 5 reps at 100 KG
 ____________________________________________________________
 ```
 
+###### [Back to table of contents](#table-of-contents)
+
 ### Health: BMI
 
 Calculates user's Body Mass Index (BMI).
@@ -154,15 +164,16 @@ You're overweight.
 ____________________________________________________________
 ```
 
+###### [Back to table of contents](#table-of-contents)
+
 ### Health: Period
 
 Tracks the start and end of user's menstrual cycle.
 
 Format: `health /h:period /start:START_DATE /end:END_DATE`
 
-* All parameters must be provided in correct order as shown above.
 * `START_DATE` is `DD-MM-YYYY` format (i.e. `19-03-2024`) representing the start of a cycle.
-* `END_DATE` is a `DD-MM-YYYY` format (i.e. `19-03-2024`) representing the end of a cycle.
+* `END_DATE` is `DD-MM-YYYY` format (i.e. `19-03-2024`) representing the end of a cycle.
 
 Examples:
 * `health /h:period /start:09-03-2022 /end:16-03-2022`
@@ -176,6 +187,53 @@ Period Start: 2022-03-09 Period End: 2022-03-16
 Period Length: 8 days
 ____________________________________________________________
 ```
+
+Predicts user's next period start date. 
+
+Format: `health /h:prediction`
+
+Expected Output:
+```
+health /h:prediction
+Period Start: 2024-01-09 Period End: 2024-01-16
+Period Length: 8 days
+Cycle Length: 32 days
+Period Start: 2024-02-10 Period End: 2024-02-16
+Period Length: 7 days
+Cycle Length: 28 days
+Period Start: 2024-03-09 Period End: 2024-03-14
+Period Length: 6 days
+Your next cycle's predicted start date is 2024-04-08, in 7 days.
+```
+
+### Health: Appointment
+
+###### [Back to table of contents](#table-of-contents)
+
+### Health: Appointment
+
+Tracks the user's medical appointments.
+
+Format: `health /h:appointment /date:DATE /time:TIME /description:DESCRIPTION`
+
+* All parameters must be provided in correct order as shown above.
+* `DATE` is a `DD-MM-YYYY` format (i.e. `03-04-2024`) representing the date of the appointment.
+* `TIME` is a `HH:mm` format (i.e. `14:15`) representing the time of the appointment.
+* `DESCRIPTION` is a string (i.e. `review checkup with surgeon`) representing the details of the appointment. The string can only contain alphanumeric characters and spaces.
+
+Examples:
+* `health /h:appointment /date:03-04-2024 /time:14:15 /description:review checkup with surgeon`
+
+Expected Output:
+```
+health /h:appointment /date:03-04-2024 /time:14:15 /description:review checkup with surgeon
+____________________________________________________________
+Added: appointment | 2024-04-03 | 14:15 | review checkup with surgeon
+On 2024-04-03 at 14:15: review checkup with surgeon
+____________________________________________________________
+```
+
+###### [Back to table of contents](#table-of-contents)
 
 ### History
 
@@ -200,6 +258,8 @@ Index		Type	Time		Distance	Pace		Date
 ____________________________________________________________
 ```
 
+###### [Back to table of contents](#table-of-contents)
+
 ### Latest
 
 Prints the latest instance of `run`, `gym`, `bmi` or `period`.
@@ -220,6 +280,8 @@ Period Start: 2022-03-09 Period End: 2022-03-16
 Period Length: 8 days
 ____________________________________________________________
 ```
+
+###### [Back to table of contents](#table-of-contents)
 
 ### Help
 
@@ -245,6 +307,8 @@ exit - Exit the program
 ____________________________________________________________
 ```
 
+###### [Back to table of contents](#table-of-contents)
+
 ### Exit
 
 Exits the bot gracefully.
@@ -262,19 +326,79 @@ See you soon, Captain!
 ____________________________________________________________
 ```
 
+###### [Back to table of contents](#table-of-contents)
+
 ## Logging
 
-The latest logs are written to `pulsepilot_log.txt` once the bot exits. Each time the bot is run, the current `pulsepilot_log.txt` file is overwritten with the most recent logs. The logs record both info messages and any error messages.
+The latest logs are written to `pulsepilot_log.txt` once the bot exits. Each time the bot is run, the current 
+`pulsepilot_log.txt` file is overwritten with the most recent logs. The logs record both info messages and any error messages.
+
+###### [Back to table of contents](#table-of-contents)
 
 ## Saving Data
 
-As of now, the bot does not write or read from any file. This feature will be implemented in v2.0. 
+Data is saved to `pulsepilot_data.txt` once the bot exits. Each time the bot exits, the current 
+`pulsepilot_data.txt` file is overwritten with the most recent data.
+
+**Warning:** Should this file be corrupted,there is a slim chance of recovery.
+**Tip:** Ensure that you always have a _backup copy stored safely_ to prevent permanent data loss.
+
+###### [Back to table of contents](#table-of-contents)
 
 ## FAQ
 
 **1.** How do I transfer my data to another computer?
 
-As of now, it is not possible to do so. This feature will be implemented in `v2.0`. 
+Ensure that the `pulsepilot.jar` is placed in the **same folder** as `pulsepilot_data.txt`. PulsePilot should recognise
+and synchronise your data contents from `pulsepilot_data.txt` if done correctly.
+
+**Tip:** Create a _backup copy_ to prior to file transfer to avoid data corruption.
+
+**2.** What happens if my data is corrupted?
+
+Depending on the severity of corruption, you may experience 2 scenarios:
+- A full corruption
+```
+____________________________________________________________
+ _              _
+|_)    |  _  _ |_) o  |  _ _|_
+|  |_| | _> (/_|   |  | (_) |_
+Engaging orbital thrusters...
+PulsePilot on standby
+____________________________________________________________
+Exception Caught!
+File is corrupted! Ceasing any further data imports...
+Consider deleting 'pulsepilot_data.txt' and trying again!
+____________________________________________________________
+```
+- A partial corruption
+```
+____________________________________________________________
+ _              _
+|_)    |  _  _ |_) o  |  _ _|_
+|  |_| | _> (/_|   |  | (_) |_
+Engaging orbital thrusters...
+PulsePilot on standby
+____________________________________________________________
+Terminal primed. Command inputs are now accepted...
+____________________________________________________________
+Exception Caught!
+Error: File is corrupted! Ceasing any further data imports...
+Some data may have been recovered. PulsePilot shall resume.
+____________________________________________________________
+```
+
+In either case, you may want to overwrite/replace the current `pulsepilot_data.txt` with that of your backup in order to restory your data.
+
+
+A full corruption indicates permanent and complete data loss. Please delete `pulsepilot_data.txt` and relaunch Pulsepilot.
+
+A partial corruption indicates a partial recovery of data up until the point of corruption. We recommend utilising the `history` command to review and discrepencies
+and missing data. You may choose to re-enter the corrupted data to be saved again upon `exit`.
+
+(hyperlink for history and exit)
+
+###### [Back to table of contents](#table-of-contents)
 
 ## Command Summary
 
@@ -289,3 +413,4 @@ As of now, it is not possible to do so. This feature will be implemented in `v2.
 | View latest  | `latest /view:TYPE` <br/>Example:   `latest /view:bmi`                                                                               |
 | Exit bot     | `exit`                                                                                                                               |
 
+###### [Back to table of contents](#table-of-contents)
