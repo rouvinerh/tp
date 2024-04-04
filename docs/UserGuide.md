@@ -237,63 +237,52 @@ ____________________________________________________________
 
 ### History
 
-Prints all tracked instances of `run`, `gym`, `workouts`,  `bmi`, `period`, `appointment`.
+Prints all tracked instances of `run`, `gym`, `bmi` or `period`.
 
-Format: `history /item:TYPE`
-
-* `TYPE` is either `run`, `gym`, `workouts`, `bmi`, `period`, `appointment`.
-  - `run` shows all entries of runs 
-  - `gym` shows all entries of gym
-  - `workouts` shows all entries of gym and runs
-  - `bmi` shows all BMI entries 
-  - `period` shows all Period entries 
-  - `appointment` show all Appointment entries
-
-Examples:
-* `history /item:workouts`
-
-Expected Output:
-
-```
-history /item:workouts
-____________________________________________________________
-Showing all workouts (runs and gyms):
- Index	Type 	Date        	Distance	Duration       	Pace    	Station   	Sets	Reps	Weights   
-1     	gym  	1997-11-20  	-       	-              	-       	bench press	2   	4,4 	100,120   
-      	     	            	        	               	        	squats    	2   	4,4 	50,60     
-2     	run  	2023-02-10  	5.25    	25:23          	4:50/km 	-         	-   	-   	-         
-____________________________________________________________
-```
-
-###### [Back to table of contents](#table-of-contents)
---- 
-### Latest
-
-Prints the latest instance of `run`, `gym`, `bmi`, `period`, `appointment`.
-
-Format: `latest /item:TYPE`
+Format: `history /view:TYPE`
 
 * `TYPE` is either `run`, `gym`, `bmi` or `period`.
-  - `run` shows the latest run
-  - `gym` shows the latest gym
-  - `bmi` shows the latest BMI
-  - `period` shows the latest Period
-  - `appointment` show the latest Appointment
 
 Examples:
-* `latest /item:appointment`
+* `history /view:run`
 
 Expected Output:
 
 ```
-latest /item:period
+history /view:run
 ____________________________________________________________
-On 2023-11-11 at 23:24: this is a testing description
+Index		Type	Time		Distance	Pace		Date
+1.		run 	25:00		5.00		5:00/km		2024-03-17
+2.		run 	25:23		5.24		4:51/km		2024-03-18
+3.		run 	25:23		5.24		4:51/km		2024-03-19
 ____________________________________________________________
 ```
 
 ###### [Back to table of contents](#table-of-contents)
----
+
+### Latest
+
+Prints the latest instance of `run`, `gym`, `bmi` or `period`.
+
+Format: `latest /view:TYPE`
+
+* `TYPE` is either `run`, `gym`, `bmi` or `period`.
+
+Examples:
+* `latest /view:run`
+
+Expected Output:
+
+```
+latest /view:period
+____________________________________________________________
+Period Start: 2022-03-09 Period End: 2022-03-16
+Period Length: 8 days
+____________________________________________________________
+```
+
+###### [Back to table of contents](#table-of-contents)
+
 ### Help
 
 Prints the `help` message. 
@@ -311,15 +300,15 @@ new /e:run /d:DISTANCE /t:TIME [/date:DATE] - Add a new run
 new /e:gym /n:NUMBER_OF_STATIONS [/date:DATE] - Add a new gym workout
 health /h:bmi /height:HEIGHT /weight:WEIGHT /date:DATE - Add new BMI data
 health /h:period /start:START_DATE /end:END_DATE - Add new period data
-history /item:[run/gym/workouts/bmi/period] - Show history of runs/gyms/workouts/bmi records/periods tracked
-latest /item:[run/gym/bmi/period] - Show history of runs/gyms/bmi records/periods tracked
+history /view:[run/gym/bmi/period] - Show history of runs/gyms/bmi records/periods tracked
+latest /view:[run/gym/bmi/period] - Show history of runs/gyms/bmi records/periods tracked
 help - Show this help message
 exit - Exit the program
 ____________________________________________________________
 ```
 
 ###### [Back to table of contents](#table-of-contents)
----
+
 ### Exit
 
 Exits the bot gracefully.
@@ -338,14 +327,14 @@ ____________________________________________________________
 ```
 
 ###### [Back to table of contents](#table-of-contents)
----
+
 ## Logging
 
 The latest logs are written to `pulsepilot_log.txt` once the bot exits. Each time the bot is run, the current 
 `pulsepilot_log.txt` file is overwritten with the most recent logs. The logs record both info messages and any error messages.
 
 ###### [Back to table of contents](#table-of-contents)
----
+
 ## Saving Data
 
 Data is saved to `pulsepilot_data.txt` once the bot exits. Each time the bot exits, the current 
@@ -355,9 +344,9 @@ Data is saved to `pulsepilot_data.txt` once the bot exits. Each time the bot exi
 **Tip:** Ensure that you always have a _backup copy stored safely_ to prevent permanent data loss.
 
 ###### [Back to table of contents](#table-of-contents)
----
+
 ## FAQ
---- 
+
 **1.** How do I transfer my data to another computer?
 
 Ensure that the `pulsepilot.jar` is placed in the **same folder** as `pulsepilot_data.txt`. PulsePilot should recognise
@@ -365,7 +354,6 @@ and synchronise your data contents from `pulsepilot_data.txt` if done correctly.
 
 **Tip:** Create a _backup copy_ to prior to file transfer to avoid data corruption.
 
---- 
 **2.** What happens if my data is corrupted?
 
 Depending on the severity of corruption, you may experience 2 scenarios:
@@ -407,14 +395,11 @@ A full corruption indicates permanent and complete data loss. Please delete `pul
 
 A partial corruption indicates a partial recovery of data up until the point of corruption. We recommend utilising the `history` command to review and discrepencies
 and missing data. You may choose to re-enter the corrupted data to be saved again upon `exit`.
-###### [Back to table of contents](#table-of-contents)
----
 
-**3.** Why is there a `history /item:workouts`? What is the purpose of it?
-The purpose of this is to show all workouts (runs and gyms) in the order that it was created. This allows the user to track and view past history giving them greater context of the workouts that they have did. 
+(hyperlink for history and exit)
 
 ###### [Back to table of contents](#table-of-contents)
---- 
+
 ## Command Summary
 
 | Action       | Format, Examples                                                                                                                     |
@@ -424,7 +409,8 @@ The purpose of this is to show all workouts (runs and gyms) in the order that it
 | Add gym      | `new /e:gym /n:NUMBER_OF_STATIONS`<br/>Example:`new /e:gym /n:4`                                                                     |
 | Track BMI    | `health /h:bmi /height:HEIGHT /weight:WEIGHT /date:DATE` <br/>Example:   `health /h:bmi /height:1.70 /weight:75.42 /date:19-03-2024` |
 | Track Period | `health /h:period /start:START_DATE /end:END_DATE` <br/>Example:   `health /h:period /start:09-03-2022 /end:16-03-2022`              |
-| View history | `history /item:TYPE` <br/>Example:   `history /item:run`                                                                             |
-| View latest  | `latest /item:TYPE` <br/>Example:   `latest /item:bmi`                                                                               |
+| View history | `history /view:TYPE` <br/>Example:   `history /view:run`                                                                             |
+| View latest  | `latest /view:TYPE` <br/>Example:   `latest /view:bmi`                                                                               |
 | Exit bot     | `exit`                                                                                                                               |
+
 ###### [Back to table of contents](#table-of-contents)
