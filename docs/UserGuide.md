@@ -441,6 +441,18 @@ and missing data. You may choose to re-enter the corrupted data to be saved agai
 
 (hyperlink for history and exit)
 
+**3.** Is my tracking data private and confidential?
+
+Yes, your data is secure and stored locally on your machine. PulsePilot does not have any features that would allow it to send your data elsewhere.
+
+**4.** What Java version is required to run PulsePilot?
+
+PulsePilot requires at least Java version 11.
+
+**5.** Can I use the application offline?
+
+Yes, PulsePilot works perfectly offline. All data are stored on your device for better privacy.
+
 ###### [Back to table of contents](#table-of-contents)
 
 ## Command Summary
