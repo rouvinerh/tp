@@ -1,5 +1,10 @@
 package constants;
 
+/**
+ * WorkoutConstants class contains constants related to workout-related functionalities in the application.
+ * It includes constants for workout types, flags, parameters, indices, file loading, history display,
+ * and formatted strings.
+ */
 public class WorkoutConstant {
 
     // Workout Delimiter

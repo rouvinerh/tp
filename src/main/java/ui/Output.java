@@ -19,6 +19,9 @@ import utility.Filters.HistoryAndLatestFilters;
 
 import java.util.ArrayList;
 
+/**
+ * The Output class handles printing various messages, data, and ASCII art for the user interface.
+ */
 public class Output {
 
     /**
@@ -156,6 +159,9 @@ public class Output {
     /**
      * Prints all Workout objects (Run and Gym) based on the time it was added.
      * The list is sorted in descending order. (Latest one first)
+     *
+     * @throws CustomExceptions.OutOfBounds  If index is out of bounds.
+     * @throws CustomExceptions.InvalidInput If user input is invalid.
      */
     protected static void printWorkoutHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
         printLine();

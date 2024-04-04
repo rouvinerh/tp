@@ -261,6 +261,7 @@ public class Validation {
      *
      * @param appointmentDetails List of strings representing Appointment details.
      * @throws CustomExceptions.InvalidInput If there are any errors in the details entered.
+     * @throws CustomExceptions.InsufficientInput If date, time, or description parameters are missing.
      */
     public static void validateAppointmentDetails(String[] appointmentDetails)
             throws CustomExceptions.InvalidInput, CustomExceptions.InsufficientInput {

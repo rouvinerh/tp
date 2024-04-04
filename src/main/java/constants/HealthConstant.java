@@ -1,5 +1,9 @@
 package constants;
 
+/**
+ * HealthConstant class contains constants related to health-related functionalities in the application.
+ * It includes headers, flags, parameters, thresholds, formatted strings/messages, and split indices.
+ */
 public class HealthConstant {
 
     // Headers
