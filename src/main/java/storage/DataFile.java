@@ -27,9 +27,15 @@ import utility.CustomExceptions;
 import constants.UiConstant;
 import utility.Filters.DataType;
 
+
 /**
  * Represents a DataFile object used to read and write data stored in PulsePilot to a file.
+ *
+ * This class handles the reading and writing of various data related to PulsePilot, including user's name,
+ * health data like BMI, appointments, periods, and workout data like runs and gym sessions.
+ * It provides methods to load, save, and process different types of data as well as prevent tampering.
  */
+
 public class DataFile {
 
     public static String userName = null;
@@ -58,7 +64,10 @@ public class DataFile {
     /**
      * Generates the SHA-256 hash of the pulsepilot_data.txt file.
      *
-     * @return A String representing the hash of the pulsepilot_data.txt file.
+     * @param file The file for which to generate the hash.
+     * @return A String representing the SHA-256 hash of the pulsepilot_data.txt file.
+     * @throws NoSuchAlgorithmException If the SHA-256 algorithm is not available.
+     * @throws IOException              If an I/O error occurs while reading the file.
      */
     private static String generateFileHash(File file) throws NoSuchAlgorithmException, IOException {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -81,10 +90,10 @@ public class DataFile {
     }
 
     /**
-     * Checks if data file already exists. If it does, log it. Else, create the file and log the event.
+     * Checks if the data file already exists. If it does, logs it. Else, creates the file and logs the event.
      *
-     * @param dataFile Represents the data file.
-     * @return Integer representing a found data file, 0, or not found, 1
+     * @param dataFile The data file to check.
+     * @return An integer representing whether the file was found (0) or not found (1).
      * @throws CustomExceptions.FileCreateError If there is an error creating the data file.
      */
     public static int verifyIntegrity(File dataFile) throws CustomExceptions.FileCreateError {
@@ -102,7 +111,9 @@ public class DataFile {
     }
 
     /**
-     * Initialises the data file to be used. Function exits if file cannot be created.
+     * Initializes the data file to be used. The function exits if the file cannot be created.
+     *
+     * @return An integer representing whether the file was found (0) or not found (1).
      */
     public static int loadDataFile() {
         int status = UiConstant.FILE_NOT_FOUND;
