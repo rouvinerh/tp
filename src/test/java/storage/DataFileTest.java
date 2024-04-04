@@ -73,7 +73,7 @@ public class DataFileTest {
             assertEquals("APPOINTMENT:15-05-2023:14.30:Doctor's Checkup", lines.get(4));
             assertEquals("PERIOD:01-03-2023:05-03-2023:5", lines.get(5));
             assertEquals("PERIOD:01-04-2023:04-04-2023:4", lines.get(6));
-            assertEquals("RUN:5.0:0.30.0:01-04-2023", lines.get(7));
+            assertEquals("RUN:5.00:00.30.00:01-04-2023", lines.get(7));
             assertEquals("GYM:2:11-11-1997:bench press:4:4:10,20,30,40:squats:4:3:20,30,40,50", lines.get(8));
             assertEquals("GYM:2:NA:bench press:4:4:10,20,30,40:squats:4:3:20,30,40,50", lines.get(9));
         } else {

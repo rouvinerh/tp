@@ -204,7 +204,8 @@ public class Output {
         printLine();
         System.out.println("Your run history:");
         ArrayList<? extends Workout> workoutList = WorkoutList.getWorkouts(WorkoutConstant.RUN);
-        System.out.println(WorkoutConstant.RUN_HEADER_INDEX_FORMAT);
+        String runHeader = String.format(WorkoutConstant.RUN_HEADER_INDEX_FORMAT);
+        System.out.println(runHeader);
 
         for (int i = 0; i < workoutList.size(); i++) {
             int index = i + 1;

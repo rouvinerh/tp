@@ -56,7 +56,12 @@ The purpose of this guide is to provide an explanation for all the functions and
 
 The application follows an Object-Oriented Design approach, with separate classes for handling different components of the application, such as user input, output, exercise logging, and health data management.
 
+<<<<<<< HEAD
 ![Architecture Diagram](img/architecture_diagram.png)
+=======
+
+![ArchitectureDiagram](img/architecture_diagram.png)
+>>>>>>> f712869cb298d4ac1f4d6178e7eaeed520cb1919
 
 The **_Architecture Diagram_** given above explains the high-level design of the PulsePilot.
 
@@ -78,8 +83,6 @@ The application can be further broken down into the following packages:
 ### UI Package
 
 The `UI` package contains `Handler` and `Output`, which are responsible for handling user input and printing of output fo the screen respectively.
-
-![UI Package Class Diagram](img/ui_class_diagram.png)
 
 #### Handler
 
@@ -110,8 +113,6 @@ The `Output` class is responsible for printing messages, prompts, errors and oth
 4. `GymStation` stores the name of the gym station, number of sets, and an array of `GymSet` objects.
 5. `GymSet` stores the weight and repetitions for a particular set.
 6. `WorkoutList` is a class that stores an array list different `Workout` objects using ArrayList.
-
-![Workout Package Class Diagram](img/workout_class_diagram.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -146,7 +147,7 @@ The `Output` class is responsible for printing messages, prompts, errors and oth
 ###### [Back to table of contents](#table-of-contents)
 
 ### Health Package
-![Class Diagram for Health Package](img/health_package.png)
+
 The Health component consists of `Health`, `HealthList`, `Bmi`, `Period`, and `Appointment`.
 
 1. `Health` class stores date.
@@ -356,6 +357,10 @@ This is the sequence diagram for adding a run:
 
 ![Run Sequence Diagram](img/run_sequence_diagram.png)
 
+`validateRunInput` uses the `Validation` class to check the parameters specified when adding a Run. It follows the sequence diagram below:
+
+![Run Validation Sequence Diagram](img/run_validation_sequence_diagram.png)
+
 ###### [Back to table of contents](#table-of-contents)
 
 #### Add Gym
@@ -391,10 +396,11 @@ Example of Gym Station:
 > NOTE: The number of sets entered matches the number of weights added. If 4 sets have been done, the bot expects 4 positive inters separated by commas as the `weights` input.
 
 ##### Gym Sequence
-
-![Gym Sequence Diagram](./img/gym_sequence_diagram.jpg)
-
-
+Below is the sequence diagram for adding a gym and the reference diagram
+<div style="display: flex; ">
+    <img src="./img/gym_overall_sequence_diagram.png" alt="Image 1" style="width: 45%;">
+    <img src="./img/gym_parse_gym_station_input_sequence_diagram.png" alt="Par" style="width: 55%;">
+</div>
 1. User input is passed to `Handler.processInput()`, which determines the command used is `workout`, thus passing the input to `Handler.handleWorkout()`.
 
 2. `Handler.handleWorkout()` determines the type of exercise which is `gym`, and calls the `Parser.parseGymInput()` method to process the user's input.
@@ -420,6 +426,8 @@ Example of Gym Station:
 9. `Output.printAddGym()` is then called to print the message acknowledging the successful adding of a new `Gym` object.
 
 ###### [Back to table of contents](#table-of-contents)
+
+--- 
 
 ### Health
 
