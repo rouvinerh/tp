@@ -79,8 +79,6 @@ The application can be further broken down into the following packages:
 
 The `UI` package contains `Handler` and `Output`, which are responsible for handling user input and printing of output fo the screen respectively.
 
-![UI Package Class Diagram](img/ui_class_diagram.png)
-
 #### Handler
 
 The main entry point of the application is the `Handler` class, used to handle user input. When the user starts the bot, the steps are as follows:
@@ -110,8 +108,6 @@ The `Output` class is responsible for printing messages, prompts, errors and oth
 4. `GymStation` stores the name of the gym station, number of sets, and an array of `GymSet` objects.
 5. `GymSet` stores the weight and repetitions for a particular set.
 6. `WorkoutList` is a class that stores an array list different `Workout` objects using ArrayList.
-
-![Workout Package Class Diagram](img/workout_class_diagram.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -146,7 +142,7 @@ The `Output` class is responsible for printing messages, prompts, errors and oth
 ###### [Back to table of contents](#table-of-contents)
 
 ### Health Package
-![Class Diagram for Health Package](img/health_package.png)
+
 The Health component consists of `Health`, `HealthList`, `Bmi`, `Period`, and `Appointment`.
 
 1. `Health` class stores date.
@@ -355,6 +351,10 @@ WORKOUT /e:run /d:[distance] /t:[time] /date:[date]
 This is the sequence diagram for adding a run:
 
 ![Run Sequence Diagram](img/run_sequence_diagram.png)
+
+`validateRunInput` uses the `Validation` class to check the parameters specified when adding a Run. It follows the sequence diagram below:
+
+![Run Validation Sequence Diagram](img/run_validation_sequence_diagram.png)
 
 ###### [Back to table of contents](#table-of-contents)
 

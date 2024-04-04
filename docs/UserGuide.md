@@ -66,29 +66,36 @@ ____________________________________________________________
   * `[/d:DATE]` means that the `DATE` parameter is **optional**.
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 
+---
+
 ## Commands
 
 ### Workout: Run
 
 Adds a new Run workout to track. 
 
-Format: `new /e:run /d:DISTANCE /t:TIME [/date:DATE]`
+Format: `workout /e:run /d:DISTANCE /t:TIME [/date:DATE]`
 
-* All parameters must be provided in correct order as shown above.
 * `DISTANCE` is a **2 decimal point positive number** (i.e. `15.24`) representing the distance ran.
 * `TIME` is in `[HH]:MM:SS` format (i.e. `25:30`). The `HH` representing hours is **optional**.
-* `DATE` is in `DD-MM-YYYY` format (i.e. `19-03-2024`).
+* `DATE` is in `DD-MM-YYYY` format (i.e. `19-03-2024`). The date is optional, and if not specified, defaults to `NA`.
 
-Examples: `new /e:run /d:5.24 /t:25:23 /date:19-03-2024`
+Examples: `workout /e:run /d:5.15 /t:25:03 /date:25-03-2023` OR `workout /e:run /d:5.15 /t:25:03`.
 
 Expected Output:
 
 ```
-new /e:run /d:5.24 /t:25:23 /date:19-03-2024
+workout /e:run /d:5.15 /t:25:03 /date:25-03-2023
 ____________________________________________________________
 Successfully added a new run session
 Type	Time		Distance	Pace		Date
-run 	25:23		5.24		4:51/km		2024-03-19
+run   	25:03     	5.15      	4:52/km   	2023-03-25  
+____________________________________________________________
+workout /e:run /d:5.15 /t:25:03
+____________________________________________________________
+Successfully added a new run session
+Type	Time		Distance	Pace		Date
+run   	25:03     	5.15      	4:52/km   	NA          
 ____________________________________________________________
 ```
 
@@ -98,18 +105,18 @@ ____________________________________________________________
 
 Adds a new gym session to track. 
 
-Format: `new /e:gym /n:NUMBER_OF_STATIONS`
+Format: `workout /e:gym /n:2 [/date:DATE]`
 
-* All parameters must be provided in correct order as shown above.
 * `NUMBER_OF_STATIONS` is a **positive integer**  representing the number of stations for one Gym session.
+* `DATE` is in `DD-MM-YYYY` format (i.e. `19-03-2024`). The date is optional, and if not specified, defaults to `NA`.
 
-Examples: `new /e:gym /n:2`
+Examples: `workout /e:gym /n:2 /date:25-03-2023` OR `workout /e:gym /n:4`
 
 ###### [Back to table of contents](#table-of-contents)
 
 #### Adding Gym Stations
 
-Upon entry of the `new /e:gym` command, the bot will prompt for further details for each station done:
+Upon entry of the `workout /e:gym` command, the bot will prompt for further details for each station done:
 
 Format: `STATION_NAME /s:SET /r:REPS /w:WEIGHT`
 
@@ -122,25 +129,32 @@ Format: `STATION_NAME /s:SET /r:REPS /w:WEIGHT`
 Examples: `Bench Press /s:4 /r:10 /w:75`
 
 Expected Output:
+
 ```
-new /e:gym /n:2
+workout /e:gym /n:2 /date:25-03-2023
 ____________________________________________________________
-Please enter the details of station 1. (Format: [name of exercise:string] /s:[sets:number] /r:[reps:number] /w:[weights:number])
+Please enter the details of station 1. (Format: e.g. Bench Press /s:2 /r:4 /w:10,20)
 ____________________________________________________________
-Bench Press /s:4 /r:10 /w:5
+bench press /s:2 /r:4 /w:10,20
 ____________________________________________________________
-Please enter the details of station 2. (Format: [name of exercise:string] /s:[sets:number] /r:[reps:number] /w:[weights:number])
+Please enter the details of station 2. (Format: e.g. Bench Press /s:2 /r:4 /w:10,20)
 ____________________________________________________________
-Squat /s:4 /r:5 /w:100
+squat /s:2 /r:4 /w:10,20
 ____________________________________________________________
 Successfully added a new gym session
-Bench Press: 4 sets of 10 reps at 5 KG
-Squat: 4 sets of 5 reps at 100 KG
+Station 1 bench press: 2 sets
+	- Set 1. 4 reps at 10 KG
+	- Set 2. 4 reps at 20 KG
+Station 2 squat: 2 sets
+	- Set 1. 4 reps at 10 KG
+	- Set 2. 4 reps at 20 KG
 ____________________________________________________________
 ```
 
 ###### [Back to table of contents](#table-of-contents)
+
 ___
+
 ### Health: BMI
 
 Calculates user's Body Mass Index (BMI) based on height and weight from user's input.
@@ -374,6 +388,7 @@ and synchronise your data contents from `pulsepilot_data.txt` if done correctly.
 **2.** What happens if my data is corrupted?
 
 Depending on the severity of corruption, you may experience 2 scenarios:
+
 - A full corruption
 ```
 ____________________________________________________________
@@ -405,12 +420,12 @@ Some data may have been recovered. PulsePilot shall resume.
 ____________________________________________________________
 ```
 
-In either case, you may want to overwrite/replace the current `pulsepilot_data.txt` with that of your backup in order to restory your data.
+In either case, you may want to overwrite/replace the current `pulsepilot_data.txt` with that of your backup in order to restore your data.
 
 
-A full corruption indicates permanent and complete data loss. Please delete `pulsepilot_data.txt` and relaunch Pulsepilot.
+A full corruption indicates permanent and complete data loss. Please delete `pulsepilot_data.txt` and relaunch PulsePilot.
 
-A partial corruption indicates a partial recovery of data up until the point of corruption. We recommend utilising the `history` command to review and discrepencies
+A partial corruption indicates a partial recovery of data up until the point of corruption. We recommend utilising the `history` command to review and discrepancies
 and missing data. You may choose to re-enter the corrupted data to be saved again upon `exit`.
 
 (hyperlink for history and exit)
