@@ -18,8 +18,7 @@ import java.util.Scanner;
 import storage.LogFile;
 
 /**
- * Represents user input parsing and handling
- * before providing feedback to the user.
+ * Represents user input parsing and handling before providing feedback to the user.
  */
 public class Handler {
     public static Scanner in;
