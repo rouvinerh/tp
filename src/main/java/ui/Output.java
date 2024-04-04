@@ -277,8 +277,11 @@ public class Output {
      */
     protected static void printAppointmentHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
         printLine();
-        System.out.println("Your Appointment history:");
-        HealthList.showAppointmentList();
+        try {
+            HealthList.showAppointmentList();
+        } catch (CustomExceptions.OutOfBounds e) {
+            System.out.println(e.getMessage());
+        }
         printLine();
     }
 
@@ -341,7 +344,11 @@ public class Output {
      */
     protected static void printLatestAppointment(){
         printLine();
-        HealthList.showLatestAppointment();
+        try {
+            HealthList.showLatestAppointment();
+        } catch (CustomExceptions.OutOfBounds e) {
+            System.out.println(e.getMessage());
+        }
         printLine();
     }
 

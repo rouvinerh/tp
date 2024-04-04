@@ -29,7 +29,7 @@ public class AppointmentTest {
     }
 
     @Test
-    void showAppointmentList_printCorrectAppointmentList() {
+    void showAppointmentList_printCorrectAppointmentList() throws CustomExceptions.OutOfBounds {
         Appointment firstAppointment = new Appointment("25-03-2024", "16:30", "Physiotherapy session");
         Appointment secondAppointment = new Appointment("22-03-2024", "16:00", "Wound dressing change");
         Appointment thirdAppointment = new Appointment("22-03-2024", "11:00", "Doctor consultation");
