@@ -3,7 +3,9 @@ package constants;
 import java.io.File;
 
 /**
- * Constants class representing all constants used for PulsePilot.
+ * UiConstants class contains constants related to user-interaction-related functionalities in the application.
+ * It includes constants for special characters, regular expressions, UI replies, storage paths,
+ * numerical values, history management, delete operations, and split indices.
  */
 public class UiConstant {
 
