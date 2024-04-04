@@ -14,6 +14,7 @@ PulsePilot is a **desktop app for tracking health-related information, optimised
     * [Adding Gym Stations](#adding-gym-stations)
   * [Health: BMI](#health-bmi)
   * [Health: Period](#health-period)
+  * [Health: Appointment](#health-appointment)
   * [History](#history)
   * [Latest](#latest)
   * [Help](#help)
@@ -211,11 +212,9 @@ Period Start: 2024-03-09 Period End: 2024-03-14
 Period Length: 6 days
 Your next cycle's predicted start date is 2024-04-08, in 4 days.
 ```
-###### [Back to table of contents](#table-of-contents)
-___
-### Health: Appointment
 
 ###### [Back to table of contents](#table-of-contents)
+___
 
 ### Health: Appointment
 
@@ -223,15 +222,22 @@ Tracks the user's medical appointments.
 
 Format: `health /h:appointment /date:DATE /time:TIME /description:DESCRIPTION`
 
-* All parameters must be provided in correct order as shown above.
+* Parameters after `health` do not need to be in order.
+
 * `DATE` is a `DD-MM-YYYY` format (i.e. `03-04-2024`) representing the date of the appointment.
+
 * `TIME` is a `HH:mm` format (i.e. `14:15`) representing the time of the appointment.
+
 * `DESCRIPTION` is a string (i.e. `review checkup with surgeon`) representing the details of the appointment. The string can only contain alphanumeric characters and spaces.
 
 Examples:
+
 * `health /h:appointment /date:03-04-2024 /time:14:15 /description:review checkup with surgeon`
 
+* `health /date:03-04-2024 /description:review checkup with surgeon /time:14:15 /h:appointment`
+
 Expected Output:
+
 ```
 health /h:appointment /date:03-04-2024 /time:14:15 /description:review checkup with surgeon
 ____________________________________________________________
@@ -242,16 +248,18 @@ ____________________________________________________________
 
 ###### [Back to table of contents](#table-of-contents)
 
+---
+
 ### History
 
-Prints all tracked instances of `run`, `gym`, `bmi` or `period`.
+Prints all tracked instances of `run`, `gym`, `bmi`, `period`, or `appointment`.
 
-Format: `history /view:TYPE`
+Format: `history /item:TYPE`
 
-* `TYPE` is either `run`, `gym`, `bmi` or `period`.
+* `TYPE` is either `run`, `gym`, `bmi`, `period`, or `appointment`.
 
 Examples:
-* `history /view:run`
+* `history /item:run`
 
 Expected Output:
 
@@ -269,19 +277,19 @@ ____________________________________________________________
 
 ### Latest
 
-Prints the latest instance of `run`, `gym`, `bmi` or `period`.
+Prints the latest instance of `run`, `gym`, `bmi`, `period`, or `appointment`.
 
-Format: `latest /view:TYPE`
+Format: `latest /item:TYPE`
 
-* `TYPE` is either `run`, `gym`, `bmi` or `period`.
+* `TYPE` is either `run`, `gym`, `bmi`, `period`, or `appointment`.
 
 Examples:
-* `latest /view:run`
+* `latest /item:run`
 
 Expected Output:
 
 ```
-latest /view:period
+latest /item:period
 ____________________________________________________________
 Period Start: 2022-03-09 Period End: 2022-03-16
 Period Length: 8 days
@@ -303,12 +311,14 @@ help
 ____________________________________________________________
 Commands List:
 
-new /e:run /d:DISTANCE /t:TIME [/date:DATE] - Add a new run
-new /e:gym /n:NUMBER_OF_STATIONS [/date:DATE] - Add a new gym workout
+workout /e:run /d:DISTANCE /t:TIME [/date:DATE] - Add a new run
+workout /e:gym /n:NUMBER_OF_STATIONS [/date:DATE] - Add a new gym workout
 health /h:bmi /height:HEIGHT /weight:WEIGHT /date:DATE - Add new BMI data
 health /h:period /start:START_DATE /end:END_DATE - Add new period data
-history /view:[run/gym/bmi/period] - Show history of runs/gyms/bmi records/periods tracked
-latest /view:[run/gym/bmi/period] - Show history of runs/gyms/bmi records/periods tracked
+health /h:prediction - Predicts next period's start date
+health /h:appointment /date:DATE /time:TIME /description:DESCRIPTION - Add new appointment data
+history /item:[run/gym/bmi/period] - Shows history of runs/gyms/bmi records/periods tracked/appointment records
+latest /item:[run/gym/bmi/period] - Shows latest entry of runs/gyms/bmi records/periods tracked/appointment records
 help - Show this help message
 exit - Exit the program
 ____________________________________________________________
@@ -409,15 +419,17 @@ and missing data. You may choose to re-enter the corrupted data to be saved agai
 
 ## Command Summary
 
-| Action       | Format, Examples                                                                                                                     |
-|--------------|--------------------------------------------------------------------------------------------------------------------------------------|
-| Print help   | `help`                                                                                                                               |
-| Add new run  | `new /e:run /d:DISTANCE /t:TIME [/date:DATE]`<br/>Example: `new /e:run /d:5.24 /t:25:23 /date:19-03-2024`                            |
-| Add gym      | `new /e:gym /n:NUMBER_OF_STATIONS`<br/>Example:`new /e:gym /n:4`                                                                     |
-| Track BMI    | `health /h:bmi /height:HEIGHT /weight:WEIGHT /date:DATE` <br/>Example:   `health /h:bmi /height:1.70 /weight:75.42 /date:19-03-2024` |
-| Track Period | `health /h:period /start:START_DATE /end:END_DATE` <br/>Example:   `health /h:period /start:09-03-2022 /end:16-03-2022`              |
-| View history | `history /view:TYPE` <br/>Example:   `history /view:run`                                                                             |
-| View latest  | `latest /view:TYPE` <br/>Example:   `latest /view:bmi`                                                                               |
-| Exit bot     | `exit`                                                                                                                               |
+| Action              | Format, Examples                                                                                                                                                                     |
+|---------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Print help          | `help`                                                                                                                                                                               |
+| Add new run         | `new /e:run /d:DISTANCE /t:TIME [/date:DATE]`<br/>Example: `new /e:run /d:5.24 /t:25:23 /date:19-03-2024`                                                                            |
+| Add gym             | `new /e:gym /n:NUMBER_OF_STATIONS`<br/>Example:`new /e:gym /n:4`                                                                                                                     |
+| Track BMI           | `health /h:bmi /height:HEIGHT /weight:WEIGHT /date:DATE` <br/>Example:   `health /h:bmi /height:1.70 /weight:75.42 /date:19-03-2024`                                                 |
+| Track Period        | `health /h:period /start:START_DATE /end:END_DATE` <br/>Example:   `health /h:period /start:09-03-2022 /end:16-03-2022`                                                              |
+| Track Appointment   | `health /h:appointment /date:DATE /time:TIME /description:DESCRIPTION` <br/>Example:   `health /h:appointment /date:03-04-2024 /time:14:15 /description:review checkup with surgeon` |
+| Predict next period | `health /h:prediction`                                                                                                                                                               |
+| View history        | `history /item:TYPE` <br/>Example:   `history /item:run`                                                                                                                             |
+| View latest         | `latest /item:TYPE` <br/>Example:   `latest /item:bmi`                                                                                                                               |
+| Exit bot            | `exit`                                                                                                                                                                               |
 
 ###### [Back to table of contents](#table-of-contents)

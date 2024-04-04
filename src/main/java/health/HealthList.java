@@ -15,26 +15,27 @@ public class HealthList extends ArrayList<Health> {
 
     /**
      * LogFile for logging health-related activities.
-     * */
+     */
     static LogFile logFile = LogFile.getInstance();
 
     /**
      * The list of Bmi records.
-     * */
+     */
     private static final ArrayList<Bmi> BMIS = new ArrayList<>();
 
     /**
      * The list of Appointment records.
-     * */
+     */
     private static final ArrayList<Appointment> APPOINTMENTS = new ArrayList<>();
 
     /**
      * The list of Period records.
-     * */
+     */
     private static final ArrayList<Period> PERIODS = new ArrayList<>();
 
 
     //@@author j013n3
+
     /**
      * Adds a Bmi to the list of Bmis whenever addBmi is called.
      *
@@ -47,6 +48,7 @@ public class HealthList extends ArrayList<Health> {
     }
 
     //@@author syj02
+
     /**
      * Prints the most recently added Bmi object from bmis list.
      *
@@ -107,6 +109,7 @@ public class HealthList extends ArrayList<Health> {
     }
 
     //@@author j013n3
+
     /**
      * Prints all Period entries tracked.
      *
@@ -143,7 +146,7 @@ public class HealthList extends ArrayList<Health> {
      *
      * @return The periods array list.
      */
-    public static ArrayList<Period> getPeriods(){
+    public static ArrayList<Period> getPeriods() {
         return PERIODS;
     }
 
@@ -152,7 +155,7 @@ public class HealthList extends ArrayList<Health> {
      *
      * @return The bmis array list.
      */
-    public static ArrayList<Bmi> getBmis(){
+    public static ArrayList<Bmi> getBmis() {
         return BMIS;
     }
 
@@ -161,7 +164,7 @@ public class HealthList extends ArrayList<Health> {
      *
      * @return The appointments array list.
      */
-    public static ArrayList<Appointment> getAppointments(){
+    public static ArrayList<Appointment> getAppointments() {
         return APPOINTMENTS;
     }
 
@@ -201,8 +204,10 @@ public class HealthList extends ArrayList<Health> {
     }
 
     //@@l5_z
+
     /**
      * Clears the Period, Bmi, and Appointment array lists.
+     *
      * @throws AssertionError If periods, bmis, and appointments lists are not empty.
      */
     public static void clearHealthLists() {
@@ -244,8 +249,8 @@ public class HealthList extends ArrayList<Health> {
         }
         Bmi deletedBmi = BMIS.get(index);
         System.out.printf((HealthConstant.LOG_DELETE_BMI_FORMAT) + "%n",
-                        deletedBmi.bmiValue,
-                        deletedBmi.date);
+                deletedBmi.bmiValue,
+                deletedBmi.date);
         BMIS.remove(index);
         LogFile.writeLog(HealthConstant.BMI_REMOVED_MESSAGE_PREFIX + index, false);
     }
@@ -269,6 +274,7 @@ public class HealthList extends ArrayList<Health> {
     }
 
     //@@author syj_02
+
     /**
      * Adds an Appointment to the list of Appointments whenever addAppointment is called.
      * Sorts all Appointment objects in the list by date and time of the appointments with
@@ -310,10 +316,14 @@ public class HealthList extends ArrayList<Health> {
      *
      * @throws AssertionError If appointments list is empty.
      */
-    public static void showAppointmentList() {
+    public static void showAppointmentList() throws CustomExceptions.OutOfBounds {
+        if (APPOINTMENTS.isEmpty()) {
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_APPOINTMENT_EMPTY_ERROR);
+        }
         assert !APPOINTMENTS.isEmpty() : ErrorConstant.EMPTY_APPOINTMENT_LIST_ERROR;
         int index = 1;
-        for (Appointment appointment: APPOINTMENTS) {
+        System.out.println(HealthConstant.APPOINTMENT_HISTORY_HEADER);
+        for (Appointment appointment : APPOINTMENTS) {
             System.out.print(index + ". ");
             System.out.println(appointment);
             index += 1;
@@ -325,8 +335,11 @@ public class HealthList extends ArrayList<Health> {
      *
      * @throws AssertionError If Appointments list is empty.
      */
-    public static void showLatestAppointment() {
-        assert !APPOINTMENTS.isEmpty(): ErrorConstant.EMPTY_APPOINTMENT_LIST_ERROR;
+    public static void showLatestAppointment() throws CustomExceptions.OutOfBounds {
+        if (APPOINTMENTS.isEmpty()) {
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_APPOINTMENT_EMPTY_ERROR);
+        }
+        assert !APPOINTMENTS.isEmpty() : ErrorConstant.EMPTY_APPOINTMENT_LIST_ERROR;
         int currentIndex = APPOINTMENTS.size();
         System.out.println(APPOINTMENTS.get(currentIndex - 1));
     }
