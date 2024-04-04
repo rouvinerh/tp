@@ -71,17 +71,17 @@ class OutputTest {
      */
     @Test
     void printHistory_runsOnly_expectAllRunsPrinted() throws CustomExceptions.InvalidInput {
-        Run run1 = new Run("40:10", "10.3", "15-03-2024");
-        Run run2 = new Run("01:59:10", "15.3");
+        new Run("40:10", "10.3", "15-03-2024");
+        new Run("01:59:10", "15.3");
         String expected = UiConstant.PARTITION_LINE +
                 System.lineSeparator() +
                 "Your run history:" +
                 System.lineSeparator() +
-                String.format(WorkoutConstant.RUN_HEADER_INDEX_FORMAT) +
+                "Index\t\tType\tTime\t\tDistance\tPace\t\tDate" +
                 System.lineSeparator() +
-                String.format(WorkoutConstant.RUN_DATA_INDEX_FORMAT, 1, run1) +
+                "1.\t\t\trun \t40:10\t\t10.3\t\t3:54/km\t\t2024-03-15" +
                 System.lineSeparator() +
-                String.format(WorkoutConstant.RUN_DATA_INDEX_FORMAT, 2, run2) +
+                "2.\t\t\trun \t1:59:10\t\t15.3\t\t7:47/km\t\tNA" +
                 System.lineSeparator() +
                 UiConstant.PARTITION_LINE +
                 System.lineSeparator();
@@ -105,14 +105,14 @@ class OutputTest {
      */
     @Test
     void printLatestRun_oneRun_expectOneRunPrinted() throws CustomExceptions.InvalidInput {
-        Run newRun = new Run("40:10", "10.3");
+        new Run("40:10", "10.3");
         String expected = UiConstant.PARTITION_LINE +
                 System.lineSeparator() +
                 "Your latest run:" +
                 System.lineSeparator() +
-                String.format(WorkoutConstant.RUN_HEADER_INDEX_FORMAT) +
+                "Index\t\tType\tTime\t\tDistance\tPace\t\tDate" +
                 System.lineSeparator() +
-                String.format(WorkoutConstant.RUN_DATA_INDEX_FORMAT, 1, newRun) +
+                "1.\t\t\trun \t40:10\t\t10.3\t\t3:54/km\t\tNA" +
                 System.lineSeparator() +
                 UiConstant.PARTITION_LINE +
                 System.lineSeparator();

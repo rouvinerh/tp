@@ -55,15 +55,9 @@ public class Run extends Workout {
      */
     public String getTimes() {
         if (isHourPresent) {
-            return String.format(WorkoutConstant.TWO_DIGIT_PLACE_FORMAT, times[0])
-                    + ":"
-                    + String.format(WorkoutConstant.TWO_DIGIT_PLACE_FORMAT, times[1])
-                    + ":"
-                    + String.format(WorkoutConstant.TWO_DIGIT_PLACE_FORMAT, times[2]);
+            return times[0] + ":" + times[1] + ":" + times[2];
         } else {
-            return String.format(WorkoutConstant.TWO_DIGIT_PLACE_FORMAT, times[0])
-                    + ":"
-                    + String.format(WorkoutConstant.TWO_DIGIT_PLACE_FORMAT, times[1]);
+            return times[0] + ":" + times[1];
         }
     }
 
@@ -72,8 +66,8 @@ public class Run extends Workout {
      *
      * @return Run distance.
      */
-    public String getDistance() {
-        return String.format(WorkoutConstant.TWO_DECIMAL_PLACE_FORMAT, distance);
+    public double getDistance() {
+        return distance;
     }
 
     /**
@@ -92,10 +86,6 @@ public class Run extends Workout {
 
     public void setDate(LocalDate date) {
         this.date = date;
-    }
-
-    public boolean isHourPresent() {
-        return isHourPresent;
     }
 
     /**
