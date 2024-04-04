@@ -56,8 +56,7 @@ The purpose of this guide is to provide an explanation for all the functions and
 
 The application follows an Object-Oriented Design approach, with separate classes for handling different components of the application, such as user input, output, exercise logging, and health data management.
 
-
-![ArchitectureDiagram](![img.png](img/architecture_diagram.png)
+![Architecture Diagram](img/architecture_diagram.png)
 
 The **_Architecture Diagram_** given above explains the high-level design of the PulsePilot.
 
@@ -79,8 +78,6 @@ The application can be further broken down into the following packages:
 ### UI Package
 
 The `UI` package contains `Handler` and `Output`, which are responsible for handling user input and printing of output fo the screen respectively.
-
-![UI Package Class Diagram](img/ui_class_diagram.png)
 
 #### Handler
 
@@ -111,8 +108,6 @@ The `Output` class is responsible for printing messages, prompts, errors and oth
 4. `GymStation` stores the name of the gym station, number of sets, and an array of `GymSet` objects.
 5. `GymSet` stores the weight and repetitions for a particular set.
 6. `WorkoutList` is a class that stores an array list different `Workout` objects using ArrayList.
-
-![Workout Package Class Diagram](img/workout_class_diagram.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -147,7 +142,7 @@ The `Output` class is responsible for printing messages, prompts, errors and oth
 ###### [Back to table of contents](#table-of-contents)
 
 ### Health Package
-![Class Diagram for Health Package](img/health_package.png)
+
 The Health component consists of `Health`, `HealthList`, `Bmi`, `Period`, and `Appointment`.
 
 1. `Health` class stores date.
@@ -357,6 +352,10 @@ This is the sequence diagram for adding a run:
 
 ![Run Sequence Diagram](img/run_sequence_diagram.png)
 
+`validateRunInput` uses the `Validation` class to check the parameters specified when adding a Run. It follows the sequence diagram below:
+
+![Run Validation Sequence Diagram](img/run_validation_sequence_diagram.png)
+
 ###### [Back to table of contents](#table-of-contents)
 
 #### Add Gym
@@ -469,6 +468,7 @@ The sequence diagram below shows how a `Bmi` object is added to `BMIS`.
 6. Upon successful validation, a new `Bmi` object is created based on `bmiDetails` with `bmiValue` obtained from `Bmi.calculateBmiValue()` and the corresponding BMI category obtained from `Bmi.getBmiCategory()`.
 7. `HealthList.addBmi()` adds the newly created `Bmi` into `BMIS`.
 8. `Output.printAddBmi()` prints `Bmi` string containing height, weight, date, BMI and BMI category to user.
+
 ![Sequence Diagram for Add Bmi](img/bmi_sequence.png)
 
 ###### [Back to table of contents](#table-of-contents)
