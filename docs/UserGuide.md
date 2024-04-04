@@ -420,8 +420,8 @@ The purpose of this is to show all workouts (runs and gyms) in the order that it
 | Action       | Format, Examples                                                                                                                     |
 |--------------|--------------------------------------------------------------------------------------------------------------------------------------|
 | Print help   | `help`                                                                                                                               |
-| Add new run  | `new /e:run /d:DISTANCE /t:TIME [/date:DATE]`<br/>Example: `new /e:run /d:5.24 /t:25:23 /date:19-03-2024`                            |
-| Add gym      | `new /e:gym /n:NUMBER_OF_STATIONS`<br/>Example:`new /e:gym /n:4`                                                                     |
+| Add new run  | `workout /e:run /d:DISTANCE /t:TIME [/date:DATE]`<br/>Example: `new /e:run /d:5.24 /t:25:23 /date:19-03-2024`                            |
+| Add gym      | `workout /e:gym /n:NUMBER_OF_STATIONS [/date:DATE]`<br/>Example:`new /e:gym /n:4`                                                                     |
 | Track BMI    | `health /h:bmi /height:HEIGHT /weight:WEIGHT /date:DATE` <br/>Example:   `health /h:bmi /height:1.70 /weight:75.42 /date:19-03-2024` |
 | Track Period | `health /h:period /start:START_DATE /end:END_DATE` <br/>Example:   `health /h:period /start:09-03-2022 /end:16-03-2022`              |
 | View history | `history /item:TYPE` <br/>Example:   `history /item:run`                                                                             |
