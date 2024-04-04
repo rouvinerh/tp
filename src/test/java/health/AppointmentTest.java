@@ -38,7 +38,9 @@ public class AppointmentTest {
         HealthList.addAppointment(secondAppointment);
         HealthList.addAppointment(thirdAppointment);
 
-        String expected = "1. On "
+        String expected = "Your Appointment history:"
+                + System.lineSeparator()
+                + "1. On "
                 + thirdAppointment.getDate()
                 + " at "
                 + thirdAppointment.getTime()
@@ -80,6 +82,8 @@ public class AppointmentTest {
                 + secondAppointment.getTime()
                 + ": "
                 + secondAppointment.getDescription()
+                + System.lineSeparator()
+                + "Your Appointment history:"
                 + System.lineSeparator()
                 + "1. On "
                 + thirdAppointment.getDate()

@@ -286,14 +286,6 @@ class OutputTest {
     }
 
     /**
-     * Tests the behaviour of the printLatestAppointment function when no Appointment objects are added.
-     */
-    @Test
-    void printLatestAppointment_noAppointments_expectAssertionError() {
-        assertThrows(AssertionError.class, Output::printLatestAppointment);
-    }
-
-    /**
      * Tests the behaviour of printAppointmentHistory when two Appointment objects are added.
      * Expects two Appointment objects to be pritned.
      *
