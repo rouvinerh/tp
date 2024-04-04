@@ -56,8 +56,7 @@ The purpose of this guide is to provide an explanation for all the functions and
 
 The application follows an Object-Oriented Design approach, with separate classes for handling different components of the application, such as user input, output, exercise logging, and health data management.
 
-
-![ArchitectureDiagram](![img.png](img/architecture_diagram.png)
+![Architecture Diagram](img/architecture_diagram.png)
 
 The **_Architecture Diagram_** given above explains the high-level design of the PulsePilot.
 
@@ -442,7 +441,9 @@ The sequence diagram below illustrates the process of period prediction.
 6. `HealthList.predictNextPeriodStartDate()` gets the predicted start date by calling `Period.nextCyclePrediction()`.
 7. `Period.getLastThreeCycleLengths()` is called to find the sum of the latest three cycle lengths before returning to `Period.nextCyclePrediction()` for necessary calculation to obtain the predicted start date.
 8. The `Parser` class calls `Period.printNextCyclePrediction()` with the predicted start date as a parameter. This method prints a string indicating the number of days until the predicted start date of the next period, or how many days late the period is if the current date is after the predicted start date.
-![Sequence Diagram for Period Prediction](img/period_sequence.png)
+
+![Period Sequence Diagram](img/period_sequence.png)
+![Period Validation Diagram](img/period_validation.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -498,7 +499,8 @@ HEALTH /h:appointment /date:[date] /time:[time] /description:[description]
 
 6. The `Appointment` object is passed to `Output.printAddAppointment()` and a message acknowledging the successful adding is printed to the screen.
 
-![AddAppointment](img/appointment_sequence.png)
+![Appointment Sequence Diagram](img/appointment_sequence.png)
+![Appointment Validation Diagram](img/appointment_validation.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -517,7 +519,6 @@ The sequence diagram below illustrates the process of period prediction.
 6. `HealthList.predictNextPeriodStartDate()` gets the predicted start date by calling `Period.nextCyclePrediction()`.
 7. `Period.getLastThreeCycleLengths()` is called to find the sum of the latest three cycle lengths before returning to `Period.nextCyclePrediction()` for necessary calculation to obtain the predicted start date.
 8. The `Parser` class calls `Period.printNextCyclePrediction()` with the predicted start date as a parameter. This method prints a string indicating the number of days until the predicted start date of the next period, or how many days late the period is if the current date is after the predicted start date.
-![Sequence Diagram for Add Period](img/period_prediction.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
