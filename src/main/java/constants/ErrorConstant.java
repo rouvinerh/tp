@@ -1,5 +1,9 @@
 package constants;
 
+/**
+ * ErrorConstant class contains constants for various types of errors that may occur in the application.
+ * The constants are used to provide descriptive error messages to the user when errors occur.
+ */
 public class ErrorConstant {
 
     // General Errors
