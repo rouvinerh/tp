@@ -459,7 +459,7 @@ Yes, PulsePilot works perfectly offline. All data are stored on your device for 
 
 | Action        | Format, Examples                                                                                      |
 |---------------|--------------------------------------------------------------------------------------------------------|
-| Print help    | help                                                                                                   |
+| Print help    | `help`                                                                                                   |
 | Add new run   | `workout /e:run /d:DISTANCE /t:TIME [/date:DATE]` Example: `workout /e:run /d:5.24 /t:25:23 /date:19-03-2024` |
 | Add gym       | `workout /e:gym /n:NUMBER_OF_STATIONS [/date:DATE]` Example: `workout /e:gym /n:4`                       |
 | Track BMI     | `health /h:bmi /height:HEIGHT /weight:WEIGHT /date:DATE` Example: `health /h:bmi /height:1.70 /weight:75.42 /date:19-03-2024` |
