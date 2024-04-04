@@ -130,6 +130,8 @@ public class DataFile {
                 } else {
                     LogFile.writeLog(ErrorConstant.DATA_INTEGRITY_ERROR, true);
                     Output.printException(ErrorConstant.DATA_INTEGRITY_ERROR);
+                    hashFile.delete();
+                    dataFile.delete();
                     System.exit(1);
                 }
             } else if (!dataFile.exists() && !hashFile.exists()) {
@@ -166,8 +168,8 @@ public class DataFile {
         return sb.toString();
     }
 
-    private static void writeHashToFile(File hashFile, String hash) throws IOException {
-        FileOutputStream fos = new FileOutputStream(hashFile);
+    private static void writeHashToFile(FileWriter hashFile, String hash) throws IOException {
+        FileOutputStream fos = new FileOutputStream(UiConstant.HASH_FILE_PATH);
         fos.write(hash.getBytes());
         fos.close();
     }
@@ -315,6 +317,18 @@ public class DataFile {
             dataFile.close();
 
         } catch (IOException e) {
+            throw new CustomExceptions.FileWriteError(ErrorConstant.SAVE_ERROR);
+        }
+
+        try (FileWriter hashFile = new FileWriter(UiConstant.HASH_FILE_PATH)) {
+            LogFile.writeLog("Attempting to write hash", false);
+            File dataFile = UiConstant.SAVE_FILE;
+            writeHashToFile(hashFile, generateFileHash(dataFile));
+
+            LogFile.writeLog("Write end", false);
+            hashFile.close();
+
+        } catch (IOException | NoSuchAlgorithmException e) {
             throw new CustomExceptions.FileWriteError(ErrorConstant.SAVE_ERROR);
         }
     }
