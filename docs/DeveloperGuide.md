@@ -56,7 +56,12 @@ The purpose of this guide is to provide an explanation for all the functions and
 
 The application follows an Object-Oriented Design approach, with separate classes for handling different components of the application, such as user input, output, exercise logging, and health data management.
 
+<<<<<<< HEAD
 ![Architecture Diagram](img/architecture_diagram.png)
+=======
+
+![ArchitectureDiagram](img/architecture_diagram.png)
+>>>>>>> f712869cb298d4ac1f4d6178e7eaeed520cb1919
 
 The **_Architecture Diagram_** given above explains the high-level design of the PulsePilot.
 
@@ -391,10 +396,11 @@ Example of Gym Station:
 > NOTE: The number of sets entered matches the number of weights added. If 4 sets have been done, the bot expects 4 positive inters separated by commas as the `weights` input.
 
 ##### Gym Sequence
-
-![Gym Sequence Diagram](./img/gym_sequence_diagram.jpg)
-
-
+Below is the sequence diagram for adding a gym and the reference diagram
+<div style="display: flex; ">
+    <img src="./img/gym_overall_sequence_diagram.png" alt="Image 1" style="width: 45%;">
+    <img src="./img/gym_parse_gym_station_input_sequence_diagram.png" alt="Par" style="width: 55%;">
+</div>
 1. User input is passed to `Handler.processInput()`, which determines the command used is `workout`, thus passing the input to `Handler.handleWorkout()`.
 
 2. `Handler.handleWorkout()` determines the type of exercise which is `gym`, and calls the `Parser.parseGymInput()` method to process the user's input.
@@ -420,6 +426,8 @@ Example of Gym Station:
 9. `Output.printAddGym()` is then called to print the message acknowledging the successful adding of a new `Gym` object.
 
 ###### [Back to table of contents](#table-of-contents)
+
+--- 
 
 ### Health
 
