@@ -228,14 +228,6 @@ class OutputTest {
     }
 
     /**
-     * Tests the behaviour of the printLatestBmi function when no Bmi objects are added.
-     */
-    @Test
-    void printLatestBmi_noBmi_expectAssertionError() {
-        assertThrows(AssertionError.class, Output::printLatestBmi);
-    }
-
-    /**
      * Tests the behaviour of the printLatestBmi function when two Period objects are added.
      */
     @Test
@@ -255,14 +247,6 @@ class OutputTest {
                 System.lineSeparator();
 
         assertEquals(expected, outContent.toString());
-    }
-
-    /**
-     * Tests the behaviour of the printLatestBmi function when no Period objects are added.
-     */
-    @Test
-    void printLatestPeriod_noPeriod_expectAssertionError() {
-        assertThrows(AssertionError.class, Output::printLatestPeriod);
     }
 
     /**

@@ -11,12 +11,12 @@ public class ErrorConstant {
     public static final String SAVE_ERROR = "File save failed. Write error occurred:";
     public static final String LOAD_ERROR = "File read error:" + "Error at ";
     public static final String CREATE_FILE_ERROR = "Unable to create file.";
-    public static final String CORRUPT_ERROR = "File is corrupted! Ceasing any further data imports..." +
-            System.lineSeparator() + "Consider deleting 'pulsepilot_data.txt' and trying again!" +
+    public static final String CORRUPT_ERROR = "File is corrupted!" +
+            System.lineSeparator() + "Deleting 'pulsepilot_data.txt' and 'pulsepilot_hash.txt'. Try running again!" +
             System.lineSeparator() + UiConstant.PARTITION_LINE;
-    public static final String PARTIAL_CORRUPT_ERROR = "File is corrupted! Ceasing any further data imports..." +
-            System.lineSeparator() + "Some data may have been recovered. PulsePilot shall resume." +
-            System.lineSeparator() + UiConstant.PARTITION_LINE;
+    public static final String DATA_INTEGRITY_ERROR = "Data file integrity compromised. Exiting.";
+    public static final String MISSING_INTEGRITY_ERROR = "Key files for integrity missing. Exiting.";
+    public static final String HASH_ERROR = "Error occurred while processing file hash.";
 
     // Storage Error for Gym
     public static final String LOAD_GYM_FORMAT_ERROR = LOAD_ERROR + "Format of gym entry is incorrect/corrupted";
@@ -55,8 +55,13 @@ public class ErrorConstant {
     public static final String HISTORY_GYM_EMPTY_ERROR = "No gyms found! You need to add a gym first!";
     public static final String HISTORY_WORKOUTS_EMPTY_ERROR = "No workouts found! You need to add " +
             "either a run or a gym first";
+<<<<<<< HEAD
     public static final String HISTORY_APPOINTMENT_EMPTY_ERROR = "No appointments found! You need to add an " +
             "appointment first";
+=======
+    public static final String HISTORY_BMI_EMPTY_ERROR = "No bmis found! You need to add a bmi first!";
+    public static final String HISTORY_PERIOD_EMPTY_ERROR = "No periods found! You need to add a period first!";
+>>>>>>> 5362bb0017e94109c19720d82b563e6586db503c
 
     // RUN ERRORS
     public static final String INSUFFICIENT_RUN_PARAMETERS_ERROR = "Insufficient parameters for run! "

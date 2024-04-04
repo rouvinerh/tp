@@ -8,6 +8,10 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import health.Appointment;
 import health.Bmi;
@@ -23,9 +27,15 @@ import utility.CustomExceptions;
 import constants.UiConstant;
 import utility.Filters.DataType;
 
+
 /**
  * Represents a DataFile object used to read and write data stored in PulsePilot to a file.
+ *
+ * This class handles the reading and writing of various data related to PulsePilot, including user's name,
+ * health data like BMI, appointments, periods, and workout data like runs and gym sessions.
+ * It provides methods to load, save, and process different types of data as well as prevent tampering.
  */
+
 public class DataFile {
 
     public static String userName = null;
@@ -52,10 +62,38 @@ public class DataFile {
     }
 
     /**
-     * Checks if data file already exists. If it does, log it. Else, create the file and log the event.
+     * Generates the SHA-256 hash of the pulsepilot_data.txt file.
      *
-     * @param dataFile Represents the data file.
-     * @return Integer representing a found data file, 0, or not found, 1
+     * @param file The file for which to generate the hash.
+     * @return A String representing the SHA-256 hash of the pulsepilot_data.txt file.
+     * @throws NoSuchAlgorithmException If the SHA-256 algorithm is not available.
+     * @throws IOException              If an I/O error occurs while reading the file.
+     */
+    private static String generateFileHash(File file) throws NoSuchAlgorithmException, IOException {
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        FileInputStream fis = new FileInputStream(file);
+        byte[] dataBytes = new byte[1024];
+
+        int bytesRead;
+        while ((bytesRead = fis.read(dataBytes)) != -1) {
+            md.update(dataBytes, 0, bytesRead);
+        }
+
+        byte[] digest = md.digest();
+        StringBuilder sb = new StringBuilder();
+        for (byte b : digest) {
+            sb.append(String.format("%02x", b & 0xff));
+        }
+
+        fis.close();
+        return sb.toString();
+    }
+
+    /**
+     * Checks if the data file already exists. If it does, logs it. Else, creates the file and logs the event.
+     *
+     * @param dataFile The data file to check.
+     * @return An integer representing whether the file was found (0) or not found (1).
      * @throws CustomExceptions.FileCreateError If there is an error creating the data file.
      */
     public static int verifyIntegrity(File dataFile) throws CustomExceptions.FileCreateError {
@@ -73,20 +111,67 @@ public class DataFile {
     }
 
     /**
-     * Initialises the data file to be used. Function exits if file cannot be created.
+     * Initializes the data file to be used. The function exits if the file cannot be created.
+     *
+     * @return An integer representing whether the file was found (0) or not found (1).
      */
     public static int loadDataFile() {
         int status = UiConstant.FILE_NOT_FOUND;
         try {
-            status = verifyIntegrity(UiConstant.SAVE_FILE);
+            File dataFile = UiConstant.SAVE_FILE;
+            File hashFile = new File(UiConstant.HASH_FILE_PATH);
+
+            if (dataFile.exists() && hashFile.exists()) {
+                String expectedHash = generateFileHash(dataFile);
+                String actualHash = readHashFromFile(hashFile);
+
+                if (expectedHash.equals(actualHash)) {
+                    status = verifyIntegrity(dataFile);
+                } else {
+                    LogFile.writeLog(ErrorConstant.DATA_INTEGRITY_ERROR, true);
+                    Output.printException(ErrorConstant.DATA_INTEGRITY_ERROR);
+                    hashFile.delete();
+                    dataFile.delete();
+                    System.exit(1);
+                }
+            } else if (!dataFile.exists() && !hashFile.exists()) {
+                status = verifyIntegrity(dataFile);
+            } else {
+                LogFile.writeLog(ErrorConstant.MISSING_INTEGRITY_ERROR, true);
+                Output.printException(ErrorConstant.MISSING_INTEGRITY_ERROR);
+                hashFile.delete();
+                dataFile.delete();
+                System.exit(1);
+            }
         } catch (CustomExceptions.FileCreateError e) {
             System.err.println(ErrorConstant.CREATE_FILE_ERROR);
             LogFile.writeLog(ErrorConstant.CREATE_FILE_ERROR, true);
             System.exit(1);
+        } catch (IOException | NoSuchAlgorithmException e) {
+            LogFile.writeLog("Error occurred while processing file hash: " + e.getMessage(), true);
+            Output.printException(ErrorConstant.HASH_ERROR);
+            System.exit(1);
         }
+
         Path dataFilePath = Path.of(UiConstant.DATA_FILE_PATH);
         assert Files.exists(dataFilePath) : "Data file does not exist.";
         return status;
+    }
+
+    private static String readHashFromFile(File hashFile) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        Scanner scanner = new Scanner(hashFile);
+        while (scanner.hasNextLine()) {
+            sb.append(scanner.nextLine());
+        }
+        scanner.close();
+        return sb.toString();
+    }
+
+    private static void writeHashToFile(FileWriter hashFile, String hash) throws IOException {
+        FileOutputStream fos = new FileOutputStream(UiConstant.HASH_FILE_PATH);
+        fos.write(hash.getBytes());
+        fos.close();
     }
 
     /**
@@ -99,18 +184,16 @@ public class DataFile {
             LogFile.writeLog("Read begins", false);
             try {
                 String [] input = readFile.nextLine().split(UiConstant.SPLIT_BY_COLON);
-                String dataType = input[UiConstant.DATA_TYPE_INDEX].trim();
-                if (dataType.equalsIgnoreCase(UiConstant.NAME_LABEL)) {
-                    String name = input[UiConstant.NAME_INDEX].trim();
-                    processName(name);
-                } else {
-                    Output.printException(ErrorConstant.CORRUPT_ERROR);
-                    System.exit(1);
-                }
+                String name = input[UiConstant.NAME_INDEX].trim();
+                processName(name);
 
             } catch (Exception e) {
                 LogFile.writeLog("Data file is missing name, exiting." + e, true);
                 Output.printException(ErrorConstant.CORRUPT_ERROR);
+                File dataFile = UiConstant.SAVE_FILE;
+                File hashFile = new File(UiConstant.HASH_FILE_PATH);
+                dataFile.delete();
+                hashFile.delete();
                 System.exit(1);
             }
 
@@ -149,8 +232,13 @@ public class DataFile {
                 lineNumberCount += 1;
             }
         } catch (Exception e) {
-            LogFile.writeLog("Invalid item read at line: " + (lineNumberCount + 1) + "! " + e, true);
-            throw new CustomExceptions.FileReadError(ErrorConstant.PARTIAL_CORRUPT_ERROR);
+            LogFile.writeLog("Data file is corrupted, exiting." + e, true);
+            Output.printException(ErrorConstant.CORRUPT_ERROR);
+            File dataFile = UiConstant.SAVE_FILE;
+            File hashFile = new File(UiConstant.HASH_FILE_PATH);
+            dataFile.delete();
+            hashFile.delete();
+            System.exit(1);
         }
     }
     public static void processName(String name){
@@ -229,6 +317,18 @@ public class DataFile {
             dataFile.close();
 
         } catch (IOException e) {
+            throw new CustomExceptions.FileWriteError(ErrorConstant.SAVE_ERROR);
+        }
+
+        try (FileWriter hashFile = new FileWriter(UiConstant.HASH_FILE_PATH)) {
+            LogFile.writeLog("Attempting to write hash", false);
+            File dataFile = UiConstant.SAVE_FILE;
+            writeHashToFile(hashFile, generateFileHash(dataFile));
+
+            LogFile.writeLog("Write end", false);
+            hashFile.close();
+
+        } catch (IOException | NoSuchAlgorithmException e) {
             throw new CustomExceptions.FileWriteError(ErrorConstant.SAVE_ERROR);
         }
     }
@@ -319,7 +419,7 @@ public class DataFile {
                 } else if (workoutEntry instanceof Gym) {
                     Gym gymEntry = (Gym) workoutEntry;
                     String gymString = gymEntry.toFileString();
-                    dataFile.write(gymString);
+                    dataFile.write(gymString + System.lineSeparator());
                 }
             }
         }

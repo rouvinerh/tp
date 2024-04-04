@@ -54,7 +54,10 @@ public class HealthList extends ArrayList<Health> {
      *
      * @throws AssertionError If bmis list is empty.
      */
-    public static void showCurrentBmi() {
+    public static void showCurrentBmi() throws CustomExceptions.OutOfBounds {
+        if (BMIS.isEmpty()) {
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_BMI_EMPTY_ERROR);
+        }
         assert !BMIS.isEmpty() : ErrorConstant.EMPTY_BMI_LIST_ERROR;
         int currentIndex = BMIS.size();
         System.out.println(BMIS.get(currentIndex - 1));
@@ -65,8 +68,12 @@ public class HealthList extends ArrayList<Health> {
      *
      * @throws AssertionError If bmis list is empty.
      */
-    public static void showBmiHistory() {
+    public static void showBmiHistory() throws CustomExceptions.OutOfBounds {
+        if (BMIS.isEmpty()) {
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_BMI_EMPTY_ERROR);
+        }
         assert !BMIS.isEmpty() : ErrorConstant.EMPTY_BMI_LIST_ERROR;
+        System.out.println(HealthConstant.BMI_HISTORY_HEADER);
         for (Bmi bmi : BMIS) {
             System.out.println(bmi);
         }
@@ -92,7 +99,10 @@ public class HealthList extends ArrayList<Health> {
      *
      * @throws AssertionError If periods list is empty.
      */
-    public static void showLatestPeriod() {
+    public static void showLatestPeriod() throws CustomExceptions.OutOfBounds {
+        if (PERIODS.isEmpty()) {
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_PERIOD_EMPTY_ERROR);
+        }
         assert !PERIODS.isEmpty() : ErrorConstant.EMPTY_PERIOD_LIST_ERROR;
         int currentIndex = PERIODS.size();
         System.out.println(PERIODS.get(currentIndex - 1));
@@ -105,8 +115,12 @@ public class HealthList extends ArrayList<Health> {
      *
      * @throws AssertionError If periods list is empty.
      */
-    public static void showPeriodHistory() {
+    public static void showPeriodHistory() throws CustomExceptions.OutOfBounds {
+        if (PERIODS.isEmpty()) {
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_PERIOD_EMPTY_ERROR);
+        }
         assert !PERIODS.isEmpty() : ErrorConstant.EMPTY_PERIOD_LIST_ERROR;
+        System.out.println(HealthConstant.PERIOD_HISTORY_HEADER);
         for (Period period : PERIODS) {
             System.out.println(period);
         }
