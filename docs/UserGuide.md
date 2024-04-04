@@ -457,16 +457,16 @@ Yes, PulsePilot works perfectly offline. All data are stored on your device for 
 
 ## Command Summary
 
-| Action       | Format, Examples                                                                                                             |
-|--------------|------------------------------------------------------------------------------------------------------------------------------|
-| Print help   | `help`                                                                                                                       |
-| Add new run  | `workout /e:run /d:DISTANCE /t:TIME [/date:DATE]` Example: `workout /e:run /d:5.24 /t:25:23 /date:19-03-2024`                |
-| Add gym      | `workout /e:gym /n:NUMBER_OF_STATIONS [/date:DATE]` Example: `workout /e:gym /n:4`                                           |
-| Track BMI    | `health /h:bmi /height:HEIGHT /weight:WEIGHT /date:DATE` Example: health /h:bmi /height:1.70 /weight:75.42 /date:19-03-2024` |
-| Track Period | `health /h:period /start:START_DATE /end:END_DATE` Example: `health /h:period /start:09-03-2022 /end:16-03-2022`             |
-| View history | `history /item:TYPE` Example: `history /item:run`                                                                            |
-| View latest  | `latest /item:TYPE`  Example: `latest /item:bmi`                                                                             |
-| Exit bot     | `exit`                                                                                                                       |
+| Action        | Format, Examples                                                                                      |
+|---------------|--------------------------------------------------------------------------------------------------------|
+| Print help    | `help`                                                                                                   |
+| Add new run   | `workout /e:run /d:DISTANCE /t:TIME [/date:DATE]` Example: `workout /e:run /d:5.24 /t:25:23 /date:19-03-2024` |
+| Add gym       | `workout /e:gym /n:NUMBER_OF_STATIONS [/date:DATE]` Example: `workout /e:gym /n:4`                       |
+| Track BMI     | `health /h:bmi /height:HEIGHT /weight:WEIGHT /date:DATE` Example: `health /h:bmi /height:1.70 /weight:75.42 /date:19-03-2024` |
+| Track Period  | `health /h:period /start:START_DATE /end:END_DATE` Example: `health /h:period /start:09-03-2022 /end:16-03-2022` |
+| View history  | `history /item:TYPE` Example: `history /item:run`                                                          |
+| View latest   | `latest /item:TYPE` Example: `latest /item:bmi`                                                            |
+| Exit bot      | `exit`                                                                                                   |
 
 ###### [Back to table of contents](#table-of-contents)
 
