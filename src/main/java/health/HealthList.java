@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 /**
- * Represents the list of BMI objects stored.
+ * The HealthList class extends the ArrayList class.
+ * It contains the individual lists of Bmi objects, Appointment objects and Period objects, and the functionalities to
+ * add the objects to their respective lists, get the lists, and display the latest object and lists of objects.
  */
 public class HealthList extends ArrayList<Health> {
 
@@ -37,7 +39,7 @@ public class HealthList extends ArrayList<Health> {
     //@@author j013n3
 
     /**
-     * Adds a Bmi to the list of Bmis whenever addBmi is called.
+     * Adds a Bmi object to the bmis list.
      *
      * @param bmi Bmi object.
      * @throws AssertionError If Bmi object is null.
@@ -50,7 +52,7 @@ public class HealthList extends ArrayList<Health> {
     //@@author syj02
 
     /**
-     * Prints the most recently added Bmi object from bmis list.
+     * Prints the latest Bmi object added.
      *
      * @throws AssertionError If bmis list is empty.
      */
@@ -64,7 +66,7 @@ public class HealthList extends ArrayList<Health> {
     }
 
     /**
-     * Prints all the BMI entries recorded.
+     * Prints all the Bmi entries recorded.
      *
      * @throws AssertionError If bmis list is empty.
      */
@@ -80,7 +82,7 @@ public class HealthList extends ArrayList<Health> {
     }
 
     /**
-     * Adds a period to the ArrayList of periods.
+     * Adds a Period object to the periods list.
      *
      * @param period Period object to be added.
      * @throws AssertionError If period object is null.
@@ -95,7 +97,7 @@ public class HealthList extends ArrayList<Health> {
     }
 
     /**
-     * Prints the latest period object added.
+     * Prints the latest Period object added.
      *
      * @throws AssertionError If periods list is empty.
      */
@@ -127,7 +129,7 @@ public class HealthList extends ArrayList<Health> {
     }
 
     /**
-     * Prints the latest three Period objects from the periods list.
+     * Prints the last three Period objects added to the periods list.
      */
     public static void printLatestThreeCycles() {
         int size = PERIODS.size();
@@ -142,7 +144,7 @@ public class HealthList extends ArrayList<Health> {
     }
 
     /**
-     * Retrieves the list of periods recorded.
+     * Retrieves the list of periods recorded of ArrayList type.
      *
      * @return The periods array list.
      */
@@ -151,7 +153,7 @@ public class HealthList extends ArrayList<Health> {
     }
 
     /**
-     * Retrieves the list of bmis recorded.
+     * Retrieves the list of bmis recorded of ArrayList type.
      *
      * @return The bmis array list.
      */
@@ -160,7 +162,7 @@ public class HealthList extends ArrayList<Health> {
     }
 
     /**
-     * Retrieves the list of appointments recorded.
+     * Retrieves the list of appointments recorded of ArrayList type.
      *
      * @return The appointments array list.
      */
@@ -169,7 +171,7 @@ public class HealthList extends ArrayList<Health> {
     }
 
     /**
-     * Retrieves the number of periods recorded.
+     * Retrieves the number of periods recorded of int type.
      *
      * @return The number of periods recorded.
      */
@@ -178,7 +180,7 @@ public class HealthList extends ArrayList<Health> {
     }
 
     /**
-     * Gets the Period object at the specified index.
+     * Retrieves the Period object at the specified index of Period type.
      *
      * @param index The index of the Period object.
      * @return The Period object at the specified index, or null if the index is out of bounds.
@@ -206,7 +208,7 @@ public class HealthList extends ArrayList<Health> {
     //@@l5_z
 
     /**
-     * Clears the Period, Bmi, and Appointment array lists.
+     * Clears the periods, bmis, and appointments lists.
      *
      * @throws AssertionError If periods, bmis, and appointments lists are not empty.
      */
@@ -220,7 +222,7 @@ public class HealthList extends ArrayList<Health> {
     }
 
     /**
-     * Retrieves size of periods list.
+     * Retrieves size of periods list of int type.
      *
      * @return Size of periods list.
      */
@@ -229,7 +231,7 @@ public class HealthList extends ArrayList<Health> {
     }
 
     /**
-     * Retrieves size of bmis list.
+     * Retrieves size of bmis list of int type.
      *
      * @return Size of bmis list.
      */
@@ -241,6 +243,7 @@ public class HealthList extends ArrayList<Health> {
      * Deletes Bmi object based on index.
      *
      * @param index Index of the Bmi object to be deleted.
+     * @throws CustomExceptions.OutOfBounds If the index of the Bmi object given does not exist.
      */
     public static void deleteBmi(int index) throws CustomExceptions.OutOfBounds {
         assert !BMIS.isEmpty() : ErrorConstant.EMPTY_BMI_LIST_ERROR;
@@ -256,9 +259,10 @@ public class HealthList extends ArrayList<Health> {
     }
 
     /**
-     * Deletes Bmi object based on index.
+     * Deletes Period object based on index.
      *
-     * @param index Index of the Bmi object to be deleted.
+     * @param index Index of the Period object to be deleted.
+     * @throws CustomExceptions.OutOfBounds If the index of the Period object given does not exist.
      */
     public static void deletePeriod(int index) throws CustomExceptions.OutOfBounds {
         assert !PERIODS.isEmpty() : ErrorConstant.EMPTY_PERIOD_LIST_ERROR;
@@ -293,7 +297,7 @@ public class HealthList extends ArrayList<Health> {
      * Deletes Appointment object based on index.
      *
      * @param index Index of the Appointment object to be deleted.
-     * @throws CustomExceptions.OutOfBounds If the index is out of bounds.
+     * @throws CustomExceptions.OutOfBounds If the index of the Appointment object given does not exist.
      */
     public static void deleteAppointment(int index) throws CustomExceptions.OutOfBounds {
         assert !APPOINTMENTS.isEmpty() : ErrorConstant.EMPTY_APPOINTMENT_LIST_ERROR;
@@ -333,7 +337,7 @@ public class HealthList extends ArrayList<Health> {
     /**
      * Prints the latest Appointment object added.
      *
-     * @throws AssertionError If Appointments list is empty.
+     * @throws AssertionError If appointments list is empty.
      */
     public static void showLatestAppointment() throws CustomExceptions.OutOfBounds {
         if (APPOINTMENTS.isEmpty()) {
