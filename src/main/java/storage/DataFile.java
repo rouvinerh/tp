@@ -313,7 +313,7 @@ public class DataFile {
                 } else if (workoutEntry instanceof Gym) {
                     Gym gymEntry = (Gym) workoutEntry;
                     String gymString = gymEntry.toFileString();
-                    dataFile.write(gymString);
+                    dataFile.write(gymString + System.lineSeparator());
                 }
             }
         }
