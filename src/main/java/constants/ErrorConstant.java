@@ -38,7 +38,7 @@ public class ErrorConstant {
     public static final String PARSING_DATE_ERROR ="Error parsing date!";
 
     // Time errors
-    public static final String INVALID_TIME_ERROR = "Invalid time format. Format is HH:MM:SS or MM:SS with integers";
+    public static final String INVALID_ACTUAL_TIME_ERROR = "Invalid time format. Format is HH:MM in 24 hours format!";
     public static final String INVALID_MINUTES_ERROR = "Minutes must be a positive integer between 01 and 59.";
     public static final String INVALID_HOURS_ERROR = "Hours must be a positive integer between 1 and 23";
     public static final String PARSING_TIME_ERROR = "Error parsing time!";
@@ -63,7 +63,7 @@ public class ErrorConstant {
     public static final String INVALID_RUN_TIME_ERROR = "Invalid time format. Format is either HH:MM:SS or" +
             "MM:SS with integers.";
     public static final String INVALID_MINUTE_ERROR = "Minutes must be a positive integer between 01 and 59";
-    public static final String INVALID_SECOND_ERROR = "Seconds must be a positive integer between 01 and 59";
+    public static final String INVALID_SECOND_ERROR = "Seconds must be a positive integer between 00 and 59";
     public static final String INVALID_HOUR_ERROR = "Hours cannot be 0. Use MM:SS instead";
 
 
