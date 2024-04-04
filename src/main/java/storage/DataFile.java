@@ -128,15 +128,15 @@ public class DataFile {
                 if (expectedHash.equals(actualHash)) {
                     status = verifyIntegrity(dataFile);
                 } else {
-                    LogFile.writeLog("Data file integrity compromised. Exiting.", true);
+                    LogFile.writeLog(ErrorConstant.DATA_INTEGRITY_ERROR, true);
                     Output.printException(ErrorConstant.DATA_INTEGRITY_ERROR);
                     System.exit(1);
                 }
             } else if (!dataFile.exists() && !hashFile.exists()) {
                 status = verifyIntegrity(dataFile);
             } else {
-                LogFile.writeLog("Data file integrity compromised. Exiting.", true);
-                Output.printException(ErrorConstant.DATA_INTEGRITY_ERROR);
+                LogFile.writeLog(ErrorConstant.MISSING_INTEGRITY_ERROR, true);
+                Output.printException(ErrorConstant.MISSING_INTEGRITY_ERROR);
                 hashFile.delete();
                 dataFile.delete();
                 System.exit(1);

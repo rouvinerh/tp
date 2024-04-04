@@ -15,6 +15,7 @@ public class ErrorConstant {
             System.lineSeparator() + "Deleting 'pulsepilot_data.txt' and 'pulsepilot_hash.txt'. Try running again!" +
             System.lineSeparator() + UiConstant.PARTITION_LINE;
     public static final String DATA_INTEGRITY_ERROR = "Data file integrity compromised. Exiting.";
+    public static final String MISSING_INTEGRITY_ERROR = "Key files for integrity missing. Exiting.";
     public static final String HASH_ERROR = "Error occurred while processing file hash.";
 
     // Storage Error for Gym
