@@ -11,9 +11,9 @@ import java.util.ArrayList;
  * Represents the WorkoutList object.
  */
 public class WorkoutList extends ArrayList<Workout> {
-    public static final ArrayList<Workout> WORKOUTS = new ArrayList<>();
-    public static final ArrayList<Run> RUNS = new ArrayList<>();
-    public static final ArrayList<Gym> GYMS = new ArrayList<>();
+    private static final ArrayList<Workout> WORKOUTS = new ArrayList<>();
+    private static final ArrayList<Run> RUNS = new ArrayList<>();
+    private static final ArrayList<Gym> GYMS = new ArrayList<>();
 
 
     /**
@@ -30,7 +30,7 @@ public class WorkoutList extends ArrayList<Workout> {
      *
      * @param run Run object to be added.
      */
-    public static void addRun(Run run) {
+    protected static void addRun(Run run) {
         RUNS.add(run);
         addWorkout(run);
     }
@@ -43,6 +43,10 @@ public class WorkoutList extends ArrayList<Workout> {
     public static void addGym(Gym gym) {
         GYMS.add(gym);
         addWorkout(gym);
+    }
+
+    public static ArrayList<Workout> getWorkouts(){
+        return WORKOUTS;
     }
 
     /**
@@ -74,6 +78,8 @@ public class WorkoutList extends ArrayList<Workout> {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_GYM_EMPTY_ERROR);
         }
 
+
+
         if(filter.equals(WorkoutConstant.RUN)){
             return RUNS;
         } else if (filter.equals(WorkoutConstant.GYM)) {
@@ -83,6 +89,15 @@ public class WorkoutList extends ArrayList<Workout> {
         }
 
     }
+
+    public static ArrayList<Gym> getGyms() {
+        return GYMS;
+    }
+
+    public static ArrayList<Run> getRuns() {
+        return RUNS;
+    }
+
 
     /**
      * Returns latest run.

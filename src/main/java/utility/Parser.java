@@ -44,6 +44,27 @@ public class Parser {
     }
 
     /**
+     * Converts a LocalDate object to a formatted String representation.
+     * @param date LocalDate object representing the date.
+     * @return Formatted String representation of the date in the format "dd-MM-yyyy".
+     *
+     * @throws DateTimeParseException If there is an error parsing the date.
+     */
+    public static String parseFormattedDate(LocalDate date) {
+
+        DateTimeFormatter formatter = null;
+        try {
+            formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        } catch (DateTimeParseException e) {
+            Output.printException(ErrorConstant.PARSING_DATE_ERROR);
+        }
+        if (date == null || formatter == null) {
+            return "NA";
+        }
+        return date.format(formatter);
+    }
+
+    /**
      * Parses and converts String time to a LocalDate variable.
      * @param stringTime String representing the time.
      * @return LocalTime variable representing the time.
@@ -400,9 +421,9 @@ public class Parser {
     /**
      * Splits the Gym File Input that comes from Storage.
      * Validates the numberOfStation and Date input.
-     * @param input
+     * @param input The user input string.
      * @return String[] containing the gym details
-     * @throws CustomExceptions.FileReadError
+     * @throws CustomExceptions.FileReadError If the file cannot be read.
      */
     private static String[] splitGymFileInput (String input) throws CustomExceptions.FileReadError {
 
@@ -414,7 +435,7 @@ public class Parser {
 
         // checks if there are enough parameters in the gym file + if numOfStation is a digit
         try {
-            gymType = gymDetails[WorkoutConstant.GYM_FILE_INDEX];
+            gymType = gymDetails[WorkoutConstant.GYM_FILE_INDEX].toLowerCase();
             numOfStationStr = gymDetails[WorkoutConstant.NUM_OF_STATIONS_FILE_INDEX];
             numOfStation = Integer.parseInt(numOfStationStr);
             date = gymDetails[WorkoutConstant.DATE_FILE_INDEX];
@@ -425,7 +446,7 @@ public class Parser {
         }
 
         // Check if the gym type is correct (e.g. storage starts with gym| ...)
-        if (!gymDetails[WorkoutConstant.GYM_FILE_INDEX].equals(WorkoutConstant.GYM)) {
+        if (!gymType.equals(WorkoutConstant.GYM)) {
             throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_GYM_TYPE_ERROR);
         }
 
@@ -529,8 +550,8 @@ public class Parser {
      *
      * @param input in the format specified above
      * @return gym object created from the input
-     * @throws CustomExceptions.InvalidInput
-     * @throws CustomExceptions.FileReadError
+     * @throws CustomExceptions.InvalidInput If there is invalid input from the file.
+     * @throws CustomExceptions.FileReadError If the file cannot be read.
      */
     public static Gym parseGymFileInput(String input)
             throws CustomExceptions.InvalidInput,

@@ -13,18 +13,26 @@ import java.util.Comparator;
  */
 public class HealthList extends ArrayList<Health> {
 
-
-    /** The list of Bmi records. */
-    public static final ArrayList<Bmi> BMIS = new ArrayList<>();
-
-    /** The list of Appointment records. */
-    public static final ArrayList<Appointment> APPOINTMENTS = new ArrayList<>();
-
-    /** The list of Period records. */
-    public static final ArrayList<Period> PERIODS = new ArrayList<>();
-
-    /** LogFile for logging health-related activities. */
+    /**
+     * LogFile for logging health-related activities.
+     * */
     static LogFile logFile = LogFile.getInstance();
+
+    /**
+     * The list of Bmi records.
+     * */
+    private static final ArrayList<Bmi> BMIS = new ArrayList<>();
+
+    /**
+     * The list of Appointment records.
+     * */
+    private static final ArrayList<Appointment> APPOINTMENTS = new ArrayList<>();
+
+    /**
+     * The list of Period records.
+     * */
+    private static final ArrayList<Period> PERIODS = new ArrayList<>();
+
 
     //@@author j013n3
     /**
@@ -53,7 +61,7 @@ public class HealthList extends ArrayList<Health> {
     /**
      * Prints all the BMI entries recorded.
      *
-     * @throws AssertionError If bmis list is empty
+     * @throws AssertionError If bmis list is empty.
      */
     public static void showBmiHistory() {
         assert !BMIS.isEmpty() : ErrorConstant.EMPTY_BMI_LIST_ERROR;
@@ -65,8 +73,8 @@ public class HealthList extends ArrayList<Health> {
     /**
      * Adds a period to the ArrayList of periods.
      *
-     * @param period Period object to be added
-     * @throws AssertionError If period object is null
+     * @param period Period object to be added.
+     * @throws AssertionError If period object is null.
      */
     public static void addPeriod(Period period) {
         assert period != null : ErrorConstant.NULL_PERIOD_ERROR;
@@ -80,7 +88,7 @@ public class HealthList extends ArrayList<Health> {
     /**
      * Prints the latest period object added.
      *
-     * @throws AssertionError If periods list is empty
+     * @throws AssertionError If periods list is empty.
      */
     public static void showLatestPeriod() {
         assert !PERIODS.isEmpty() : ErrorConstant.EMPTY_PERIOD_LIST_ERROR;
@@ -92,7 +100,7 @@ public class HealthList extends ArrayList<Health> {
     /**
      * Prints all Period entries tracked.
      *
-     * @throws AssertionError If periods list is empty
+     * @throws AssertionError If periods list is empty.
      */
     public static void showPeriodHistory() {
         assert !PERIODS.isEmpty() : ErrorConstant.EMPTY_PERIOD_LIST_ERROR;
@@ -101,11 +109,8 @@ public class HealthList extends ArrayList<Health> {
         }
     }
 
-
-
     /**
      * Prints the latest three Period objects from the periods list.
-     *
      */
     public static void printLatestThreeCycles() {
         int size = PERIODS.size();
@@ -117,6 +122,33 @@ public class HealthList extends ArrayList<Health> {
         for (int i = startIndex; i <= endIndex; i++) {
             System.out.println(PERIODS.get(i));
         }
+    }
+
+    /**
+     * Retrieves the list of periods recorded.
+     *
+     * @return The periods array list.
+     */
+    public static ArrayList<Period> getPeriods(){
+        return PERIODS;
+    }
+
+    /**
+     * Retrieves the list of bmis recorded.
+     *
+     * @return The bmis array list.
+     */
+    public static ArrayList<Bmi> getBmis(){
+        return BMIS;
+    }
+
+    /**
+     * Retrieves the list of appointments recorded.
+     *
+     * @return The appointments array list.
+     */
+    public static ArrayList<Appointment> getAppointments(){
+        return APPOINTMENTS;
     }
 
     /**
@@ -144,8 +176,8 @@ public class HealthList extends ArrayList<Health> {
     /**
      * Predicts the start date of the next period based on the average cycle length of the last three cycles.
      *
-     * @return The predicted start date of the next period
-     * @throws AssertionError If periods lists is empty
+     * @return The predicted start date of the next period.
+     * @throws AssertionError If periods lists is empty.
      */
     public static LocalDate predictNextPeriodStartDate() {
         assert !PERIODS.isEmpty() : ErrorConstant.EMPTY_PERIOD_LIST_ERROR;
@@ -156,8 +188,8 @@ public class HealthList extends ArrayList<Health> {
 
     //@@l5_z
     /**
-     * Clears the Bmis and Periods array lists.
-     * @throws AssertionError If periods and bmis lists are not empty
+     * Clears the Period, Bmi, and Appointment array lists.
+     * @throws AssertionError If periods, bmis, and appointments lists are not empty.
      */
     public static void clearHealthLists() {
         PERIODS.clear();
@@ -188,6 +220,7 @@ public class HealthList extends ArrayList<Health> {
 
     /**
      * Deletes Bmi object based on index.
+     *
      * @param index Index of the Bmi object to be deleted.
      */
     public static void deleteBmi(int index) throws CustomExceptions.OutOfBounds {
@@ -205,6 +238,7 @@ public class HealthList extends ArrayList<Health> {
 
     /**
      * Deletes Bmi object based on index.
+     *
      * @param index Index of the Bmi object to be deleted.
      */
     public static void deletePeriod(int index) throws CustomExceptions.OutOfBounds {
@@ -226,7 +260,7 @@ public class HealthList extends ArrayList<Health> {
      * Sorts all Appointment objects in the list by date and time of the appointments with
      * the earliest appointment at the top.
      *
-     * @param appointment Appointment object
+     * @param appointment Appointment object.
      * @throws AssertionError If Appointment object is null.
      */
     public static void addAppointment(Appointment appointment) {
@@ -239,7 +273,7 @@ public class HealthList extends ArrayList<Health> {
      * Deletes Appointment object based on index.
      *
      * @param index Index of the Appointment object to be deleted.
-     * @throws CustomExceptions.OutOfBounds If the index is out of bounds
+     * @throws CustomExceptions.OutOfBounds If the index is out of bounds.
      */
     public static void deleteAppointment(int index) throws CustomExceptions.OutOfBounds {
         assert !APPOINTMENTS.isEmpty() : ErrorConstant.EMPTY_APPOINTMENT_LIST_ERROR;
@@ -260,7 +294,7 @@ public class HealthList extends ArrayList<Health> {
     /**
      * Prints all Appointment entries tracked.
      *
-     * @throws AssertionError If appointments list is empty
+     * @throws AssertionError If appointments list is empty.
      */
     public static void showAppointmentList() {
         assert !APPOINTMENTS.isEmpty() : ErrorConstant.EMPTY_APPOINTMENT_LIST_ERROR;
