@@ -139,19 +139,21 @@ ____________________________________________________________
 ```
 
 ###### [Back to table of contents](#table-of-contents)
-
+___
 ### Health: BMI
 
-Calculates user's Body Mass Index (BMI).
+Calculates user's Body Mass Index (BMI) based on height and weight from user's input.
 
 Format: `health /h:bmi /height:HEIGHT /weight:WEIGHT /date:DATE`
-* All parameters must be provided in correct order as shown above.
+
+* Parameters after `health` can be in any order. 
 * `HEIGHT` is a **2 decimal point number in metres** (i.e. `1.71`) representing the user's height.
 * `WEIGHT` is a **2 decimal point number in kilograms** (i.e. `60.50`) representing the user’s weight.
 * `DATE` is in `DD-MM-YYYY` format (i.e. `19-03-2024`).
 
 Examples:
 * `health /h:bmi /height:1.70 /weight:75.42 /date:19-03-2024`
+* `health /h:bmi /date:19-03-2024 /height:1.70 /weight:75.42`
 
 Expected Output:
 ```
@@ -165,18 +167,20 @@ ____________________________________________________________
 ```
 
 ###### [Back to table of contents](#table-of-contents)
-
+___
 ### Health: Period
 
 Tracks the start and end of user's menstrual cycle.
 
 Format: `health /h:period /start:START_DATE /end:END_DATE`
 
-* `START_DATE` is `DD-MM-YYYY` format (i.e. `19-03-2024`) representing the start of a cycle.
-* `END_DATE` is `DD-MM-YYYY` format (i.e. `19-03-2024`) representing the end of a cycle.
+* Parameters after `health` can be in any order.
+* `START_DATE` is `DD-MM-YYYY` format (i.e. `19-03-2024`) representing the first day of period flow which is also the first day of the cycle.
+* `END_DATE` is `DD-MM-YYYY` format (i.e. `19-03-2024`) representing the last day of period flow.
 
 Examples:
 * `health /h:period /start:09-03-2022 /end:16-03-2022`
+* `health /start:09-03-2022 /end:16-03-2022 /h:period`
 
 Expected Output:
 ```
@@ -192,6 +196,8 @@ Predicts user's next period start date.
 
 Format: `health /h:prediction`
 
+* All parameters must be provided in the correct order.
+
 Expected Output:
 ```
 health /h:prediction
@@ -203,9 +209,10 @@ Period Length: 7 days
 Cycle Length: 28 days
 Period Start: 2024-03-09 Period End: 2024-03-14
 Period Length: 6 days
-Your next cycle's predicted start date is 2024-04-08, in 7 days.
+Your next cycle's predicted start date is 2024-04-08, in 4 days.
 ```
-
+###### [Back to table of contents](#table-of-contents)
+___
 ### Health: Appointment
 
 ###### [Back to table of contents](#table-of-contents)
