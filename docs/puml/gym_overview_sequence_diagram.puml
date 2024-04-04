@@ -25,8 +25,9 @@ activate Parser #Salmon
 Parser --> Parser : gymDetails
 deactivate Parser #Salmon
 ref over Parser: validateGymInput
-alt #LightBlue [date exists]
-    Parser -> Gym : Gym(Date)
+alt #LightBlue date exists
+    create Gym
+    Parser -> Gym : new(date)
     activate Gym #Salmon
     Gym -> WorkoutList : addGym()
     activate WorkoutList #FFBBBB
@@ -38,8 +39,10 @@ alt #LightBlue [date exists]
     deactivate WorkoutList #FFBBBB
     Gym --> Parser
     deactivate Gym #Salmon
-else #LightPink [date does not exist]
-    Parser -> Gym : Gym()
+
+else #LightPink date does not exist
+    create Gym
+    Parser -> Gym : new()
      activate Gym #Salmon
     Gym -> WorkoutList : addGym()
     activate WorkoutList #FFBBBB
@@ -55,6 +58,6 @@ end
 ref over Parser : parseGymStationInput()
 Parser --> Handler 
 deactivate Parser #FFBBBB
-
+destroy Gym
 @enduml
 
