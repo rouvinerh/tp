@@ -55,6 +55,8 @@ public class ErrorConstant {
     public static final String HISTORY_GYM_EMPTY_ERROR = "No gyms found! You need to add a gym first!";
     public static final String HISTORY_WORKOUTS_EMPTY_ERROR = "No workouts found! You need to add " +
             "either a run or a gym first";
+    public static final String HISTORY_BMI_EMPTY_ERROR = "No bmis found! You need to add a bmi first!";
+    public static final String HISTORY_PERIOD_EMPTY_ERROR = "No periods found! You need to add a period first!";
 
     // RUN ERRORS
     public static final String INSUFFICIENT_RUN_PARAMETERS_ERROR = "Insufficient parameters for run! "

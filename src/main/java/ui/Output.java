@@ -251,8 +251,11 @@ public class Output {
      */
     protected static void printBmiHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
         printLine();
-        System.out.println("Your BMI history:");
-        HealthList.showBmiHistory();
+        try {
+            HealthList.showBmiHistory();
+        } catch (CustomExceptions.OutOfBounds e) {
+            System.out.println(e.getMessage());
+        }
         printLine();
     }
 
@@ -264,8 +267,11 @@ public class Output {
      */
     protected static void printPeriodHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
         printLine();
-        System.out.println("Your Period history:");
+        try {
         HealthList.showPeriodHistory();
+        } catch (CustomExceptions.OutOfBounds e) {
+            System.out.println(e.getMessage());
+        }
         printLine();
     }
 
@@ -323,7 +329,11 @@ public class Output {
      */
     protected static void printLatestBmi() {
         printLine();
-        HealthList.showCurrentBmi();
+        try {
+            HealthList.showCurrentBmi();
+        } catch (CustomExceptions.OutOfBounds e) {
+            System.out.println(e.getMessage());
+        }
         printLine();
     }
 
@@ -332,7 +342,11 @@ public class Output {
      */
     protected static void printLatestPeriod() {
         printLine();
-        HealthList.showLatestPeriod();
+        try {
+            HealthList.showLatestPeriod();
+        } catch (CustomExceptions.OutOfBounds e) {
+            System.out.println(e.getMessage());
+        }
         printLine();
     }
 
