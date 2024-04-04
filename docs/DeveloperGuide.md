@@ -56,7 +56,6 @@ The purpose of this guide is to provide an explanation for all the functions and
 
 The application follows an Object-Oriented Design approach, with separate classes for handling different components of the application, such as user input, output, exercise logging, and health data management.
 
-
 ![Architecture Diagram](img/architecture_diagram.png)
 
 The **_Architecture Diagram_** given above explains the high-level design of the PulsePilot.
@@ -231,16 +230,16 @@ The Health component consists of `Health`, `HealthList`, `Bmi`, `Period`, and `A
 #### Appointment
 
 **Attributes**
-1. date: Represents the date of the appointment.
-2. time: Represents the time of the appointment.
-3. description: Stores a description of the appointment.
+1. `date`: Represents the date of the appointment.
+2. `time`: Represents the time of the appointment.
+3. `description`: Stores a description of the appointment.
 
 **Methods:**
-1. Appointment(String stringDate, String stringTime, String description): The constructor of Appointment which takes date, time, and description.
-2. getDate(): Retrieves the date of the appointment.
-3. getTime(): Retrieves the time of the appointment.
-4. getDescription(): Retrieves the description of the appointment.
-5. toString(): Returns a string representation of the Appointment object, including the date, time, and description.
+1. `Appointment(String stringDate, String stringTime, String description)`: The constructor of Appointment which takes date, time, and description.
+2. `getDate()`: Retrieves the date of the appointment.
+3. `getTime()`: Retrieves the time of the appointment.
+4. `getDescription()`: Retrieves the description of the appointment.
+5. `toString()`: Returns a string representation of the Appointment object, including the date, time, and description.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -436,15 +435,24 @@ HEALTH /h:period /start:[start_date] /end:[end_date]
 The sequence diagram below illustrates the process of period prediction.
 
 1. The Handler class receives `userInput` through `Handler.processInput()` which calls `Handler.handleHealth` to handle health-related operations.
-2. `Parser.extractSubstringaFromSpecificIndex()` is then called to extract `typeOfHealth`, in this case, `prediction`. 
+
+2. `Parser.extractSubstringaFromSpecificIndex()` is then called to extract `typeOfHealth`, in this case, `prediction`.
+
 3. The Handler class then calls `Parser.parsePredictionInput()`.
+
 4. `HealthList.getPeriodSize()` is then called to retrieve the size of `Periods` to ensure sufficient `Period` inputs are present for prediction.
+
 5. `HealthList.printLatestThreeCycles()` prints the user's latest three menstrual cycles.
+
 6. `HealthList.predictNextPeriodStartDate()` gets the predicted start date by calling `Period.nextCyclePrediction()`.
+
 7. `Period.getLastThreeCycleLengths()` is called to find the sum of the latest three cycle lengths before returning to `Period.nextCyclePrediction()` for necessary calculation to obtain the predicted start date.
+
 8. The `Parser` class calls `Period.printNextCyclePrediction()` with the predicted start date as a parameter. This method prints a string indicating the number of days until the predicted start date of the next period, or how many days late the period is if the current date is after the predicted start date.
 
+![Period Sequence Diagram](img/period_sequence.png)
 
+![Period Validation Diagram](img/period_validation.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -455,7 +463,9 @@ HEALTH /h:bmi /height:[height] /weight:[weight] /date:[date]
 </code>
 
 - `[height]` is a 2 **decimal place positive number** representing the user's height.
+
 - `[weight]`is a 2 **decimal place positive number** representing the user's weight.
+
 - `[date]` is in `DD-MM-YYYY` format (i.e. `19-03-2024`).
 
 ##### BMI Sequence
@@ -463,12 +473,19 @@ HEALTH /h:bmi /height:[height] /weight:[weight] /date:[date]
 The sequence diagram below shows how a `Bmi` object is added to `BMIS`.
 
 1. Upon receiving `userInput` in `Handler.processInput()`, `Handler.handleHealth()` is called.
+
 2. `Parser.extractSubstringaFromSpecificIndex()` is then called to extract `typeOfHealth`, in this case, `bmi`.
+
 3. The Handler class then calls `Parser.parseBmiInput()`, passing in `userInput`.
+
 4. `Parser.splitBmiInput` splits the input and returns `bmiDetails` which consists of height, weight and date.
+
 5. The `Parser` class calls `Validation.validateBmiInput` to validate `bmiDetails` using `Validation.validateDataInput()` and `Validation.validateDateNotAfterToday()` methods.
+
 6. Upon successful validation, a new `Bmi` object is created based on `bmiDetails` with `bmiValue` obtained from `Bmi.calculateBmiValue()` and the corresponding BMI category obtained from `Bmi.getBmiCategory()`.
+
 7. `HealthList.addBmi()` adds the newly created `Bmi` into `BMIS`.
+
 8. `Output.printAddBmi()` prints `Bmi` string containing height, weight, date, BMI and BMI category to user.
 
 ![Bmi Sequence Diagram](img/bmi_sequence.png)
@@ -484,7 +501,9 @@ HEALTH /h:appointment /date:[date] /time:[time] /description:[description]
 </code>
 
 - `[date]` is in `DD-MM-YYYY` format representing the date of the appointment.
+
 - `[time]` is in `HH:mm` format representing the time of the appointment.
+
 - `[description]` is a string  representing the details of the appointment. The string can only contain alphanumeric characters and spaces.
 
 ##### Appointment Sequence
@@ -503,7 +522,9 @@ HEALTH /h:appointment /date:[date] /time:[time] /description:[description]
 
 6. The `Appointment` object is passed to `Output.printAddAppointment()` and a message acknowledging the successful adding is printed to the screen.
 
-![AddAppointment](img/appointment_sequence.png)
+![Appointment Sequence Diagram](img/appointment_sequence.png)
+
+![Appointment Validation Diagram](img/appointment_validation.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -515,13 +536,21 @@ HEALTH /h:prediction
 The sequence diagram below illustrates the process of period prediction.
 
 1. The Handler class receives `userInput` through `Handler.processInput()` which calls `Handler.handleHealth` to handle health-related operations.
-2. `Parser.extractSubstringaFromSpecificIndex()` is then called to extract `typeOfHealth`, in this case, `prediction`. 
+
+2. `Parser.extractSubstringaFromSpecificIndex()` is then called to extract `typeOfHealth`, in this case, `prediction`.
+
 3. The Handler class then calls `Parser.parsePredictionInput()`.
+
 4. `HealthList.getPeriodSize()` is then called to retrieve the size of `Periods` to ensure sufficient `Period` inputs are present for prediction.
+
 5. `HealthList.printLatestThreeCycles()` prints the user's latest three menstrual cycles.
+
 6. `HealthList.predictNextPeriodStartDate()` gets the predicted start date by calling `Period.nextCyclePrediction()`.
+
 7. `Period.getLastThreeCycleLengths()` is called to find the sum of the latest three cycle lengths before returning to `Period.nextCyclePrediction()` for necessary calculation to obtain the predicted start date.
+
 8. The `Parser` class calls `Period.printNextCyclePrediction()` with the predicted start date as a parameter. This method prints a string indicating the number of days until the predicted start date of the next period, or how many days late the period is if the current date is after the predicted start date.
+
 ![Prediction Sequence Diagram](img/prediction_sequence_diagram.png)
 
 ###### [Back to table of contents](#table-of-contents)
