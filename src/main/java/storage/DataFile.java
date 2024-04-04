@@ -121,7 +121,8 @@ public class DataFile {
                     Output.printException(ErrorConstant.DATA_INTEGRITY_ERROR);
                     System.exit(1);
                 }
-
+            } else if (!dataFile.exists() && !hashFile.exists()) {
+                status = verifyIntegrity(dataFile);
             } else {
                 LogFile.writeLog("Data file integrity compromised. Exiting.", true);
                 Output.printException(ErrorConstant.DATA_INTEGRITY_ERROR);
