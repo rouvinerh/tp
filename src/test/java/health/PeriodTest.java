@@ -88,7 +88,9 @@ class PeriodTest {
         HealthList.addPeriod(firstPeriod);
         HealthList.addPeriod(secondPeriod);
 
-        String expected = "Period Start: "
+        String expected = "Your Period history:"
+                + System.lineSeparator() +
+                "Period Start: "
                 + firstPeriod.getStartDate()
                 + " Period End: "
                 + firstPeriod.getEndDate()

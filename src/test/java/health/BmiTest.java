@@ -124,7 +124,9 @@ class BmiTest {
         HealthList.addBmi(firstBmi);
         HealthList.addBmi(secondBmi);
 
-        String expected = "2024-03-20"
+        String expected = "Your BMI history:"
+                + System.lineSeparator()
+                + "2024-03-20"
                 + System.lineSeparator()
                 + "Your BMI is 26.12"
                 + System.lineSeparator()

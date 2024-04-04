@@ -268,7 +268,7 @@ public class Output {
     protected static void printPeriodHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
         printLine();
         try {
-        HealthList.showPeriodHistory();
+            HealthList.showPeriodHistory();
         } catch (CustomExceptions.OutOfBounds e) {
             System.out.println(e.getMessage());
         }
