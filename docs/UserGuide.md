@@ -92,9 +92,12 @@ Format: `STATION_NAME /s:SET /r:REPS /w:WEIGHT`
 * `STATION_NAME` is a **string**  representing the name of the gym station.
 * `SET` is a **positive integer**  representing the number of sets done for one station.
 * `REPS` is a **positive integer**  representing the number of repetitions done for one station.
-* `WEIGHT` is a **positive integer**  representing the weight used for one station.
+* `WEIGHT` is a **positive double**  representing the weight used for one station.
 
-Examples: `Bench Press /s:4 /r:10 /w:75,75,75,75`
+> ❗`WEIGHT` must be in **multiples of 0.125 KG**. This is because the minimum weight increment in a gym is 0.125KG. Example `bench press /s:2 /r:10 /w:10.333,12.5` is not valid as 10.333 is not a multiple of 0.125kg. 
+
+
+Examples: `Bench Press /s:4 /r:10 /w:75.0,78.25,78.75,89.50`
 
 Expected Output:
 
