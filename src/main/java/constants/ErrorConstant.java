@@ -76,7 +76,7 @@ public class ErrorConstant {
     public static final String INVALID_RUN_TIME_ERROR = "Invalid time format. Format is either HH:MM:SS or " +
             "MM:SS with integers.";
     public static final String INVALID_SECOND_ERROR = "Seconds must be a positive integer between 00 and 59";
-    public static final String INVALID_HOUR_ERROR = "Hours cannot be 0. Use MM:SS instead";
+    public static final String INVALID_HOUR_ERROR = "Hours cannot set to 00. Use MM:SS instead";
     public static final String INVALID_MINUTE_ERROR = "Minutes must be a positive integer between 01 and 59";
 
     // GYM ERRORS
@@ -187,5 +187,8 @@ public class ErrorConstant {
     public static final String MAX_WEIGHT_ERROR = "The heaviest human being Jon Brower Minnnoch weighed in at 635kg. "
             + System.lineSeparator()
             + "Please enter a more realistic weight less than 640kg!";
+
+    public static final String ZERO_DISTANCE_ERROR = "Distance run cannot be 0!";
+    public static final String ZERO_TIME_ERROR = "Time cannot be set to 00:00!";
 
 }

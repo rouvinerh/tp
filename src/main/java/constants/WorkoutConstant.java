@@ -25,6 +25,8 @@ public class WorkoutConstant {
     public static final int NUMBER_OF_PARTS_FOR_RUN_TIME_WITH_HOURS = 3;
     public static final int MAX_GYM_STATION_NAME_LENGTH = 40;
     public static final int MIN_WEIGHT = 0;
+    public static final double MAX_RUN_DISTANCE = 5000.00;
+    public static final double MIN_RUN_DISTANCE = 0;
 
     // INDEX
     public static final Integer STATION_NAME_INDEX = 0;
@@ -95,5 +97,5 @@ public class WorkoutConstant {
 
     public static final int NUM_OF_SLASHES_FOR_RUN_WITH_DATE = 4;
     public static final int NUM_OF_SLASHES_FOR_RUN_WITHOUT_DATE = 3;
-    public static final double MAX_RUN_DISTANCE = 5000.00;
+
 }

@@ -180,6 +180,10 @@ public class Validation {
             throw new CustomExceptions.InvalidInput(ErrorConstant.DISTANCE_TOO_LONG_ERROR);
         }
 
+        if (runDistance <= WorkoutConstant.MIN_RUN_DISTANCE) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.ZERO_DISTANCE_ERROR);
+        }
+
         if (runDetails[WorkoutConstant.RUN_DATE_INDEX] != null) {
             validateDateInput(runDetails[WorkoutConstant.RUN_DATE_INDEX]);
             validateDateNotAfterToday(runDetails[WorkoutConstant.RUN_DATE_INDEX]);
@@ -264,7 +268,6 @@ public class Validation {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_RUN_TIME_ERROR);
         }
 
-
         if (hours == UiConstant.MIN_HOURS) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_HOUR_ERROR);
         }
@@ -285,6 +288,10 @@ public class Validation {
 
         if (seconds < UiConstant.MIN_SECONDS || seconds > UiConstant.MAX_SECONDS) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_SECOND_ERROR);
+        }
+
+        if (minutes == 0 && seconds == 0) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.ZERO_TIME_ERROR);
         }
     }
     //@@author
