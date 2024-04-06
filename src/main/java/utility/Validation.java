@@ -4,7 +4,7 @@ import constants.ErrorConstant;
 import constants.HealthConstant;
 import constants.UiConstant;
 import constants.WorkoutConstant;
-
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -25,13 +25,21 @@ public class Validation {
         String[] parts = date.split(UiConstant.DASH);
         int day = Integer.parseInt(parts[0]);
         int month = Integer.parseInt(parts[1]);
+        int year = Integer.parseInt(parts[2]);
 
-        if (day < UiConstant.MIN_DAY || day > UiConstant.MAX_DAY) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_DAY_ERROR);
+        boolean isLeapYear = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+        if (month == 2 && day == 29 && !isLeapYear) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_LEAP_YEAR_ERROR);
         }
 
-        if (month < UiConstant.MIN_MONTH || month > UiConstant.MAX_MONTH) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_MONTH_ERROR);
+        if (year < 1967) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_YEAR_ERROR);
+        }
+
+        try {
+            LocalDate check = LocalDate.of(year, month, day);
+        } catch (DateTimeException e) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_DATE_ERROR);
         }
     }
 
@@ -90,6 +98,22 @@ public class Validation {
                 || !bmiDetails[HealthConstant.BMI_WEIGHT_INDEX].matches(UiConstant.VALID_TWO_DP_NUMBER_REGEX)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.HEIGHT_WEIGHT_INPUT_ERROR);
         }
+
+        double height = Double.parseDouble(bmiDetails[HealthConstant.BMI_HEIGHT_INDEX]);
+        double weight = Double.parseDouble(bmiDetails[HealthConstant.BMI_WEIGHT_INDEX]);
+
+        if (height <= HealthConstant.MIN_HEIGHT || weight <= HealthConstant.MIN_WEIGHT) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.ZERO_HEIGHT_AND_WEIGHT_ERROR);
+        }
+
+        if (height > HealthConstant.MAX_HEIGHT) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.MAX_HEIGHT_ERROR);
+        }
+
+        if (weight > HealthConstant.MAX_WEIGHT) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.MAX_WEIGHT_ERROR);
+        }
+
         validateDateInput(bmiDetails[HealthConstant.BMI_DATE_INDEX]);
         validateDateNotAfterToday(bmiDetails[HealthConstant.BMI_DATE_INDEX]);
 
@@ -148,6 +172,15 @@ public class Validation {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_RUN_DISTANCE_ERROR);
         }
 
+        double runDistance = Double.parseDouble(runDetails[WorkoutConstant.RUN_DISTANCE_INDEX]);
+        if (runDistance > WorkoutConstant.MAX_RUN_DISTANCE) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.DISTANCE_TOO_LONG_ERROR);
+        }
+
+        if (runDistance <= WorkoutConstant.MIN_RUN_DISTANCE) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.ZERO_DISTANCE_ERROR);
+        }
+
         if (runDetails[WorkoutConstant.RUN_DATE_INDEX] != null) {
             validateDateInput(runDetails[WorkoutConstant.RUN_DATE_INDEX]);
             validateDateNotAfterToday(runDetails[WorkoutConstant.RUN_DATE_INDEX]);
@@ -188,7 +221,7 @@ public class Validation {
      */
     public static void validateTimeInput(String time) throws CustomExceptions.InvalidInput {
         if (!time.matches(UiConstant.VALID_TIME_REGEX)) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_TIME_ERROR);
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_ACTUAL_TIME_ERROR);
         }
         String [] parts = time.split(UiConstant.SPLIT_BY_COLON);
         int hours = Integer.parseInt(parts[0]);
@@ -218,6 +251,7 @@ public class Validation {
         int hours = WorkoutConstant.NO_HOURS_PRESENT;
         int minutes;
         int seconds;
+        boolean isHoursPresent = false;
 
         if (parts.length == WorkoutConstant.NUMBER_OF_PARTS_FOR_RUN_TIME) {
             minutes = Integer.parseInt(parts[0]);
@@ -226,19 +260,35 @@ public class Validation {
             hours = Integer.parseInt(parts[0]);
             minutes = Integer.parseInt(parts[1]);
             seconds = Integer.parseInt(parts[2]);
+            isHoursPresent = true;
         } else {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_RUN_TIME_ERROR);
-        }
-        if (minutes <= UiConstant.MIN_MINUTES || minutes >= UiConstant.MAX_MINUTES) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_MINUTE_ERROR);
-        }
-
-        if (seconds <= UiConstant.MIN_SECONDS || seconds >= UiConstant.MAX_SECONDS) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_SECOND_ERROR);
         }
 
         if (hours == UiConstant.MIN_HOURS) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_HOUR_ERROR);
+        }
+
+        if (isHoursPresent) {
+            if (minutes > UiConstant.MAX_MINUTES) {
+                throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_MINUTE_ERROR);
+            }
+
+            if (seconds > UiConstant.MAX_SECONDS) {
+                throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_SECOND_ERROR);
+            }
+        }
+        // hour is not present
+        if (minutes > UiConstant.MAX_MINUTES) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_MINUTE_ERROR);
+        }
+
+        if (seconds < UiConstant.MIN_SECONDS || seconds > UiConstant.MAX_SECONDS) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_SECOND_ERROR);
+        }
+
+        if (minutes == 0 && seconds == 0) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.ZERO_TIME_ERROR);
         }
     }
     //@@author
@@ -247,6 +297,7 @@ public class Validation {
      *
      * @param appointmentDetails List of strings representing Appointment details.
      * @throws CustomExceptions.InvalidInput If there are any errors in the details entered.
+     * @throws CustomExceptions.InsufficientInput If date, time, or description parameters are missing.
      */
     public static void validateAppointmentDetails(String[] appointmentDetails)
             throws CustomExceptions.InvalidInput, CustomExceptions.InsufficientInput {
@@ -298,17 +349,20 @@ public class Validation {
      * @return ArrayList of integers representing the weights in the format [weight1, weight2, weight3 ...]
      * @throws CustomExceptions.InvalidInput If an invalid weights string is passed in.
      */
-    public static ArrayList<Integer> validateWeightsArray(String weightsString)
+    public static ArrayList<Double> validateWeightsArray(String weightsString)
             throws CustomExceptions.InvalidInput {
         String[] weightsArray = weightsString.split(UiConstant.SPLIT_BY_COMMAS);
-        ArrayList<Integer> validatedWeightsArray = new ArrayList<>();
+        ArrayList<Double> validatedWeightsArray = new ArrayList<>();
         try {
             for(String weight: weightsArray){
-                int weightInteger = Integer.parseInt(weight);
-                if (weightInteger < WorkoutConstant.MIN_WEIGHT){
+                double weightDouble = Double.parseDouble(weight);
+                if (weightDouble < WorkoutConstant.MIN_WEIGHT){
                     throw new CustomExceptions.InvalidInput(ErrorConstant.GYM_WEIGHT_POSITIVE_ERROR);
                 }
-                validatedWeightsArray.add(weightInteger);
+                if (weightDouble % WorkoutConstant.WEIGHT_MULTIPLE != 0 ){
+                    throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_WEIGHT_VALUE_ERROR);
+                }
+                validatedWeightsArray.add(weightDouble);
             }
         } catch (NumberFormatException e){
             throw new CustomExceptions.InvalidInput(ErrorConstant.GYM_WEIGHT_DIGIT_ERROR);
@@ -340,13 +394,7 @@ public class Validation {
         }
 
         String weights = Parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.WEIGHTS_FLAG).trim();
-        if (!weights.contains(UiConstant.SPLIT_BY_COMMAS)) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_WEIGHTS_ERROR);
-        }
 
-        if (!weights.matches(UiConstant.VALID_WEIGHTS_ARRAY_REGEX)) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_WEIGHTS_ARRAY_FORMAT_ERROR);
-        }
 
         String[] weightsArray = weights.split(UiConstant.SPLIT_BY_COMMAS);
         if (weightsArray.length < WorkoutConstant.MIN_GYM_STATION_WEIGHTS_ARRAY_LENGTH) {

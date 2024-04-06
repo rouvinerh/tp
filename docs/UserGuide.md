@@ -14,8 +14,10 @@ PulsePilot is a **desktop app for tracking health-related information, optimised
     * [Adding Gym Stations](#adding-gym-stations)
   * [Health: BMI](#health-bmi)
   * [Health: Period](#health-period)
+  * [Health: Appointment](#health-appointment)
   * [History](#history)
   * [Latest](#latest)
+  * [Delete](#delete)
   * [Help](#help)
   * [Exit](#exit)
 * [Logging](#logging)
@@ -24,8 +26,6 @@ PulsePilot is a **desktop app for tracking health-related information, optimised
 * [Command Summary](#command-summary)
 
 ## Quick Start
-
-{Give steps to get started quickly}
 
 1. Ensure that you have the latest Java 11.
 2. Download the latest `pulsepilot.jar`.
@@ -65,29 +65,36 @@ ____________________________________________________________
   * `[/d:DATE]` means that the `DATE` parameter is **optional**.
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 
+---
+
 ## Commands
 
 ### Workout: Run
 
 Adds a new Run workout to track. 
 
-Format: `new /e:run /d:DISTANCE /t:TIME [/date:DATE]`
+Format: `workout /e:run /d:DISTANCE /t:TIME [/date:DATE]`
 
-* All parameters must be provided in correct order as shown above.
-* `DISTANCE` is a **2 decimal point positive number** (i.e. `15.24`) representing the distance ran.
+* `DISTANCE` is a **2 decimal point positive number** (i.e. `15.24`) representing the distance ran in **kilometers**.
 * `TIME` is in `[HH]:MM:SS` format (i.e. `25:30`). The `HH` representing hours is **optional**.
-* `DATE` is in `DD-MM-YYYY` format (i.e. `19-03-2024`).
+* `DATE` is in `DD-MM-YYYY` format (i.e. `19-03-2024`). The date is optional, and if not specified, defaults to `NA`.
 
-Examples: `new /e:run /d:5.24 /t:25:23 /date:19-03-2024`
+Examples: `workout /e:run /d:5.15 /t:25:03 /date:25-03-2023` OR `workout /e:run /d:5.15 /t:25:03`.
 
 Expected Output:
 
 ```
-new /e:run /d:5.24 /t:25:23 /date:19-03-2024
+workout /e:run /d:5.15 /t:25:03 /date:25-03-2023
 ____________________________________________________________
 Successfully added a new run session
 Type	Time		Distance	Pace		Date
-run 	25:23		5.24		4:51/km		2024-03-19
+run   	25:03     	5.15      	4:52/km   	2023-03-25  
+____________________________________________________________
+workout /e:run /d:5.15 /t:25:03
+____________________________________________________________
+Successfully added a new run session
+Type	Time		Distance	Pace		Date
+run   	25:03     	5.15      	4:52/km   	NA          
 ____________________________________________________________
 ```
 
@@ -97,18 +104,18 @@ ____________________________________________________________
 
 Adds a new gym session to track. 
 
-Format: `new /e:gym /n:NUMBER_OF_STATIONS`
+Format: `workout /e:gym /n:NUMBER_OF_STATIONS [/date:DATE]`
 
-* All parameters must be provided in correct order as shown above.
 * `NUMBER_OF_STATIONS` is a **positive integer**  representing the number of stations for one Gym session.
+* `DATE` is in `DD-MM-YYYY` format (i.e. `19-03-2024`). The date is optional, and if not specified, defaults to `NA`.
 
-Examples: `new /e:gym /n:2`
+Examples: `workout /e:gym /n:2 /date:25-03-2023` OR `workout /e:gym /n:4`
 
 ###### [Back to table of contents](#table-of-contents)
 
 #### Adding Gym Stations
 
-Upon entry of the `new /e:gym` command, the bot will prompt for further details for each station done:
+Upon entry of the `workout /e:gym` command, the bot will prompt for further details for each station done:
 
 Format: `STATION_NAME /s:SET /r:REPS /w:WEIGHT`
 
@@ -118,40 +125,51 @@ Format: `STATION_NAME /s:SET /r:REPS /w:WEIGHT`
 * `REPS` is a **positive integer**  representing the number of repetitions done for one station.
 * `WEIGHT` is a **positive integer**  representing the weight used for one station.
 
-Examples: `Bench Press /s:4 /r:10 /w:75`
+Examples: `Bench Press /s:4 /r:10 /w:75,75,75,75`
 
 Expected Output:
+
 ```
-new /e:gym /n:2
+workout /e:gym /n:2 /date:25-03-2023
 ____________________________________________________________
-Please enter the details of station 1. (Format: [name of exercise:string] /s:[sets:number] /r:[reps:number] /w:[weights:number])
+Please enter the details of station 1. (Format: e.g. Bench Press /s:2 /r:4 /w:10,20)
 ____________________________________________________________
-Bench Press /s:4 /r:10 /w:5
+bench press /s:2 /r:4 /w:10,20
 ____________________________________________________________
-Please enter the details of station 2. (Format: [name of exercise:string] /s:[sets:number] /r:[reps:number] /w:[weights:number])
+Please enter the details of station 2. (Format: e.g. Bench Press /s:2 /r:4 /w:10,20)
 ____________________________________________________________
-Squat /s:4 /r:5 /w:100
+squat /s:2 /r:4 /w:10,20
 ____________________________________________________________
 Successfully added a new gym session
-Bench Press: 4 sets of 10 reps at 5 KG
-Squat: 4 sets of 5 reps at 100 KG
+Station 1 bench press: 2 sets
+	- Set 1. 4 reps at 10 KG
+	- Set 2. 4 reps at 20 KG
+Station 2 squat: 2 sets
+	- Set 1. 4 reps at 10 KG
+	- Set 2. 4 reps at 20 KG
 ____________________________________________________________
 ```
+
+> Note that the number of weights must equal to the number of sets! For example, if you have done 2 sets, PulsePilot expects 2 weights specified like `10,10`. 
 
 ###### [Back to table of contents](#table-of-contents)
 
+___
+
 ### Health: BMI
 
-Calculates user's Body Mass Index (BMI).
+Calculates user's Body Mass Index (BMI) based on height and weight from user's input.
 
 Format: `health /h:bmi /height:HEIGHT /weight:WEIGHT /date:DATE`
-* All parameters must be provided in correct order as shown above.
+
+* Parameters after `health` can be in any order. 
 * `HEIGHT` is a **2 decimal point number in metres** (i.e. `1.71`) representing the user's height.
 * `WEIGHT` is a **2 decimal point number in kilograms** (i.e. `60.50`) representing the user’s weight.
 * `DATE` is in `DD-MM-YYYY` format (i.e. `19-03-2024`).
 
 Examples:
 * `health /h:bmi /height:1.70 /weight:75.42 /date:19-03-2024`
+* `health /h:bmi /date:19-03-2024 /height:1.70 /weight:75.42`
 
 Expected Output:
 ```
@@ -164,19 +182,29 @@ You're overweight.
 ____________________________________________________________
 ```
 
-###### [Back to table of contents](#table-of-contents)
+The ranges for BMI are as follows:
 
+- BMI < 18.5: Underweight
+- 18.5 <= BMI < 24.9: Normal
+- 24.9 <= BMI < 29.9: Overweight
+- 29.9 <= BMI < 39.9: Obese
+- BMI >= 39.9: Severely Obese
+
+###### [Back to table of contents](#table-of-contents)
+___
 ### Health: Period
 
 Tracks the start and end of user's menstrual cycle.
 
 Format: `health /h:period /start:START_DATE /end:END_DATE`
 
-* `START_DATE` is `DD-MM-YYYY` format (i.e. `19-03-2024`) representing the start of a cycle.
-* `END_DATE` is `DD-MM-YYYY` format (i.e. `19-03-2024`) representing the end of a cycle.
+* Parameters after `health` can be in any order.
+* `START_DATE` is `DD-MM-YYYY` format (i.e. `19-03-2024`) representing the first day of period flow which is also the first day of the cycle.
+* `END_DATE` is `DD-MM-YYYY` format (i.e. `19-03-2024`) representing the last day of period flow.
 
 Examples:
 * `health /h:period /start:09-03-2022 /end:16-03-2022`
+* `health /start:09-03-2022 /end:16-03-2022 /h:period`
 
 Expected Output:
 ```
@@ -192,6 +220,8 @@ Predicts user's next period start date.
 
 Format: `health /h:prediction`
 
+* All parameters must be provided in the correct order.
+
 Expected Output:
 ```
 health /h:prediction
@@ -203,12 +233,11 @@ Period Length: 7 days
 Cycle Length: 28 days
 Period Start: 2024-03-09 Period End: 2024-03-14
 Period Length: 6 days
-Your next cycle's predicted start date is 2024-04-08, in 7 days.
+Your next cycle's predicted start date is 2024-04-08, in 4 days.
 ```
 
-### Health: Appointment
-
 ###### [Back to table of contents](#table-of-contents)
+___
 
 ### Health: Appointment
 
@@ -216,15 +245,22 @@ Tracks the user's medical appointments.
 
 Format: `health /h:appointment /date:DATE /time:TIME /description:DESCRIPTION`
 
-* All parameters must be provided in correct order as shown above.
+* Parameters after `health` do not need to be in order.
+
 * `DATE` is a `DD-MM-YYYY` format (i.e. `03-04-2024`) representing the date of the appointment.
+
 * `TIME` is a `HH:mm` format (i.e. `14:15`) representing the time of the appointment.
+
 * `DESCRIPTION` is a string (i.e. `review checkup with surgeon`) representing the details of the appointment. The string can only contain alphanumeric characters and spaces.
 
 Examples:
+
 * `health /h:appointment /date:03-04-2024 /time:14:15 /description:review checkup with surgeon`
 
+* `health /date:03-04-2024 /description:review checkup with surgeon /time:14:15 /h:appointment`
+
 Expected Output:
+
 ```
 health /h:appointment /date:03-04-2024 /time:14:15 /description:review checkup with surgeon
 ____________________________________________________________
@@ -235,49 +271,94 @@ ____________________________________________________________
 
 ###### [Back to table of contents](#table-of-contents)
 
+---
+
 ### History
 
-Prints all tracked instances of `run`, `gym`, `bmi` or `period`.
+Prints all tracked instances of `run`, `gym`, `workouts`,  `bmi`, `period`, `appointment`.
 
-Format: `history /view:TYPE`
+Format: `history /item:TYPE`
 
-* `TYPE` is either `run`, `gym`, `bmi` or `period`.
+* `TYPE` is either `run`, `gym`, `workouts`, `bmi`, `period`, `appointment`.
+  - `run` shows all entries of runs 
+  - `gym` shows all entries of gym
+  - `workouts` shows all entries of gym and runs
+  - `bmi` shows all BMI entries 
+  - `period` shows all Period entries 
+  - `appointment` show all Appointment entries
 
 Examples:
-* `history /view:run`
+* `history /item:workouts`
 
 Expected Output:
 
 ```
-history /view:run
+history /item:workouts
 ____________________________________________________________
-Index		Type	Time		Distance	Pace		Date
-1.		run 	25:00		5.00		5:00/km		2024-03-17
-2.		run 	25:23		5.24		4:51/km		2024-03-18
-3.		run 	25:23		5.24		4:51/km		2024-03-19
+Showing all workouts (runs and gyms):
+ Index	Type 	Date        	Distance	Duration       	Pace    	Station   	Sets	Reps	Weights   
+1     	gym  	1997-11-20  	-       	-              	-       	bench press	2   	4,4 	100,120   
+      	     	            	        	               	        	squats    	2   	4,4 	50,60     
+2     	run  	2023-02-10  	5.25    	25:23          	4:50/km 	-         	-   	-   	-         
 ____________________________________________________________
 ```
 
 ###### [Back to table of contents](#table-of-contents)
-
+--- 
 ### Latest
 
-Prints the latest instance of `run`, `gym`, `bmi` or `period`.
+Prints the latest instance of `run`, `gym`, `bmi`, `period`, `appointment`.
 
-Format: `latest /view:TYPE`
+Format: `latest /item:TYPE`
 
 * `TYPE` is either `run`, `gym`, `bmi` or `period`.
+  - `run` shows the latest run
+  - `gym` shows the latest gym
+  - `bmi` shows the latest BMI
+  - `period` shows the latest Period
+  - `appointment` show the latest Appointment
 
 Examples:
-* `latest /view:run`
+* `latest /item:appointment`
 
 Expected Output:
 
 ```
-latest /view:period
+latest /item:period
 ____________________________________________________________
-Period Start: 2022-03-09 Period End: 2022-03-16
-Period Length: 8 days
+On 2023-11-11 at 23:24: this is a testing description
+____________________________________________________________
+```
+
+###### [Back to table of contents](#table-of-contents)
+--- 
+
+### Delete
+
+Deletes an item tracked within PulsePilot. 
+
+Format: `delete /item:TYPE /index:INDEX`
+
+* `TYPE` is either `run`, `gym`, `bmi` or `period`.
+* `INDEX` represents the index of the item to delete. 
+
+Expected output:
+
+```
+history /item:run
+____________________________________________________________
+Your run history:
+Index 	Type  	Time      	Distance  	Pace      	Date        
+1     	run   	25:20     	5.15      	4:55/km   	2024-03-28  
+2     	run   	50:20     	12.15     	4:09/km   	2024-03-29  
+____________________________________________________________
+delete /item:run /index:2
+Removed Run entry with 12.15km at 4:09/km.
+history /item:run
+____________________________________________________________
+Your run history:
+Index 	Type  	Time      	Distance  	Pace      	Date        
+1     	run   	25:20     	5.15      	4:55/km   	2024-03-28  
 ____________________________________________________________
 ```
 
@@ -296,12 +377,14 @@ help
 ____________________________________________________________
 Commands List:
 
-new /e:run /d:DISTANCE /t:TIME [/date:DATE] - Add a new run
-new /e:gym /n:NUMBER_OF_STATIONS [/date:DATE] - Add a new gym workout
+workout /e:run /d:DISTANCE /t:TIME [/date:DATE] - Add a new run
+workout /e:gym /n:NUMBER_OF_STATIONS [/date:DATE] - Add a new gym workout
 health /h:bmi /height:HEIGHT /weight:WEIGHT /date:DATE - Add new BMI data
 health /h:period /start:START_DATE /end:END_DATE - Add new period data
-history /view:[run/gym/bmi/period] - Show history of runs/gyms/bmi records/periods tracked
-latest /view:[run/gym/bmi/period] - Show history of runs/gyms/bmi records/periods tracked
+health /h:prediction - Predicts next period's start date
+health /h:appointment /date:DATE /time:TIME /description:DESCRIPTION - Add new appointment data
+history /item:[run/gym/bmi/period] - Shows history of runs/gyms/bmi records/periods tracked/appointment records
+latest /item:[run/gym/bmi/period] - Shows latest entry of runs/gyms/bmi records/periods tracked/appointment records
 help - Show this help message
 exit - Exit the program
 ____________________________________________________________
@@ -349,15 +432,27 @@ Data is saved to `pulsepilot_data.txt` once the bot exits. Each time the bot exi
 
 **1.** How do I transfer my data to another computer?
 
-Ensure that the `pulsepilot.jar` is placed in the **same folder** as `pulsepilot_data.txt`. PulsePilot should recognise
-and synchronise your data contents from `pulsepilot_data.txt` if done correctly.
+Ensure that `pulsepilot.jar` is placed in the **same folder** as `pulsepilot_data.txt` **and** `pulsepilot_hash.txt`.
+PulsePilot should recognise and synchronise your data contents from `pulsepilot_data.txt` if done correctly.
 
-**Tip:** Create a _backup copy_ to prior to file transfer to avoid data corruption.
+**Tip!** Create a _backup copy_ of both `pulsepilot_data.txt` and `pulsepilot_hash.txt` prior to file transfer
+to avoid data corruption. The _backup copies_ should be stored in a **separate** folder location from where 
+the original `pulsepilot.jar` is saved.
 
-**2.** What happens if my data is corrupted?
+**Tip!** You can copy files by:
+- Selecting the file of interest and ensure it is highlighted
+- Copy the file with <kbd>Ctrl</kbd> + <kbd>C</kbd>
+- Opening up a new folder in a **separate** folder location from where `pulsepilot.jar` is saved
+- Paste the new file copy with <kbd>Ctrl</kbd> + <kbd>V</kbd>
 
-Depending on the severity of corruption, you may experience 2 scenarios:
-- A full corruption
+**2.** What happens if my data is corrupted or tampered with?
+
+**_WARNING_: DO NOT** tamper with either `pulsepilot_data.txt` or `pulsepilot_hash.txt` to prevent **permanent** and 
+**unrecoverable** loss of data.
+
+You may experience 2 scenarios:
+
+- A data file content corruption
 ```
 ____________________________________________________________
  _              _
@@ -367,11 +462,10 @@ Engaging orbital thrusters...
 PulsePilot on standby
 ____________________________________________________________
 Exception Caught!
-File is corrupted! Ceasing any further data imports...
-Consider deleting 'pulsepilot_data.txt' and trying again!
-____________________________________________________________
+Data file integrity compromised. Exiting.
+
 ```
-- A partial corruption
+- A missing file error
 ```
 ____________________________________________________________
  _              _
@@ -380,37 +474,52 @@ ____________________________________________________________
 Engaging orbital thrusters...
 PulsePilot on standby
 ____________________________________________________________
-Terminal primed. Command inputs are now accepted...
-____________________________________________________________
 Exception Caught!
-Error: File is corrupted! Ceasing any further data imports...
-Some data may have been recovered. PulsePilot shall resume.
-____________________________________________________________
+Key files for integrity missing. Exiting.
+
 ```
 
-In either case, you may want to overwrite/replace the current `pulsepilot_data.txt` with that of your backup in order to restory your data.
+A data file content corruption results in permanent and complete data loss. This occurs either due to intentional or
+accidental tampering with either `pulsepilot_data.txt` or `pulsepilot_hash.txt` files, or corruption due to unforeseen
+circumstances on the user-end during migration of files. PulsePilot will automatically delete the corrupted files
+before exiting.
 
+A missing file error occurs when either `pulsepilot_data.txt` or `pulsepilot_hash.txt` is missing when PulsePilot is 
+run. For safety and security purposes, PulsePilot will automatically delete the remaining file before exiting.
 
-A full corruption indicates permanent and complete data loss. Please delete `pulsepilot_data.txt` and relaunch Pulsepilot.
+**Both cases will inevitably result in permanent and complete data loss.**
 
-A partial corruption indicates a partial recovery of data up until the point of corruption. We recommend utilising the `history` command to review and discrepencies
-and missing data. You may choose to re-enter the corrupted data to be saved again upon `exit`.
+**DATA RECOVERY:** In both cases, you may want to recover data by utilising **both** your backup copies of 
+`pulsepilot_data.txt` and `pulsepilot_hash.txt` to restore your data. 
+Otherwise, you may opt to re-run `pulsepilot.jar` again with the same command, `java -jar pulsepilot.jar` to initialise 
+a new save file.
 
-(hyperlink for history and exit)
+**3.** Is my tracking data private and confidential?
+
+Yes, your data is secure and stored locally on your machine. PulsePilot does not have any features that would allow it to send your data elsewhere.
+
+**4.** What Java version is required to run PulsePilot?
+
+PulsePilot requires at least Java version 11.
+
+**5.** Can I use the application offline?
+
+Yes, PulsePilot works perfectly offline. All data are stored on your device for better privacy.
 
 ###### [Back to table of contents](#table-of-contents)
 
 ## Command Summary
 
-| Action       | Format, Examples                                                                                                                     |
-|--------------|--------------------------------------------------------------------------------------------------------------------------------------|
-| Print help   | `help`                                                                                                                               |
-| Add new run  | `new /e:run /d:DISTANCE /t:TIME [/date:DATE]`<br/>Example: `new /e:run /d:5.24 /t:25:23 /date:19-03-2024`                            |
-| Add gym      | `new /e:gym /n:NUMBER_OF_STATIONS`<br/>Example:`new /e:gym /n:4`                                                                     |
-| Track BMI    | `health /h:bmi /height:HEIGHT /weight:WEIGHT /date:DATE` <br/>Example:   `health /h:bmi /height:1.70 /weight:75.42 /date:19-03-2024` |
-| Track Period | `health /h:period /start:START_DATE /end:END_DATE` <br/>Example:   `health /h:period /start:09-03-2022 /end:16-03-2022`              |
-| View history | `history /view:TYPE` <br/>Example:   `history /view:run`                                                                             |
-| View latest  | `latest /view:TYPE` <br/>Example:   `latest /view:bmi`                                                                               |
-| Exit bot     | `exit`                                                                                                                               |
+| Action        | Format, Examples                                                                                      |
+|---------------|--------------------------------------------------------------------------------------------------------|
+| Print help    | `help`                                                                                                   |
+| Add new run   | `workout /e:run /d:DISTANCE /t:TIME [/date:DATE]` Example: `workout /e:run /d:5.24 /t:25:23 /date:19-03-2024` |
+| Add gym       | `workout /e:gym /n:NUMBER_OF_STATIONS [/date:DATE]` Example: `workout /e:gym /n:4`                       |
+| Track BMI     | `health /h:bmi /height:HEIGHT /weight:WEIGHT /date:DATE` Example: `health /h:bmi /height:1.70 /weight:75.42 /date:19-03-2024` |
+| Track Period  | `health /h:period /start:START_DATE /end:END_DATE` Example: `health /h:period /start:09-03-2022 /end:16-03-2022` |
+| View history  | `history /item:TYPE` Example: `history /item:run`                                                          |
+| View latest   | `latest /item:TYPE` Example: `latest /item:bmi`                                                            |
+| Exit bot      | `exit`                                                                                                   |
 
 ###### [Back to table of contents](#table-of-contents)
+

@@ -3,7 +3,9 @@ package constants;
 import java.io.File;
 
 /**
- * Constants class representing all constants used for PulsePilot.
+ * UiConstants class contains constants related to user-interaction-related functionalities in the application.
+ * It includes constants for special characters, regular expressions, UI replies, storage paths,
+ * numerical values, history management, delete operations, and split indices.
  */
 public class UiConstant {
 
@@ -76,4 +78,6 @@ public class UiConstant {
     public static final int DELETE_ITEM_STRING_INDEX = 0;
     public static final int DELETE_ITEM_NUMBER_INDEX = 1;
 
+    public static final int NUM_OF_SLASHES_FOR_DELETE = 2;
+    public static final int NUM_OF_SLASHES_FOR_LATEST_AND_HISTORY = 1;
 }
