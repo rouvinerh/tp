@@ -38,7 +38,8 @@ class ParserTest {
      * Expects the correct details to be returned as a list of strings.
      */
     @Test
-    public void splitDeleteInput_correctInput_returnsCorrectDeleteValues() throws CustomExceptions.InsufficientInput {
+    public void splitDeleteInput_correctInput_returnsCorrectDeleteValues() throws CustomExceptions.InsufficientInput,
+            CustomExceptions.InvalidInput {
         String input = "/item:appointment /index:1";
         String[] expected = {"appointment", "1"};
         String[] result = Parser.splitDeleteInput(input);
@@ -62,7 +63,8 @@ class ParserTest {
      * Expects no exception to be thrown.
      */
     @Test
-    void splitBmiInput_correctInput_returnsCorrectBmiValues() throws CustomExceptions.InsufficientInput {
+    void splitBmiInput_correctInput_returnsCorrectBmiValues() throws CustomExceptions.InsufficientInput,
+            CustomExceptions.InvalidInput {
         String input = "/h:bmi /height:1.71 /weight:60.50 /date:19-03-2024";
         String[] expected = {"1.71", "60.50", "19-03-2024"};
         String[] result = Parser.splitBmiInput(input);
@@ -109,7 +111,8 @@ class ParserTest {
      * Expects no exception to be thrown.
      */
     @Test
-    void splitAppointmentInput_correctInput_noExceptionThrown() throws CustomExceptions.InsufficientInput {
+    void splitAppointmentInput_correctInput_noExceptionThrown() throws CustomExceptions.InsufficientInput,
+            CustomExceptions.InvalidInput {
         String input = "/h:appointment /date:30-03-2024 /time:19:30 /description:test";
         String[] expected = {"30-03-2024", "19:30", "test"};
         String[] result = Parser.splitAppointmentDetails(input);
@@ -157,7 +160,8 @@ class ParserTest {
      * @throws CustomExceptions.InsufficientInput If there is insufficient input.
      */
     @Test
-    void splitGymInput_correctInputWithoutDate_noExceptionThrown() throws CustomExceptions.InsufficientInput {
+    void splitGymInput_correctInputWithoutDate_noExceptionThrown() throws CustomExceptions.InsufficientInput,
+            CustomExceptions.InvalidInput {
         String input = "/e:gym /n:3";
         String[] expected = {"3", null};
         String[] result = Parser.splitGymInput(input);
@@ -171,7 +175,8 @@ class ParserTest {
      * @throws CustomExceptions.InsufficientInput If there is insufficient input.
      */
     @Test
-    void splitGymInput_correctInputWithDate_noExceptionThrown() throws CustomExceptions.InsufficientInput {
+    void splitGymInput_correctInputWithDate_noExceptionThrown() throws CustomExceptions.InsufficientInput,
+            CustomExceptions.InvalidInput {
         String input = "/e:gym /n:3 /date:29-03-2024";
         String[] expected = {"3", "29-03-2024"};
         String[] result = Parser.splitGymInput(input);
@@ -198,8 +203,9 @@ class ParserTest {
      * @throws CustomExceptions.InsufficientInput If there is insufficient input.
      */
     @Test
-    void splitRunInput_correctInputWithoutDate_noExceptionThrown() throws CustomExceptions.InsufficientInput {
-        String input = "/t:25:24 /d:5.15";
+    void splitRunInput_correctInputWithoutDate_noExceptionThrown() throws CustomExceptions.InsufficientInput,
+            CustomExceptions.InvalidInput {
+        String input = "/e:run /t:25:24 /d:5.15";
         String[] expected = {"25:24", "5.15", null};
         String[] result = Parser.splitRunInput(input);
         assertArrayEquals(expected, result);
@@ -212,7 +218,8 @@ class ParserTest {
      * @throws CustomExceptions.InsufficientInput If there is insufficient input.
      */
     @Test
-    void splitRunInput_correctInputWithDate_noExceptionThrown() throws CustomExceptions.InsufficientInput {
+    void splitRunInput_correctInputWithDate_noExceptionThrown() throws CustomExceptions.InsufficientInput,
+            CustomExceptions.InvalidInput {
         String input = "/e:run /d:5.15 /t:25:24 /date:29-04-2024";
         String[] expected = {"25:24", "5.15", "29-04-2024"};
         String[] result = Parser.splitRunInput(input);

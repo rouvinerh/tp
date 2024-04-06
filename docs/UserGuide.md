@@ -17,6 +17,7 @@ PulsePilot is a **desktop app for tracking health-related information, optimised
   * [Health: Appointment](#health-appointment)
   * [History](#history)
   * [Latest](#latest)
+  * [Delete](#delete)
   * [Help](#help)
   * [Exit](#exit)
 * [Logging](#logging)
@@ -25,8 +26,6 @@ PulsePilot is a **desktop app for tracking health-related information, optimised
 * [Command Summary](#command-summary)
 
 ## Quick Start
-
-{Give steps to get started quickly}
 
 1. Ensure that you have the latest Java 11.
 2. Download the latest `pulsepilot.jar`.
@@ -76,7 +75,7 @@ Adds a new Run workout to track.
 
 Format: `workout /e:run /d:DISTANCE /t:TIME [/date:DATE]`
 
-* `DISTANCE` is a **2 decimal point positive number** (i.e. `15.24`) representing the distance ran.
+* `DISTANCE` is a **2 decimal point positive number** (i.e. `15.24`) representing the distance ran in **kilometers**.
 * `TIME` is in `[HH]:MM:SS` format (i.e. `25:30`). The `HH` representing hours is **optional**.
 * `DATE` is in `DD-MM-YYYY` format (i.e. `19-03-2024`). The date is optional, and if not specified, defaults to `NA`.
 
@@ -105,7 +104,7 @@ ____________________________________________________________
 
 Adds a new gym session to track. 
 
-Format: `workout /e:gym /n:2 [/date:DATE]`
+Format: `workout /e:gym /n:NUMBER_OF_STATIONS [/date:DATE]`
 
 * `NUMBER_OF_STATIONS` is a **positive integer**  representing the number of stations for one Gym session.
 * `DATE` is in `DD-MM-YYYY` format (i.e. `19-03-2024`). The date is optional, and if not specified, defaults to `NA`.
@@ -126,7 +125,7 @@ Format: `STATION_NAME /s:SET /r:REPS /w:WEIGHT`
 * `REPS` is a **positive integer**  representing the number of repetitions done for one station.
 * `WEIGHT` is a **positive integer**  representing the weight used for one station.
 
-Examples: `Bench Press /s:4 /r:10 /w:75`
+Examples: `Bench Press /s:4 /r:10 /w:75,75,75,75`
 
 Expected Output:
 
@@ -150,6 +149,8 @@ Station 2 squat: 2 sets
 	- Set 2. 4 reps at 20 KG
 ____________________________________________________________
 ```
+
+> Note that the number of weights must equal to the number of sets! For example, if you have done 2 sets, PulsePilot expects 2 weights specified like `10,10`. 
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -180,6 +181,14 @@ Your BMI is 26.1
 You're overweight.
 ____________________________________________________________
 ```
+
+The ranges for BMI are as follows:
+
+- BMI < 18.5: Underweight
+- 18.5 <= BMI < 24.9: Normal
+- 24.9 <= BMI < 29.9: Overweight
+- 29.9 <= BMI < 39.9: Obese
+- BMI >= 39.9: Severely Obese
 
 ###### [Back to table of contents](#table-of-contents)
 ___
@@ -323,6 +332,38 @@ ____________________________________________________________
 
 ###### [Back to table of contents](#table-of-contents)
 --- 
+
+### Delete
+
+Deletes an item tracked within PulsePilot. 
+
+Format: `delete /item:TYPE /index:INDEX`
+
+* `TYPE` is either `run`, `gym`, `bmi` or `period`.
+* `INDEX` represents the index of the item to delete. 
+
+Expected output:
+
+```
+history /item:run
+____________________________________________________________
+Your run history:
+Index 	Type  	Time      	Distance  	Pace      	Date        
+1     	run   	25:20     	5.15      	4:55/km   	2024-03-28  
+2     	run   	50:20     	12.15     	4:09/km   	2024-03-29  
+____________________________________________________________
+delete /item:run /index:2
+Removed Run entry with 12.15km at 4:09/km.
+history /item:run
+____________________________________________________________
+Your run history:
+Index 	Type  	Time      	Distance  	Pace      	Date        
+1     	run   	25:20     	5.15      	4:55/km   	2024-03-28  
+____________________________________________________________
+```
+
+###### [Back to table of contents](#table-of-contents)
+
 ### Help
 
 Prints the `help` message. 

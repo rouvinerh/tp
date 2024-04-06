@@ -87,8 +87,6 @@ Images are included like this
 
 > ❗This is an **example image** to show how images are included, and will be removed in future iterations.
 
-
-
 ###### [Back to table of contents](#table-of-contents)
 
 ### Windows

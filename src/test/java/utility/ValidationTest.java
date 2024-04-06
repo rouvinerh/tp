@@ -75,6 +75,18 @@ public class ValidationTest {
         assertThrows(CustomExceptions.InvalidInput.class, () -> {
             Validation.validateDateInput(input8);
         });
+
+        // leap year
+        String input9 = "29-02-2023";
+        assertThrows(CustomExceptions.InvalidInput.class, () -> {
+            Validation.validateDateInput(input9);
+        });
+
+        // year before 1967
+        String input10 = "29-02-0000";
+        assertThrows(CustomExceptions.InvalidInput.class, () -> {
+            Validation.validateDateInput(input10);
+        });
     }
 
     /**
