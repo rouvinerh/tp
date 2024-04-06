@@ -186,6 +186,6 @@ public class ErrorConstant {
             + "Please enter a more realistic height less than 2.75m!";
     public static final String MAX_WEIGHT_ERROR = "The heaviest human being Jon Brower Minnnoch weighed in at 635kg. "
             + System.lineSeparator()
-            + "Please enter a more realistic height less than 640kg!";
+            + "Please enter a more realistic weight less than 640kg!";
 
 }
