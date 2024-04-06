@@ -109,7 +109,7 @@ public class Parser {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_DELETE_PARAMETERS_ERROR);
         }
 
-        if (countForwardSlash(input) != UiConstant.NUM_OF_SLASHES_FOR_DELETE) {
+        if (countForwardSlash(input) > UiConstant.NUM_OF_SLASHES_FOR_DELETE) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.TOO_MANY_SLASHES_ERROR);
         }
 
@@ -149,7 +149,7 @@ public class Parser {
      */
     public static String parseHistoryAndLatestInput(String userInput) {
         try {
-            if (countForwardSlash(userInput) != UiConstant.NUM_OF_SLASHES_FOR_LATEST_AND_HISTORY) {
+            if (countForwardSlash(userInput) > UiConstant.NUM_OF_SLASHES_FOR_LATEST_AND_HISTORY) {
                 throw new CustomExceptions.InvalidInput(ErrorConstant.TOO_MANY_SLASHES_ERROR);
             }
             String type = extractSubstringFromSpecificIndex(userInput, UiConstant.ITEM_FLAG);
@@ -201,7 +201,7 @@ public class Parser {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_BMI_PARAMETERS_ERROR);
         }
 
-        if (countForwardSlash(input) != HealthConstant.NUM_OF_SLASHES_FOR_BMI) {
+        if (countForwardSlash(input) > HealthConstant.NUM_OF_SLASHES_FOR_BMI) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.TOO_MANY_SLASHES_ERROR);
         }
 
@@ -248,7 +248,7 @@ public class Parser {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_PERIOD_PARAMETERS_ERROR);
         }
 
-        if (countForwardSlash(input) != HealthConstant.NUM_OF_SLASHES_FOR_PERIOD) {
+        if (countForwardSlash(input) > HealthConstant.NUM_OF_SLASHES_FOR_PERIOD) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.TOO_MANY_SLASHES_ERROR);
         }
 
@@ -292,7 +292,7 @@ public class Parser {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_APPOINTMENT_PARAMETERS_ERROR);
         }
 
-        if (countForwardSlash(input) != HealthConstant.NUM_OF_SLASHES_FOR_APPOINTMENT) {
+        if (countForwardSlash(input) > HealthConstant.NUM_OF_SLASHES_FOR_APPOINTMENT) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.TOO_MANY_SLASHES_ERROR);
         }
 
@@ -466,7 +466,7 @@ public class Parser {
             try {
                 Output.printGymStationPrompt(i + 1);
                 String userInput = Handler.in.nextLine();
-                if (countForwardSlash(userInput) != WorkoutConstant.NUM_OF_SLASHES_FOR_GYM_STATION) {
+                if (countForwardSlash(userInput) > WorkoutConstant.NUM_OF_SLASHES_FOR_GYM_STATION) {
                     throw new CustomExceptions.InvalidInput(ErrorConstant.TOO_MANY_SLASHES_ERROR);
                 }
                 String[] validGymStationInput = Validation.splitAndValidateGymStationInput(userInput);

@@ -96,7 +96,8 @@ public class ErrorConstant {
     public static final String INVALID_WEIGHTS_ARRAY_FORMAT_ERROR = "Weights can only have integers and commas, with" +
             "no spaces! Example: 10,20,30";
     public static final String EMPTY_WEIGHTS_ARRAY_ERROR = "Weights array cannot be empty";
-    public static final String GYM_WEIGHT_POSITIVE_ERROR = "Weights must be positive! e.g. /w:10,20,30";
+    public static final String GYM_WEIGHT_POSITIVE_ERROR = "Weights specified must a positive integer! " +
+            "e.g. /w:10,20,30";
     public static final String GYM_WEIGHT_DIGIT_ERROR = " Weights must be a number! e.g. /w:5,10,20";
     public static final String GYM_WEIGHTS_INCORRECT_NUMBER_ERROR = " Number of weight values must be the same as" +
             " the number of sets! e.g. bench press /s:2 /r:10 /w:10,20";
@@ -165,5 +166,13 @@ public class ErrorConstant {
             + "3100 Mile Race."
             + System.lineSeparator()
             + "Please enter a more realistic distance less than 5000km!";
+
+    public static final String ZERO_HEIGHT_AND_WEIGHT_ERROR = "Height and weight must be more than 0.";
+    public static final String MAX_HEIGHT_ERROR = "The tallest man Robert Wadlow was 2.72m. "
+            + System.lineSeparator()
+            + "Please enter a more realistic height less than 2.75m!";
+    public static final String MAX_WEIGHT_ERROR = "The heaviest human being Jon Brower Minnnoch weighed in at 635kg. "
+            + System.lineSeparator()
+            + "Please enter a more realistic height less than 640kg!";
 
 }

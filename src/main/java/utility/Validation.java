@@ -4,7 +4,9 @@ import constants.ErrorConstant;
 import constants.HealthConstant;
 import constants.UiConstant;
 import constants.WorkoutConstant;
+import health.Health;
 
+import javax.print.attribute.HashPrintJobAttributeSet;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -99,6 +101,22 @@ public class Validation {
                 || !bmiDetails[HealthConstant.BMI_WEIGHT_INDEX].matches(UiConstant.VALID_TWO_DP_NUMBER_REGEX)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.HEIGHT_WEIGHT_INPUT_ERROR);
         }
+
+        double height = Double.parseDouble(bmiDetails[HealthConstant.BMI_HEIGHT_INDEX]);
+        double weight = Double.parseDouble(bmiDetails[HealthConstant.BMI_WEIGHT_INDEX]);
+
+        if (height <= HealthConstant.MIN_HEIGHT || weight <= HealthConstant.MIN_WEIGHT) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.ZERO_HEIGHT_AND_WEIGHT_ERROR);
+        }
+
+        if (height > HealthConstant.MAX_HEIGHT) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.MAX_HEIGHT_ERROR);
+        }
+
+        if (weight > HealthConstant.MAX_WEIGHT) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.MAX_WEIGHT_ERROR);
+        }
+
         validateDateInput(bmiDetails[HealthConstant.BMI_DATE_INDEX]);
         validateDateNotAfterToday(bmiDetails[HealthConstant.BMI_DATE_INDEX]);
 
@@ -334,7 +352,7 @@ public class Validation {
         try {
             for(String weight: weightsArray){
                 int weightInteger = Integer.parseInt(weight);
-                if (weightInteger < WorkoutConstant.MIN_WEIGHT){
+                if (weightInteger <= WorkoutConstant.MIN_WEIGHT){
                     throw new CustomExceptions.InvalidInput(ErrorConstant.GYM_WEIGHT_POSITIVE_ERROR);
                 }
                 validatedWeightsArray.add(weightInteger);
