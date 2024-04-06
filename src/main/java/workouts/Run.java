@@ -93,10 +93,6 @@ public class Run extends Workout {
         this.date = date;
     }
 
-    public boolean isHourPresent() {
-        return isHourPresent;
-    }
-
     /**
      * Method parses the time format in either hh:mm:ss or mm:ss.
      * Sets {@code isHourPresent} variable to true if hours have been specified.
@@ -139,7 +135,7 @@ public class Run extends Workout {
                     + this.times[1] * UiConstant.NUM_SECONDS_IN_MINUTE
                     + this.times[2];
         } else {
-            totalSeconds = this.times[0] * 60 + this.times[1];
+            totalSeconds = this.times[0] * UiConstant.NUM_SECONDS_IN_MINUTE + this.times[1];
         }
         return totalSeconds;
     }
@@ -149,9 +145,16 @@ public class Run extends Workout {
      *
      * @return Formatted string the pace of the run.
      */
-    public String calculatePace() {
+    public String calculatePace() throws CustomExceptions.InvalidInput {
         int totalSeconds = calculateTotalSeconds();
         double paceInDecimal = ((double) totalSeconds / this.distance) / UiConstant.NUM_SECONDS_IN_MINUTE;
+
+        if (paceInDecimal > WorkoutConstant.MAX_PACE) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.MAX_PACE_ERROR);
+        }
+        if (paceInDecimal < WorkoutConstant.MIN_PACE) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.MIN_PACE_ERROR);
+        }
 
         int minutes = (int) paceInDecimal;
         double remainingSeconds = paceInDecimal - minutes;

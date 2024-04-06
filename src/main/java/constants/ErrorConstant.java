@@ -74,10 +74,10 @@ public class ErrorConstant {
             + "Only input what is required! Additional characters between flags will cause errors.";
     public static final String INVALID_RUN_DISTANCE_ERROR = "Distance is a 2 decimal point positive number!";
     public static final String INVALID_RUN_TIME_ERROR = "Invalid time format. Format is either HH:MM:SS or " +
-            "MM:SS with integers.";
-    public static final String INVALID_SECOND_ERROR = "Seconds must be a positive integer between 00 and 59";
-    public static final String INVALID_HOUR_ERROR = "Hours cannot set to 00. Use MM:SS instead";
-    public static final String INVALID_MINUTE_ERROR = "Minutes must be a positive integer between 01 and 59";
+            "MM:SS with integers!";
+    public static final String INVALID_SECOND_ERROR = "Seconds must be a positive integer between 00 and 59!";
+    public static final String INVALID_HOUR_ERROR = "Hours cannot set to 00. Use MM:SS instead!";
+    public static final String INVALID_MINUTE_ERROR = "Minutes must be a positive integer between 01 and 59!";
 
     // GYM ERRORS
     public static final String INSUFFICIENT_GYM_PARAMETERS_ERROR = "Insufficient parameters for gym! "
@@ -190,5 +190,11 @@ public class ErrorConstant {
 
     public static final String ZERO_DISTANCE_ERROR = "Distance run cannot be 0!";
     public static final String ZERO_TIME_ERROR = "Time cannot be set to 00:00!";
+    public static final String MAX_PACE_ERROR = "The calculated pace is too slow!"
+            + System.lineSeparator()
+            + "Pace calculated cannot be slower than 30:00/km!";
+    public static String MIN_PACE_ERROR = "The calculated pace is too fast!"
+            + System.lineSeparator()
+            + "Pace calculacted cannot be faster than 1:00/km!";
 
 }
