@@ -28,6 +28,8 @@ public class WorkoutConstant {
     public static final double MAX_RUN_DISTANCE = 5000.00;
     public static final double MIN_RUN_DISTANCE = 0;
 
+    public static final double WEIGHT_MULTIPLE = 0.125;
+
     // INDEX
     public static final Integer STATION_NAME_INDEX = 0;
     public static final int NO_HOURS_PRESENT = -1;
