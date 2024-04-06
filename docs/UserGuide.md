@@ -179,6 +179,14 @@ You're overweight.
 ____________________________________________________________
 ```
 
+The ranges for BMI are as follows:
+
+- BMI < 18.5: Underweight
+- 18.5 <= BMI < 24.9: Normal
+- 24.9 <= BMI < 29.9: Overweight
+- 29.9 <= BMI < 39.9: Obese
+- BMI >= 39.9: Severely Obese
+
 ###### [Back to table of contents](#table-of-contents)
 ___
 ### Health: Period
