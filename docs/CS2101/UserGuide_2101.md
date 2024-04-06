@@ -28,19 +28,19 @@ Once again, we hope our application helps you, and thank you for choosing PulseP
 
 Before we delve into the content of what is PulsePilot and how to use it, we want to let you know and get familiar with the styling used in this guide, so that this guide can help you better!
 
-###### [Back to table of contents](#table-of-contents)
-
 ### Glossary Usage
 
 This guide may have difficult to understand technical jargon or terms used. Fret not! We understand that seeing such terms can be daunting to someone not familiar with it.
 
 As such, our team has created a **Glossary** for you to refer to when reading this guide! It serves as a mini-dictionary, for you to read a definition and quickly go back to wherever you were.
 
-For example, technical terms are marked in **italicised blue** [*like this*]()! When you click on it, it will bring you to the glossary. Each term in the glossary also contains a 'Go back' button, and it brings you back to where you originally were to create a seamless reading experience.
+Technical terms are marked in **italicised blue** [*like this*]()! When you click on it, it brings you to the glossary. Each term in the glossary also contains a 'Go back' button, and clicking on that returns you to where you originally were. This is to create a seamless reading experience for you!
 
 Give it a try with the term: [*Object-Oriented Programming*](#glossary).
 
-The blue phrases known are also known as [*hyperlinks*](#glossary). Non-italicised hyperlinks [like this]() are used to bring you to different parts of the document. 
+The blue phrases known are also known as [*hyperlinks*](#glossary). 
+
+Non-italicised hyperlinks [like this]() are used to bring you to different parts of the document. 
 
 For example, **the one below to bring you back to the table of contents on top!**
 
@@ -57,6 +57,8 @@ There are 3 different kinds of **blocks**, denoted using different **icons** to 
 > ❗This is an **important** block. It contains information that you **MUST READ**! Take note of these!
 
 If you need more, add more.
+
+###### [Back to table of contents](#table-of-contents)
 
 ## What is PulsePilot
 
