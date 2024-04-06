@@ -90,22 +90,24 @@ Upon entry of the `workout /e:gym` command, the bot will prompt for further deta
 
 Format: `STATION_NAME /s:SET /r:REPS /w:WEIGHT`
 
-* All parameters must be provided in correct order as shown above.
 * `STATION_NAME` is a **string**  representing the name of the gym station.
 * `SET` is a **positive integer**  representing the number of sets done for one station.
 * `REPS` is a **positive integer**  representing the number of repetitions done for one station.
-* `WEIGHT` is a **positive double**  representing the weight used for one station.
+* `WEIGHT` is a **list of positive double** separated by commas. It represents the weights used for all the sets in the station.
+> ⚠️ `STATION_NAME` must always be the first parameter. The order of the other parameters can be in any order.
 
-> ❗`WEIGHT` must be in **multiples of 0.125 KG**. This is because the minimum weight increment in a gym is 0.125KG. Example `bench press /s:2 /r:10 /w:10.333,12.5` is not valid as 10.333 is not a multiple of 0.125kg. 
+> ⚠️ `WEIGHT` must be in **multiples of 0.125 KG**. This is because the minimum weight increment in a gym is 0.125KG. Example `bench press /s:2 /r:10 /w:10.333,12.5` is not valid as 10.333 is not a multiple of 0.125kg. 
+
+> ⚠️ Note that the **number of weights must equal to the number of sets**! For example, if you have done 2 sets at 10 kg, PulsePilot still expects 2 weights to be specified like this `squats /s:2 /r:5 /w:10.25,10.5`. 
 
 
-Examples: `Bench Press /s:4 /r:10 /w:75.0,78.25,78.75,89.50`
+Examples 1 : 
+- `bench press /s:2 /r:4 /w:10,20`
+- `squat /r:2 /s:2 /w:10.5,20.5`
 
 Expected Output:
 
 ![Adding Gyms](img/adding_gym.png)
-
-> Note that the number of weights must equal to the number of sets! For example, if you have done 2 sets, PulsePilot expects 2 weights specified like `10,10`. 
 
 ###### [Back to table of contents](#table-of-contents)
 
