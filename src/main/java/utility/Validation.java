@@ -395,6 +395,9 @@ public class Validation {
 
         String weights = Parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.WEIGHTS_FLAG).trim();
 
+        if (!weights.matches(UiConstant.VALID_WEIGHTS_ARRAY_REGEX)) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_WEIGHTS_ARRAY_FORMAT_ERROR);
+        }
 
         String[] weightsArray = weights.split(UiConstant.SPLIT_BY_COMMAS);
         if (weightsArray.length < WorkoutConstant.MIN_GYM_STATION_WEIGHTS_ARRAY_LENGTH) {
