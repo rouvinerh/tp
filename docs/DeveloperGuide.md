@@ -56,12 +56,8 @@ The purpose of this guide is to provide an explanation for all the functions and
 
 The application follows an Object-Oriented Design approach, with separate classes for handling different components of the application, such as user input, output, exercise logging, and health data management.
 
-<<<<<<< HEAD
-![Architecture Diagram](img/architecture_diagram.png)
-=======
 
-![ArchitectureDiagram](img/architecture_diagram.png)
->>>>>>> f712869cb298d4ac1f4d6178e7eaeed520cb1919
+![Architecture Diagram](img/architecture_diagram.png)
 
 The **_Architecture Diagram_** given above explains the high-level design of the PulsePilot.
 

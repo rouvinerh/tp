@@ -31,6 +31,11 @@ public class HealthConstant {
     public static final double NORMAL_BMI_THRESHOLD = 24.9;
     public static final double OVERWEIGHT_BMI_THRESHOLD = 29.9;
     public static final double OBESE_BMI_THRESHOLD = 39.9;
+    public static final double MIN_WEIGHT = 0;
+    public static final double MIN_HEIGHT = 0;
+    public static final double MAX_HEIGHT = 2.75;
+    public static final double MAX_WEIGHT = 640;
+
 
     // Formatted Strings/Messages
     // BMI
@@ -87,4 +92,8 @@ public class HealthConstant {
     public static final int APPOINTMENT_DATE_INDEX = 0;
     public static final int APPOINTMENT_TIME_INDEX = 1;
     public static final int APPOINTMENT_DESCRIPTION_INDEX = 2;
+
+    public static final int NUM_OF_SLASHES_FOR_PERIOD = 3;
+    public static final int NUM_OF_SLASHES_FOR_BMI = 4;
+    public static final int NUM_OF_SLASHES_FOR_APPOINTMENT = 4;
 }
