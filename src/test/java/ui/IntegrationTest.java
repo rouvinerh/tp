@@ -103,7 +103,7 @@ public class IntegrationTest {
     @Test
     void testLatestDisplay_userInputsTwoGymAndRuns_expectsLatestGymAndRun(){
         String run1 = "WORKOUT /e:run /d:10.30 /t:40:10 /date:15-03-2024";
-        String run2 = "WORKOUT /e:run /d:40.30 /t:30:10 /date:17-03-2024";
+        String run2 = "WORKOUT /e:run /d:11.59 /t:30:10 /date:17-03-2024";
         String gym1 = "WORKOUT /e:gym /n:2 /date:18-03-2024";
         String gym1Station1 = "benchpress /s:2 /r:4 /w:40,60";
         String gym1Station2 = "squats /s:3 /r:4 /w:10,20,30";
@@ -139,7 +139,7 @@ public class IntegrationTest {
         // Craft expected output
         try{
             Run run1Expected = new Run("40:10", "10.30", "15-03-2024");
-            Run run2Expected = new Run("30:10", "40.30", "17-03-2024");
+            Run run2Expected = new Run("30:10", "11.59", "17-03-2024");
 
             Gym gym1expected = new Gym("18-03-2024");
             gym1expected.addStation("benchpress", 2, 4,

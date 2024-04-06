@@ -145,8 +145,7 @@ public class Run extends Workout {
      *
      *
      * @return Formatted string the pace of the run.
-     * @throws CustomExceptions.InvalidInput If the total time taken or pace calculated does not fall within the
-     * stipulated boundaries.
+     * @throws CustomExceptions.InvalidInput If the total time taken or pace calculated is too large or small.
      */
     public String calculatePace() throws CustomExceptions.InvalidInput {
         int totalSeconds = calculateTotalSeconds();

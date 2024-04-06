@@ -429,17 +429,17 @@ class OutputTest {
     @Test
     void printWorkoutHistory() {
         try {
-            Run run1 = new Run("11:11:12", "10.24", "19-12-1923");
+            Run run1 = new Run("01:11:12", "10.24", "19-12-1999");
             Gym gym1 = new Gym("11-11-1992");
             gym1.addStation("Bench Press", 2, 4, new ArrayList<>(Arrays.asList(10,20)));
             gym1.addStation("Squat Press", 2, 4, new ArrayList<>(Arrays.asList(100,200)));
 
             String expectedRun1 = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
                     WorkoutConstant.RUN,
-                    "1923-12-19",
+                    "1999-12-19",
                     "10.24",
-                    "11:11:12",
-                    "65:33/km",
+                    "01:11:12",
+                    "6:57/km",
                     UiConstant.DASH,
                     UiConstant.DASH,
                     UiConstant.DASH,
