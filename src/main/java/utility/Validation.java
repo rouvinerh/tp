@@ -349,17 +349,17 @@ public class Validation {
      * @return ArrayList of integers representing the weights in the format [weight1, weight2, weight3 ...]
      * @throws CustomExceptions.InvalidInput If an invalid weights string is passed in.
      */
-    public static ArrayList<Integer> validateWeightsArray(String weightsString)
+    public static ArrayList<Double> validateWeightsArray(String weightsString)
             throws CustomExceptions.InvalidInput {
         String[] weightsArray = weightsString.split(UiConstant.SPLIT_BY_COMMAS);
-        ArrayList<Integer> validatedWeightsArray = new ArrayList<>();
+        ArrayList<Double> validatedWeightsArray = new ArrayList<>();
         try {
             for(String weight: weightsArray){
-                int weightInteger = Integer.parseInt(weight);
-                if (weightInteger <= WorkoutConstant.MIN_WEIGHT){
+                double weightDouble = Double.parseDouble(weight);
+                if (weightDouble < WorkoutConstant.MIN_WEIGHT){
                     throw new CustomExceptions.InvalidInput(ErrorConstant.GYM_WEIGHT_POSITIVE_ERROR);
                 }
-                validatedWeightsArray.add(weightInteger);
+                validatedWeightsArray.add(weightDouble);
             }
         } catch (NumberFormatException e){
             throw new CustomExceptions.InvalidInput(ErrorConstant.GYM_WEIGHT_DIGIT_ERROR);
