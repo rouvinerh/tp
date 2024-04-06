@@ -17,6 +17,7 @@ PulsePilot is a **desktop app for tracking health-related information, optimised
   * [Health: Appointment](#health-appointment)
   * [History](#history)
   * [Latest](#latest)
+  * [Delete](#delete)
   * [Help](#help)
   * [Exit](#exit)
 * [Logging](#logging)
@@ -331,6 +332,38 @@ ____________________________________________________________
 
 ###### [Back to table of contents](#table-of-contents)
 --- 
+
+### Delete
+
+Deletes an item tracked within PulsePilot. 
+
+Format: `delete /item:TYPE /index:INDEX`
+
+* `TYPE` is either `run`, `gym`, `bmi` or `period`.
+* `INDEX` represents the index of the item to delete. 
+
+Expected output:
+
+```
+history /item:run
+____________________________________________________________
+Your run history:
+Index 	Type  	Time      	Distance  	Pace      	Date        
+1     	run   	25:20     	5.15      	4:55/km   	2024-03-28  
+2     	run   	50:20     	12.15     	4:09/km   	2024-03-29  
+____________________________________________________________
+delete /item:run /index:2
+Removed Run entry with 12.15km at 4:09/km.
+history /item:run
+____________________________________________________________
+Your run history:
+Index 	Type  	Time      	Distance  	Pace      	Date        
+1     	run   	25:20     	5.15      	4:55/km   	2024-03-28  
+____________________________________________________________
+```
+
+###### [Back to table of contents](#table-of-contents)
+
 ### Help
 
 Prints the `help` message. 
