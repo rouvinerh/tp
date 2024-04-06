@@ -26,8 +26,6 @@ PulsePilot is a **desktop app for tracking health-related information, optimised
 
 ## Quick Start
 
-{Give steps to get started quickly}
-
 1. Ensure that you have the latest Java 11.
 2. Download the latest `pulsepilot.jar`.
 3. Copy the file to the folder you want to use as the home folder for PulsePilot.
