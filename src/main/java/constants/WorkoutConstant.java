@@ -29,6 +29,8 @@ public class WorkoutConstant {
     public static final double MIN_RUN_DISTANCE = 0;
     public static final double MAX_PACE = 30;
     public static final double MIN_PACE = 1;
+    public static final double MIN_RUN_TIME_IN_SECONDS = 0;
+    public static final double MAX_RUN_TIME_IN_SECONDS = 360000; // 99:59:59 in seconds
 
     // INDEX
     public static final Integer STATION_NAME_INDEX = 0;

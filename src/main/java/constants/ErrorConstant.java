@@ -193,8 +193,12 @@ public class ErrorConstant {
     public static final String MAX_PACE_ERROR = "The calculated pace is too slow!"
             + System.lineSeparator()
             + "Pace calculated cannot be slower than 30:00/km!";
-    public static String MIN_PACE_ERROR = "The calculated pace is too fast!"
+    public static final String MIN_PACE_ERROR = "The calculated pace is too fast!"
             + System.lineSeparator()
             + "Pace calculacted cannot be faster than 1:00/km!";
+
+    public static final String ZERO_RUN_TIME_ERROR = "Total time taken for run cannot be 0!";
+    public static final String MAX_RUN_TIME_ERROR = "Total time taken for run cannot exceed 100 hours!";
+
 
 }

@@ -143,10 +143,21 @@ public class Run extends Workout {
     /**
      * Method calculates the pace of the run, and formats it into M:SS/km.
      *
+     *
      * @return Formatted string the pace of the run.
+     * @throws CustomExceptions.InvalidInput If the total time taken or pace calculated does not fall within the
+     * stipulated boundaries.
      */
     public String calculatePace() throws CustomExceptions.InvalidInput {
         int totalSeconds = calculateTotalSeconds();
+        if (totalSeconds <= WorkoutConstant.MIN_RUN_TIME_IN_SECONDS) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.ZERO_RUN_TIME_ERROR);
+        }
+
+        if (totalSeconds > WorkoutConstant.MAX_RUN_TIME_IN_SECONDS) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.MAX_RUN_TIME_ERROR);
+        }
+
         double paceInDecimal = ((double) totalSeconds / this.distance) / UiConstant.NUM_SECONDS_IN_MINUTE;
 
         if (paceInDecimal > WorkoutConstant.MAX_PACE) {
