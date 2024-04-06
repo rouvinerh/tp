@@ -103,7 +103,7 @@ ____________________________________________________________
 
 Adds a new gym session to track. 
 
-Format: `workout /e:gym /n:2 [/date:DATE]`
+Format: `workout /e:gym /n:NUMBER_OF_STATIONS [/date:DATE]`
 
 * `NUMBER_OF_STATIONS` is a **positive integer**  representing the number of stations for one Gym session.
 * `DATE` is in `DD-MM-YYYY` format (i.e. `19-03-2024`). The date is optional, and if not specified, defaults to `NA`.
