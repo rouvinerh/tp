@@ -88,4 +88,11 @@ public class WorkoutConstant {
     public static final String INVALID_RUN_TIME = "Invalid run time!";
     public static final String INVALID_GYM_INPUT = "Invalid gym parameters!";
     public static final String INVALID_GYM_STATION_INDEX = "Invalid gym station index!";
+
+    public static final int NUM_OF_SLASHES_FOR_GYM_WITH_DATE = 3;
+    public static final int NUM_OF_SLASHES_FOR_GYM_WITHOUT_DATE = 2;
+    public static final int NUM_OF_SLASHES_FOR_GYM_STATION = 3;
+
+    public static final int NUM_OF_SLASHES_FOR_RUN_WITH_DATE = 4;
+    public static final int NUM_OF_SLASHES_FOR_RUN_WITHOUT_DATE = 3;
 }

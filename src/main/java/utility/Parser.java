@@ -26,6 +26,22 @@ import java.util.ArrayList;
 public class Parser {
 
     /**
+     * Counts the number of '/' characters there are in a given string.
+     *
+     * @param input The user input string.
+     * @return An integer representing the number of '/' characters there are.
+     */
+    public static int countForwardSlash(String input) {
+        int count = 0;
+        for (int i = 0; i < input.length(); i++) {
+            if (input.charAt(i) == '/') {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
      * Parses and converts String date to a LocalDate variable.
      * @param date String representing the date.
      * @return LocalDate variable representing the date.
@@ -51,7 +67,6 @@ public class Parser {
      * @throws DateTimeParseException If there is an error parsing the date.
      */
     public static String parseFormattedDate(LocalDate date) {
-
         DateTimeFormatter formatter = null;
         try {
             formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -89,10 +104,15 @@ public class Parser {
      * @return An array of strings containing the extracted delete command parameters.
      * @throws CustomExceptions.InsufficientInput If not enough parameters are specified.
      */
-    public static String[] splitDeleteInput(String input) throws CustomExceptions.InsufficientInput {
+    public static String[] splitDeleteInput(String input) throws CustomExceptions.InsufficientInput, CustomExceptions.InvalidInput {
         if (!input.contains(UiConstant.ITEM_FLAG) || !input.contains(UiConstant.INDEX_FLAG)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_DELETE_PARAMETERS_ERROR);
         }
+
+        if (countForwardSlash(input) != UiConstant.NUM_OF_SLASHES_FOR_DELETE) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.TOO_MANY_SLASHES_ERROR);
+        }
+
         String[] results = new String[UiConstant.NUM_DELETE_PARAMETERS];
         results[UiConstant.DELETE_ITEM_STRING_INDEX] = extractSubstringFromSpecificIndex(input,
                 UiConstant.ITEM_FLAG).trim();
@@ -109,6 +129,7 @@ public class Parser {
      * @return A list of strings containing the filter string and index to delete.
      */
     public static String[] parseDeleteInput(String userInput) {
+
         try {
             String[] deleteDetails = splitDeleteInput(userInput);
             Validation.validateDeleteInput(deleteDetails);
@@ -128,6 +149,9 @@ public class Parser {
      */
     public static String parseHistoryAndLatestInput(String userInput) {
         try {
+            if (countForwardSlash(userInput) != UiConstant.NUM_OF_SLASHES_FOR_LATEST_AND_HISTORY) {
+                throw new CustomExceptions.InvalidInput(ErrorConstant.TOO_MANY_SLASHES_ERROR);
+            }
             String type = extractSubstringFromSpecificIndex(userInput, UiConstant.ITEM_FLAG);
 
             if (type.isBlank()) {
@@ -168,12 +192,19 @@ public class Parser {
      * @return An array of strings containing the extracted Bmi parameters.
      * @throws CustomExceptions.InsufficientInput If the height, weight or date parameters are missing.
      */
-    public static String[] splitBmiInput(String input) throws CustomExceptions.InsufficientInput {
+    public static String[] splitBmiInput(String input) throws CustomExceptions.InsufficientInput,
+            CustomExceptions.InvalidInput {
+
         if (!input.contains(HealthConstant.HEIGHT_FLAG)
                 || !input.contains(HealthConstant.WEIGHT_FLAG)
                 || !input.contains(HealthConstant.DATE_FLAG)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_BMI_PARAMETERS_ERROR);
         }
+
+        if (countForwardSlash(input) != HealthConstant.NUM_OF_SLASHES_FOR_BMI) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.TOO_MANY_SLASHES_ERROR);
+        }
+
         String [] results = new String[HealthConstant.NUM_BMI_PARAMETERS];
         results[HealthConstant.BMI_HEIGHT_INDEX] = extractSubstringFromSpecificIndex(input,
                 HealthConstant.HEIGHT_FLAG).trim();
@@ -210,11 +241,17 @@ public class Parser {
      * @return An array of strings containing the extracted Period parameters.
      * @throws CustomExceptions.InsufficientInput If the user input is invalid or blank.
      */
-    public static String[] splitPeriodInput(String input) throws CustomExceptions.InsufficientInput {
+    public static String[] splitPeriodInput(String input) throws CustomExceptions.InsufficientInput,
+            CustomExceptions.InvalidInput {
         if (!input.contains(HealthConstant.START_FLAG)
                 || !input.contains(HealthConstant.END_FLAG)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_PERIOD_PARAMETERS_ERROR);
         }
+
+        if (countForwardSlash(input) != HealthConstant.NUM_OF_SLASHES_FOR_PERIOD) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.TOO_MANY_SLASHES_ERROR);
+        }
+
         String [] results = new String[HealthConstant.NUM_PERIOD_PARAMETERS];
         results[HealthConstant.PERIOD_START_DATE_INDEX] = extractSubstringFromSpecificIndex(input,
                 HealthConstant.START_FLAG).trim();
@@ -247,13 +284,18 @@ public class Parser {
      * @throws CustomExceptions.InsufficientInput If the user input is invalid or blank.
      */
     public static String[] splitAppointmentDetails(String input)
-            throws CustomExceptions.InsufficientInput {
+            throws CustomExceptions.InsufficientInput, CustomExceptions.InvalidInput {
         String [] results = new String[HealthConstant.NUM_APPOINTMENT_PARAMETERS];
         if (!input.contains(HealthConstant.DATE_FLAG)
                 || !input.contains(HealthConstant.TIME_FLAG)
                 || !input.contains(HealthConstant.DESCRIPTION_FLAG)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_APPOINTMENT_PARAMETERS_ERROR);
         }
+
+        if (countForwardSlash(input) != HealthConstant.NUM_OF_SLASHES_FOR_APPOINTMENT) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.TOO_MANY_SLASHES_ERROR);
+        }
+
         results[HealthConstant.APPOINTMENT_DATE_INDEX] = extractSubstringFromSpecificIndex(input,
                 HealthConstant.DATE_FLAG).trim();
         results[HealthConstant.APPOINTMENT_TIME_INDEX] = extractSubstringFromSpecificIndex(input,
@@ -311,10 +353,18 @@ public class Parser {
      * @return The Gym parameters split from the user input.
      * @throws CustomExceptions.InsufficientInput If the number of stations is missing.
      */
-    public static String[] splitGymInput(String input) throws CustomExceptions.InsufficientInput {
+    public static String[] splitGymInput(String input) throws CustomExceptions.InsufficientInput,
+            CustomExceptions.InvalidInput {
         if (!input.contains(WorkoutConstant.NUMBER_OF_STATIONS_FLAG)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_GYM_PARAMETERS_ERROR);
         }
+
+        if (countForwardSlash(input) != WorkoutConstant.NUM_OF_SLASHES_FOR_GYM_WITH_DATE &&
+            countForwardSlash(input) != WorkoutConstant.NUM_OF_SLASHES_FOR_GYM_WITHOUT_DATE) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.TOO_MANY_SLASHES_ERROR);
+        }
+
+
         String[] results = new String[WorkoutConstant.NUMBER_OF_GYM_PARAMETERS];
         results[WorkoutConstant.GYM_NUMBER_OF_STATIONS_INDEX] = extractSubstringFromSpecificIndex(input,
                 WorkoutConstant.NUMBER_OF_STATIONS_FLAG).trim();
@@ -354,11 +404,18 @@ public class Parser {
      * @return The Run parameters split from the user input.
      * @throws CustomExceptions.InsufficientInput If the distance and time taken for the run are missing.
      */
-    public static String[] splitRunInput(String input) throws CustomExceptions.InsufficientInput {
+    public static String[] splitRunInput(String input) throws CustomExceptions.InsufficientInput,
+            CustomExceptions.InvalidInput {
         if (!input.contains(WorkoutConstant.DISTANCE_FLAG) ||
             !input.contains(WorkoutConstant.RUN_TIME_FLAG)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_RUN_PARAMETERS_ERROR);
         }
+
+        if (countForwardSlash(input) != WorkoutConstant.NUM_OF_SLASHES_FOR_RUN_WITH_DATE &&
+                countForwardSlash(input) != WorkoutConstant.NUM_OF_SLASHES_FOR_RUN_WITHOUT_DATE) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.TOO_MANY_SLASHES_ERROR);
+        }
+
         String[] results = new String[WorkoutConstant.NUMBER_OF_RUN_PARAMETERS];
         results[WorkoutConstant.RUN_TIME_INDEX] = extractSubstringFromSpecificIndex(input,
                 WorkoutConstant.RUN_TIME_FLAG).trim();
@@ -409,6 +466,9 @@ public class Parser {
             try {
                 Output.printGymStationPrompt(i + 1);
                 String userInput = Handler.in.nextLine();
+                if (countForwardSlash(userInput) != WorkoutConstant.NUM_OF_SLASHES_FOR_GYM_STATION) {
+                    throw new CustomExceptions.InvalidInput(ErrorConstant.TOO_MANY_SLASHES_ERROR);
+                }
                 String[] validGymStationInput = Validation.splitAndValidateGymStationInput(userInput);
 
                 int numberOfSets = Integer.parseInt(validGymStationInput[WorkoutConstant.GYM_STATION_SET_INDEX]);

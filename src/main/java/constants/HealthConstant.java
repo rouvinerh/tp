@@ -87,4 +87,8 @@ public class HealthConstant {
     public static final int APPOINTMENT_DATE_INDEX = 0;
     public static final int APPOINTMENT_TIME_INDEX = 1;
     public static final int APPOINTMENT_DESCRIPTION_INDEX = 2;
+
+    public static final int NUM_OF_SLASHES_FOR_PERIOD = 3;
+    public static final int NUM_OF_SLASHES_FOR_BMI = 4;
+    public static final int NUM_OF_SLASHES_FOR_APPOINTMENT = 4;
 }

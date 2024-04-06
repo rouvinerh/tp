@@ -37,7 +37,7 @@ public class ErrorConstant {
 
     // Date errors
     public static final String INVALID_DATE_ERROR = "Invalid date format. Format is DD-MM-YYYY in integers. " +
-            "Make sure correct parameters are entered (including leap years)!";
+            "Make a valida date is entered (take note of leap years)!";
     public static final String INVALID_YEAR_ERROR = "Year has to be after 1967!";
     public static final String INVALID_LEAP_YEAR_ERROR = "29 Feb does not exist in this year!";
     public static final String PARSING_DATE_ERROR ="Error parsing date!";
@@ -80,7 +80,7 @@ public class ErrorConstant {
     public static final String INVALID_MINUTE_ERROR = "Minutes must be a positive integer between 01 and 59";
 
     // GYM ERRORS
-    public static final String INSUFFICIENT_GYM_PARAMETERS_ERROR = "Insufficient parameters for gym!"
+    public static final String INSUFFICIENT_GYM_PARAMETERS_ERROR = "Insufficient parameters for gym! "
             + "Example input: /e:gym /n:2 [/date:DATE]"
             + System.lineSeparator()
             + "Only input what is required! Additional characters between flags will cause errors.";
@@ -158,5 +158,7 @@ public class ErrorConstant {
             System.lineSeparator() +
             "Use /item:run/gym/period/bmi/appointment";
 
+    public static final String TOO_MANY_SLASHES_ERROR = "Too many '/' characters specified within input. " +
+            "Parameters cannot contain any '/' characters!";
 
 }

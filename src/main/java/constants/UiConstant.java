@@ -78,4 +78,6 @@ public class UiConstant {
     public static final int DELETE_ITEM_STRING_INDEX = 0;
     public static final int DELETE_ITEM_NUMBER_INDEX = 1;
 
+    public static final int NUM_OF_SLASHES_FOR_DELETE = 2;
+    public static final int NUM_OF_SLASHES_FOR_LATEST_AND_HISTORY = 1;
 }
