@@ -86,10 +86,16 @@ public class ErrorConstant {
     public static final String INVALID_REPS_ERROR = "Number of reps must be a positive integer!";
     public static final String INVALID_WEIGHTS_ERROR = "The weight done for each set is seperated by commas! " +
             "Example: 10,20,30";
+    public static final String INVALID_WEIGHT_VALUE_ERROR = "The weight done for each set must " +
+            "be a multiple of 0.125." +
+            System.lineSeparator() +
+            "This is because the smallest weight increment in most gyms is 0.125kg." +
+            System.lineSeparator() +
+            "Example Command: squats /s:3 /r:10 /w:10.25, 10.5, 10.75";
     public static final String INVALID_WEIGHTS_ARRAY_FORMAT_ERROR = "Weights can only have integers and commas, with" +
             "no spaces! Example: 10,20,30";
     public static final String EMPTY_WEIGHTS_ARRAY_ERROR = "Weights array cannot be empty";
-    public static final String GYM_WEIGHT_POSITIVE_ERROR = "Weights must be positive! e.g. /w:10,20,30";
+    public static final String INVALID_WEIGHT_POSITIVE_ERROR = "Weights must be a positive integer! e.g. /w:10.25,20.0,30.5";
     public static final String GYM_WEIGHT_DIGIT_ERROR = " Weights must be a number! e.g. /w:5,10,20";
     public static final String GYM_WEIGHTS_INCORRECT_NUMBER_ERROR = " Number of weight values must be the same as" +
             " the number of sets! e.g. bench press /s:2 /r:10 /w:10,20";

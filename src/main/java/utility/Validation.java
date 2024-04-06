@@ -321,7 +321,10 @@ public class Validation {
             for(String weight: weightsArray){
                 double weightDouble = Double.parseDouble(weight);
                 if (weightDouble < WorkoutConstant.MIN_WEIGHT){
-                    throw new CustomExceptions.InvalidInput(ErrorConstant.GYM_WEIGHT_POSITIVE_ERROR);
+                    throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_WEIGHT_POSITIVE_ERROR);
+                }
+                if (weightDouble % WorkoutConstant.WEIGHT_MULTIPLE != 0 ){
+                    throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_WEIGHT_VALUE_ERROR);
                 }
                 validatedWeightsArray.add(weightDouble);
             }
@@ -359,9 +362,9 @@ public class Validation {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_WEIGHTS_ERROR);
         }
 
-        if (!weights.matches(UiConstant.VALID_WEIGHTS_ARRAY_REGEX)) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_WEIGHTS_ARRAY_FORMAT_ERROR);
-        }
+//        if (!weights.matches(UiConstant.VALID_WEIGHTS_ARRAY_REGEX)) {
+//            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_WEIGHTS_ARRAY_FORMAT_ERROR);
+//        }
 
         String[] weightsArray = weights.split(UiConstant.SPLIT_BY_COMMAS);
         if (weightsArray.length < WorkoutConstant.MIN_GYM_STATION_WEIGHTS_ARRAY_LENGTH) {
