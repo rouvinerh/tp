@@ -308,7 +308,7 @@ public class DataFile {
     }
 
     /**
-     * Processes a run entry from the input string array and adds it to the health list.
+     * Processes a run entry from the input string array and adds it to the workout list.
      *
      * @param input The input string array containing run data.
      * @throws CustomExceptions.InvalidInput If there is an error in the input data format.
