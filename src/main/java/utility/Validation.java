@@ -357,7 +357,7 @@ public class Validation {
             for(String weight: weightsArray){
                 double weightDouble = Double.parseDouble(weight);
                 if (weightDouble < WorkoutConstant.MIN_WEIGHT){
-                    throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_WEIGHT_POSITIVE_ERROR);
+                    throw new CustomExceptions.InvalidInput(ErrorConstant.GYM_WEIGHT_POSITIVE_ERROR);
                 }
                 if (weightDouble % WorkoutConstant.WEIGHT_MULTIPLE != 0 ){
                     throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_WEIGHT_VALUE_ERROR);
