@@ -480,7 +480,19 @@ A full corruption indicates permanent and complete data loss. Please delete `pul
 A partial corruption indicates a partial recovery of data up until the point of corruption. We recommend utilising the `history` command to review and discrepancies
 and missing data. You may choose to re-enter the corrupted data to be saved again upon `exit`.
 
-(hyperlink for history and exit)
+3. What happens if I specify extra flags on accident?
+   
+Note that if you add duplicate or extra flags, the bot **will read the first instance only**.
+
+All other parameters will be ignored.
+
+For example:
+
+```
+workout /e:run /d:5.25 /t:59:50 /d:10.55
+```
+
+In the above output, the bot will read `5.25` as the distance. The second `/d:10.55` is ignored. 
 
 ###### [Back to table of contents](#table-of-contents)
 
