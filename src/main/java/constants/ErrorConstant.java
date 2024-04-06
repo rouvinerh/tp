@@ -89,13 +89,26 @@ public class ErrorConstant {
 
     public static final String INVALID_EXERCISE_NAME_ERROR = "Exercise name can only have letters!";
     public static final String EXERCISE_NAME_LENGTH_ERROR = "Exercise name cannot be more than 40 characters!";
-    public static final String INVALID_SETS_ERROR = "Number of sets must be a positive integer!";
-    public static final String INVALID_REPS_ERROR = "Number of reps must be a positive integer!";
+    public static final String GYM_STATION_FORMAT_ERROR = "Remember that you are now adding gym station input!"
+            + System.lineSeparator()
+            + "Expected format: [Station Name] /s:[SETS] /r:[REPS] /w:[WEIGHTS]";
+    public static final String INVALID_SETS_ERROR = "Number of sets must be a positive integer!"
+            + System.lineSeparator()
+            + GYM_STATION_FORMAT_ERROR;
+    public static final String INVALID_REPS_ERROR = "Number of reps must be a positive integer!"
+            + System.lineSeparator()
+            + GYM_STATION_FORMAT_ERROR;
     public static final String INVALID_WEIGHTS_ERROR = "The weight done for each set is seperated by commas! " +
-            "Example: 10,20,30";
+            "Example: 10,20,30"
+            + System.lineSeparator()
+            + GYM_STATION_FORMAT_ERROR;
     public static final String INVALID_WEIGHTS_ARRAY_FORMAT_ERROR = "Weights can only have integers and commas, with" +
-            "no spaces! Example: 10,20,30";
-    public static final String EMPTY_WEIGHTS_ARRAY_ERROR = "Weights array cannot be empty";
+            "no spaces! Example: 10,20,30"
+            + System.lineSeparator()
+            + GYM_STATION_FORMAT_ERROR;
+    public static final String EMPTY_WEIGHTS_ARRAY_ERROR = "Weights array cannot be empty"
+            + System.lineSeparator()
+            + GYM_STATION_FORMAT_ERROR;
     public static final String GYM_WEIGHT_POSITIVE_ERROR = "Weights specified must a positive integer! " +
             "e.g. /w:10,20,30";
     public static final String GYM_WEIGHT_DIGIT_ERROR = " Weights must be a number! e.g. /w:5,10,20";
