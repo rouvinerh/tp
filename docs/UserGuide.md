@@ -124,7 +124,7 @@ Format: `STATION_NAME /s:SET /r:REPS /w:WEIGHT`
 * `REPS` is a **positive integer**  representing the number of repetitions done for one station.
 * `WEIGHT` is a **positive integer**  representing the weight used for one station.
 
-Examples: `Bench Press /s:4 /r:10 /w:75`
+Examples: `Bench Press /s:4 /r:10 /w:75,75,75,75`
 
 Expected Output:
 
@@ -148,6 +148,8 @@ Station 2 squat: 2 sets
 	- Set 2. 4 reps at 20 KG
 ____________________________________________________________
 ```
+
+> Note that the number of weights must equal to the number of sets! For example, if you have done 2 sets, PulsePilot expects 2 weights specified like `10,10`. 
 
 ###### [Back to table of contents](#table-of-contents)
 
