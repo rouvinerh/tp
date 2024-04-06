@@ -74,7 +74,7 @@ Adds a new Run workout to track.
 
 Format: `workout /e:run /d:DISTANCE /t:TIME [/date:DATE]`
 
-* `DISTANCE` is a **2 decimal point positive number** (i.e. `15.24`) representing the distance ran.
+* `DISTANCE` is a **2 decimal point positive number** (i.e. `15.24`) representing the distance ran in **kilometers**.
 * `TIME` is in `[HH]:MM:SS` format (i.e. `25:30`). The `HH` representing hours is **optional**.
 * `DATE` is in `DD-MM-YYYY` format (i.e. `19-03-2024`). The date is optional, and if not specified, defaults to `NA`.
 
