@@ -36,8 +36,10 @@ public class ErrorConstant {
     public static final String CORRECT_FILTER_ITEM_FORMAT = "/item:run/gym/workouts/bmi/period/appointment";
 
     // Date errors
-    public static final String INVALID_DATE_ERROR = "Invalid date format. Format is DD-MM-YYYY in integers.";
-    public static final String INVALID_DAY_ERROR = "Day must be an integer between 01 and 31.";
+    public static final String INVALID_DATE_ERROR = "Invalid date format. Format is DD-MM-YYYY in integers. " +
+            "Make sure correct parameters are entered (including leap years)!";
+    public static final String INVALID_YEAR_ERROR = "Year has to be after 1967!";
+    public static final String INVALID_LEAP_YEAR_ERROR = "29 Feb does not exist in this year!";
     public static final String INVALID_MONTH_ERROR = "Month must be an integer between 01 and 12.";
     public static final String PARSING_DATE_ERROR ="Error parsing date!";
 

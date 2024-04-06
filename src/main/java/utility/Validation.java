@@ -5,6 +5,7 @@ import constants.HealthConstant;
 import constants.UiConstant;
 import constants.WorkoutConstant;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -25,13 +26,21 @@ public class Validation {
         String[] parts = date.split(UiConstant.DASH);
         int day = Integer.parseInt(parts[0]);
         int month = Integer.parseInt(parts[1]);
+        int year = Integer.parseInt(parts[2]);
 
-        if (day < UiConstant.MIN_DAY || day > UiConstant.MAX_DAY) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_DAY_ERROR);
+        boolean isLeapYear = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+        if (month == 2 && day == 29 && !isLeapYear) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_LEAP_YEAR_ERROR);
         }
 
-        if (month < UiConstant.MIN_MONTH || month > UiConstant.MAX_MONTH) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_MONTH_ERROR);
+        if (year < 1967) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_YEAR_ERROR);
+        }
+
+        try {
+            LocalDate check = LocalDate.of(year, month, day);
+        } catch (DateTimeException e) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_DATE_ERROR);
         }
     }
 
