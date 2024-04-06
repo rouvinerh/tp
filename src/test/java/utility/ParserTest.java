@@ -111,7 +111,8 @@ class ParserTest {
      * Expects no exception to be thrown.
      */
     @Test
-    void splitAppointmentInput_correctInput_noExceptionThrown() throws CustomExceptions.InsufficientInput, CustomExceptions.InvalidInput {
+    void splitAppointmentInput_correctInput_noExceptionThrown() throws CustomExceptions.InsufficientInput,
+            CustomExceptions.InvalidInput {
         String input = "/h:appointment /date:30-03-2024 /time:19:30 /description:test";
         String[] expected = {"30-03-2024", "19:30", "test"};
         String[] result = Parser.splitAppointmentDetails(input);
@@ -204,7 +205,7 @@ class ParserTest {
     @Test
     void splitRunInput_correctInputWithoutDate_noExceptionThrown() throws CustomExceptions.InsufficientInput,
             CustomExceptions.InvalidInput {
-        String input = "/t:25:24 /d:5.15";
+        String input = "/e:run /t:25:24 /d:5.15";
         String[] expected = {"25:24", "5.15", null};
         String[] result = Parser.splitRunInput(input);
         assertArrayEquals(expected, result);

@@ -104,7 +104,8 @@ public class Parser {
      * @return An array of strings containing the extracted delete command parameters.
      * @throws CustomExceptions.InsufficientInput If not enough parameters are specified.
      */
-    public static String[] splitDeleteInput(String input) throws CustomExceptions.InsufficientInput, CustomExceptions.InvalidInput {
+    public static String[] splitDeleteInput(String input) throws CustomExceptions.InsufficientInput,
+            CustomExceptions.InvalidInput {
         if (!input.contains(UiConstant.ITEM_FLAG) || !input.contains(UiConstant.INDEX_FLAG)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_DELETE_PARAMETERS_ERROR);
         }

@@ -4,9 +4,6 @@ import constants.ErrorConstant;
 import constants.HealthConstant;
 import constants.UiConstant;
 import constants.WorkoutConstant;
-import health.Health;
-
-import javax.print.attribute.HashPrintJobAttributeSet;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
