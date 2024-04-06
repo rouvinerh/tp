@@ -106,6 +106,11 @@ public class ErrorConstant {
             + System.lineSeparator() 
             + GYM_STATION_FORMAT_ERROR;
 
+    public static final String INVALID_WEIGHTS_ARRAY_FORMAT_ERROR = "Weights array format is incorrect!"
+            + System.lineSeparator()
+            + "Weights must be separated by commas (with no whitespaces) and be a positive decimal (up to 3 decimal places)"
+            + System.lineSeparator()
+            + GYM_STATION_FORMAT_ERROR;
     public static final String EMPTY_WEIGHTS_ARRAY_ERROR = "Weights array cannot be empty"
             + System.lineSeparator()
             + GYM_STATION_FORMAT_ERROR;

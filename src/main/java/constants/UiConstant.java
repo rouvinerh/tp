@@ -28,6 +28,7 @@ public class UiConstant {
     public static final String VALID_POSITIVE_INTEGER_REGEX = "^[1-9]\\d*$";
     public static final String VALID_APPOINTMENT_DESCRIPTION_REGEX = "^[0-9a-zA-Z\\s]+$";
     public static final String VALID_EXERCISE_NAME_REGEX = "^[A-Za-z\\s]+$";
+    public static final String VALID_WEIGHTS_ARRAY_REGEX = "^\\d+(\\.\\d{1,3})?(,\\d+(\\.\\d{1,3})?)*$";
 
     // PulsePilot UI replies
     public static final String EXIT_MESSAGE = "Initiating PulsePilot landing sequence...";
