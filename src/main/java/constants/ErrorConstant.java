@@ -103,7 +103,7 @@ public class ErrorConstant {
             + System.lineSeparator()
             + GYM_STATION_FORMAT_ERROR;
     public static final String INVALID_WEIGHTS_ARRAY_FORMAT_ERROR = "Weights can only have integers and commas, with" +
-            "no spaces! Example: 10,20,30"
+            " no spaces! Example: 10,20,30"
             + System.lineSeparator()
             + GYM_STATION_FORMAT_ERROR;
     public static final String EMPTY_WEIGHTS_ARRAY_ERROR = "Weights array cannot be empty"
@@ -181,10 +181,10 @@ public class ErrorConstant {
             + "Please enter a more realistic distance less than 5000km!";
 
     public static final String ZERO_HEIGHT_AND_WEIGHT_ERROR = "Height and weight must be more than 0.";
-    public static final String MAX_HEIGHT_ERROR = "The tallest man Robert Wadlow was 2.72m. "
+    public static final String MAX_HEIGHT_ERROR = "The tallest man, Robert Wadlow was 2.72m."
             + System.lineSeparator()
             + "Please enter a more realistic height less than 2.75m!";
-    public static final String MAX_WEIGHT_ERROR = "The heaviest human being Jon Brower Minnnoch weighed in at 635kg. "
+    public static final String MAX_WEIGHT_ERROR = "The heaviest human being, Jon Brower Minnnoch weighed in at 635kg."
             + System.lineSeparator()
             + "Please enter a more realistic weight less than 640kg!";
 
