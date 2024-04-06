@@ -40,13 +40,12 @@ public class ErrorConstant {
             "Make sure correct parameters are entered (including leap years)!";
     public static final String INVALID_YEAR_ERROR = "Year has to be after 1967!";
     public static final String INVALID_LEAP_YEAR_ERROR = "29 Feb does not exist in this year!";
-    public static final String INVALID_MONTH_ERROR = "Month must be an integer between 01 and 12.";
     public static final String PARSING_DATE_ERROR ="Error parsing date!";
 
     // Time errors
     public static final String INVALID_ACTUAL_TIME_ERROR = "Invalid time format. Format is HH:MM in 24 hours format!";
-    public static final String INVALID_MINUTES_ERROR = "Minutes must be a positive integer between 01 and 59.";
-    public static final String INVALID_HOURS_ERROR = "Hours must be a positive integer between 1 and 23";
+    public static final String INVALID_MINUTES_ERROR = "Minutes must be a positive integer between 00 and 59.";
+    public static final String INVALID_HOURS_ERROR = "Hours must be a positive integer between 00 and 23";
     public static final String PARSING_TIME_ERROR = "Error parsing time!";
 
     //Delete Errors
