@@ -95,4 +95,5 @@ public class WorkoutConstant {
 
     public static final int NUM_OF_SLASHES_FOR_RUN_WITH_DATE = 4;
     public static final int NUM_OF_SLASHES_FOR_RUN_WITHOUT_DATE = 3;
+    public static final double MAX_RUN_DISTANCE = 5000.00;
 }

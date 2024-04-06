@@ -157,6 +157,11 @@ public class Validation {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_RUN_DISTANCE_ERROR);
         }
 
+        double runDistance = Double.parseDouble(runDetails[WorkoutConstant.RUN_DISTANCE_INDEX]);
+        if (runDistance > WorkoutConstant.MAX_RUN_DISTANCE) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.DISTANCE_TOO_LONG_ERROR);
+        }
+
         if (runDetails[WorkoutConstant.RUN_DATE_INDEX] != null) {
             validateDateInput(runDetails[WorkoutConstant.RUN_DATE_INDEX]);
             validateDateNotAfterToday(runDetails[WorkoutConstant.RUN_DATE_INDEX]);

@@ -73,7 +73,7 @@ public class ErrorConstant {
             + System.lineSeparator()
             + "Only input what is required! Additional characters between flags will cause errors.";
     public static final String INVALID_RUN_DISTANCE_ERROR = "Distance is a 2 decimal point positive number!";
-    public static final String INVALID_RUN_TIME_ERROR = "Invalid time format. Format is either HH:MM:SS or" +
+    public static final String INVALID_RUN_TIME_ERROR = "Invalid time format. Format is either HH:MM:SS or " +
             "MM:SS with integers.";
     public static final String INVALID_SECOND_ERROR = "Seconds must be a positive integer between 00 and 59";
     public static final String INVALID_HOUR_ERROR = "Hours cannot be 0. Use MM:SS instead";
@@ -160,5 +160,10 @@ public class ErrorConstant {
 
     public static final String TOO_MANY_SLASHES_ERROR = "Too many '/' characters specified within input. " +
             "Parameters cannot contain any '/' characters!";
+
+    public static final String DISTANCE_TOO_LONG_ERROR = "The world's longest foot race is the Self-Transcendence "
+            + "3100 Mile Race."
+            + System.lineSeparator()
+            + "Please enter a more realistic distance less than 5000km!";
 
 }
