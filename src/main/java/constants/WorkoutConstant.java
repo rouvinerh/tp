@@ -77,7 +77,7 @@ public class WorkoutConstant {
     public static final String RUN_HEADER_INDEX_FORMAT = String.format("%-6s\t%-6s\t%-10s\t%-10s\t%-10s\t%-12s",
             "Index", "Type", "Time", "Distance", "Pace", "Date");
     public static final String GYM_STATION_FORMAT = "%s: ";
-    public static final String GYM_SET_FORMAT = "%d reps at %d KG";
+    public static final String GYM_SET_FORMAT = "%d reps at %.3f KG";
     public static final String GYM_SET_INDEX_FORMAT = "\t- Set %d. %s";
     public static final String INDIVIDUAL_GYM_STATION_FORMAT = "%d sets";
     public static final String RUN_HEADER = "Type\tTime\t\tDistance\tPace\t\tDate";

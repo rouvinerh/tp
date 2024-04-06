@@ -535,13 +535,13 @@ public class ValidationTest {
     */
     @Test
     void validateWeightsArray_correctInput_returnCorrectArrayList() throws CustomExceptions.InvalidInput {
-        String input = "1,2,50,60";
-        ArrayList<Integer> expected = new ArrayList<>();
-        expected.add(1);
-        expected.add(2);
-        expected.add(50);
-        expected.add(60);
-        ArrayList<Integer> result = Validation.validateWeightsArray(input);
+        String input = "1.0,2.25,50.0,60.50";
+        ArrayList<Double> expected = new ArrayList<>();
+        expected.add(1.0);
+        expected.add(2.25);
+        expected.add(50.0);
+        expected.add(60.50);
+        ArrayList<Double> result = Validation.validateWeightsArray(input);
         assertArrayEquals(expected.toArray(), result.toArray());
     }
 

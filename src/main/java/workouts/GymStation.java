@@ -21,7 +21,7 @@ public class GymStation {
      * @param numberOfRepetitions Number of reps done.
      * @param weightsList         Weight used.
      */
-    protected GymStation(String name, int numberOfSets, int numberOfRepetitions, ArrayList<Integer> weightsList) {
+    protected GymStation(String name, int numberOfSets, int numberOfRepetitions, ArrayList<Double> weightsList) {
         this.stationName = name;
         this.numberOfSets = numberOfSets;
         processSets(weightsList, numberOfRepetitions);
@@ -33,7 +33,7 @@ public class GymStation {
      * @param weightsList     The weight done for the particular set.
      * @param numberOfRepetitions The number of repetitions done for the particular set.
      */
-    public void processSets(ArrayList<Integer> weightsList, int numberOfRepetitions) {
+    public void processSets(ArrayList<Double> weightsList, int numberOfRepetitions) {
         for (int i = 0; i < numberOfSets; i++) {
             GymSet newSet = new GymSet(weightsList.get(i), numberOfRepetitions);
             sets.add(newSet);

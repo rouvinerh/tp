@@ -414,7 +414,7 @@ public class Parser {
                 int numberOfSets = Integer.parseInt(validGymStationInput[WorkoutConstant.GYM_STATION_SET_INDEX]);
                 int numberOfRepetitions = Integer.parseInt(
                         validGymStationInput[WorkoutConstant.GYM_STATION_REPS_INDEX]);
-                ArrayList<Integer> weightsArray = Validation.validateWeightsArray(
+                ArrayList<Double> weightsArray = Validation.validateWeightsArray(
                         validGymStationInput[WorkoutConstant.GYM_STATION_WEIGHTS_INDEX]);
 
                 gym.addStation(validGymStationInput[WorkoutConstant.GYM_STATION_NAME_INDEX], numberOfSets,
@@ -507,7 +507,7 @@ public class Parser {
 
         int numberOfSets;
         int reps;
-        ArrayList<Integer> weights = new ArrayList<>();
+        ArrayList<Double> weights = new ArrayList<>();
         try {
             currentStationName = gymDetails[baseCounter];
             numberOfSetsStr = gymDetails[baseCounter + WorkoutConstant.SETS_OFFSET];
@@ -541,7 +541,7 @@ public class Parser {
         // Check if weights are valid numbers
         try {
             for (String weightString : weight) {
-                weights.add(Integer.parseInt(weightString));
+                weights.add(Double.parseDouble(weightString));
             }
         } catch (NumberFormatException e) {
             throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_GYM_FORMAT_ERROR);

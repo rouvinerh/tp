@@ -144,8 +144,8 @@ class OutputTest {
     void printLatestGym_twoGyms_expectOneGymPrinted() {
         try{
             Gym gym1 = new Gym();
-            ArrayList<Integer> array1 = new ArrayList<>(Arrays.asList(1));
-            ArrayList<Integer> array2 = new ArrayList<>(Arrays.asList(1,2));
+            ArrayList<Double> array1 = new ArrayList<>(Arrays.asList(1.0));
+            ArrayList<Double> array2 = new ArrayList<>(Arrays.asList(1.0,2.0));
 
             gym1.addStation("Bench Press", 1, 10, array1);
             gym1.addStation("Shoulder Press", 2, 10, array2);
@@ -164,14 +164,14 @@ class OutputTest {
                     String.format(WorkoutConstant.GYM_STATION_FORMAT, "Station 1 Squat Press") +
                     String.format(WorkoutConstant.INDIVIDUAL_GYM_STATION_FORMAT, 1) +
                     System.lineSeparator() +
-                    String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, 1, "50 reps at 1 KG") +
+                    String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, 1, "50 reps at 1.000 KG") +
                     System.lineSeparator() +
                     String.format(WorkoutConstant.GYM_STATION_FORMAT, "Station 2 Lat Press") +
                     String.format(WorkoutConstant.INDIVIDUAL_GYM_STATION_FORMAT, 2) +
                     System.lineSeparator() +
-                    String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, 1, "10 reps at 1 KG") +
+                    String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, 1, "10 reps at 1.000 KG") +
                     System.lineSeparator() +
-                    String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, 2, "10 reps at 2 KG") +
+                    String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, 2, "10 reps at 2.000 KG") +
                     System.lineSeparator() +
                     UiConstant.PARTITION_LINE +
                     System.lineSeparator();
@@ -369,8 +369,8 @@ class OutputTest {
     void printGymHistory_correctInput_expectPrintGymHistory(){
         try{
 
-            ArrayList<Integer> array1 = new ArrayList<>(Arrays.asList(1));
-            ArrayList<Integer> array2 = new ArrayList<>(Arrays.asList(1,2));
+            ArrayList<Double> array1 = new ArrayList<>(Arrays.asList(1.0));
+            ArrayList<Double> array2 = new ArrayList<>(Arrays.asList(1.0,2.0));
 
             Gym gym1 = new Gym();
             gym1.addStation("Bench Press", 1, 50, array1);
@@ -389,14 +389,14 @@ class OutputTest {
                     String.format(WorkoutConstant.GYM_STATION_FORMAT, "Station 1 Bench Press") +
                     String.format(WorkoutConstant.INDIVIDUAL_GYM_STATION_FORMAT, 1) +
                     System.lineSeparator() +
-                    String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, 1, "50 reps at 1 KG") +
+                    String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, 1, "50 reps at 1.000 KG") +
                     System.lineSeparator() +
                     String.format(WorkoutConstant.GYM_STATION_FORMAT, "Station 2 Shoulder Press") +
                     String.format(WorkoutConstant.INDIVIDUAL_GYM_STATION_FORMAT, 2) +
                     System.lineSeparator() +
-                    String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, 1, "10 reps at 1 KG") +
+                    String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, 1, "10 reps at 1.000 KG") +
                     System.lineSeparator() +
-                    String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, 2, "10 reps at 2 KG") +
+                    String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, 2, "10 reps at 2.000 KG") +
                     System.lineSeparator() +
                     UiConstant.PARTITION_LINE +
                     System.lineSeparator() +
@@ -405,14 +405,14 @@ class OutputTest {
                     String.format(WorkoutConstant.GYM_STATION_FORMAT, "Station 1 Squat Press") +
                     String.format(WorkoutConstant.INDIVIDUAL_GYM_STATION_FORMAT, 1) +
                     System.lineSeparator() +
-                    String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, 1, "50 reps at 1 KG") +
+                    String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, 1, "50 reps at 1.000 KG") +
                     System.lineSeparator() +
                     String.format(WorkoutConstant.GYM_STATION_FORMAT, "Station 2 Lat Press") +
                     String.format(WorkoutConstant.INDIVIDUAL_GYM_STATION_FORMAT, 2) +
                     System.lineSeparator() +
-                    String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, 1, "10 reps at 1 KG") +
+                    String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, 1, "10 reps at 1.000 KG") +
                     System.lineSeparator() +
-                    String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, 2, "10 reps at 2 KG") +
+                    String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, 2, "10 reps at 2.000 KG") +
                     System.lineSeparator() +
                     UiConstant.PARTITION_LINE +
                     System.lineSeparator();
@@ -431,8 +431,10 @@ class OutputTest {
         try {
             Run run1 = new Run("11:11:12", "10.24", "19-12-1923");
             Gym gym1 = new Gym("11-11-1992");
-            gym1.addStation("Bench Press", 2, 4, new ArrayList<>(Arrays.asList(10,20)));
-            gym1.addStation("Squat Press", 2, 4, new ArrayList<>(Arrays.asList(100,200)));
+            gym1.addStation("Bench Press", 2, 4,
+                    new ArrayList<>(Arrays.asList(10.0,20.0)));
+            gym1.addStation("Squat Press", 2, 4,
+                    new ArrayList<>(Arrays.asList(100.0,200.0)));
 
             String expectedRun1 = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
                     WorkoutConstant.RUN,
@@ -456,7 +458,7 @@ class OutputTest {
                     "Bench Press",
                     "2",
                     "4,4",
-                    "10,20"
+                    "10.0,20.0"
             );
 
             String expectedGym1Set2 = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
@@ -468,7 +470,7 @@ class OutputTest {
                     "Squat Press",
                     "2",
                     "4,4",
-                    "100,200"
+                    "100.0,200.0"
             );
 
             String expected2 = String.format(
