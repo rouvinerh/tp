@@ -41,8 +41,8 @@ public class DataFileTest {
         ));
 
 
-        ArrayList<Integer> array1 = new ArrayList<>(Arrays.asList(10,20,30,40));
-        ArrayList<Integer> array2 = new ArrayList<>(Arrays.asList(20,30,40,50));
+        ArrayList<Double> array1 = new ArrayList<>(Arrays.asList(10.0,20.0,30.0,40.0));
+        ArrayList<Double> array2 = new ArrayList<>(Arrays.asList(20.0,30.0,40.0,50.0));
         Gym newGym = new Gym("11-11-1997");
         Gym newGym2 = new Gym();
         newGym.addStation("bench press", 4, 4, array1);
@@ -74,8 +74,9 @@ public class DataFileTest {
             assertEquals("PERIOD:01-03-2023:05-03-2023:5", lines.get(5));
             assertEquals("PERIOD:01-04-2023:04-04-2023:4", lines.get(6));
             assertEquals("RUN:5.00:00.30.00:01-04-2023", lines.get(7));
-            assertEquals("GYM:2:11-11-1997:bench press:4:4:10,20,30,40:squats:4:3:20,30,40,50", lines.get(8));
-            assertEquals("GYM:2:NA:bench press:4:4:10,20,30,40:squats:4:3:20,30,40,50", lines.get(9));
+            assertEquals("GYM:2:11-11-1997:bench press:4:4:10.0,20.0,30.0," +
+                    "40.0:squats:4:3:20.0,30.0,40.0,50.0", lines.get(8));
+            assertEquals("GYM:2:NA:bench press:4:4:10.0,20.0,30.0,40.0:squats:4:3:20.0,30.0,40.0,50.0", lines.get(9));
         } else {
             fail("Data file is empty");
         }

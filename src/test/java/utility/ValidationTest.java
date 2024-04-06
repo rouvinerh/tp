@@ -547,13 +547,14 @@ public class ValidationTest {
     */
     @Test
     void validateWeightsArray_correctInput_returnCorrectArrayList() throws CustomExceptions.InvalidInput {
-        String input = "1,2,50,60";
-        ArrayList<Integer> expected = new ArrayList<>();
-        expected.add(1);
-        expected.add(2);
-        expected.add(50);
-        expected.add(60);
-        ArrayList<Integer> result = Validation.validateWeightsArray(input);
+        String input = "1.0,2.25,50.5,60.75, 0.0";
+        ArrayList<Double> expected = new ArrayList<>();
+        expected.add(1.0);
+        expected.add(2.25);
+        expected.add(50.5);
+        expected.add(60.75);
+        expected.add(0.0);
+        ArrayList<Double> result = Validation.validateWeightsArray(input);
         assertArrayEquals(expected.toArray(), result.toArray());
     }
 
@@ -572,5 +573,11 @@ public class ValidationTest {
         String input2 = "1,a";
         assertThrows(CustomExceptions.InvalidInput.class, () ->
                 Validation.validateWeightsArray(input2));
+
+        // incorrect multiple of weights
+        String input3 = "1.3333, 1.444, 0.998";
+        assertThrows(CustomExceptions.InvalidInput.class, () ->
+                Validation.validateWeightsArray(input3));
+
     }
 }

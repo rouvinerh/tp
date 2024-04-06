@@ -70,8 +70,8 @@ public class IntegrationTest {
     void testSaveAndLoadGym_gymObjectInput_expectSamePrintHistory(){
         Gym newGym = new Gym();
         try {
-            ArrayList<Integer> array1 = new ArrayList<>(List.of(1));
-            ArrayList<Integer> array2 = new ArrayList<>(Arrays.asList(1, 2));
+            ArrayList<Double> array1 = new ArrayList<>(List.of(1.0));
+            ArrayList<Double> array2 = new ArrayList<>(Arrays.asList(1.0, 2.0));
             newGym.addStation("Exercise 1", 1, 10, array1);
             newGym.addStation("Exercise 2", 2, 20 , array2);
 
@@ -143,13 +143,13 @@ public class IntegrationTest {
 
             Gym gym1expected = new Gym("18-03-2024");
             gym1expected.addStation("benchpress", 2, 4,
-                    new ArrayList<>(Arrays.asList(40,60)));
+                    new ArrayList<>(Arrays.asList(40.0,60.0)));
             gym1expected.addStation("squats", 3, 4,
-                    new ArrayList<>(Arrays.asList(10,20,30)));
+                    new ArrayList<>(Arrays.asList(10.0,20.0,30.0)));
 
             Gym gym2expected = new Gym("22-03-2024");
             gym2expected.addStation("deadlift",  4, 4,
-                    new ArrayList<>(Arrays.asList(120,130,140,160)));
+                    new ArrayList<>(Arrays.asList(120.0,130.0,140.0,160.0)));
 
             Output.printAddRun(run1Expected);
             Output.printAddRun(run2Expected);
