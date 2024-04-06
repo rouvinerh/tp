@@ -50,7 +50,9 @@ public class ErrorConstant {
 
     //Delete Errors
     public static final String INSUFFICIENT_DELETE_PARAMETERS_ERROR = "Insufficient parameters for delete! " +
-            "Example input: /item:item /index:index";
+            "Example input: /item:item /index:index"
+            + System.lineSeparator()
+            + "Only input what is required! Additional characters between flags will cause errors.";
     public static final String INVALID_INDEX_ERROR = "Index must be a valid positive integer.";
 
     // EXERCISE ERRORS
@@ -67,7 +69,9 @@ public class ErrorConstant {
 
     // RUN ERRORS
     public static final String INSUFFICIENT_RUN_PARAMETERS_ERROR = "Insufficient parameters for run! "
-            + "Example input: /e:run /d:5.25 /t:25:23 [/date:DATE]";
+            + "Example input: /e:run /d:5.25 /t:25:23 [/date:DATE]"
+            + System.lineSeparator()
+            + "Only input what is required! Additional characters between flags will cause errors.";
     public static final String INVALID_RUN_DISTANCE_ERROR = "Distance is a 2 decimal point positive number!";
     public static final String INVALID_RUN_TIME_ERROR = "Invalid time format. Format is either HH:MM:SS or" +
             "MM:SS with integers.";
@@ -77,7 +81,9 @@ public class ErrorConstant {
 
     // GYM ERRORS
     public static final String INSUFFICIENT_GYM_PARAMETERS_ERROR = "Insufficient parameters for gym!"
-            + "Example input: /e:gym /n:2 [/date:DATE]";
+            + "Example input: /e:gym /n:2 [/date:DATE]"
+            + System.lineSeparator()
+            + "Only input what is required! Additional characters between flags will cause errors.";
     public static final String INVALID_NUMBER_OF_STATIONS_ERROR = "Number of stations is a positive number!";
     public static final String EMPTY_EXERCISE_NAME_ERROR = "Exercise name cannot be blank!";
 
@@ -101,7 +107,9 @@ public class ErrorConstant {
 
     // BMI ERRORS
     public static final String INSUFFICIENT_BMI_PARAMETERS_ERROR = "Insufficient parameters for bmi! " +
-            "Example input: /h:bmi /height:height /weight:weight /date:date";
+            "Example input: /h:bmi /height:height /weight:weight /date:date"
+            + System.lineSeparator()
+            + "Only input what is required! Additional characters between flags will cause errors.";
     public static final String NEGATIVE_BMI_ERROR = "Bmi must be a positive value";
     public static final String NULL_BMI_ERROR = "Bmi object cannot be null.";
     public static final String EMPTY_BMI_LIST_ERROR = "BMI List is empty.";
@@ -111,7 +119,9 @@ public class ErrorConstant {
 
     // PERIOD ERRORS
     public static final String INSUFFICIENT_PERIOD_PARAMETERS_ERROR = "Insufficient parameters for period! " +
-            "Example input: /h:period /start:startDate /end:endDate";
+            "Example input: /h:period /start:startDate /end:endDate"
+            + System.lineSeparator()
+            + "Only input what is required! Additional characters between flags will cause errors.";
     public static final String NULL_PERIOD_ERROR = "Period object cannot be null.";
     public static final String NULL_START_DATE_ERROR = "Start date of period cannot be empty.";
     public static final String NULL_END_DATE_ERROR = "End date of period cannot be empty.";
@@ -125,7 +135,9 @@ public class ErrorConstant {
 
     // APPOINTMENT ERRORS
     public static final String INSUFFICIENT_APPOINTMENT_PARAMETERS_ERROR = "Insufficient parameters for period! " +
-            "Example input: /h:appointment /date:date /time:time /description:description /place:place";
+            "Example input: /h:appointment /date:date /time:time /description:description /place:place"
+            + System.lineSeparator()
+            + "Only input what is required! Additional characters between flags will cause errors.";
     public static final String NULL_APPOINTMENT_ERROR = "Appointment object cannot be null.";
     public static final String EMPTY_APPOINTMENT_LIST_ERROR = "Appointment list is empty.";
     public static final String APPOINTMENT_LIST_UNCLEARED_ERROR = "Appointment list is not cleared.";
