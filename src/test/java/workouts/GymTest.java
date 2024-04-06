@@ -33,9 +33,9 @@ class GymTest {
     void addStation_validInput_expectAddedStation() {
         Gym newGym = new Gym();
         try{
-            ArrayList<Integer> array1 = new ArrayList<>(Arrays.asList(1));
-            ArrayList<Integer> array2 = new ArrayList<>(Arrays.asList(1,2));
-            ArrayList<Integer> array3 = new ArrayList<>(Arrays.asList(1,2,3));
+            ArrayList<Double> array1 = new ArrayList<>(Arrays.asList(1.0));
+            ArrayList<Double> array2 = new ArrayList<>(Arrays.asList(1.0,2.0));
+            ArrayList<Double> array3 = new ArrayList<>(Arrays.asList(1.0,2.0,3.0));
 
             newGym.addStation("Exercise 1", 1, 10, array1);
             newGym.addStation("Exercise 2", 2, 20, array2);
@@ -101,10 +101,10 @@ class GymTest {
 
     @Test
     void toFileString_correctInput_expectedCorrectString(){
-        String expected1 = "GYM:2:11-11-1997:bench press:4:4:10,20,30,40:squats:4:3:20,30,40,50";
-        String expected2WithNoDate = "GYM:2:NA:bench press:4:4:10,20,30,40:squats:4:3:20,30,40,50";
-        ArrayList<Integer> array1 = new ArrayList<>(Arrays.asList(10,20,30,40));
-        ArrayList<Integer> array2 = new ArrayList<>(Arrays.asList(20,30,40,50));
+        String expected1 = "GYM:2:11-11-1997:bench press:4:4:10.0,20.0,30.0,40.0:squats:4:3:20.0,30.0,40.0,50.0";
+        String expected2WithNoDate = "GYM:2:NA:bench press:4:4:10.0,20.0,30.0,40.0:squats:4:3:20.0,30.0,40.0,50.0";
+        ArrayList<Double> array1 = new ArrayList<>(Arrays.asList(10.0,20.0,30.0,40.0));
+        ArrayList<Double> array2 = new ArrayList<>(Arrays.asList(20.0,30.0,40.0,50.0));
         Gym newGym = new Gym("11-11-1997");
         Gym newGym2 = new Gym();
 
