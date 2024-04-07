@@ -1,10 +1,6 @@
 package ui;
 
 import health.Appointment;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.AfterAll;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -28,6 +24,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterAll;
+
 class OutputTest {
 
 
@@ -45,16 +46,12 @@ class OutputTest {
         System.setErr(new PrintStream(errContent));
     }
 
+
     @AfterEach
     public void cleanup() {
         WorkoutList.clearWorkoutsRunGym();
         HealthList.clearHealthLists();
         outContent.reset();
-        Handler.destroyScanner();
-        if (Handler.in == null) {
-            return;
-        }
-        assert HandlerTest.isScannerClosed(Handler.in) : "Scanner is not closed";
     }
 
     @AfterAll

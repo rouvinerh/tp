@@ -17,10 +17,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeAll;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -35,6 +36,7 @@ public class IntegrationTest {
     private static final PrintStream originalOut = System.out;
     private static final PrintStream originalErr = System.err;
 
+    private Handler handler;
     @BeforeAll
     public static void setUpStreams() {
         System.setIn(inContent);
@@ -43,16 +45,11 @@ public class IntegrationTest {
     }
 
     @AfterEach
-    public void cleanup() {
+    public void tearDown(){
         WorkoutList.clearWorkoutsRunGym();
         HealthList.clearHealthLists();
         outContent.reset();
         errContent.reset();
-        Handler.destroyScanner();
-        if (Handler.in == null) {
-            return;
-        }
-        assert HandlerTest.isScannerClosed(Handler.in) : "Scanner is not closed";
     }
 
     @AfterAll
@@ -81,8 +78,9 @@ public class IntegrationTest {
 
             // Save the string, clear the static list, and then simulate load
             String saveString = newGym.toFileString();
-            cleanup();
-            Gym loadedGym = Parser.parseGymFileInput(saveString);
+            tearDown();
+            Parser parser = new Parser();
+            Gym loadedGym = parser.parseGymFileInput(saveString);
             Output.printAddGym(loadedGym);
             String output = outContent.toString();
 
@@ -129,12 +127,10 @@ public class IntegrationTest {
                 + showHistoryRun + System.lineSeparator() 
                 + showHistoryAll + System.lineSeparator();
 
-        System.setIn(new ByteArrayInputStream(inputString.getBytes()));
-        Handler.initialiseScanner();
-        Handler.processInput();
+        Handler newHandler = new Handler(inputString);
+        newHandler.processInput();
         String result = outContent.toString();
-
-        cleanup();
+        tearDown();
 
         // Craft expected output
         try{
@@ -189,12 +185,14 @@ public class IntegrationTest {
                 + period3 + System.lineSeparator()
                 + period4 + System.lineSeparator()
                 + prediction + System.lineSeparator();
-        
-        System.setIn(new ByteArrayInputStream(inputString.getBytes()));
-        Handler.initialiseScanner();
-        Handler.processInput();
+
+
+        Handler newHandler = new Handler(inputString);
+        newHandler.processInput();
         String result = outContent.toString();
-        cleanup();
+        tearDown();
+
+
 
         Period expectedPeriod1 = new Period("18-12-2023" , "26-12-2023");
         Period expectedPeriod2 = new Period("18-01-2024" , "26-01-2024");
@@ -212,7 +210,8 @@ public class IntegrationTest {
 
         HealthList.addPeriod(expectedPeriod4);
         Output.printAddPeriod(expectedPeriod4);
-        Parser.parsePredictionInput();
+        Parser parser = new Parser();
+        parser.parsePredictionInput();
 
         String expected = outContent.toString();
         assertEquals(expected, result);
@@ -235,12 +234,11 @@ public class IntegrationTest {
                 + period3 + System.lineSeparator()
                 + prediction + System.lineSeparator();
 
-        System.setIn(new ByteArrayInputStream(inputString.getBytes()));
-        Handler.initialiseScanner();
-        Handler.processInput();
+        Handler newHandler = new Handler(inputString);
+        newHandler.processInput();
         String result = outContent.toString();
         String resultErr = errContent.toString();
-        cleanup();
+        tearDown();
 
         Period expectedPeriod1 = new Period("18-12-2023" , "26-12-2023");
         Period expectedPeriod2 = new Period("18-01-2024" , "26-01-2024");
@@ -260,7 +258,8 @@ public class IntegrationTest {
 
         // expect error message
         try {
-            Parser.parsePredictionInput();
+            Parser parser = new Parser();
+            parser.parsePredictionInput();
         } catch (CustomExceptions.InsufficientInput e) {
             Output.printException(e.getMessage());
         }

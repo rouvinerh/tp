@@ -127,8 +127,12 @@ public class DataFileTest {
         ));
 
         // Act
-        int status = DataFile.loadDataFile();
-        DataFile.saveDataFile(name, bmiArrayList, appointmentArrayList, periodArrayList, workoutArrayList);
+        int status = dataFile.loadDataFile();
+        dataFile.saveDataFile(name, bmiArrayList, appointmentArrayList, periodArrayList, workoutArrayList);
+
+        DataFile dataFile = new DataFile();
+
+        dataFile.saveDataFile(name, bmiArrayList, appointmentArrayList, periodArrayList, workoutArrayList);
 
         // Assert
         List<String> lines = Files.readAllLines(Path.of(TEST_DATA_FILE_PATH));
