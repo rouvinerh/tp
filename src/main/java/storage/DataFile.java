@@ -68,7 +68,7 @@ public class DataFile {
      * @throws NoSuchAlgorithmException If the SHA-256 algorithm is not available.
      * @throws IOException If an I/O error occurs while reading the file.
      */
-    private static String generateFileHash(File file) throws NoSuchAlgorithmException, IOException {
+    public static String generateFileHash(File file) throws NoSuchAlgorithmException, IOException {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         FileInputStream fis = new FileInputStream(file);
         byte[] dataBytes = new byte[1024];
@@ -308,7 +308,7 @@ public class DataFile {
     }
 
     /**
-     * Processes a run entry from the input string array and adds it to the health list.
+     * Processes a run entry from the input string array and adds it to the workout list.
      *
      * @param input The input string array containing run data.
      * @throws CustomExceptions.InvalidInput If there is an error in the input data format.

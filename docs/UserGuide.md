@@ -306,16 +306,27 @@ Data is saved to `pulsepilot_data.txt` once the bot exits. Each time the bot exi
 
 **1.** How do I transfer my data to another computer?
 
-Ensure that the `pulsepilot.jar` is placed in the **same folder** as `pulsepilot_data.txt`. PulsePilot should recognise
-and synchronise your data contents from `pulsepilot_data.txt` if done correctly.
+Ensure that `pulsepilot.jar` is placed in the **same folder** as `pulsepilot_data.txt` **and** `pulsepilot_hash.txt`.
+PulsePilot should recognise and synchronise your data contents from `pulsepilot_data.txt` if done correctly.
 
-**Tip:** Create a _backup copy_ to prior to file transfer to avoid data corruption.
+**Tip!** Create a _backup copy_ of both `pulsepilot_data.txt` and `pulsepilot_hash.txt` prior to file transfer
+to avoid data corruption. The _backup copies_ should be stored in a **separate** folder location from where 
+the original `pulsepilot.jar` is saved.
 
-**2.** What happens if my data is corrupted?
+**Tip!** You can copy files by:
+- Selecting the file of interest and ensure it is highlighted
+- Copy the file with <kbd>Ctrl</kbd> + <kbd>C</kbd>
+- Opening up a new folder in a **separate** folder location from where `pulsepilot.jar` is saved
+- Paste the new file copy with <kbd>Ctrl</kbd> + <kbd>V</kbd>
 
-Depending on the severity of corruption, you may experience 2 scenarios:
+**2.** What happens if my data is corrupted or tampered with?
 
-- A full corruption
+**_WARNING_: DO NOT** tamper with either `pulsepilot_data.txt` or `pulsepilot_hash.txt` to prevent **permanent** and 
+**unrecoverable** loss of data.
+
+You may experience 2 scenarios:
+
+- A data file content corruption
 ```
 ____________________________________________________________
  _              _
@@ -325,11 +336,10 @@ Engaging orbital thrusters...
 PulsePilot on standby
 ____________________________________________________________
 Exception Caught!
-File is corrupted! Ceasing any further data imports...
-Consider deleting 'pulsepilot_data.txt' and trying again!
-____________________________________________________________
+Data file integrity compromised. Exiting.
+
 ```
-- A partial corruption
+- A missing file error
 ```
 ____________________________________________________________
  _              _
@@ -338,34 +348,26 @@ ____________________________________________________________
 Engaging orbital thrusters...
 PulsePilot on standby
 ____________________________________________________________
-Terminal primed. Command inputs are now accepted...
-____________________________________________________________
 Exception Caught!
-Error: File is corrupted! Ceasing any further data imports...
-Some data may have been recovered. PulsePilot shall resume.
-____________________________________________________________
-```
-
-In either case, you may want to overwrite/replace the current `pulsepilot_data.txt` with that of your backup in order to restore your data.
-
-A full corruption indicates permanent and complete data loss. Please delete `pulsepilot_data.txt` and relaunch PulsePilot.
-
-A partial corruption indicates a partial recovery of data up until the point of corruption. We recommend utilising the `history` command to review and discrepancies
-and missing data. You may choose to re-enter the corrupted data to be saved again upon `exit`.
-
-3. What happens if I specify extra flags on accident?
-   
-Note that if you add duplicate or extra flags, the bot **will read the first instance only**.
-
-All other parameters will be ignored.
-
-For example:
+Key files for integrity missing. Exiting.
 
 ```
-workout /e:run /d:5.25 /t:59:50 /d:10.55
-```
 
-In the above output, the bot will read `5.25` as the distance. The second `/d:10.55` is ignored. 
+
+A data file content corruption results in permanent and complete data loss. This occurs either due to intentional or
+accidental tampering with either `pulsepilot_data.txt` or `pulsepilot_hash.txt` files, or corruption due to unforeseen
+circumstances on the user-end during migration of files. PulsePilot will automatically delete the corrupted files
+before exiting.
+
+A missing file error occurs when either `pulsepilot_data.txt` or `pulsepilot_hash.txt` is missing when PulsePilot is 
+run. For safety and security purposes, PulsePilot will automatically delete the remaining file before exiting.
+
+**Both cases will inevitably result in permanent and complete data loss.**
+
+**DATA RECOVERY:** In both cases, you may want to recover data by utilising **both** your backup copies of 
+`pulsepilot_data.txt` and `pulsepilot_hash.txt` to restore your data. 
+Otherwise, you may opt to re-run `pulsepilot.jar` again with the same command, `java -jar pulsepilot.jar` to initialise 
+a new save file.
 
 **3.** Is my tracking data private and confidential?
 
@@ -378,6 +380,20 @@ PulsePilot requires at least Java version 11.
 **5.** Can I use the application offline?
 
 Yes, PulsePilot works perfectly offline. All data are stored on your device for better privacy.
+
+**6.** What happens if I specify extra flags on accident?
+   
+Note that if you add duplicate or extra flags, the bot **will read the first instance only**.
+
+All other parameters will be ignored.
+
+For example:
+
+```
+workout /e:run /d:5.25 /t:59:50 /d:10.55
+```
+
+In the above output, the bot will read `5.25` as the distance. The second `/d:10.55` is ignored. 
 
 ###### [Back to table of contents](#table-of-contents)
 
