@@ -69,7 +69,7 @@ public class DataFile {
      * @throws NoSuchAlgorithmException If the SHA-256 algorithm is not available.
      * @throws IOException If an I/O error occurs while reading the file.
      */
-    private String generateFileHash(File file) throws NoSuchAlgorithmException, IOException {
+    protected String generateFileHash(File file) throws NoSuchAlgorithmException, IOException {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         FileInputStream fis = new FileInputStream(file);
         byte[] dataBytes = new byte[1024];
