@@ -48,7 +48,7 @@ The bot will prompt you for your name before starting.
 * Parameters in square brackets are optional.
   * `[/d:DATE]` means that the `DATE` parameter is **optional**.
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
-
+> ⚠️ Follow instructions clearly. Ensure that the syntax is exactly the same as provided in the user guide. For instance, no extra characters in the commands, such as blank space, newline, etc. 
 ---
 
 ## Commands
@@ -107,30 +107,7 @@ Examples 1 :
 
 Expected Output:
 
-<<<<<<< HEAD
 ![Adding Gyms](img/adding_gym.png)
-=======
-```
-workout /e:gym /n:2 /date:25-03-2023
-____________________________________________________________
-Please enter the details of station 1. (Format: e.g. Bench Press /s:2 /r:4 /w:10,20)
-____________________________________________________________
-bench press /s:2 /r:4 /w:10,20
-____________________________________________________________
-Please enter the details of station 2. (Format: e.g. Bench Press /s:2 /r:4 /w:10,20)
-____________________________________________________________
-squat /r:2 /s:2 /w:10.5,20.5
-____________________________________________________________
-Successfully added a new gym session
-Station 1 bench press: 2 sets
-	- Set 1. 4 reps at 10 KG
-	- Set 2. 4 reps at 20 KG
-Station 2 squat: 2 sets
-	- Set 1. 4 reps at 10.500 KG
-	- Set 2. 4 reps at 20.500 KG
-____________________________________________________________
-```
->>>>>>> 109ea7910a5eaa95e4698a57c5072466ca1d648b
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -157,11 +134,11 @@ Expected Output:
 
 The ranges for BMI are as follows:
 
-- BMI < 18.5: Underweight
-- 18.5 <= BMI < 24.9: Normal
-- 24.9 <= BMI < 29.9: Overweight
-- 29.9 <= BMI < 39.9: Obese
-- BMI >= 39.9: Severely Obese
+- BMI < 18.5 (less than 18.5): **Underweight**
+- 18.5 <= BMI < 25.0 (more than or equal to 18.5 and less than 25.0): **Normal**
+- 25.0 <= BMI < 30.0 (more than or equal to 25.0 and less than 30.0): **Overweight**
+- 30.0 <= BMI < 40.0 (more than or equal to 30.0 and less than 40.0): **Obese**
+- BMI >= 40.0 (more than 40.0): **Severely Obese**
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -418,6 +395,26 @@ workout /e:run /d:5.25 /t:59:50 /d:10.55
 ```
 
 In the above output, the bot will read `5.25` as the distance. The second `/d:10.55` is ignored. 
+
+**7.** What if I keep receiving an error message even though my input seems to follow the instructions given in the user guide?
+
+Please ensure that you follow the command syntax given **exactly** in the user guide. Some examples of mistakes that could be easily overlooked:
+
+Example of the correct command:
+
+![correct_command.png](img/correct_command.png)
+
+- Error of adding extra space(s) in fixed parameters:
+  - In this case, the altered fixed parameter is `/date:`, which has written as `/ date:` instead.
+  - Fixed parameters are non-optional and non-user-decided parameters. Check [Notes about command format](#notes-about-command-format).
+
+![extra_space_error_command.png](img/extra_space_error_command.png)
+
+- Error of adding extra newline(s) after command:
+
+![extra_newline_error_command.png](img/extra_newline_error_command.png)
+
+Note that the errors mentioned above would lead to errors thrown. Any similar syntax errors could likely throw errors as well.
 
 ###### [Back to table of contents](#table-of-contents)
 
