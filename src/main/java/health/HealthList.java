@@ -7,6 +7,7 @@ import constants.HealthConstant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
+import ui.Output;
 
 /**
  * The HealthList class extends the ArrayList class.
@@ -132,6 +133,7 @@ public class HealthList extends ArrayList<Health> {
      * Prints the last three Period objects added to the periods list.
      */
     public static void printLatestThreeCycles() {
+        Output.printLine();
         int size = PERIODS.size();
         int startIndex = size - HealthConstant.LATEST_THREE_CYCLE_LENGTHS;
         assert startIndex >= 0 : ErrorConstant.START_INDEX_NEGATIVE_ERROR;
@@ -141,6 +143,7 @@ public class HealthList extends ArrayList<Health> {
         for (int i = startIndex; i <= endIndex; i++) {
             System.out.println(PERIODS.get(i));
         }
+
     }
 
     /**

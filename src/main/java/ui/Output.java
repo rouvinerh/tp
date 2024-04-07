@@ -107,6 +107,7 @@ public class Output {
      * @param newBmi The new Bmi object added.
      */
     public static void printAddBmi(Bmi newBmi) {
+        printLine();
         System.out.println(HealthConstant.BMI_ADDED_MESSAGE_PREFIX
                 + newBmi.getHeight()
                 + UiConstant.LINE
@@ -114,6 +115,7 @@ public class Output {
                 + UiConstant.LINE
                 + newBmi.getDate());
         System.out.println(newBmi);
+        printLine();
     }
 
     /**
@@ -122,11 +124,13 @@ public class Output {
      * @param newPeriod The new Period object added.
      */
     public static void printAddPeriod(Period newPeriod) {
+        printLine();
         System.out.println(HealthConstant.PERIOD_ADDED_MESSAGE_PREFIX
                 + newPeriod.getStartDate()
                 + UiConstant.LINE
                 + newPeriod.getEndDate());
         System.out.println(newPeriod);
+        printLine();
     }
 
     /**
@@ -135,6 +139,7 @@ public class Output {
      * @param newAppointment The new Appointment object added.
      */
     public static void printAddAppointment(Appointment newAppointment) {
+        printLine();
         System.out.println(HealthConstant.APPOINTMENT_ADDED_MESSAGE_PREFIX
                 + newAppointment.getDate()
                 + UiConstant.LINE
@@ -142,6 +147,7 @@ public class Output {
                 + UiConstant.LINE
                 + newAppointment.getDescription());
         System.out.println(newAppointment);
+        printLine();
     }
 
     /**
