@@ -228,10 +228,10 @@ public class Validation {
         int minutes = Integer.parseInt(parts[1]);
 
         if (hours < UiConstant.MIN_HOURS || hours > UiConstant.MAX_HOURS) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_HOURS_ERROR);
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_ACTUAL_TIME_HOUR_ERROR);
         }
         if (minutes < UiConstant.MIN_MINUTES || minutes > UiConstant.MAX_MINUTES) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_MINUTES_ERROR);
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_ACTUAL_TIME_MINUTE_ERROR);
         }
     }
 

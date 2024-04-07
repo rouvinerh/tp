@@ -44,8 +44,9 @@ public class ErrorConstant {
 
     // Time errors
     public static final String INVALID_ACTUAL_TIME_ERROR = "Invalid time format. Format is HH:MM in 24 hours format!";
-    public static final String INVALID_MINUTES_ERROR = "Minutes must be a positive integer between 00 and 59.";
-    public static final String INVALID_HOURS_ERROR = "Hours must be a positive integer between 00 and 23";
+    public static final String INVALID_ACTUAL_TIME_MINUTE_ERROR = "Minutes must be a positive integer " +
+            " 00 and 59.";
+    public static final String INVALID_ACTUAL_TIME_HOUR_ERROR = "Hours must be a positive integer between 00 and 23";
     public static final String PARSING_TIME_ERROR = "Error parsing time!";
 
     //Delete Errors
@@ -76,7 +77,7 @@ public class ErrorConstant {
     public static final String INVALID_RUN_TIME_ERROR = "Invalid time format. Format is either HH:MM:SS or " +
             "MM:SS with integers!";
     public static final String INVALID_SECOND_ERROR = "Seconds must be a positive integer between 00 and 59!";
-    public static final String INVALID_HOUR_ERROR = "Hours cannot set to 00. Use MM:SS instead!";
+    public static final String INVALID_HOUR_ERROR = "Hours is excluded if set to 00. Use MM:SS instead!";
     public static final String INVALID_MINUTE_ERROR = "Minutes must be a positive integer between 01 and 59!";
 
     // GYM ERRORS
@@ -99,7 +100,7 @@ public class ErrorConstant {
             + System.lineSeparator()
             + GYM_STATION_FORMAT_ERROR;
 
-    public static final String INVALID_WEIGHTS_ERROR = "The weight done for each set is seperated by commas! " +
+    public static final String INVALID_WEIGHTS_ERROR = "The weight used for each set is separated by commas! " +
             "Example: 10,20,30"
             + System.lineSeparator()
             + GYM_STATION_FORMAT_ERROR;
