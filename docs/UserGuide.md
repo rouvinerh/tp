@@ -48,7 +48,7 @@ The bot will prompt you for your name before starting.
 * Parameters in square brackets are optional.
   * `[/d:DATE]` means that the `DATE` parameter is **optional**.
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
-
+> ⚠️ Follow instructions clearly. Ensure that the syntax is exactly the same as provided in the user guide. For instance, no extra characters in the commands, such as blank space, newline, etc. 
 ---
 
 ## Commands
@@ -395,6 +395,26 @@ workout /e:run /d:5.25 /t:59:50 /d:10.55
 ```
 
 In the above output, the bot will read `5.25` as the distance. The second `/d:10.55` is ignored. 
+
+**7.** What if I keep receiving an error message even though my input seems to follow the instructions given in the user guide?
+
+Please ensure that you follow the command syntax given **exactly** in the user guide. Some examples of mistakes that could be easily overlooked:
+
+Example of the correct command:
+
+![correct_command.png](img/correct_command.png)
+
+- Error of adding extra space(s) in fixed parameters:
+  - In this case, the altered fixed parameter is `/date:`, which has written as `/ date:` instead.
+  - Fixed parameters are non-optional and non-user-decided parameters. Check [Notes about command format](#notes-about-command-format).
+
+![extra_space_error_command.png](img/extra_space_error_command.png)
+
+- Error of adding extra newline(s) after command:
+
+![extra_newline_error_command.png](img/extra_newline_error_command.png)
+
+Note that the errors mentioned above would lead to errors thrown. Any similar syntax errors could likely throw errors as well.
 
 ###### [Back to table of contents](#table-of-contents)
 
