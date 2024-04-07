@@ -130,20 +130,12 @@ public class DataFile {
                 if (expectedHash.equals(actualHash)) {
                     status = verifyIntegrity(dataFile);
                 } else {
-                    LogFile.writeLog(ErrorConstant.DATA_INTEGRITY_ERROR, true);
-                    Output.printException(ErrorConstant.DATA_INTEGRITY_ERROR);
-                    hashFile.delete();
-                    dataFile.delete();
-                    System.exit(1);
+                    processHashFail(ErrorConstant.DATA_INTEGRITY_ERROR, hashFile, dataFile);
                 }
             } else if (!dataFile.exists() && !hashFile.exists()) {
                 status = verifyIntegrity(dataFile);
             } else {
-                LogFile.writeLog(ErrorConstant.MISSING_INTEGRITY_ERROR, true);
-                Output.printException(ErrorConstant.MISSING_INTEGRITY_ERROR);
-                hashFile.delete();
-                dataFile.delete();
-                System.exit(1);
+                processHashFail(ErrorConstant.MISSING_INTEGRITY_ERROR, hashFile, dataFile);
             }
         } catch (CustomExceptions.FileCreateError e) {
             System.err.println(ErrorConstant.CREATE_FILE_ERROR);
@@ -158,6 +150,23 @@ public class DataFile {
         Path dataFilePath = Path.of(UiConstant.DATA_FILE_PATH);
         assert Files.exists(dataFilePath) : "Data file does not exist.";
         return status;
+    }
+
+    /**
+     * Handles the failure of file hash verification.
+     * This method is called when the hash value of the data file does not match the expected value.
+     * It logs the error, prints the exception, deletes the data file and hash file, and exits the application.
+     *
+     * @param errorString The error message to be logged and printed.
+     * @param hashFile The hash file to be deleted.
+     * @param dataFile The data file to be deleted.
+     */
+    private static void processHashFail(String errorString, File hashFile, File dataFile) {
+        LogFile.writeLog(errorString, true);
+        Output.printException(errorString);
+        hashFile.delete();
+        dataFile.delete();
+        System.exit(1);
     }
 
     /**
