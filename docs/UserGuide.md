@@ -107,30 +107,7 @@ Examples 1 :
 
 Expected Output:
 
-<<<<<<< HEAD
 ![Adding Gyms](img/adding_gym.png)
-=======
-```
-workout /e:gym /n:2 /date:25-03-2023
-____________________________________________________________
-Please enter the details of station 1. (Format: e.g. Bench Press /s:2 /r:4 /w:10,20)
-____________________________________________________________
-bench press /s:2 /r:4 /w:10,20
-____________________________________________________________
-Please enter the details of station 2. (Format: e.g. Bench Press /s:2 /r:4 /w:10,20)
-____________________________________________________________
-squat /r:2 /s:2 /w:10.5,20.5
-____________________________________________________________
-Successfully added a new gym session
-Station 1 bench press: 2 sets
-	- Set 1. 4 reps at 10 KG
-	- Set 2. 4 reps at 20 KG
-Station 2 squat: 2 sets
-	- Set 1. 4 reps at 10.500 KG
-	- Set 2. 4 reps at 20.500 KG
-____________________________________________________________
-```
->>>>>>> 109ea7910a5eaa95e4698a57c5072466ca1d648b
 
 ###### [Back to table of contents](#table-of-contents)
 
