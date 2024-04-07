@@ -34,27 +34,9 @@ PulsePilot is a **desktop app for tracking health-related information, optimised
 5. The welcome message for PulsePilot should be printed to the screen.
 6. Type commands in the command line and press Enter to execute it. Using `help` and pressing Enter will print the help message.
 
-The bot will prompt you for your name before starting. 
+The bot will prompt you for your name before starting.
 
-```
-____________________________________________________________
- _              _
-|_)    |  _  _ |_) o  |  _ _|_
-|  |_| | _> (/_|   |  | (_) |_
-Engaging orbital thrusters...
-PulsePilot on standby
-____________________________________________________________
-What is your name, voyager?
-____________________________________________________________
-Jason
-Welcome aboard, Captain Jason
-____________________________________________________________
-Tips: Enter 'help' to view the pilot manual!
-Initiating FTL jump sequence...
-FTL jump completed.
-Terminal primed. Command inputs are now accepted...
-____________________________________________________________
-```
+![Opening Prompt from PulsePilot](img/start_prompt.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -83,20 +65,7 @@ Examples: `workout /e:run /d:5.15 /t:25:03 /date:25-03-2023` OR `workout /e:run 
 
 Expected Output:
 
-```
-workout /e:run /d:5.15 /t:25:03 /date:25-03-2023
-____________________________________________________________
-Successfully added a new run session
-Type	Time		Distance	Pace		Date
-run   	25:03     	5.15      	4:52/km   	2023-03-25  
-____________________________________________________________
-workout /e:run /d:5.15 /t:25:03
-____________________________________________________________
-Successfully added a new run session
-Type	Time		Distance	Pace		Date
-run   	25:03     	5.15      	4:52/km   	NA          
-____________________________________________________________
-```
+![Adding Runs](img/adding_runs.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -129,26 +98,7 @@ Examples: `Bench Press /s:4 /r:10 /w:75,75,75,75`
 
 Expected Output:
 
-```
-workout /e:gym /n:2 /date:25-03-2023
-____________________________________________________________
-Please enter the details of station 1. (Format: e.g. Bench Press /s:2 /r:4 /w:10,20)
-____________________________________________________________
-bench press /s:2 /r:4 /w:10,20
-____________________________________________________________
-Please enter the details of station 2. (Format: e.g. Bench Press /s:2 /r:4 /w:10,20)
-____________________________________________________________
-squat /s:2 /r:4 /w:10,20
-____________________________________________________________
-Successfully added a new gym session
-Station 1 bench press: 2 sets
-	- Set 1. 4 reps at 10 KG
-	- Set 2. 4 reps at 20 KG
-Station 2 squat: 2 sets
-	- Set 1. 4 reps at 10 KG
-	- Set 2. 4 reps at 20 KG
-____________________________________________________________
-```
+![Adding Gyms](img/adding_gym.png)
 
 > Note that the number of weights must equal to the number of sets! For example, if you have done 2 sets, PulsePilot expects 2 weights specified like `10,10`. 
 
@@ -172,15 +122,8 @@ Examples:
 * `health /h:bmi /date:19-03-2024 /height:1.70 /weight:75.42`
 
 Expected Output:
-```
-health /h:bmi /height:1.70 /weight:75.42 /date:19-03-2024
-____________________________________________________________
-Added: bmi | 1.70 | 75.42 | 19-03-2024
-2024-03-19
-Your BMI is 26.1
-You're overweight.
-____________________________________________________________
-```
+
+![Adding BMI](img/adding_bmi.png)
 
 The ranges for BMI are as follows:
 
@@ -191,7 +134,9 @@ The ranges for BMI are as follows:
 - BMI >= 39.9: Severely Obese
 
 ###### [Back to table of contents](#table-of-contents)
+
 ___
+
 ### Health: Period
 
 Tracks the start and end of user's menstrual cycle.
@@ -207,36 +152,22 @@ Examples:
 * `health /start:09-03-2022 /end:16-03-2022 /h:period`
 
 Expected Output:
-```
-health /h:period /start:09-03-2022 /end:16-03-2022
-____________________________________________________________
-Added: period | 09-03-2022 | 16-03-2022
-Period Start: 2022-03-09 Period End: 2022-03-16
-Period Length: 8 days
-____________________________________________________________
-```
+
+![Adding Periods](img/adding_period.png)
 
 Predicts user's next period start date. 
 
 Format: `health /h:prediction`
 
 * All parameters must be provided in the correct order.
+* There must be at least 4 periods added before a prediction can be made. 
 
 Expected Output:
-```
-health /h:prediction
-Period Start: 2024-01-09 Period End: 2024-01-16
-Period Length: 8 days
-Cycle Length: 32 days
-Period Start: 2024-02-10 Period End: 2024-02-16
-Period Length: 7 days
-Cycle Length: 28 days
-Period Start: 2024-03-09 Period End: 2024-03-14
-Period Length: 6 days
-Your next cycle's predicted start date is 2024-04-08, in 4 days.
-```
+
+![Viewing Prediction](img/viewing_prediction.png)
 
 ###### [Back to table of contents](#table-of-contents)
+
 ___
 
 ### Health: Appointment
@@ -261,13 +192,7 @@ Examples:
 
 Expected Output:
 
-```
-health /h:appointment /date:03-04-2024 /time:14:15 /description:review checkup with surgeon
-____________________________________________________________
-Added: appointment | 2024-04-03 | 14:15 | review checkup with surgeon
-On 2024-04-03 at 14:15: review checkup with surgeon
-____________________________________________________________
-```
+![Adding Appointment](img/adding_appointment.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -292,18 +217,10 @@ Examples:
 
 Expected Output:
 
-```
-history /item:workouts
-____________________________________________________________
-Showing all workouts (runs and gyms):
- Index	Type 	Date        	Distance	Duration       	Pace    	Station   	Sets	Reps	Weights   
-1     	gym  	1997-11-20  	-       	-              	-       	bench press	2   	4,4 	100,120   
-      	     	            	        	               	        	squats    	2   	4,4 	50,60     
-2     	run  	2023-02-10  	5.25    	25:23          	4:50/km 	-         	-   	-   	-         
-____________________________________________________________
-```
+![Viewing History](img/viewing_history.png)
 
 ###### [Back to table of contents](#table-of-contents)
+
 --- 
 ### Latest
 
@@ -323,14 +240,10 @@ Examples:
 
 Expected Output:
 
-```
-latest /item:period
-____________________________________________________________
-On 2023-11-11 at 23:24: this is a testing description
-____________________________________________________________
-```
+![Viewing Latest](img/viewing_latest.png)
 
 ###### [Back to table of contents](#table-of-contents)
+
 --- 
 
 ### Delete
@@ -344,23 +257,7 @@ Format: `delete /item:TYPE /index:INDEX`
 
 Expected output:
 
-```
-history /item:run
-____________________________________________________________
-Your run history:
-Index 	Type  	Time      	Distance  	Pace      	Date        
-1     	run   	25:20     	5.15      	4:55/km   	2024-03-28  
-2     	run   	50:20     	12.15     	4:09/km   	2024-03-29  
-____________________________________________________________
-delete /item:run /index:2
-Removed Run entry with 12.15km at 4:09/km.
-history /item:run
-____________________________________________________________
-Your run history:
-Index 	Type  	Time      	Distance  	Pace      	Date        
-1     	run   	25:20     	5.15      	4:55/km   	2024-03-28  
-____________________________________________________________
-```
+![Deleting](img/deleting.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -372,42 +269,19 @@ Format: `help`
 
 Expected output:
 
-```
-help
-____________________________________________________________
-Commands List:
-
-workout /e:run /d:DISTANCE /t:TIME [/date:DATE] - Add a new run
-workout /e:gym /n:NUMBER_OF_STATIONS [/date:DATE] - Add a new gym workout
-health /h:bmi /height:HEIGHT /weight:WEIGHT /date:DATE - Add new BMI data
-health /h:period /start:START_DATE /end:END_DATE - Add new period data
-health /h:prediction - Predicts next period's start date
-health /h:appointment /date:DATE /time:TIME /description:DESCRIPTION - Add new appointment data
-history /item:[run/gym/bmi/period] - Shows history of runs/gyms/bmi records/periods tracked/appointment records
-latest /item:[run/gym/bmi/period] - Shows latest entry of runs/gyms/bmi records/periods tracked/appointment records
-help - Show this help message
-exit - Exit the program
-____________________________________________________________
-```
+![img.png](img/viewing_help.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
 ### Exit
 
-Exits the bot gracefully.
+Exits the bot **and writes to data file**.
 
 Format: `exit`
 
 Expected Output:
 
-```
-exit
-Initiating PulsePilot landing sequence...
-____________________________________________________________
-PulsePilot successful touchdown
-See you soon, Captain!
-____________________________________________________________
-```
+![Exiting Bot](img/exit_bot.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -474,7 +348,6 @@ ____________________________________________________________
 
 In either case, you may want to overwrite/replace the current `pulsepilot_data.txt` with that of your backup in order to restore your data.
 
-
 A full corruption indicates permanent and complete data loss. Please delete `pulsepilot_data.txt` and relaunch PulsePilot.
 
 A partial corruption indicates a partial recovery of data up until the point of corruption. We recommend utilising the `history` command to review and discrepancies
@@ -510,16 +383,17 @@ Yes, PulsePilot works perfectly offline. All data are stored on your device for 
 
 ## Command Summary
 
-| Action        | Format, Examples                                                                                      |
-|---------------|--------------------------------------------------------------------------------------------------------|
-| Print help    | `help`                                                                                                   |
-| Add new run   | `workout /e:run /d:DISTANCE /t:TIME [/date:DATE]` Example: `workout /e:run /d:5.24 /t:25:23 /date:19-03-2024` |
-| Add gym       | `workout /e:gym /n:NUMBER_OF_STATIONS [/date:DATE]` Example: `workout /e:gym /n:4`                       |
+| Action        | Format, Examples                                                                                                              |
+|---------------|-------------------------------------------------------------------------------------------------------------------------------|
+| Print help    | `help`                                                                                                                        |
+| Add new run   | `workout /e:run /d:DISTANCE /t:TIME [/date:DATE]` Example: `workout /e:run /d:5.24 /t:25:23 /date:19-03-2024`                 |
+| Add gym       | `workout /e:gym /n:NUMBER_OF_STATIONS [/date:DATE]` Example: `workout /e:gym /n:4`                                            |
 | Track BMI     | `health /h:bmi /height:HEIGHT /weight:WEIGHT /date:DATE` Example: `health /h:bmi /height:1.70 /weight:75.42 /date:19-03-2024` |
-| Track Period  | `health /h:period /start:START_DATE /end:END_DATE` Example: `health /h:period /start:09-03-2022 /end:16-03-2022` |
-| View history  | `history /item:TYPE` Example: `history /item:run`                                                          |
-| View latest   | `latest /item:TYPE` Example: `latest /item:bmi`                                                            |
-| Exit bot      | `exit`                                                                                                   |
+| Track Period  | `health /h:period /start:START_DATE /end:END_DATE` Example: `health /h:period /start:09-03-2022 /end:16-03-2022`              |
+| View history  | `history /item:TYPE` Example: `history /item:run`                                                                             |
+| View latest   | `latest /item:TYPE` Example: `latest /item:bmi`                                                                               |
+| Deleting item | `delete /item:TYPE /index:INDEX` Example: `delete /item:run /index:1`                                                         |
+| Exit bot      | `exit`                                                                                                                        |
 
 ###### [Back to table of contents](#table-of-contents)
 
