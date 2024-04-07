@@ -1,7 +1,6 @@
 package ui;
 
 import constants.WorkoutConstant;
-import health.Health;
 import health.HealthList;
 import health.Period;
 import utility.CustomExceptions;
