@@ -10,18 +10,20 @@ import java.util.ArrayList;
 /**
  * Represents the WorkoutList object.
  */
-public class WorkoutList extends ArrayList<Workout> {
+public class WorkoutList  {
     private static final ArrayList<Workout> WORKOUTS = new ArrayList<>();
     private static final ArrayList<Run> RUNS = new ArrayList<>();
     private static final ArrayList<Gym> GYMS = new ArrayList<>();
 
+    protected WorkoutList() {
 
+    }
     /**
      * Adds a workout to the list of workouts.
      *
      * @param workout Workout object to be added.
      */
-    private static void addWorkout(Workout workout) {
+    protected void addWorkout(Workout workout) {
         WORKOUTS.add(workout);
     }
 
@@ -30,7 +32,7 @@ public class WorkoutList extends ArrayList<Workout> {
      *
      * @param run Run object to be added.
      */
-    protected static void addRun(Run run) {
+    protected void addRun(Run run) {
         RUNS.add(run);
         addWorkout(run);
     }
@@ -40,7 +42,7 @@ public class WorkoutList extends ArrayList<Workout> {
      *
      * @param gym Gym object to be added.
      */
-    public static void addGym(Gym gym) {
+    protected void addGym(Gym gym) {
         GYMS.add(gym);
         addWorkout(gym);
     }

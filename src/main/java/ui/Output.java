@@ -34,7 +34,7 @@ public class Output {
     /**
      * Prints the help message.
      */
-    public static void printHelp() {
+    public void printHelp() {
         printLine();
         System.out.println("Commands List:");
         System.out.println();
@@ -57,7 +57,7 @@ public class Output {
     /**
      * Prints an ASCII Art depicting the word 'PulsePilot'.
      */
-    public static void printArt() {
+    public void printArt() {
         System.out.println(" _              _");
         System.out.println("|_)    |  _  _ |_) o  |  _ _|_");
         System.out.println("|  |_| | _> (/_|   |  | (_) |_");
@@ -68,7 +68,7 @@ public class Output {
      *
      * @param stationNumber Integer representing the current gym station index.
      */
-    public static void printGymStationPrompt(int stationNumber) {
+    public void printGymStationPrompt(int stationNumber) {
         printLine();
         System.out.println("Please enter the details of station "
                 + stationNumber
@@ -84,7 +84,7 @@ public class Output {
      * @param currentWorkout The current Workout object within the list.
      * @return A string
      */
-    private static String getFormattedRunWithIndex(int index, Workout currentWorkout) {
+    private String getFormattedRunWithIndex(int index, Workout currentWorkout) {
         return String.format(WorkoutConstant.RUN_DATA_INDEX_FORMAT, index, currentWorkout);
     }
 
@@ -93,7 +93,7 @@ public class Output {
      *
      * @param newRun The new Run object added.
      */
-    public static void printAddRun(Run newRun) {
+    public void printAddRun(Run newRun) {
         printLine();
         System.out.println(WorkoutConstant.ADD_RUN);
         System.out.println(WorkoutConstant.RUN_HEADER);
@@ -106,7 +106,7 @@ public class Output {
      *
      * @param newBmi The new Bmi object added.
      */
-    public static void printAddBmi(Bmi newBmi) {
+    public void printAddBmi(Bmi newBmi) {
         printLine();
         System.out.println(HealthConstant.BMI_ADDED_MESSAGE_PREFIX
                 + newBmi.getHeight()
@@ -123,7 +123,7 @@ public class Output {
      *
      * @param newPeriod The new Period object added.
      */
-    public static void printAddPeriod(Period newPeriod) {
+    public void printAddPeriod(Period newPeriod) {
         printLine();
         System.out.println(HealthConstant.PERIOD_ADDED_MESSAGE_PREFIX
                 + newPeriod.getStartDate()
@@ -138,7 +138,7 @@ public class Output {
      *
      * @param newAppointment The new Appointment object added.
      */
-    public static void printAddAppointment(Appointment newAppointment) {
+    public void printAddAppointment(Appointment newAppointment) {
         printLine();
         System.out.println(HealthConstant.APPOINTMENT_ADDED_MESSAGE_PREFIX
                 + newAppointment.getDate()
@@ -155,7 +155,7 @@ public class Output {
      *
      * @param gym The new Gym object added.
      */
-    public static void printAddGym(Gym gym) {
+    public void printAddGym(Gym gym) {
         printLine();
         System.out.println(WorkoutConstant.ADD_GYM);
         printGymStats(gym);
@@ -169,7 +169,7 @@ public class Output {
      * @throws CustomExceptions.OutOfBounds  If index is out of bounds.
      * @throws CustomExceptions.InvalidInput If user input is invalid.
      */
-    protected static void printWorkoutHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
+    protected void printWorkoutHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
         printLine();
         System.out.println(WorkoutConstant.HISTORY_WORKOUTS_HEADER);
         System.out.println(WorkoutConstant.HISTORY_WORKOUTS_HEADER_FORMAT);
@@ -206,7 +206,7 @@ public class Output {
      * @throws CustomExceptions.OutOfBounds  If index is out of bounds.
      * @throws CustomExceptions.InvalidInput If user input is invalid.
      */
-    protected static void printRunHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
+    protected void printRunHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
         printLine();
         System.out.println("Your run history:");
         ArrayList<? extends Workout> workoutList = WorkoutList.getWorkouts(WorkoutConstant.RUN);
@@ -227,7 +227,7 @@ public class Output {
      *
      * @param gym The Gym object containing the GymStation objects to be printed.
      */
-    protected static void printGymStats(Gym gym) {
+    protected void printGymStats(Gym gym) {
         ArrayList<GymStation> allStations = gym.getStations();
         for (int i = 0; i < allStations.size(); i++) {
             System.out.printf("Station %d %s%n", i + 1, allStations.get(i).toString());
@@ -240,7 +240,7 @@ public class Output {
      * @throws CustomExceptions.OutOfBounds  If index is out of bounds.
      * @throws CustomExceptions.InvalidInput If user input is invalid.
      */
-    protected static void printGymHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
+    protected void printGymHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
         printLine();
         System.out.println("Your gym history:");
         ArrayList<? extends Workout> workoutList = WorkoutList.getWorkouts(WorkoutConstant.GYM);
@@ -262,7 +262,7 @@ public class Output {
      * @throws CustomExceptions.OutOfBounds  If there is access to a Bmi object that does not exist.
      * @throws CustomExceptions.InvalidInput If there is invalid input.
      */
-    protected static void printBmiHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
+    protected void printBmiHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
         printLine();
         try {
             HealthList.showBmiHistory();
@@ -278,7 +278,7 @@ public class Output {
      * @throws CustomExceptions.OutOfBounds  If there is access to a Period object that does not exist.
      * @throws CustomExceptions.InvalidInput If there is invalid input.
      */
-    protected static void printPeriodHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
+    protected void printPeriodHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
         printLine();
         try {
             HealthList.showPeriodHistory();
@@ -294,7 +294,7 @@ public class Output {
      * @throws CustomExceptions.OutOfBounds  If there is access to an Appointment object that does not exist.
      * @throws CustomExceptions.InvalidInput If there is invalid input.
      */
-    protected static void printAppointmentHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
+    protected void printAppointmentHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
         printLine();
         try {
             HealthList.showAppointmentList();
@@ -307,7 +307,7 @@ public class Output {
     /**
      * Prints the latest Run recorded.
      */
-    protected static void printLatestRun() {
+    protected void printLatestRun() {
         printLine();
         try {
 
@@ -326,7 +326,7 @@ public class Output {
     /**
      * Prints the latest Gym recorded.
      */
-    protected static void printLatestGym() {
+    protected void printLatestGym() {
         printLine();
         try {
             Gym latestGym = WorkoutList.getLatestGym();
@@ -343,7 +343,7 @@ public class Output {
     /**
      * Prints the latest BMI entry recorded.
      */
-    protected static void printLatestBmi() {
+    protected void printLatestBmi() {
         printLine();
         try {
             HealthList.showCurrentBmi();
@@ -356,7 +356,7 @@ public class Output {
     /**
      * Prints the latest Period entry recorded.
      */
-    protected static void printLatestPeriod() {
+    protected void printLatestPeriod() {
         printLine();
         try {
             HealthList.showLatestPeriod();
@@ -369,7 +369,7 @@ public class Output {
     /**
      * Prints the latest Appointment entry recorded.
      */
-    protected static void printLatestAppointment(){
+    protected void printLatestAppointment(){
         printLine();
         try {
             HealthList.showLatestAppointment();
@@ -384,7 +384,7 @@ public class Output {
      *
      * @param filter String used to determine the latest Run, Gym, Period, or BMI objects is to be printed.
      */
-    public static void printLatest(String filter) {
+    public void printLatest(String filter) {
         try {
             HistoryAndLatestFilters parsedFilter = HistoryAndLatestFilters.valueOf(filter.toUpperCase());
             switch (parsedFilter) {
@@ -421,7 +421,7 @@ public class Output {
      *
      * @param filter String used to determine if all Run, Gym, Period, or BMI objects are to be printed.
      */
-    public static void printHistory(String filter) {
+    public void printHistory(String filter) {
         try {
             HistoryAndLatestFilters parsedFilter = HistoryAndLatestFilters.valueOf(filter.toUpperCase());
             switch (parsedFilter) {
@@ -452,7 +452,7 @@ public class Output {
                 break;
             }
         } catch (CustomExceptions.OutOfBounds | CustomExceptions.InvalidInput e) {
-            Output.printException(e.getMessage());
+            printException(e.getMessage());
         }
     }
 
@@ -461,14 +461,14 @@ public class Output {
      *
      * @param message The custom message to be printed.
      */
-    public static void printException(String message) {
+    public void printException(String message) {
         System.err.println("Exception Caught!" + System.lineSeparator() + message);
     }
 
     /**
      * Prints the welcome banner for PulsePilot.
      */
-    public static void printWelcomeBanner() {
+    public void printWelcomeBanner() {
         printLine();
         printArt();
         System.out.println("Engaging orbital thrusters...");
@@ -482,7 +482,7 @@ public class Output {
      * @param status Integer representing whether the storage file has been loaded. If set to 0, file is present. Else,
      *               file is not present.
      */
-    public static void printGreeting(int status, String name) {
+    public void printGreeting(int status, String name) {
         if (status == 0) {
             System.out.println("Welcome back, Captain " + name);
             System.out.println(UiConstant.SUCCESSFUL_LOAD);
@@ -495,7 +495,7 @@ public class Output {
     /**
      * Prints the goodbye message for PulsePilot.
      */
-    public static void printGoodbyeMessage() {
+    public void printGoodbyeMessage() {
         printLine();
         System.out.println("PulsePilot successful touchdown");
         System.out.println("See you soon, Captain!");

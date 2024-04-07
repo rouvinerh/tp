@@ -4,12 +4,12 @@ import constants.ErrorConstant;
 import constants.HealthConstant;
 import constants.UiConstant;
 import constants.WorkoutConstant;
-import ui.Output;
-
 import health.Appointment;
 import health.Bmi;
 import health.HealthList;
 import health.Period;
+import ui.Output;
+
 import workouts.Gym;
 import workouts.Run;
 
@@ -25,16 +25,21 @@ import java.util.Scanner;
  */
 public class Parser {
     private final Scanner in;
-    private Validation validation;
+    private final Validation validation;
+    private final Output output;
 
-    public Parser (Scanner in){
-        this.in = in;
-        this.validation = new Validation();
+
+
+    public Parser (Scanner inputScanner){
+        in = inputScanner;
+        validation = new Validation();
+        output = new Output();
     }
 
     public Parser (){
-        this.in = new Scanner(System.in);
-        this.validation = new Validation();
+        in = new Scanner(System.in);
+        validation = new Validation();
+        output = new Output();
     }
 
     /**
@@ -66,7 +71,7 @@ public class Parser {
         try {
             formattedDate = LocalDate.parse(date, formatter);
         } catch (DateTimeParseException e) {
-            Output.printException(ErrorConstant.PARSING_DATE_ERROR);
+            output.printException(ErrorConstant.PARSING_DATE_ERROR);
         }
         return formattedDate;
     }
@@ -85,7 +90,7 @@ public class Parser {
         try {
             formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         } catch (DateTimeParseException e) {
-            Output.printException(ErrorConstant.PARSING_DATE_ERROR);
+            output.printException(ErrorConstant.PARSING_DATE_ERROR);
         }
         if (date == null || formatter == null) {
             return "NA";
@@ -108,7 +113,7 @@ public class Parser {
         try {
             formattedTime = LocalTime.parse(stringTime, formatter);
         } catch (DateTimeParseException e) {
-            Output.printException(ErrorConstant.PARSING_TIME_ERROR);
+            output.printException(ErrorConstant.PARSING_TIME_ERROR);
         }
         return formattedTime;
     }
@@ -152,7 +157,7 @@ public class Parser {
             validation.validateDeleteInput(deleteDetails);
             return deleteDetails;
         } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
-            Output.printException(e.getMessage());
+            output.printException(e.getMessage());
             return null;
         }
     }
@@ -177,7 +182,7 @@ public class Parser {
             validation.validateFilter(type.toLowerCase());
             return type.toLowerCase();
         } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
-            Output.printException(e.getMessage());
+            output.printException(e.getMessage());
             return null;
         }
     }
@@ -197,8 +202,7 @@ public class Parser {
                 bmiDetails[HealthConstant.BMI_HEIGHT_INDEX],
                 bmiDetails[HealthConstant.BMI_WEIGHT_INDEX],
                 bmiDetails[HealthConstant.BMI_DATE_INDEX]);
-        HealthList.addBmi(newBmi);
-        Output.printAddBmi(newBmi);
+        output.printAddBmi(newBmi);
     }
 
     //@@author syj02
@@ -247,8 +251,7 @@ public class Parser {
         Period newPeriod = new Period(
                 periodDetails[HealthConstant.PERIOD_START_DATE_INDEX],
                 periodDetails[HealthConstant.PERIOD_END_DATE_INDEX]);
-        HealthList.addPeriod(newPeriod);
-        Output.printAddPeriod(newPeriod);
+        output.printAddPeriod(newPeriod);
     }
 
     /**
@@ -337,8 +340,8 @@ public class Parser {
                 appointmentDetails[HealthConstant.APPOINTMENT_DATE_INDEX],
                 appointmentDetails[HealthConstant.APPOINTMENT_TIME_INDEX],
                 appointmentDetails[HealthConstant.APPOINTMENT_DESCRIPTION_INDEX]);
-        HealthList.addAppointment(newAppointment);
-        Output.printAddAppointment(newAppointment);
+
+        output.printAddAppointment(newAppointment);
     }
 
     //@@author L5-Z
@@ -470,7 +473,7 @@ public class Parser {
                     runDetails[WorkoutConstant.RUN_DISTANCE_INDEX],
                     runDetails[WorkoutConstant.RUN_DATE_INDEX]);
         }
-        Output.printAddRun(newRun);
+        output.printAddRun(newRun);
     }
 
     /**
@@ -483,7 +486,7 @@ public class Parser {
         int i = 0;
         while (i < numberOfStations) {
             try {
-                Output.printGymStationPrompt(i + 1);
+                output.printGymStationPrompt(i + 1);
                 String userInput = this.in.nextLine();
                 if (countForwardSlash(userInput) > WorkoutConstant.NUM_OF_SLASHES_FOR_GYM_STATION) {
                     throw new CustomExceptions.InvalidInput(ErrorConstant.TOO_MANY_SLASHES_ERROR);
@@ -500,10 +503,10 @@ public class Parser {
                         numberOfRepetitions, weightsArray);
                 i++;
             } catch (CustomExceptions.InsufficientInput | CustomExceptions.InvalidInput e) {
-                Output.printException(e.getMessage());
+                output.printException(e.getMessage());
             }
         }
-        Output.printAddGym(gym);
+        output.printAddGym(gym);
     }
 
     //@@author L5-Z

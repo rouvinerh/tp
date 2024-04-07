@@ -34,10 +34,6 @@ public class AppointmentTest {
         Appointment secondAppointment = new Appointment("22-03-2024", "16:00", "Wound dressing change");
         Appointment thirdAppointment = new Appointment("22-03-2024", "11:00", "Doctor consultation");
 
-        HealthList.addAppointment(firstAppointment);
-        HealthList.addAppointment(secondAppointment);
-        HealthList.addAppointment(thirdAppointment);
-
         String expected = "Your Appointment history:"
                 + System.lineSeparator()
                 + "1. On "
@@ -72,9 +68,6 @@ public class AppointmentTest {
         Appointment secondAppointment = new Appointment("22-03-2024", "16:00", "Wound dressing change");
         Appointment thirdAppointment = new Appointment("22-03-2024", "11:00", "Doctor consultation");
 
-        HealthList.addAppointment(firstAppointment);
-        HealthList.addAppointment(secondAppointment);
-        HealthList.addAppointment(thirdAppointment);
 
         String expected = "Removed appointment on "
                 + secondAppointment.getDate()

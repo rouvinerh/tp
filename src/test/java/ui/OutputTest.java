@@ -82,7 +82,8 @@ class OutputTest {
                 System.lineSeparator() +
                 UiConstant.PARTITION_LINE +
                 System.lineSeparator();
-        Output.printHistory(WorkoutConstant.RUN);
+        Output output = new Output();
+        output.printHistory(WorkoutConstant.RUN);
         assertEquals(expected, outContent.toString());
     }
 
@@ -92,7 +93,8 @@ class OutputTest {
     @Test
     void printHistory_invalidHistoryFilter_throwError() {
         String input = "invalidFilter";
-        assertThrows(IllegalArgumentException.class, () -> Output.printHistory(input));
+        Output output = new Output();
+        assertThrows(IllegalArgumentException.class, () -> output.printHistory(input));
     }
 
     /**
@@ -113,7 +115,9 @@ class OutputTest {
                 System.lineSeparator() +
                 UiConstant.PARTITION_LINE +
                 System.lineSeparator();
-        Output.printLatestRun();
+
+        Output output = new Output();
+        output.printLatestRun();
         assertEquals(expected, outContent.toString());
     }
 
@@ -130,7 +134,8 @@ class OutputTest {
                 System.lineSeparator() +
                 UiConstant.PARTITION_LINE +
                 System.lineSeparator();
-        Output.printLatestRun();
+        Output output = new Output();
+        output.printLatestRun();
         assertEquals(expected, outContent.toString());
     }
 
@@ -172,8 +177,8 @@ class OutputTest {
                     System.lineSeparator() +
                     UiConstant.PARTITION_LINE +
                     System.lineSeparator();
-
-            Output.printLatestGym();
+            Output output = new Output();
+            output.printLatestGym();
 
             assertEquals(expected, outContent.toString());
 
@@ -196,7 +201,8 @@ class OutputTest {
                 System.lineSeparator() +
                 UiConstant.PARTITION_LINE +
                 System.lineSeparator();
-        Output.printLatestGym();
+        Output output = new Output();
+        output.printLatestGym();
         assertEquals(expected, outContent.toString());
         cleanup();
     }
@@ -206,11 +212,11 @@ class OutputTest {
      */
     @Test
     void printLatestBmi_twoBmis_expectOneBmiPrinted() {
-        Bmi firstBmi = new Bmi("1.75", "70.0", "18-03-2024");
-        Bmi secondBmi = new Bmi("1.55", "55.0", "20-03-2024");
-        HealthList.addBmi(firstBmi);
-        HealthList.addBmi(secondBmi);
-        Output.printLatestBmi();
+        new Bmi("1.75", "70.0", "18-03-2024");
+        new Bmi("1.55", "55.0", "20-03-2024");
+
+        Output output = new Output();
+        output.printLatestBmi();
         String expected = UiConstant.PARTITION_LINE +
                 System.lineSeparator() +
                 "2024-03-20" +
@@ -229,11 +235,14 @@ class OutputTest {
      */
     @Test
     void printLatestPeriod_twoPeriods_expectOnePeriodPrinted() {
-        Period firstPeriod = new Period("09-02-2023", "16-02-2023");
-        Period secondPeriod = new Period("09-03-2023", "16-03-2023");
-        HealthList.addPeriod(firstPeriod);
-        HealthList.addPeriod(secondPeriod);
-        Output.printLatestPeriod();
+        new Period("09-02-2023", "16-02-2023");
+        new Period("09-03-2023", "16-03-2023");
+
+
+        Output output = new Output();
+        output.printLatestPeriod();
+
+
         String expected = UiConstant.PARTITION_LINE +
                 System.lineSeparator() +
                 "Period Start: 2023-03-09 Period End: 2023-03-16" +
@@ -253,10 +262,10 @@ class OutputTest {
     void printLatestAppointment_twoAppointments_expectOneAppointmentPrinted() {
         Appointment firstAppointment = new Appointment("29-03-2024", "17:00", "test");
         Appointment secondAppointment = new Appointment("24-01-2026", "12:00", "test2");
-        HealthList.addAppointment(firstAppointment);
-        HealthList.addAppointment(secondAppointment);
 
-        Output.printLatestAppointment();
+
+        Output output = new Output();
+        output.printLatestAppointment();
         String expected = UiConstant.PARTITION_LINE +
                 System.lineSeparator() +
                 "On 2026-01-24 at 12:00: test2" +
@@ -276,11 +285,12 @@ class OutputTest {
     @Test
     void printAppointmentHistory_twoAppointments_expectTwoAppointmentsPrinted() throws
             CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
-        Appointment firstAppointment = new Appointment("29-03-2024", "17:00", "test");
-        Appointment secondAppointment = new Appointment("24-01-2026", "12:00", "test2");
-        HealthList.addAppointment(firstAppointment);
-        HealthList.addAppointment(secondAppointment);
-        Output.printAppointmentHistory();
+        new Appointment("29-03-2024", "17:00", "test");
+        new Appointment("24-01-2026", "12:00", "test2");
+
+
+        Output output = new Output();
+        output.printAppointmentHistory();
         String expected = UiConstant.PARTITION_LINE +
                 System.lineSeparator() +
                 "Your Appointment history:" +
@@ -300,11 +310,12 @@ class OutputTest {
     @Test
     void printPeriodHistory_twoPeriods_expectTwoPeriodsPrinted() throws
             CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
-        Period firstPeriod = new Period("09-02-2023", "16-02-2023");
-        Period secondPeriod = new Period("09-03-2023", "16-03-2023");
-        HealthList.addPeriod(firstPeriod);
-        HealthList.addPeriod(secondPeriod);
-        Output.printPeriodHistory();
+        new Period("09-02-2023", "16-02-2023");
+        new Period("09-03-2023", "16-03-2023");
+
+
+        Output output = new Output();
+        output.printPeriodHistory();
         String expected = UiConstant.PARTITION_LINE +
                 System.lineSeparator() +
                 "Your Period history:" +
@@ -331,11 +342,11 @@ class OutputTest {
     @Test
     void printBmiHistory_twoBmis_expectTwoBmisPrinted() throws CustomExceptions.OutOfBounds,
             CustomExceptions.InvalidInput {
-        Bmi firstBmi = new Bmi("1.75", "70.0", "18-03-2024");
-        Bmi secondBmi = new Bmi("1.55", "55.0", "20-03-2024");
-        HealthList.addBmi(firstBmi);
-        HealthList.addBmi(secondBmi);
-        Output.printBmiHistory();
+        new Bmi("1.75", "70.0", "18-03-2024");
+        new Bmi("1.55", "55.0", "20-03-2024");
+
+        Output output = new Output();
+        output.printBmiHistory();
         String expected = UiConstant.PARTITION_LINE +
                 System.lineSeparator() +
                 "Your BMI history:" +
@@ -413,7 +424,8 @@ class OutputTest {
                     System.lineSeparator() +
                     UiConstant.PARTITION_LINE +
                     System.lineSeparator();
-            Output.printHistory(WorkoutConstant.GYM);
+            Output output = new Output();
+            output.printHistory(WorkoutConstant.GYM);
             assertEquals(expected, outContent.toString());
         }  catch (CustomExceptions.InvalidInput e) {
             System.out.println(e.getMessage());
@@ -484,8 +496,8 @@ class OutputTest {
                     + expected1 + System.lineSeparator()
                     + expected2 + System.lineSeparator()
                     + UiConstant.PARTITION_LINE + System.lineSeparator();
-
-            Output.printHistory(WorkoutConstant.ALL);
+            Output output = new Output();
+            output.printHistory(WorkoutConstant.ALL);
             assertEquals(expected, outContent.toString());
         } catch (CustomExceptions.InvalidInput e) {
             fail("Shouldn't have failed");

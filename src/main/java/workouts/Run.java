@@ -17,7 +17,10 @@ public class Run extends Workout {
     protected LocalDate date = null;
     protected String pace;
     protected boolean isHourPresent;
-    private Parser parser;
+    private final Parser parser = new Parser();
+    private final WorkoutList workoutList = new WorkoutList();
+
+
     /**
      * Constructs a new Run object with the time and distance from user input.
      *
@@ -26,11 +29,10 @@ public class Run extends Workout {
      * @throws CustomExceptions.InvalidInput If there is invalid input.
      */
     public Run(String stringTime, String stringDistance) throws CustomExceptions.InvalidInput {
-        parser = new Parser();
         times = splitRunTime(stringTime);
         distance = Double.parseDouble(stringDistance);
         pace = calculatePace();
-        WorkoutList.addRun(this);
+        workoutList.addRun(this);
     }
 
     /**
@@ -42,12 +44,11 @@ public class Run extends Workout {
      * @throws CustomExceptions.InvalidInput If there is invalid input.
      */
     public Run(String stringTime, String stringDistance, String stringDate) throws CustomExceptions.InvalidInput {
-        parser = new Parser();
         times = splitRunTime(stringTime);
         distance = Double.parseDouble(stringDistance);
         date = parser.parseDate(stringDate);
         pace = calculatePace();
-        WorkoutList.addRun(this);
+        workoutList.addRun(this);
     }
 
     /**

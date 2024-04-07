@@ -36,8 +36,8 @@ public class Period extends Health {
      */
     protected long cycleLength;
 
-    private Parser parser;
-
+    private final Parser parser = new Parser();
+    private final HealthList healthList = new HealthList();
     //@@author syj02
     /**
      * Constructor for Period object.
@@ -46,11 +46,11 @@ public class Period extends Health {
      * @param stringEndDate   A string representing the end date of the period.
      */
     public Period(String stringStartDate, String stringEndDate) {
-        parser = new Parser();
         this.startDate = parser.parseDate(stringStartDate);
         this.endDate = parser.parseDate(stringEndDate);
         this.periodLength = calculatePeriodLength();
         this.cycleLength = 0;
+        healthList.addPeriod(this);
     }
 
     /**
