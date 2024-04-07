@@ -90,19 +90,47 @@ Upon entry of the `workout /e:gym` command, the bot will prompt for further deta
 
 Format: `STATION_NAME /s:SET /r:REPS /w:WEIGHT`
 
-* All parameters must be provided in correct order as shown above.
 * `STATION_NAME` is a **string**  representing the name of the gym station.
 * `SET` is a **positive integer**  representing the number of sets done for one station.
 * `REPS` is a **positive integer**  representing the number of repetitions done for one station.
-* `WEIGHT` is a **positive integer**  representing the weight used for one station.
+* `WEIGHT` is a **list of positive double** separated by commas. It represents the weights used for all the sets in the station.
+> ⚠️ `STATION_NAME` must always be the first parameter. The order of the other parameters can be in any order.
 
-Examples: `Bench Press /s:4 /r:10 /w:75,75,75,75`
+> ⚠️ `WEIGHT` must be in **multiples of 0.125 KG**. This is because the minimum weight increment in a gym is 0.125KG. Example `bench press /s:2 /r:10 /w:10.333,12.5` is not valid as 10.333 is not a multiple of 0.125kg. 
+
+> ⚠️ Note that the **number of weights must equal to the number of sets**! For example, if you have done 2 sets at 10 kg, PulsePilot still expects 2 weights to be specified like this `squats /s:2 /r:5 /w:10.25,10.5`. 
+
+
+Examples 1 : 
+- `bench press /s:2 /r:4 /w:10,20`
+- `squat /r:2 /s:2 /w:10.5,20.5`
 
 Expected Output:
 
+<<<<<<< HEAD
 ![Adding Gyms](img/adding_gym.png)
-
-> Note that the number of weights must equal to the number of sets! For example, if you have done 2 sets, PulsePilot expects 2 weights specified like `10,10`. 
+=======
+```
+workout /e:gym /n:2 /date:25-03-2023
+____________________________________________________________
+Please enter the details of station 1. (Format: e.g. Bench Press /s:2 /r:4 /w:10,20)
+____________________________________________________________
+bench press /s:2 /r:4 /w:10,20
+____________________________________________________________
+Please enter the details of station 2. (Format: e.g. Bench Press /s:2 /r:4 /w:10,20)
+____________________________________________________________
+squat /r:2 /s:2 /w:10.5,20.5
+____________________________________________________________
+Successfully added a new gym session
+Station 1 bench press: 2 sets
+	- Set 1. 4 reps at 10 KG
+	- Set 2. 4 reps at 20 KG
+Station 2 squat: 2 sets
+	- Set 1. 4 reps at 10.500 KG
+	- Set 2. 4 reps at 20.500 KG
+____________________________________________________________
+```
+>>>>>>> 109ea7910a5eaa95e4698a57c5072466ca1d648b
 
 ###### [Back to table of contents](#table-of-contents)
 

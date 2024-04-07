@@ -15,12 +15,13 @@ import java.util.ArrayList;
 public class Gym extends Workout {
     protected LocalDate date = null;
     protected ArrayList<GymStation> stations = new ArrayList<>();
-
+    private final Parser parser = new Parser();
+    private final WorkoutList workoutList = new WorkoutList();
     /**
      * Constructor that adds a Gym object to WorkoutList.
      */
     public Gym() {
-        WorkoutList.addGym(this);
+        workoutList.addGym(this);
     }
 
     /**
@@ -29,8 +30,8 @@ public class Gym extends Workout {
      * @param stringDate String representing the date parameter specified.
      */
     public Gym(String stringDate) {
-        this.date = Parser.parseDate(stringDate);
-        WorkoutList.addGym(this);
+        this.date = parser.parseDate(stringDate);
+        workoutList.addGym(this);
     }
 
     /**
@@ -62,7 +63,7 @@ public class Gym extends Workout {
         return stations;
     }
 
-    public void appendIntoStations(GymStation station) {
+    private void appendIntoStations(GymStation station) {
         stations.add(station);
     }
 
@@ -114,7 +115,7 @@ public class Gym extends Workout {
         if(this.getDate() == null){
             date = ErrorConstant.NO_DATE_SPECIFIED_ERROR;
         } else {
-            date = Parser.parseFormattedDate(this.getDate());
+            date = parser.parseFormattedDate(this.getDate());
         }
 
         fileString.append(type);
