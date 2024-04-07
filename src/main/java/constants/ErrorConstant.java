@@ -104,9 +104,6 @@ public class ErrorConstant {
             "Example: 10,20,30"
             + System.lineSeparator()
             + GYM_STATION_FORMAT_ERROR;
-    public static final String INVALID_WEIGHTS_ARRAY_FORMAT_ERROR = "Weights can only have integers and commas, with" +
-            " no spaces! Example: 10,20,30"
-            + System.lineSeparator();
 
     public static final String INVALID_WEIGHT_VALUE_ERROR = "The weight done for each set must "
             + "be a multiple of 0.125." 

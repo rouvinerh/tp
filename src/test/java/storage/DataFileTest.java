@@ -128,28 +128,14 @@ public class DataFileTest {
         ));
 
         // Act
-<<<<<<< HEAD
+        DataFile dataFile = new DataFile();
         int status = dataFile.loadDataFile();
         dataFile.saveDataFile(name, bmiArrayList, appointmentArrayList, periodArrayList, workoutArrayList);
-=======
-        Path path = Path.of(UiConstant.DATA_FILE_PATH);
-
-        if (Files.exists(path)) {
-            Files.delete(path);
-        }
-        Files.createFile(path);
->>>>>>> 109ea7910a5eaa95e4698a57c5072466ca1d648b
-
-        DataFile dataFile = new DataFile();
-
         dataFile.saveDataFile(name, bmiArrayList, appointmentArrayList, periodArrayList, workoutArrayList);
 
         // Assert
-<<<<<<< HEAD
         List<String> lines = Files.readAllLines(Path.of(TEST_DATA_FILE_PATH));
-=======
-        List<String> lines = Files.readAllLines(path);
->>>>>>> 109ea7910a5eaa95e4698a57c5072466ca1d648b
+
         if (!lines.isEmpty()) {
             assertEquals("NAME:John Doe", lines.get(0));
             assertEquals("BMI:1.70:70.00:24.22:01-04-2023", lines.get(1));
@@ -178,8 +164,9 @@ public class DataFileTest {
         ArrayList<Workout> workoutArrayList = new ArrayList<>();
 
         // Act
-        int status = DataFile.loadDataFile();
-        DataFile.saveDataFile(name, bmiArrayList, appointmentArrayList, periodArrayList, workoutArrayList);
+        DataFile dataFile = new DataFile();
+        int status = dataFile.loadDataFile();
+        dataFile.saveDataFile(name, bmiArrayList, appointmentArrayList, periodArrayList, workoutArrayList);
 
         // Assert
         assertTrue(new File(TEST_DATA_FILE_PATH).exists());
@@ -210,8 +197,9 @@ public class DataFileTest {
         ));
 
         // Act
-        int status = DataFile.loadDataFile();
-        DataFile.saveDataFile(name, bmiArrayList, appointmentArrayList, periodArrayList, workoutArrayList);
+        DataFile dataFile = new DataFile();
+        int status = dataFile.loadDataFile();
+        dataFile.saveDataFile(name, bmiArrayList, appointmentArrayList, periodArrayList, workoutArrayList);
 
         // Assert
         assertEquals(UiConstant.FILE_NOT_FOUND, status);
@@ -240,11 +228,12 @@ public class DataFileTest {
                 new Run("00:30:00", "5.0", "01-04-2023")
         ));
 
-        File dataFile = new File(TEST_DATA_FILE_PATH);
-        DataFile.saveDataFile(name, bmiArrayList, appointmentArrayList, periodArrayList, workoutArrayList);
+        File dataFileName = new File(TEST_DATA_FILE_PATH);
+        DataFile dataFile = new DataFile();
+        dataFile.saveDataFile(name, bmiArrayList, appointmentArrayList, periodArrayList, workoutArrayList);
 
         // Act
-        String hash = DataFile.generateFileHash(dataFile);
+        String hash = dataFile.generateFileHash(dataFileName);
 
         // Assert
         assertNotNull(hash);
