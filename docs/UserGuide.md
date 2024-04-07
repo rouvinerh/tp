@@ -134,11 +134,11 @@ Expected Output:
 
 The ranges for BMI are as follows:
 
-- BMI < 18.5: Underweight
-- 18.5 <= BMI < 24.9: Normal
-- 24.9 <= BMI < 29.9: Overweight
-- 29.9 <= BMI < 39.9: Obese
-- BMI >= 39.9: Severely Obese
+- BMI < 18.5 (less than 18.5): **Underweight**
+- 18.5 <= BMI < 25.0 (more than or equal to 18.5 and less than 25.0): **Normal**
+- 25.0 <= BMI < 30.0 (more than or equal to 25.0 and less than 30.0): **Overweight**
+- 30.0 <= BMI < 40.0 (more than or equal to 30.0 and less than 40.0): **Obese**
+- BMI >= 40.0 (more than 40.0): **Severely Obese**
 
 ###### [Back to table of contents](#table-of-contents)
 
