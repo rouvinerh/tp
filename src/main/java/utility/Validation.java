@@ -12,13 +12,17 @@ import java.util.ArrayList;
  * Represents the validation class used to validate all inputs for PulsePilot.
  */
 public class Validation {
+
+    public Validation(){
+
+    }
     /**
      * Validates that the input date string is correctly formatted in DD-MM-YYYY.
      *
      * @param date The string date from user input.
      * @throws CustomExceptions.InvalidInput If there are invalid date inputs.
      */
-    public static void validateDateInput(String date) throws CustomExceptions.InvalidInput {
+    public void validateDateInput(String date) throws CustomExceptions.InvalidInput {
         if (!date.matches(UiConstant.VALID_DATE_REGEX)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_DATE_ERROR);
         }
@@ -50,7 +54,7 @@ public class Validation {
      * @throws CustomExceptions.InvalidInput If the details specified are invalid.
      * @throws CustomExceptions.InsufficientInput If empty strings are used.
      */
-    public static void validateDeleteInput(String[] deleteDetails) throws CustomExceptions.InvalidInput,
+    public void validateDeleteInput(String[] deleteDetails) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
         if (isEmptyParameterPresent(deleteDetails)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_DELETE_PARAMETERS_ERROR);
@@ -68,7 +72,7 @@ public class Validation {
      * @param filter The filter string to be checked.
      * @throws CustomExceptions.InvalidInput If the filter string is none of them.
      */
-    public static void validateFilter(String filter) throws CustomExceptions.InvalidInput {
+    public void validateFilter(String filter) throws CustomExceptions.InvalidInput {
         if (filter.equals(WorkoutConstant.RUN)
                 || filter.equals(WorkoutConstant.GYM)
                 || filter.equals(HealthConstant.BMI)
@@ -88,7 +92,7 @@ public class Validation {
      * @param bmiDetails List of strings representing BMI details.
      * @throws CustomExceptions.InvalidInput If there are any errors in the details entered.
      */
-    public static void validateBmiInput(String[] bmiDetails) throws CustomExceptions.InvalidInput,
+    public void validateBmiInput(String[] bmiDetails) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
         if (isEmptyParameterPresent(bmiDetails)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_BMI_PARAMETERS_ERROR);
@@ -125,7 +129,7 @@ public class Validation {
      * @param periodDetails List of strings representing Period details.
      * @throws CustomExceptions.InvalidInput If there are any errors in the details entered.
      */
-    public static void validatePeriodInput(String[] periodDetails) throws CustomExceptions.InvalidInput,
+    public void validatePeriodInput(String[] periodDetails) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
         if (isEmptyParameterPresent(periodDetails)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_PERIOD_PARAMETERS_ERROR);
@@ -146,9 +150,9 @@ public class Validation {
 
         validateDateNotAfterToday(periodDetails[HealthConstant.PERIOD_START_DATE_INDEX]);
         validateDateNotAfterToday(periodDetails[HealthConstant.PERIOD_END_DATE_INDEX]);
-
-        LocalDate startDate = Parser.parseDate(periodDetails[HealthConstant.PERIOD_START_DATE_INDEX]);
-        LocalDate endDate = Parser.parseDate(periodDetails[HealthConstant.PERIOD_END_DATE_INDEX]);
+        Parser parser = new Parser();
+        LocalDate startDate = parser.parseDate(periodDetails[HealthConstant.PERIOD_START_DATE_INDEX]);
+        LocalDate endDate = parser.parseDate(periodDetails[HealthConstant.PERIOD_END_DATE_INDEX]);
         if (startDate.isAfter(endDate)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.PERIOD_END_BEFORE_START_ERROR);
         }
@@ -162,7 +166,7 @@ public class Validation {
      * @throws CustomExceptions.InvalidInput If the details specified are invalid.
      * @throws CustomExceptions.InsufficientInput If empty strings are used.
      */
-    public static void validateRunInput(String[] runDetails) throws CustomExceptions.InvalidInput,
+    public void validateRunInput(String[] runDetails) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
         if (isEmptyParameterPresent(runDetails)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_RUN_PARAMETERS_ERROR);
@@ -194,7 +198,7 @@ public class Validation {
      * @throws CustomExceptions.InvalidInput If the details specified are invalid.
      * @throws CustomExceptions.InsufficientInput If empty strings are used.
      */
-    public static void validateGymInput(String[] gymDetails) throws CustomExceptions.InvalidInput,
+    public void validateGymInput(String[] gymDetails) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
         if (isEmptyParameterPresent(gymDetails)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_GYM_PARAMETERS_ERROR);
@@ -219,7 +223,7 @@ public class Validation {
      * @param time String representing the time to check.
      * @throws CustomExceptions.InvalidInput If time is formatted wrongly.
      */
-    public static void validateTimeInput(String time) throws CustomExceptions.InvalidInput {
+    public void validateTimeInput(String time) throws CustomExceptions.InvalidInput {
         if (!time.matches(UiConstant.VALID_TIME_REGEX)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_ACTUAL_TIME_ERROR);
         }
@@ -242,7 +246,7 @@ public class Validation {
      * @param time String representing the time to check.
      * @throws CustomExceptions.InvalidInput If time is formatted wrongly.
      */
-    public static void validateRunTimeInput(String time) throws CustomExceptions.InvalidInput {
+    public void validateRunTimeInput(String time) throws CustomExceptions.InvalidInput {
         if (!time.matches(UiConstant.VALID_TIME_REGEX) &&
                 !time.matches(UiConstant.VALID_TIME_WITH_HOURS_REGEX)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_RUN_TIME_ERROR);
@@ -299,7 +303,7 @@ public class Validation {
      * @throws CustomExceptions.InvalidInput If there are any errors in the details entered.
      * @throws CustomExceptions.InsufficientInput If date, time, or description parameters are missing.
      */
-    public static void validateAppointmentDetails(String[] appointmentDetails)
+    public void validateAppointmentDetails(String[] appointmentDetails)
             throws CustomExceptions.InvalidInput, CustomExceptions.InsufficientInput {
         if (isEmptyParameterPresent(appointmentDetails)) {
             throw new CustomExceptions.InsufficientInput( ErrorConstant
@@ -328,7 +332,7 @@ public class Validation {
      * @throws CustomExceptions.InsufficientInput If empty strings are used.
      */
     //@@author JustinSoh
-    public static void validateExerciseName(String exerciseName) throws CustomExceptions.InvalidInput,
+    public void validateExerciseName(String exerciseName) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
         if (exerciseName.isEmpty()) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.EMPTY_EXERCISE_NAME_ERROR);
@@ -349,7 +353,7 @@ public class Validation {
      * @return ArrayList of integers representing the weights in the format [weight1, weight2, weight3 ...]
      * @throws CustomExceptions.InvalidInput If an invalid weights string is passed in.
      */
-    public static ArrayList<Double> validateWeightsArray(String weightsString)
+    public ArrayList<Double> validateWeightsArray(String weightsString)
             throws CustomExceptions.InvalidInput {
         String[] weightsArray = weightsString.split(UiConstant.SPLIT_BY_COMMAS);
         ArrayList<Double> validatedWeightsArray = new ArrayList<>();
@@ -378,22 +382,22 @@ public class Validation {
      * @throws CustomExceptions.InvalidInput If the details specified are invalid.
      * @throws CustomExceptions.InsufficientInput If empty strings are used.
      */
-    public static String[] splitAndValidateGymStationInput(String input) throws CustomExceptions.InvalidInput,
+    public String[] splitAndValidateGymStationInput(String input) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
         String exerciseName = input.split(UiConstant.SPLIT_BY_SLASH)[WorkoutConstant.STATION_NAME_INDEX].trim();
         validateExerciseName(exerciseName);
-
-        String sets = Parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.SETS_FLAG).trim();
+        Parser parser = new Parser();
+        String sets = parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.SETS_FLAG).trim();
         if (!sets.matches(UiConstant.VALID_POSITIVE_INTEGER_REGEX)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_SETS_ERROR);
         }
 
-        String reps = Parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.REPS_FLAG).trim();
+        String reps = parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.REPS_FLAG).trim();
         if (!reps.matches(UiConstant.VALID_POSITIVE_INTEGER_REGEX)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_REPS_ERROR);
         }
 
-        String weights = Parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.WEIGHTS_FLAG).trim();
+        String weights = parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.WEIGHTS_FLAG).trim();
 
         if (!weights.matches(UiConstant.VALID_WEIGHTS_ARRAY_REGEX)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_WEIGHTS_ARRAY_FORMAT_ERROR);
@@ -424,7 +428,7 @@ public class Validation {
      * @param input A list of strings representing command inputs.
      * @return False if it contains empty strings. Otherwise, returns true.
      */
-    public static boolean isEmptyParameterPresent(String[] input) {
+    public boolean isEmptyParameterPresent(String[] input) {
         for (String s : input) {
             if (s != null && s.isEmpty()) {
                 return true;
@@ -439,8 +443,9 @@ public class Validation {
      * @param dateString A string representing the date.
      * @throws CustomExceptions.InvalidInput If the date specified is after today.
      */
-    public static void validateDateNotAfterToday(String dateString) throws CustomExceptions.InvalidInput {
-        LocalDate date = Parser.parseDate(dateString);
+    public void validateDateNotAfterToday(String dateString) throws CustomExceptions.InvalidInput {
+        Parser parser = new Parser();
+        LocalDate date = parser.parseDate(dateString);
         if (date.isAfter(LocalDate.now())) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.DATE_IN_FUTURE_ERROR);
         }

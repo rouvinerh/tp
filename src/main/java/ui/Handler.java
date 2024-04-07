@@ -21,8 +21,24 @@ import storage.LogFile;
  * Represents user input parsing and handling before providing feedback to the user.
  */
 public class Handler {
-    public static Scanner in;
+
     static LogFile logFile = LogFile.getInstance();
+    public Scanner in;
+    public Parser parser;
+    public DataFile dataFile;
+
+
+    public Handler(){
+        in = new Scanner(System.in);
+        parser = new Parser(in);
+        dataFile = new DataFile();
+    }
+
+    public Handler(String input){
+        in = new Scanner(input); // use for JUnit Testing
+        parser = new Parser(in);
+        dataFile = new DataFile();
+    }
 
     /**
      * Processes user input and filters for valid command words from enum {@code Command},
@@ -30,12 +46,11 @@ public class Handler {
      *
      * @throws IllegalArgumentException If an error occurs during command processing.
      */
-    public static void processInput() {
+    public void processInput() {
         while (in.hasNextLine()) {
             String userInput = in.nextLine();
             String instruction = userInput.toUpperCase().split(UiConstant.SPLIT_BY_WHITESPACE)[0];
             LogFile.writeLog("User Input: " + userInput, false);
-
             assert userInput != null : "Object cannot be null";
 
             try {
@@ -89,18 +104,18 @@ public class Handler {
      *
      * @param userInput The user input string.
      */
-    public static void handleWorkout(String userInput) {
+    public void handleWorkout(String userInput) {
         try {
-            String typeOfWorkout = Parser.extractSubstringFromSpecificIndex(userInput,
+            String typeOfWorkout = parser.extractSubstringFromSpecificIndex(userInput,
                     WorkoutConstant.EXERCISE_FLAG);
             WorkoutFilters filter = WorkoutFilters.valueOf(typeOfWorkout.toUpperCase());
             switch(filter) {
             case RUN:
-                Parser.parseRunInput(userInput);
+                parser.parseRunInput(userInput);
                 break;
 
             case GYM:
-                Parser.parseGymInput(userInput);
+                parser.parseGymInput(userInput);
                 break;
 
             default:
@@ -119,8 +134,8 @@ public class Handler {
      *
      * @param userInput The user input string.
      */
-    public static void handleHistory(String userInput) {
-        String filter = Parser.parseHistoryAndLatestInput(userInput);
+    public void handleHistory(String userInput) {
+        String filter = parser.parseHistoryAndLatestInput(userInput);
         if (filter != null) {
             Output.printHistory(filter);
         }
@@ -133,8 +148,8 @@ public class Handler {
      * @param userInput The user input string.
      * @throws CustomExceptions.InvalidInput If the user input is invalid.
      */
-    public static void handleDelete(String userInput) throws CustomExceptions.InvalidInput {
-        String[] parsedInputs = Parser.parseDeleteInput(userInput);
+    public void handleDelete(String userInput) throws CustomExceptions.InvalidInput {
+        String[] parsedInputs = parser.parseDeleteInput(userInput);
         if (parsedInputs == null) {
             return;
         }
@@ -177,25 +192,25 @@ public class Handler {
      *
      * @param userInput A string containing health data information of user.
      */
-    public static void handleHealth(String userInput) {
+    public void handleHealth(String userInput) {
         try {
-            String typeOfHealth = Parser.extractSubstringFromSpecificIndex(userInput, HealthConstant.HEALTH_FLAG);
+            String typeOfHealth = parser.extractSubstringFromSpecificIndex(userInput, HealthConstant.HEALTH_FLAG);
             HealthFilters filter = HealthFilters.valueOf(typeOfHealth.toUpperCase());
             switch(filter) {
             case BMI:
-                Parser.parseBmiInput(userInput);
+                parser.parseBmiInput(userInput);
                 break;
 
             case PERIOD:
-                Parser.parsePeriodInput(userInput);
+                parser.parsePeriodInput(userInput);
                 break;
 
             case PREDICTION:
-                Parser.parsePredictionInput();
+                parser.parsePredictionInput();
                 break;
 
             case APPOINTMENT:
-                Parser.parseAppointmentInput(userInput);
+                parser.parseAppointmentInput(userInput);
                 break;
 
             default:
@@ -215,8 +230,8 @@ public class Handler {
      *
      * @param userInput String representing user input.
      */
-    public static void handleLatest(String userInput) {
-        String filter = Parser.parseHistoryAndLatestInput(userInput);
+    public void handleLatest(String userInput) {
+        String filter = parser.parseHistoryAndLatestInput(userInput);
         if (filter != null) {
             Output.printLatest(filter);
         }
@@ -227,8 +242,8 @@ public class Handler {
     /**
      * Get user's name, and print profile induction messages.
      */
-    public static void userInduction() {
-        String name = in.nextLine();
+    public void userInduction() {
+        String name = this.in.nextLine();
         DataFile.userName = name;
         System.out.println("Welcome aboard, Captain " + name);
         Output.printLine();
@@ -245,18 +260,18 @@ public class Handler {
     /**
      * Initialise scanner to read user input.
      */
-    public static void initialiseScanner() {
+    public void initialiseScanner() {
         in = new Scanner(System.in);
-        assert in != null : "Object cannot be null";
+        assert this.in != null : "Object cannot be null";
     }
 
     /**
      * Close scanner to stop reading user input.
      */
-    public static void destroyScanner() {
-        if (in != null) {
-            assert in != null : "Object cannot be null";
-            in.close();
+    public void destroyScanner() {
+        if (this.in != null) {
+            assert this.in != null : "Object cannot be null";
+            this.in.close();
         }
     }
 
@@ -264,16 +279,15 @@ public class Handler {
      * Initializes PulsePilot by printing a welcome message, loading tasks from storage,
      * and returning the tasks list.
      */
-    public static void initialiseBot() {
+    public void initialiseBot() {
         Output.printWelcomeBanner();
-        initialiseScanner();
         LogFile.writeLog("Started bot", false);
 
-        int status = DataFile.loadDataFile();
+        int status = dataFile.loadDataFile();
 
         if (status == 0) {
             try {
-                DataFile.readDataFile(); // File read
+                dataFile.readDataFile(); // File read
                 Output.printGreeting(status, DataFile.userName);
             } catch (CustomExceptions.FileReadError e) {
                 Output.printException(e.getMessage());
@@ -291,13 +305,13 @@ public class Handler {
      * Terminates PulsePilot by saving tasks to storage, printing a goodbye message,
      * and indicating the filename where tasks are saved.
      */
-    public static void terminateBot() {
+    public void terminateBot() {
         LogFile.writeLog("User terminating PulsePilot", false);
         try {
             LogFile.writeLog("Attempting to save data file", false);
 
 
-            DataFile.saveDataFile(DataFile.userName, HealthList.getBmis(), HealthList.getAppointments(),
+            dataFile.saveDataFile(DataFile.userName, HealthList.getBmis(), HealthList.getAppointments(),
                     HealthList.getPeriods(), WorkoutList.getWorkouts());
             LogFile.writeLog("File saved", false);
         } catch (CustomExceptions.FileWriteError e) {
@@ -310,4 +324,5 @@ public class Handler {
         destroyScanner();
         System.exit(0);
     }
+
 }

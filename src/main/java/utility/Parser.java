@@ -4,7 +4,6 @@ import constants.ErrorConstant;
 import constants.HealthConstant;
 import constants.UiConstant;
 import constants.WorkoutConstant;
-import ui.Handler;
 import ui.Output;
 
 import health.Appointment;
@@ -19,11 +18,24 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Represents the parser used to parse and split input for PulsePilot.
  */
 public class Parser {
+    private final Scanner in;
+    private Validation validation;
+
+    public Parser (Scanner in){
+        this.in = in;
+        this.validation = new Validation();
+    }
+
+    public Parser (){
+        this.in = new Scanner(System.in);
+        this.validation = new Validation();
+    }
 
     /**
      * Counts the number of '/' characters there are in a given string.
@@ -31,7 +43,7 @@ public class Parser {
      * @param input The user input string.
      * @return An integer representing the number of '/' characters there are.
      */
-    public static int countForwardSlash(String input) {
+    public int countForwardSlash(String input) {
         int count = 0;
         for (int i = 0; i < input.length(); i++) {
             if (input.charAt(i) == '/') {
@@ -48,7 +60,7 @@ public class Parser {
      *
      * @throws DateTimeParseException If there is an error parsing the date.
      */
-    public static LocalDate parseDate(String date) {
+    public LocalDate parseDate(String date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate formattedDate = null;
         try {
@@ -66,7 +78,7 @@ public class Parser {
      *
      * @throws DateTimeParseException If there is an error parsing the date.
      */
-    public static String parseFormattedDate(LocalDate date) {
+    public String parseFormattedDate(LocalDate date) {
         DateTimeFormatter formatter = null;
         try {
             formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -86,7 +98,7 @@ public class Parser {
      *
      * @throws DateTimeParseException If there is an error parsing the time.
      */
-    public static LocalTime parseTime(String stringTime) throws DateTimeParseException {
+    public LocalTime parseTime(String stringTime) throws DateTimeParseException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         LocalTime formattedTime = null;
         try {
@@ -104,7 +116,7 @@ public class Parser {
      * @return An array of strings containing the extracted delete command parameters.
      * @throws CustomExceptions.InsufficientInput If not enough parameters are specified.
      */
-    public static String[] splitDeleteInput(String input) throws CustomExceptions.InsufficientInput,
+    public String[] splitDeleteInput(String input) throws CustomExceptions.InsufficientInput,
             CustomExceptions.InvalidInput {
         if (!input.contains(UiConstant.ITEM_FLAG) || !input.contains(UiConstant.INDEX_FLAG)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_DELETE_PARAMETERS_ERROR);
@@ -129,11 +141,11 @@ public class Parser {
      * @param userInput The user input string.
      * @return A list of strings containing the filter string and index to delete.
      */
-    public static String[] parseDeleteInput(String userInput) {
+    public String[] parseDeleteInput(String userInput) {
 
         try {
             String[] deleteDetails = splitDeleteInput(userInput);
-            Validation.validateDeleteInput(deleteDetails);
+            validation.validateDeleteInput(deleteDetails);
             return deleteDetails;
         } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
             Output.printException(e.getMessage());
@@ -148,7 +160,7 @@ public class Parser {
      * @param userInput String representing the user input.
      * @return The filter string, set to either 'gym', 'run', 'bmi' or 'period'.
      */
-    public static String parseHistoryAndLatestInput(String userInput) {
+    public String parseHistoryAndLatestInput(String userInput) {
         try {
             if (countForwardSlash(userInput) > UiConstant.NUM_OF_SLASHES_FOR_LATEST_AND_HISTORY) {
                 throw new CustomExceptions.InvalidInput(ErrorConstant.TOO_MANY_SLASHES_ERROR);
@@ -158,7 +170,7 @@ public class Parser {
             if (type.isBlank()) {
                 throw new CustomExceptions.InsufficientInput(ErrorConstant.INVALID_HISTORY_FILTER_ERROR);
             }
-            Validation.validateFilter(type.toLowerCase());
+            validation.validateFilter(type.toLowerCase());
             return type.toLowerCase();
         } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
             Output.printException(e.getMessage());
@@ -173,10 +185,10 @@ public class Parser {
      * @throws CustomExceptions.InvalidInput      If input is invalid.
      * @throws CustomExceptions.InsufficientInput If the height, weight or date parameters are missing.
      */
-    public static void parseBmiInput(String userInput) throws CustomExceptions.InvalidInput,
+    public void parseBmiInput(String userInput) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
         String[] bmiDetails = splitBmiInput(userInput);
-        Validation.validateBmiInput(bmiDetails);
+        validation.validateBmiInput(bmiDetails);
         Bmi newBmi = new Bmi(
                 bmiDetails[HealthConstant.BMI_HEIGHT_INDEX],
                 bmiDetails[HealthConstant.BMI_WEIGHT_INDEX],
@@ -193,7 +205,7 @@ public class Parser {
      * @return An array of strings containing the extracted Bmi parameters.
      * @throws CustomExceptions.InsufficientInput If the height, weight or date parameters are missing.
      */
-    public static String[] splitBmiInput(String input) throws CustomExceptions.InsufficientInput,
+    public String[] splitBmiInput(String input) throws CustomExceptions.InsufficientInput,
             CustomExceptions.InvalidInput {
 
         if (!input.contains(HealthConstant.HEIGHT_FLAG)
@@ -224,10 +236,10 @@ public class Parser {
      * @throws CustomExceptions.InvalidInput      If input is invalid.
      * @throws CustomExceptions.InsufficientInput If the start date or end date parameters are missing.
      */
-    public static void parsePeriodInput(String userInput) throws CustomExceptions.InvalidInput,
+    public void parsePeriodInput(String userInput) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
         String[] periodDetails = splitPeriodInput(userInput);
-        Validation.validatePeriodInput(periodDetails);
+        validation.validatePeriodInput(periodDetails);
         Period newPeriod = new Period(
                 periodDetails[HealthConstant.PERIOD_START_DATE_INDEX],
                 periodDetails[HealthConstant.PERIOD_END_DATE_INDEX]);
@@ -242,7 +254,7 @@ public class Parser {
      * @return An array of strings containing the extracted Period parameters.
      * @throws CustomExceptions.InsufficientInput If the user input is invalid or blank.
      */
-    public static String[] splitPeriodInput(String input) throws CustomExceptions.InsufficientInput,
+    public String[] splitPeriodInput(String input) throws CustomExceptions.InsufficientInput,
             CustomExceptions.InvalidInput {
         if (!input.contains(HealthConstant.START_FLAG)
                 || !input.contains(HealthConstant.END_FLAG)) {
@@ -267,7 +279,7 @@ public class Parser {
      *
      * @throws CustomExceptions.InsufficientInput If prediction cannot be made.
      */
-    public static void parsePredictionInput() throws CustomExceptions.InsufficientInput {
+    public void parsePredictionInput() throws CustomExceptions.InsufficientInput {
         if (HealthList.getPeriodSize() >= HealthConstant.MIN_SIZE_FOR_PREDICTION) {
             HealthList.printLatestThreeCycles();
             LocalDate nextPeriodStartDate = HealthList.predictNextPeriodStartDate();
@@ -284,7 +296,7 @@ public class Parser {
      * @return An array of strings containing the extracted Appointment parameters.
      * @throws CustomExceptions.InsufficientInput If the user input is invalid or blank.
      */
-    public static String[] splitAppointmentDetails(String input)
+    public String[] splitAppointmentDetails(String input)
             throws CustomExceptions.InsufficientInput, CustomExceptions.InvalidInput {
         String [] results = new String[HealthConstant.NUM_APPOINTMENT_PARAMETERS];
         if (!input.contains(HealthConstant.DATE_FLAG)
@@ -313,10 +325,10 @@ public class Parser {
      * @throws CustomExceptions.InvalidInput      If input is invalid.
      * @throws CustomExceptions.InsufficientInput If the date, time or description parameters are missing.
      */
-    public static void parseAppointmentInput(String userInput) throws CustomExceptions.InvalidInput,
+    public void parseAppointmentInput(String userInput) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
         String[] appointmentDetails = splitAppointmentDetails(userInput);
-        Validation.validateAppointmentDetails(appointmentDetails);
+        validation.validateAppointmentDetails(appointmentDetails);
         Appointment newAppointment = new Appointment(
                 appointmentDetails[HealthConstant.APPOINTMENT_DATE_INDEX],
                 appointmentDetails[HealthConstant.APPOINTMENT_TIME_INDEX],
@@ -332,7 +344,7 @@ public class Parser {
      * @param delimiter The delimiter to search for in the input string.
      * @return The extracted substring, or an empty string if the delimiter is not found.
      */
-    public static String extractSubstringFromSpecificIndex(String input, String delimiter) {
+    public String extractSubstringFromSpecificIndex(String input, String delimiter) {
         int index = input.indexOf(delimiter);
         if (index == -1 || index == input.length() - delimiter.length()) {
             return "";
@@ -354,7 +366,7 @@ public class Parser {
      * @return The Gym parameters split from the user input.
      * @throws CustomExceptions.InsufficientInput If the number of stations is missing.
      */
-    public static String[] splitGymInput(String input) throws CustomExceptions.InsufficientInput,
+    public String[] splitGymInput(String input) throws CustomExceptions.InsufficientInput,
             CustomExceptions.InvalidInput {
         if (!input.contains(WorkoutConstant.NUMBER_OF_STATIONS_FLAG)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_GYM_PARAMETERS_ERROR);
@@ -384,10 +396,10 @@ public class Parser {
      * @throws CustomExceptions.InvalidInput      If input is invalid.
      * @throws CustomExceptions.InsufficientInput If number of station parameter is missing.
      */
-    public static void parseGymInput(String userInput) throws CustomExceptions.InsufficientInput,
+    public void parseGymInput(String userInput) throws CustomExceptions.InsufficientInput,
             CustomExceptions.InvalidInput {
         String[] gymDetails = splitGymInput(userInput);
-        Validation.validateGymInput(gymDetails);
+        validation.validateGymInput(gymDetails);
         Gym newGym;
         if (gymDetails[WorkoutConstant.GYM_DATE_INDEX] == null) {
             newGym = new Gym();
@@ -405,7 +417,7 @@ public class Parser {
      * @return The Run parameters split from the user input.
      * @throws CustomExceptions.InsufficientInput If the distance and time taken for the run are missing.
      */
-    public static String[] splitRunInput(String input) throws CustomExceptions.InsufficientInput,
+    public String[] splitRunInput(String input) throws CustomExceptions.InsufficientInput,
             CustomExceptions.InvalidInput {
         if (!input.contains(WorkoutConstant.DISTANCE_FLAG) ||
             !input.contains(WorkoutConstant.RUN_TIME_FLAG)) {
@@ -437,10 +449,10 @@ public class Parser {
      * @throws CustomExceptions.InvalidInput      If input is invalid.
      * @throws CustomExceptions.InsufficientInput If the run time or run distance parameters are missing.
      */
-    public static void parseRunInput(String input) throws CustomExceptions.InsufficientInput,
+    public void parseRunInput(String input) throws CustomExceptions.InsufficientInput,
             CustomExceptions.InvalidInput {
         String[] runDetails = splitRunInput(input);
-        Validation.validateRunInput(runDetails);
+        validation.validateRunInput(runDetails);
         Run newRun;
         if (runDetails[WorkoutConstant.RUN_DATE_INDEX] == null) {
             newRun = new Run(
@@ -461,21 +473,21 @@ public class Parser {
      * @param numberOfStations The number of stations in one gym session.
      * @param gym              The Gym object.
      */
-    public static void parseGymStationInput(int numberOfStations, Gym gym) {
+    public void parseGymStationInput(int numberOfStations, Gym gym) {
         int i = 0;
         while (i < numberOfStations) {
             try {
                 Output.printGymStationPrompt(i + 1);
-                String userInput = Handler.in.nextLine();
+                String userInput = this.in.nextLine();
                 if (countForwardSlash(userInput) > WorkoutConstant.NUM_OF_SLASHES_FOR_GYM_STATION) {
                     throw new CustomExceptions.InvalidInput(ErrorConstant.TOO_MANY_SLASHES_ERROR);
                 }
-                String[] validGymStationInput = Validation.splitAndValidateGymStationInput(userInput);
+                String[] validGymStationInput = validation.splitAndValidateGymStationInput(userInput);
 
                 int numberOfSets = Integer.parseInt(validGymStationInput[WorkoutConstant.GYM_STATION_SET_INDEX]);
                 int numberOfRepetitions = Integer.parseInt(
                         validGymStationInput[WorkoutConstant.GYM_STATION_REPS_INDEX]);
-                ArrayList<Double> weightsArray = Validation.validateWeightsArray(
+                ArrayList<Double> weightsArray = validation.validateWeightsArray(
                         validGymStationInput[WorkoutConstant.GYM_STATION_WEIGHTS_INDEX]);
 
                 gym.addStation(validGymStationInput[WorkoutConstant.GYM_STATION_NAME_INDEX], numberOfSets,
@@ -497,7 +509,7 @@ public class Parser {
      * @return String[] containing the gym details
      * @throws CustomExceptions.FileReadError If the file cannot be read.
      */
-    private static String[] splitGymFileInput (String input) throws CustomExceptions.FileReadError {
+    private String[] splitGymFileInput (String input) throws CustomExceptions.FileReadError {
 
         String [] gymDetails = input.split(UiConstant.SPLIT_BY_COLON);
         String gymType;
@@ -535,7 +547,7 @@ public class Parser {
         // if the date is not NA, then validate and make sure it is correct
         try{
             if (!date.equals(ErrorConstant.NO_DATE_SPECIFIED_ERROR)){
-                Validation.validateDateInput(date);
+                validation.validateDateInput(date);
             }
         } catch (CustomExceptions.InvalidInput e){
             throw new CustomExceptions.FileReadError(ErrorConstant.INVALID_DATE_ERROR);
@@ -557,7 +569,7 @@ public class Parser {
      * @throws CustomExceptions.FileReadError if there is an error in the file input
      * @throws CustomExceptions.InvalidInput if the input is invalid
      */
-    private static int addStationFromFile(Gym gym, String[] gymDetails, int baseCounter)
+    private int addStationFromFile(Gym gym, String[] gymDetails, int baseCounter)
             throws CustomExceptions.FileReadError,
             CustomExceptions.InvalidInput {
 
@@ -626,7 +638,7 @@ public class Parser {
      * @throws CustomExceptions.InvalidInput If there is invalid input from the file.
      * @throws CustomExceptions.FileReadError If the file cannot be read.
      */
-    public static Gym parseGymFileInput(String input)
+    public Gym parseGymFileInput(String input)
             throws CustomExceptions.InvalidInput,
             CustomExceptions.FileReadError {
 

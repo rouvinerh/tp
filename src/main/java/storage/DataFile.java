@@ -39,12 +39,13 @@ public class DataFile {
     public static String userName = null;
     private static DataFile instance = null;
 
+
+
     /**
      * Private constructor to prevent instantiation from outside the class.
      * Initializes the data file.
      */
-    private DataFile() {
-        loadDataFile();
+    public DataFile() {
     }
 
     /**
@@ -53,7 +54,7 @@ public class DataFile {
      *
      * @return Singleton instance of DataFile class.
      */
-    public static DataFile getInstance() {
+    public DataFile getInstance() {
         if (instance == null) {
             instance = new DataFile();
         }
@@ -68,7 +69,7 @@ public class DataFile {
      * @throws NoSuchAlgorithmException If the SHA-256 algorithm is not available.
      * @throws IOException If an I/O error occurs while reading the file.
      */
-    private static String generateFileHash(File file) throws NoSuchAlgorithmException, IOException {
+    private String generateFileHash(File file) throws NoSuchAlgorithmException, IOException {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         FileInputStream fis = new FileInputStream(file);
         byte[] dataBytes = new byte[1024];
@@ -97,7 +98,7 @@ public class DataFile {
      * @return An integer representing whether the file was found (0) or not found (1).
      * @throws CustomExceptions.FileCreateError If there is an error creating the data file.
      */
-    public static int verifyIntegrity(File dataFile) throws CustomExceptions.FileCreateError {
+    public int verifyIntegrity(File dataFile) throws CustomExceptions.FileCreateError {
         try {
             if (dataFile.createNewFile()) {
                 LogFile.writeLog("Created new data file", false);
@@ -117,7 +118,7 @@ public class DataFile {
      *
      * @return An integer representing whether the file was found (0) or not found (1).
      */
-    public static int loadDataFile() {
+    public int loadDataFile() {
         int status = UiConstant.FILE_NOT_FOUND;
         try {
             File dataFile = UiConstant.SAVE_FILE;
@@ -167,7 +168,7 @@ public class DataFile {
      * @return The hash value read from the file.
      * @throws IOException If an I/O error occurs.
      */
-    private static String readHashFromFile(File hashFile) throws IOException {
+    private String readHashFromFile(File hashFile) throws IOException {
         StringBuilder sb = new StringBuilder();
         Scanner scanner = new Scanner(hashFile);
         while (scanner.hasNextLine()) {
@@ -184,7 +185,7 @@ public class DataFile {
      * @param hash     The hash value to write.
      * @throws IOException If an I/O error occurs.
      */
-    private static void writeHashToFile(FileWriter hashFile, String hash) throws IOException {
+    private void writeHashToFile(FileWriter hashFile, String hash) throws IOException {
         FileOutputStream fos = new FileOutputStream(UiConstant.HASH_FILE_PATH);
         fos.write(hash.getBytes());
         fos.close();
@@ -195,7 +196,7 @@ public class DataFile {
      *
      * @throws CustomExceptions.FileReadError If there is an error reading the data file.
      */
-    public static void readDataFile() throws CustomExceptions.FileReadError {
+    public void readDataFile() throws CustomExceptions.FileReadError {
         int lineNumberCount = 0; // just for getting lineNumber, no other use
         try (final Scanner readFile = new Scanner(UiConstant.SAVE_FILE)) {
             LogFile.writeLog("Read begins", false);
@@ -264,7 +265,7 @@ public class DataFile {
      *
      * @param name The user name read from the data file.
      */
-    public static void processName(String name){
+    public void processName(String name){
         userName = name.trim();
     }
 
@@ -273,7 +274,7 @@ public class DataFile {
      *
      * @param input The input string array containing appointment data.
      */
-    public static void processAppointment(String[] input) {
+    public void processAppointment(String[] input) {
         String date = input[1].trim(); // date
         String time = input[2].trim(); // time
         String formattedTime = time.replace(".", ":");
@@ -287,7 +288,7 @@ public class DataFile {
      *
      * @param input The input string array containing period data.
      */
-    public static void processPeriod(String[] input) {
+    public void processPeriod(String[] input) {
         String startDate = input[1].trim(); // start
         String endDate = input[2].trim(); // end, skip 3 duration
         Period period = new Period(startDate, endDate);
@@ -299,7 +300,7 @@ public class DataFile {
      *
      * @param input The input string array containing BMI data.
      */
-    public static void processBmi(String[] input) {
+    public void processBmi(String[] input) {
         String height = input[1].trim(); // height
         String weight = input[2].trim(); // weight
         String date = input[4].trim();// skip 3, bmi score, 4 is date
@@ -313,7 +314,7 @@ public class DataFile {
      * @param input The input string array containing run data.
      * @throws CustomExceptions.InvalidInput If there is an error in the input data format.
      */
-    public static void processRun(String[] input) throws CustomExceptions.InvalidInput {
+    public void processRun(String[] input) throws CustomExceptions.InvalidInput {
         String distance = input[1].trim(); // distance
         String time = input[2].trim(); // time
         String formattedTime = time.replace(".", ":");
@@ -332,9 +333,10 @@ public class DataFile {
      * @throws CustomExceptions.InvalidInput   If there is an error in the input data format.
      * @throws CustomExceptions.FileReadError If there is an error reading the gym file.
      */
-    public static void processGym(String rawInput)
+    public void processGym(String rawInput)
             throws CustomExceptions.InvalidInput, CustomExceptions.FileReadError {
-        Parser.parseGymFileInput(rawInput);
+        Parser newParser = new Parser();
+        newParser.parseGymFileInput(rawInput);
     }
 
     /**
@@ -347,7 +349,7 @@ public class DataFile {
      * @param workoutArrayList   List of workout entries to be saved.
      * @throws CustomExceptions.FileWriteError If there is an error writing to the data file.
      */
-    public static void saveDataFile(String name,
+    public void saveDataFile(String name,
                                     ArrayList<Bmi> bmiArrayList,
                                     ArrayList<Appointment> appointmentArrayList,
                                     ArrayList<Period> periodArrayList,
@@ -391,7 +393,7 @@ public class DataFile {
      * @param name     The user's name to be written to the file.
      * @throws IOException If an I/O error occurs while writing to the file.
      */
-    public static void writeName(FileWriter dataFile, String name) throws IOException {
+    public void writeName(FileWriter dataFile, String name) throws IOException {
         dataFile.write(UiConstant.NAME_LABEL + UiConstant.SPLIT_BY_COLON + name.trim() + System.lineSeparator());
         LogFile.writeLog("Wrote name to file", false);
     }
@@ -405,15 +407,15 @@ public class DataFile {
      * @param periodArrayList      The list of period entries to be written.
      * @throws IOException If an I/O error occurs while writing to the file.
      */
-    public static void writeHealthData(FileWriter dataFile, ArrayList<Bmi> bmiArrayList,
+    public void writeHealthData(FileWriter dataFile, ArrayList<Bmi> bmiArrayList,
                                        ArrayList<Appointment> appointmentArrayList,
                                        ArrayList<Period> periodArrayList) throws IOException {
-
+        Parser newParser = new Parser();
         // Write each bmi entry in a specific format
         // bmi format: bmi:HEIGHT:WEIGHT:BMI_SCORE:DATE (NA if no date)
         if (!bmiArrayList.isEmpty()){
             for (Bmi bmiEntry : bmiArrayList) {
-                String formattedDate = Parser.parseFormattedDate(bmiEntry.getDate());
+                String formattedDate = newParser.parseFormattedDate(bmiEntry.getDate());
 
                 dataFile.write(DataType.BMI + UiConstant.SPLIT_BY_COLON + bmiEntry.getHeight() +
                         UiConstant.SPLIT_BY_COLON + bmiEntry.getWeight() +
@@ -426,7 +428,7 @@ public class DataFile {
         // appointment format: appointment:DATE:TIME:DESCRIPTION
         if (!appointmentArrayList.isEmpty()){
             for (Appointment appointmentEntry : appointmentArrayList) {
-                String formattedDate = Parser.parseFormattedDate(appointmentEntry.getDate());
+                String formattedDate = newParser.parseFormattedDate(appointmentEntry.getDate());
                 String formattedTime = String.valueOf(appointmentEntry.getTime());
                 formattedTime = formattedTime.replace(":", ".");
 
@@ -442,8 +444,8 @@ public class DataFile {
         if (!periodArrayList.isEmpty()){
             for (Period periodEntry : periodArrayList) {
                 LogFile.writeLog("Writing period to file", false);
-                String formattedStartDate = Parser.parseFormattedDate(periodEntry.getStartDate());
-                String formattedEndDate = Parser.parseFormattedDate(periodEntry.getEndDate());
+                String formattedStartDate = newParser.parseFormattedDate(periodEntry.getStartDate());
+                String formattedEndDate = newParser.parseFormattedDate(periodEntry.getEndDate());
 
                 dataFile.write(DataType.PERIOD + UiConstant.SPLIT_BY_COLON + formattedStartDate +
                         UiConstant.SPLIT_BY_COLON + formattedEndDate +
@@ -461,16 +463,17 @@ public class DataFile {
      * @param workoutArrayList The list of workout entries to be written.
      * @throws IOException If an I/O error occurs while writing to the file.
      */
-    public static void writeWorkoutData(FileWriter dataFile,
+    public void writeWorkoutData(FileWriter dataFile,
                                         ArrayList<Workout> workoutArrayList) throws IOException {
 
+        Parser newParser = new Parser();
         // Write each run entry in a specific format
         // run format: run:DISTANCE:TIME:DATE
         if (!workoutArrayList.isEmpty()){
             for (Workout workoutEntry : workoutArrayList) {
                 if (workoutEntry instanceof Run) {
                     Run runEntry = (Run) workoutEntry;
-                    String formattedDate = Parser.parseFormattedDate(runEntry.getDate());
+                    String formattedDate = newParser.parseFormattedDate(runEntry.getDate());
                     String formattedTime = runEntry.getTimes().replace(":", ".");
 
                     dataFile.write(DataType.RUN + UiConstant.SPLIT_BY_COLON + runEntry.getDistance() +

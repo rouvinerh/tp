@@ -22,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 public class DataFileTest {
 
+
     @Test
     void saveDataFile_validData_writesCorrectly() throws IOException, CustomExceptions.FileWriteError,
             CustomExceptions.InvalidInput {
@@ -57,14 +58,19 @@ public class DataFileTest {
         ));
 
         // Act
-        if (Files.exists(Path.of(UiConstant.DATA_FILE_PATH))) {
-            Files.delete(Path.of(UiConstant.DATA_FILE_PATH));
+        Path path = Path.of(UiConstant.DATA_FILE_PATH);
+
+        if (Files.exists(path)) {
+            Files.delete(path);
         }
-        Files.createFile(Path.of(UiConstant.DATA_FILE_PATH));
-        DataFile.saveDataFile(name, bmiArrayList, appointmentArrayList, periodArrayList, workoutArrayList);
+        Files.createFile(path);
+
+        DataFile dataFile = new DataFile();
+
+        dataFile.saveDataFile(name, bmiArrayList, appointmentArrayList, periodArrayList, workoutArrayList);
 
         // Assert
-        List<String> lines = Files.readAllLines(Path.of(UiConstant.DATA_FILE_PATH));
+        List<String> lines = Files.readAllLines(path);
         if (!lines.isEmpty()) {
             assertEquals("NAME:John Doe", lines.get(0));
             assertEquals("BMI:1.70:70.00:24.22:01-04-2023", lines.get(1));
