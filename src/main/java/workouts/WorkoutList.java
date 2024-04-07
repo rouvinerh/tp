@@ -40,7 +40,7 @@ public class WorkoutList extends ArrayList<Workout> {
      *
      * @param gym Gym object to be added.
      */
-    public static void addGym(Gym gym) {
+    protected static void addGym(Gym gym) {
         GYMS.add(gym);
         addWorkout(gym);
     }
@@ -78,8 +78,6 @@ public class WorkoutList extends ArrayList<Workout> {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_GYM_EMPTY_ERROR);
         }
 
-
-
         if(filter.equals(WorkoutConstant.RUN)){
             return RUNS;
         } else if (filter.equals(WorkoutConstant.GYM)) {
@@ -89,15 +87,6 @@ public class WorkoutList extends ArrayList<Workout> {
         }
 
     }
-
-    public static ArrayList<Gym> getGyms() {
-        return GYMS;
-    }
-
-    public static ArrayList<Run> getRuns() {
-        return RUNS;
-    }
-
 
     /**
      * Returns latest run.

@@ -1,5 +1,7 @@
 # User Guide
 
+![Logo](img/logo.jpg)
+
 ## Introduction
 
 PulsePilot is a **desktop app for tracking health-related information, optimised for users via a Command Line Interface (CLI)**. If one can type fast, you can key in and track health-related information faster than traditional GUI applications installed on your phone or computer.
@@ -263,7 +265,7 @@ Expected output:
 
 ### Help
 
-Prints the `help` message. 
+Prints the `help` message.
 
 Format: `help`
 
@@ -287,8 +289,7 @@ Expected Output:
 
 ## Logging
 
-The latest logs are written to `pulsepilot_log.txt` once the bot exits. Each time the bot is run, the current 
-`pulsepilot_log.txt` file is overwritten with the most recent logs. The logs record both info messages and any error messages.
+The latest logs are written to `pulsepilot_log.txt` once the bot exits. Each time the bot is run, the current  `pulsepilot_log.txt` file is overwritten with the most recent logs. The logs record both info messages and any error messages.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -306,14 +307,13 @@ Data is saved to `pulsepilot_data.txt` once the bot exits. Each time the bot exi
 
 **1.** How do I transfer my data to another computer?
 
-Ensure that `pulsepilot.jar` is placed in the **same folder** as `pulsepilot_data.txt` **and** `pulsepilot_hash.txt`.
-PulsePilot should recognise and synchronise your data contents from `pulsepilot_data.txt` if done correctly.
+Ensure that `pulsepilot.jar` is placed in the **same folder** as `pulsepilot_data.txt` **and** `pulsepilot_hash.txt`. PulsePilot should recognise and synchronise your data contents from `pulsepilot_data.txt` if done correctly.
 
-**Tip!** Create a _backup copy_ of both `pulsepilot_data.txt` and `pulsepilot_hash.txt` prior to file transfer
-to avoid data corruption. The _backup copies_ should be stored in a **separate** folder location from where 
+**Tip!** Create a _backup copy_ of both `pulsepilot_data.txt` and `pulsepilot_hash.txt` prior to file transfer to avoid data corruption. The _backup copies_ should be stored in a **separate** folder location from where 
 the original `pulsepilot.jar` is saved.
 
 **Tip!** You can copy files by:
+
 - Selecting the file of interest and ensure it is highlighted
 - Copy the file with <kbd>Ctrl</kbd> + <kbd>C</kbd>
 - Opening up a new folder in a **separate** folder location from where `pulsepilot.jar` is saved
@@ -321,8 +321,7 @@ the original `pulsepilot.jar` is saved.
 
 **2.** What happens if my data is corrupted or tampered with?
 
-**_WARNING_: DO NOT** tamper with either `pulsepilot_data.txt` or `pulsepilot_hash.txt` to prevent **permanent** and 
-**unrecoverable** loss of data.
+**_WARNING_: DO NOT** tamper with either `pulsepilot_data.txt` or `pulsepilot_hash.txt` to prevent **permanent** and **unrecoverable** loss of data.
 
 You may experience 2 scenarios:
 
@@ -337,9 +336,10 @@ PulsePilot on standby
 ____________________________________________________________
 Exception Caught!
 Data file integrity compromised. Exiting.
-
 ```
+
 - A missing file error
+
 ```
 ____________________________________________________________
  _              _
@@ -350,24 +350,20 @@ PulsePilot on standby
 ____________________________________________________________
 Exception Caught!
 Key files for integrity missing. Exiting.
-
 ```
 
 
-A data file content corruption results in permanent and complete data loss. This occurs either due to intentional or
-accidental tampering with either `pulsepilot_data.txt` or `pulsepilot_hash.txt` files, or corruption due to unforeseen
-circumstances on the user-end during migration of files. PulsePilot will automatically delete the corrupted files
-before exiting.
+A data file content corruption results in permanent and complete data loss. This occurs either due to intentional or accidental tampering with either `pulsepilot_data.txt` or `pulsepilot_hash.txt` files, or corruption due to unforeseen circumstances on the user-end during migration of files.
 
-A missing file error occurs when either `pulsepilot_data.txt` or `pulsepilot_hash.txt` is missing when PulsePilot is 
-run. For safety and security purposes, PulsePilot will automatically delete the remaining file before exiting.
+PulsePilot will automatically delete the corrupted files before exiting.
+
+A missing file error occurs when either `pulsepilot_data.txt` or `pulsepilot_hash.txt` is missing when PulsePilot is run. For safety and security purposes, PulsePilot will automatically delete the remaining file before exiting.
 
 **Both cases will inevitably result in permanent and complete data loss.**
 
-**DATA RECOVERY:** In both cases, you may want to recover data by utilising **both** your backup copies of 
-`pulsepilot_data.txt` and `pulsepilot_hash.txt` to restore your data. 
-Otherwise, you may opt to re-run `pulsepilot.jar` again with the same command, `java -jar pulsepilot.jar` to initialise 
-a new save file.
+**DATA RECOVERY:** In both cases, you may want to recover data by utilising **both** your backup copies of  `pulsepilot_data.txt` and `pulsepilot_hash.txt` to restore your data. 
+
+Otherwise, you may opt to re-run `pulsepilot.jar` again with the same command, `java -jar pulsepilot.jar` to initialise a new save file.
 
 **3.** Is my tracking data private and confidential?
 
@@ -385,7 +381,7 @@ Yes, PulsePilot works perfectly offline. All data are stored on your device for 
    
 Note that if you add duplicate or extra flags, the bot **will read the first instance only**.
 
-All other parameters will be ignored.
+**All other parameters will be ignored.**
 
 For example:
 

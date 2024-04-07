@@ -28,8 +28,6 @@ public class UiConstant {
     public static final String VALID_POSITIVE_INTEGER_REGEX = "^[1-9]\\d*$";
     public static final String VALID_APPOINTMENT_DESCRIPTION_REGEX = "^[0-9a-zA-Z\\s]+$";
     public static final String VALID_EXERCISE_NAME_REGEX = "^[A-Za-z\\s]+$";
-    public static final String VALID_WEIGHTS_ARRAY_REGEX = "^\\d+(,\\d+)*$";
-
 
     // PulsePilot UI replies
     public static final String EXIT_MESSAGE = "Initiating PulsePilot landing sequence...";
@@ -61,10 +59,6 @@ public class UiConstant {
     public static final Integer MIN_RUNTIME_ARRAY_LENGTH = 2;
     public static final int NUM_SECONDS_IN_MINUTE = 60;
     public static final int NUM_SECONDS_IN_HOUR = 3600;
-    public static final Integer MIN_DAY = 1;
-    public static final Integer MAX_DAY = 31;
-    public static final Integer MIN_MONTH = 1;
-    public static final Integer MAX_MONTH = 12;
     public static final Integer MIN_MINUTES = 0;
     public static final Integer MAX_MINUTES = 59;
     public static final Integer MIN_SECONDS = 0;
@@ -78,7 +72,6 @@ public class UiConstant {
     // SPLIT INDEX
     public static final int DELETE_ITEM_STRING_INDEX = 0;
     public static final int DELETE_ITEM_NUMBER_INDEX = 1;
-
     public static final int NUM_OF_SLASHES_FOR_DELETE = 2;
     public static final int NUM_OF_SLASHES_FOR_LATEST_AND_HISTORY = 1;
 }

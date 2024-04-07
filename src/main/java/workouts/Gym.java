@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
- * Represents a Gym object that contains an ArrayList of GymStation objects.
+ * Represents a Gym object that contains an ArrayList of GymStation objects and an optional date.
  */
 public class Gym extends Workout {
     protected LocalDate date = null;

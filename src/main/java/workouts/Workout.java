@@ -5,7 +5,7 @@ import utility.Parser;
 /**
  * Represents a Workout object for PulsePilot.
  */
-public abstract class Workout {
+public class Workout {
     protected LocalDate date = null;
 
     /**

@@ -1,5 +1,7 @@
 # Developer Guide
 
+![Logo](img/logo.jpg)
+
 ## Table of Contents
 
 * [Acknowledgements](#acknowledgements)
@@ -10,19 +12,21 @@
 * [Appendix: Manual Testing](#appendix-manual-testing)
 * [Frequently Asked Questions](#frequently-asked-questions)
 
+---
+
 ## Acknowledgements
 
 Our team has referenced [Address Book (Level-3)](https://github.com/se-edu/addressbook-level3) referenced for their [User Guide (UG)](https://se-education.org/addressbook-level3/UserGuide.html) and [Developer Guide (DG)](https://se-education.org/addressbook-level3/DeveloperGuide.html) to better structure our own Developer Guide.
 
-- The `java.util.Scanner` class from the Java Standard Library is used for reading user input.
-- The `JUnit 5` testing framework is used for writing and running unit tests.
-- {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+---
 
 ## Introduction
 
 The purpose of this guide is to provide an explanation for all the functions and internal workings in PulsePilot. This enables any technical readers to get a detailed understanding of the application's implementation, making it easier for them to contribute to the project or adapt it according to their preferences.
 
 ###### [Back to table of contents](#table-of-contents)
+
+---
 
 ## Design
 
@@ -52,10 +56,13 @@ The purpose of this guide is to provide an explanation for all the functions and
 * [PulsePilot](#pulsepilot-package)
 * [Constants](#constants-package)
 
+---
+
 ### Overview of Components
 
-The application follows an Object-Oriented Design approach, with separate classes for handling different components of the application, such as user input, output, exercise logging, and health data management.
+This part of the guide provides a high-level overview of each package and its classes via a class or sequence diagrams. A quick description of each class is given as well. Developers can refer to the code for specific implementation via code documentation.
 
+The application follows an **Object-Oriented Design** approach, with separate classes for handling different components of the application, such as user input, output, exercise logging, and health data management.
 
 ![Architecture Diagram](img/architecture_diagram.png)
 
@@ -74,7 +81,11 @@ The application can be further broken down into the following packages:
 - `Utility`: Contains utility functions, such as input parsing and validation.
 - `Constants`: Contains all constants used in PulsePilot.
 
+**The workflow and sequence diagrams of adding objects is covered in the commands section.**
+
 ###### [Back to table of contents](#table-of-contents)
+
+---
 
 ### UI Package
 
@@ -82,65 +93,106 @@ The `UI` package contains `Handler` and `Output`, which are responsible for hand
 
 #### Handler
 
-The main entry point of the application is the `Handler` class, used to handle user input. When the user starts the bot, the steps are as follows:
+The main entry point of the application is the `Handler` class, used to determine the command used and send the user's input to the correct handler method to process and carry out the action.
 
-1. `initialiseBot()` is called, and it prompts the user to enter their name, which is used throughout the bot.
-2. `initialiseScanner()` is used to create the singleton `Scanner` instance to read user input.
-3. When the user enters input, it is passed to `processInput()`, which determines the type of command inputted.
-4. Once the correct input has been determined, it is passed to the relevant handle function. For example, a `workout` command is passed to `handleWorkout()`.
+The sequence diagram below shows how the application is initialised and processes the user's input using the `Handler` class:
 
-On termination of the bot, `destroyScanner()` is called to close the `Scanner` created, and `terminateBot()` is called to save the data stored within the bot and exit gracefully.
+![Handler Sequence Diagram](img/handler_sequence_diagram.png)
+
+There are 3 main components of the `Handler` class, which are the `initialiseBot()`, `processInput()` and `terminateBot()` methods. Their sequence diagrams are shown below:
+
+{Sequence diagram for initialiseBot}
+
+{Sequence diagram for processInput}
+
+{Sequence diagram for terminateBot}
 
 ###### [Back to table of contents](#table-of-contents)
+
+---
 
 #### Output
 
 The `Output` class is responsible for printing messages, prompts, errors and other information to the terminal for the user.
 
-{To include description and `Output` class diagram}
+The class diagram for `Output` has been omitted as it does not value-add to the guide, since a developer can read the code to gain a better understanding of `Output.`
 
 ###### [Back to table of contents](#table-of-contents)
+
+---
 
 ### Workout Package
 
-1. `Workout` is a class that stores the date of the workout.
-2. `Run` is a subclass of Workout and stores the distance, time, pace, and date of the run.
-3. `Gym` is a subclass of Workout and stores the date and an array of `GymStation` objects
-4. `GymStation` stores the name of the gym station, number of sets, and an array of `GymSet` objects.
-5. `GymSet` stores the weight and repetitions for a particular set.
-6. `WorkoutList` is a class that stores an array list different `Workout` objects using ArrayList.
-
-###### [Back to table of contents](#table-of-contents)
+The `Workout` package is responsible for tracking run and gym workouts from the user.
 
 #### Workout List
 
-{Include `WorkoutList` description}
+`WorkoutList` is a class that contains the `ArrayList` objects of `Run`, `Gym` and the superclass `Workout`. The class diagram is as follows:
+
+![WorkoutList Class Diagram](img/workoutlist_class_diagram.png)
+
+The class contains methods to retrieve the different objects. Additionally, it contains the methods for **deleting** an object from the bot, which is used for the `delete` command implementation.
+
+The `clearWorkoutsRunGym()` method is used to clear all the data stored within each `ArrayList`, which is mainly used for unit testing.
 
 ###### [Back to table of contents](#table-of-contents)
+
+---
 
 #### Gym
 
-{Include `Gym` description}
+`Gym` is a class that represents a gym session that the user has recorded. It contains the following variables:
+
+- `date`: An **optional** parameter representing the date of the workout. Implemented via an overloaded `Gym()` constructor.
+
+**A `Gym` object contains 1 or more `GymStation` objects.**
+
+The class diagram for gym is as follows:
+
+![Gym Class Diagram](img/gym_class_diagram.png)
 
 ###### [Back to table of contents](#table-of-contents)
+
+---
 
 ##### Gym Station
 
-{Include `GymStation` description}
+`GymStation` is a class that represents one gym station the user has done in a particular gym session. It contains the following variables:
+
+- `stationName`: Name of the gym station as a `String`.
+-  `ArrayList<GymSet>`: An `ArrayList` of `GymSet` object, representing the varying number of sets done at one station.
+- `numberOfSets`: The number of sets done as an `int`.
+
+**A `GymStation` object contains 1 or more `GymSet` objects.**
 
 ###### [Back to table of contents](#table-of-contents)
+
+---
 
 ##### Gym Set
 
-{Include `GymSet` description}
+`GymSet` is a class that represents one gym set the user has done in one gym station. It contains the following variables:
+
+- `weight`: The weight done for a gym set represented as a `double`.
+- `numberOfRepetitions`: The number of repetitions for a gym set represented as an `int`.
 
 ###### [Back to table of contents](#table-of-contents)
+
+---
 
 #### Run
 
-{Include `Run` description}
+`Run` is a class that represents a run workout the user has recorded. It contains the following variables:
+
+- `times`: A `Integer[]` variable representing the hours, minutes and seconds taken for a run.
+- `distance`: The distance run represented as a `double`.
+- `date`: An **optional** parameter representing the date of the workout. Implemented via an overloaded `Gym()` constructor.
+- `pace`: The pace of the run in minutes/km represented as a `String`.
+- `isHourPresent`: A `boolean` variable to indicate if an hour has been indicated, since the bot accepts both `HH:MM:SS` and `MM:SS` formats.
 
 ###### [Back to table of contents](#table-of-contents)
+
+---
 
 ### Health Package
 
@@ -154,49 +206,64 @@ The Health component consists of `Health`, `HealthList`, `Bmi`, `Period`, and `A
 
 ###### [Back to table of contents](#table-of-contents)
 
+---
+
 #### Health List
 
+The `HealthList` class contains three `ArrayList` variables, to store BMI, Appointment and Period objects, as well as the various methods to retrieve, delete and print the objects stored.
+
 **Attributes**
-1. `logFile`: Represents a log file for logging health-related activities. 
-2. `BMIS`: ArrayList containing BMI records. 
+
+1. `logFile`: Represents a log file for logging health-related activities.
+2. `BMIS`: ArrayList containing BMI records.
 3. `APPOINTMENTS`: ArrayList containing appointment records.
 4. `PERIODS`: ArrayList containing period records.
 
 **Methods:**
-1. `addBmi(Bmi bmi)`: Adds a BMI object to the list of BMIs. 
-2. `showCurrentBmi()`: Prints the most recently added BMI record. 
-3. `showBmiHistory()`: Prints all BMI entries recorded. 
-4. `addPeriod(Period period)`: Adds a period record to the list of periods. 
-5. `showLatestPeriod()`: Prints the latest period record added. 
-6. `showPeriodHistory()`: Prints all period entries tracked. 
-7. `printLatestThreeCycles()`: Prints the latest three period objects from the periods list. 
-8. `getPeriods()`: Retrieves the list of period records. 
+
+1. `addBmi(Bmi bmi)`: Adds a BMI object to the list of BMIs.
+2. `showCurrentBmi()`: Prints the most recently added BMI record.
+3. `showBmiHistory()`: Prints all BMI entries recorded.
+4. `addPeriod(Period period)`: Adds a period record to the list of periods.
+5. `showLatestPeriod()`: Prints the latest period record added.
+6. `showPeriodHistory()`: Prints all period entries tracked.
+7. `printLatestThreeCycles()`: Prints the latest three period objects from the periods list.
+8. `getPeriods()`: Retrieves the list of period records.
 9. `getBmis()`: Retrieves the list of BMI records.
-10. `getAppointments()`: Retrieves the list of appointment records. 
-11. `getPeriodSize()`: Retrieves the number of periods recorded. 
-12. `getPeriod(int index)`: Gets the period object at the specified index. 
-13. `predictNextPeriodStartDate()`: Predicts the start date of the next period based on the average cycle length of the last three cycles. 
-14. `clearHealthLists()`: Clears the lists of BMIs, periods, and appointments. 
-15. `getPeriodsSize()`: Retrieves the size of the periods list. 
-16. `getBmisSize()`: Retrieves the size of the BMIs list. 
-17. `deleteBmi(int index)`: Deletes a BMI record based on the index. 
-18. `deletePeriod(int index)`: Deletes a period record based on the index. 
-19. `addAppointment(Appointment appointment)`: Adds an appointment to the list of appointments. 
+10. `getAppointments()`: Retrieves the list of appointment records.
+11. `getPeriodSize()`: Retrieves the number of periods recorded.
+12. `getPeriod(int index)`: Gets the period object at the specified index.
+13. `predictNextPeriodStartDate()`: Predicts the start date of the next period based on the average cycle length of the last three cycles.
+14. `clearHealthLists()`: Clears the lists of BMIs, periods, and appointments.
+15. `getPeriodsSize()`: Retrieves the size of the periods list.
+16. `getBmisSize()`: Retrieves the size of the BMIs list.
+17. `deleteBmi(int index)`: Deletes a BMI record based on the index.
+18. `deletePeriod(int index)`: Deletes a period record based on the index.
+19. `addAppointment(Appointment appointment)`: Adds an appointment to the list of appointments.
 20. `deleteAppointment(int index)`: Deletes an appointment based on the index.
-21. `showAppointmentList()`: Prints all appointment entries tracked. 
+21. `showAppointmentList()`: Prints all appointment entries tracked.
 22. `showLatestAppointment()`: Prints the latest appointment record added.
 
 ###### [Back to table of contents](#table-of-contents)
 
+---
+
 #### BMI
+
+An object containing information about a user's Body Mass Index (BMI) data. The class automatically calculates the BMI score and determines the corresponding category, then stores that in the object.
+
+This class inherits from the `Health` superclass.
+
 **Attributes**
-1. `height`: A double value representing the height.
-2. `weight`: A double value representing the weight.
+
+1. `height`: A double value representing the height in **meters**.
+2. `weight`: A double value representing the weight in **kilograms**.
 3. `bmiValue`: A double value representing the calculated BMI value.
 4. `bmiCategory`: A String representing the BMI category
-5. `date`: A LocalDate object representing the date.
+5. `date`: A `LocalDate` object representing the date specified.
 
 **Methods:**
+
 1. `Bmi(String height, String weight, String date)`: The constructor of the Bmi class, which takes height, weight, and date as string parameters.
 2. `getBmiValue()`: Returns the calculated BMI value as a string.
 3. `getHeight()`: Returns the height value as a string.
@@ -205,17 +272,33 @@ The Health component consists of `Health`, `HealthList`, `Bmi`, `Period`, and `A
 6. `getBmiCategory(double bmiValue)`: Determines and returns the BMI category as a string based on the calculated BMI value.
 7. `toString()`: Returns a string representation of the Bmi object.
 
+The ranges for BMI are as follows:
+
+- BMI < 18.5: Underweight
+- 18.5 <= BMI < 24.9: Normal
+- 24.9 <= BMI < 29.9: Overweight
+- 29.9 <= BMI < 39.9: Obese
+- BMI >= 39.9: Severely Obese
+
 ###### [Back to table of contents](#table-of-contents)
+
+---
 
 #### Period
 
+An object containing information about a user's menstrual cycle. The object stores the start and end date as `LocalDate` objects. It also calculates and stores the length of the period flow and period cycle in **days**.
+
+This class inherits from the `Health` superclass.
+
 **Attributes**
-1. `startDate`: Represents the start date of the period 
-2. `endDate`: Represents the end date of the period 
-3. `periodLength`: Stores the length of the period in days 
+
+1. `startDate`: Represents the start date of the period.
+2. `endDate`: Represents the end date of the period.
+3. `periodLength`: Stores the length of the period in days.
 4. `cycleLength`: Stores the length of the menstrual cycle.
 
 **Methods:**
+
 1. `Period(String stringStartDate, String stringEndDate)`: The constructor of Period class which takes start date and end date of period.
 2. `getStartDate()`: Retrieves the start date of the period.
 3. `getEndDate()`: Retrieves the end date of the period
@@ -228,14 +311,20 @@ The Health component consists of `Health`, `HealthList`, `Bmi`, `Period`, and `A
 
 ###### [Back to table of contents](#table-of-contents)
 
+---
+
 #### Appointment
 
+This class inherits from the `Health` superclass.
+
 **Attributes**
-1. `date`: Represents the date of the appointment.
+
+1. `date`: Represents the date of the appointment
 2. `time`: Represents the time of the appointment.
 3. `description`: Stores a description of the appointment.
 
 **Methods:**
+
 1. `Appointment(String stringDate, String stringTime, String description)`: The constructor of Appointment which takes date, time, and description.
 2. `getDate()`: Retrieves the date of the appointment.
 3. `getTime()`: Retrieves the time of the appointment.
@@ -244,39 +333,66 @@ The Health component consists of `Health`, `HealthList`, `Bmi`, `Period`, and `A
 
 ###### [Back to table of contents](#table-of-contents)
 
+---
 ### Utility Package
 
 The `Utility` package includes classes and methods that handle exceptions, user input parsing, user input validation, and the various filter strings using enumerations.
 
 It consists of `CustomExceptions`, `Filters`, `Parser` and `Validation` classes.
 
-{Include `Utility` class diagram}
-
 ###### [Back to table of contents](#table-of-contents)
+
+---
 
 #### Parser
 
-{Include `Parser` description}
+The `Parser` class is responsible for the resolving of the user's input. This involves the validating the user input, and then splitting it.
+
+The input **must contain the flags required for each command**, else an exception will be thrown. The number of `/` characters is checked as well, as it can trigger errors. Afterwards, the split input is validated using methods within the `Validated` class. 
+
+The specific usage of `Parser` is covered below in the commands section of this guide.
 
 ###### [Back to table of contents](#table-of-contents)
+
+---
 
 #### Validation
 
-{Include `Validation` description}
+The `Validation` class is responsible for validating the user's split input. The split input comes from the `Parser` class in `String[]` variables. Each variable is then checked using regex to ensure that it follows the requirements needed, and that the values are within the stipulated ranges.
+
+The specific usage of `Validation` is covered below in the commands section of this guide.
 
 ###### [Back to table of contents](#table-of-contents)
+
+---
 
 #### Custom Exceptions
 
-{Include `CustomException` description}
+The `CustomExceptions` class inherits from the `Exception` class from Java. This class is in charge of printing the various errors from the user's input.
+
+The exceptions are further broken down into the following:
+
+- `OutOfBounds`: When an access with an illegal index is made.
+- `InvalidInput`: When user enters input that does not conform with required format or is malformed.
+- `FileReadError`: Unable to read the files for `Storage`.
+- `FileWriteError`: Unable to write files for `Storage`.
+- `FileCreateError`: Unable to create files for `Storage`.
+- `InsufficientInput`: When not enough parameters are found for a command.
+
 
 ###### [Back to table of contents](#table-of-contents)
+
+---
 
 #### Filters
 
-{Include `Filters` description}
+The `Filters` class contains all the filter strings for different use cases, such as when adding a workout or viewing the history.
+
+This is represented as enumerations. Attempts to use an invalid filter results in `IllegalArgumentException` being thrown.
 
 ###### [Back to table of contents](#table-of-contents)
+
+---
 
 ### Storage Package
 
@@ -284,25 +400,44 @@ It consists of `CustomExceptions`, `Filters`, `Parser` and `Validation` classes.
 
 {Include `Storage` class diagram}
 
-The Storage component consists of LogFile, DataFile, and DataType.
+The Storage component consists of LogFile and DataFile.
 
 ###### [Back to table of contents](#table-of-contents)
+
+---
 
 #### Log File
 
 ###### [Back to table of contents](#table-of-contents)
 
+---
+
 #### Data File
 
 ###### [Back to table of contents](#table-of-contents)
+
+---
 
 ### PulsePilot Package
 
 ###### [Back to table of contents](#table-of-contents)
 
+---
+
 ### Constants Package
 
+This package contains all of the different constants used throughout PulsePilot to prevent the usage of magic strings and numbers.
+
+The constants are broken down into the following 4 classes:
+
+- `HealthConstant`: All constant strings and numbers related to all `Health` commands and methods.
+- `WorkoutConstant`: All constant strings and numbers related to all `Workout` commands and methods.
+- `ErrorConstant`: All strings used when exceptions are thrown.
+- `UiConstant`: All other constants and numbers that are not within the above three classes, such as file names, flags, and other general purpose constants.
+
 ###### [Back to table of contents](#table-of-contents)
+
+---
 
 ## Commands and Implementation
 
@@ -358,6 +493,8 @@ This is the sequence diagram for adding a run:
 ![Run Validation Sequence Diagram](img/run_validation_sequence_diagram.png)
 
 ###### [Back to table of contents](#table-of-contents)
+
+---
 
 #### Add Gym
 
@@ -460,6 +597,8 @@ The sequence diagram below illustrates the process of period prediction.
 
 ###### [Back to table of contents](#table-of-contents)
 
+---
+
 #### Add BMI
 
 <code style="color: #D85D43;">
@@ -498,6 +637,8 @@ The sequence diagram below shows how a `Bmi` object is added to `BMIS`.
 
 ###### [Back to table of contents](#table-of-contents)
 
+---
+
 #### Add Appointment
 
 <code style="color: #D85D43;">
@@ -532,6 +673,8 @@ HEALTH /h:appointment /date:[date] /time:[time] /description:[description]
 
 ###### [Back to table of contents](#table-of-contents)
 
+---
+
 #### Make Period Prediction
 <code style="color: #D85D43;">
 HEALTH /h:prediction 
@@ -559,21 +702,31 @@ The sequence diagram below illustrates the process of period prediction.
 
 ###### [Back to table of contents](#table-of-contents)
 
+---
+
 ### View History
 
 ###### [Back to table of contents](#table-of-contents)
+
+---
 
 ### View Latest
 
 ###### [Back to table of contents](#table-of-contents)
 
+---
+
 ### Delete Item
 
 ###### [Back to table of contents](#table-of-contents)
 
+---
+
 ### Storage of Data
 
 ###### [Back to table of contents](#table-of-contents)
+
+---
 
 ## Appendix: Requirements
 
@@ -592,6 +745,8 @@ Outpatients who need to monitor their health activity and health parameters.
 
 ###### [Back to table of contents](#table-of-contents)
 
+---
+
 #### Value proposition
 
 PulsePilot is a health monitoring application designed to bridge the gap between medical professionals and patients during outpatient recovery.
@@ -601,6 +756,8 @@ PulsePilot offers outpatients the capability to input and track a range of healt
 Simultaneously, PulsePilot facilitates access to this vital data for various healthcare professionals, ensuring comprehensive and seamless support in guiding outpatient recovery processes.
 
 ###### [Back to table of contents](#table-of-contents)
+
+---
 
 ### User Stories
 
@@ -619,6 +776,8 @@ Simultaneously, PulsePilot facilitates access to this vital data for various hea
 
 ###### [Back to table of contents](#table-of-contents)
 
+---
+
 ### Non-Functional Requirements
 
 - **Usability**: The application should have a user-friendly command-line interface with clear instructions and prompts for user input.
@@ -627,6 +786,8 @@ Simultaneously, PulsePilot facilitates access to this vital data for various hea
 - **Testability**: The application should have comprehensive unit tests to  ensure correct functionality and enable easier maintenance and future enhancements.
 
 ###### [Back to table of contents](#table-of-contents)
+
+---
 
 ### Glossary
 
@@ -637,6 +798,8 @@ Simultaneously, PulsePilot facilitates access to this vital data for various hea
 - **Medical Appointment**: An arrangement with a doctor, physiotherapist, or healthcare professional, to meet at a certain time and place.
 
 ###### [Back to table of contents](#table-of-contents)
+
+---
 
 ## Appendix: Manual Testing
 
@@ -655,9 +818,13 @@ Simultaneously, PulsePilot facilitates access to this vital data for various hea
 
 ###### [Back to table of contents](#table-of-contents)
 
+---
+
 ### Launching and Termination Testing
 
 ###### [Back to table of contents](#table-of-contents)
+
+---
 
 ### Workout Testing
 
@@ -665,9 +832,12 @@ Simultaneously, PulsePilot facilitates access to this vital data for various hea
 
 ###### [Back to table of contents](#table-of-contents)
 
+---
 #### Gym Testing
 
 ###### [Back to table of contents](#table-of-contents)
+
+---
 
 ### Health Testing
 
@@ -675,21 +845,31 @@ Simultaneously, PulsePilot facilitates access to this vital data for various hea
 
 ###### [Back to table of contents](#table-of-contents)
 
+---
+
 #### Prediction Testing
 
 ###### [Back to table of contents](#table-of-contents)
+
+---
 
 #### BMI Testing
 
 ###### [Back to table of contents](#table-of-contents)
 
+---
+
 #### Appointment Testing
 
 ###### [Back to table of contents](#table-of-contents)
 
+---
+
 ### Storage Testing
 
 ###### [Back to table of contents](#table-of-contents)
+
+---
 
 ## Frequently Asked Questions
 
@@ -697,3 +877,5 @@ Simultaneously, PulsePilot facilitates access to this vital data for various hea
    A: You can set up the development environment by first cloning the repository to your local system. Then, load the project into your chosen IDE (we recommend IntelliJ IDEA).
 
 ###### [Back to table of contents](#table-of-contents)
+
+---
