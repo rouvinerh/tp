@@ -38,6 +38,7 @@ public class Bmi extends Health {
      */
     protected LocalDate date;
 
+    private Parser parser;
     //@@author j013n3
     /**
      * Constructor for Bmi object.
@@ -47,13 +48,13 @@ public class Bmi extends Health {
      * @throws AssertionError If height or weight values are not positive.
      */
     public Bmi(String height, String weight, String date) {
-
+        parser = new Parser();
         this.height = Double.parseDouble(height);
         this.weight = Double.parseDouble(weight);
 
         assert this.height > 0 && this.weight > 0 : ErrorConstant.NEGATIVE_VALUE_ERROR;
 
-        this.date = Parser.parseDate(date);
+        this.date = parser.parseDate(date);
 
         this.bmiValue = calculateBmiValue();
         this.bmiCategory = getBmiCategory(bmiValue);
