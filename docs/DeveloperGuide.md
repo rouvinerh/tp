@@ -394,8 +394,8 @@ Example of Gym Station:
 ##### Gym Sequence
 Below is the sequence diagram for adding a gym and the reference diagram
 <div style="display: flex; ">
-    <img src="./img/gym_overall_sequence_diagram.png" alt="Image 1" style="width: 45%;">
-    <img src="./img/gym_parse_gym_station_input_sequence_diagram.png" alt="Par" style="width: 55%;">
+    <img src="img/gym_overall_sequence_diagram.png" alt="Image 1" style="width: 45%;">
+    <img src="img/gym_parse_gym_station_input_sequence_diagram.png" alt="Par" style="width: 55%;">
 </div>
 1. User input is passed to `Handler.processInput()`, which determines the command used is `workout`, thus passing the input to `Handler.handleWorkout()`.
 

@@ -15,6 +15,7 @@ public class Appointment extends Health {
     /**
      * The date of the appointment.
      */
+
     protected LocalDate date;
 
     /**

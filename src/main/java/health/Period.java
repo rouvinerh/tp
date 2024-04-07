@@ -2,6 +2,7 @@ package health;
 
 import constants.ErrorConstant;
 import constants.HealthConstant;
+import ui.Output;
 import utility.Parser;
 import constants.UiConstant;
 
@@ -158,6 +159,7 @@ public class Period extends Health {
                     + -daysUntilNextPeriod
                     + HealthConstant.DAYS_MESSAGE);
         }
+        Output.printLine();
     }
 
     /**

@@ -1,5 +1,6 @@
 package health;
 
+import constants.UiConstant;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -192,6 +193,8 @@ class PeriodTest {
                 + HealthConstant.PERIOD_IS_LATE
                 + "5"
                 + HealthConstant.DAYS_MESSAGE
+                + System.lineSeparator()
+                + UiConstant.PARTITION_LINE
                 + System.lineSeparator();
 
         Period.printNextCyclePrediction(predictedDate);
@@ -211,6 +214,8 @@ class PeriodTest {
                 + predictedDate
                 + ", in 10"
                 + HealthConstant.DAYS_MESSAGE
+                + System.lineSeparator()
+                + UiConstant.PARTITION_LINE
                 + System.lineSeparator();
 
         Period.printNextCyclePrediction(predictedDate);
@@ -233,7 +238,9 @@ class PeriodTest {
         HealthList.addPeriod(thirdPeriod);
         HealthList.addPeriod(fourthPeriod);
 
-        String expected = "Period Start: "
+        String expected = UiConstant.PARTITION_LINE
+                + System.lineSeparator()
+                + "Period Start: "
                 + secondPeriod.getStartDate()
                 + " Period End: "
                 + secondPeriod.getEndDate()
