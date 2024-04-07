@@ -28,10 +28,10 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class DataFileTest {
-    private static final String TEST_DATA_FILE_PATH = "./test_data.txt";
-    private static final String TEST_HASH_FILE_PATH = "./test_hash.txt";
-    private static final String ORIGINAL_DATA_FILE_PATH = "./pulsepilot_data.txt";
-    private static final String ORIGINAL_HASH_FILE_PATH = "./pulsepilot_hash.txt";
+    private  final String TEST_DATA_FILE_PATH = "./test_data.txt";
+    private  final String TEST_HASH_FILE_PATH = "./test_hash.txt";
+    private  final String ORIGINAL_DATA_FILE_PATH = "./pulsepilot_data.txt";
+    private  final String ORIGINAL_HASH_FILE_PATH = "./pulsepilot_hash.txt";
 
     @BeforeEach
     void setUp() {

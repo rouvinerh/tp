@@ -28,7 +28,8 @@ public class Appointment extends Health {
      */
     protected String description;
 
-    private Parser parser;
+    private final Parser parser = new Parser();
+    private final HealthList healthList = new HealthList();
 
     /**
      * Constructor for Appointment object.
@@ -38,10 +39,10 @@ public class Appointment extends Health {
      * @param description A string describing the appointment.
      */
     public Appointment(String stringDate, String stringTime, String description) {
-        parser = new Parser();
         this.date = parser.parseDate(stringDate);
         this.time = parser.parseTime(stringTime);
         this.description = description;
+        healthList.addAppointment(this);
     }
 
     /**

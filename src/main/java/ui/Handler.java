@@ -24,22 +24,27 @@ import storage.LogFile;
 public class Handler {
 
     static LogFile logFile = LogFile.getInstance();
-    public Scanner in;
-    public Parser parser;
-    public DataFile dataFile;
+    private final Scanner in;
+    private final Parser parser;
+    private final DataFile dataFile;
+    private final Output output;
 
 
     public Handler(){
         in = new Scanner(System.in);
         parser = new Parser(in);
         dataFile = new DataFile();
+        output = new Output();
+
     }
 
     public Handler(String input){
         in = new Scanner(input); // use for JUnit Testing
         parser = new Parser(in);
         dataFile = new DataFile();
+        output = new Output();
     }
+
 
     /**
      * Processes user input and filters for valid command words from enum {@code Command},
@@ -83,16 +88,16 @@ public class Handler {
                     break;
 
                 case HELP:
-                    Output.printHelp();
+                    output.printHelp();
                     break;
 
                 default:
                     break; // valueOf results in immediate exception for non-match with enum Command
                 }
             } catch (CustomExceptions.InvalidInput e) {
-                Output.printException(e.getMessage());
+                output.printException(e.getMessage());
             } catch (IllegalArgumentException e) {
-                Output.printException(ErrorConstant.INVALID_COMMAND_ERROR);
+                output.printException(ErrorConstant.INVALID_COMMAND_ERROR);
             }
         }
     }
@@ -123,9 +128,9 @@ public class Handler {
                 break;
             }
         } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
-            Output.printException(e.getMessage());
+            output.printException(e.getMessage());
         } catch (IllegalArgumentException e) {
-            Output.printException("Invalid workout type! Please input either /e:run or /e:gym!");
+            output.printException("Invalid workout type! Please input either /e:run or /e:gym!");
         }
     }
 
@@ -138,7 +143,7 @@ public class Handler {
     public void handleHistory(String userInput) {
         String filter = parser.parseHistoryAndLatestInput(userInput);
         if (filter != null) {
-            Output.printHistory(filter);
+            output.printHistory(filter);
         }
     }
 
@@ -182,7 +187,7 @@ public class Handler {
                 break;
             }
         } catch (CustomExceptions.OutOfBounds e) {
-            Output.printException(e.getMessage());
+            output.printException(e.getMessage());
         }
     }
 
@@ -218,9 +223,9 @@ public class Handler {
                 break;
             }
         } catch (CustomExceptions.InvalidInput |  CustomExceptions.InsufficientInput e) {
-            Output.printException(e.getMessage());
+            output.printException(e.getMessage());
         } catch (IllegalArgumentException e) {
-            Output.printException(ErrorConstant.INVALID_HEALTH_INPUT_ERROR);
+            output.printException(ErrorConstant.INVALID_HEALTH_INPUT_ERROR);
         }
     }
 
@@ -234,7 +239,7 @@ public class Handler {
     public void handleLatest(String userInput) {
         String filter = parser.parseHistoryAndLatestInput(userInput);
         if (filter != null) {
-            Output.printLatest(filter);
+            output.printLatest(filter);
         }
     }
 
@@ -247,7 +252,7 @@ public class Handler {
         String name = this.in.nextLine();
         DataFile.userName = name;
         System.out.println("Welcome aboard, Captain " + name);
-        Output.printLine();
+        output.printLine();
 
         System.out.println("Tips: Enter 'help' to view the pilot manual!");
         System.out.println("Initiating FTL jump sequence...");
@@ -258,13 +263,6 @@ public class Handler {
         System.out.println("FTL jump completed.");
     }
 
-    /**
-     * Initialise scanner to read user input.
-     */
-    public void initialiseScanner() {
-        in = new Scanner(System.in);
-        assert this.in != null : "Object cannot be null";
-    }
 
     /**
      * Close scanner to stop reading user input.
@@ -281,7 +279,7 @@ public class Handler {
      * and returning the tasks list.
      */
     public void initialiseBot() {
-        Output.printWelcomeBanner();
+        output.printWelcomeBanner();
         LogFile.writeLog("Started bot", false);
 
         int status = dataFile.loadDataFile();
@@ -289,17 +287,17 @@ public class Handler {
         if (status == 0) {
             try {
                 dataFile.readDataFile(); // File read
-                Output.printGreeting(status, DataFile.userName);
+                output.printGreeting(status, DataFile.userName);
             } catch (CustomExceptions.FileReadError e) {
-                Output.printException(e.getMessage());
+                output.printException(e.getMessage());
             }
         } else {
-            Output.printGreeting(status, DataFile.userName);
+            output.printGreeting(status, DataFile.userName);
             userInduction();
         }
 
         System.out.println("Terminal primed. Command inputs are now accepted...");
-        Output.printLine();
+        output.printLine();
     }
 
     /**
@@ -317,12 +315,11 @@ public class Handler {
             LogFile.writeLog("File saved", false);
         } catch (CustomExceptions.FileWriteError e) {
             LogFile.writeLog("File write error", true);
-            Output.printException(e.getMessage());
+            output.printException(e.getMessage());
         }
-        Output.printGoodbyeMessage();
+        output.printGoodbyeMessage();
         // Yet to implement : Reply.printReply("Saved tasks as: " + Constant.FILE_NAME);
         LogFile.writeLog("Bot exited gracefully", false);
-        destroyScanner();
         System.exit(0);
     }
 
