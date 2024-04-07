@@ -92,6 +92,7 @@ public class DataFileTest {
         }
     }
 
+
     @Test
     void saveDataFile_validData_writesCorrectly() throws IOException, CustomExceptions.FileWriteError,
             CustomExceptions.InvalidInput {
