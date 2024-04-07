@@ -92,6 +92,7 @@ public class DataFileTest {
         }
     }
 
+
     @Test
     void saveDataFile_validData_writesCorrectly() throws IOException, CustomExceptions.FileWriteError,
             CustomExceptions.InvalidInput {
@@ -127,15 +128,28 @@ public class DataFileTest {
         ));
 
         // Act
+<<<<<<< HEAD
         int status = dataFile.loadDataFile();
         dataFile.saveDataFile(name, bmiArrayList, appointmentArrayList, periodArrayList, workoutArrayList);
+=======
+        Path path = Path.of(UiConstant.DATA_FILE_PATH);
+
+        if (Files.exists(path)) {
+            Files.delete(path);
+        }
+        Files.createFile(path);
+>>>>>>> 109ea7910a5eaa95e4698a57c5072466ca1d648b
 
         DataFile dataFile = new DataFile();
 
         dataFile.saveDataFile(name, bmiArrayList, appointmentArrayList, periodArrayList, workoutArrayList);
 
         // Assert
+<<<<<<< HEAD
         List<String> lines = Files.readAllLines(Path.of(TEST_DATA_FILE_PATH));
+=======
+        List<String> lines = Files.readAllLines(path);
+>>>>>>> 109ea7910a5eaa95e4698a57c5072466ca1d648b
         if (!lines.isEmpty()) {
             assertEquals("NAME:John Doe", lines.get(0));
             assertEquals("BMI:1.70:70.00:24.22:01-04-2023", lines.get(1));
