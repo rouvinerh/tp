@@ -167,7 +167,7 @@ public class DataFile {
      */
     private void processHashFail(String errorString, File hashFile, File dataFile) {
         LogFile.writeLog(errorString, true);
-        Output.printException(errorString);
+        output.printException(errorString);
         hashFile.delete();
         dataFile.delete();
         System.exit(1);

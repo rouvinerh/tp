@@ -73,7 +73,7 @@ There are 3 different kinds of **blocks**, denoted using different **icons** to 
 
 > ⚠️ This is a **warning** block. It is used to highlight information about certain errors that you might encounter.
 
-> ❗This is an **important** block. It contains information that you **MUST READ**! Take note of these!
+> ❗ This is an **important** block. It contains information that you **MUST READ**! Take note of these!
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -89,7 +89,7 @@ The application is built for **both** healthcare professionals and patients. Usi
 
 Healthcare professionals on the other hand would use PulsePilot to view the information that a patient has logged, allowing them to better keep track of their patients outside of the hospital.
 
-> ❗This application is still in **beta** phase. As such it is not complete and more features will be added in future versions.
+> ❗ This application is still in **beta** phase. As such it is not complete and more features will be added in future versions.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -143,7 +143,7 @@ Here is a sub table of contents so you can navigate through this section easily:
 
 ![img.png](img_2101/windows_cmd.png)
 
-> ❗This is an **example image**
+> ❗ This is an **example image**
 
 ###### [Back to Command Line Interface](#command-line-interface)
 

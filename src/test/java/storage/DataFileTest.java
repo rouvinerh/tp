@@ -261,11 +261,12 @@ public class DataFileTest {
         ArrayList<Workout> workoutArrayList = new ArrayList<>(Arrays.asList(
         ));
 
-        int status = DataFile.loadDataFile();
-        DataFile.saveDataFile(name, bmiArrayList, appointmentArrayList, periodArrayList, workoutArrayList);
+        DataFile dataFile = new DataFile();
+        int status = dataFile.loadDataFile();
+        dataFile.saveDataFile(name, bmiArrayList, appointmentArrayList, periodArrayList, workoutArrayList);
 
         // Act
-        DataFile.readDataFile();
+        dataFile.readDataFile();
 
         // Assert
         assertEquals(name, DataFile.userName);
