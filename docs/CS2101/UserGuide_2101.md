@@ -1,5 +1,7 @@
 # User Guide
 
+![Logo](../img/logo.jpg)
+
 ## Introduction
 
 Hello! Thank you for choosing to use PulsePilot!

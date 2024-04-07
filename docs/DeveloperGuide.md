@@ -1,5 +1,7 @@
 # Developer Guide
 
+![Logo](img/logo.jpg)
+
 ## Table of Contents
 
 * [Acknowledgements](#acknowledgements)
