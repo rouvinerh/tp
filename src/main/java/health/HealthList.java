@@ -37,6 +37,8 @@ public class HealthList extends ArrayList<Health> {
     private static final ArrayList<Period> PERIODS = new ArrayList<>();
 
 
+    protected HealthList() {
+    }
     //@@author j013n3
 
     /**
@@ -45,7 +47,7 @@ public class HealthList extends ArrayList<Health> {
      * @param bmi Bmi object.
      * @throws AssertionError If Bmi object is null.
      */
-    public static void addBmi(Bmi bmi) {
+    protected void addBmi(Bmi bmi) {
         assert bmi != null : ErrorConstant.NULL_BMI_ERROR;
         BMIS.add(bmi);
     }
@@ -88,7 +90,7 @@ public class HealthList extends ArrayList<Health> {
      * @param period Period object to be added.
      * @throws AssertionError If period object is null.
      */
-    public static void addPeriod(Period period) {
+    protected void addPeriod(Period period) {
         assert period != null : ErrorConstant.NULL_PERIOD_ERROR;
         if (!PERIODS.isEmpty()) {
             Period previousPeriod = PERIODS.get(PERIODS.size() - 1);
@@ -145,6 +147,8 @@ public class HealthList extends ArrayList<Health> {
         }
 
     }
+
+
 
     /**
      * Retrieves the list of periods recorded of ArrayList type.
@@ -290,7 +294,7 @@ public class HealthList extends ArrayList<Health> {
      * @param appointment Appointment object.
      * @throws AssertionError If Appointment object is null.
      */
-    public static void addAppointment(Appointment appointment) {
+    public void addAppointment(Appointment appointment) {
         assert appointment != null : ErrorConstant.NULL_APPOINTMENT_ERROR;
         APPOINTMENTS.add(appointment);
         APPOINTMENTS.sort(Comparator.comparing(Appointment::getDate).thenComparing(Appointment::getTime));

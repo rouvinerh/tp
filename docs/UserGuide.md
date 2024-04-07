@@ -48,7 +48,7 @@ The bot will prompt you for your name before starting.
 * Parameters in square brackets are optional.
   * `[/d:DATE]` means that the `DATE` parameter is **optional**.
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
-
+> ⚠️ Follow instructions clearly. Ensure that the syntax is exactly the same as provided in the user guide. For instance, no extra characters in the commands, such as blank space, newline, etc. 
 ---
 
 ## Commands
@@ -90,19 +90,24 @@ Upon entry of the `workout /e:gym` command, the bot will prompt for further deta
 
 Format: `STATION_NAME /s:SET /r:REPS /w:WEIGHT`
 
-* All parameters must be provided in correct order as shown above.
 * `STATION_NAME` is a **string**  representing the name of the gym station.
 * `SET` is a **positive integer**  representing the number of sets done for one station.
 * `REPS` is a **positive integer**  representing the number of repetitions done for one station.
-* `WEIGHT` is a **positive integer**  representing the weight used for one station.
+* `WEIGHT` is a **list of positive double** separated by commas. It represents the weights used for all the sets in the station.
+> ⚠️ `STATION_NAME` must always be the first parameter. The order of the other parameters can be in any order.
 
-Examples: `Bench Press /s:4 /r:10 /w:75,75,75,75`
+> ⚠️ `WEIGHT` must be in **multiples of 0.125 KG**. This is because the minimum weight increment in a gym is 0.125KG. Example `bench press /s:2 /r:10 /w:10.333,12.5` is not valid as 10.333 is not a multiple of 0.125kg. 
+
+> ⚠️ Note that the **number of weights must equal to the number of sets**! For example, if you have done 2 sets at 10 kg, PulsePilot still expects 2 weights to be specified like this `squats /s:2 /r:5 /w:10.25,10.5`. 
+
+
+Examples 1 : 
+- `bench press /s:2 /r:4 /w:10,20`
+- `squat /r:2 /s:2 /w:10.5,20.5`
 
 Expected Output:
 
 ![Adding Gyms](img/adding_gym.png)
-
-> Note that the number of weights must equal to the number of sets! For example, if you have done 2 sets, PulsePilot expects 2 weights specified like `10,10`. 
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -129,11 +134,11 @@ Expected Output:
 
 The ranges for BMI are as follows:
 
-- BMI < 18.5: Underweight
-- 18.5 <= BMI < 24.9: Normal
-- 24.9 <= BMI < 29.9: Overweight
-- 29.9 <= BMI < 39.9: Obese
-- BMI >= 39.9: Severely Obese
+- BMI < 18.5 (less than 18.5): **Underweight**
+- 18.5 <= BMI < 25.0 (more than or equal to 18.5 and less than 25.0): **Normal**
+- 25.0 <= BMI < 30.0 (more than or equal to 25.0 and less than 30.0): **Overweight**
+- 30.0 <= BMI < 40.0 (more than or equal to 30.0 and less than 40.0): **Obese**
+- BMI >= 40.0 (more than 40.0): **Severely Obese**
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -390,6 +395,26 @@ workout /e:run /d:5.25 /t:59:50 /d:10.55
 ```
 
 In the above output, the bot will read `5.25` as the distance. The second `/d:10.55` is ignored. 
+
+**7.** What if I keep receiving an error message even though my input seems to follow the instructions given in the user guide?
+
+Please ensure that you follow the command syntax given **exactly** in the user guide. Some examples of mistakes that could be easily overlooked:
+
+Example of the correct command:
+
+![correct_command.png](img/correct_command.png)
+
+- Error of adding extra space(s) in fixed parameters:
+  - In this case, the altered fixed parameter is `/date:`, which has written as `/ date:` instead.
+  - Fixed parameters are non-optional and non-user-decided parameters. Check [Notes about command format](#notes-about-command-format).
+
+![extra_space_error_command.png](img/extra_space_error_command.png)
+
+- Error of adding extra newline(s) after command:
+
+![extra_newline_error_command.png](img/extra_newline_error_command.png)
+
+Note that the errors mentioned above would lead to errors thrown. Any similar syntax errors could likely throw errors as well.
 
 ###### [Back to table of contents](#table-of-contents)
 

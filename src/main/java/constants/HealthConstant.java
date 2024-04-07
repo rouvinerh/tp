@@ -28,9 +28,9 @@ public class HealthConstant {
 
     // Threshold
     public static final double UNDERWEIGHT_BMI_THRESHOLD = 18.5;
-    public static final double NORMAL_BMI_THRESHOLD = 24.9;
-    public static final double OVERWEIGHT_BMI_THRESHOLD = 29.9;
-    public static final double OBESE_BMI_THRESHOLD = 39.9;
+    public static final double NORMAL_BMI_THRESHOLD = 25.0;
+    public static final double OVERWEIGHT_BMI_THRESHOLD = 30.0;
+    public static final double OBESE_BMI_THRESHOLD = 40.0;
     public static final double MIN_WEIGHT = 0;
     public static final double MIN_HEIGHT = 0;
     public static final double MAX_HEIGHT = 2.75;

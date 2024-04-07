@@ -24,7 +24,6 @@ class HandlerTest {
     private final InputStream originalIn = System.in;
     private final PrintStream originalOut = System.out;
     private final PrintStream originalErr = System.err;
-
     @BeforeEach
     public void setUpStreams() {
         System.setOut(new PrintStream(outContent));
@@ -39,11 +38,6 @@ class HandlerTest {
         System.setErr(originalErr);
         WorkoutList.clearWorkoutsRunGym();
         HealthList.clearHealthLists();
-        Handler.destroyScanner();
-        if (Handler.in == null) {
-            return;
-        }
-        assert isScannerClosed(Handler.in) : "Scanner is not closed";
     }
 
     /**
@@ -68,9 +62,8 @@ class HandlerTest {
     @Test
     void processInput_exitCommand_terminatesProgram() {
         String input = "EXIT";
-        System.setIn(new ByteArrayInputStream(input.getBytes()));
-        Handler.initialiseScanner();
-        Handler.processInput();
+        Handler myHandler = new Handler(input);
+        myHandler.processInput();
         String output = outContent.toString();
         assertTrue(output.contains("Initiating PulsePilot landing sequence..."));
     }
@@ -82,9 +75,8 @@ class HandlerTest {
     @Test
     void processInput_workoutCommand_addRunExercise() {
         String input = "WORKOUT /e:run /d:10.30 /t:40:10 /date:15-03-2024";
-        System.setIn(new ByteArrayInputStream(input.getBytes()));
-        Handler.initialiseScanner();
-        Handler.processInput();
+        Handler myHandler = new Handler(input);
+        myHandler.processInput();
         String output = outContent.toString();
         System.out.println(output);
         assertTrue(output.contains("Successfully added a new run session"));
@@ -97,9 +89,8 @@ class HandlerTest {
     @Test
     void processInput_healthCommand_addBMIHealthData() {
         String input = "HEALTH /h:bmi /height:1.70 /weight:65.00 /date:15-03-2024";
-        System.setIn(new ByteArrayInputStream(input.getBytes()));
-        Handler.initialiseScanner();
-        Handler.processInput();
+        Handler myHandler = new Handler(input);
+        myHandler.processInput();
         String output = outContent.toString();
         assertTrue(output.contains("Added: bmi | 1.70 | 65.00 | 2024-03-15"));
     }
@@ -111,16 +102,12 @@ class HandlerTest {
      */
     @Test
     void processInput_historyCommand_printsHistoryRun() {
-        String inputRun = "WORKOUT /e:run /d:10.3 /t:00:40:10 /date:15-03-2024";
-        System.setIn(new ByteArrayInputStream(inputRun.getBytes()));
-        Handler.initialiseScanner();
-        Handler.processInput();
-        Handler.destroyScanner();
-
-        String inputHistory = "HISTORY /item:run";
-        System.setIn(new ByteArrayInputStream(inputHistory.getBytes()));
-        Handler.initialiseScanner();
-        Handler.processInput();
+        StringBuilder inputRun = new StringBuilder();
+        inputRun.append("WORKOUT /e:run /d:10.3 /t:00:40:10 /date:15-03-2024");
+        inputRun.append(System.lineSeparator());
+        inputRun.append("HISTORY /item:run");
+        Handler myHandler = new Handler(inputRun.toString());
+        myHandler.processInput();
         String output = outContent.toString();
         assertTrue(output.contains("Your run history"));
     }
@@ -131,17 +118,11 @@ class HandlerTest {
      */
     @Test
     void processInput_latestCommand_printsLatestRun() {
-        String inputRun = "WORKOUT /e:run /d:10.30 /t:40:10 /date:15-03-2024";
-        System.setIn(new ByteArrayInputStream(inputRun.getBytes()));
-        Handler.initialiseScanner();
-        Handler.processInput();
-        Handler.destroyScanner();
-
-        String inputLatest = "LATEST /item:run";
-        System.setIn(new ByteArrayInputStream(inputLatest.getBytes()));
-        Handler.initialiseScanner();
-        Handler.processInput();
-
+        String inputRun = "WORKOUT /e:run /d:10.30 /t:40:10 /date:15-03-2024"
+                + System.lineSeparator()
+                + "LATEST /item:run";
+        Handler myHandler = new Handler(inputRun);
+        myHandler.processInput();
         String output = outContent.toString();
         assertTrue(output.contains("Your latest run:"));
     }
@@ -153,10 +134,8 @@ class HandlerTest {
     @Test
     void processInput_helpCommand_printsHelp() {
         String input = "HELP";
-        System.setIn(new ByteArrayInputStream(input.getBytes()));
-        Handler.initialiseScanner();
-        Handler.processInput();
-
+        Handler myHandler = new Handler(input);
+        myHandler.processInput();
         String output = outContent.toString();
         assertTrue(output.contains("Commands List"));
     }
@@ -169,10 +148,8 @@ class HandlerTest {
     @Test
     void processInput_invalidCommand_printsInvalidCommandException() {
         String input = "INVALID";
-        System.setIn(new ByteArrayInputStream(input.getBytes()));
-        Handler.initialiseScanner();
-        Handler.processInput();
-
+        Handler myHandler = new Handler(input);
+        myHandler.processInput();
         String expected = "Exception Caught!" +
                 System.lineSeparator() +
                 ErrorConstant.INVALID_COMMAND_ERROR +
@@ -186,9 +163,8 @@ class HandlerTest {
     @Test
     void processInput_healthCommand_insufficientParameters() {
         String input = "HEALTH /h:bmi /height:1.70";
-        System.setIn(new ByteArrayInputStream(input.getBytes()));
-        Handler.initialiseScanner();
-        Handler.processInput();
+        Handler myHandler = new Handler(input);
+        myHandler.processInput();
         assertTrue(errContent.toString().contains(ErrorConstant.INSUFFICIENT_BMI_PARAMETERS_ERROR));
     }
 }

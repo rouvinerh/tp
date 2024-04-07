@@ -7,6 +7,7 @@ import utility.Parser;
  */
 public class Workout {
     protected LocalDate date = null;
+    private Parser parser;
 
     /**
      * Overloaded constructor that uses the optional date parameter from user input.
@@ -14,13 +15,15 @@ public class Workout {
      * @param stringDate String representing the date of the workout.
      */
     public Workout(String stringDate) {
-        this.date = Parser.parseDate(stringDate);
+        parser = new Parser();
+        this.date = parser.parseDate(stringDate);
     }
 
     /**
      * Constructor that builds a new Workout object.
      */
     public Workout() {
+        parser = new Parser();
     }
 
     /**
