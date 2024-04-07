@@ -5,7 +5,7 @@ import java.time.LocalDate;
 /**
  * The Health class represents a Health object to track user's health information.
  */
-public class Health {
+public abstract class Health {
     /**
      * The date of Health object.
      */
