@@ -59,6 +59,8 @@ public class Parser {
         return formattedDate;
     }
 
+    //@@author L5-Z
+
     /**
      * Converts a LocalDate object to a formatted String representation.
      * @param date LocalDate object representing the date.
@@ -79,6 +81,8 @@ public class Parser {
         return date.format(formatter);
     }
 
+    //@@author
+    
     /**
      * Parses and converts String time to a LocalDate variable.
      * @param stringTime String representing the time.
@@ -324,6 +328,8 @@ public class Parser {
         HealthList.addAppointment(newAppointment);
         Output.printAddAppointment(newAppointment);
     }
+
+    //@@author L5-Z
 
     /**
      * Extracts a substring from the given input string based on the provided delimiter.
