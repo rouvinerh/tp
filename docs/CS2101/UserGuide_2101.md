@@ -25,16 +25,11 @@ If you have any queries with the guide, our application, or even life in general
 * [How to use this guide](#how-to-use-this-guide)
   * [Glossary Usage](#glossary-usage)
   * [Blocks](#blocks)
-* [PulsePilot](#pulsepilot)
+* [About PulsePilot](#pulsepilot)
   * [What is it?](#what-is-it)
   * [Origins](#origins)
 * [Command Line Interface](#command-line-interface)
-  * [Windows](#windows)
-  * [MacOS](#macos)
-* [Installation of Java and PulsePilot](#installation)
-  * [Installing Java](#installing-java)
-  * [Installing PulsePilot on Windows](#installing-pulsepilot-on-windows)
-  * [Installing PulsePilot on MacOS](#installing-pulsepilot-on-macos)
+* [Installation](#installation)
 * [PulsePilot Commands](#pulsepilot-commands)
 * [Experienced User Guide](#experienced-user-manual)
 * [Command Summary](#command-summary)
@@ -91,7 +86,7 @@ PulsePilot is an application made by 6 computing students from the National Univ
 
 The application is built for **both** healthcare professionals and patients. Using PulsePilot, patients can better record their recovery progress from an injury, as well as general well-being. 
 
-Healthcare professionals on the other hand would use PulsePilot to view the information that a patient has logged, allowing them to better keep tabs on their patients' recovery status outside of the hospital.
+Healthcare professionals on the other hand would use PulsePilot to view the information that a patient has logged, allowing them to better keep tabs on their patients' recovery status outside the hospital.
 
 At the time of writing, you can do the following with PulsePilot:
 
@@ -124,7 +119,7 @@ The 2 main problems identified from our study were:
 
 The above problems gave rise to PulsePilot, the guide for which you are reading right now! PulsePilot was designed with both patients and healthcare professionals in mind to solve the 2 main problems identified above!
 
-We hope that PulsePilot can bridge the information gap between you and your doctor, and we wish you a speedy recovery. :D
+We hope that PulsePilot can bridge the information gap between you and your doctor, and we wish you a speedy recovery. D
 
 > ❗ This application is still in [*beta phase*](#glossary). As such it is not complete and more features will be added in future versions. Stay tuned for updates!
 
@@ -134,13 +129,13 @@ We hope that PulsePilot can bridge the information gap between you and your doct
 
 ## Command Line Interface
 
-> 💡 This section explains what a [*Command Line Interface (CLI)*](#glossary) is. If you are already familiar with this, please feel free to move on to the [installation of PulsePilot](#installation-of-java-and-pulsepilot).
+> 💡 This section explains what a [*Command Line Interface (CLI)*](#glossary) is. If you are already familiar with this, please feel free to move on to the [installation section](#installation) .
 
 > ⚠️ For **inexperienced** users, if you are not familiar with what the CLI is, keep reading this section. PulsePilot is built to be run using the CLI, and its [*commands*](#glossary) are also entered through the CLI!
 
-Let us begin exploring the [*Command Line Interface (CLI)*](#glossary)! This section is further broken down into the 2 most common operating systems: Windows and MacOS. Remember that PulsePilot can be run on **any operating system with Java installed**!
+Let us begin exploring the [*Command Line Interface (CLI)*](#glossary)! This section is further broken down into the 2 most common operating systems: Windows and macOS. Remember that PulsePilot can be run on **any operating system with Java installed**!
 
-Here is a sub table of contents so you can navigate through this section easily:
+Here is a sub table of contents, so you can navigate through this section easily:
 
 * [Windows](#windows)
   * [Launching `cmd.exe`](#launching-cmdexe)
@@ -163,7 +158,7 @@ To do so, firstly, hit the <kbd>Windows</kbd> key on your keyboard to bring up t
 
 ![Windows Start](img_2101/windows/windows_start.png)
 
-Afterwards, type `cmd` or `Command Prompt` into the search bar above, and there should be 1 program found called the '**Command Prompt**'.
+Afterward, type `cmd` or `Command Prompt` into the search bar above, and there should be 1 program found called the '**Command Prompt**'.
 
 ![Finding cmd.exe](img_2101/windows/finding_cmd_exe.png)
 
@@ -244,14 +239,14 @@ That is all the commands you need to know to navigate through the Windows CLI an
 
 #### Launching `bash`
 
-On MacOS, the default command line interface is called the Terminal, which uses the Bash shell. To launch the Terminal:
+On macOS, the default command line interface is called the Terminal, which uses the Bash shell. To launch the Terminal:
 
 Open the Launchpad
 Search for "Terminal" and click on the application to open it
-The MacOS Terminal allows you to enter and execute Bash commands.
+The macOS Terminal allows you to enter and execute Bash commands.
 
 MacOS Commands
-Here are some common Bash commands you can use in the MacOS Terminal:
+Here are some common Bash commands you can use in the macOS Terminal:
 
 ls - Lists the files and directories in the current directory
 cd <directory> - Changes the current directory to the specified one
@@ -276,39 +271,79 @@ list directory, change directory, invalid commands.
 
 ## Installation
 
-### Installing Java
+Now that you are familiar with the CLI, it is time to install Java and PulsePilot to your computer!
+
+A specific version of Java will be required for PulsePilot, thus this part of the guide will bring you through the installation of Java 11.
+
+> 💡 If you already have Java 11 installed, feel free to skip to [next section](#pulsepilot-commands) on the commands for PulsePilot.
+
+
+* [Windows](#windows-installation)
+  * [Java](#java-for-windows)
+  * [PulsePilot](#pulsepilot-for-windows)
+* [macOS](#macos-installation)
+  * [Java](#java-for-macos)
+  * [PulsePilot](#pulsepilot-for-macos)
+
+### Windows Installation
+
+#### Java for Windows
+
 
 To install Java on your computer, you can follow these steps:
 
 Visit the official Java website (https://www.java.com/en/download/)
-Download the appropriate Java installer for your operating system (Windows or MacOS)
+Download the appropriate Java installer for your operating system (Windows or macOS)
 Run the installer and follow the on-screen instructions to complete the installation
 
-###### [Back to table of contents](#table-of-contents)
-
----
-
-### Installing PulsePilot on Windows
-
-After installing Java, you can install PulsePilot by following these steps:
-
-Download the latest version of the PulsePilot application from the provided source
-Extract the downloaded files to a directory on your computer
-Open the Command Prompt (Windows) or Terminal (MacOS) and navigate to the directory where you extracted the PulsePilot files
-Run the PulsePilot application by typing the appropriate command (e.g., java -jar pulsepilot.jar)
+###### [Back to Installation](#installation)
 
 ###### [Back to table of contents](#table-of-contents)
 
 ---
 
-### Installing PulsePilot on MacOS
+
+### PulsePilot for Windows
 
 After installing Java, you can install PulsePilot by following these steps:
 
 Download the latest version of the PulsePilot application from the provided source
 Extract the downloaded files to a directory on your computer
-Open the Command Prompt (Windows) or Terminal (MacOS) and navigate to the directory where you extracted the PulsePilot files
+Open the Command Prompt (Windows) or Terminal (macOS) and navigate to the directory where you extracted the PulsePilot files
 Run the PulsePilot application by typing the appropriate command (e.g., java -jar pulsepilot.jar)
+
+###### [Back to Installation](#installation)
+
+###### [Back to table of contents](#table-of-contents)
+
+---
+
+### macOS Installation
+
+###### [Back to Installation](#installation)
+
+###### [Back to table of contents](#table-of-contents)
+
+---
+
+#### Java for macOS
+
+After installing Java, you can install PulsePilot by following these steps:
+
+Download the latest version of the PulsePilot application from the provided source
+Extract the downloaded files to a directory on your computer
+Open the Command Prompt (Windows) or Terminal (macOS) and navigate to the directory where you extracted the PulsePilot files
+Run the PulsePilot application by typing the appropriate command (e.g., java -jar pulsepilot.jar)
+
+###### [Back to Installation](#installation)
+
+###### [Back to table of contents](#table-of-contents)
+
+---
+
+#### PulsePilot for macOS
+
+###### [Back to Installation](#installation)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -652,7 +687,7 @@ Expected Output:
 ![Viewing Prediction](../img/output/viewing_prediction.png)
 
 > ⚠️ **There is no minimum and maximum cycle lengths** for a period and hence cycle, since underlying medical conditions can cause varying cycle lengths.
-> PulsePilot will only **notify** you if your cycle length is outside of the healthy range of **2 - 7 days**.
+> PulsePilot will only **notify** you if your cycle length is outside the healthy range of **2 - 7 days**.
 
 ###### [Back to Experienced User Guide](#experienced-user-manual)
 
@@ -674,7 +709,7 @@ Format: <code style="color: #D85D43;">health /h:appointment /date:DATE /time:TIM
 
 * `DESCRIPTION` is a string (i.e. `review checkup with surgeon`) representing the details of the appointment. The string can **only contain alphanumeric characters and spaces**.
 
-> ⚠️ Other **non-alphanumeric characters** entered in the appointment description will trigger an error!
+> ⚠️ Other **non-alphanumeric characters** entered the appointment description will trigger an error!
 
 Examples:
 
@@ -806,7 +841,7 @@ Expected Output:
 
 ## Command Summary
 
-Here is a summary of of all the commands and its functions. The table contains examples as well for you to try out!
+Here is a summary of all the commands and its functions. The table contains examples as well for you to try out!
 
 | Action       | Format, Examples                                                                                                                       |
 |--------------|----------------------------------------------------------------------------------------------------------------------------------------|
