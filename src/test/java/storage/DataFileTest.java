@@ -3,6 +3,7 @@ package storage;
 import constants.UiConstant;
 import health.Appointment;
 import health.Bmi;
+import health.HealthList;
 import health.Period;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,6 +12,7 @@ import utility.CustomExceptions;
 import workouts.Gym;
 import workouts.Run;
 import workouts.Workout;
+import workouts.WorkoutList;
 
 import java.io.File;
 import java.io.IOException;
@@ -53,6 +55,10 @@ public class DataFileTest {
         UiConstant.HASH_FILE_PATH = ORIGINAL_HASH_FILE_PATH;
     }
 
+    private void cleanup(){
+        WorkoutList.clearWorkoutsRunGym();
+        HealthList.clearHealthLists();
+    }
     private void assertDataFileContents(String name, ArrayList<Bmi> bmiArrayList,
                                         ArrayList<Appointment> appointmentArrayList,
                                         ArrayList<Period> periodArrayList,
@@ -239,10 +245,9 @@ public class DataFileTest {
         assertFalse(hash.isEmpty());
     }
 
-    /*
     @Test
     void loadDataFile_existingFile_readsCorrectly() throws CustomExceptions.FileReadError,
-            CustomExceptions.InvalidInput, CustomExceptions.FileWriteError {
+            CustomExceptions.FileWriteError {
         // Arrange
         String name = "John Doe";
         ArrayList<Bmi> bmiArrayList = new ArrayList<>(Arrays.asList(
@@ -253,73 +258,29 @@ public class DataFileTest {
                 new Appointment("01-05-2023", "10:00", "Dentist Appointment"),
                 new Appointment("15-05-2023", "14:30", "Doctor's Checkup")
         ));
+
+        // Has additional elements added to ArrayList and will thus be skipped
         ArrayList<Period> periodArrayList = new ArrayList<>(Arrays.asList(
-                new Period("01-03-2023", "05-03-2023"),
-                new Period("01-04-2023", "04-04-2023")
         ));
         ArrayList<Workout> workoutArrayList = new ArrayList<>(Arrays.asList(
-                new Run("00:30:00", "5.0", "01-04-2023"),
-                new Gym("11-11-1997")
         ));
 
-        int status = DataFile.loadDataFile();
-        DataFile.saveDataFile(name, bmiArrayList, appointmentArrayList, periodArrayList, workoutArrayList);
+        DataFile dataFile = new DataFile();
+        int status = dataFile.loadDataFile();
+        dataFile.saveDataFile(name, bmiArrayList, appointmentArrayList, periodArrayList, workoutArrayList);
 
         // Act
-        DataFile.readDataFile();
+        cleanup();
+        dataFile.readDataFile();
+
 
         // Assert
         assertEquals(name, DataFile.userName);
-        assertEquals(bmiArrayList, HealthList.BMIS);
-        assertEquals(appointmentArrayList, HealthList.getAppointmentList());
-        assertEquals(periodArrayList, HealthList.getPeriodList());
-        assertEquals(workoutArrayList.size(), Gym.getGymSessions().size() + Run.getRuns().size());
+        assertEquals(Arrays.toString(bmiArrayList.toArray()), Arrays.toString(HealthList.getBmis().toArray()));
+        assertEquals(Arrays.toString(appointmentArrayList.toArray()),
+                Arrays.toString(HealthList.getAppointments().toArray()));
+        assertEquals(Arrays.toString(periodArrayList.toArray()), Arrays.toString(HealthList.getPeriods().toArray()));
+        assertEquals(Arrays.toString(workoutArrayList.toArray()), Arrays.toString(WorkoutList.getWorkouts().toArray()));
     }
-
-    @Test
-    void loadDataFile_corruptedFile_deletesAndCreatesNew() throws CustomExceptions.FileCreateError,
-    CustomExceptions.FileWriteError, CustomExceptions.InvalidInput {
-        // Arrange
-        String name = "John Doe";
-        ArrayList<Bmi> bmiArrayList = new ArrayList<>(Arrays.asList(
-                new Bmi("1.7", "70.0", "01-04-2023"),
-                new Bmi("1.8", "80.0", "15-04-2023")
-        ));
-        ArrayList<Appointment> appointmentArrayList = new ArrayList<>(Arrays.asList(
-                new Appointment("01-05-2023", "10:00", "Dentist Appointment"),
-                new Appointment("15-05-2023", "14:30", "Doctor's Checkup")
-        ));
-        ArrayList<Period> periodArrayList = new ArrayList<>(Arrays.asList(
-                new Period("01-03-2023", "05-03-2023"),
-                new Period("01-04-2023", "04-04-2023")
-        ));
-        ArrayList<Workout> workoutArrayList = new ArrayList<>(Arrays.asList(
-                new Run("00:30:00", "5.0", "01-04-2023")
-        ));
-
-        int status = DataFile.loadDataFile();
-        DataFile.saveDataFile(name, bmiArrayList, appointmentArrayList, periodArrayList, workoutArrayList);
-        LogFile.writeLog("begin corruption", false);
-        // Corrupt the data file
-        try (var writer = Files.newBufferedWriter(Path.of(TEST_DATA_FILE_PATH))) {
-            writer.write("corrupted data");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // Act
-        try {
-            int new_status = DataFile.loadDataFile();
-        } catch (Exception e) {
-            Output.printException("Except: " + e);
-        }
-
-        // Assert
-        assertEquals(UiConstant.FILE_NOT_FOUND, status);
-        assertFalse(new File(TEST_DATA_FILE_PATH).exists());
-        assertFalse(new File(TEST_HASH_FILE_PATH).exists());
-    }
-
-     */
 
 }

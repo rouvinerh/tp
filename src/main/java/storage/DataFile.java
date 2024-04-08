@@ -134,20 +134,12 @@ public class DataFile {
                 if (expectedHash.equals(actualHash)) {
                     status = verifyIntegrity(dataFile);
                 } else {
-                    LogFile.writeLog(ErrorConstant.DATA_INTEGRITY_ERROR, true);
-                    output.printException(ErrorConstant.DATA_INTEGRITY_ERROR);
-                    hashFile.delete();
-                    dataFile.delete();
-                    System.exit(1);
+                    processFail(ErrorConstant.DATA_INTEGRITY_ERROR, hashFile, dataFile);
                 }
             } else if (!dataFile.exists() && !hashFile.exists()) {
                 status = verifyIntegrity(dataFile);
             } else {
-                LogFile.writeLog(ErrorConstant.MISSING_INTEGRITY_ERROR, true);
-                output.printException(ErrorConstant.MISSING_INTEGRITY_ERROR);
-                hashFile.delete();
-                dataFile.delete();
-                System.exit(1);
+                processFail(ErrorConstant.MISSING_INTEGRITY_ERROR, hashFile, dataFile);
             }
         } catch (CustomExceptions.FileCreateError e) {
             System.err.println(ErrorConstant.CREATE_FILE_ERROR);
@@ -162,6 +154,23 @@ public class DataFile {
         Path dataFilePath = Path.of(UiConstant.DATA_FILE_PATH);
         assert Files.exists(dataFilePath) : "Data file does not exist.";
         return status;
+    }
+
+    /**
+     * Handles the failure of file hash verification.
+     * This method is called when the hash value of the data file does not match the expected value.
+     * It logs the error, prints the exception, deletes the data file and hash file, and exits the application.
+     *
+     * @param errorString The error message to be logged and printed.
+     * @param hashFile The hash file to be deleted.
+     * @param dataFile The data file to be deleted.
+     */
+    private void processFail(String errorString, File hashFile, File dataFile) {
+        LogFile.writeLog(errorString, true);
+        output.printException(errorString);
+        hashFile.delete();
+        dataFile.delete();
+        System.exit(1);
     }
 
     /**
@@ -206,7 +215,9 @@ public class DataFile {
             try {
                 String[] input = readFile.nextLine().split(UiConstant.SPLIT_BY_COLON);
                 String name = input[UiConstant.NAME_INDEX].trim();
+                LogFile.writeLog("Processing Name", false);
                 processName(name);
+                LogFile.writeLog("Name Loaded", false);
 
             } catch (Exception e) {
                 LogFile.writeLog("Data file is missing name, exiting." + e, true);
@@ -220,10 +231,11 @@ public class DataFile {
 
             while (readFile.hasNextLine()) {
                 String rawInput = readFile.nextLine();
+                LogFile.writeLog("Read String: " + rawInput, false);
                 String[] input = rawInput.split(UiConstant.SPLIT_BY_COLON);
-
                 String dataType = input[UiConstant.DATA_TYPE_INDEX].trim();
 
+                LogFile.writeLog("Current DataType:" + dataType, false);
                 DataType filter = DataType.valueOf(dataType);
                 switch (filter) {
 
@@ -357,9 +369,9 @@ public class DataFile {
     ) throws CustomExceptions.FileWriteError {
 
         try (FileWriter dataFile = new FileWriter(UiConstant.DATA_FILE_PATH)) {
-            LogFile.writeLog("Attempting to write data, name: " + name, false);
+            LogFile.writeLog("Attempting to write name: " + name, false);
             writeName(dataFile, name);
-            LogFile.writeLog("Written name", false);
+
             writeHealthData(dataFile, bmiArrayList,
                     appointmentArrayList,
                     periodArrayList);
