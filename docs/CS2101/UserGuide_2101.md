@@ -10,7 +10,7 @@ Our team appreciates that you are giving our health application a try, and we ho
 
 This document serves as the **User Guide** of PulsePilot, designed to help you (an injured athlete) learn what PulsePilot is about, our motives, how to install it and how to use it.
 
-Learning to use software can be daunting. Thus, this guide was created for **non-technical users**, helping you unleash PulsePilot to its fulles potential!
+Learning to use software can be daunting. Thus, this guide was created for **non-technical users**, helping you unleash PulsePilot to its fullest potential!
 
 Once again, we hope our application helps you, and thank you for choosing PulsePilot, and we hope you recover as fast as possible!
 
