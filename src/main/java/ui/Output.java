@@ -383,10 +383,10 @@ public class Output {
     /**
      * Prints the latest Appointment entry recorded.
      */
-    protected void printLatestAppointment(){
+    protected void printEarliestAppointment(){
         printLine();
         try {
-            HealthList.showLatestAppointment();
+            HealthList.showEarliestAppointment();
         } catch (CustomExceptions.OutOfBounds e) {
             System.out.println(e.getMessage());
         }
@@ -419,7 +419,7 @@ public class Output {
                 break;
 
             case APPOINTMENT:
-                printLatestAppointment();
+                printEarliestAppointment();
                 break;
 
             default:

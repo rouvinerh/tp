@@ -101,7 +101,6 @@ public class HealthList extends ArrayList<Health> {
             previousPeriod.setCycleLength(period.getStartDate());
         }
         PERIODS.add(period);
-        PERIODS.sort(Comparator.comparing(Period::getStartDate).reversed());
     }
 
     /**
@@ -114,7 +113,8 @@ public class HealthList extends ArrayList<Health> {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_PERIOD_EMPTY_ERROR);
         }
         assert !PERIODS.isEmpty() : ErrorConstant.EMPTY_PERIOD_LIST_ERROR;
-        System.out.println(PERIODS.get(0));
+        int size = PERIODS.size();
+        System.out.println(PERIODS.get(size - 1));
     }
 
     //@@author j013n3
@@ -356,12 +356,11 @@ public class HealthList extends ArrayList<Health> {
      *
      * @throws AssertionError If appointments list is empty.
      */
-    public static void showLatestAppointment() throws CustomExceptions.OutOfBounds {
+    public static void showEarliestAppointment() throws CustomExceptions.OutOfBounds {
         if (APPOINTMENTS.isEmpty()) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_APPOINTMENT_EMPTY_ERROR);
         }
         assert !APPOINTMENTS.isEmpty() : ErrorConstant.EMPTY_APPOINTMENT_LIST_ERROR;
-        int currentIndex = APPOINTMENTS.size();
-        System.out.println(APPOINTMENTS.get(currentIndex - 1));
+        System.out.println(APPOINTMENTS.get(0));
     }
 }
