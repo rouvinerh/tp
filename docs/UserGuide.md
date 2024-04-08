@@ -414,7 +414,6 @@ You may experience 2 scenarios:
 
 ![Missing Files](img/output/missing_files.png)
 
-
 A data file content corruption results in permanent and complete data loss. This occurs either due to intentional or accidental tampering with either `pulsepilot_data.txt` or `pulsepilot_hash.txt` files, or corruption due to unforeseen circumstances on the user-end during migration of files.
 
 PulsePilot will automatically delete the corrupted files before exiting.
