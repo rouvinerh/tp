@@ -86,8 +86,8 @@ class PeriodTest {
         Period secondPeriod = new Period("09-05-2023", "16-05-2023");
 
         String expected = "Your Period history:"
-                + System.lineSeparator() +
-                "Period Start: "
+                + System.lineSeparator()
+                + "1. Period Start: "
                 + firstPeriod.getStartDate()
                 + " Period End: "
                 + firstPeriod.getEndDate()
@@ -100,7 +100,7 @@ class PeriodTest {
                 + firstPeriod.cycleLength
                 + " days"
                 + System.lineSeparator()
-                + "Period Start: "
+                + "2. Period Start: "
                 + secondPeriod.getStartDate()
                 + " Period End: "
                 + secondPeriod.getEndDate()
