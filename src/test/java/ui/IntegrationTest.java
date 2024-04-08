@@ -69,8 +69,8 @@ public class IntegrationTest {
         try {
             ArrayList<Double> array1 = new ArrayList<>(List.of(1.0));
             ArrayList<Double> array2 = new ArrayList<>(Arrays.asList(1.0, 2.0));
-            newGym.addStation("Exercise 1", 1, 10, array1);
-            newGym.addStation("Exercise 2", 2, 20 , array2);
+            newGym.addStation("ExerciseA", 1, 10, array1);
+            newGym.addStation("ExerciseB", 2, 20 , array2);
 
             // Save the expected output
             Output output = new Output();
@@ -89,7 +89,7 @@ public class IntegrationTest {
             assertEquals(expectedString, outputContent);
 
 
-        } catch (CustomExceptions.InvalidInput | CustomExceptions.FileReadError e){
+        } catch (CustomExceptions.InvalidInput | CustomExceptions.FileReadError | CustomExceptions.InsufficientInput e){
             fail("Should not throw an exception");
         }
 

@@ -86,10 +86,10 @@ public class ErrorConstant {
             + System.lineSeparator()
             + "Only input what is required! Additional characters between flags will cause errors.";
     public static final String INVALID_NUMBER_OF_STATIONS_ERROR = "Number of stations is a positive number!";
-    public static final String EMPTY_EXERCISE_NAME_ERROR = "Exercise name cannot be blank!";
+    public static final String EMPTY_GYM_STATION_NAME_ERROR = "Exercise name cannot be blank!";
 
-    public static final String INVALID_EXERCISE_NAME_ERROR = "Exercise name can only have letters!";
-    public static final String EXERCISE_NAME_LENGTH_ERROR = "Exercise name cannot be more than 40 characters!";
+    public static final String INVALID_GYM_STATION_NAME_ERROR = "Exercise name can only have letters!";
+    public static final String GYM_STATION_NAME_LENGTH_ERROR = "Exercise name cannot be more than 40 characters!";
     public static final String GYM_STATION_FORMAT_ERROR = "Remember that you are now adding gym station input!"
             + System.lineSeparator()
             + "Expected format: [Station Name] /s:[SETS] /r:[REPS] /w:[WEIGHTS]";

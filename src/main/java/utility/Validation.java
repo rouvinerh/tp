@@ -185,7 +185,8 @@ public class Validation {
             throw new CustomExceptions.InvalidInput(ErrorConstant.ZERO_DISTANCE_ERROR);
         }
 
-        if (runDetails[WorkoutConstant.RUN_DATE_INDEX] != null) {
+        if (runDetails[WorkoutConstant.RUN_DATE_INDEX] != null &&
+                !runDetails[WorkoutConstant.GYM_DATE_INDEX].equals("NA")) {
             validateDateInput(runDetails[WorkoutConstant.RUN_DATE_INDEX]);
             validateDateNotAfterToday(runDetails[WorkoutConstant.RUN_DATE_INDEX]);
         }
@@ -209,7 +210,8 @@ public class Validation {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_NUMBER_OF_STATIONS_ERROR);
         }
 
-        if (gymDetails[WorkoutConstant.GYM_DATE_INDEX] != null) {
+        if (gymDetails[WorkoutConstant.GYM_DATE_INDEX] != null &&
+                !gymDetails[WorkoutConstant.GYM_DATE_INDEX].equals("NA")) {
             validateDateInput(gymDetails[WorkoutConstant.GYM_DATE_INDEX]);
             validateDateNotAfterToday(gymDetails[WorkoutConstant.GYM_DATE_INDEX]);
         }
@@ -335,14 +337,14 @@ public class Validation {
     public void validateExerciseName(String exerciseName) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
         if (exerciseName.isEmpty()) {
-            throw new CustomExceptions.InsufficientInput(ErrorConstant.EMPTY_EXERCISE_NAME_ERROR);
+            throw new CustomExceptions.InsufficientInput(ErrorConstant.EMPTY_GYM_STATION_NAME_ERROR);
         }
         if (!exerciseName.matches(UiConstant.VALID_EXERCISE_NAME_REGEX)) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_EXERCISE_NAME_ERROR);
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_GYM_STATION_NAME_ERROR);
         }
 
         if (exerciseName.length() > WorkoutConstant.MAX_GYM_STATION_NAME_LENGTH) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.EXERCISE_NAME_LENGTH_ERROR);
+            throw new CustomExceptions.InvalidInput(ErrorConstant.GYM_STATION_NAME_LENGTH_ERROR);
         }
     }
 
