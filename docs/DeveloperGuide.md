@@ -79,6 +79,7 @@ The application can be further broken down into the following packages:
 - `Health`: Stores health-related information.
 - `Workout`: Stores workout-related information.
 - `Utility`: Contains utility functions, such as input parsing and validation.
+- `PulsePilot`: The main entry point for the application.
 - `Constants`: Contains all constants used in PulsePilot.
 
 **The workflow and sequence diagrams of adding objects is covered in the commands section.**
@@ -99,13 +100,35 @@ The sequence diagram below shows how the application is initialised and processe
 
 ![Handler Sequence Diagram](img/sequence_diagrams/handler_sequence_diagram.png)
 
-There are 3 main components of the `Handler` class, which are the `initialiseBot()`, `processInput()` and `terminateBot()` methods. Their sequence diagrams are shown below:
+The `Handler` class creates other classes when it is used as shown in this sequence diagram:
 
-{Sequence diagram for initialiseBot}
+![Handler Class Creation](img/sequence_diagrams/handler_class_creation.png)
 
-{Sequence diagram for processInput}
+The creation of the above classes will be left out of other class diagrams to prevent making complex class diagrams. **It is assumed in other class diagrams for `Handler` that the classes have already been created.**
 
-{Sequence diagram for terminateBot}
+##### Initialising Bot
+
+The `initialiseBot()` method within `Handler` functions as such:
+
+![User Induction Sequences](img/sequence_diagrams/user_induction.png)
+
+The main feature of this method is to check whether the data file is present and not corrupted. How this is done will be covered in `Storage`.
+
+##### Process Input
+
+The `processInput()` method is responsible for determining what command the user has entered, and passes the input to the right handler method.
+
+The sequence diagram is as follows:
+
+![Process Input](img/sequence_diagrams/process_input.png)
+
+##### Terminating Bot
+
+The `terminateBot()` method is responsible for **writing to the data file** and exiting the bot gracefully. If a user exits without calling `terminateBot()`, **data will be lost!**
+
+The sequence diagram is as follows:
+
+![Terminate Bot](img/sequence_diagrams/terminate_bot.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -360,7 +383,7 @@ The specific usage of `Parser` is covered below in the commands section of this 
 
 The `Validation` class is responsible for validating the user's split input. The split input comes from the `Parser` class in `String[]` variables. Each variable is then checked using regex to ensure that it follows the requirements needed, and that the values are within the stipulated ranges.
 
-The specific usage of `Validation` is covered below in the commands section of this guide.
+The specific usage of `Validation` is covered below for each command.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -458,9 +481,7 @@ The constants are broken down into the following 4 classes:
 
 #### Add Run
 
-<code style="color: #D85D43;">
-WORKOUT /e:run /d:[distance] /t:[time] /date:[date]
-</code>
+Command Format: <code style="color: #D85D43;">WORKOUT /e:run /d:[distance] /t:[time] /date:[date]</code>
 
 - `[distance]` is a 2 **decimal place positive number** representing the number of kilometers covered.
 - `[time]` is in `HH:MM:SS` or `MM:SS` format with positive integers, representing the amount of time taken for the run.
