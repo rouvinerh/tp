@@ -130,7 +130,9 @@ public class Output {
                 + UiConstant.LINE
                 + (newPeriod.getEndDate() == null ? ErrorConstant.NO_DATE_SPECIFIED_ERROR : newPeriod.getEndDate()));
         System.out.println(newPeriod);
-        printPeriodWarning(newPeriod);
+        if (newPeriod.getEndDate() != null) {
+            printPeriodWarning(newPeriod);
+        }
         printLine();
     }
 
