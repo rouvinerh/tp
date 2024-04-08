@@ -216,10 +216,10 @@ Expected Output:
 
 ![Viewing Prediction](img/output/viewing_prediction.png)
 
-###### [Back to table of contents](#table-of-contents)
-
 > ⚠️ There is no minimum and maximum lengths for a period and hence cycle, since underlying medical conditions can cause varying cycle lengths.
 > PulsePilot will only **notify** you if your cycle length is outside of the healthy range of **2 - 7 days**.
+
+###### [Back to table of contents](#table-of-contents)
 
 ___
 
@@ -248,9 +248,6 @@ Examples:
 Expected Output:
 
 ![Adding Appointment](img/output/adding_appointment.png)
-
-
-
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -357,7 +354,7 @@ Expected Output:
 
 ## Logging
 
-The latest logs are written to `pulsepilot_log.txt` once the bot exits. Each time the bot is run, the current  `pulsepilot_log.txt` file is overwritten with the most recent logs. The logs record both info messages and any error messages.
+The latest logs are written to `pulsepilot_log.txt` once the bot exits. Each time the bot is run, the current `pulsepilot_log.txt` file is overwritten with the most recent logs. The logs record both info messages and any error messages.
 
 ###### [Back to table of contents](#table-of-contents)
 

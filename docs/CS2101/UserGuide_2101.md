@@ -6,7 +6,7 @@
 
 Hello! Thank you for choosing to use PulsePilot!
 
-Our team appreciates that you are giving our health application a try, and we hope that it helps you track your recovery better and bounce back from whatever injury you are facing.
+Our team appreciates that you are giving our health application a try, and we hope that it helps you document your recovery journey better and bounce back from whatever injury you are facing.
 
 This document serves as the **User Guide** of PulsePilot, designed to help you (an injured athlete) learn what PulsePilot is about, our motives, how to install it and how to use it.
 
@@ -36,6 +36,7 @@ If you have any queries with the guide, our application, or even life in general
   * [Installing PulsePilot on Windows](#installing-pulsepilot-on-windows)
   * [Installing PulsePilot on MacOS](#installing-pulsepilot-on-macos)
 * [PulsePilot Commands](#pulsepilot-commands)
+* [Experienced User Guide](#experienced-user-manual)
 * [Command Summary](#command-summary)
 * [Frequently Asked Questions](#frequently-asked-questions)
 * [Glossary](#glossary)
@@ -86,13 +87,20 @@ There are 3 different kinds of **blocks**, denoted using different **icons** to 
 
 ### What is it?
 
-PulsePilot is an application made by 6 computing students from the National University of Singapore (NUS) that helps you (the user) keep track of your recovery better! More specifically, it was coded in [*Java*](#glossary).
+PulsePilot is an application made by 6 computing students from the National University of Singapore (NUS) that helps you (the user) document each stage of your recovery journey better! More specifically, it was coded in [*Java*](#glossary).
 
-The application is built for **both** healthcare professionals and patients. Using PulsePilot, patients can better track their recovery progress from an injury, as well as general well-being.
+The application is built for **both** healthcare professionals and patients. Using PulsePilot, patients can better record their recovery progress from an injury, as well as general well-being. 
 
-Healthcare professionals on the other hand would use PulsePilot to view the information that a patient has logged, allowing them to better keep track of their patients outside of the hospital.
+Healthcare professionals on the other hand would use PulsePilot to view the information that a patient has logged, allowing them to better keep tabs on their patients' recovery status outside of the hospital.
 
-> ❗ This application is still in **beta** phase. As such it is not complete and more features will be added in future versions.
+At the time of writing, you can do the following with PulsePilot:
+
+  - Keep training logs of **both run and gym** workouts.
+- Store information of your **past menstrual cycles and make predictions of future cycles**.
+- Record past or present **medical appointment** information.
+- Keep a log of your **Body Mass Index (BMI)**.  
+
+More details about how to [install](#installation) and use [PulsePilot](#pulsepilot-commands) are covered below!
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -109,12 +117,16 @@ We have done extensive research onto this problem, as well as received testimoni
 The 2 main problems identified from our study were:
 
 1. Poor communication between **healthcare professionals and patients** inhibiting medical progress:
- This can be caused by the long waiting periods in between sessions, by a patient seeing more than 1 specialist at a time or from the specialist having too many patients to track.
+ This can be caused by the long waiting periods in between sessions, by a patient seeing more than 1 specialist at a time or from the specialist having too many patients to monitor.
 
-2. Data Fragmentation:
+2. **Data Fragmentation**:
   As mentioned above, a patient can see many specialists, thus resulting in their information and hence recovery status being **spread out across different clinics, hospitals and people**. There is **no centralised system** for doctors to read patient data and for patients to update all doctors simultaneously.
 
-The above problems gave rise to PulsePilot, the guide for which you are reading right now! We hope that PulsePilot can bridge the information gap between you and your doctor, and we wish you a speedy recovery. :D
+The above problems gave rise to PulsePilot, the guide for which you are reading right now! PulsePilot was designed with both patients and healthcare professionals in mind to solve the 2 main problems identified above!
+
+We hope that PulsePilot can bridge the information gap between you and your doctor, and we wish you a speedy recovery. :D
+
+> ❗ This application is still in [*beta phase*](#glossary). As such it is not complete and more features will be added in future versions. Stay tuned for updates!
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -257,19 +269,17 @@ Run the PulsePilot application by typing the appropriate command (e.g., java -ja
 
 Now that Java and PulsePilot is up and running on your computer, it is time to learn how to use PulsePilot via its implemented commands!
 
-
+> ⚠️ For **experienced** users, if this is not your first time using a CLI application or PulsePilot, feel free to skip ahead to the [experienced user manual](#experienced-user-manual)! If not, please continue reading!
 
 * [PulsePilot Text Style](#pulsepilot-text-style)
 * [Workout](#workout)
   * [Add Run](#add-run)
   * [Add Gym](#add-gym)
-  * [Workout (For Experienced Users)](#workout-experienced-users)
 * [Health](#health)
   * [Add Period](#add-period)
   * [Add BMI](#add-bmi)
   * [Add Appointment](#add-appointment)
   * [Make Period Prediction](#make-period-prediction)
-  * [Health (For Experienced Users)](#health-experienced-users)
 * [View History](#view-history)
 * [View Latest](#view-latest)
 * [Delete Item](#delete-item)
@@ -300,8 +310,6 @@ There are 3 colours used in the guide.
 
 ### Workout
 
-> ⚠️ Skip to the [experienced user section](#workout-experienced-users). For **experienced** users only!
-
 ###### [Back to PulsePilot Commands](#back-to-pulsepilot-commands)
 
 ###### [Back to table of contents](#table-of-contents)
@@ -326,15 +334,6 @@ idiot guide here.
 
 ###### [Back to table of contents](#table-of-contents)
 
-
-### Workout (Experienced Users)
-
-###### [Back to PulsePilot Commands](#back-to-pulsepilot-commands)
-
-###### [Back to table of contents](#table-of-contents)
-
-
----
 
 ### Health
 
@@ -411,6 +410,344 @@ idiot guide here.
 ### Exit
 
 ###### [Back to PulsePilot Commands](#back-to-pulsepilot-commands)
+
+###### [Back to table of contents](#table-of-contents)
+
+---
+
+### Experienced User Manual
+
+> ❗This guide is for **experienced** users, made to be briefer without much step-by-step demonstrations. Only proceed if you know what you are doing!
+
+> ❗If you are **not** experienced, please head to our step-by-step guide for PulsePilot [here](#pulsepilot-commands).
+
+
+* [Workout: Run](#workout-run)
+* [Workout: Gym](#workout-gym)
+  * [Adding Gym Stations](#adding-gym-stations)
+* [Health: BMI](#health-bmi)
+* [Health: Period](#health-period)
+* [Health: Appointment](#health-appointment)
+* [History](#history)
+* [Latest](#latest)
+* [Delete](#delete)
+* [Help](#help)
+* [Exit](#exit)
+
+## Commands
+
+### Workout: Run
+
+Adds a new run workout to track.
+
+Format: <code style="color: #D85D43;">workout /e:run /d:DISTANCE /t:TIME [/date:DATE]</code>
+
+* `DISTANCE` is a **2 decimal point positive number** (i.e. `15.24`) representing the distance ran in **kilometers**.
+* `TIME` is in `[HH]:MM:SS` format (i.e. `25:30`). The `HH` representing hours is **optional**.
+* `DATE` is in `DD-MM-YYYY` format (i.e. `19-03-2024`). The date is **optional**, and if not specified, defaults to `NA`.
+
+> ⚠️ If `HH` is set to `00`, the bot will throw an error. Please use `MM:SS` if the `HH` field is not needed!
+
+
+Examples:
+- <code style="color: #D85D43;">workout /e:run /d:5.15 /t:25:03 /date:25-03-2023 </code>
+- <code style="color: #D85D43;">workout /e:run /d:5.15 /t:25:03</code>
+
+Expected Output:
+
+![Adding Runs](../img/output/adding_runs.png)
+
+> ⚠️ **Minimum and Maximum inputs:**
+> Maximum Pace: 30:00/km, Minimum Pace: 1:00/km
+> Maximum Run Time: 99:59:59, Minimum Run Time: 00:01
+> Maximum Distance: 5000.00, Minimum Distance: 0.01
+> **Note that exceeding these bounds will trigger an error!**
+
+###### [Back to Experienced User Guide](#experienced-user-manual)
+
+###### [Back to table of contents](#table-of-contents)
+
+### Workout: Gym
+
+Adds a new gym session to track.
+
+Format: <code style="color: #D85D43;">workout /e:gym /n:NUMBER_OF_STATIONS [/date:DATE]</code>
+
+* `NUMBER_OF_STATIONS` is a **positive integer of at least 1** representing the number of stations for one Gym session.
+* `DATE` is in `DD-MM-YYYY` format (i.e. `19-03-2024`). The date is **optional**, and if not specified, defaults to `NA`.
+
+Examples:
+
+- <code style="color: #D85D43;">workout /e:gym /n:2 /date:25-03-2023</code>
+- <code style="color: #D85D43;">workout /e:gym /n:4</code>
+
+###### [Back to Experienced User Guide](#experienced-user-manual)
+
+###### [Back to table of contents](#table-of-contents)
+
+#### Adding Gym Stations
+
+Upon entry of the `workout /e:gym` command, the bot will prompt for further details for each station done:
+
+Format: <code style="color: #D85D43;">STATION_NAME /s:SET /r:REPS /w:WEIGHT</code>
+
+* `STATION_NAME` is a **string**  representing the name of the gym station.
+* `SET` is a **positive integer**  representing the number of sets done for one station.
+* `REPS` is a **positive integer**  representing the number of repetitions done for one station.
+* `WEIGHT` is a **list of positive numbers** separated by commas. It represents the weights used for all the sets in the station.
+
+> ⚠️ `STATION_NAME` must always be the first parameter. The order of the other parameters can be in any order.
+
+> ⚠️ `WEIGHT` must be in **multiples of 0.125 KG**. This is because the minimum weight increment in a gym is 0.125kg. Example `bench press /s:2 /r:10 /w:10.333,12.5` is not valid as 10.333 is not a multiple of 0.125kg.
+
+> ⚠️ Note that the **number of weights must equal to the number of sets**! For example, if you have done 2 sets at 10 kg, PulsePilot still expects 2 weights to be specified like this `squats /s:2 /r:5 /w:10.25,10.5`.
+
+
+Examples:
+- <code style="color: #D85D43;">bench press /s:2 /r:4 /w:10,20</code>
+- <code style="color: #D85D43;">squat /r:2 /s:2 /w:10.5,20.5</code>
+
+Expected Output:
+
+![Adding Gyms](../img/output/adding_gym.png)
+
+> ⚠️ **Minimum inputs:**
+Minimum weight: 0.00
+Minimum number of sets: 1
+Minimum number of repetitions: 1
+> **Note that exceeding these bounds will trigger an error!**
+
+###### [Back to Experienced User Guide](#experienced-user-manual)
+
+###### [Back to table of contents](#table-of-contents)
+
+___
+
+### Health: BMI
+
+Calculates user's Body Mass Index (BMI) based on height and weight from user's input.
+
+Format: <code style="color: #D85D43;">health /h:bmi /height:HEIGHT /weight:WEIGHT /date:DATE</code>
+
+* Parameters after `health` can be in any order.
+* `HEIGHT` is a **2 decimal point number in metres** (i.e. `1.71`) representing the user's height.
+* `WEIGHT` is a **2 decimal point number in kilograms** (i.e. `60.50`) representing the user’s weight.
+* `DATE` is in `DD-MM-YYYY` format (i.e. `19-03-2024`).
+
+Examples:
+* <code style="color: #D85D43;">health /h:bmi /height:1.70 /weight:75.42 /date:19-03-2024</code>
+* <code style="color: #D85D43;">health /h:bmi /date:19-03-2024 /height:1.70 /weight:75.42</code>
+
+Expected Output:
+
+![Adding BMI](../img/output/adding_bmi.png)
+
+The ranges for BMI are as follows:
+
+- BMI < 18.5 (less than 18.5): **Underweight**
+- 18.5 <= BMI < 25.0 (more than or equal to 18.5 and less than 25.0): **Normal**
+- 25.0 <= BMI < 30.0 (more than or equal to 25.0 and less than 30.0): **Overweight**
+- 30.0 <= BMI < 40.0 (more than or equal to 30.0 and less than 40.0): **Obese**
+- BMI >= 40.0 (more than 40.0): **Severely Obese**
+
+> ⚠️ **Minimum and Maximum inputs:**
+> Maximum Height: 2.75, Minimum Height: 0.01
+> Maximum Weight: 640.00, Minimum Weight: 0:01
+> **Note that exceeding these bounds will trigger an error!**
+
+###### [Back to Experienced User Guide](#experienced-user-manual)
+
+###### [Back to table of contents](#table-of-contents)
+
+___
+
+### Health: Period
+
+Tracks the start and end of user's menstrual cycle.
+
+
+Format: <code style="color: #D85D43;">health /h:period /start:START_DATE [/end:END_DATE]</code>
+
+* Parameters after `health` can be in any order.
+
+* `START_DATE` is `DD-MM-YYYY` format (i.e. `19-03-2024`) representing the first day of period flow which is also the first day of the cycle. This parameter needs to be present at all times (i.e. inputting a new period input or adding in end date).
+
+* `END_DATE` is `DD-MM-YYYY` format (i.e. `19-03-2024`) representing the last day of period flow. This parameter is optional and can be input once the period flow ends. To add an end date, you need to input the correct corresponding start date of the period.
+
+**Warning:** Every period input needs to include a start date and end date before adding a new period input.
+
+
+Examples:
+* <code style="color: #D85D43;">health /h:period /start:09-03-2022 /end:16-03-2022</code>
+* <code style="color: #D85D43;">health /start:09-03-2022 /end:16-03-2022 /h:period</code>
+* * <code style="color: #D85D43;">health /h:period /start:09-03-2022</code>
+
+
+Expected Output:
+
+![Adding Periods](../img/output/adding_period.png)
+
+### Health: Prediction
+
+Predicts user's next period start date.
+
+Format: <code style="color: #D85D43;">health /h:prediction</code>
+
+* All parameters must be provided in the correct order.
+* There must be at least **4 periods** added before a prediction can be made.
+
+Expected Output:
+
+![Viewing Prediction](../img/output/viewing_prediction.png)
+
+> ⚠️ **There is no minimum and maximum cycle lengths** for a period and hence cycle, since underlying medical conditions can cause varying cycle lengths.
+> PulsePilot will only **notify** you if your cycle length is outside of the healthy range of **2 - 7 days**.
+
+###### [Back to Experienced User Guide](#experienced-user-manual)
+
+###### [Back to table of contents](#table-of-contents)
+
+___
+
+### Health: Appointment
+
+Tracks the user's medical appointments.
+
+Format: <code style="color: #D85D43;">health /h:appointment /date:DATE /time:TIME /description:DESCRIPTION</code>
+
+* Parameters after `health` do not need to be in order.
+
+* `DATE` is a `DD-MM-YYYY` format (i.e. `03-04-2024`) representing the date of the appointment.
+
+* `TIME` is a `HH:mm` format (i.e. `14:15`) representing the time of the appointment.
+
+* `DESCRIPTION` is a string (i.e. `review checkup with surgeon`) representing the details of the appointment. The string can **only contain alphanumeric characters and spaces**.
+
+> ⚠️ Other **non-alphanumeric characters** entered in the appointment description will trigger an error!
+
+Examples:
+
+* <code style="color: #D85D43;">health /h:appointment /date:03-04-2024 /time:14:15 /description:review checkup with surgeon</code>
+
+* <code style="color: #D85D43;">health /date:03-04-2024 /description:review checkup with surgeon /time:14:15 /h:appointment</code>
+
+Expected Output:
+
+![Adding Appointment](../img/output/adding_appointment.png)
+
+
+###### [Back to Experienced User Guide](#experienced-user-manual)
+
+###### [Back to table of contents](#table-of-contents)
+
+___
+
+
+### History
+
+Prints all tracked instances of `run`, `gym`, `workouts`,  `bmi`, `period`, `appointment`.
+
+Format: <code style="color: #D85D43;">history /item:TYPE</code>
+
+* `TYPE` is either `run`, `gym`, `workouts`, `bmi`, `period`, `appointment`.
+  - `run` shows all entries of runs.
+  - `gym` shows all entries of gym.
+  - `workouts` shows all entries of gym and runs.
+  - `bmi` shows all BMI entries.
+  - `period` shows all Period entries.
+  - `appointment` show all Appointment entries.
+
+Examples:
+* <code style="color: #D85D43;">history /item:workouts</code>
+* <code style="color: #D85D43;">history /item:appointment</code>
+
+Expected Output:
+
+![Viewing History](../img/output/viewing_history.png)
+
+###### [Back to Experienced User Guide](#experienced-user-manual)
+
+###### [Back to table of contents](#table-of-contents)
+
+--- 
+
+### Latest
+
+Prints the latest instance of `run`, `gym`, `bmi`, `period`, `appointment`.
+
+Format: <code style="color: #D85D43;">latest /item:TYPE</code>
+
+* `TYPE` is either `run`, `gym`, `bmi`, `period` or `appointment`.
+  - `run` shows the latest run
+  - `gym` shows the latest gym
+  - `bmi` shows the latest BMI
+  - `period` shows the latest Period
+  - `appointment` show the latest Appointment
+
+Examples:
+* <code style="color: #D85D43;">latest /item:appointment</code>
+
+Expected Output:
+
+![Viewing Latest](../img/output/viewing_latest.png)
+
+###### [Back to Experienced User Guide](#experienced-user-manual)
+
+###### [Back to table of contents](#table-of-contents)
+
+--- 
+
+### Delete
+
+Deletes an item tracked within PulsePilot.
+
+Format: <code style="color: #D85D43;">delete /item:TYPE /index:INDEX</code>
+
+* `TYPE` is either `run`, `gym`, `bmi`, `period` or `appointment`.
+* `INDEX` represents the index of the item to delete.
+
+Examples:
+* <code style="color: #D85D43;">delete /item:run /index:2</code>
+
+Expected output:
+
+![Deleting](../img/output/deleting.png)
+
+###### [Back to Experienced User Guide](#experienced-user-manual)
+
+###### [Back to table of contents](#table-of-contents)
+
+---
+
+### Help
+
+Prints the help message.
+
+Format: <code style="color: #D85D43;">help</code>
+
+Expected output:
+
+![img.png](../img/output/viewing_help.png)
+
+###### [Back to Experienced User Guide](#experienced-user-manual)
+
+###### [Back to table of contents](#table-of-contents)
+
+---
+
+### Exit
+
+Exits the bot **and writes to data file**.
+
+Format: <code style="color: #D85D43;">exit</code>
+
+Expected Output:
+
+![Exiting Bot](../img/output/exit_bot.png)
+
+> ⚠️ Exiting the bot by closing the terminal or with <kbd>Ctrl</kbd> + <kbd>C</kbd>  **will result in data being lost!**
+
+###### [Back to Experienced User Guide](#experienced-user-manual)
 
 ###### [Back to table of contents](#table-of-contents)
 
