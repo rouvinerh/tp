@@ -186,6 +186,8 @@ public class ErrorConstant {
     public static final String DESCRIPTION_LENGTH_ERROR = "Description cannot be more than 100 characters";
     public static final String INVALID_DESCRIPTION_ERROR = "Appointment description can only " +
             "contain alphanumeric characters, spaces, inverted commas and quotes!";
+    public static final String DATE_FROM_PAST_ERROR = "Date specified cannot be earlier than today's date.";
+    public static final String TIME_FROM_PAST_ERROR = "Time specified cannot be earlier than current time.";
 
     public static final String INVALID_HISTORY_FILTER_ERROR = "Missing/invalid filter used!" +
             System.lineSeparator() +
