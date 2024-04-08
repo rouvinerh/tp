@@ -54,11 +54,11 @@ As such, our team has created a **Glossary** for you to refer to when reading th
 
 Technical terms are marked in **italicised blue** [*like this*]()! When you click on it, it brings you to the glossary. Each term in the glossary also contains a 'Go back' button, and clicking on that returns you to where you originally were. This is to create a seamless reading experience for you! 
 
-Note that only **the first instance** of a term will be hyperlinked! 
+Note that only **the first instance** of a term will be hyperlinked!
 
 Give it a try with the term: [*Object-Oriented Programming*](#glossary).
 
-The blue phrases known are also known as [*hyperlinks*](#glossary). 
+The blue phrases known are also known as [*hyperlinks*](#glossary).
 
 Non-italicised hyperlinks [like this]() are used to bring you to different parts of the document.
 

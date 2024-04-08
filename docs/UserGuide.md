@@ -397,36 +397,17 @@ the original `pulsepilot.jar` is saved.
 
 **2.** What happens if my data is corrupted or tampered with?
 
-**_WARNING_: DO NOT** tamper with either `pulsepilot_data.txt` or `pulsepilot_hash.txt` to prevent **permanent** and **unrecoverable** loss of data.
+> ❗ **_WARNING_: DO NOT** tamper with either `pulsepilot_data.txt` or `pulsepilot_hash.txt` to prevent **permanent** and **unrecoverable** loss of data.
 
 You may experience 2 scenarios:
 
 - A data file content corruption
-```
-____________________________________________________________
- _              _
-|_)    |  _  _ |_) o  |  _ _|_
-|  |_| | _> (/_|   |  | (_) |_
-Engaging orbital thrusters...
-PulsePilot on standby
-____________________________________________________________
-Exception Caught!
-Data file integrity compromised. Exiting.
-```
+
+![Data Corruption](img/output/data_corruption.png)
 
 - A missing file error
 
-```
-____________________________________________________________
- _              _
-|_)    |  _  _ |_) o  |  _ _|_
-|  |_| | _> (/_|   |  | (_) |_
-Engaging orbital thrusters...
-PulsePilot on standby
-____________________________________________________________
-Exception Caught!
-Key files for integrity missing. Exiting.
-```
+![Missing Files](img/output/missing_files.png)
 
 
 A data file content corruption results in permanent and complete data loss. This occurs either due to intentional or accidental tampering with either `pulsepilot_data.txt` or `pulsepilot_hash.txt` files, or corruption due to unforeseen circumstances on the user-end during migration of files.
@@ -437,7 +418,7 @@ A missing file error occurs when either `pulsepilot_data.txt` or `pulsepilot_has
 
 **Both cases will inevitably result in permanent and complete data loss.**
 
-**DATA RECOVERY:** In both cases, you may want to recover data by utilising **both** your backup copies of  `pulsepilot_data.txt` and `pulsepilot_hash.txt` to restore your data. 
+> ❗ **DATA RECOVERY:** In both cases, you may want to recover data by utilising **both** your backup copies of  `pulsepilot_data.txt` and `pulsepilot_hash.txt` to restore your data. 
 
 Otherwise, you may opt to re-run `pulsepilot.jar` again with the same command, `java -jar pulsepilot.jar` to initialise a new save file.
 
