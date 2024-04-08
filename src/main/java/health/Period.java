@@ -61,7 +61,7 @@ public class Period extends Health {
     public Period(String stringStartDate) {
         this.startDate = parser.parseDate(stringStartDate);
         this.endDate = null;
-        this.periodLength = 0;
+        this.periodLength = 1;
         this.cycleLength = 0;
         healthList.addPeriod(this);
     }
