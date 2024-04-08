@@ -185,7 +185,7 @@ public class ErrorConstant {
     public static final String NULL_TIME_ERROR = "Time of appointment cannot be empty.";
     public static final String DESCRIPTION_LENGTH_ERROR = "Description cannot be more than 100 characters";
     public static final String INVALID_DESCRIPTION_ERROR = "Appointment description can only " +
-            "contain alphanumeric characters and spaces!";
+            "contain alphanumeric characters, spaces, inverted commas and quotes!";
 
     public static final String INVALID_HISTORY_FILTER_ERROR = "Missing/invalid filter used!" +
             System.lineSeparator() +

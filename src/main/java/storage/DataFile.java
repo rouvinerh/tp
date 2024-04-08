@@ -12,7 +12,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
 import health.Appointment;
 import health.Bmi;
 import health.Period;
@@ -127,8 +126,8 @@ public class DataFile {
     public int loadDataFile() {
         int status = UiConstant.FILE_NOT_FOUND;
         try {
-            File dataFile = UiConstant.SAVE_FILE;
-            File hashFile = new File(UiConstant.HASH_FILE_PATH);
+            File dataFile = UiConstant.saveFile;
+            File hashFile = new File(UiConstant.hashFilePath);
 
             if (dataFile.exists() && hashFile.exists()) {
                 String expectedHash = generateFileHash(dataFile);
@@ -154,7 +153,7 @@ public class DataFile {
             System.exit(1);
         }
 
-        Path dataFilePath = Path.of(UiConstant.DATA_FILE_PATH);
+        Path dataFilePath = Path.of(UiConstant.dataFilePath);
         assert Files.exists(dataFilePath) : "Data file does not exist.";
         return status;
     }
@@ -201,7 +200,7 @@ public class DataFile {
      * @throws IOException If an I/O error occurs.
      */
     private void writeHashToFile(FileWriter hashFile, String hash) throws IOException {
-        FileOutputStream fos = new FileOutputStream(UiConstant.HASH_FILE_PATH);
+        FileOutputStream fos = new FileOutputStream(UiConstant.hashFilePath);
         fos.write(hash.getBytes());
         fos.close();
     }
@@ -213,7 +212,7 @@ public class DataFile {
      */
     public void readDataFile() throws CustomExceptions.FileReadError {
         int lineNumberCount = 0; // just for getting lineNumber, no other use
-        try (final Scanner readFile = new Scanner(UiConstant.SAVE_FILE)) {
+        try (final Scanner readFile = new Scanner(UiConstant.saveFile)) {
             LogFile.writeLog("Read begins", false);
             try {
                 String[] input = readFile.nextLine().split(UiConstant.SPLIT_BY_COLON);
@@ -225,8 +224,8 @@ public class DataFile {
             } catch (Exception e) {
                 LogFile.writeLog("Data file is missing name, exiting." + e, true);
                 output.printException(ErrorConstant.CORRUPT_ERROR);
-                File dataFile = UiConstant.SAVE_FILE;
-                File hashFile = new File(UiConstant.HASH_FILE_PATH);
+                File dataFile = UiConstant.saveFile;
+                File hashFile = new File(UiConstant.hashFilePath);
                 dataFile.delete();
                 hashFile.delete();
                 System.exit(1);
@@ -271,8 +270,8 @@ public class DataFile {
             LogFile.writeLog("Data file is corrupted, exiting." + e, true);
             output.printException(e.getMessage());
             output.printException(ErrorConstant.CORRUPT_ERROR);
-            File dataFile = UiConstant.SAVE_FILE;
-            File hashFile = new File(UiConstant.HASH_FILE_PATH);
+            File dataFile = UiConstant.saveFile;
+            File hashFile = new File(UiConstant.hashFilePath);
             dataFile.delete();
             hashFile.delete();
             System.exit(1);
@@ -298,11 +297,12 @@ public class DataFile {
      */
     public void processAppointment(String[] input) throws CustomExceptions.InsufficientInput,
             CustomExceptions.InvalidInput {
-        validation.validateAppointmentDetails(input);
         String date = input[1].trim(); // date
         String time = input[2].trim(); // time
         String formattedTime = time.replace(".", ":");
         String description = input[3].trim(); // description
+        String[] checkAppointmentDetails = {date, formattedTime, description};
+        validation.validateAppointmentDetails(checkAppointmentDetails);
         Appointment appointment = new Appointment(date, formattedTime, description);
     }
 
@@ -312,9 +312,10 @@ public class DataFile {
      * @param input The input string array containing period data.
      */
     public void processPeriod(String[] input) throws CustomExceptions.InsufficientInput, CustomExceptions.InvalidInput {
-        validation.validatePeriodInput(input);
         String startDate = input[1].trim(); // start
         String endDate = input[2].trim(); // end, skip 3 duration
+        String[] checkPeriodInput = {startDate, endDate};
+        validation.validatePeriodInput(checkPeriodInput);
         if (endDate.equals(ErrorConstant.NO_DATE_SPECIFIED_ERROR)) {
             new Period(startDate);
         } else {
@@ -328,10 +329,12 @@ public class DataFile {
      * @param input The input string array containing BMI data.
      */
     public void processBmi(String[] input) throws CustomExceptions.InsufficientInput, CustomExceptions.InvalidInput {
-        validation.validateBmiInput(input);
         String height = input[1].trim(); // height
         String weight = input[2].trim(); // weight
         String date = input[4].trim();// skip 3, bmi score, 4 is date
+        System.out.println(date);
+        String[] checkBmiInput = {height, weight, date};
+        validation.validateBmiInput(checkBmiInput);
         Bmi bmi = new Bmi(height, weight, date);
     }
 
@@ -342,11 +345,12 @@ public class DataFile {
      * @throws CustomExceptions.InvalidInput If there is an error in the input data format.
      */
     public void processRun(String[] input) throws CustomExceptions.InvalidInput, CustomExceptions.InsufficientInput {
-        validation.validateRunInput(input);
         String distance = input[1].trim(); // distance
         String time = input[2].trim(); // time
         String formattedTime = time.replace(".", ":");
         String date = input[3].trim(); // 3 is date
+        String[] checkRunInput = {formattedTime, distance, date};
+        validation.validateRunInput(checkRunInput);
         if (date.equals(ErrorConstant.NO_DATE_SPECIFIED_ERROR)) {
             new Run(formattedTime, distance);
         } else {
@@ -385,7 +389,7 @@ public class DataFile {
                              ArrayList<Workout> workoutArrayList
     ) throws CustomExceptions.FileWriteError {
 
-        try (FileWriter dataFile = new FileWriter(UiConstant.DATA_FILE_PATH)) {
+        try (FileWriter dataFile = new FileWriter(UiConstant.dataFilePath)) {
             LogFile.writeLog("Attempting to write name: " + name, false);
             writeName(dataFile, name);
 
@@ -402,9 +406,9 @@ public class DataFile {
             throw new CustomExceptions.FileWriteError(ErrorConstant.SAVE_ERROR);
         }
 
-        try (FileWriter hashFile = new FileWriter(UiConstant.HASH_FILE_PATH)) {
+        try (FileWriter hashFile = new FileWriter(UiConstant.hashFilePath)) {
             LogFile.writeLog("Attempting to write hash", false);
-            File dataFile = UiConstant.SAVE_FILE;
+            File dataFile = UiConstant.saveFile;
             writeHashToFile(hashFile, generateFileHash(dataFile));
 
             LogFile.writeLog("Write end", false);
