@@ -26,8 +26,9 @@ public class UiConstant {
     public static final String VALID_TIME_REGEX = "^\\d{2}:\\d{2}$";
     public static final String VALID_TIME_WITH_HOURS_REGEX = "^\\d{2}:\\d{2}:\\d{2}$";
     public static final String VALID_POSITIVE_INTEGER_REGEX = "^[1-9]\\d*$";
-    public static final String VALID_APPOINTMENT_DESCRIPTION_REGEX = "^[0-9a-zA-Z\\s]+$";
+    public static final String VALID_APPOINTMENT_DESCRIPTION_REGEX = "^[0-9a-zA-Z\\s'\"]+$";
     public static final String VALID_EXERCISE_NAME_REGEX = "^[A-Za-z\\s]+$";
+    public static final String VALID_USERNAME_REGEX = "^[A-Za-z\\s]+$";
     public static final String VALID_WEIGHTS_ARRAY_REGEX = "^\\d+(\\.\\d{1,3})?(,\\d+(\\.\\d{1,3})?)*$";
 
     // PulsePilot UI replies
@@ -39,9 +40,9 @@ public class UiConstant {
     public static final int NAME_INDEX = 1;
     public static final String NAME_LABEL = "NAME";
     public static final String LOG_FILE_PATH = "./pulsepilot_log.txt";
-    public static  String DATA_FILE_PATH = "./pulsepilot_data.txt";
-    public static  String HASH_FILE_PATH = "./pulsepilot_hash.txt";
-    public static  File SAVE_FILE = new File(UiConstant.DATA_FILE_PATH);
+    public static String dataFilePath = "./pulsepilot_data.txt";
+    public static  String hashFilePath = "./pulsepilot_hash.txt";
+    public static File saveFile = new File(UiConstant.dataFilePath);
     public static final int FILE_FOUND = 0;
     public static final int FILE_NOT_FOUND = 1;
     public static final String MISSING_FILE = "What is your name, voyager?";

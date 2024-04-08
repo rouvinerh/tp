@@ -30,29 +30,29 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class DataFileTest {
-    private  final String TEST_DATA_FILE_PATH = "./test_data.txt";
-    private  final String TEST_HASH_FILE_PATH = "./test_hash.txt";
-    private  final String ORIGINAL_DATA_FILE_PATH = "./pulsepilot_data.txt";
-    private  final String ORIGINAL_HASH_FILE_PATH = "./pulsepilot_hash.txt";
+    private  final String testDataFilePath = "./test_data.txt";
+    private  final String testHashFilePath = "./test_hash.txt";
+    private  final String originalDataFilePath = "./pulsepilot_data.txt";
+    private  final String originalHashFilePath = "./pulsepilot_hash.txt";
 
     @BeforeEach
     void setUp() {
         // Set the file paths to the test files
-        UiConstant.DATA_FILE_PATH = TEST_DATA_FILE_PATH;
-        UiConstant.SAVE_FILE = new File(TEST_DATA_FILE_PATH);
-        UiConstant.HASH_FILE_PATH = TEST_HASH_FILE_PATH;
+        UiConstant.dataFilePath = testDataFilePath;
+        UiConstant.saveFile = new File(testDataFilePath);
+        UiConstant.hashFilePath = testHashFilePath;
     }
 
     @AfterEach
     void tearDown() {
         // Delete the test files after each test
-        new File(TEST_DATA_FILE_PATH).delete();
-        new File(TEST_HASH_FILE_PATH).delete();
+        new File(testDataFilePath).delete();
+        new File(testHashFilePath).delete();
 
         // Reset the file paths
-        UiConstant.DATA_FILE_PATH = ORIGINAL_DATA_FILE_PATH;
-        UiConstant.SAVE_FILE = new File(ORIGINAL_DATA_FILE_PATH);
-        UiConstant.HASH_FILE_PATH = ORIGINAL_HASH_FILE_PATH;
+        UiConstant.dataFilePath = originalDataFilePath;
+        UiConstant.saveFile = new File(originalDataFilePath);
+        UiConstant.hashFilePath = originalHashFilePath;
     }
 
     private void cleanup(){
@@ -64,7 +64,7 @@ public class DataFileTest {
                                         ArrayList<Period> periodArrayList,
                                         ArrayList<Workout> workoutArrayList) {
         try {
-            List<String> lines = Files.readAllLines(Path.of(TEST_DATA_FILE_PATH));
+            List<String> lines = Files.readAllLines(Path.of(testDataFilePath));
             assertEquals("NAME:" + name, lines.get(0));
 
             int index = 1;
@@ -105,8 +105,8 @@ public class DataFileTest {
         // Arrange
         String name = "John Doe";
         ArrayList<Bmi> bmiArrayList = new ArrayList<>(Arrays.asList(
-                new Bmi("1.7", "70.0", "01-04-2023"),
-                new Bmi("1.8", "80.0", "15-04-2023")
+                new Bmi("1.70", "70.00", "01-04-2023"),
+                new Bmi("1.80", "80.00", "15-04-2023")
         ));
         ArrayList<Appointment> appointmentArrayList = new ArrayList<>(Arrays.asList(
                 new Appointment("01-05-2023", "10:00", "Dentist Appointment"),
@@ -139,7 +139,7 @@ public class DataFileTest {
         dataFile.saveDataFile(name, bmiArrayList, appointmentArrayList, periodArrayList, workoutArrayList);
 
         // Assert
-        List<String> lines = Files.readAllLines(Path.of(TEST_DATA_FILE_PATH));
+        List<String> lines = Files.readAllLines(Path.of(testDataFilePath));
 
         if (!lines.isEmpty()) {
             assertEquals("NAME:John Doe", lines.get(0));
@@ -174,9 +174,9 @@ public class DataFileTest {
         dataFile.saveDataFile(name, bmiArrayList, appointmentArrayList, periodArrayList, workoutArrayList);
 
         // Assert
-        assertTrue(new File(TEST_DATA_FILE_PATH).exists());
-        assertTrue(new File(TEST_HASH_FILE_PATH).exists());
-        assertTrue(new File(TEST_HASH_FILE_PATH).length() != 0);
+        assertTrue(new File(testDataFilePath).exists());
+        assertTrue(new File(testHashFilePath).exists());
+        assertTrue(new File(testHashFilePath).length() != 0);
         assertDataFileContents(name, bmiArrayList, appointmentArrayList, periodArrayList, workoutArrayList);
     }
 
@@ -186,8 +186,8 @@ public class DataFileTest {
         // Arrange
         String name = "John Doe";
         ArrayList<Bmi> bmiArrayList = new ArrayList<>(Arrays.asList(
-                new Bmi("1.7", "70.0", "01-04-2023"),
-                new Bmi("1.8", "80.0", "15-04-2023")
+                new Bmi("1.70", "70.00", "01-04-2023"),
+                new Bmi("1.80", "80.00", "15-04-2023")
         ));
         ArrayList<Appointment> appointmentArrayList = new ArrayList<>(Arrays.asList(
                 new Appointment("01-05-2023", "10:00", "Dentist Appointment"),
@@ -208,8 +208,8 @@ public class DataFileTest {
 
         // Assert
         assertEquals(UiConstant.FILE_NOT_FOUND, status);
-        assertTrue(new File(TEST_DATA_FILE_PATH).exists());
-        assertTrue(new File(TEST_HASH_FILE_PATH).exists());
+        assertTrue(new File(testDataFilePath).exists());
+        assertTrue(new File(testHashFilePath).exists());
     }
 
     @Test
@@ -218,8 +218,8 @@ public class DataFileTest {
         // Arrange
         String name = "John Doe";
         ArrayList<Bmi> bmiArrayList = new ArrayList<>(Arrays.asList(
-                new Bmi("1.7", "70.0", "01-04-2023"),
-                new Bmi("1.8", "80.0", "15-04-2023")
+                new Bmi("1.70", "70.00", "01-04-2023"),
+                new Bmi("1.80", "80.00", "15-04-2023")
         ));
         ArrayList<Appointment> appointmentArrayList = new ArrayList<>(Arrays.asList(
                 new Appointment("01-05-2023", "10:00", "Dentist Appointment"),
@@ -233,7 +233,7 @@ public class DataFileTest {
                 new Run("00:30:00", "5.0", "01-04-2023")
         ));
 
-        File dataFileName = new File(TEST_DATA_FILE_PATH);
+        File dataFileName = new File(testDataFilePath);
         DataFile dataFile = new DataFile();
         dataFile.saveDataFile(name, bmiArrayList, appointmentArrayList, periodArrayList, workoutArrayList);
 
@@ -251,8 +251,8 @@ public class DataFileTest {
         // Arrange
         String name = "John Doe";
         ArrayList<Bmi> bmiArrayList = new ArrayList<>(Arrays.asList(
-                new Bmi("1.7", "70.0", "01-04-2023"),
-                new Bmi("1.8", "80.0", "15-04-2023")
+                new Bmi("1.70", "70.00", "01-04-2023"),
+                new Bmi("1.80", "80.00", "15-04-2023")
         ));
         ArrayList<Appointment> appointmentArrayList = new ArrayList<>(Arrays.asList(
                 new Appointment("01-05-2023", "10:00", "Dentist Appointment"),
@@ -277,10 +277,13 @@ public class DataFileTest {
         // Assert
         assertEquals(name, DataFile.userName);
         assertEquals(Arrays.toString(bmiArrayList.toArray()), Arrays.toString(HealthList.getBmis().toArray()));
+        
         assertEquals(Arrays.toString(appointmentArrayList.toArray()),
                 Arrays.toString(HealthList.getAppointments().toArray()));
-        assertEquals(Arrays.toString(periodArrayList.toArray()), Arrays.toString(HealthList.getPeriods().toArray()));
-        assertEquals(Arrays.toString(workoutArrayList.toArray()), Arrays.toString(WorkoutList.getWorkouts().toArray()));
+        assertEquals(Arrays.toString(periodArrayList.toArray()),
+                Arrays.toString(HealthList.getPeriods().toArray()));
+        assertEquals(Arrays.toString(workoutArrayList.toArray()),
+                Arrays.toString(WorkoutList.getWorkouts().toArray()));
     }
 
 }
