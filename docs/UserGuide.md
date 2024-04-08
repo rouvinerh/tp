@@ -382,7 +382,7 @@ This is what the output is supposed to look like when the same command is used o
 
 ![Colour Rendered](img/output/correct_colour_render.png)
 
-This is a visual bug, and it can be safely ignored by the user. Alternatively, you may wish to enable ANSI Escape Sequences if you would like to view these colours. 
+This is a visual bug, and it can be safely ignored by the user.
 
 ## FAQ
 

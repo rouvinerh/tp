@@ -302,7 +302,7 @@ There are 3 colours used in the guide.
 
 
 
-###### [Back to PulsePilot Commands](#back-to-pulsepilot-commands)
+###### [Back to PulsePilot Commands](#pulsepilot-commands)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -310,7 +310,7 @@ There are 3 colours used in the guide.
 
 ### Workout
 
-###### [Back to PulsePilot Commands](#back-to-pulsepilot-commands)
+###### [Back to PulsePilot Commands](#pulsepilot-commands)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -320,7 +320,7 @@ There are 3 colours used in the guide.
 
 idiot guide here
 
-###### [Back to PulsePilot Commands](#back-to-pulsepilot-commands)
+###### [Back to PulsePilot Commands](#pulsepilot-commands)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -330,14 +330,14 @@ idiot guide here
 
 idiot guide here.
 
-###### [Back to PulsePilot Commands](#back-to-pulsepilot-commands)
+###### [Back to PulsePilot Commands](#pulsepilot-commands)
 
 ###### [Back to table of contents](#table-of-contents)
 
 
 ### Health
 
-###### [Back to PulsePilot Commands](#back-to-pulsepilot-commands)
+###### [Back to PulsePilot Commands](#pulsepilot-commands)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -345,7 +345,7 @@ idiot guide here.
 
 #### Add Period
 
-###### [Back to PulsePilot Commands](#back-to-pulsepilot-commands)
+###### [Back to PulsePilot Commands](#pulsepilot-commands)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -353,7 +353,7 @@ idiot guide here.
 
 #### Add BMI
 
-###### [Back to PulsePilot Commands](#back-to-pulsepilot-commands)
+###### [Back to PulsePilot Commands](#pulsepilot-commands)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -361,7 +361,7 @@ idiot guide here.
 
 #### Add Appointment
 
-###### [Back to PulsePilot Commands](#back-to-pulsepilot-commands)
+###### [Back to PulsePilot Commands](#pulsepilot-commands)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -369,7 +369,7 @@ idiot guide here.
 
 #### Make Period Prediction
 
-###### [Back to PulsePilot Commands](#back-to-pulsepilot-commands)
+###### [Back to PulsePilot Commands](#pulsepilot-commands)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -377,7 +377,7 @@ idiot guide here.
 
 ### View History
 
-###### [Back to PulsePilot Commands](#back-to-pulsepilot-commands)
+###### [Back to PulsePilot Commands](#pulsepilot-commands)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -385,7 +385,7 @@ idiot guide here.
 
 ### View Latest
 
-###### [Back to PulsePilot Commands](#back-to-pulsepilot-commands)
+###### [Back to PulsePilot Commands](#pulsepilot-commands)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -393,7 +393,7 @@ idiot guide here.
 
 ### Delete Item
 
-###### [Back to PulsePilot Commands](#back-to-pulsepilot-commands)
+###### [Back to PulsePilot Commands](#pulsepilot-commands)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -401,7 +401,7 @@ idiot guide here.
 
 ### Storage of Data
 
-###### [Back to PulsePilot Commands](#back-to-pulsepilot-commands)
+###### [Back to PulsePilot Commands](#pulsepilot-commands)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -409,7 +409,7 @@ idiot guide here.
 
 ### Exit
 
-###### [Back to PulsePilot Commands](#back-to-pulsepilot-commands)
+###### [Back to PulsePilot Commands](#pulsepilot-commands)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -768,6 +768,30 @@ Here is a summary of of all the commands and its functions. The table contains e
 | View latest  | `latest /item:TYPE`<br>  Example: `latest /item:bmi`  </br>                                                                            |
 | Exit bot     | `exit`                                                                                                                                 |
 
+
+###### [Back to table of contents](#table-of-contents)
+
+---
+
+## Common Problems
+
+### Odd Characters on Screen
+
+In some instances, the output from an error will result in odd characters being printed on screen:
+
+![Colour not rendering](../img/output/colour_render.png)
+
+This issue affects Windows machines. The odd characters are actually special characters used to **display colour** in the terminal. Windows 10 users do not have this enabled by default in their terminals. For Windows 11, these are automatically enabled and hence rendered properly.
+
+This is what the output is supposed to look like when the same command is used on a Windows 11 machine:
+
+![Colour Rendered](../img/output/correct_colour_render.png)
+
+This merely a visual difference, and it does not mean the bot is not working. You can safely ignore this and continue using PulsePilot.
+
+> 💡 These 'special characters' are actually called [ANSI escape sequences](https://en.wikipedia.org/wiki/ANSI_escape_code). If you want to view PulsePilot in colour, please enable them for your Windows computer using [this guide](#https://www.youtube.com/watch?v=HeJOyEw3RtM). **MacOS and Linux users are unaffected!**
+
+###### [Back to PulsePilot Commands](#pulsepilot-commands)
 
 ###### [Back to table of contents](#table-of-contents)
 
