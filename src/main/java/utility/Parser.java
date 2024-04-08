@@ -628,7 +628,14 @@ public class Parser {
             throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_GYM_FORMAT_ERROR);
         }
 
-        // Check if valid numbers
+        if (currentStationName.length() > WorkoutConstant.MAX_GYM_STATION_NAME_LENGTH) {
+            throw new CustomExceptions.FileReadError(ErrorConstant.INVALID_GYM_STATION_NAME_ERROR);
+        }
+
+        if (!currentStationName.matches(UiConstant.VALID_EXERCISE_NAME_REGEX)) {
+            throw new CustomExceptions.FileReadError(ErrorConstant.INVALID_GYM_STATION_NAME_ERROR);
+        }
+
         try {
             numberOfSets = Integer.parseInt(numberOfSetsStr);
             reps = Integer.parseInt(repsStr);
@@ -636,22 +643,12 @@ public class Parser {
             throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_GYM_FORMAT_ERROR);
         }
 
-        // Check if weights able to split
-        String[] weight = weightStrings.split(UiConstant.SPLIT_BY_COMMAS);
-        if (weight.length != numberOfSets){
+        ArrayList<Double> validatedWeightsArray = validation.validateWeightsArray(weightStrings);
+        if (validatedWeightsArray.size() != numberOfSets) {
             throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_NUMBER_OF_SETS_ERROR);
         }
 
-        // Check if weights are valid numbers
-        try {
-            for (String weightString : weight) {
-                weights.add(Double.parseDouble(weightString));
-            }
-        } catch (NumberFormatException e) {
-            throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_GYM_FORMAT_ERROR);
-        }
-
-        gym.addStation(currentStationName, numberOfSets, reps, weights);
+        gym.addStation(currentStationName, numberOfSets, reps, validatedWeightsArray);
         baseCounter += WorkoutConstant.INCREMENT_OFFSET;
 
         return baseCounter;
@@ -671,10 +668,14 @@ public class Parser {
      */
     public Gym parseGymFileInput(String input)
             throws CustomExceptions.InvalidInput,
-            CustomExceptions.FileReadError {
+            CustomExceptions.FileReadError, CustomExceptions.InsufficientInput {
 
         // does initial round of input checking
         String[] gymDetails = splitGymFileInput(input);
+        String [] checkGymDetails = new String[WorkoutConstant.NUMBER_OF_GYM_PARAMETERS];
+        checkGymDetails[0] = gymDetails[1];
+        checkGymDetails[1] = gymDetails[2];
+        validation.validateGymInput(checkGymDetails);
         Gym gym;
         String date = gymDetails[WorkoutConstant.DATE_FILE_INDEX];
 

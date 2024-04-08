@@ -86,10 +86,10 @@ public class ErrorConstant {
             + System.lineSeparator()
             + "Only input what is required! Additional characters between flags will cause errors.";
     public static final String INVALID_NUMBER_OF_STATIONS_ERROR = "Number of stations is a positive number!";
-    public static final String EMPTY_EXERCISE_NAME_ERROR = "Exercise name cannot be blank!";
+    public static final String EMPTY_GYM_STATION_NAME_ERROR = "Exercise name cannot be blank!";
 
-    public static final String INVALID_EXERCISE_NAME_ERROR = "Exercise name can only have letters!";
-    public static final String EXERCISE_NAME_LENGTH_ERROR = "Exercise name cannot be more than 40 characters!";
+    public static final String INVALID_GYM_STATION_NAME_ERROR = "Exercise name can only have letters!";
+    public static final String GYM_STATION_NAME_LENGTH_ERROR = "Exercise name cannot be more than 40 characters!";
     public static final String GYM_STATION_FORMAT_ERROR = "Remember that you are now adding gym station input!"
             + System.lineSeparator()
             + "Expected format: [Station Name] /s:[SETS] /r:[REPS] /w:[WEIGHTS]";
@@ -185,7 +185,7 @@ public class ErrorConstant {
     public static final String NULL_TIME_ERROR = "Time of appointment cannot be empty.";
     public static final String DESCRIPTION_LENGTH_ERROR = "Description cannot be more than 100 characters";
     public static final String INVALID_DESCRIPTION_ERROR = "Appointment description can only " +
-            "contain alphanumeric characters and spaces!";
+            "contain alphanumeric characters, spaces, inverted commas and quotes!";
 
     public static final String INVALID_HISTORY_FILTER_ERROR = "Missing/invalid filter used!" +
             System.lineSeparator() +
@@ -222,6 +222,7 @@ public class ErrorConstant {
 
     public static final String ZERO_RUN_TIME_ERROR = "Total time taken for run cannot be 0!";
     public static final String MAX_RUN_TIME_ERROR = "Total time taken for run cannot exceed 100 hours!";
-
+    public static final String INVALID_USERNAME_ERROR = "Username can only contain alphanumeric characters and " +
+            "spaces!";
 
 }

@@ -38,7 +38,7 @@ PulsePilot is a **desktop app for tracking health-related information, optimised
 
 The bot will prompt you for your name before starting.
 
-![Opening Prompt from PulsePilot](img/start_prompt.png)
+![Opening Prompt from PulsePilot](img/output/start_prompt.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -46,41 +46,62 @@ The bot will prompt you for your name before starting.
 
 * Parameters in `UPPER_CASE` are the parameters to be **supplied by the user**.
 * Parameters in square brackets are optional.
-  * `[/d:DATE]` means that the `DATE` parameter is **optional**.
+  * `[/date:DATE]` means that the `DATE` parameter is **optional**.
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
-> ⚠️ Follow instructions clearly. Ensure that the syntax is exactly the same as provided in the user guide. For instance, no extra characters in the commands, such as blank space, newline, etc. 
+  * This can result in errors despite valid commands being used!
+
+> ⚠️ PulsePilot is **not case-sensitive**. All commands are converted to upper case before being processed.
+
+> ⚠️ The order of flags (for example, `/e:`) can be changed **unless mentioned otherwise**.
+
+> ⚠️ For all positive integer inputs, please omit additional `0` characters in front as it will trigger errors. For example, inputting `01` will cause an error!
+
+> ⚠️ Follow instructions clearly. Ensure that the syntax is exactly the same as provided in the user guide. For instance, no extra characters in the commands, such as blank space, newline, etc.
 ---
 
 ## Commands
 
 ### Workout: Run
 
-Adds a new Run workout to track. 
+Adds a new run workout to track.
 
-Format: `workout /e:run /d:DISTANCE /t:TIME [/date:DATE]`
+Format: <code style="color: #D85D43;">workout /e:run /d:DISTANCE /t:TIME [/date:DATE]</code>
 
 * `DISTANCE` is a **2 decimal point positive number** (i.e. `15.24`) representing the distance ran in **kilometers**.
 * `TIME` is in `[HH]:MM:SS` format (i.e. `25:30`). The `HH` representing hours is **optional**.
-* `DATE` is in `DD-MM-YYYY` format (i.e. `19-03-2024`). The date is optional, and if not specified, defaults to `NA`.
+* `DATE` is in `DD-MM-YYYY` format (i.e. `19-03-2024`). The date is **optional**, and if not specified, defaults to `NA`.
 
-Examples: `workout /e:run /d:5.15 /t:25:03 /date:25-03-2023` OR `workout /e:run /d:5.15 /t:25:03`.
+> ⚠️ If `HH` is set to `00`, the bot will throw an error. Please use `MM:SS` if the `HH` field is not needed!
+
+
+Examples:
+- <code style="color: #D85D43;">workout /e:run /d:5.15 /t:25:03 /date:25-03-2023 </code>
+- <code style="color: #D85D43;">workout /e:run /d:5.15 /t:25:03</code>
 
 Expected Output:
 
-![Adding Runs](img/adding_runs.png)
+![Adding Runs](img/output/adding_runs.png)
+
+> ⚠️ Minimum and Maximum inputs:
+> Maximum Pace: 30:00/km, Minimum Pace: 1:00/km
+> Maximum Run Time: 99:59:59, Minimum Run Time: 00:01
+> Maximum Distance: 5000.00, Minimum Distance: 0.01
+> **Note that exceeding these bounds will trigger an error!**
 
 ###### [Back to table of contents](#table-of-contents)
 
 ### Workout: Gym
 
-Adds a new gym session to track. 
+Adds a new gym session to track.
 
-Format: `workout /e:gym /n:NUMBER_OF_STATIONS [/date:DATE]`
+Format: <code style="color: #D85D43;">workout /e:gym /n:NUMBER_OF_STATIONS [/date:DATE]</code>
 
-* `NUMBER_OF_STATIONS` is a **positive integer**  representing the number of stations for one Gym session.
-* `DATE` is in `DD-MM-YYYY` format (i.e. `19-03-2024`). The date is optional, and if not specified, defaults to `NA`.
+* `NUMBER_OF_STATIONS` is a **positive integer of at least 1** representing the number of stations for one Gym session.
+* `DATE` is in `DD-MM-YYYY` format (i.e. `19-03-2024`). The date is **optional**, and if not specified, defaults to `NA`.
 
-Examples: `workout /e:gym /n:2 /date:25-03-2023` OR `workout /e:gym /n:4`
+Examples: 
+- <code style="color: #D85D43;">workout /e:gym /n:2 /date:25-03-2023</code>
+- <code style="color: #D85D43;">workout /e:gym /n:4</code>
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -88,26 +109,33 @@ Examples: `workout /e:gym /n:2 /date:25-03-2023` OR `workout /e:gym /n:4`
 
 Upon entry of the `workout /e:gym` command, the bot will prompt for further details for each station done:
 
-Format: `STATION_NAME /s:SET /r:REPS /w:WEIGHT`
+Format: <code style="color: #D85D43;">STATION_NAME /s:SET /r:REPS /w:WEIGHT</code>
 
 * `STATION_NAME` is a **string**  representing the name of the gym station.
 * `SET` is a **positive integer**  representing the number of sets done for one station.
 * `REPS` is a **positive integer**  representing the number of repetitions done for one station.
-* `WEIGHT` is a **list of positive double** separated by commas. It represents the weights used for all the sets in the station.
+* `WEIGHT` is a **list of positive numbers** separated by commas. It represents the weights used for all the sets in the station.
+
 > ⚠️ `STATION_NAME` must always be the first parameter. The order of the other parameters can be in any order.
 
-> ⚠️ `WEIGHT` must be in **multiples of 0.125 KG**. This is because the minimum weight increment in a gym is 0.125KG. Example `bench press /s:2 /r:10 /w:10.333,12.5` is not valid as 10.333 is not a multiple of 0.125kg. 
+> ⚠️ `WEIGHT` must be in **multiples of 0.125 KG**. This is because the minimum weight increment in a gym is 0.125kg. Example `bench press /s:2 /r:10 /w:10.333,12.5` is not valid as 10.333 is not a multiple of 0.125kg.
 
-> ⚠️ Note that the **number of weights must equal to the number of sets**! For example, if you have done 2 sets at 10 kg, PulsePilot still expects 2 weights to be specified like this `squats /s:2 /r:5 /w:10.25,10.5`. 
+> ⚠️ Note that the **number of weights must equal to the number of sets**! For example, if you have done 2 sets at 10 kg, PulsePilot still expects 2 weights to be specified like this `squats /s:2 /r:5 /w:10.25,10.5`.
 
 
-Examples 1 : 
-- `bench press /s:2 /r:4 /w:10,20`
-- `squat /r:2 /s:2 /w:10.5,20.5`
+Examples:
+- <code style="color: #D85D43;">bench press /s:2 /r:4 /w:10,20</code>
+- <code style="color: #D85D43;">squat /r:2 /s:2 /w:10.5,20.5</code>
 
 Expected Output:
 
-![Adding Gyms](img/adding_gym.png)
+![Adding Gyms](img/output/adding_gym.png)
+
+> ⚠️ Minimum inputs:
+Minimum weight: 0.00
+Minimum number of sets: 1
+Minimum number of repetitions: 1
+> **Note that exceeding these bounds will trigger an error!**
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -117,20 +145,20 @@ ___
 
 Calculates user's Body Mass Index (BMI) based on height and weight from user's input.
 
-Format: `health /h:bmi /height:HEIGHT /weight:WEIGHT /date:DATE`
+Format: <code style="color: #D85D43;">health /h:bmi /height:HEIGHT /weight:WEIGHT /date:DATE</code>
 
-* Parameters after `health` can be in any order. 
+* Parameters after `health` can be in any order.
 * `HEIGHT` is a **2 decimal point number in metres** (i.e. `1.71`) representing the user's height.
 * `WEIGHT` is a **2 decimal point number in kilograms** (i.e. `60.50`) representing the user’s weight.
 * `DATE` is in `DD-MM-YYYY` format (i.e. `19-03-2024`).
 
 Examples:
-* `health /h:bmi /height:1.70 /weight:75.42 /date:19-03-2024`
-* `health /h:bmi /date:19-03-2024 /height:1.70 /weight:75.42`
+* <code style="color: #D85D43;">health /h:bmi /height:1.70 /weight:75.42 /date:19-03-2024</code>
+* <code style="color: #D85D43;">health /h:bmi /date:19-03-2024 /height:1.70 /weight:75.42</code>
 
 Expected Output:
 
-![Adding BMI](img/adding_bmi.png)
+![Adding BMI](img/output/adding_bmi.png)
 
 The ranges for BMI are as follows:
 
@@ -140,6 +168,11 @@ The ranges for BMI are as follows:
 - 30.0 <= BMI < 40.0 (more than or equal to 30.0 and less than 40.0): **Obese**
 - BMI >= 40.0 (more than 40.0): **Severely Obese**
 
+> ⚠️ Minimum and Maximum inputs:
+> Maximum Height: 2.75, Minimum Height: 0.01
+> Maximum Weight: 640.00, Minimum Weight: 0:01
+> **Note that exceeding these bounds will trigger an error!**
+
 ###### [Back to table of contents](#table-of-contents)
 
 ___
@@ -148,7 +181,8 @@ ___
 
 Tracks the start and end of user's menstrual cycle.
 
-Format: `health /h:period /start:START_DATE [/end:END_DATE]`
+
+Format: <code style="color: #D85D43;">health /h:period /start:START_DATE [/end:END_DATE]</code>
 
 * Parameters after `health` can be in any order.
 
@@ -160,24 +194,30 @@ Format: `health /h:period /start:START_DATE [/end:END_DATE]`
 
 
 Examples:
-* `health /h:period /start:09-03-2022 /end:16-03-2022`
-* `health /start:09-03-2022 /end:16-03-2022 /h:period`
-* `health /h:period /start:09-03-2022`
+* <code style="color: #D85D43;">health /h:period /start:09-03-2022 /end:16-03-2022</code>
+* <code style="color: #D85D43;">health /start:09-03-2022 /end:16-03-2022 /h:period</code>
+* * <code style="color: #D85D43;">health /h:period /start:09-03-2022</code>
+
 
 Expected Output:
 
-![Adding Periods](img/adding_period.png)
+![Adding Periods](img/output/adding_period.png)
 
-Predicts user's next period start date. 
+### Health: Prediction
 
-Format: `health /h:prediction`
+Predicts user's next period start date.
+
+Format: <code style="color: #D85D43;">health /h:prediction</code>
 
 * All parameters must be provided in the correct order.
-* There must be at least 4 periods added before a prediction can be made. 
+* There must be at least **4 periods** added before a prediction can be made.
 
 Expected Output:
 
-![Viewing Prediction](img/viewing_prediction.png)
+![Viewing Prediction](img/output/viewing_prediction.png)
+
+> ⚠️ There is no minimum and maximum lengths for a period and hence cycle, since underlying medical conditions can cause varying cycle lengths.
+> PulsePilot will only **notify** you if your cycle length is outside of the healthy range of **2 - 7 days**.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -187,7 +227,7 @@ ___
 
 Tracks the user's medical appointments.
 
-Format: `health /h:appointment /date:DATE /time:TIME /description:DESCRIPTION`
+Format: <code style="color: #D85D43;">health /h:appointment /date:DATE /time:TIME /description:DESCRIPTION</code>
 
 * Parameters after `health` do not need to be in order.
 
@@ -195,17 +235,19 @@ Format: `health /h:appointment /date:DATE /time:TIME /description:DESCRIPTION`
 
 * `TIME` is a `HH:mm` format (i.e. `14:15`) representing the time of the appointment.
 
-* `DESCRIPTION` is a string (i.e. `review checkup with surgeon`) representing the details of the appointment. The string can only contain alphanumeric characters and spaces.
+* `DESCRIPTION` is a string (i.e. `review checkup with surgeon`) representing the details of the appointment. The string can **only contain alphanumeric characters and spaces**.
+
+> ⚠️ Other characters entered in the appointment description will trigger an error!
 
 Examples:
 
-* `health /h:appointment /date:03-04-2024 /time:14:15 /description:review checkup with surgeon`
+* <code style="color: #D85D43;">health /h:appointment /date:03-04-2024 /time:14:15 /description:review checkup with surgeon</code>
 
-* `health /date:03-04-2024 /description:review checkup with surgeon /time:14:15 /h:appointment`
+* <code style="color: #D85D43;">health /date:03-04-2024 /description:review checkup with surgeon /time:14:15 /h:appointment</code>
 
 Expected Output:
 
-![Adding Appointment](img/adding_appointment.png)
+![Adding Appointment](img/output/adding_appointment.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -215,22 +257,23 @@ Expected Output:
 
 Prints all tracked instances of `run`, `gym`, `workouts`,  `bmi`, `period`, `appointment`.
 
-Format: `history /item:TYPE`
+Format: <code style="color: #D85D43;">history /item:TYPE</code>
 
 * `TYPE` is either `run`, `gym`, `workouts`, `bmi`, `period`, `appointment`.
-  - `run` shows all entries of runs 
-  - `gym` shows all entries of gym
-  - `workouts` shows all entries of gym and runs
-  - `bmi` shows all BMI entries 
-  - `period` shows all Period entries 
-  - `appointment` show all Appointment entries
+  - `run` shows all entries of runs.
+  - `gym` shows all entries of gym.
+  - `workouts` shows all entries of gym and runs.
+  - `bmi` shows all BMI entries.
+  - `period` shows all Period entries.
+  - `appointment` show all Appointment entries.
 
 Examples:
-* `history /item:workouts`
+* <code style="color: #D85D43;">history /item:workouts</code>
+* <code style="color: #D85D43;">history /item:appointment</code>
 
 Expected Output:
 
-![Viewing History](img/viewing_history.png)
+![Viewing History](img/output/viewing_history.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -239,9 +282,9 @@ Expected Output:
 
 Prints the latest instance of `run`, `gym`, `bmi`, `period`, `appointment`.
 
-Format: `latest /item:TYPE`
+Format: <code style="color: #D85D43;">latest /item:TYPE</code>
 
-* `TYPE` is either `run`, `gym`, `bmi` or `period`.
+* `TYPE` is either `run`, `gym`, `bmi`, `period` or `appointment`.
   - `run` shows the latest run
   - `gym` shows the latest gym
   - `bmi` shows the latest BMI
@@ -249,11 +292,11 @@ Format: `latest /item:TYPE`
   - `appointment` show the latest Appointment
 
 Examples:
-* `latest /item:appointment`
+* <code style="color: #D85D43;">latest /item:appointment</code>
 
 Expected Output:
 
-![Viewing Latest](img/viewing_latest.png)
+![Viewing Latest](img/output/viewing_latest.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -261,46 +304,57 @@ Expected Output:
 
 ### Delete
 
-Deletes an item tracked within PulsePilot. 
+Deletes an item tracked within PulsePilot.
 
-Format: `delete /item:TYPE /index:INDEX`
+Format: <code style="color: #D85D43;">delete /item:TYPE /index:INDEX</code>
 
-* `TYPE` is either `run`, `gym`, `bmi` or `period`.
-* `INDEX` represents the index of the item to delete. 
+* `TYPE` is either `run`, `gym`, `bmi`, `period` or `appointment`.
+* `INDEX` represents the index of the item to delete.
+
+Examples:
+* <code style="color: #D85D43;">delete /item:run /index:2</code>
 
 Expected output:
 
-![Deleting](img/deleting.png)
+![Deleting](img/output/deleting.png)
 
 ###### [Back to table of contents](#table-of-contents)
+
+---
 
 ### Help
 
-Prints the `help` message.
+Prints the help message.
 
-Format: `help`
+Format: <code style="color: #D85D43;">help</code>
 
 Expected output:
 
-![img.png](img/viewing_help.png)
+![img.png](img/output/viewing_help.png)
 
 ###### [Back to table of contents](#table-of-contents)
+
+---
 
 ### Exit
 
 Exits the bot **and writes to data file**.
 
-Format: `exit`
+Format: <code style="color: #D85D43;">exit</code>
 
 Expected Output:
 
-![Exiting Bot](img/exit_bot.png)
+![Exiting Bot](img/output/exit_bot.png)
+
+> ⚠️ Exiting the bot by closing the terminal or with <kbd>Ctrl</kbd> + <kbd>C</kbd>  **will result in data being lost!**
 
 ###### [Back to table of contents](#table-of-contents)
 
+---
+
 ## Logging
 
-The latest logs are written to `pulsepilot_log.txt` once the bot exits. Each time the bot is run, the current  `pulsepilot_log.txt` file is overwritten with the most recent logs. The logs record both info messages and any error messages.
+The latest logs are written to `pulsepilot_log.txt` once the bot exits. Each time the bot is run, the current `pulsepilot_log.txt` file is overwritten with the most recent logs. The logs record both info messages and any error messages.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -313,6 +367,22 @@ Data is saved to `pulsepilot_data.txt` once the bot exits. Each time the bot exi
 **Tip:** Ensure that you always have a _backup copy stored safely_ to prevent permanent data loss.
 
 ###### [Back to table of contents](#table-of-contents)
+
+## Known Issues
+
+### Colours Not Rendering
+
+In some instances, the output from an error will result in odd characters being printed on screen:
+
+![Colour not rendering](img/output/colour_render.png)
+
+This issue affects Windows machines. The odd characters are actually escape sequences used to display colour in the terminal. Windows 10 users do not have this enabled by default in their terminals. For Windows 11, these escape characters are automatically enabled and hence rendered properly.
+
+This is what the output is supposed to look like when the same command is used on a Windows 11 machine:
+
+![Colour Rendered](img/output/correct_colour_render.png)
+
+This is a visual bug, and it can be safely ignored by the user.
 
 ## FAQ
 
@@ -332,37 +402,17 @@ the original `pulsepilot.jar` is saved.
 
 **2.** What happens if my data is corrupted or tampered with?
 
-**_WARNING_: DO NOT** tamper with either `pulsepilot_data.txt` or `pulsepilot_hash.txt` to prevent **permanent** and **unrecoverable** loss of data.
+> ❗ **_WARNING_: DO NOT** tamper with either `pulsepilot_data.txt` or `pulsepilot_hash.txt` to prevent **permanent** and **unrecoverable** loss of data.
 
 You may experience 2 scenarios:
 
 - A data file content corruption
-```
-____________________________________________________________
- _              _
-|_)    |  _  _ |_) o  |  _ _|_
-|  |_| | _> (/_|   |  | (_) |_
-Engaging orbital thrusters...
-PulsePilot on standby
-____________________________________________________________
-Exception Caught!
-Data file integrity compromised. Exiting.
-```
+
+![Data Corruption](img/output/data_corruption.png)
 
 - A missing file error
 
-```
-____________________________________________________________
- _              _
-|_)    |  _  _ |_) o  |  _ _|_
-|  |_| | _> (/_|   |  | (_) |_
-Engaging orbital thrusters...
-PulsePilot on standby
-____________________________________________________________
-Exception Caught!
-Key files for integrity missing. Exiting.
-```
-
+![Missing Files](img/output/missing_files.png)
 
 A data file content corruption results in permanent and complete data loss. This occurs either due to intentional or accidental tampering with either `pulsepilot_data.txt` or `pulsepilot_hash.txt` files, or corruption due to unforeseen circumstances on the user-end during migration of files.
 
@@ -372,7 +422,7 @@ A missing file error occurs when either `pulsepilot_data.txt` or `pulsepilot_has
 
 **Both cases will inevitably result in permanent and complete data loss.**
 
-**DATA RECOVERY:** In both cases, you may want to recover data by utilising **both** your backup copies of  `pulsepilot_data.txt` and `pulsepilot_hash.txt` to restore your data. 
+> ❗ **DATA RECOVERY:** In both cases, you may want to recover data by utilising **both** your backup copies of  `pulsepilot_data.txt` and `pulsepilot_hash.txt` to restore your data. 
 
 Otherwise, you may opt to re-run `pulsepilot.jar` again with the same command, `java -jar pulsepilot.jar` to initialise a new save file.
 
@@ -439,4 +489,3 @@ Note that the errors mentioned above would lead to errors thrown. Any similar sy
 | Exit bot      | `exit`                                                                                                                        |
 
 ###### [Back to table of contents](#table-of-contents)
-

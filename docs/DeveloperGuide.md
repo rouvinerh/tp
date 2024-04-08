@@ -79,6 +79,7 @@ The application can be further broken down into the following packages:
 - `Health`: Stores health-related information.
 - `Workout`: Stores workout-related information.
 - `Utility`: Contains utility functions, such as input parsing and validation.
+- `PulsePilot`: The main entry point for the application.
 - `Constants`: Contains all constants used in PulsePilot.
 
 **The workflow and sequence diagrams of adding objects is covered in the commands section.**
@@ -97,15 +98,37 @@ The main entry point of the application is the `Handler` class, used to determin
 
 The sequence diagram below shows how the application is initialised and processes the user's input using the `Handler` class:
 
-![Handler Sequence Diagram](img/handler_sequence_diagram.png)
+![Handler Sequence Diagram](img/sequence_diagrams/handler_sequence_diagram.png)
 
-There are 3 main components of the `Handler` class, which are the `initialiseBot()`, `processInput()` and `terminateBot()` methods. Their sequence diagrams are shown below:
+The `Handler` class creates other classes when it is used as shown in this sequence diagram:
 
-{Sequence diagram for initialiseBot}
+![Handler Class Creation](img/sequence_diagrams/handler_class_creation.png)
 
-{Sequence diagram for processInput}
+The creation of the above classes will be left out of other class diagrams to prevent making complex class diagrams. **It is assumed in other class diagrams for `Handler` that the classes have already been created.**
 
-{Sequence diagram for terminateBot}
+##### Initialising Bot
+
+The `initialiseBot()` method within `Handler` functions as such:
+
+![User Induction Sequences](img/sequence_diagrams/user_induction.png)
+
+The main feature of this method is to check whether the data file is present and not corrupted. How this is done will be covered in `Storage`.
+
+##### Process Input
+
+The `processInput()` method is responsible for determining what command the user has entered, and passes the input to the right handler method.
+
+The sequence diagram is as follows:
+
+![Process Input](img/sequence_diagrams/process_input.png)
+
+##### Terminating Bot
+
+The `terminateBot()` method is responsible for **writing to the data file** and exiting the bot gracefully. If a user exits without calling `terminateBot()`, **data will be lost!**
+
+The sequence diagram is as follows:
+
+![Terminate Bot](img/sequence_diagrams/terminate_bot.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -129,7 +152,7 @@ The `Workout` package is responsible for tracking run and gym workouts from the 
 
 `WorkoutList` is a class that contains the `ArrayList` objects of `Run`, `Gym` and the superclass `Workout`. The class diagram is as follows:
 
-![WorkoutList Class Diagram](img/workoutlist_class_diagram.png)
+![WorkoutList Class Diagram](img/class_diagrams/workoutlist_class_diagram.png)
 
 The class contains methods to retrieve the different objects. Additionally, it contains the methods for **deleting** an object from the bot, which is used for the `delete` command implementation.
 
@@ -149,7 +172,7 @@ The `clearWorkoutsRunGym()` method is used to clear all the data stored within e
 
 The class diagram for gym is as follows:
 
-![Gym Class Diagram](img/gym_class_diagram.png)
+![Gym Class Diagram](img/class_diagrams/gym_class_diagram.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -360,7 +383,7 @@ The specific usage of `Parser` is covered below in the commands section of this 
 
 The `Validation` class is responsible for validating the user's split input. The split input comes from the `Parser` class in `String[]` variables. Each variable is then checked using regex to ensure that it follows the requirements needed, and that the values are within the stipulated ranges.
 
-The specific usage of `Validation` is covered below in the commands section of this guide.
+The specific usage of `Validation` is covered below for each command.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -458,9 +481,7 @@ The constants are broken down into the following 4 classes:
 
 #### Add Run
 
-<code style="color: #D85D43;">
-WORKOUT /e:run /d:[distance] /t:[time] /date:[date]
-</code>
+Command Format: <code style="color: #D85D43;">WORKOUT /e:run /d:[distance] /t:[time] /date:[date]</code>
 
 - `[distance]` is a 2 **decimal place positive number** representing the number of kilometers covered.
 - `[time]` is in `HH:MM:SS` or `MM:SS` format with positive integers, representing the amount of time taken for the run.
@@ -486,11 +507,11 @@ WORKOUT /e:run /d:[distance] /t:[time] /date:[date]
 
 This is the sequence diagram for adding a run:
 
-![Run Sequence Diagram](img/run_sequence_diagram.png)
+![Run Sequence Diagram](img/sequence_diagrams/run_sequence_diagram.png)
 
 `validateRunInput` uses the `Validation` class to check the parameters specified when adding a Run. It follows the sequence diagram below:
 
-![Run Validation Sequence Diagram](img/run_validation_sequence_diagram.png)
+![Run Validation Sequence Diagram](img/sequence_diagrams/run_validation_sequence_diagram.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -531,8 +552,8 @@ Example of Gym Station:
 ##### Gym Sequence
 Below is the sequence diagram for adding a gym and the reference diagram
 <div style="display: flex; ">
-    <img src="img/gym_overall_sequence_diagram.png" alt="Image 1" style="width: 45%;">
-    <img src="img/gym_parse_gym_station_input_sequence_diagram.png" alt="Par" style="width: 55%;">
+    <img src="img/sequence_diagrams/gym_overall_sequence_diagram.png" alt="Image 1" style="width: 45%;">
+    <img src="img/sequence_diagrams/gym_parse_gym_station_input_sequence_diagram.png" alt="Par" style="width: 55%;">
 </div>
 1. User input is passed to `Handler.processInput()`, which determines the command used is `workout`, thus passing the input to `Handler.handleWorkout()`.
 
@@ -591,9 +612,9 @@ The sequence diagram below illustrates the process of period prediction.
 
 8. The `Parser` class calls `Period.printNextCyclePrediction()` with the predicted start date as a parameter. This method prints a string indicating the number of days until the predicted start date of the next period, or how many days late the period is if the current date is after the predicted start date.
 
-![Period Sequence Diagram](img/period_sequence.png)
+![Period Sequence Diagram](img/sequence_diagrams/period_sequence.png)
 
-![Period Validation Diagram](img/period_validation.png)
+![Period Validation Diagram](img/sequence_diagrams/period_validation.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -631,9 +652,9 @@ The sequence diagram below shows how a `Bmi` object is added to `BMIS`.
 
 8. `Output.printAddBmi()` prints `Bmi` string containing height, weight, date, BMI and BMI category to user.
 
-![Bmi Sequence Diagram](img/bmi_sequence.png)
+![Bmi Sequence Diagram](img/sequence_diagrams/bmi_sequence.png)
 
-![Bmi Validation Sequence Diagram](img/bmi_validation.png)
+![Bmi Validation Sequence Diagram](img/sequence_diagrams/bmi_validation.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -667,9 +688,9 @@ HEALTH /h:appointment /date:[date] /time:[time] /description:[description]
 
 6. The `Appointment` object is passed to `Output.printAddAppointment()` and a message acknowledging the successful adding is printed to the screen.
 
-![Appointment Sequence Diagram](img/appointment_sequence.png)
+![Appointment Sequence Diagram](img/sequence_diagrams/appointment_sequence.png)
 
-![Appointment Validation Diagram](img/appointment_validation.png)
+![Appointment Validation Diagram](img/sequence_diagrams/appointment_validation.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -698,7 +719,7 @@ The sequence diagram below illustrates the process of period prediction.
 
 8. The `Parser` class calls `Period.printNextCyclePrediction()` with the predicted start date as a parameter. This method prints a string indicating the number of days until the predicted start date of the next period, or how many days late the period is if the current date is after the predicted start date.
 
-![Prediction Sequence Diagram](img/prediction_sequence_diagram.png)
+![Prediction Sequence Diagram](img/sequence_diagrams/prediction_sequence_diagram.png)
 
 ###### [Back to table of contents](#table-of-contents)
 

@@ -13,6 +13,7 @@ import utility.Filters.DeleteFilters;
 import utility.Filters.HealthFilters;
 import utility.Parser;
 import utility.Filters.WorkoutFilters;
+import utility.Validation;
 import workouts.WorkoutList;
 
 import java.util.Scanner;
@@ -28,6 +29,7 @@ public class Handler {
     private final Parser parser;
     private final DataFile dataFile;
     private final Output output;
+    private final Validation validation;
 
 
     public Handler(){
@@ -35,7 +37,7 @@ public class Handler {
         parser = new Parser(in);
         dataFile = new DataFile();
         output = new Output();
-
+        validation = new Validation();
     }
 
     public Handler(String input){
@@ -43,6 +45,7 @@ public class Handler {
         parser = new Parser(in);
         dataFile = new DataFile();
         output = new Output();
+        validation = new Validation();
     }
 
 
@@ -249,7 +252,16 @@ public class Handler {
      * Get user's name, and print profile induction messages.
      */
     public void userInduction() {
-        String name = this.in.nextLine();
+        String name;
+        while (true) {
+            name = this.in.nextLine();
+            if (!validation.validateUsername(name)) {
+                System.err.println(ErrorConstant.INVALID_USERNAME_ERROR);
+            } else {
+                break;
+            }
+        }
+
         DataFile.userName = name;
         System.out.println("Welcome aboard, Captain " + name);
         output.printLine();
@@ -259,7 +271,6 @@ public class Handler {
 
         // DataFile.saveName(name);
         LogFile.writeLog("Name Entered: " + name, false);
-
         System.out.println("FTL jump completed.");
     }
 
