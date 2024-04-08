@@ -50,6 +50,7 @@ public class HealthList extends ArrayList<Health> {
     protected void addBmi(Bmi bmi) {
         assert bmi != null : ErrorConstant.NULL_BMI_ERROR;
         BMIS.add(bmi);
+        BMIS.sort(Comparator.comparing(Bmi::getDate).reversed());
     }
 
     //@@author syj02
@@ -97,6 +98,7 @@ public class HealthList extends ArrayList<Health> {
             previousPeriod.setCycleLength(period.getStartDate());
         }
         PERIODS.add(period);
+        PERIODS.sort(Comparator.comparing(Period::getStartDate).reversed());
     }
 
     /**
