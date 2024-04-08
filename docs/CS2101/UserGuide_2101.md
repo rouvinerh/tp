@@ -8,15 +8,15 @@ Hello! Thank you for choosing to use PulsePilot!
 
 Our team appreciates that you are giving our health application a try, and we hope that it helps you track your recovery better and bounce back from whatever injury you are facing.
 
-This document is the **User Guide** of PulsePilot, which will help you (an injured athlete) learn about what PulsePilot is about, why it was created, how to install it and how to use it.
+This document serves as the **User Guide** of PulsePilot, designed to help you (an injured athlete) learn what PulsePilot is about, our motives, how to install it and how to use it.
 
-Learning to use software can be daunting. Thus, this guide was created for **non-technical users**, bringing you from zero to becoming a PulsePilot expert!
+Learning to use software can be daunting. Thus, this guide was created for **non-technical users**, helping you unleash PulsePilot to its fullest potential!
 
 Once again, we hope our application helps you, and thank you for choosing PulsePilot, and we hope you recover as fast as possible!
 
 ## Contact Us
 
-If you have any queries with the guide, our application, or even life in general,  please feel free to reach out to our project director Justin Soh at +65 91234567!
+If you have any queries with the guide, our application, or even life in general,  please feel free to reach out to our project director **Justin Soh** at [+65 91234567](https://www.youtube.com/watch?v=eBGIQ7ZuuiU)!
 
 ---
 
@@ -33,7 +33,8 @@ If you have any queries with the guide, our application, or even life in general
   * [MacOS](#macos)
 * [Installation of Java and PulsePilot](#installation)
   * [Installing Java](#installing-java)
-  * [Installing PulsePilot](#installing-pulsepilot)
+  * [Installing PulsePilot on Windows](#installing-pulsepilot-on-windows)
+  * [Installing PulsePilot on MacOS](#installing-pulsepilot-on-macos)
 * [PulsePilot Commands](#pulsepilot-commands)
 * [Command Summary](#command-summary)
 * [Frequently Asked Questions](#frequently-asked-questions)
@@ -75,7 +76,7 @@ There are 3 different kinds of **blocks**, denoted using different **icons** to 
 
 > ⚠️ This is a **warning** block. It is used to highlight key information that **may** be useful for you!
 
-> ❗This is an **important** block. It contains information that you **MUST READ**! Take note of these!
+> ❗ This is an **important** block. It contains information that you **MUST READ**! Take note of these!
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -91,7 +92,7 @@ The application is built for **both** healthcare professionals and patients. Usi
 
 Healthcare professionals on the other hand would use PulsePilot to view the information that a patient has logged, allowing them to better keep track of their patients outside of the hospital.
 
-> ❗This application is still in **beta** phase. As such it is not complete and more features will be added in future versions.
+> ❗ This application is still in **beta** phase. As such it is not complete and more features will be added in future versions.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -146,7 +147,13 @@ Here is a sub table of contents so you can navigate through this section easily:
 
 ![img.png](img_2101/windows_cmd.png)
 
-> ❗This is an **example image**
+> ❗ This is an **example image**
+
+To launch the **Windows Command Prompt** (also known as `cmd.exe`), you can follow these steps:
+
+1. Open the Windows Start menu
+2. Search for "Command Prompt" or "cmd" and click on the application to open it
+3. The Windows Command Prompt allows you to enter and execute various commands on your Windows operating system.
 
 ###### [Back to Command Line Interface](#command-line-interface)
 
@@ -155,6 +162,14 @@ Here is a sub table of contents so you can navigate through this section easily:
 ---
 
 #### Windows Commands
+Here are some common Windows commands you can use in the Command Prompt:
+
+* `dir` - Lists the files and [directories](#glossary) in the current directory
+* `cd` <directory> - Changes the current [directory](#glossary) to the specified one
+* `cls` - Clears the screen of the Command Prompt
+* `exit` - Closes the Command Prompt window
+
+To use the commands, type in the command of interest, followed by <kbd>Spacebar</kbd> and finally the parameter.
 
 invalid commands, list directory, change directory
 
@@ -166,13 +181,21 @@ invalid commands, list directory, change directory
 
 ### MacOS
 
-###### [Back to Command Line Interface](#command-line-interface)
-
-###### [Back to table of contents](#table-of-contents)
-
----
-
 #### Launching `bash`
+
+On MacOS, the default command line interface is called the Terminal, which uses the Bash shell. To launch the Terminal:
+
+Open the Launchpad
+Search for "Terminal" and click on the application to open it
+The MacOS Terminal allows you to enter and execute Bash commands.
+
+MacOS Commands
+Here are some common Bash commands you can use in the MacOS Terminal:
+
+ls - Lists the files and directories in the current directory
+cd <directory> - Changes the current directory to the specified one
+clear - Clears the screen of the Terminal
+exit - Closes the Terminal window
 
 ###### [Back to Command Line Interface](#command-line-interface)
 
@@ -194,11 +217,37 @@ list directory, change directory, invalid commands.
 
 ### Installing Java
 
+To install Java on your computer, you can follow these steps:
+
+Visit the official Java website (https://www.java.com/en/download/)
+Download the appropriate Java installer for your operating system (Windows or MacOS)
+Run the installer and follow the on-screen instructions to complete the installation
+
 ###### [Back to table of contents](#table-of-contents)
 
 ---
 
-### Installing PulsePIlot
+### Installing PulsePilot on Windows
+
+After installing Java, you can install PulsePilot by following these steps:
+
+Download the latest version of the PulsePilot application from the provided source
+Extract the downloaded files to a directory on your computer
+Open the Command Prompt (Windows) or Terminal (MacOS) and navigate to the directory where you extracted the PulsePilot files
+Run the PulsePilot application by typing the appropriate command (e.g., java -jar pulsepilot.jar)
+
+###### [Back to table of contents](#table-of-contents)
+
+---
+
+### Installing PulsePilot on MacOS
+
+After installing Java, you can install PulsePilot by following these steps:
+
+Download the latest version of the PulsePilot application from the provided source
+Extract the downloaded files to a directory on your computer
+Open the Command Prompt (Windows) or Terminal (MacOS) and navigate to the directory where you extracted the PulsePilot files
+Run the PulsePilot application by typing the appropriate command (e.g., java -jar pulsepilot.jar)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -395,13 +444,13 @@ Here is a summary of of all the commands and its functions. The table contains e
 
 ## Glossary
 
-| Term                           | Definition                                                                                                                                                            |
-|--------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Object-Oriented Programming    | A programming paradigm aiming used to guide the the analysis and structure of solutions by programmers in a specific way. <br> [*Go Back*](#glossary-usage) </br>     |
-| Hyperlinks                     | A reference to data that a user can follow by clicking on, which can point to an entire document or specific part of document. <br>[*Go Back*](#glossary-usage) </br> |
-| Java                     | A programming language that was created to run programs **any operating system**. It was created based on the 'write once, run anywhere' philosophy. <br>[*Go Back*](#glossary-usage) </br> |
-| Command Line Interface                     | A **text-based** interface where users can input commands to interact with a computer. <br>[*Go Back*](#command-line-interface) </br> |
-| Command                     | A line of text representing an instruction given to the program. <br>[*Go Back*](#command-line-interface) </br> |
+| Term                        | Definition                                                                                                                                                            |
+|-----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Object-Oriented Programming | A programming paradigm aiming used to guide the the analysis and structure of solutions by programmers in a specific way. <br> [*Go Back*](#glossary-usage) </br>     |
+| Hyperlinks                  | A reference to data that a user can follow by clicking on, which can point to an entire document or specific part of document. <br>[*Go Back*](#glossary-usage) </br> |
+| Java                        | A programming language that was created to run programs **any operating system**. It was created based on the 'write once, run anywhere' philosophy. <br>[*Go Back*](#glossary-usage) </br> |
+| Command Line Interface      | A **text-based** interface where users can input commands that interact with a computer. <br>[*Go Back*](#command-line-interface) </br> |
+| Directories                 |                                                                                                                                         |
 
 
 ###### [Back to table of contents](#table-of-contents)
