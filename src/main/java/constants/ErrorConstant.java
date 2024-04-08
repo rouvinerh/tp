@@ -171,7 +171,7 @@ public class ErrorConstant {
             "Enter 'history /item:period' to view existing period inputs.";
 
     // APPOINTMENT ERRORS
-    public static final String INSUFFICIENT_APPOINTMENT_PARAMETERS_ERROR = "Insufficient parameters for period! " +
+    public static final String INSUFFICIENT_APPOINTMENT_PARAMETERS_ERROR = "Insufficient parameters for appointment! " +
             "Example input: /h:appointment /date:date /time:time /description:description /place:place"
             + System.lineSeparator()
             + "Only input what is required! Additional characters between flags will cause errors.";
