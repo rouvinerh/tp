@@ -374,7 +374,7 @@ the `pulsepilot_data.txt` file is overwritten with the most up-to-date data.
 
 In some instances, the output from an error will result in odd characters being printed on screen:
 
-![Colour not rendering](img/output/colour_render.png)
+![Colour not rendering](img/output/colour_not_rendered.png)
 
 This color rendering issue is specific to Windows machines. The odd characters you see are actually escape sequences used to display color in the terminal. Windows 10 terminals do not have this color rendering feature enabled by default, whereas Windows 11 terminals automatically enable it, displaying the colors correctly.
 
@@ -460,7 +460,7 @@ Example of the correct command:
 ![correct_command.png](img/correct_command.png)
 
 - Error of adding extra space(s) in fixed parameters:
-  - In this case, the altered fixed parameter is `/date:`, which has written as `/ date:` instead.
+  - In this case, the altered fixed parameter is `/date:`, which was written as `/ date:` instead.
   - Fixed parameters are non-optional and non-user-decided parameters. Check [Notes about command format](#notes-about-command-format).
 
 ![extra_space_error_command.png](img/extra_space_error_command.png)
