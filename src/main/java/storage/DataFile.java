@@ -369,9 +369,9 @@ public class DataFile {
     ) throws CustomExceptions.FileWriteError {
 
         try (FileWriter dataFile = new FileWriter(UiConstant.DATA_FILE_PATH)) {
-            LogFile.writeLog("Attempting to write data, name: " + name, false);
+            LogFile.writeLog("Attempting to write name: " + name, false);
             writeName(dataFile, name);
-            LogFile.writeLog("Written name", false);
+
             writeHealthData(dataFile, bmiArrayList,
                     appointmentArrayList,
                     periodArrayList);
