@@ -18,6 +18,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -246,12 +247,26 @@ public class Parser {
      */
     public void parsePeriodInput(String userInput) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
+        int size = HealthList.getPeriodSize();
         String[] periodDetails = splitPeriodInput(userInput);
         validation.validatePeriodInput(periodDetails);
-        Period newPeriod = new Period(
-                periodDetails[HealthConstant.PERIOD_START_DATE_INDEX],
-                periodDetails[HealthConstant.PERIOD_END_DATE_INDEX]);
-        output.printAddPeriod(newPeriod);
+
+        if (userInput.contains(HealthConstant.END_FLAG)) {
+            if ((size == 0) || (size > 0
+                    && Objects.requireNonNull(HealthList.getPeriod(size-1)).getEndDate() != null)) {
+                Period newPeriod = new Period(
+                        periodDetails[HealthConstant.PERIOD_START_DATE_INDEX],
+                        periodDetails[HealthConstant.PERIOD_END_DATE_INDEX]);
+                output.printAddPeriod(newPeriod);
+            } else if (size > 0 && Objects.requireNonNull(HealthList.getPeriod(size-1)).getEndDate() == null) {
+                Period latestPeriod = Objects.requireNonNull(HealthList.getPeriod(size - 1));
+                latestPeriod.updateEndDate(periodDetails[1]);
+                output.printAddPeriod(latestPeriod);
+            }
+        } else {
+            Period newPeriod = new Period(periodDetails[HealthConstant.PERIOD_START_DATE_INDEX]);
+            output.printAddPeriod(newPeriod);
+        }
     }
 
     /**
@@ -264,7 +279,7 @@ public class Parser {
     public String[] splitPeriodInput(String input) throws CustomExceptions.InsufficientInput,
             CustomExceptions.InvalidInput {
         if (!input.contains(HealthConstant.START_FLAG)
-                || !input.contains(HealthConstant.END_FLAG)) {
+                || (!input.contains(HealthConstant.START_FLAG) && !input.contains(HealthConstant.END_FLAG))) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_PERIOD_PARAMETERS_ERROR);
         }
 
@@ -272,11 +287,18 @@ public class Parser {
             throw new CustomExceptions.InvalidInput(ErrorConstant.TOO_MANY_SLASHES_ERROR);
         }
 
-        String [] results = new String[HealthConstant.NUM_PERIOD_PARAMETERS];
-        results[HealthConstant.PERIOD_START_DATE_INDEX] = extractSubstringFromSpecificIndex(input,
-                HealthConstant.START_FLAG).trim();
-        results[HealthConstant.PERIOD_END_DATE_INDEX] = extractSubstringFromSpecificIndex(input,
-                HealthConstant.END_FLAG).trim();
+        String[] results = new String[HealthConstant.NUM_PERIOD_PARAMETERS];
+
+        if (input.contains(HealthConstant.START_FLAG) && input.contains(HealthConstant.END_FLAG)) {
+            results[HealthConstant.PERIOD_START_DATE_INDEX] = extractSubstringFromSpecificIndex(input,
+                    HealthConstant.START_FLAG).trim();
+            results[HealthConstant.PERIOD_END_DATE_INDEX] = extractSubstringFromSpecificIndex(input,
+                    HealthConstant.END_FLAG).trim();
+        } else if (input.contains(HealthConstant.START_FLAG) && !input.contains(HealthConstant.END_FLAG)) {
+            results[HealthConstant.PERIOD_START_DATE_INDEX] = extractSubstringFromSpecificIndex(input,
+                    HealthConstant.START_FLAG).trim();
+        }
+
         return results;
     }
 

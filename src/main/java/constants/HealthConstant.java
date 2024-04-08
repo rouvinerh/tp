@@ -53,7 +53,7 @@ public class HealthConstant {
     // PERIOD
     public static final String PRINT_PERIOD_FORMAT = "Period Start: %s Period End: %s"
             + System.lineSeparator()
-            + "Period Length: %d days";
+            + "Period Length: %d %s";
     public static final String PRINT_BMI_FORMAT = "%s"
             + System.lineSeparator()
             + "Your BMI is %.2f"
@@ -63,6 +63,8 @@ public class HealthConstant {
     public static final String PERIOD_ADDED_MESSAGE_PREFIX = "Added: period | ";
     public static final String PERIOD_REMOVED_MESSAGE_PREFIX = "Removed period with index: ";
     public static final String PERIOD_HISTORY_HEADER = "Your Period history:";
+    public static final String PERIOD_TOO_LONG_MESSAGE = "Your period length is out of the healthy range. " +
+            "Please consult a gynaecologist if this persists.";
 
     // PREDICTION
     public static final String PRINT_CYCLE_FORMAT = "Cycle Length: %d days";
@@ -73,7 +75,9 @@ public class HealthConstant {
     public static final String PREDICTED_START_DATE_MESSAGE = "Your next cycle's predicted start date is ";
     public static final String COUNT_DAYS_MESSAGE = ", in ";
     public static final String PERIOD_IS_LATE = ". Your period is late by ";
-    public static final String DAYS_MESSAGE = " days.";
+    public static final String PREDICTED_DATE_IS_TODAY_MESSAGE = ", which is today! ";
+    public static final String DAY_MESSAGE = "day";
+    public static final String DAYS_MESSAGE = "days";
 
     // APPOINTMENT
     public static final String PRINT_APPOINTMENT_FORMAT = "On %s at %s: %s";
