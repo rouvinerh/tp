@@ -320,16 +320,17 @@ class OutputTest {
                 System.lineSeparator() +
                 "Your Period history:" +
                 System.lineSeparator() +
-                "1. Period Start: 2023-02-09 Period End: 2023-02-16" +
+                "1. Period Start: 2023-03-09 Period End: 2023-03-16" +
+                System.lineSeparator() +
+                "Period Length: 8 days" +
+                System.lineSeparator() +
+                "2. Period Start: 2023-02-09 Period End: 2023-02-16" +
                 System.lineSeparator() +
                 "Period Length: 8 days" +
                 System.lineSeparator() +
                 "Cycle Length: 28 days" +
                 System.lineSeparator() +
-                "2. Period Start: 2023-03-09 Period End: 2023-03-16" +
-                System.lineSeparator() +
-                "Period Length: 8 days" +
-                System.lineSeparator() +
+
                 UiConstant.PARTITION_LINE +
                 System.lineSeparator();
 
