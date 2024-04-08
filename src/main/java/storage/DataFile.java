@@ -293,7 +293,11 @@ public class DataFile {
     public void processPeriod(String[] input) {
         String startDate = input[1].trim(); // start
         String endDate = input[2].trim(); // end, skip 3 duration
-        new Period(startDate, endDate);
+        if (endDate.equals(ErrorConstant.NO_DATE_SPECIFIED_ERROR)) {
+            new Period(startDate);
+        } else {
+            new Period(startDate, endDate);
+        }
     }
 
     /**
