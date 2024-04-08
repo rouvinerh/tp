@@ -65,8 +65,7 @@ public class HealthList extends ArrayList<Health> {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_BMI_EMPTY_ERROR);
         }
         assert !BMIS.isEmpty() : ErrorConstant.EMPTY_BMI_LIST_ERROR;
-        int currentIndex = BMIS.size();
-        System.out.println(BMIS.get(currentIndex - 1));
+        System.out.println(BMIS.get(0));
     }
 
     /**
@@ -79,10 +78,14 @@ public class HealthList extends ArrayList<Health> {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_BMI_EMPTY_ERROR);
         }
         assert !BMIS.isEmpty() : ErrorConstant.EMPTY_BMI_LIST_ERROR;
+        int index = 1;
         System.out.println(HealthConstant.BMI_HISTORY_HEADER);
         for (Bmi bmi : BMIS) {
+            System.out.print(index + ". ");
             System.out.println(bmi);
+            index += 1;
         }
+
     }
 
     /**
@@ -111,8 +114,7 @@ public class HealthList extends ArrayList<Health> {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_PERIOD_EMPTY_ERROR);
         }
         assert !PERIODS.isEmpty() : ErrorConstant.EMPTY_PERIOD_LIST_ERROR;
-        int currentIndex = PERIODS.size();
-        System.out.println(PERIODS.get(currentIndex - 1));
+        System.out.println(PERIODS.get(0));
     }
 
     //@@author j013n3
@@ -127,9 +129,12 @@ public class HealthList extends ArrayList<Health> {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_PERIOD_EMPTY_ERROR);
         }
         assert !PERIODS.isEmpty() : ErrorConstant.EMPTY_PERIOD_LIST_ERROR;
+        int index = 1;
         System.out.println(HealthConstant.PERIOD_HISTORY_HEADER);
         for (Period period : PERIODS) {
+            System.out.print(index + ". ");
             System.out.println(period);
+            index += 1;
         }
     }
 
