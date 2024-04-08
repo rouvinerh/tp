@@ -125,18 +125,21 @@ class BmiTest {
 
         String expected = "Your BMI history:"
                 + System.lineSeparator()
-                + "2024-03-20"
-                + System.lineSeparator()
-                + "Your BMI is 26.12"
-                + System.lineSeparator()
-                + "You're overweight."
-                + System.lineSeparator()
+                + "1. "
                 + "2024-03-21"
                 + System.lineSeparator()
                 + "Your BMI is 22.84"
                 + System.lineSeparator()
                 + "Great! You're within normal range."
+                + System.lineSeparator()
+                + "2. "
+                + "2024-03-20"
+                + System.lineSeparator()
+                + "Your BMI is 26.12"
+                + System.lineSeparator()
+                + "You're overweight."
                 + System.lineSeparator();
+
 
         HealthList.showBmiHistory();
         assertEquals(expected, outContent.toString());
