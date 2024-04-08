@@ -1,6 +1,6 @@
 # User Guide
 
-![Logo](../img/logo.jpg)
+![Logo](../puml/sequence_diagrams/img/logo.jpg)
 
 ## Introduction
 
@@ -10,7 +10,7 @@ Our team appreciates that you are giving our health application a try, and we ho
 
 This document is the **User Guide** of PulsePilot, which will help you (an injured athlete) learn about what PulsePilot is about, why it was created, how to install it and how to use it.
 
-Learning to use software can be daunting. Thus, this guide was created for **non-technical users**, bringing you fro m zero to becoming a PulsePilot expert!
+Learning to use software can be daunting. Thus, this guide was created for **non-technical users**, bringing you from zero to becoming a PulsePilot expert!
 
 Once again, we hope our application helps you, and thank you for choosing PulsePilot, and we hope you recover as fast as possible!
 
@@ -51,11 +51,13 @@ This guide may have difficult to understand technical jargon or terms used. Fret
 
 As such, our team has created a **Glossary** for you to refer to when reading this guide! It serves as a mini-dictionary, for you to read a definition and quickly go back to wherever you were.
 
-Technical terms are marked in **italicised blue** [*like this*]()! When you click on it, it brings you to the glossary. Each term in the glossary also contains a 'Go back' button, and clicking on that returns you to where you originally were. This is to create a seamless reading experience for you!
+Technical terms are marked in **italicised blue** [*like this*]()! When you click on it, it brings you to the glossary. Each term in the glossary also contains a 'Go back' button, and clicking on that returns you to where you originally were. This is to create a seamless reading experience for you! 
+
+Note that only **the first instance** of a term will be hyperlinked! 
 
 Give it a try with the term: [*Object-Oriented Programming*](#glossary).
 
-The blue phrases known are also known as [*hyperlinks*](#glossary).
+The blue phrases known are also known as [*hyperlinks*](#glossary). 
 
 Non-italicised hyperlinks [like this]() are used to bring you to different parts of the document.
 
@@ -69,9 +71,9 @@ For example, **the one below to bring you back to the table of contents on top!*
 
 There are 3 different kinds of **blocks**, denoted using different **icons** to bring things to your attention.
 
-> 💡 This is an **information** block. It is used to highlight additional details that you might be interested in!
+> 💡 This is an **information** block. It is used to highlight **additional** details that you might be interested in!
 
-> ⚠️ This is a **warning** block. It is used to highlight information about certain errors that you might encounter.
+> ⚠️ This is a **warning** block. It is used to highlight key information that **may** be useful for you!
 
 > ❗This is an **important** block. It contains information that you **MUST READ**! Take note of these!
 
@@ -119,8 +121,9 @@ The above problems gave rise to PulsePilot, the guide for which you are reading 
 
 ## Command Line Interface
 
-> 💡 This section explains what a [*Command Line Interface (CLI)*](#glossary) is. If you are already familiar with this, please feel free to move on to the [installation of PulsePilot](#installation-of-java-and-pulsepilot). PulsePilot is an application that runs entirely on the CLI, so make sure that you know exactly what you are doing before skipping.
-> If you are not familiar with what the CLI is, keep reading this section.  
+> 💡 This section explains what a [*Command Line Interface (CLI)*](#glossary) is. If you are already familiar with this, please feel free to move on to the [installation of PulsePilot](#installation-of-java-and-pulsepilot).
+
+> ⚠️ For **inexperienced** users, if you are not familiar with what the CLI is, keep reading this section. PulsePilot is built to be run using the CLI, and its [*commands*](#glossary) are also entered through the CLI!
 
 Let us begin exploring the [*Command Line Interface (CLI)*](#glossary)! This section is further broken down into the 2 most common operating systems: Windows and MacOS. Remember that PulsePilot can be run on **any operating system with Java installed**!
 
@@ -153,7 +156,7 @@ Here is a sub table of contents so you can navigate through this section easily:
 
 #### Windows Commands
 
-invalid commands, list directory, change directory 
+invalid commands, list directory, change directory
 
 ###### [Back to Command Line Interface](#command-line-interface)
 
@@ -205,20 +208,50 @@ list directory, change directory, invalid commands.
 
 Now that Java and PulsePilot is up and running on your computer, it is time to learn how to use PulsePilot via its implemented commands!
 
+
+
+* [PulsePilot Text Style](#pulsepilot-text-style)
 * [Workout](#workout)
   * [Add Run](#add-run)
   * [Add Gym](#add-gym)
+  * [Workout (For Experienced Users)](#workout-experienced-users)
 * [Health](#health)
   * [Add Period](#add-period)
   * [Add BMI](#add-bmi)
   * [Add Appointment](#add-appointment)
   * [Make Period Prediction](#make-period-prediction)
+  * [Health (For Experienced Users)](#health-experienced-users)
 * [View History](#view-history)
 * [View Latest](#view-latest)
 * [Delete Item](#delete-item)
 * [Storage of Data](#storage-of-data)
+* [Exit](#exit)
+
+### PulsePilot Text Style
+
+Our team has colour coded the texts in this guide to help you better understand the commands, as it can get a bit confusing!
+
+> ❗The colours on your own screen may be different, or it may not even be colour-coded at all. The colours are just visual cues for **this guide**!
+
+There are 3 colours used in the guide.
+
+![Colour Coded Text](img_2101/colour_code.png)
+
+- A response is merely a message from the bot.
+- An error indicates that the bot has detected an error when running or in your input, so do read the error messages!
+- Your input represents the command **you** type and press 'Enter' for PulsePilot to use!
+
+
+
+###### [Back to PulsePilot Commands](#back-to-pulsepilot-commands)
+
+###### [Back to table of contents](#table-of-contents)
+
+---
 
 ### Workout
+
+> ⚠️ Skip to the [experienced user section](#workout-experienced-users). For **experienced** users only!
 
 ###### [Back to PulsePilot Commands](#back-to-pulsepilot-commands)
 
@@ -228,6 +261,8 @@ Now that Java and PulsePilot is up and running on your computer, it is time to l
 
 #### Add Run
 
+idiot guide here
+
 ###### [Back to PulsePilot Commands](#back-to-pulsepilot-commands)
 
 ###### [Back to table of contents](#table-of-contents)
@@ -236,9 +271,19 @@ Now that Java and PulsePilot is up and running on your computer, it is time to l
 
 #### Add Gym
 
+idiot guide here.
+
 ###### [Back to PulsePilot Commands](#back-to-pulsepilot-commands)
 
 ###### [Back to table of contents](#table-of-contents)
+
+
+### Workout (Experienced Users)
+
+###### [Back to PulsePilot Commands](#back-to-pulsepilot-commands)
+
+###### [Back to table of contents](#table-of-contents)
+
 
 ---
 
@@ -314,6 +359,14 @@ Now that Java and PulsePilot is up and running on your computer, it is time to l
 
 ---
 
+### Exit
+
+###### [Back to PulsePilot Commands](#back-to-pulsepilot-commands)
+
+###### [Back to table of contents](#table-of-contents)
+
+---
+
 ## Command Summary
 
 Here is a summary of of all the commands and its functions. The table contains examples as well for you to try out!
@@ -347,7 +400,8 @@ Here is a summary of of all the commands and its functions. The table contains e
 | Object-Oriented Programming    | A programming paradigm aiming used to guide the the analysis and structure of solutions by programmers in a specific way. <br> [*Go Back*](#glossary-usage) </br>     |
 | Hyperlinks                     | A reference to data that a user can follow by clicking on, which can point to an entire document or specific part of document. <br>[*Go Back*](#glossary-usage) </br> |
 | Java                     | A programming language that was created to run programs **any operating system**. It was created based on the 'write once, run anywhere' philosophy. <br>[*Go Back*](#glossary-usage) </br> |
-| Command Line Interface                     | A **text-based** interface where users can input commands that interact with a computer. <br>[*Go Back*](#command-line-interface) </br> |
+| Command Line Interface                     | A **text-based** interface where users can input commands to interact with a computer. <br>[*Go Back*](#command-line-interface) </br> |
+| Command                     | A line of text representing an instruction given to the program. <br>[*Go Back*](#command-line-interface) </br> |
 
 
 ###### [Back to table of contents](#table-of-contents)
