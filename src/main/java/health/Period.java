@@ -144,11 +144,11 @@ public class Period extends Health {
 
         long sumOfCycleLengths = 0;
 
-        int startIndexForPrediction = size - HealthConstant.MIN_SIZE_FOR_PREDICTION;
+        int startIndexForPrediction = HealthConstant.LAST_CYCLE_INDEX; // == 1
         assert startIndexForPrediction >= 0 : ErrorConstant.START_INDEX_NEGATIVE_ERROR;
 
-        int endIndexForPrediction = size - HealthConstant.LAST_CYCLE_INDEX_OFFSET;
-        assert endIndexForPrediction >= startIndexForPrediction : ErrorConstant.END_INDEX_GREATER_THAN_START_ERROR;
+        int endIndexForPrediction = HealthConstant.FIRST_CYCLE_INDEX; // == 3
+        assert endIndexForPrediction >= startIndexForPrediction : ErrorConstant.END_INDEX_SMALLER_THAN_START_ERROR;
 
         for (int i = startIndexForPrediction; i <= endIndexForPrediction; i++) {
             sumOfCycleLengths += Objects.requireNonNull(HealthList.getPeriod(i)).cycleLength;

@@ -179,8 +179,8 @@ public class ErrorConstant {
     public static final String EMPTY_APPOINTMENT_LIST_ERROR = "Appointment list is empty.";
     public static final String APPOINTMENT_LIST_UNCLEARED_ERROR = "Appointment list is not cleared.";
     public static final String START_INDEX_NEGATIVE_ERROR = "Start index for prediction must be positive";
-    public static final String END_INDEX_GREATER_THAN_START_ERROR =
-            "End index must be greater than start index is negative";
+    public static final String END_INDEX_SMALLER_THAN_START_ERROR =
+            "End index must be smaller than start index";
     public static final String NULL_DATE_ERROR = "Date of appointment cannot be empty.";
     public static final String NULL_TIME_ERROR = "Time of appointment cannot be empty.";
     public static final String DESCRIPTION_LENGTH_ERROR = "Description cannot be more than 100 characters";

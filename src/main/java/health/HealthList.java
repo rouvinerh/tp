@@ -50,6 +50,7 @@ public class HealthList extends ArrayList<Health> {
     protected void addBmi(Bmi bmi) {
         assert bmi != null : ErrorConstant.NULL_BMI_ERROR;
         BMIS.add(bmi);
+        // bmi sorted from latest to earliest date
         BMIS.sort(Comparator.comparing(Bmi::getDate).reversed());
     }
 
@@ -97,10 +98,12 @@ public class HealthList extends ArrayList<Health> {
     protected void addPeriod(Period period) {
         assert period != null : ErrorConstant.NULL_PERIOD_ERROR;
         if (!PERIODS.isEmpty()) {
-            Period previousPeriod = PERIODS.get(PERIODS.size() - 1);
+            Period previousPeriod = PERIODS.get(0);
             previousPeriod.setCycleLength(period.getStartDate());
         }
         PERIODS.add(period);
+        // period sorted from latest to earliest start date
+        PERIODS.sort(Comparator.comparing(Period::getStartDate).reversed());
     }
 
     /**
@@ -113,8 +116,7 @@ public class HealthList extends ArrayList<Health> {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_PERIOD_EMPTY_ERROR);
         }
         assert !PERIODS.isEmpty() : ErrorConstant.EMPTY_PERIOD_LIST_ERROR;
-        int size = PERIODS.size();
-        System.out.println(PERIODS.get(size - 1));
+        System.out.println(PERIODS.get(0));
     }
 
     //@@author j013n3
@@ -144,12 +146,11 @@ public class HealthList extends ArrayList<Health> {
     public static void printLatestThreeCycles() {
         Output.printLine();
         int size = PERIODS.size();
-        int startIndex = size - HealthConstant.LATEST_THREE_CYCLE_LENGTHS;
+        int startIndex = 0;
+        int endIndex = HealthConstant.LATEST_THREE_CYCLE_LENGTHS;
         assert startIndex >= 0 : ErrorConstant.START_INDEX_NEGATIVE_ERROR;
 
-        int endIndex = size - HealthConstant.LAST_CYCLE_OFFSET;
-
-        for (int i = startIndex; i <= endIndex; i++) {
+        for (int i = startIndex; i < endIndex; i++) {
             System.out.println(PERIODS.get(i));
         }
 
@@ -213,7 +214,7 @@ public class HealthList extends ArrayList<Health> {
     public static LocalDate predictNextPeriodStartDate() {
         assert !PERIODS.isEmpty() : ErrorConstant.EMPTY_PERIOD_LIST_ERROR;
 
-        Period latestPeriod = PERIODS.get(PERIODS.size() - 1);
+        Period latestPeriod = PERIODS.get(0);
         return latestPeriod.nextCyclePrediction();
     }
 
