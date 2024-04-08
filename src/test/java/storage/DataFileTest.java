@@ -251,12 +251,12 @@ public class DataFileTest {
         // Arrange
         String name = "John Doe";
         ArrayList<Bmi> bmiArrayList = new ArrayList<>(Arrays.asList(
-                new Bmi("1.70", "70.00", "01-04-2023"),
-                new Bmi("1.80", "80.00", "15-04-2023")
+                new Bmi("1.80", "80.00", "15-04-2023"),
+                new Bmi("1.70", "70.00", "01-04-2023")
         ));
         ArrayList<Appointment> appointmentArrayList = new ArrayList<>(Arrays.asList(
-                new Appointment("01-05-2023", "10:00", "Dentist Appointment"),
-                new Appointment("15-05-2023", "14:30", "Doctor's Checkup")
+                new Appointment("01-05-2024", "10:00", "Dentist Appointment"),
+                new Appointment("15-05-2024", "14:30", "Doctor's Checkup")
         ));
 
         // Has additional elements added to ArrayList and will thus be skipped
