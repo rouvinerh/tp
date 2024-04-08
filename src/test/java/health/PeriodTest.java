@@ -186,8 +186,9 @@ class PeriodTest {
         String expected = HealthConstant.PREDICTED_START_DATE_MESSAGE
                 + predictedDate
                 + HealthConstant.PERIOD_IS_LATE
-                + "5"
+                + "5 "
                 + HealthConstant.DAYS_MESSAGE
+                + UiConstant.FULL_STOP
                 + System.lineSeparator()
                 + UiConstant.PARTITION_LINE
                 + System.lineSeparator();
@@ -207,8 +208,9 @@ class PeriodTest {
 
         String expected = HealthConstant.PREDICTED_START_DATE_MESSAGE
                 + predictedDate
-                + ", in 10"
+                + ", in 10 "
                 + HealthConstant.DAYS_MESSAGE
+                + UiConstant.FULL_STOP
                 + System.lineSeparator()
                 + UiConstant.PARTITION_LINE
                 + System.lineSeparator();

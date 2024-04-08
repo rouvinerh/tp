@@ -148,15 +148,21 @@ ___
 
 Tracks the start and end of user's menstrual cycle.
 
-Format: `health /h:period /start:START_DATE /end:END_DATE`
+Format: `health /h:period /start:START_DATE [/end:END_DATE]`
 
 * Parameters after `health` can be in any order.
-* `START_DATE` is `DD-MM-YYYY` format (i.e. `19-03-2024`) representing the first day of period flow which is also the first day of the cycle.
-* `END_DATE` is `DD-MM-YYYY` format (i.e. `19-03-2024`) representing the last day of period flow.
+
+* `START_DATE` is `DD-MM-YYYY` format (i.e. `19-03-2024`) representing the first day of period flow which is also the first day of the cycle. This parameter needs to be present at all times (i.e. inputting a new period input or adding in end date).
+
+* `END_DATE` is `DD-MM-YYYY` format (i.e. `19-03-2024`) representing the last day of period flow. This parameter is optional and can be input once the period flow ends. To add an end date, you need to input the correct corresponding start date of the period.
+
+**Warning:** Every period input needs to include a start date and end date before adding a new period input.
+
 
 Examples:
 * `health /h:period /start:09-03-2022 /end:16-03-2022`
 * `health /start:09-03-2022 /end:16-03-2022 /h:period`
+* `health /h:period /start:09-03-2022`
 
 Expected Output:
 
@@ -426,7 +432,7 @@ Note that the errors mentioned above would lead to errors thrown. Any similar sy
 | Add new run   | `workout /e:run /d:DISTANCE /t:TIME [/date:DATE]` Example: `workout /e:run /d:5.24 /t:25:23 /date:19-03-2024`                 |
 | Add gym       | `workout /e:gym /n:NUMBER_OF_STATIONS [/date:DATE]` Example: `workout /e:gym /n:4`                                            |
 | Track BMI     | `health /h:bmi /height:HEIGHT /weight:WEIGHT /date:DATE` Example: `health /h:bmi /height:1.70 /weight:75.42 /date:19-03-2024` |
-| Track Period  | `health /h:period /start:START_DATE /end:END_DATE` Example: `health /h:period /start:09-03-2022 /end:16-03-2022`              |
+| Track Period  | `health /h:period /start:START_DATE [/end:END_DATE]` Example: `health /h:period /start:09-03-2022 /end:16-03-2022`            |
 | View history  | `history /item:TYPE` Example: `history /item:run`                                                                             |
 | View latest   | `latest /item:TYPE` Example: `latest /item:bmi`                                                                               |
 | Deleting item | `delete /item:TYPE /index:INDEX` Example: `delete /item:run /index:1`                                                         |

@@ -41,7 +41,7 @@ public class Output {
         System.out.println("workout /e:run /d:DISTANCE /t:TIME [/date:DATE] - Add a new run");
         System.out.println("workout /e:gym /n:NUMBER_OF_STATIONS [/date:DATE] - Add a new gym workout");
         System.out.println("health /h:bmi /height:HEIGHT /weight:WEIGHT /date:DATE - Add new BMI data");
-        System.out.println("health /h:period /start:START_DATE /end:END_DATE - Add new period data");
+        System.out.println("health /h:period /start:START_DATE [/end:END_DATE] - Add new period data");
         System.out.println("health /h:prediction - Predicts next period's start date");
         System.out.println("health /h:appointment /date:DATE /time:TIME /description:DESCRIPTION" +
                 " - Add new appointment data");
@@ -128,9 +128,23 @@ public class Output {
         System.out.println(HealthConstant.PERIOD_ADDED_MESSAGE_PREFIX
                 + newPeriod.getStartDate()
                 + UiConstant.LINE
-                + newPeriod.getEndDate());
+                + (newPeriod.getEndDate() == null ? ErrorConstant.NO_DATE_SPECIFIED_ERROR : newPeriod.getEndDate()));
         System.out.println(newPeriod);
+        if (newPeriod.getEndDate() != null) {
+            printPeriodWarning(newPeriod);
+        }
         printLine();
+    }
+
+    /**
+     * Prints the message when period length is not within the healthy range.
+     *
+     * @param newPeriod The new Period object added.
+     */
+    public void printPeriodWarning(Period newPeriod) {
+        if (newPeriod.getPeriodLength() < 2 || newPeriod.getPeriodLength() > 9) {
+            System.out.println("\u001b[31m" + HealthConstant.PERIOD_TOO_LONG_MESSAGE + "\u001b[0m");
+        }
     }
 
     /**
