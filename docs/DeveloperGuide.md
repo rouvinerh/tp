@@ -1,6 +1,6 @@
 # Developer Guide
 
-![Logo](puml/sequence_diagrams/img/logo.jpg)
+![Logo](img/logo.jpg)
 
 ## Table of Contents
 
@@ -64,7 +64,7 @@ This part of the guide provides a high-level overview of each package and its cl
 
 The application follows an **Object-Oriented Design** approach, with separate classes for handling different components of the application, such as user input, output, exercise logging, and health data management.
 
-![Architecture Diagram](puml/sequence_diagrams/img/architecture_diagram.png)
+![Architecture Diagram](img/architecture_diagram.png)
 
 The **_Architecture Diagram_** given above explains the high-level design of the PulsePilot.
 
@@ -97,7 +97,7 @@ The main entry point of the application is the `Handler` class, used to determin
 
 The sequence diagram below shows how the application is initialised and processes the user's input using the `Handler` class:
 
-![Handler Sequence Diagram](puml/sequence_diagrams/img/sequence_diagrams/handler_sequence_diagram.png)
+![Handler Sequence Diagram](img/sequence_diagrams/handler_sequence_diagram.png)
 
 There are 3 main components of the `Handler` class, which are the `initialiseBot()`, `processInput()` and `terminateBot()` methods. Their sequence diagrams are shown below:
 
@@ -129,7 +129,7 @@ The `Workout` package is responsible for tracking run and gym workouts from the 
 
 `WorkoutList` is a class that contains the `ArrayList` objects of `Run`, `Gym` and the superclass `Workout`. The class diagram is as follows:
 
-![WorkoutList Class Diagram](puml/sequence_diagrams/img/class_diagrams/workoutlist_class_diagram.png)
+![WorkoutList Class Diagram](img/class_diagrams/workoutlist_class_diagram.png)
 
 The class contains methods to retrieve the different objects. Additionally, it contains the methods for **deleting** an object from the bot, which is used for the `delete` command implementation.
 
@@ -149,7 +149,7 @@ The `clearWorkoutsRunGym()` method is used to clear all the data stored within e
 
 The class diagram for gym is as follows:
 
-![Gym Class Diagram](puml/sequence_diagrams/img/class_diagrams/gym_class_diagram.png)
+![Gym Class Diagram](img/class_diagrams/gym_class_diagram.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -486,11 +486,11 @@ WORKOUT /e:run /d:[distance] /t:[time] /date:[date]
 
 This is the sequence diagram for adding a run:
 
-![Run Sequence Diagram](puml/sequence_diagrams/img/sequence_diagrams/run_sequence_diagram.png)
+![Run Sequence Diagram](img/sequence_diagrams/run_sequence_diagram.png)
 
 `validateRunInput` uses the `Validation` class to check the parameters specified when adding a Run. It follows the sequence diagram below:
 
-![Run Validation Sequence Diagram](puml/sequence_diagrams/img/sequence_diagrams/run_validation_sequence_diagram.png)
+![Run Validation Sequence Diagram](img/sequence_diagrams/run_validation_sequence_diagram.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -531,8 +531,8 @@ Example of Gym Station:
 ##### Gym Sequence
 Below is the sequence diagram for adding a gym and the reference diagram
 <div style="display: flex; ">
-    <img src="puml/sequence_diagrams/img/sequence_diagrams/gym_overall_sequence_diagram.png" alt="Image 1" style="width: 45%;">
-    <img src="puml/sequence_diagrams/img/sequence_diagrams/gym_parse_gym_station_input_sequence_diagram.png" alt="Par" style="width: 55%;">
+    <img src="img/sequence_diagrams/gym_overall_sequence_diagram.png" alt="Image 1" style="width: 45%;">
+    <img src="img/sequence_diagrams/gym_parse_gym_station_input_sequence_diagram.png" alt="Par" style="width: 55%;">
 </div>
 1. User input is passed to `Handler.processInput()`, which determines the command used is `workout`, thus passing the input to `Handler.handleWorkout()`.
 
@@ -591,9 +591,9 @@ The sequence diagram below illustrates the process of period prediction.
 
 8. The `Parser` class calls `Period.printNextCyclePrediction()` with the predicted start date as a parameter. This method prints a string indicating the number of days until the predicted start date of the next period, or how many days late the period is if the current date is after the predicted start date.
 
-![Period Sequence Diagram](puml/sequence_diagrams/img/sequence_diagrams/period_sequence.png)
+![Period Sequence Diagram](img/sequence_diagrams/period_sequence.png)
 
-![Period Validation Diagram](puml/sequence_diagrams/img/sequence_diagrams/period_validation.png)
+![Period Validation Diagram](img/sequence_diagrams/period_validation.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -631,9 +631,9 @@ The sequence diagram below shows how a `Bmi` object is added to `BMIS`.
 
 8. `Output.printAddBmi()` prints `Bmi` string containing height, weight, date, BMI and BMI category to user.
 
-![Bmi Sequence Diagram](puml/sequence_diagrams/img/sequence_diagrams/bmi_sequence.png)
+![Bmi Sequence Diagram](img/sequence_diagrams/bmi_sequence.png)
 
-![Bmi Validation Sequence Diagram](puml/sequence_diagrams/img/sequence_diagrams/bmi_validation.png)
+![Bmi Validation Sequence Diagram](img/sequence_diagrams/bmi_validation.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -667,9 +667,9 @@ HEALTH /h:appointment /date:[date] /time:[time] /description:[description]
 
 6. The `Appointment` object is passed to `Output.printAddAppointment()` and a message acknowledging the successful adding is printed to the screen.
 
-![Appointment Sequence Diagram](puml/sequence_diagrams/img/sequence_diagrams/appointment_sequence.png)
+![Appointment Sequence Diagram](img/sequence_diagrams/appointment_sequence.png)
 
-![Appointment Validation Diagram](puml/sequence_diagrams/img/sequence_diagrams/appointment_validation.png)
+![Appointment Validation Diagram](img/sequence_diagrams/appointment_validation.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -698,7 +698,7 @@ The sequence diagram below illustrates the process of period prediction.
 
 8. The `Parser` class calls `Period.printNextCyclePrediction()` with the predicted start date as a parameter. This method prints a string indicating the number of days until the predicted start date of the next period, or how many days late the period is if the current date is after the predicted start date.
 
-![Prediction Sequence Diagram](puml/sequence_diagrams/img/sequence_diagrams/prediction_sequence_diagram.png)
+![Prediction Sequence Diagram](img/sequence_diagrams/prediction_sequence_diagram.png)
 
 ###### [Back to table of contents](#table-of-contents)
 

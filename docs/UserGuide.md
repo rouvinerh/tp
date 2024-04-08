@@ -1,6 +1,6 @@
 # User Guide
 
-![Logo](puml/sequence_diagrams/img/logo.jpg)
+![Logo](img/logo.jpg)
 
 ## Introduction
 
@@ -38,7 +38,7 @@ PulsePilot is a **desktop app for tracking health-related information, optimised
 
 The bot will prompt you for your name before starting.
 
-![Opening Prompt from PulsePilot](puml/sequence_diagrams/img/output/start_prompt.png)
+![Opening Prompt from PulsePilot](img/output/start_prompt.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -67,7 +67,7 @@ Examples: `workout /e:run /d:5.15 /t:25:03 /date:25-03-2023` OR `workout /e:run 
 
 Expected Output:
 
-![Adding Runs](puml/sequence_diagrams/img/output/adding_runs.png)
+![Adding Runs](img/output/adding_runs.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -108,7 +108,7 @@ Examples 1 :
 Expected Output:
 
 <<<<<<< HEAD
-![Adding Gyms](puml/sequence_diagrams/img/output/adding_gym.png)
+![Adding Gyms](img/output/adding_gym.png)
 =======
 ```
 workout /e:gym /n:2 /date:25-03-2023
@@ -153,7 +153,7 @@ Examples:
 
 Expected Output:
 
-![Adding BMI](puml/sequence_diagrams/img/output/adding_bmi.png)
+![Adding BMI](img/output/adding_bmi.png)
 
 The ranges for BMI are as follows:
 
@@ -183,7 +183,7 @@ Examples:
 
 Expected Output:
 
-![Adding Periods](puml/sequence_diagrams/img/output/adding_period.png)
+![Adding Periods](img/output/adding_period.png)
 
 Predicts user's next period start date. 
 
@@ -194,7 +194,7 @@ Format: `health /h:prediction`
 
 Expected Output:
 
-![Viewing Prediction](puml/sequence_diagrams/img/output/viewing_prediction.png)
+![Viewing Prediction](img/output/viewing_prediction.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -222,7 +222,7 @@ Examples:
 
 Expected Output:
 
-![Adding Appointment](puml/sequence_diagrams/img/output/adding_appointment.png)
+![Adding Appointment](img/output/adding_appointment.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -247,7 +247,7 @@ Examples:
 
 Expected Output:
 
-![Viewing History](puml/sequence_diagrams/img/output/viewing_history.png)
+![Viewing History](img/output/viewing_history.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -270,7 +270,7 @@ Examples:
 
 Expected Output:
 
-![Viewing Latest](puml/sequence_diagrams/img/output/viewing_latest.png)
+![Viewing Latest](img/output/viewing_latest.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -287,7 +287,7 @@ Format: `delete /item:TYPE /index:INDEX`
 
 Expected output:
 
-![Deleting](puml/sequence_diagrams/img/output/deleting.png)
+![Deleting](img/output/deleting.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -299,7 +299,7 @@ Format: `help`
 
 Expected output:
 
-![img.png](puml/sequence_diagrams/img/output/viewing_help.png)
+![img.png](img/output/viewing_help.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -311,7 +311,7 @@ Format: `exit`
 
 Expected Output:
 
-![Exiting Bot](puml/sequence_diagrams/img/output/exit_bot.png)
+![Exiting Bot](img/output/exit_bot.png)
 
 ###### [Back to table of contents](#table-of-contents)
 

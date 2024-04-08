@@ -1,6 +1,6 @@
 # User Guide
 
-![Logo](../puml/sequence_diagrams/img/logo.jpg)
+![Logo](../img/logo.jpg)
 
 ## Introduction
 
