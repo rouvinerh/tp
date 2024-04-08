@@ -157,15 +157,35 @@ Here is a sub table of contents so you can navigate through this section easily:
 
 #### Launching `cmd.exe`
 
-![img.png](img_2101/windows_cmd.png)
+Let us first begin with launching the command line for Windows. The name of this program is `cmd.exe`!
 
-> ❗ This is an **example image**
+To do so, firstly, hit the <kbd>Windows</kbd> key on your keyboard to bring up the start menu:
 
-To launch the **Windows Command Prompt** (also known as `cmd.exe`), you can follow these steps:
+![Windows Start](img_2101/windows/windows_start.png)
 
-1. Open the Windows Start menu
-2. Search for "Command Prompt" or "cmd" and click on the application to open it
-3. The Windows Command Prompt allows you to enter and execute various commands on your Windows operating system.
+Afterwards, type `cmd` or `Command Prompt` into the search bar above, and there should be 1 program found called the '**Command Prompt**'.
+
+![Finding cmd.exe](img_2101/windows/finding_cmd_exe.png)
+
+Go ahead and click on that, and a black screen should pop up on your screen looking like this:
+
+![Launching cmd.exe](img_2101/windows/windows_cmd_exe.png)
+
+Congratulations, you have successfully launched the CLI for Windows!
+
+The string `C:\Users\rouvi` is the current [*directory*](#glossary) that you are in! This means that currently, the CLI is within the `C:\Users\rouvi` folder of the computer.
+
+> ❗ The directory and CLI for you may look different from the one shown in the guide! This is **normal** as the guide was created using a different computer. As long as the top of the window shows '**Command Prompt**', you are good to go!
+
+You can type different things into the CLI, and press <kbd>Enter</kbd> to make your computer read the input and process it as a command.
+
+For the example below,qw I typed a `hello` and hit <kbd>Enter</kbd> to make the compute read it.
+
+![Typing Commands](img_2101/windows/sample_windows_type.png)
+
+`hello` is not a valid command to use with `cmd.exe`, and your computer will let you know it is not a recognised command as shown in the image above.
+
+Read the next section to learn some basic commands!
 
 ###### [Back to Command Line Interface](#command-line-interface)
 
@@ -174,16 +194,45 @@ To launch the **Windows Command Prompt** (also known as `cmd.exe`), you can foll
 ---
 
 #### Windows Commands
-Here are some common Windows commands you can use in the Command Prompt:
 
-* `dir` - Lists the files and [directories](#glossary) in the current directory
-* `cd` <directory> - Changes the current [directory](#glossary) to the specified one
-* `cls` - Clears the screen of the Command Prompt
-* `exit` - Closes the Command Prompt window
+##### Changing Directories
 
-To use the commands, type in the command of interest, followed by <kbd>Spacebar</kbd> and finally the parameter.
+There are many commands in Windows, but this guide will cover the basic few you need to use PulsePilot.
 
-invalid commands, list directory, change directory
+The first command is `cd`, short for **change directory**. It changes the **current** directory to the specified one. The format to use it is `cd <DIRECTORY>`, where `<DIRECTORY>` is something you pick!
+
+For example, suppose I want to go to the `cli_demo` folder from my current directory. I would type the following:
+
+![cd](img_2101/windows/cd.png)
+
+Note how `C:\Users\rouvi` now has `\cli_demo` appended to the back. This means that the directory has been changed successfully.
+
+If you `cd` to a directory that does not exist, your terminal will let you know it cannot find such a directory:
+
+![cd error](img_2101/windows/cd_error.png)
+
+If you want to go 'back' one directory, use `cd ..`.
+
+> 💡 `..` means the previous directory.
+
+![cd ..](img_2101/windows/cd_back.png)
+
+##### Listing Directories
+
+Now, suppose you want to view files a directory has within it. You can use `dir` to do so. 
+
+For example, I want to view what files are within the `cli_demo` folder. I would first `cd` to the `cli_demo` folder, and then use `dir` to view the output:
+
+![cd then dir](img_2101/windows/cd_dir.png)
+
+This would print out all the folders within the directory. In the `cli_demo` directory, I have a `hello.txt` and a `pulsepilot.txt` file. 
+
+I also have another folder within `cli_demo` called `another_directory`. Your computer differentiates between files and directories using the `<DIR>` string printed before the name of the file or folder.
+
+That is all the commands you need to know to navigate through the Windows CLI and use PulsePilot! To summarise:
+
+* `dir` - Lists the files and directories in the current directory.
+* `cd <DIRECTORY>` - Changes the current directory to the specified one.
 
 ###### [Back to Command Line Interface](#command-line-interface)
 
@@ -290,8 +339,6 @@ Now that Java and PulsePilot is up and running on your computer, it is time to l
 
 Our team has colour coded the texts in this guide to help you better understand the commands, as it can get a bit confusing!
 
-> ❗The colours on your own screen may be different, or it may not even be colour-coded at all. The colours are just visual cues for **this guide**!
-
 There are 3 colours used in the guide.
 
 ![Colour Coded Text](img_2101/colour_code.png)
@@ -300,6 +347,10 @@ There are 3 colours used in the guide.
 - An error indicates that the bot has detected an error when running or in your input, so do read the error messages!
 - Your input represents the command **you** type and press 'Enter' for PulsePilot to use!
 
+
+> ❗If you are not seeing colours on your screen, and instead see **odd characters** like `[` or `<-`, please read our [*troubleshooting guide*](#odd-characters-on-screen) for this issue!
+
+> ❗The colours on your own screen may be different, or it may not even be colour-coded at all. The colours are just visual cues for **this guide**!
 
 
 ###### [Back to PulsePilot Commands](#pulsepilot-commands)
@@ -781,17 +832,17 @@ In some instances, the output from an error will result in odd characters being 
 
 ![Colour not rendering](../img/output/colour_render.png)
 
-This issue affects Windows machines. The odd characters are actually special characters used to **display colour** in the terminal. Windows 10 users do not have this enabled by default in their terminals. For Windows 11, these are automatically enabled and hence rendered properly.
+This issue affects Windows machines. The odd characters are actually special characters used to **display colour** in the terminal. **Windows 10 users** do not have this enabled by default. For Windows 11, these are automatically enabled and hence this problem does not occur.
 
-This is what the output is supposed to look like when the same command is used on a Windows 11 machine:
+This is what the output is supposed to look like when the same command is used on a Windows 11 computer:
 
 ![Colour Rendered](../img/output/correct_colour_render.png)
 
-This merely a visual difference, and it does not mean the bot is not working. You can safely ignore this and continue using PulsePilot.
+This merely a visual difference, and it does not mean the bot is not working. **You can safely ignore this and continue using PulsePilot.**
 
 > 💡 These 'special characters' are actually called [ANSI escape sequences](https://en.wikipedia.org/wiki/ANSI_escape_code). If you want to view PulsePilot in colour, please enable them for your Windows computer using [this guide](#https://www.youtube.com/watch?v=HeJOyEw3RtM). **MacOS and Linux users are unaffected!**
 
-###### [Back to PulsePilot Commands](#pulsepilot-commands)
+###### [Back to PulsePilot Text Style](#pulsepilot-text-style)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -811,7 +862,7 @@ This merely a visual difference, and it does not mean the bot is not working. Yo
 | Hyperlinks                  | A reference to data that a user can follow by clicking on, which can point to an entire document or specific part of document. <br>[*Go Back*](#glossary-usage) </br> |
 | Java                        | A programming language that was created to run programs **any operating system**. It was created based on the 'write once, run anywhere' philosophy. <br>[*Go Back*](#glossary-usage) </br> |
 | Command Line Interface      | A **text-based** interface where users can input commands that interact with a computer. <br>[*Go Back*](#command-line-interface) </br> |
-| Directories                 |                                                                                                                                         |
+| Directory / Directories                 |  A folder within your computer that contains other files and files.[*Go Back*](#launching-cmdexe) </br>                                                                                                                                       |
 
 
 ###### [Back to table of contents](#table-of-contents)
