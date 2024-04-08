@@ -264,9 +264,9 @@ public class DataFile {
     }
 
     /**
-     * Processes the user name from the data file.
+     * Processes the username from the data file.
      *
-     * @param name The user name read from the data file.
+     * @param name The username read from the data file.
      */
     public void processName(String name) {
         userName = name.trim();

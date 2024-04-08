@@ -450,4 +450,14 @@ public class Validation {
             throw new CustomExceptions.InvalidInput(ErrorConstant.DATE_IN_FUTURE_ERROR);
         }
     }
+
+    /**
+     * Checks whether the username has only alphanumeric characters and spaces.
+     *
+     * @param name The input name from the user
+     * @return Returns true if it only has alphanumeric characters, otherwise returns false.
+     */
+    public boolean validateUsername (String name) {
+        return name.matches(UiConstant.VALID_USERNAME_REGEX);
+    }
 }

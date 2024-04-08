@@ -206,6 +206,7 @@ public class ErrorConstant {
 
     public static final String ZERO_RUN_TIME_ERROR = "Total time taken for run cannot be 0!";
     public static final String MAX_RUN_TIME_ERROR = "Total time taken for run cannot exceed 100 hours!";
-
+    public static final String INVALID_USERNAME_ERROR = "Username can only contain alphanumeric characters and " +
+            "spaces!";
 
 }
