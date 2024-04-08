@@ -251,7 +251,7 @@ public class Parser {
         String[] periodDetails = splitPeriodInput(userInput);
         validation.validatePeriodInput(periodDetails);
 
-        if (userInput.contains(HealthConstant.START_FLAG) && userInput.contains(HealthConstant.END_FLAG)) {
+        if (userInput.contains(HealthConstant.END_FLAG)) {
             if ((size == 0) || (size > 0
                     && Objects.requireNonNull(HealthList.getPeriod(size-1)).getEndDate() != null)) {
                 Period newPeriod = new Period(
@@ -259,10 +259,11 @@ public class Parser {
                         periodDetails[HealthConstant.PERIOD_END_DATE_INDEX]);
                 output.printAddPeriod(newPeriod);
             } else if (size > 0 && Objects.requireNonNull(HealthList.getPeriod(size-1)).getEndDate() == null) {
-                Objects.requireNonNull(HealthList.getPeriod(size - 1)).updateEndDate(periodDetails[1]);
-                output.printAddPeriod(HealthList.getPeriod(size - 1));
+                Period latestPeriod = Objects.requireNonNull(HealthList.getPeriod(size - 1));
+                latestPeriod.updateEndDate(periodDetails[1]);
+                output.printAddPeriod(latestPeriod);
             }
-        } else if (userInput.contains(HealthConstant.START_FLAG) && !userInput.contains(HealthConstant.END_FLAG)) {
+        } else {
             Period newPeriod = new Period(periodDetails[HealthConstant.PERIOD_START_DATE_INDEX]);
             output.printAddPeriod(newPeriod);
         }

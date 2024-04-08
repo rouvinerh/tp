@@ -74,6 +74,7 @@ public class Period extends Health {
     public void updateEndDate(String stringEndDate) {
         this.endDate = parser.parseDate(stringEndDate);
         this.periodLength = calculatePeriodLength();
+
     }
 
     /**

@@ -63,6 +63,8 @@ public class HealthConstant {
     public static final String PERIOD_ADDED_MESSAGE_PREFIX = "Added: period | ";
     public static final String PERIOD_REMOVED_MESSAGE_PREFIX = "Removed period with index: ";
     public static final String PERIOD_HISTORY_HEADER = "Your Period history:";
+    public static final String PERIOD_TOO_LONG_MESSAGE = "Your period length is out of the healthy range. " +
+            "Please consult a gynaecologist if this persists.";
 
     // PREDICTION
     public static final String PRINT_CYCLE_FORMAT = "Cycle Length: %d days";

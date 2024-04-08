@@ -130,7 +130,19 @@ public class Output {
                 + UiConstant.LINE
                 + (newPeriod.getEndDate() == null ? ErrorConstant.NO_DATE_SPECIFIED_ERROR : newPeriod.getEndDate()));
         System.out.println(newPeriod);
+        printPeriodWarning(newPeriod);
         printLine();
+    }
+
+    /**
+     * Prints the message when period length is not within the healthy range.
+     *
+     * @param newPeriod The new Period object added.
+     */
+    public void printPeriodWarning(Period newPeriod) {
+        if (newPeriod.getPeriodLength() < 2 || newPeriod.getPeriodLength() > 9) {
+            System.out.println("\u001b[31m" + HealthConstant.PERIOD_TOO_LONG_MESSAGE + "\u001b[0m");
+        }
     }
 
     /**
