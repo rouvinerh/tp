@@ -155,8 +155,6 @@ public class HealthList extends ArrayList<Health> {
 
     }
 
-
-
     /**
      * Retrieves the list of periods recorded of ArrayList type.
      *
@@ -315,10 +313,9 @@ public class HealthList extends ArrayList<Health> {
      */
     public static void deleteAppointment(int index) throws CustomExceptions.OutOfBounds {
         assert !APPOINTMENTS.isEmpty() : ErrorConstant.EMPTY_APPOINTMENT_LIST_ERROR;
-        if (index < 1 || index > APPOINTMENTS.size()) {
+        if (index < 0 || index > APPOINTMENTS.size()) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.INVALID_INDEX_DELETE_ERROR);
         }
-        index -= 1;
         Appointment deletedAppointment = APPOINTMENTS.get(index);
         System.out.printf((HealthConstant.LOG_DELETE_APPOINTMENT_FORMAT) + "%n",
                 deletedAppointment.date,
