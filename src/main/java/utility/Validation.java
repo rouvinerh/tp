@@ -8,6 +8,7 @@ import health.HealthList;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -342,6 +343,8 @@ public class Validation {
         }
         validateDateInput(appointmentDetails[HealthConstant.APPOINTMENT_DATE_INDEX]);
         validateTimeInput(appointmentDetails[HealthConstant.APPOINTMENT_TIME_INDEX]);
+        validateDateNotBeforeToday(appointmentDetails[HealthConstant.APPOINTMENT_DATE_INDEX]);
+        validateTimeNotBeforeNow(appointmentDetails[HealthConstant.APPOINTMENT_TIME_INDEX]);
 
         if (appointmentDetails[HealthConstant.APPOINTMENT_DESCRIPTION_INDEX].length()
                 > HealthConstant.MAX_DESCRIPTION_LENGTH) {
@@ -535,6 +538,34 @@ public class Validation {
             if (periodDetails[HealthConstant.PERIOD_END_DATE_INDEX] == null) {
                 throw new CustomExceptions.InvalidInput(ErrorConstant.END_DATE_NOT_FOUND_ERROR );
             }
+        }
+    }
+
+    /**
+     * Validates whether the date specified is before today. Throws an error if it is.
+     *
+     * @param dateString A string representing the date.
+     * @throws CustomExceptions.InvalidInput If the date specified is before today.
+     */
+    public void validateDateNotBeforeToday(String dateString) throws CustomExceptions.InvalidInput {
+        Parser parser = new Parser();
+        LocalDate date = parser.parseDate(dateString);
+        if (date.isBefore(LocalDate.now())) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.DATE_FROM_PAST_ERROR);
+        }
+    }
+
+    /**
+     * Validates whether the time specified is before current. Throws an error if it is.
+     *
+     * @param timeString A string representing the time.
+     * @throws CustomExceptions.InvalidInput If the time specified is before current time.
+     */
+    public void validateTimeNotBeforeNow(String timeString) throws CustomExceptions.InvalidInput {
+        Parser parser = new Parser();
+        LocalTime time = parser.parseTime(timeString);
+        if (time.isBefore(LocalTime.now())) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.TIME_FROM_PAST_ERROR);
         }
     }
 }
