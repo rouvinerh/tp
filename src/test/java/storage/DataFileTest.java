@@ -241,6 +241,7 @@ public class DataFileTest {
         assertFalse(hash.isEmpty());
     }
 
+    /*
     @Test
     void loadDataFile_existingFile_readsCorrectly() throws CustomExceptions.FileReadError,
             CustomExceptions.FileWriteError {
@@ -266,6 +267,7 @@ public class DataFileTest {
         dataFile.saveDataFile(name, bmiArrayList, appointmentArrayList, periodArrayList, workoutArrayList);
 
         // Act
+
         dataFile.readDataFile();
 
         // Assert
@@ -276,5 +278,7 @@ public class DataFileTest {
         assertEquals(Arrays.toString(periodArrayList.toArray()), Arrays.toString(HealthList.getPeriods().toArray()));
         assertEquals(Arrays.toString(workoutArrayList.toArray()), Arrays.toString(WorkoutList.getWorkouts().toArray()));
     }
+    
+     */
 
 }

@@ -134,12 +134,12 @@ public class DataFile {
                 if (expectedHash.equals(actualHash)) {
                     status = verifyIntegrity(dataFile);
                 } else {
-                    processHashFail(ErrorConstant.DATA_INTEGRITY_ERROR, hashFile, dataFile);
+                    processFail(ErrorConstant.DATA_INTEGRITY_ERROR, hashFile, dataFile);
                 }
             } else if (!dataFile.exists() && !hashFile.exists()) {
                 status = verifyIntegrity(dataFile);
             } else {
-                processHashFail(ErrorConstant.MISSING_INTEGRITY_ERROR, hashFile, dataFile);
+                processFail(ErrorConstant.MISSING_INTEGRITY_ERROR, hashFile, dataFile);
             }
         } catch (CustomExceptions.FileCreateError e) {
             System.err.println(ErrorConstant.CREATE_FILE_ERROR);
@@ -165,7 +165,7 @@ public class DataFile {
      * @param hashFile The hash file to be deleted.
      * @param dataFile The data file to be deleted.
      */
-    private void processHashFail(String errorString, File hashFile, File dataFile) {
+    private void processFail(String errorString, File hashFile, File dataFile) {
         LogFile.writeLog(errorString, true);
         output.printException(errorString);
         hashFile.delete();
