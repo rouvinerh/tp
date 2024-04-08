@@ -215,7 +215,9 @@ public class DataFile {
             try {
                 String[] input = readFile.nextLine().split(UiConstant.SPLIT_BY_COLON);
                 String name = input[UiConstant.NAME_INDEX].trim();
+                LogFile.writeLog("Processing Name", false);
                 processName(name);
+                LogFile.writeLog("Name Loaded", false);
 
             } catch (Exception e) {
                 LogFile.writeLog("Data file is missing name, exiting." + e, true);
@@ -229,10 +231,11 @@ public class DataFile {
 
             while (readFile.hasNextLine()) {
                 String rawInput = readFile.nextLine();
+                LogFile.writeLog("Read String: " + rawInput, false);
                 String[] input = rawInput.split(UiConstant.SPLIT_BY_COLON);
-
                 String dataType = input[UiConstant.DATA_TYPE_INDEX].trim();
 
+                LogFile.writeLog("Current DataType:" + dataType, false);
                 DataType filter = DataType.valueOf(dataType);
                 switch (filter) {
 
