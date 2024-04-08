@@ -471,7 +471,6 @@ public class DataFile {
             }
         }
 
-
         // Write each period entry in a specific format
         // period format: period:START:END:DURATION
         if (!periodArrayList.isEmpty()) {

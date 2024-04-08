@@ -146,7 +146,9 @@ public class Validation {
         }
 
         try {
-            if (periodDetails[HealthConstant.PERIOD_END_DATE_INDEX] != null) {
+            if (periodDetails[HealthConstant.PERIOD_END_DATE_INDEX] != null &&
+                    !periodDetails[HealthConstant.PERIOD_END_DATE_INDEX].equals(ErrorConstant.NO_DATE_SPECIFIED_ERROR)){
+
                 validateDateInput(periodDetails[HealthConstant.PERIOD_END_DATE_INDEX]);
             }
         } catch (CustomExceptions.InvalidInput e) {
@@ -174,7 +176,8 @@ public class Validation {
         LocalDate startDate = parser.parseDate(periodDetails[HealthConstant.PERIOD_START_DATE_INDEX]);
 
         //if end date is present, check end date is not after today's date and start date
-        if (periodDetails[HealthConstant.PERIOD_END_DATE_INDEX] != null) {
+        if (periodDetails[HealthConstant.PERIOD_END_DATE_INDEX] != null &&
+                !periodDetails[HealthConstant.PERIOD_END_DATE_INDEX].equals(ErrorConstant.NO_DATE_SPECIFIED_ERROR)) {
             validateDateNotAfterToday(periodDetails[HealthConstant.PERIOD_END_DATE_INDEX]);
             LocalDate endDate = parser.parseDate(periodDetails[HealthConstant.PERIOD_END_DATE_INDEX]);
 
@@ -212,7 +215,7 @@ public class Validation {
         }
 
         if (runDetails[WorkoutConstant.RUN_DATE_INDEX] != null &&
-                !runDetails[WorkoutConstant.GYM_DATE_INDEX].equals("NA")) {
+                !runDetails[WorkoutConstant.GYM_DATE_INDEX].equals(ErrorConstant.NO_DATE_SPECIFIED_ERROR)) {
             validateDateInput(runDetails[WorkoutConstant.RUN_DATE_INDEX]);
             validateDateNotAfterToday(runDetails[WorkoutConstant.RUN_DATE_INDEX]);
         }
@@ -237,7 +240,7 @@ public class Validation {
         }
 
         if (gymDetails[WorkoutConstant.GYM_DATE_INDEX] != null &&
-                !gymDetails[WorkoutConstant.GYM_DATE_INDEX].equals("NA")) {
+                !gymDetails[WorkoutConstant.GYM_DATE_INDEX].equals(ErrorConstant.NO_DATE_SPECIFIED_ERROR)) {
             validateDateInput(gymDetails[WorkoutConstant.GYM_DATE_INDEX]);
             validateDateNotAfterToday(gymDetails[WorkoutConstant.GYM_DATE_INDEX]);
         }
@@ -487,7 +490,7 @@ public class Validation {
      */
     public boolean validateUsername (String name) {
         return name.matches(UiConstant.VALID_USERNAME_REGEX);
-
+    }
 
     /**
      * Validates whether the start date is before or equal to the end date of the latest period in the HealthList.

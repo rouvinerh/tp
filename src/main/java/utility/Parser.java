@@ -672,7 +672,7 @@ public class Parser {
 
         // does initial round of input checking
         String[] gymDetails = splitGymFileInput(input);
-        String [] checkGymDetails = new String[2];
+        String [] checkGymDetails = new String[WorkoutConstant.NUMBER_OF_GYM_PARAMETERS];
         checkGymDetails[0] = gymDetails[1];
         checkGymDetails[1] = gymDetails[2];
         validation.validateGymInput(checkGymDetails);
