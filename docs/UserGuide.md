@@ -10,6 +10,7 @@
 
 * [Quick Start](#quick-start)
 * [Notes About Command Format](#notes-about-command-format)
+* [User Induction](#user-induction)
 * [Commands](#commands)
   * [Workout: Run](#workout-run)
   * [Workout: Gym](#workout-gym)
@@ -62,6 +63,27 @@
 > ⚠️ The order of flags can be changed (for example, `/t: /d:` and `/d: /t:`) **unless mentioned otherwise**.
 
 > ⚠️ Ensure that the syntax is **exactly the same** as provided in the user guide. Avoid using extra characters in the commands, such as blank space, newline, etc.
+
+###### [Back to table of contents](#table-of-contents)
+
+---
+
+## User Induction
+
+1. When you first run the PulsePilot application, the bot will prompt you to enter your `name` to create a new user profile.
+   - Your `name` can only contain **alphanumeric characters (letters and numbers) and spaces**.
+   > ❗ **WARNING:** If you enter a name that does not follow this convention, the bot will display an error message and prompt you to try again.
+
+    ![Non-compliance of naming convention](img/output/wrong_username.png)
+
+2. After entering a valid `name`, the bot will create a new user profile associated with your `name`. 
+This profile will be used to store all your health and workout data. 
+3. Once your user profile is created, you can start using the various commands in PulsePilot to track your progress and health.
+   - You may enter commands after receiving this message prompt:
+     
+      ![Accepting commands](img/output/accepting_commands.png)
+4. All your data will be saved and associated with your user profile
+   - You can continue tracking your information across multiple devices. Find out more [here](#faq).
 
 ###### [Back to table of contents](#table-of-contents)
 
