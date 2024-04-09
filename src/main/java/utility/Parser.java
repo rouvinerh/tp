@@ -25,11 +25,10 @@ import java.util.Scanner;
  * Represents the parser used to parse and split input for PulsePilot.
  */
 public class Parser {
+    //@@author JustinSoh
     private final Scanner in;
     private final Validation validation;
     private final Output output;
-
-
 
     public Parser (Scanner inputScanner){
         in = inputScanner;
@@ -43,6 +42,7 @@ public class Parser {
         output = new Output();
     }
 
+    //@@author rouvinerh
     /**
      * Counts the number of '/' characters there are in a given string.
      *
@@ -78,7 +78,6 @@ public class Parser {
     }
 
     //@@author L5-Z
-
     /**
      * Converts a LocalDate object to a formatted String representation.
      * @param date LocalDate object representing the date.
@@ -99,7 +98,7 @@ public class Parser {
         return date.format(formatter);
     }
 
-    //@@author
+    //@@author syj02
     
     /**
      * Parses and converts String time to a LocalDate variable.
@@ -119,6 +118,7 @@ public class Parser {
         return formattedTime;
     }
 
+    //@@author rouvinerh
     /**
      * Splits user input for Delete command into item and index.
      *
@@ -188,6 +188,7 @@ public class Parser {
         }
     }
 
+    //@@author syj02
     /**
      * Parses input for Bmi command. Adds Bmi object to HealthList if valid.
      *
@@ -206,7 +207,6 @@ public class Parser {
         output.printAddBmi(newBmi);
     }
 
-    //@@author syj02
     /**
      * Split user input for Bmi command, height, weight and date.
      *
@@ -236,7 +236,8 @@ public class Parser {
                 HealthConstant.DATE_FLAG).trim();
         return results;
     }
-    //@@author
+
+    //@@author j013n3
 
     /**
      * Parses input for Period command. Adds Period object to HealthList if valid.
@@ -253,12 +254,12 @@ public class Parser {
 
         if (userInput.contains(HealthConstant.END_FLAG)) {
             if ((size == 0) || (size > 0
-                    && Objects.requireNonNull(HealthList.getPeriod(size-1)).getEndDate() != null)) {
+                    && Objects.requireNonNull(HealthList.getPeriod(size - 1)).getEndDate() != null)) {
                 Period newPeriod = new Period(
                         periodDetails[HealthConstant.PERIOD_START_DATE_INDEX],
                         periodDetails[HealthConstant.PERIOD_END_DATE_INDEX]);
                 output.printAddPeriod(newPeriod);
-            } else if (size > 0 && Objects.requireNonNull(HealthList.getPeriod(size-1)).getEndDate() == null) {
+            } else if (size > 0 && Objects.requireNonNull(HealthList.getPeriod(size - 1)).getEndDate() == null) {
                 Period latestPeriod = Objects.requireNonNull(HealthList.getPeriod(size - 1));
                 latestPeriod.updateEndDate(periodDetails[1]);
                 output.printAddPeriod(latestPeriod);
@@ -302,6 +303,7 @@ public class Parser {
         return results;
     }
 
+
     /**
      * Parses input for Prediction command.
      * Prints period prediction if possible.
@@ -318,6 +320,7 @@ public class Parser {
         }
     }
 
+    //@@author syj02
     /**
      * Split user input into Appointment command, date, time and description.
      *
@@ -420,6 +423,8 @@ public class Parser {
         return results;
     }
 
+    //@@author JustinSoh
+
     /**
      * Parses input for the Gym command. Adds Gym object if valid.
      *
@@ -440,6 +445,8 @@ public class Parser {
         int numberOfStations = Integer.parseInt(gymDetails[WorkoutConstant.GYM_NUMBER_OF_STATIONS_INDEX]);
         parseGymStationInput(numberOfStations, newGym);
     }
+
+    //@@author rouvinerh
 
     /**
      * Splits the user input for adding a run.
@@ -473,6 +480,7 @@ public class Parser {
         return results;
     }
 
+    //@@author JustinSoh
     /**
      * Parses input for the Run command. Adds a Run object if valid.
      *
@@ -670,7 +678,6 @@ public class Parser {
             throws CustomExceptions.InvalidInput,
             CustomExceptions.FileReadError, CustomExceptions.InsufficientInput {
 
-        // does initial round of input checking
         String[] gymDetails = splitGymFileInput(input);
         String [] checkGymDetails = new String[WorkoutConstant.NUMBER_OF_GYM_PARAMETERS];
         checkGymDetails[0] = gymDetails[1];

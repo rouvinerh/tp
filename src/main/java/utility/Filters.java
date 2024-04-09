@@ -3,8 +3,9 @@ package utility;
 /**
  * Class representing the filters used for PulsePilot.
  */
+//@@author L5-Z
 public class Filters {
-    //@@author L5-Z
+
     public enum Command {
         WORKOUT,
         HISTORY,

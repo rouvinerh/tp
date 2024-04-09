@@ -12,6 +12,7 @@ import constants.WorkoutConstant;
  * Represents a Run object.
  */
 public class Run extends Workout {
+    //@@author rouvinerh
     protected Integer[] times;
     protected double distance;
     protected LocalDate date = null;
@@ -174,6 +175,7 @@ public class Run extends Workout {
         int seconds = (int) Math.round(remainingSeconds * UiConstant.NUM_SECONDS_IN_MINUTE);
         return String.format("%d:%02d/km", minutes, seconds);
     }
+    //@@author JustinSoh
 
     /**
      * Retrieves the string representation of a Run object.

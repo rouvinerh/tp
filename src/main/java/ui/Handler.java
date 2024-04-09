@@ -24,13 +24,13 @@ import storage.LogFile;
  */
 public class Handler {
 
+    //@@author JustinSoh
     static LogFile logFile = LogFile.getInstance();
     private final Scanner in;
     private final Parser parser;
     private final DataFile dataFile;
     private final Output output;
     private final Validation validation;
-
 
     public Handler(){
         in = new Scanner(System.in);
@@ -48,7 +48,7 @@ public class Handler {
         validation = new Validation();
     }
 
-
+    //@@author L5-Z
     /**
      * Processes user input and filters for valid command words from enum {@code Command},
      * then creates the relevant object based on details entered.
@@ -137,6 +137,7 @@ public class Handler {
         }
     }
 
+    //@@author rouvinerh
     /**
      * Handles history command.
      * Show history of all exercises, run or gym.
@@ -274,7 +275,7 @@ public class Handler {
         System.out.println("FTL jump completed.");
     }
 
-
+    //@@author JustinSoh
     /**
      * Close scanner to stop reading user input.
      */
@@ -285,6 +286,7 @@ public class Handler {
         }
     }
 
+    //@@author L5-Z
     /**
      * Initializes PulsePilot by printing a welcome message, loading tasks from storage,
      * and returning the tasks list.

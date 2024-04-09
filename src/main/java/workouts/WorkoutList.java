@@ -11,6 +11,7 @@ import java.util.ArrayList;
  * Represents the WorkoutList object.
  */
 public class WorkoutList  {
+    //@@author JustinSoh
     private static final ArrayList<Workout> WORKOUTS = new ArrayList<>();
     private static final ArrayList<Run> RUNS = new ArrayList<>();
     private static final ArrayList<Gym> GYMS = new ArrayList<>();

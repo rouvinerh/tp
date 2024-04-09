@@ -17,6 +17,7 @@ import java.util.Objects;
  */
 public class Validation {
 
+    //@@author JustinSoh
     public Validation(){
 
     }
@@ -70,8 +71,8 @@ public class Validation {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_INDEX_ERROR);
         }
     }
-    // @@author L5-Z
 
+    // @@author L5-Z
     /**
      * Validates whether the filter string is either 'run', 'gym', 'bmi', 'period' or 'appointment'.
      *
@@ -348,7 +349,7 @@ public class Validation {
         }
     }
 
-
+    //@@author JustinSoh
     /**
      * Validates the string for an exercise name, and that it has no special characters.
      * Only alphanumeric and space characters can be in the name.
@@ -357,7 +358,6 @@ public class Validation {
      * @throws CustomExceptions.InvalidInput If the details specified are invalid.
      * @throws CustomExceptions.InsufficientInput If empty strings are used.
      */
-    //@@author JustinSoh
     public void validateExerciseName(String exerciseName) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
         if (exerciseName.isEmpty()) {

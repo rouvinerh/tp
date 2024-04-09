@@ -6,6 +6,7 @@ import storage.LogFile;
  */
 public class CustomExceptions extends Exception {
 
+    //@@author JustinSoh
     /**
      * Prints the error for an OutOfBounds error, and logs it in the log file as an error.
      */
@@ -26,6 +27,7 @@ public class CustomExceptions extends Exception {
         }
     }
 
+    //@@author L5-Z
     /**
      * Prints the error for an FileReadError error, and logs it in the log file as an error.
      */
@@ -56,6 +58,7 @@ public class CustomExceptions extends Exception {
         }
     }
 
+    //@@author JustinSoh
     /**
      * Prints the error for an InsufficientInput error, and logs it in the log file as an error.
      */

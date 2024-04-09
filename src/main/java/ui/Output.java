@@ -24,6 +24,7 @@ import java.util.ArrayList;
  */
 public class Output {
 
+    //@@author L5-Z
     /**
      * Prints a horizontal line.
      */
@@ -63,6 +64,7 @@ public class Output {
         System.out.println("|  |_| | _> (/_|   |  | (_) |_");
     }
 
+    //@@author JustinSoh
     /**
      * Prints the gym station prompt.
      *
@@ -75,7 +77,6 @@ public class Output {
                 + ". (Format: " + WorkoutConstant.STATION_GYM_FORMAT + ")");
         printLine();
     }
-
 
     /**
      * Returns the formatted string for printing runs.
@@ -101,6 +102,7 @@ public class Output {
         printLine();
     }
 
+    //@@author j013n3
     /**
      * Prints the message when a new Bmi is added.
      *
@@ -147,6 +149,7 @@ public class Output {
         }
     }
 
+    //@@author syj02
     /**
      * Prints the message when a new Appointment is added.
      *
@@ -164,6 +167,7 @@ public class Output {
         printLine();
     }
 
+    //@@author JustinSoh
     /**
      * Prints the text header when adding a new Gym.
      *
@@ -270,6 +274,7 @@ public class Output {
         printLine();
     }
 
+    //@@author j013n3
     /**
      * Prints all Bmi objects recorded.
      *
@@ -302,6 +307,7 @@ public class Output {
         printLine();
     }
 
+    //@@author syj02
     /**
      * Prints all Appointment objects recorded.
      *
@@ -318,6 +324,7 @@ public class Output {
         printLine();
     }
 
+    //@@author rouvinerh
     /**
      * Prints the latest Run recorded.
      */
@@ -470,6 +477,7 @@ public class Output {
         }
     }
 
+    //@@author JustinSoh
     /**
      * Prints a specified message and the exception error message.
      *
@@ -479,6 +487,7 @@ public class Output {
         System.err.println("Exception Caught!" + System.lineSeparator() + message);
     }
 
+    //@@author L5-Z
     /**
      * Prints the welcome banner for PulsePilot.
      */

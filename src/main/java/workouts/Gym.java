@@ -13,6 +13,7 @@ import java.util.ArrayList;
  * Represents a Gym object that contains an ArrayList of GymStation objects and an optional date.
  */
 public class Gym extends Workout {
+    //@@author JustinSoh
     protected LocalDate date = null;
     protected ArrayList<GymStation> stations = new ArrayList<>();
     private final Parser parser = new Parser();

@@ -10,6 +10,7 @@ import constants.UiConstant;
 /**
  * Represents a Logfile object used to write information and error logs for PulsePilot.
  */
+//@@ author L5-Z
 public class LogFile {
     protected static FileHandler logFileHandler = null;
     private static LogFile instance = null;
