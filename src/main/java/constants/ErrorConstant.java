@@ -171,7 +171,7 @@ public class ErrorConstant {
             "Enter 'history /item:period' to view existing period inputs.";
 
     // APPOINTMENT ERRORS
-    public static final String INSUFFICIENT_APPOINTMENT_PARAMETERS_ERROR = "Insufficient parameters for period! " +
+    public static final String INSUFFICIENT_APPOINTMENT_PARAMETERS_ERROR = "Insufficient parameters for appointment! " +
             "Example input: /h:appointment /date:date /time:time /description:description /place:place"
             + System.lineSeparator()
             + "Only input what is required! Additional characters between flags will cause errors.";
@@ -179,13 +179,15 @@ public class ErrorConstant {
     public static final String EMPTY_APPOINTMENT_LIST_ERROR = "Appointment list is empty.";
     public static final String APPOINTMENT_LIST_UNCLEARED_ERROR = "Appointment list is not cleared.";
     public static final String START_INDEX_NEGATIVE_ERROR = "Start index for prediction must be positive";
-    public static final String END_INDEX_GREATER_THAN_START_ERROR =
-            "End index must be greater than start index is negative";
+    public static final String END_INDEX_SMALLER_THAN_START_ERROR =
+            "End index must be smaller than start index";
     public static final String NULL_DATE_ERROR = "Date of appointment cannot be empty.";
     public static final String NULL_TIME_ERROR = "Time of appointment cannot be empty.";
     public static final String DESCRIPTION_LENGTH_ERROR = "Description cannot be more than 100 characters";
     public static final String INVALID_DESCRIPTION_ERROR = "Appointment description can only " +
             "contain alphanumeric characters, spaces, inverted commas and quotes!";
+    public static final String DATE_FROM_PAST_ERROR = "Date specified cannot be earlier than today's date.";
+    public static final String TIME_FROM_PAST_ERROR = "Time specified cannot be earlier than current time.";
 
     public static final String INVALID_HISTORY_FILTER_ERROR = "Missing/invalid filter used!" +
             System.lineSeparator() +

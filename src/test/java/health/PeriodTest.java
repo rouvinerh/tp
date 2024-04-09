@@ -86,8 +86,17 @@ class PeriodTest {
         Period secondPeriod = new Period("09-05-2023", "16-05-2023");
 
         String expected = "Your Period history:"
-                + System.lineSeparator() +
-                "Period Start: "
+                + System.lineSeparator()
+                + "1. Period Start: "
+                + secondPeriod.getStartDate()
+                + " Period End: "
+                + secondPeriod.getEndDate()
+                + System.lineSeparator()
+                + "Period Length: "
+                + secondPeriod.getPeriodLength()
+                + " days"
+                + System.lineSeparator()
+                + "2. Period Start: "
                 + firstPeriod.getStartDate()
                 + " Period End: "
                 + firstPeriod.getEndDate()
@@ -98,15 +107,6 @@ class PeriodTest {
                 + System.lineSeparator()
                 + "Cycle Length: "
                 + firstPeriod.cycleLength
-                + " days"
-                + System.lineSeparator()
-                + "Period Start: "
-                + secondPeriod.getStartDate()
-                + " Period End: "
-                + secondPeriod.getEndDate()
-                + System.lineSeparator()
-                + "Period Length: "
-                + secondPeriod.getPeriodLength()
                 + " days"
                 + System.lineSeparator();
 
@@ -157,18 +157,14 @@ class PeriodTest {
      * correct predicted start date.
      */
     @Test
-    void predictNextPeriodStartDate_sufficientInputs_printCorrectPredictedDate() {
-        Period firstPeriod = new Period("09-01-2024", "16-01-2024");
-        Period secondPeriod = new Period("10-02-2024", "16-02-2024");
-        Period thirdPeriod = new Period("09-03-2024", "14-03-2024");
-        Period fourthPeriod = new Period("09-04-2024", "16-04-2024");
+    void predictNextPeriodStartDate_sufficientInputs_printCorrectPredictedDate() throws CustomExceptions.OutOfBounds{
         HealthList healthList = new HealthList();
-        healthList.addPeriod(firstPeriod);
-        healthList.addPeriod(secondPeriod);
-        healthList.addPeriod(thirdPeriod);
-        healthList.addPeriod(fourthPeriod);
+        Period firstPeriod = new Period("09-12-2023", "16-12-2023");
+        Period secondPeriod = new Period("09-01-2024", "16-01-2024");
+        Period thirdPeriod = new Period("10-02-2024", "16-02-2024");
+        Period fourthPeriod = new Period("09-03-2024", "14-03-2024");
 
-        long expectedCycleLength = (32 + 28 + 31) / HealthConstant.LATEST_THREE_CYCLE_LENGTHS;
+        long expectedCycleLength = (31+ 32 + 28) / HealthConstant.LATEST_THREE_CYCLE_LENGTHS;
         LocalDate expected = fourthPeriod.getStartDate().plusDays(expectedCycleLength);
         LocalDate result = HealthList.predictNextPeriodStartDate();
         assertEquals(expected, result);
@@ -225,30 +221,21 @@ class PeriodTest {
      */
     @Test
     void printLatestThreeCycles_fourInputs_printsThreePeriodObjectsOnly() {
+        HealthList healthList = new HealthList();
         Period firstPeriod = new Period("09-01-2024", "16-01-2024");
         Period secondPeriod = new Period("10-02-2024", "16-02-2024");
         Period thirdPeriod = new Period("09-03-2024", "14-03-2024");
         Period fourthPeriod = new Period("09-04-2024", "16-04-2024");
 
-        HealthList healthList = new HealthList();
-        healthList.addPeriod(firstPeriod);
-        healthList.addPeriod(secondPeriod);
-        healthList.addPeriod(thirdPeriod);
-        healthList.addPeriod(fourthPeriod);
-
         String expected = UiConstant.PARTITION_LINE
                 + System.lineSeparator()
                 + "Period Start: "
-                + secondPeriod.getStartDate()
+                + fourthPeriod.getStartDate()
                 + " Period End: "
-                + secondPeriod.getEndDate()
+                + fourthPeriod.getEndDate()
                 + System.lineSeparator()
                 + "Period Length: "
-                + secondPeriod.getPeriodLength()
-                + " days"
-                + System.lineSeparator()
-                + "Cycle Length: "
-                + secondPeriod.cycleLength
+                + fourthPeriod.getPeriodLength()
                 + " days"
                 + System.lineSeparator()
                 + "Period Start: "
@@ -265,12 +252,16 @@ class PeriodTest {
                 + " days"
                 + System.lineSeparator()
                 + "Period Start: "
-                + fourthPeriod.getStartDate()
+                + secondPeriod.getStartDate()
                 + " Period End: "
-                + fourthPeriod.getEndDate()
+                + secondPeriod.getEndDate()
                 + System.lineSeparator()
                 + "Period Length: "
-                + fourthPeriod.getPeriodLength()
+                + secondPeriod.getPeriodLength()
+                + " days"
+                + System.lineSeparator()
+                + "Cycle Length: "
+                + secondPeriod.cycleLength
                 + " days"
                 + System.lineSeparator();
 

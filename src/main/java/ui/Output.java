@@ -142,7 +142,7 @@ public class Output {
      * @param newPeriod The new Period object added.
      */
     public void printPeriodWarning(Period newPeriod) {
-        if (newPeriod.getPeriodLength() < 2 || newPeriod.getPeriodLength() > 9) {
+        if (newPeriod.getPeriodLength() < 2 || newPeriod.getPeriodLength() > 7) {
             System.out.println("\u001b[31m" + HealthConstant.PERIOD_TOO_LONG_MESSAGE + "\u001b[0m");
         }
     }
@@ -383,10 +383,10 @@ public class Output {
     /**
      * Prints the latest Appointment entry recorded.
      */
-    protected void printLatestAppointment(){
+    protected void printEarliestAppointment(){
         printLine();
         try {
-            HealthList.showLatestAppointment();
+            HealthList.showEarliestAppointment();
         } catch (CustomExceptions.OutOfBounds e) {
             System.out.println(e.getMessage());
         }
@@ -419,7 +419,7 @@ public class Output {
                 break;
 
             case APPOINTMENT:
-                printLatestAppointment();
+                printEarliestAppointment();
                 break;
 
             default:

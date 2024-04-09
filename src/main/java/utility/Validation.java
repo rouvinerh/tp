@@ -8,6 +8,7 @@ import health.HealthList;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -161,10 +162,10 @@ public class Validation {
         //if period list is not empty
         if (sizeOfPeriodList >= UiConstant.MINIMUM_PERIOD_COUNT) {
             LocalDate latestPeriodEndDate =
-                    Objects.requireNonNull(HealthList.getPeriod(sizeOfPeriodList - 1)).getEndDate();
+                    Objects.requireNonNull(HealthList.getPeriod(0)).getEndDate(); // index of latest period == 0
             //checks if new input's start date tallies with the existing latest start date or end date is not empty
             validateStartDatesTally(periodDetails[HealthConstant.PERIOD_START_DATE_INDEX],
-                    sizeOfPeriodList, latestPeriodEndDate, periodDetails);
+                    latestPeriodEndDate, periodDetails);
             //checks if start date is after the latest period input in list
             validateDateAfterLatestPeriodInput(
                     periodDetails[HealthConstant.PERIOD_START_DATE_INDEX], latestPeriodEndDate);
@@ -342,6 +343,8 @@ public class Validation {
         }
         validateDateInput(appointmentDetails[HealthConstant.APPOINTMENT_DATE_INDEX]);
         validateTimeInput(appointmentDetails[HealthConstant.APPOINTMENT_TIME_INDEX]);
+        validateDateNotBeforeToday(appointmentDetails[HealthConstant.APPOINTMENT_DATE_INDEX]);
+        validateTimeNotBeforeNow(appointmentDetails[HealthConstant.APPOINTMENT_TIME_INDEX]);
 
         if (appointmentDetails[HealthConstant.APPOINTMENT_DESCRIPTION_INDEX].length()
                 > HealthConstant.MAX_DESCRIPTION_LENGTH) {
@@ -515,18 +518,17 @@ public class Validation {
      * and checks if end date exists.
      *
      * @param dateString          The string representation of the start date to be validated.
-     * @param sizeOfPeriodList    The size of the period list in the HealthList.
      * @param latestPeriodEndDate The end date of the latest period in the HealthList.
      * @param periodDetails       An array containing details of the current period input.
      * @throws CustomExceptions.InvalidInput If the start date does not match the start date of the latest period
      *                                        or if insufficient parameters are provided.
      */
-    public void validateStartDatesTally(String dateString, int sizeOfPeriodList, LocalDate latestPeriodEndDate,
+    public void validateStartDatesTally(String dateString, LocalDate latestPeriodEndDate,
                                                String[] periodDetails) throws CustomExceptions.InvalidInput {
         Parser parser = new Parser();
         LocalDate date = parser.parseDate(dateString);
         LocalDate latestPeriodStartDate =
-                Objects.requireNonNull(HealthList.getPeriod(sizeOfPeriodList - 1)).getStartDate();
+                Objects.requireNonNull(HealthList.getPeriod(0)).getStartDate(); // index of latest period == 0
 
         if (latestPeriodEndDate == null) {
             if (!date.equals(latestPeriodStartDate)) {
@@ -535,6 +537,34 @@ public class Validation {
             if (periodDetails[HealthConstant.PERIOD_END_DATE_INDEX] == null) {
                 throw new CustomExceptions.InvalidInput(ErrorConstant.END_DATE_NOT_FOUND_ERROR );
             }
+        }
+    }
+
+    /**
+     * Validates whether the date specified is before today. Throws an error if it is.
+     *
+     * @param dateString A string representing the date.
+     * @throws CustomExceptions.InvalidInput If the date specified is before today.
+     */
+    public void validateDateNotBeforeToday(String dateString) throws CustomExceptions.InvalidInput {
+        Parser parser = new Parser();
+        LocalDate date = parser.parseDate(dateString);
+        if (date.isBefore(LocalDate.now())) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.DATE_FROM_PAST_ERROR);
+        }
+    }
+
+    /**
+     * Validates whether the time specified is before current. Throws an error if it is.
+     *
+     * @param timeString A string representing the time.
+     * @throws CustomExceptions.InvalidInput If the time specified is before current time.
+     */
+    public void validateTimeNotBeforeNow(String timeString) throws CustomExceptions.InvalidInput {
+        Parser parser = new Parser();
+        LocalTime time = parser.parseTime(timeString);
+        if (time.isBefore(LocalTime.now())) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.TIME_FROM_PAST_ERROR);
         }
     }
 }

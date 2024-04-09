@@ -259,16 +259,16 @@ class OutputTest {
      * Tests the behaviour of the printLatestAppointment function when two Appointment objects are added.
      */
     @Test
-    void printLatestAppointment_twoAppointments_expectOneAppointmentPrinted() {
-        Appointment firstAppointment = new Appointment("29-03-2024", "17:00", "test");
+    void printEarliestAppointment_twoAppointments_expectOneAppointmentPrinted() {
+        Appointment firstAppointment = new Appointment("29-03-2025", "17:00", "test");
         Appointment secondAppointment = new Appointment("24-01-2026", "12:00", "test2");
 
 
         Output output = new Output();
-        output.printLatestAppointment();
+        output.printEarliestAppointment();
         String expected = UiConstant.PARTITION_LINE +
                 System.lineSeparator() +
-                "On 2026-01-24 at 12:00: test2" +
+                "On 2025-03-29 at 17:00: test" +
                 System.lineSeparator() +
                 UiConstant.PARTITION_LINE +
                 System.lineSeparator();
@@ -320,16 +320,17 @@ class OutputTest {
                 System.lineSeparator() +
                 "Your Period history:" +
                 System.lineSeparator() +
-                "Period Start: 2023-02-09 Period End: 2023-02-16" +
+                "1. Period Start: 2023-03-09 Period End: 2023-03-16" +
+                System.lineSeparator() +
+                "Period Length: 8 days" +
+                System.lineSeparator() +
+                "2. Period Start: 2023-02-09 Period End: 2023-02-16" +
                 System.lineSeparator() +
                 "Period Length: 8 days" +
                 System.lineSeparator() +
                 "Cycle Length: 28 days" +
                 System.lineSeparator() +
-                "Period Start: 2023-03-09 Period End: 2023-03-16" +
-                System.lineSeparator() +
-                "Period Length: 8 days" +
-                System.lineSeparator() +
+
                 UiConstant.PARTITION_LINE +
                 System.lineSeparator();
 
@@ -351,15 +352,15 @@ class OutputTest {
                 System.lineSeparator() +
                 "Your BMI history:" +
                 System.lineSeparator() +
-                "2024-03-18" +
+                "1. 2024-03-20" +
                 System.lineSeparator() +
-                "Your BMI is 22.86" +
+                "Your BMI is 22.89" +
                 System.lineSeparator() +
                 "Great! You're within normal range." +
                 System.lineSeparator() +
-                "2024-03-20" +
+                "2. 2024-03-18" +
                 System.lineSeparator() +
-                "Your BMI is 22.89" +
+                "Your BMI is 22.86" +
                 System.lineSeparator() +
                 "Great! You're within normal range." +
                 System.lineSeparator() +

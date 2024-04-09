@@ -69,6 +69,8 @@ public class HealthConstant {
     // PREDICTION
     public static final String PRINT_CYCLE_FORMAT = "Cycle Length: %d days";
     public static final Integer LATEST_THREE_CYCLE_LENGTHS = 3;
+    public static final Integer FIRST_CYCLE_INDEX = 3;
+    public static final Integer LAST_CYCLE_INDEX = 1;
     public static final Integer LAST_CYCLE_INDEX_OFFSET = 2;
     public static final Integer LAST_CYCLE_OFFSET = 1;
     public static final Integer MIN_SIZE_FOR_PREDICTION = 4;

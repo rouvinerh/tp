@@ -70,11 +70,11 @@ public class AppointmentTest {
 
 
         String expected = "Removed appointment on "
-                + secondAppointment.getDate()
+                + firstAppointment.getDate()
                 + " at "
-                + secondAppointment.getTime()
+                + firstAppointment.getTime()
                 + ": "
-                + secondAppointment.getDescription()
+                + firstAppointment.getDescription()
                 + System.lineSeparator()
                 + "Your Appointment history:"
                 + System.lineSeparator()
@@ -86,11 +86,11 @@ public class AppointmentTest {
                 + thirdAppointment.getDescription()
                 + System.lineSeparator()
                 + "2. On "
-                + firstAppointment.getDate()
+                + secondAppointment.getDate()
                 + " at "
-                + firstAppointment.getTime()
+                + secondAppointment.getTime()
                 + ": "
-                + firstAppointment.getDescription()
+                + secondAppointment.getDescription()
                 + System.lineSeparator();
 
         HealthList.deleteAppointment(2);

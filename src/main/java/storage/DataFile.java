@@ -332,10 +332,9 @@ public class DataFile {
         String height = input[1].trim(); // height
         String weight = input[2].trim(); // weight
         String date = input[4].trim();// skip 3, bmi score, 4 is date
-        System.out.println(date);
         String[] checkBmiInput = {height, weight, date};
         validation.validateBmiInput(checkBmiInput);
-        Bmi bmi = new Bmi(height, weight, date);
+        new Bmi(height, weight, date);
     }
 
     /**
