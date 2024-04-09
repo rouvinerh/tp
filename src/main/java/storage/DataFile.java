@@ -284,7 +284,7 @@ public class DataFile {
      * @param name The username read from the data file.
      */
     public void processName(String name) throws CustomExceptions.InvalidInput {
-        if (!validation.validateUsername(name)) {
+        if (validation.validateIfUsernameIsValid(name)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_USERNAME_ERROR);
         }
         userName = name.trim();
@@ -399,7 +399,6 @@ public class DataFile {
             writeWorkoutData(dataFile, workoutArrayList);
 
             LogFile.writeLog("Write end", false);
-            dataFile.close();
 
         } catch (IOException e) {
             throw new CustomExceptions.FileWriteError(ErrorConstant.SAVE_ERROR);
@@ -411,7 +410,6 @@ public class DataFile {
             writeHashToFile(hashFile, generateFileHash(dataFile));
 
             LogFile.writeLog("Write end", false);
-            hashFile.close();
 
         } catch (IOException | NoSuchAlgorithmException e) {
             throw new CustomExceptions.FileWriteError(ErrorConstant.SAVE_ERROR);

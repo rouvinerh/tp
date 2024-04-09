@@ -71,8 +71,6 @@ public class HealthConstant {
     public static final Integer LATEST_THREE_CYCLE_LENGTHS = 3;
     public static final Integer FIRST_CYCLE_INDEX = 3;
     public static final Integer LAST_CYCLE_INDEX = 1;
-    public static final Integer LAST_CYCLE_INDEX_OFFSET = 2;
-    public static final Integer LAST_CYCLE_OFFSET = 1;
     public static final Integer MIN_SIZE_FOR_PREDICTION = 4;
     public static final String PREDICTED_START_DATE_MESSAGE = "Your next cycle's predicted start date is ";
     public static final String COUNT_DAYS_MESSAGE = ", in ";

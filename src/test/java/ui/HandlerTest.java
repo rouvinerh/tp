@@ -12,7 +12,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -38,22 +37,6 @@ class HandlerTest {
         System.setErr(originalErr);
         WorkoutList.clearWorkoutsRunGym();
         HealthList.clearHealthLists();
-    }
-
-    /**
-     * Checks whether the Scanner has been closed after each JUnit test to prevent overwriting of test input for each
-     * test.
-     *
-     * @param in Scanner object from Handler.
-     * @return True if the scanner is closed. Otherwise, return false.
-     */
-    public static boolean isScannerClosed(Scanner in) {
-        try {
-            in.hasNext();
-            return false;
-        } catch (IllegalStateException e) {
-            return true;
-        }
     }
 
     /**
@@ -150,9 +133,10 @@ class HandlerTest {
         String input = "INVALID";
         Handler myHandler = new Handler(input);
         myHandler.processInput();
-        String expected = "Exception Caught!" +
+        String expected = "\u001b[31mException Caught!" +
                 System.lineSeparator() +
                 ErrorConstant.INVALID_COMMAND_ERROR +
+                "\u001b[0m" +
                 System.lineSeparator();
         assertEquals(expected, errContent.toString());
     }

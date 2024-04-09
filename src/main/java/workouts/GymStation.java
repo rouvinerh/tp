@@ -8,6 +8,7 @@ import java.util.ArrayList;
  * Represents a GymStation object.
  */
 public class GymStation {
+    //@@author JustinSoh
     protected String stationName;
     protected ArrayList<GymSet> sets = new ArrayList<>();
     protected int numberOfSets;

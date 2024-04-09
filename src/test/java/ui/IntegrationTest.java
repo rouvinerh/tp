@@ -36,7 +36,6 @@ public class IntegrationTest {
     private static final PrintStream originalOut = System.out;
     private static final PrintStream originalErr = System.err;
 
-    private Handler handler;
     @BeforeAll
     public static void setUpStreams() {
         System.setIn(inContent);

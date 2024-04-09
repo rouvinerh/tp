@@ -8,6 +8,7 @@ import health.Appointment;
 import health.Bmi;
 import health.HealthList;
 import health.Period;
+import storage.LogFile;
 import ui.Output;
 
 import workouts.Gym;
@@ -25,11 +26,10 @@ import java.util.Scanner;
  * Represents the parser used to parse and split input for PulsePilot.
  */
 public class Parser {
+    //@@author JustinSoh
     private final Scanner in;
     private final Validation validation;
     private final Output output;
-
-
 
     public Parser (Scanner inputScanner){
         in = inputScanner;
@@ -43,6 +43,7 @@ public class Parser {
         output = new Output();
     }
 
+    //@@author rouvinerh
     /**
      * Counts the number of '/' characters there are in a given string.
      *
@@ -78,7 +79,6 @@ public class Parser {
     }
 
     //@@author L5-Z
-
     /**
      * Converts a LocalDate object to a formatted String representation.
      * @param date LocalDate object representing the date.
@@ -99,7 +99,7 @@ public class Parser {
         return date.format(formatter);
     }
 
-    //@@author
+    //@@author syj02
     
     /**
      * Parses and converts String time to a LocalDate variable.
@@ -119,6 +119,7 @@ public class Parser {
         return formattedTime;
     }
 
+    //@@author rouvinerh
     /**
      * Splits user input for Delete command into item and index.
      *
@@ -188,6 +189,7 @@ public class Parser {
         }
     }
 
+    //@@author syj02
     /**
      * Parses input for Bmi command. Adds Bmi object to HealthList if valid.
      *
@@ -204,9 +206,9 @@ public class Parser {
                 bmiDetails[HealthConstant.BMI_WEIGHT_INDEX],
                 bmiDetails[HealthConstant.BMI_DATE_INDEX]);
         output.printAddBmi(newBmi);
+        LogFile.writeLog("Added BMI", false);
     }
 
-    //@@author syj02
     /**
      * Split user input for Bmi command, height, weight and date.
      *
@@ -236,7 +238,8 @@ public class Parser {
                 HealthConstant.DATE_FLAG).trim();
         return results;
     }
-    //@@author
+
+    //@@author j013n3
 
     /**
      * Parses input for Period command. Adds Period object to HealthList if valid.
@@ -253,19 +256,22 @@ public class Parser {
 
         if (userInput.contains(HealthConstant.END_FLAG)) {
             if ((size == 0) || (size > 0
-                    && Objects.requireNonNull(HealthList.getPeriod(size-1)).getEndDate() != null)) {
+                    && Objects.requireNonNull(HealthList.getPeriod(size - 1)).getEndDate() != null)) {
                 Period newPeriod = new Period(
                         periodDetails[HealthConstant.PERIOD_START_DATE_INDEX],
                         periodDetails[HealthConstant.PERIOD_END_DATE_INDEX]);
                 output.printAddPeriod(newPeriod);
-            } else if (size > 0 && Objects.requireNonNull(HealthList.getPeriod(size-1)).getEndDate() == null) {
+                LogFile.writeLog("Added Period", false);
+            } else if (size > 0 && Objects.requireNonNull(HealthList.getPeriod(size - 1)).getEndDate() == null) {
                 Period latestPeriod = Objects.requireNonNull(HealthList.getPeriod(size - 1));
                 latestPeriod.updateEndDate(periodDetails[1]);
                 output.printAddPeriod(latestPeriod);
+                LogFile.writeLog("Added Period", false);
             }
         } else {
             Period newPeriod = new Period(periodDetails[HealthConstant.PERIOD_START_DATE_INDEX]);
             output.printAddPeriod(newPeriod);
+            LogFile.writeLog("Added Period", false);
         }
     }
 
@@ -302,6 +308,7 @@ public class Parser {
         return results;
     }
 
+
     /**
      * Parses input for Prediction command.
      * Prints period prediction if possible.
@@ -313,11 +320,13 @@ public class Parser {
             HealthList.printLatestThreeCycles();
             LocalDate nextPeriodStartDate = HealthList.predictNextPeriodStartDate();
             Period.printNextCyclePrediction(nextPeriodStartDate);
+            LogFile.writeLog("Used prediction", false);
         } else {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.UNABLE_TO_MAKE_PREDICTIONS_ERROR);
         }
     }
 
+    //@@author syj02
     /**
      * Split user input into Appointment command, date, time and description.
      *
@@ -362,8 +371,8 @@ public class Parser {
                 appointmentDetails[HealthConstant.APPOINTMENT_DATE_INDEX],
                 appointmentDetails[HealthConstant.APPOINTMENT_TIME_INDEX],
                 appointmentDetails[HealthConstant.APPOINTMENT_DESCRIPTION_INDEX]);
-
         output.printAddAppointment(newAppointment);
+        LogFile.writeLog("Added appointment", false);
     }
 
     //@@author L5-Z
@@ -420,6 +429,8 @@ public class Parser {
         return results;
     }
 
+    //@@author JustinSoh
+
     /**
      * Parses input for the Gym command. Adds Gym object if valid.
      *
@@ -437,9 +448,12 @@ public class Parser {
         } else {
             newGym = new Gym(gymDetails[WorkoutConstant.GYM_DATE_INDEX]);
         }
+
         int numberOfStations = Integer.parseInt(gymDetails[WorkoutConstant.GYM_NUMBER_OF_STATIONS_INDEX]);
         parseGymStationInput(numberOfStations, newGym);
     }
+
+    //@@author rouvinerh
 
     /**
      * Splits the user input for adding a run.
@@ -473,6 +487,7 @@ public class Parser {
         return results;
     }
 
+    //@@author JustinSoh
     /**
      * Parses input for the Run command. Adds a Run object if valid.
      *
@@ -496,6 +511,7 @@ public class Parser {
                     runDetails[WorkoutConstant.RUN_DATE_INDEX]);
         }
         output.printAddRun(newRun);
+        LogFile.writeLog("Added Run", false);
     }
 
     /**
@@ -524,11 +540,14 @@ public class Parser {
                 gym.addStation(validGymStationInput[WorkoutConstant.GYM_STATION_NAME_INDEX], numberOfSets,
                         numberOfRepetitions, weightsArray);
                 i++;
+                LogFile.writeLog("Added Gym Station: " +
+                        validGymStationInput[WorkoutConstant.GYM_STATION_NAME_INDEX], false);
             } catch (CustomExceptions.InsufficientInput | CustomExceptions.InvalidInput e) {
                 output.printException(e.getMessage());
             }
         }
         output.printAddGym(gym);
+        LogFile.writeLog("Added Gym", false);
     }
 
     //@@author L5-Z
@@ -632,7 +651,7 @@ public class Parser {
             throw new CustomExceptions.FileReadError(ErrorConstant.INVALID_GYM_STATION_NAME_ERROR);
         }
 
-        if (!currentStationName.matches(UiConstant.VALID_EXERCISE_NAME_REGEX)) {
+        if (!currentStationName.matches(UiConstant.VALID_GYM_STATION_NAME_REGEX)) {
             throw new CustomExceptions.FileReadError(ErrorConstant.INVALID_GYM_STATION_NAME_ERROR);
         }
 
@@ -670,7 +689,6 @@ public class Parser {
             throws CustomExceptions.InvalidInput,
             CustomExceptions.FileReadError, CustomExceptions.InsufficientInput {
 
-        // does initial round of input checking
         String[] gymDetails = splitGymFileInput(input);
         String [] checkGymDetails = new String[WorkoutConstant.NUMBER_OF_GYM_PARAMETERS];
         checkGymDetails[0] = gymDetails[1];

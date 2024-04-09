@@ -24,14 +24,14 @@ public class WorkoutConstant {
     public static final int NUMBER_OF_PARTS_FOR_RUN_TIME = 2;
     public static final int NUMBER_OF_PARTS_FOR_RUN_TIME_WITH_HOURS = 3;
     public static final int MAX_GYM_STATION_NAME_LENGTH = 40;
-    public static final int MIN_WEIGHT = 0;
+    public static final double MIN_GYM_WEIGHT = 0.000;
     public static final double MAX_RUN_DISTANCE = 5000.00;
     public static final double MIN_RUN_DISTANCE = 0;
     public static final double MAX_PACE = 30;
     public static final double MIN_PACE = 1;
     public static final double MIN_RUN_TIME_IN_SECONDS = 0;
     public static final double MAX_RUN_TIME_IN_SECONDS = 360000; // 99:59:59 in seconds
-
+    public static final double MAX_GYM_WEIGHT = 2850.000;
     public static final double WEIGHT_MULTIPLE = 0.125;
 
     // INDEX

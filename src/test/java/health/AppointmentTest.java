@@ -1,5 +1,6 @@
 package health;
 
+import constants.UiConstant;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -69,12 +70,16 @@ public class AppointmentTest {
         Appointment thirdAppointment = new Appointment("22-03-2024", "11:00", "Doctor consultation");
 
 
-        String expected = "Removed appointment on "
+        String expected = UiConstant.PARTITION_LINE
+                + System.lineSeparator()
+                + "Removed appointment on "
                 + firstAppointment.getDate()
                 + " at "
                 + firstAppointment.getTime()
                 + ": "
                 + firstAppointment.getDescription()
+                + System.lineSeparator()
+                + UiConstant.PARTITION_LINE
                 + System.lineSeparator()
                 + "Your Appointment history:"
                 + System.lineSeparator()

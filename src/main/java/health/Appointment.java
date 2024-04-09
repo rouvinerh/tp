@@ -65,6 +65,7 @@ public class Appointment extends Health {
         return this.time;
     }
 
+    //@@author syj02
     /**
      * Retrieves the description of the appointment of String type.
      *

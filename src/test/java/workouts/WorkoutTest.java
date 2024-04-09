@@ -1,5 +1,0 @@
-package workouts;
-
-class WorkoutTest {
-
-}

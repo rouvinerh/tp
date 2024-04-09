@@ -1,10 +1,12 @@
+//@@author L5-Z
 package utility;
 
 /**
  * Class representing the filters used for PulsePilot.
  */
+
 public class Filters {
-    //@@author L5-Z
+
     public enum Command {
         WORKOUT,
         HISTORY,
@@ -14,7 +16,7 @@ public class Filters {
         HELP,
         EXIT
     }
-    //@@author
+
     public enum DeleteFilters {
         RUN,
         GYM,
@@ -44,7 +46,6 @@ public class Filters {
         WORKOUTS
     }
 
-    //@@author L5-Z
     public enum DataType {
         BMI,
         APPOINTMENT,

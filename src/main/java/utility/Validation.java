@@ -8,7 +8,6 @@ import health.HealthList;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -17,9 +16,11 @@ import java.util.Objects;
  */
 public class Validation {
 
+    //@@author JustinSoh
     public Validation(){
 
     }
+    // @@author rouvinerh
     /**
      * Validates that the input date string is correctly formatted in DD-MM-YYYY.
      *
@@ -70,6 +71,7 @@ public class Validation {
         }
     }
 
+    // @@author L5-Z
     /**
      * Validates whether the filter string is either 'run', 'gym', 'bmi', 'period' or 'appointment'.
      *
@@ -90,6 +92,7 @@ public class Validation {
                 + ErrorConstant.CORRECT_FILTER_ITEM_FORMAT);
     }
 
+    // @@author j013n3
     /**
      * Validates Bmi details entered.
      *
@@ -147,9 +150,7 @@ public class Validation {
         }
 
         try {
-            if (periodDetails[HealthConstant.PERIOD_END_DATE_INDEX] != null &&
-                    !periodDetails[HealthConstant.PERIOD_END_DATE_INDEX].equals(ErrorConstant.NO_DATE_SPECIFIED_ERROR)){
-
+            if (validateDateNotEmpty(periodDetails[HealthConstant.PERIOD_END_DATE_INDEX])) {
                 validateDateInput(periodDetails[HealthConstant.PERIOD_END_DATE_INDEX]);
             }
         } catch (CustomExceptions.InvalidInput e) {
@@ -158,27 +159,20 @@ public class Validation {
         }
 
         int sizeOfPeriodList = HealthList.getPeriodsSize();
-
-        //if period list is not empty
         if (sizeOfPeriodList >= UiConstant.MINIMUM_PERIOD_COUNT) {
-            LocalDate latestPeriodEndDate =
-                    Objects.requireNonNull(HealthList.getPeriod(0)).getEndDate(); // index of latest period == 0
-            //checks if new input's start date tallies with the existing latest start date or end date is not empty
+            LocalDate latestPeriodEndDate = Objects.requireNonNull(HealthList.getPeriod(0)).getEndDate();
+
             validateStartDatesTally(periodDetails[HealthConstant.PERIOD_START_DATE_INDEX],
                     latestPeriodEndDate, periodDetails);
-            //checks if start date is after the latest period input in list
             validateDateAfterLatestPeriodInput(
                     periodDetails[HealthConstant.PERIOD_START_DATE_INDEX], latestPeriodEndDate);
         }
-
         validateDateNotAfterToday(periodDetails[HealthConstant.PERIOD_START_DATE_INDEX]);
 
         Parser parser = new Parser();
         LocalDate startDate = parser.parseDate(periodDetails[HealthConstant.PERIOD_START_DATE_INDEX]);
 
-        //if end date is present, check end date is not after today's date and start date
-        if (periodDetails[HealthConstant.PERIOD_END_DATE_INDEX] != null &&
-                !periodDetails[HealthConstant.PERIOD_END_DATE_INDEX].equals(ErrorConstant.NO_DATE_SPECIFIED_ERROR)) {
+        if (validateDateNotEmpty(periodDetails[HealthConstant.PERIOD_END_DATE_INDEX])) {
             validateDateNotAfterToday(periodDetails[HealthConstant.PERIOD_END_DATE_INDEX]);
             LocalDate endDate = parser.parseDate(periodDetails[HealthConstant.PERIOD_END_DATE_INDEX]);
 
@@ -215,8 +209,7 @@ public class Validation {
             throw new CustomExceptions.InvalidInput(ErrorConstant.ZERO_DISTANCE_ERROR);
         }
 
-        if (runDetails[WorkoutConstant.RUN_DATE_INDEX] != null &&
-                !runDetails[WorkoutConstant.GYM_DATE_INDEX].equals(ErrorConstant.NO_DATE_SPECIFIED_ERROR)) {
+        if (validateDateNotEmpty(runDetails[WorkoutConstant.RUN_DATE_INDEX])) {
             validateDateInput(runDetails[WorkoutConstant.RUN_DATE_INDEX]);
             validateDateNotAfterToday(runDetails[WorkoutConstant.RUN_DATE_INDEX]);
         }
@@ -240,14 +233,13 @@ public class Validation {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_NUMBER_OF_STATIONS_ERROR);
         }
 
-        if (gymDetails[WorkoutConstant.GYM_DATE_INDEX] != null &&
-                !gymDetails[WorkoutConstant.GYM_DATE_INDEX].equals(ErrorConstant.NO_DATE_SPECIFIED_ERROR)) {
+        if (validateDateNotEmpty(gymDetails[WorkoutConstant.GYM_DATE_INDEX])) {
             validateDateInput(gymDetails[WorkoutConstant.GYM_DATE_INDEX]);
             validateDateNotAfterToday(gymDetails[WorkoutConstant.GYM_DATE_INDEX]);
         }
     }
 
-    //@@author
+    //@@author rouvinerh
 
     /**
      * Validates the time used in HH:MM format.
@@ -327,7 +319,7 @@ public class Validation {
             throw new CustomExceptions.InvalidInput(ErrorConstant.ZERO_TIME_ERROR);
         }
     }
-    //@@author
+    //@@author syj02
     /**
      * Validates Appointment details entered.
      *
@@ -343,8 +335,6 @@ public class Validation {
         }
         validateDateInput(appointmentDetails[HealthConstant.APPOINTMENT_DATE_INDEX]);
         validateTimeInput(appointmentDetails[HealthConstant.APPOINTMENT_TIME_INDEX]);
-        validateDateNotBeforeToday(appointmentDetails[HealthConstant.APPOINTMENT_DATE_INDEX]);
-        validateTimeNotBeforeNow(appointmentDetails[HealthConstant.APPOINTMENT_TIME_INDEX]);
 
         if (appointmentDetails[HealthConstant.APPOINTMENT_DESCRIPTION_INDEX].length()
                 > HealthConstant.MAX_DESCRIPTION_LENGTH) {
@@ -356,7 +346,7 @@ public class Validation {
         }
     }
 
-
+    //@@author JustinSoh
     /**
      * Validates the string for an exercise name, and that it has no special characters.
      * Only alphanumeric and space characters can be in the name.
@@ -365,13 +355,12 @@ public class Validation {
      * @throws CustomExceptions.InvalidInput If the details specified are invalid.
      * @throws CustomExceptions.InsufficientInput If empty strings are used.
      */
-    //@@author JustinSoh
     public void validateExerciseName(String exerciseName) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
         if (exerciseName.isEmpty()) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.EMPTY_GYM_STATION_NAME_ERROR);
         }
-        if (!exerciseName.matches(UiConstant.VALID_EXERCISE_NAME_REGEX)) {
+        if (!exerciseName.matches(UiConstant.VALID_GYM_STATION_NAME_REGEX)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_GYM_STATION_NAME_ERROR);
         }
 
@@ -394,9 +383,14 @@ public class Validation {
         try {
             for(String weight: weightsArray){
                 double weightDouble = Double.parseDouble(weight);
-                if (weightDouble < WorkoutConstant.MIN_WEIGHT){
+                if (weightDouble < WorkoutConstant.MIN_GYM_WEIGHT){
                     throw new CustomExceptions.InvalidInput(ErrorConstant.GYM_WEIGHT_POSITIVE_ERROR);
                 }
+
+                if (weightDouble >= WorkoutConstant.MAX_GYM_WEIGHT) {
+                    throw new CustomExceptions.InvalidInput(ErrorConstant.MAX_GYM_WEIGHT_ERROR);
+                }
+
                 if (weightDouble % WorkoutConstant.WEIGHT_MULTIPLE != 0 ){
                     throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_WEIGHT_VALUE_ERROR);
                 }
@@ -491,10 +485,21 @@ public class Validation {
      * @param name The input name from the user
      * @return Returns true if it only has alphanumeric characters, otherwise returns false.
      */
-    public boolean validateUsername (String name) {
-        return name.matches(UiConstant.VALID_USERNAME_REGEX);
+    public boolean validateIfUsernameIsValid(String name) {
+        return !name.matches(UiConstant.VALID_USERNAME_REGEX);
     }
 
+    /**
+     * Checks whether date is set to {@code null} or 'NA'. Both cases mean date is not specified.
+     *
+     * @param date The date string to check
+     * @return Returns true if date is specified, otherwise returns false.
+     */
+    public boolean validateDateNotEmpty (String date) {
+        return date != null && !date.equals("NA");
+    }
+
+    //@@author j013n3
     /**
      * Validates whether the start date is before or equal to the end date of the latest period in the HealthList.
      * Throws an error if it is.
@@ -537,34 +542,6 @@ public class Validation {
             if (periodDetails[HealthConstant.PERIOD_END_DATE_INDEX] == null) {
                 throw new CustomExceptions.InvalidInput(ErrorConstant.END_DATE_NOT_FOUND_ERROR );
             }
-        }
-    }
-
-    /**
-     * Validates whether the date specified is before today. Throws an error if it is.
-     *
-     * @param dateString A string representing the date.
-     * @throws CustomExceptions.InvalidInput If the date specified is before today.
-     */
-    public void validateDateNotBeforeToday(String dateString) throws CustomExceptions.InvalidInput {
-        Parser parser = new Parser();
-        LocalDate date = parser.parseDate(dateString);
-        if (date.isBefore(LocalDate.now())) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.DATE_FROM_PAST_ERROR);
-        }
-    }
-
-    /**
-     * Validates whether the time specified is before current. Throws an error if it is.
-     *
-     * @param timeString A string representing the time.
-     * @throws CustomExceptions.InvalidInput If the time specified is before current time.
-     */
-    public void validateTimeNotBeforeNow(String timeString) throws CustomExceptions.InvalidInput {
-        Parser parser = new Parser();
-        LocalTime time = parser.parseTime(timeString);
-        if (time.isBefore(LocalTime.now())) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.TIME_FROM_PAST_ERROR);
         }
     }
 }

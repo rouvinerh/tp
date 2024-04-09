@@ -10,6 +10,7 @@ import constants.UiConstant;
 /**
  * Represents a Logfile object used to write information and error logs for PulsePilot.
  */
+//@@ author L5-Z
 public class LogFile {
     protected static FileHandler logFileHandler = null;
     private static LogFile instance = null;
@@ -61,7 +62,7 @@ public class LogFile {
      */
     public static void writeLog(String input, boolean isError) {
         if (isError) {
-            logger.log(Level.WARNING, "Error: " + input);
+            logger.log(Level.WARNING, input);
         } else {
             logger.log(Level.INFO, input);
         }

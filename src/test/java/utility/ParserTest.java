@@ -87,7 +87,7 @@ class ParserTest {
         String input = "/h:bmi /height:1.71 /date:19-03-2024";
         assertThrows(CustomExceptions.InsufficientInput.class, () -> parser.splitBmiInput(input));
     }
-    //@@author
+
 
     /**
      * Tests the behaviour of a correctly formatted string being passed into splitPeriod.
@@ -112,6 +112,7 @@ class ParserTest {
         assertThrows(CustomExceptions.InsufficientInput.class, () -> parser.splitPeriodInput(input));
     }
 
+    //@@author syj02
     /**
      * Tests the behaviour of a correctly formatted string being passed into splitAppointment.
      * Expects no exception to be thrown.
@@ -135,6 +136,7 @@ class ParserTest {
         assertThrows(CustomExceptions.InsufficientInput.class, () -> parser.splitAppointmentDetails(input));
     }
 
+    //@@author rouvinerh
     /**
      * Tests the behaviour of a correctly formatted string being
      * passed into parseHistoryAndLatestInput.
@@ -158,6 +160,7 @@ class ParserTest {
         assertEquals(parser.parseDeleteInput(input), null);
     }
 
+    //@@author JustinSoh
     /**
      * Tests the behaviour of a correctly formatted string without
      * dates being passed to splitGymInput.
@@ -201,6 +204,7 @@ class ParserTest {
                 parser.splitGymInput(input));
     }
 
+    //@@author rouvinerh
     /**
      * Tests the behaviour of a correctly formatted string without
      * dates being passed to splitGymInput.
@@ -257,6 +261,7 @@ class ParserTest {
         assertEquals(expected, result);
     }
 
+    //@@author JustinSoh
     @Test
     void parseGymFileInput_correctInput_returnsGymObject() {
         String input = "gym:2:11-11-1997:bench press:4:10:10,20,30,40:squats:2:5:20,30";

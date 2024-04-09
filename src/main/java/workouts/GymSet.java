@@ -6,6 +6,7 @@ import constants.WorkoutConstant;
  * Represents a GymSet object.
  */
 public class GymSet {
+    //@@author JustinSoh
     private double weight;
     private int numberOfRepetitions;
 

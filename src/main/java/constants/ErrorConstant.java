@@ -30,7 +30,8 @@ public class ErrorConstant {
             + "Number of weights doesn't match number of sets";
 
     // Input Errors
-    public static final String INVALID_COMMAND_ERROR = "Invalid command. Enter 'help' to view available commands.";
+    public static final String INVALID_COMMAND_ERROR = "Invalid command. Enter 'help' to view " +
+            "available commands.";
     public static final String NO_DATE_SPECIFIED_ERROR = "NA";
     public static final String INVALID_ITEM_ERROR = "Invalid item specified.";
     public static final String CORRECT_FILTER_ITEM_FORMAT = "/item:run/gym/workouts/bmi/period/appointment";
@@ -65,7 +66,7 @@ public class ErrorConstant {
             "either a run or a gym first";
     public static final String HISTORY_APPOINTMENT_EMPTY_ERROR = "No appointments found! You need to add an " +
             "appointment first";
-    public static final String HISTORY_BMI_EMPTY_ERROR = "No bmis found! You need to add a bmi first!";
+    public static final String HISTORY_BMI_EMPTY_ERROR = "No BMI entries found! You need to add an entry first!";
     public static final String HISTORY_PERIOD_EMPTY_ERROR = "No periods found! You need to add a period first!";
 
     // RUN ERRORS
@@ -186,8 +187,8 @@ public class ErrorConstant {
     public static final String DESCRIPTION_LENGTH_ERROR = "Description cannot be more than 100 characters";
     public static final String INVALID_DESCRIPTION_ERROR = "Appointment description can only " +
             "contain alphanumeric characters, spaces, inverted commas and quotes!";
-    public static final String DATE_FROM_PAST_ERROR = "Date specified cannot be earlier than today's date.";
-    public static final String TIME_FROM_PAST_ERROR = "Time specified cannot be earlier than current time.";
+    public static final String INVALID_APPOINTMENT_DATE_TIME_ERROR = "Date and time specified for appointment cannot " +
+            "be earlier than current date and time.";
 
     public static final String INVALID_HISTORY_FILTER_ERROR = "Missing/invalid filter used!" +
             System.lineSeparator() +
@@ -213,6 +214,10 @@ public class ErrorConstant {
             + System.lineSeparator()
             + "Please enter a more realistic weight less than 640kg!";
 
+    public static final String MAX_GYM_WEIGHT_ERROR = "The heaviest object ever lifted by a human (Paul Anderson) " +
+            "was 2840kg."
+            + System.lineSeparator()
+            + "Please enter a more realistic gym weight less than 2850kg!";
     public static final String ZERO_DISTANCE_ERROR = "Distance run cannot be 0!";
     public static final String ZERO_TIME_ERROR = "Time cannot be set to 00:00!";
     public static final String MAX_PACE_ERROR = "The calculated pace is too slow!"
@@ -220,7 +225,7 @@ public class ErrorConstant {
             + "Pace calculated cannot be slower than 30:00/km!";
     public static final String MIN_PACE_ERROR = "The calculated pace is too fast!"
             + System.lineSeparator()
-            + "Pace calculacted cannot be faster than 1:00/km!";
+            + "Pace calculated cannot be faster than 1:00/km!";
 
     public static final String ZERO_RUN_TIME_ERROR = "Total time taken for run cannot be 0!";
     public static final String MAX_RUN_TIME_ERROR = "Total time taken for run cannot exceed 100 hours!";

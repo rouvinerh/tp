@@ -6,6 +6,7 @@ import utility.Parser;
  * Represents a Workout object for PulsePilot.
  */
 public class Workout {
+    //@@author JustinSoh
     protected LocalDate date = null;
     private Parser parser;
 
