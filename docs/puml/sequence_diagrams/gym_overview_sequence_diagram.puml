@@ -1,63 +1,59 @@
 @startuml
 skinparam sequenceReferenceBackgroundColor lightblue
-actor User
-participant Handler as Handler << Class >>
-participant Parser as Parser << Class >>
-participant Gym as Gym 
-participant ":WorkoutList" as WorkoutList
 
-User -> Handler: userInput
-activate Handler #FFBBBB
-Handler -> Handler : processInput()
-activate Handler #Salmon
-Handler -> Handler : handleWorkout()
+participant "handler:Handler" as Handler
+participant "parser:Parser" as Parser
+participant "validation:Validation" as Validation
+participant "newGym:Gym" as Run
+participant "workoutList:WorkoutList" as WorkoutList
 
-activate Handler #DarkSalmon
-Handler -> Parser  : extractSubstringFromSpecificIndex()
-activate Parser  #FFBBBB
-Parser  --> Handler : typeOfWorkout:String
-deactivate Parser  #FFBBBB
+Handler -> Parser: parseGymInput()
+activate Handler #salmon
+activate Parser #salmon
 
-Handler -> Parser : parseGymInput()
-activate Parser  #FFBBBB
-Parser -> Parser : splitGymInput()
-activate Parser #Salmon
-Parser --> Parser : gymDetails
-deactivate Parser #Salmon
-ref over Parser: validateGymInput
-alt #LightBlue date exists
-    create Gym
-    Parser -> Gym : new(date)
-    activate Gym #Salmon
-    Gym -> WorkoutList : addGym()
-    activate WorkoutList #FFBBBB
-    WorkoutList -> WorkoutList : addWorkout()
-    activate WorkoutList #Salmon
-    WorkoutList --> WorkoutList
-    deactivate WorkoutList #Salmon
-    WorkoutList --> Gym #FFBBBB
-    deactivate WorkoutList #FFBBBB
-    Gym --> Parser
-    deactivate Gym #Salmon
-
-else #LightPink date does not exist
-    create Gym
-    Parser -> Gym : new()
-     activate Gym #Salmon
-    Gym -> WorkoutList : addGym()
-    activate WorkoutList #FFBBBB
-    WorkoutList -> WorkoutList : addWorkout()
-    activate WorkoutList #Salmon
-    WorkoutList --> WorkoutList
-    deactivate WorkoutList #Salmon
-    WorkoutList --> Gym #FFBBBB
-    deactivate WorkoutList #FFBBBB
-    Gym --> Parser
-    deactivate Gym #Salmon
-end
-ref over Parser : parseGymStationInput()
-Parser --> Handler 
+Parser -> Parser: splitGymInput()
+activate Parser #FFBBBB
+Parser --> Parser: gymDetails[]
 deactivate Parser #FFBBBB
-destroy Gym
-@enduml
 
+Parser -> Validation: validateGymInput()
+activate Validation #FFBBBB
+ref over Validation: validateGymInput 
+Validation --> Parser: 
+deactivate Validation
+
+Parser -> Run **: new
+activate Run #FFBBBB   
+Run -> WorkoutList **: new
+activate WorkoutList #FFBBBB
+WorkoutList --> Run:
+deactivate WorkoutList #FFBBBB
+
+alt date is present
+    Run -> WorkoutList: addGym(date)
+    activate WorkoutList #FFBBBB
+    WorkoutList -> WorkoutList: addWorkout(date)
+    activate WorkoutList #DarkSalmon
+    WorkoutList --> WorkoutList:
+    deactivate WorkoutList #DarkSalmon
+    WorkoutList --> Run:
+    deactivate WorkoutList #FFBBBB
+ 
+else date is not present
+    Run -> WorkoutList: addGym()
+    activate WorkoutList #FFBBBB
+    WorkoutList -> WorkoutList: addWorkout()
+    activate WorkoutList #DarkSalmon
+    WorkoutList --> WorkoutList:
+    deactivate WorkoutList #DarkSalmon
+    WorkoutList --> Run:
+    deactivate WorkoutList #FFBBBB
+end
+
+Parser -> Parser: parseGymStationInput()
+activate Parser #FFBBBB
+ref over Parser: parseGymStationInput
+Parser --> Parser:
+deactivate Parser #FFBBBB
+
+@enduml

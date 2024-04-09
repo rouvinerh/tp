@@ -7,16 +7,15 @@
 * [Acknowledgements](#acknowledgements)
 * [Introduction](#introduction)
 * [Design](#design)
-* [Commands and Implementation](#commands-and-implementation)
-* [Appendix: Requirements](#appendix-requirements)
+* [Implementation of Commands](#commands-and-implementation)
+* [Appendix: DG Requirements](#appendix-requirements)
 * [Appendix: Manual Testing](#appendix-manual-testing)
-* [Frequently Asked Questions](#frequently-asked-questions)
 
 ---
 
 ## Acknowledgements
 
-Our team has referenced [Address Book (Level-3)](https://github.com/se-edu/addressbook-level3) referenced for their [User Guide (UG)](https://se-education.org/addressbook-level3/UserGuide.html) and [Developer Guide (DG)](https://se-education.org/addressbook-level3/DeveloperGuide.html) to better structure our own Developer Guide.
+Our team has referenced [Address Book (Level-3)](https://github.com/se-edu/addressbook-level3) and used their [Developer Guide (DG)](https://se-education.org/addressbook-level3/DeveloperGuide.html) to better structure our own Developer Guide.
 
 ---
 
@@ -138,7 +137,7 @@ The sequence diagram is as follows:
 
 The `Output` class is responsible for printing messages, prompts, errors and other information to the terminal for the user.
 
-The class diagram for `Output` has been omitted as it does not value-add to the guide, since a developer can read the code to gain a better understanding of `Output.`
+The class diagram for `Output` has been omitted as it does not value-add to the guide, since a developer can read the code itself to gain a better understanding of `Output.`
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -383,7 +382,7 @@ The specific usage of `Parser` is covered below in the commands section of this 
 
 The `Validation` class is responsible for validating the user's split input. The split input comes from the `Parser` class in `String[]` variables. Each variable is then checked using regex to ensure that it follows the requirements needed, and that the values are within the stipulated ranges.
 
-The specific usage of `Validation` is covered below for each command.
+The specific usage of `Validation` is covered below for the implementation of each command via sequence diagrams.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -420,8 +419,6 @@ This is represented as enumerations. Attempts to use an invalid filter results i
 ### Storage Package
 
 `Storage` contains `DataFile` and `LogFile`. This component handles all logging of commands used and writing of data stored within PulsePilot to an external data file. The reading of the data file is also done here.
-
-{Include `Storage` class diagram}
 
 The Storage component consists of LogFile and DataFile.
 
@@ -464,6 +461,8 @@ The constants are broken down into the following 4 classes:
 
 ## Commands and Implementation
 
+**NOTE**: Not all methods are fully explained here, as any developer can read the source code to find out all the specifics. This helps to keep the guide shorter and easier to read. For example, `extractSubstringFromSpecificIndex()` is mentioned, but its implementation is not covered.
+
 * [Workout](#workout)
     * [Add Run](#add-run)
     * [Add Gym](#add-gym)
@@ -479,37 +478,57 @@ The constants are broken down into the following 4 classes:
 
 ### Workout
 
+User input is passed to `Handler.processInput()`, which determines the command used is `workout`. The input is then passed to `Handler.handleWorkout()` as shown in the `Handler` architecture above. It is then split into either 'run' or 'gym' commands.
+
 #### Add Run
 
-Command Format: <code style="color: #D85D43;">WORKOUT /e:run /d:[distance] /t:[time] /date:[date]</code>
+Command Format: `WORKOUT /e:run /d:[distance] /t:[time] /date:[date]`
 
-- `[distance]` is a 2 **decimal place positive number** representing the number of kilometers covered.
-- `[time]` is in `HH:MM:SS` or `MM:SS` format with positive integers, representing the amount of time taken for the run.
-    - If the time taken is **25 minutes and 20 seconds**: Use `25:20`.
-    - If the time taken is **1 hour, 20 minutes and 30 seconds**: Use `01:20:30`.
-- `[date]` is in `DD-MM-YYYY` format. **THIS IS AN OPTIONAL PARAMETER**.
+**The date parameter is made optional**.
 
-##### Run Sequence
+The user's input is processed to add a run as follows:
 
-1. User input is passed to `Handler.processInput()`, which determines the command used is `workout`, thus passing the input to `Handler.handleWorkout()`.
+1. `Handler.handleWorkout()` determines the type of exercise which is `run`, and calls the `Parser.parseRunInput()` method to process the user's run input.
 
-2. `Handler.handleWorkout()` determines the type of exercise which is `run`, and calls the `Parser.parseRunInput()` method to process the user's input.
+2. `Parser.parseRunInput()` splits the input using `Parser.splitRunInput()`. Parameters are extracted using `extractSubstringFromSpecificIndex()` using the different flags.
+    - `splitRunInput()` checks whether all required flags like `/d:` and `/t:` are present, and if there are excess `/` characters specified. 
+        - If flags are not present, `InsufficientInput` exception is thrown.
+        - If too many `/` are present, `InvalidInput` exception is thrown.
+    - Method also extracts the `date` parameter if present.
+    - The method then returns a `String[]` variable with the required parameters extracted from the user input.
 
-3. `Parser.parseRunInput()` splits the input using `Parser.splitRunInput()`. It then validates each input using `Validation.validateRunInput()`.
-    - `CustomExceptions.InsufficientInput` is thrown if either not enough parameters are specified or blank parameters are found.
-    - `CustomExceptions.InvalidInput` is thrown if the parameters passed in are invalid and do not follow the stipulated format.
+3. `Validation.validateRunInput()` is called to validate each parameter. Once valid, correct parameters are used to construct a new `Run` object.
 
-4. If valid, a new `Run` object is created with the split user input.
+4. The `Run` constructor adds the newly created object into `WorkoutList.WORKOUTS` and `WorkoutList.RUNS`.  Total run time is converted to seconds for calculation of pace.
+    - If `totalSeconds <= 0` or `totalSeconds >= 360000`, `InvalidInput` exception is thrown.
+    - If `pace < 1:00/km` or `pace > 30:00/km`, `InvalidInput` exception is thrown.
 
-5. The `Run` constructor adds the newly created object into `WorkoutList.WORKOUTS` and `WorkoutList.RUNS`.
+5. The `Run` object is passed to `Output.printAddRun()` and a message acknowledging the successful adding is printed to the screen.
 
-6. The `Run` object is passed to `Output.printAddRun()` and a message acknowledging the successful adding is printed to the screen.
-
-This is the sequence diagram for adding a run:
+This is the sequence diagram for adding a run from `parseRunInput()`: 
 
 ![Run Sequence Diagram](img/sequence_diagrams/run_sequence_diagram.png)
 
-`validateRunInput` uses the `Validation` class to check the parameters specified when adding a Run. It follows the sequence diagram below:
+`validateRunInput` uses the `Validation` class to check the parameters specified when adding a Run. In specific, it checks the following:
+
+1. Whether the parameters contain empty strings via `isEmptyParameterPresent()`.
+    - If empty strings are present within the parameters, return `false`. Otherwise, return `true`.
+
+2. Whether run time specified is valid via `validateRunTimeInput()`.
+    - If time specified has invalid format or values, `validateRunTimeInput()` throws an `InvalidInput` exception.
+
+
+3. Checks whether distance is a valid 2dp number via regex. Then, checks whether its value is more than 5000.00, or less than or equals to 0.00.
+    - If invalid, `InvalidInput` exception is thrown.
+
+4. Checks whether date is set to `null` or `"NA"`, since date parameter is optional via `validateDateNotEmpty()`. If present, returns `true`. Otherwise, returns `false`.
+    - If date is present, check whether date is valid via `validateDateInput()`. Then, check whether date is in the future or not via `validateDateNotAfterToday()`.
+        - If date is found to be invalid, throw `InvalidInput` exception.
+    - If date is not present, run parameters are valid.
+
+
+
+This is the sequence diagram for the validation:
 
 ![Run Validation Sequence Diagram](img/sequence_diagrams/run_validation_sequence_diagram.png)
 
@@ -519,65 +538,116 @@ This is the sequence diagram for adding a run:
 
 #### Add Gym
 
-<code style="color: #D85D43;">
-WORKOUT /e:gym /n:[number_of_stations] /date:[date]
-</code>
+Command Format:
 
-- `[number_of_stations]` is a **positive integer** representing the number of gym stations done.
-- `[date]` is in `DD-MM-YYYY` format. **THIS IS AN OPTIONAL PARAMETER**.
+- `WORKOUT /e:gym /n:NUMBER_OF_STATIONS /date:[date]` to create `Gym` object and specify number of gym stations.
+- `STATION_NAME /s:SET /r:REPS /w:WEIGHT` to add each gym station.
 
-The bot will then prompt the user for the specific gym details in this format:
+**The date parameter is made optional**.
 
-<code style="color: #D85D43;">
-[station_name] /s:[number_of_sets] /r:[number_of_repetitions] /w:[weight]
-</code>
+The user's input is processed to add a gym is as follows:
 
-- `[station_name]` is a string containing **only alphanumeric characters and spaces**, representing the station name.
-- `[number_of_sets]` is a **positive integer** representing the number of sets done for the current station.
-- `[number_of_repetitions]` is a **positive integer** representing the number of repetitions done for the current station.
-- `[weight]` is a string containing **positive integers separated by commas**, representing the weight done for each set in kilograms.
-    - For example, if the user has done 3 sets of 10kg, 20kg and 15kg, the string entered is `10,20,15`.
-    - **No spaces can be present in this string**.
 
-Example of Gym Station:
+1. `Handler.handleWorkout()` determines the type of exercise which is `gym`, and calls the `Parser.parseRunInput()` method to process the user's run input.
 
-<code style="color: #D85D43;">Bench Press /s:2 /r:3 /w:100,200 </code>
+2. `Parser.parseGymInput()` splits the input using `Parser.splitGymInput()`. Parameters are extracted using `extractSubstringFromSpecificIndex()` using the different flags.
+    - `splitGymInput()` checks whether the `/n:` flag is present and if there are excess `/` characters specified.
+        - If flag is not present, `InsufficientInput` exception is thrown.
+        - If too many `/` are present, `InvalidInput` exception is thrown.
+    - Method also extracts the `date` parameter if present.
+    - The method then returns a `String[]` variable with the required parameters extracted from the user input.
 
-- Station name is `Bench Press`.
-- User has done **2 sets of 3 repetitions**.
-- The first set was done using 100kg, and the second using 200kg.
+3. `Validation.validateGymInput()` is called to validate each parameter. Once valid, correct parameters are used to construct a new `Gym` object.
 
-> NOTE: The number of sets entered matches the number of weights added. If 4 sets have been done, the bot expects 4 positive inters separated by commas as the `weights` input.
+4. The `Gym` constructor adds the newly created object into `WorkoutList.WORKOUTS` and `WorkoutList.GYMS`.  
 
-##### Gym Sequence
-Below is the sequence diagram for adding a gym and the reference diagram
-<div style="display: flex; ">
-    <img src="img/sequence_diagrams/gym_overall_sequence_diagram.png" alt="Image 1" style="width: 45%;">
-    <img src="img/sequence_diagrams/gym_parse_gym_station_input_sequence_diagram.png" alt="Par" style="width: 55%;">
-</div>
-1. User input is passed to `Handler.processInput()`, which determines the command used is `workout`, thus passing the input to `Handler.handleWorkout()`.
+5. Afterwards, `parseGymStationInput()` is called to retrieve input for each gym station.
 
-2. `Handler.handleWorkout()` determines the type of exercise which is `gym`, and calls the `Parser.parseGymInput()` method to process the user's input.
+This is the sequence diagram for adding a `Gym` thus far:
 
-3. `Parser.parseGymInput()` splits the input using `Parser.splitGymInput()`. It then validates each input using `Validation.validateRunInput()`.
-    - `CustomExceptions.InsufficientInput` is thrown if either not enough parameters are specified or blank parameters are found.
-    - `CustomExceptions.InvalidInput` is thrown if the parameters passed in are invalid and do not follow the stipulated format.
+![Gym Sequence Diagram](img/sequence_diagrams/gym_overall_sequence_diagram.png)
 
-4. If valid, a new `Gym` object is created with the split user input.
+The `validateGymInput` method checks for the following:
 
-5. The `Gym` constructor adds the newly created object into `WorkoutList.WORKOUTS` and `WorkoutList.GYMS`.
+1. Checks if the number of stations specified is a positive integer more than `0`.
+    - If not, `InvalidInput` exception is thrown.
 
-6. `Parser.parseGymStationInput()` is then called to get the user's input for each station done.
-    - This method calls `Output.printGymStationPrompt()` to print the details required from the user.
+2.  Checks whether date is set to `null` or `"NA"`, since date parameter is optional via `validateDateNotEmpty()`. If present, returns `true`. Otherwise, returns `false`.
+    - If date is present, check whether date is valid via `validateDateInput()`. Then, check whether date is in the future or not via `validateDateNotAfterToday()`.
+        - If date is found to be invalid, throw `InvalidInput` exception.
+    - If date is not present, run parameters are valid.
+    
+This is the sequence diagram for `validateGymInput()`:
 
-7. `Validation.splitAndValidateGymStationInput` is called to both split and validate the user's input for the gym station.
-    - This method calls `Validation.validateWeightsArray` to ensure the `weights` input is valid.
-    - `CustomExceptions.InsufficientInput` is thrown if either not enough parameters are specified or blank parameters are found.
-    - `CustomExceptions.InvalidInput` is thrown if the parameters passed in are invalid and do not follow the stipulated format.
+![Validate Gym Input](img/sequence_diagrams/gym_validation_sequence.png)
 
-8. If valid, parameters are converted into either `int` for the number of repetitions and sets, or `Arraylist<Integer>` for the weights array. The parameters are then passed to `gym.addStation` to add a `GymStation` object to the new `Gym` object.
+##### Add Gym Station
 
-9. `Output.printAddGym()` is then called to print the message acknowledging the successful adding of a new `Gym` object.
+After adding a `Gym` object, the user is then prompted for input for the gym station. It is processed as follows:
+
+1. `Parser.parseGymStationInput()` is called, which starts a loop that iterates `NUMBER_OF_STATION` times.
+
+2. In each loop, `Output.printGymStationPrompt()` is used to print the prompt for the user, and user input is retrieved.
+
+3. User input is passed to `Validation.splitAndValidateGymStationInput()`, which as the name suggests, splits and validates the parameters from the user. Parameters are extracted using `extractSubstringFromSpecificIndex()` using the different flags.
+    - If there is insufficient input, it throws an `InsufficientInput` exception.
+    - If any invalid input is found, it throws an `InvalidInput` exception.
+
+4. After splitting the input, the weights specified is validated via `Validation.validateWeightsArray()`. 
+    - If any invalid input is found, it throws an `InvalidInput` exception.
+
+5. After all parameters are validated, it is passed to `Gym.addStation()` to add a `GymStation` object to the existing `Gym` object. The `GymStation` object is appended to an `ArrayList<GymStation>` variable. 
+
+6. Steps 2 to 4 repeat until all stations have been added.
+
+7. The final `Gym` object is passed to `Output.printAddGym()` and a message acknowledging the successful adding is printed to the screen.
+
+This is the sequence diagram for adding a `GymStation` object:
+
+![Gym Station Sequence](img/sequence_diagrams/gym_station_sequence_diagram.png)
+
+`splitAndValidateGymStationInput()` extracts parameters by its flag using `extractSubstringFromSpecificIndex()`, and if not specified defaults to an empty string which causes an error.
+
+The following steps are done to validate the input:
+
+1. Checks for a valid exercise name that is less than 25 characters and only contains **letters and spaces** via `validateGymStationName()`.
+    - If empty, throw `InsufficientInput` exception.
+    - If too long or does not follow regex, throw `InvalidInput` exception.
+
+2. Checks if number of sets and repetitions specified are **positive integers more than 1**.
+    - If not, throw `InvalidInput` exception.
+
+3. Check whether the weights array specified is in the correct format, with commas separating numbers and having no spaces, and that it has a **length more than 1**.
+    - If not, throw `InvalidInput` exception.
+
+4. Checks if number of weights and sets are the same.
+    - If not, throw `InvalidInput` exception.
+
+Afterwards, the method returns a `String[]` variable containing the different parameters.
+
+Here is a sequence diagram for the `splitAndValidateGymStationInput()` method.
+
+![Split and Validate Station](img/sequence_diagrams/split_and_validate_station.png)
+
+The `validateWeightsArray()` method converts the `String[] weightsArray` variable returned from `splitAndValidateGymStationInput()`, validates the numbers, and returns an `ArrayList<Double>`.
+
+The method does the following:
+
+1. Starts a loop iterating over each `String` within the `String[] weightsArray` passed.
+2. Converts the `String` weight into a `Double`.
+    - If not possible, throws an `InvalidInput` exception.
+
+3. Checks if the weight specified is within the valid range.
+    - Weights that are less than 0kg and more than 2850kg will cause an `InvalidInput` exception to be thrown. **0 is accepted as a valid weight.**
+4. Whether each weight is a multiple of `0.125`. This is because 0.125kg is the smallest increment of weight possible in the gym.
+    - If not, an `InvalidInput` exception is thrown.
+5. Add the validated weight in `Double` to an `ArrayList<Double>`.
+6. Steps 2 - 5 are repeated for each `String` variable.
+7. Returns the `ArrayList<Double>` as a validated weights array.
+
+This is the sequence diagram for the method:
+
+![Validated Weights Array](img/sequence_diagrams/validate_weights_sequence.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -757,6 +827,7 @@ The sequence diagram below illustrates the process of period prediction.
 * [User Stores](#user-stories)
 * [Non-Functional Requirements](#non-functional-requirements)
 * [Glossary](#glossary)
+* [Manual Testing](#manual-testing)
 
 ### Product scope
 
@@ -817,37 +888,32 @@ Simultaneously, PulsePilot facilitates access to this vital data for various hea
 - **BMI (Body Mass Index)**: A measure of body fat based on height and weight, used to assess overall health and fitness.
 - **Menstrual Period**: A recurring physiological event in females, characterized by the start and end dates.
 - **Medical Appointment**: An arrangement with a doctor, physiotherapist, or healthcare professional, to meet at a certain time and place.
+- **Flags**: The strings used by the bot to differentiate parameters. For example, `/date:` is the date flag, used to specify the date for a given command.
 
 ###### [Back to table of contents](#table-of-contents)
 
 ---
 
-## Appendix: Manual Testing
+### Manual Testing
 
 * [Launching and Termination](#launching-and-termination-testing)
-* [Workout](#workout-testing)
-    * [Run](#run-testing)
-    * [Gym](#gym-testing)
-* [Health](#health-testing)
-    * [Period](#period-testing)
-    * [Prediction](#prediction-testing)
-    * [BMI](#bmi-testing)
-    * [Appointment](#appointment-testing)
+* [Run](#run-testing)
+* [Gym](#gym-testing)
+* [Period](#period-testing)
+* [Prediction](#prediction-testing)
+* [BMI](#bmi-testing)
+* [Appointment](#appointment-testing)
 * [Storage](#storage-testing)
 
-{Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing}
-
 ###### [Back to table of contents](#table-of-contents)
 
 ---
 
-### Launching and Termination Testing
+#### Launching and Termination Testing
 
 ###### [Back to table of contents](#table-of-contents)
 
 ---
-
-### Workout Testing
 
 #### Run Testing
 
@@ -859,8 +925,6 @@ Simultaneously, PulsePilot facilitates access to this vital data for various hea
 ###### [Back to table of contents](#table-of-contents)
 
 ---
-
-### Health Testing
 
 #### Period Testing
 
@@ -886,16 +950,7 @@ Simultaneously, PulsePilot facilitates access to this vital data for various hea
 
 ---
 
-### Storage Testing
-
-###### [Back to table of contents](#table-of-contents)
-
----
-
-## Frequently Asked Questions
-
-1. **Q: How do I set up the development environment for the project?**  
-   A: You can set up the development environment by first cloning the repository to your local system. Then, load the project into your chosen IDE (we recommend IntelliJ IDEA).
+#### Storage Testing
 
 ###### [Back to table of contents](#table-of-contents)
 
