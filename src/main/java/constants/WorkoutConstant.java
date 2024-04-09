@@ -30,7 +30,7 @@ public class WorkoutConstant {
     public static final double MAX_PACE = 30;
     public static final double MIN_PACE = 1;
     public static final double MIN_RUN_TIME_IN_SECONDS = 0;
-    public static final double MAX_RUN_TIME_IN_SECONDS = 360000; // 99:59:59 in seconds
+    public static final double MAX_RUN_TIME_IN_SECONDS = 360000; // 100 hours in seconds
     public static final double MAX_GYM_WEIGHT = 2850.000;
     public static final double WEIGHT_MULTIPLE = 0.125;
 

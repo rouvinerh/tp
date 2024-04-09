@@ -46,18 +46,22 @@ public class Output {
         System.out.println("health /h:prediction - Predicts next period's start date");
         System.out.println("health /h:appointment /date:DATE /time:TIME /description:DESCRIPTION" +
                 " - Add new appointment data");
-        System.out.println("history /item:[run/gym/bmi/period] - " +
-                "Shows history of runs/gyms/bmi records/periods tracked/appointment records");
-        System.out.println("latest /item:[run/gym/bmi/period] - " +
-                "Shows latest entry of runs/gyms/bmi records/periods tracked/appointment records");
+
+        System.out.println("history /item:[run/gym/workouts/bmi/period/appointment] - " +
+                "Shows history of run/gym/workouts/bmi/period/appointment records");
+        System.out.println("latest /item:[run/gym/bmi/period/appointment] - " +
+                "Shows latest entry of run/gym/bmi/period/appointment records");
+        System.out.println("delete /item:[run/gym/bmi/period/appointment] /index:INDEX - " +
+                "Deletes a run/gym/bmi/period/appointment record");
+
         System.out.println("help - Show this help message");
         System.out.println("exit - Exit the program");
         printLine();
     }
 
-    /**
-     * Prints an ASCII Art depicting the word 'PulsePilot'.
-     */
+        /**
+         * Prints an ASCII Art depicting the word 'PulsePilot'.
+         */
     public void printArt() {
         System.out.println(" _              _");
         System.out.println("|_)    |  _  _ |_) o  |  _ _|_");
