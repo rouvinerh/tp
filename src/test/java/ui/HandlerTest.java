@@ -133,9 +133,10 @@ class HandlerTest {
         String input = "INVALID";
         Handler myHandler = new Handler(input);
         myHandler.processInput();
-        String expected = "Exception Caught!" +
+        String expected = "\u001b[31mException Caught!" +
                 System.lineSeparator() +
                 ErrorConstant.INVALID_COMMAND_ERROR +
+                "\u001b[0m" +
                 System.lineSeparator();
         assertEquals(expected, errContent.toString());
     }

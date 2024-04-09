@@ -30,7 +30,8 @@ public class ErrorConstant {
             + "Number of weights doesn't match number of sets";
 
     // Input Errors
-    public static final String INVALID_COMMAND_ERROR = "Invalid command. Enter 'help' to view available commands.";
+    public static final String INVALID_COMMAND_ERROR = "Invalid command. Enter 'help' to view " +
+            "available commands.";
     public static final String NO_DATE_SPECIFIED_ERROR = "NA";
     public static final String INVALID_ITEM_ERROR = "Invalid item specified.";
     public static final String CORRECT_FILTER_ITEM_FORMAT = "/item:run/gym/workouts/bmi/period/appointment";

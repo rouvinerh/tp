@@ -484,7 +484,7 @@ public class Output {
      * @param message The custom message to be printed.
      */
     public void printException(String message) {
-        System.err.println("Exception Caught!" + System.lineSeparator() + message);
+        System.err.println("\u001b[31mException Caught!" + System.lineSeparator() + message + "\u001b[0m");
     }
 
     //@@author L5-Z
