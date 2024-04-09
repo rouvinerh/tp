@@ -355,7 +355,7 @@ public class Validation {
      * @throws CustomExceptions.InvalidInput If the details specified are invalid.
      * @throws CustomExceptions.InsufficientInput If empty strings are used.
      */
-    public void validateExerciseName(String exerciseName) throws CustomExceptions.InvalidInput,
+    public void validateGymStationName(String exerciseName) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
         if (exerciseName.isEmpty()) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.EMPTY_GYM_STATION_NAME_ERROR);
@@ -413,7 +413,7 @@ public class Validation {
     public String[] splitAndValidateGymStationInput(String input) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
         String exerciseName = input.split(UiConstant.SPLIT_BY_SLASH)[WorkoutConstant.STATION_NAME_INDEX].trim();
-        validateExerciseName(exerciseName);
+        validateGymStationName(exerciseName);
         Parser parser = new Parser();
         String sets = parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.SETS_FLAG).trim();
         if (!sets.matches(UiConstant.VALID_POSITIVE_INTEGER_REGEX)) {
@@ -440,12 +440,12 @@ public class Validation {
             throw new CustomExceptions.InvalidInput(ErrorConstant.GYM_WEIGHTS_INCORRECT_NUMBER_ERROR);
         }
 
-        String[] results = new String[WorkoutConstant.NUMBER_OF_GYM_STATION_PARAMETERS];
-        results[WorkoutConstant.GYM_STATION_NAME_INDEX] = exerciseName;
-        results[WorkoutConstant.GYM_STATION_SET_INDEX] = sets;
-        results[WorkoutConstant.GYM_STATION_REPS_INDEX] = reps;
-        results[WorkoutConstant.GYM_STATION_WEIGHTS_INDEX] = weights;
-        return results;
+        String[] validatedGymStationInputs = new String[WorkoutConstant.NUMBER_OF_GYM_STATION_PARAMETERS];
+        validatedGymStationInputs[WorkoutConstant.GYM_STATION_NAME_INDEX] = exerciseName;
+        validatedGymStationInputs[WorkoutConstant.GYM_STATION_SET_INDEX] = sets;
+        validatedGymStationInputs[WorkoutConstant.GYM_STATION_REPS_INDEX] = reps;
+        validatedGymStationInputs[WorkoutConstant.GYM_STATION_WEIGHTS_INDEX] = weights;
+        return validatedGymStationInputs;
     }
 
     //@@author rouvinerh

@@ -122,6 +122,8 @@ Expected Output:
 
 ###### [Back to table of contents](#table-of-contents)
 
+---
+
 ### Workout: Gym
 
 Adds a new gym session to track.

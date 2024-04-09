@@ -1,47 +1,62 @@
 @startuml
 skinparam sequenceReferenceBackgroundColor lightblue
-actor User
-participant Handler as Handler << Class >>
-participant Parser as Parser << Class >>
-participant Output as Output << Class >>
-participant ":Run" as Run
-participant ":WorkoutList" as WorkoutList
 
-User -> Handler: userInput
-activate Handler #FFBBBB
-Handler -> Handler : processInput()
-activate Handler #Salmon
-Handler --> Handler : handleWorkout()
-activate Handler #DarkSalmon
-Handler -> Parser  : extractSubstringFromSpecificIndex()
-activate Parser  #FFBBBB
-Parser  --> Handler : typeOfWorkout()
-deactivate Parser  #FFBBBB
+participant "handler:Handler" as Handler
 
-Handler -> Parser : parseRunInput()
-activate Parser  #FFBBBB
-deactivate Handler #DarkSalmon
+participant "parser:Parser" as Parser
+participant "validation:Validation" as Validation
+participant "newRun:Run" as Run
+participant "workoutList:WorkoutList" as WorkoutList
+participant "output:Output" as Output
 
-Parser -> Parser : splitRunInput()
-ref over Parser: validateRunInput
-activate Parser  #DarkSalmon
-Parser --> Parser : runDetails
-deactivate Parser  #DarkSalmon
-Parser -> Run: new
-activate Run #FFBBBB
-Run -> WorkoutList: addRun()
+Handler -> Parser: parseRunInput()
+activate Handler #salmon
+activate Parser #salmon
+
+Parser -> Parser: splitRunInput()
+activate Parser #FFBBBB
+Parser --> Parser: runDetails[]
+deactivate Parser #FFBBBB
+
+Parser -> Validation: validateRunInput()
+activate Validation #FFBBBB
+ref over Validation: validateRunInput 
+Validation --> Parser: 
+deactivate Validation
+
+Parser -> Run **: new
+activate Run #FFBBBB   
+Run -> WorkoutList **: new
 activate WorkoutList #FFBBBB
-WorkoutList -> WorkoutList: addWorkout()
-activate WorkoutList #DarkSalmon
-WorkoutList --> WorkoutList
-deactivate WorkoutList #DarkSalmon
-WorkoutList --> Run
+WorkoutList --> Run:
 deactivate WorkoutList #FFBBBB
-Run --> Parser: newRun:Run
-deactivate Run #FFBBBB
 
-Parser -> Output : printAddRun()
+alt date is present
+    Run -> WorkoutList: addRun(date)
+    activate WorkoutList #FFBBBB
+    WorkoutList -> WorkoutList: addWorkout(date)
+    activate WorkoutList #DarkSalmon
+    WorkoutList --> WorkoutList:
+    deactivate WorkoutList #DarkSalmon
+    WorkoutList --> Run:
+    deactivate WorkoutList #FFBBBB
+
+ 
+else date is not present
+    Run -> WorkoutList: addRun()
+    activate WorkoutList #FFBBBB
+    WorkoutList -> WorkoutList: addWorkout()
+    activate WorkoutList #DarkSalmon
+    WorkoutList --> WorkoutList:
+    deactivate WorkoutList #DarkSalmon
+    WorkoutList --> Run:
+    deactivate WorkoutList #FFBBBB
+end
+Run --> Parser:
+deactivate Run #FFBBBB
+Parser -> Output: printAddRun()
 activate Output #FFBBBB
-Output --> User:
+Output --> Parser:
 deactivate Output #FFBBBB
+destroy Run
 @enduml

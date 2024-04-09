@@ -424,10 +424,10 @@ public class ValidationTest {
     @Test
     void validateExerciseName_correctName_noExceptionThrown() {
         String input1 = "Bench Press";
-        assertDoesNotThrow( () -> validation.validateExerciseName(input1));
+        assertDoesNotThrow( () -> validation.validateGymStationName(input1));
 
         String input2 = "squat";
-        assertDoesNotThrow( () -> validation.validateExerciseName(input2));
+        assertDoesNotThrow( () -> validation.validateGymStationName(input2));
     }
 
     /**
@@ -438,15 +438,15 @@ public class ValidationTest {
     void validateExerciseName_invalidNames_expectsInvalidInputException() {
         // numbers in name
         String input1 = "bench1";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateExerciseName(input1));
+        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateGymStationName(input1));
 
         // special characters in name
         String input2 = "bench-;";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateExerciseName(input2));
+        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateGymStationName(input2));
 
         // special characters in name
         String input3 = "bench-;";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateExerciseName(input3));
+        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateGymStationName(input3));
     }
 
     /**
@@ -455,7 +455,7 @@ public class ValidationTest {
      */
     @Test
     void validateExerciseName_emptyNames_expectsInsufficientInputException() {
-        assertThrows(CustomExceptions.InsufficientInput.class, () -> validation.validateExerciseName(""));
+        assertThrows(CustomExceptions.InsufficientInput.class, () -> validation.validateGymStationName(""));
     }
 
     /**

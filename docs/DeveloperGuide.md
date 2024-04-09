@@ -7,16 +7,19 @@
 * [Acknowledgements](#acknowledgements)
 * [Introduction](#introduction)
 * [Design](#design)
-* [Commands and Implementation](#commands-and-implementation)
-* [Appendix: Requirements](#appendix-requirements)
-* [Appendix: Manual Testing](#appendix-manual-testing)
-* [Frequently Asked Questions](#frequently-asked-questions)
+* [Implementation of Commands](#commands-and-implementation)
+* [Appendix: DG Requirements](#appendix-requirements)
+    * [Product Scope](#target-user-profile)
+    * [User Stories](#user-stories)
+    * [Non-Functional Requirements](#non-functional-requirements)
+    * [Glossary](#glossary)
+    * [Manual Testing](#manual-testing)
 
 ---
 
 ## Acknowledgements
 
-Our team has referenced [Address Book (Level-3)](https://github.com/se-edu/addressbook-level3) referenced for their [User Guide (UG)](https://se-education.org/addressbook-level3/UserGuide.html) and [Developer Guide (DG)](https://se-education.org/addressbook-level3/DeveloperGuide.html) to better structure our own Developer Guide.
+Our team has referenced [Address Book (Level-3)](https://github.com/se-edu/addressbook-level3) and used their [Developer Guide (DG)](https://se-education.org/addressbook-level3/DeveloperGuide.html) to better structure our own Developer Guide.
 
 ---
 
@@ -51,9 +54,6 @@ The purpose of this guide is to provide an explanation for all the functions and
     * [CustomExceptions](#custom-exceptions)
     * [Filters](#filters)
 * [Storage](#storage-package)
-    * [LogFile](#log-file)
-    * [DataFile](#data-file)
-* [PulsePilot](#pulsepilot-package)
 * [Constants](#constants-package)
 
 ---
@@ -108,27 +108,15 @@ The creation of the above classes will be left out of other class diagrams to pr
 
 ##### Initialising Bot
 
-The `initialiseBot()` method within `Handler` functions as such:
-
-![User Induction Sequences](img/sequence_diagrams/user_induction.png)
-
-The main feature of this method is to check whether the data file is present and not corrupted. How this is done will be covered in `Storage`.
+ This method is used to check whether the data file is present and not corrupted. How this is done will be covered in `Storage`.
 
 ##### Process Input
 
 The `processInput()` method is responsible for determining what command the user has entered, and passes the input to the right handler method.
 
-The sequence diagram is as follows:
-
-![Process Input](img/sequence_diagrams/process_input.png)
-
 ##### Terminating Bot
 
 The `terminateBot()` method is responsible for **writing to the data file** and exiting the bot gracefully. If a user exits without calling `terminateBot()`, **data will be lost!**
-
-The sequence diagram is as follows:
-
-![Terminate Bot](img/sequence_diagrams/terminate_bot.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -138,7 +126,7 @@ The sequence diagram is as follows:
 
 The `Output` class is responsible for printing messages, prompts, errors and other information to the terminal for the user.
 
-The class diagram for `Output` has been omitted as it does not value-add to the guide, since a developer can read the code to gain a better understanding of `Output.`
+The class diagram for `Output` has been omitted as it does not value-add to the guide, since a developer can read the code itself to gain a better understanding of `Output.`
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -166,7 +154,7 @@ The `clearWorkoutsRunGym()` method is used to clear all the data stored within e
 
 `Gym` is a class that represents a gym session that the user has recorded. It contains the following variables:
 
-- `date`: An **optional** parameter representing the date of the workout. Implemented via an overloaded `Gym()` constructor.
+- `date`: An **optional** `LocalDate` parameter representing the date of the workout. Implemented via an overloaded `Gym()` constructor.
 
 **A `Gym` object contains 1 or more `GymStation` objects.**
 
@@ -209,7 +197,7 @@ The class diagram for gym is as follows:
 
 - `times`: A `Integer[]` variable representing the hours, minutes and seconds taken for a run.
 - `distance`: The distance run represented as a `double`.
-- `date`: An **optional** parameter representing the date of the workout. Implemented via an overloaded `Gym()` constructor.
+- `date`: An **optional** `LocalDate` parameter representing the date of the workout. Implemented via an overloaded `Gym()` constructor.
 - `pace`: The pace of the run in minutes/km represented as a `String`.
 - `isHourPresent`: A `boolean` variable to indicate if an hour has been indicated, since the bot accepts both `HH:MM:SS` and `MM:SS` formats.
 
@@ -235,38 +223,6 @@ The Health component consists of `Health`, `HealthList`, `Bmi`, `Period`, and `A
 
 The `HealthList` class contains three `ArrayList` variables, to store BMI, Appointment and Period objects, as well as the various methods to retrieve, delete and print the objects stored.
 
-**Attributes**
-
-1. `logFile`: Represents a log file for logging health-related activities.
-2. `BMIS`: ArrayList containing BMI records.
-3. `APPOINTMENTS`: ArrayList containing appointment records.
-4. `PERIODS`: ArrayList containing period records.
-
-**Methods:**
-
-1. `addBmi(Bmi bmi)`: Adds a BMI object to the list of BMIs.
-2. `showCurrentBmi()`: Prints the most recently added BMI record.
-3. `showBmiHistory()`: Prints all BMI entries recorded.
-4. `addPeriod(Period period)`: Adds a period record to the list of periods.
-5. `showLatestPeriod()`: Prints the latest period record added.
-6. `showPeriodHistory()`: Prints all period entries tracked.
-7. `printLatestThreeCycles()`: Prints the latest three period objects from the periods list.
-8. `getPeriods()`: Retrieves the list of period records.
-9. `getBmis()`: Retrieves the list of BMI records.
-10. `getAppointments()`: Retrieves the list of appointment records.
-11. `getPeriodSize()`: Retrieves the number of periods recorded.
-12. `getPeriod(int index)`: Gets the period object at the specified index.
-13. `predictNextPeriodStartDate()`: Predicts the start date of the next period based on the average cycle length of the last three cycles.
-14. `clearHealthLists()`: Clears the lists of BMIs, periods, and appointments.
-15. `getPeriodsSize()`: Retrieves the size of the periods list.
-16. `getBmisSize()`: Retrieves the size of the BMIs list.
-17. `deleteBmi(int index)`: Deletes a BMI record based on the index.
-18. `deletePeriod(int index)`: Deletes a period record based on the index.
-19. `addAppointment(Appointment appointment)`: Adds an appointment to the list of appointments.
-20. `deleteAppointment(int index)`: Deletes an appointment based on the index.
-21. `showAppointmentList()`: Prints all appointment entries tracked.
-22. `showLatestAppointment()`: Prints the latest appointment record added.
-
 ###### [Back to table of contents](#table-of-contents)
 
 ---
@@ -276,32 +232,6 @@ The `HealthList` class contains three `ArrayList` variables, to store BMI, Appoi
 An object containing information about a user's Body Mass Index (BMI) data. The class automatically calculates the BMI score and determines the corresponding category, then stores that in the object.
 
 This class inherits from the `Health` superclass.
-
-**Attributes**
-
-1. `height`: A double value representing the height in **meters**.
-2. `weight`: A double value representing the weight in **kilograms**.
-3. `bmiValue`: A double value representing the calculated BMI value.
-4. `bmiCategory`: A String representing the BMI category
-5. `date`: A `LocalDate` object representing the date specified.
-
-**Methods:**
-
-1. `Bmi(String height, String weight, String date)`: The constructor of the Bmi class, which takes height, weight, and date as string parameters.
-2. `getBmiValue()`: Returns the calculated BMI value as a string.
-3. `getHeight()`: Returns the height value as a string.
-4. `getWeight()`: Returns the weight value as a string.
-5. `calculateBmiValue()`: Calculates the BMI value based on the provided height and weight.
-6. `getBmiCategory(double bmiValue)`: Determines and returns the BMI category as a string based on the calculated BMI value.
-7. `toString()`: Returns a string representation of the Bmi object.
-
-The ranges for BMI are as follows:
-
-- BMI < 18.5: Underweight
-- 18.5 <= BMI < 24.9: Normal
-- 24.9 <= BMI < 29.9: Overweight
-- 29.9 <= BMI < 39.9: Obese
-- BMI >= 39.9: Severely Obese
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -313,25 +243,6 @@ An object containing information about a user's menstrual cycle. The object stor
 
 This class inherits from the `Health` superclass.
 
-**Attributes**
-
-1. `startDate`: Represents the start date of the period.
-2. `endDate`: Represents the end date of the period.
-3. `periodLength`: Stores the length of the period in days.
-4. `cycleLength`: Stores the length of the menstrual cycle.
-
-**Methods:**
-
-1. `Period(String stringStartDate, String stringEndDate)`: The constructor of Period class which takes start date and end date of period.
-2. `getStartDate()`: Retrieves the start date of the period.
-3. `getEndDate()`: Retrieves the end date of the period
-4. `getPeriodLength()`: Retrieves the length of the period
-5. `calculatePeriodLength()`: Calculates the length of the period in days.
-6. `setCycleLength(LocalDate nextStartDate)`: Sets the cycle length of the current period based on the start date of the next period.
-7. `nextCyclePrediction()`: Predicts the start date of the next period based on the average cycle length obtained from the sum of the latest three menstrual cycle lengths.
-8. `printNextCyclePrediction(LocalDate nextPeriodStartDate)`: Prints a message indicating the number of days until the predicted start date of the next period, or how many days late the period is.
-9. `toString()`: Returns a string representation of the Period object, including the start date, end date, and period length and cycle length if present.
-
 ###### [Back to table of contents](#table-of-contents)
 
 ---
@@ -339,20 +250,6 @@ This class inherits from the `Health` superclass.
 #### Appointment
 
 This class inherits from the `Health` superclass.
-
-**Attributes**
-
-1. `date`: Represents the date of the appointment
-2. `time`: Represents the time of the appointment.
-3. `description`: Stores a description of the appointment.
-
-**Methods:**
-
-1. `Appointment(String stringDate, String stringTime, String description)`: The constructor of Appointment which takes date, time, and description.
-2. `getDate()`: Retrieves the date of the appointment.
-3. `getTime()`: Retrieves the time of the appointment.
-4. `getDescription()`: Retrieves the description of the appointment.
-5. `toString()`: Returns a string representation of the Appointment object, including the date, time, and description.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -383,7 +280,7 @@ The specific usage of `Parser` is covered below in the commands section of this 
 
 The `Validation` class is responsible for validating the user's split input. The split input comes from the `Parser` class in `String[]` variables. Each variable is then checked using regex to ensure that it follows the requirements needed, and that the values are within the stipulated ranges.
 
-The specific usage of `Validation` is covered below for each command.
+The specific usage of `Validation` is covered below for the implementation of each command via sequence diagrams.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -421,27 +318,9 @@ This is represented as enumerations. Attempts to use an invalid filter results i
 
 `Storage` contains `DataFile` and `LogFile`. This component handles all logging of commands used and writing of data stored within PulsePilot to an external data file. The reading of the data file is also done here.
 
-{Include `Storage` class diagram}
+- `DataFile` is responsible for the writing of data to `pulsepilot_data.txt`, and generating the hash for it in `pulsepilot_hash.txt`. It also checks whether the data has been tampered with or files are missing, and creates or deletes files if needed.
 
-The Storage component consists of LogFile and DataFile.
-
-###### [Back to table of contents](#table-of-contents)
-
----
-
-#### Log File
-
-###### [Back to table of contents](#table-of-contents)
-
----
-
-#### Data File
-
-###### [Back to table of contents](#table-of-contents)
-
----
-
-### PulsePilot Package
+- `LogFile` writes the logs to `pulsepilot_log.txt`, tracking each command and error thrown.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -464,6 +343,8 @@ The constants are broken down into the following 4 classes:
 
 ## Commands and Implementation
 
+**NOTE**: Not all methods are fully explained here, as any developer can read the source code to find out all the specifics. This helps to keep the guide shorter and easier to read. For example, `extractSubstringFromSpecificIndex()` is mentioned, but its implementation is not covered.
+
 * [Workout](#workout)
     * [Add Run](#add-run)
     * [Add Gym](#add-gym)
@@ -479,39 +360,30 @@ The constants are broken down into the following 4 classes:
 
 ### Workout
 
+User input is passed to `Handler.processInput()`, which determines the command used is `workout`. The input is then passed to `Handler.handleWorkout()` as shown in the `Handler` architecture above. It is then split into either 'run' or 'gym' commands.
+
 #### Add Run
 
-Command Format: <code style="color: #D85D43;">WORKOUT /e:run /d:[distance] /t:[time] /date:[date]</code>
+The user's input is processed to add a run as follows:
 
-- `[distance]` is a 2 **decimal place positive number** representing the number of kilometers covered.
-- `[time]` is in `HH:MM:SS` or `MM:SS` format with positive integers, representing the amount of time taken for the run.
-    - If the time taken is **25 minutes and 20 seconds**: Use `25:20`.
-    - If the time taken is **1 hour, 20 minutes and 30 seconds**: Use `01:20:30`.
-- `[date]` is in `DD-MM-YYYY` format. **THIS IS AN OPTIONAL PARAMETER**.
+1. `Handler.handleWorkout()` determines the type of exercise which is `run`, and calls the `Parser.parseRunInput()` method to process the user's run input.
 
-##### Run Sequence
+2. `Parser.parseRunInput()` splits the input using `Parser.splitRunInput()`. Parameters are extracted using `extractSubstringFromSpecificIndex()` using the different flags.
+    - Method also extracts the `date` parameter if present.
+    - The method then returns a `String[]` variable with the required parameters extracted from the user input.
 
-1. User input is passed to `Handler.processInput()`, which determines the command used is `workout`, thus passing the input to `Handler.handleWorkout()`.
+3. `Validation.validateRunInput()` is called to validate each parameter. Once valid, correct parameters are used to construct a new `Run` object.
 
-2. `Handler.handleWorkout()` determines the type of exercise which is `run`, and calls the `Parser.parseRunInput()` method to process the user's input.
+4. The `Run` constructor adds the newly created object into `WorkoutList.WORKOUTS` and `WorkoutList.RUNS`.  Total run time is converted to seconds for calculation of pace.
 
-3. `Parser.parseRunInput()` splits the input using `Parser.splitRunInput()`. It then validates each input using `Validation.validateRunInput()`.
-    - `CustomExceptions.InsufficientInput` is thrown if either not enough parameters are specified or blank parameters are found.
-    - `CustomExceptions.InvalidInput` is thrown if the parameters passed in are invalid and do not follow the stipulated format.
 
-4. If valid, a new `Run` object is created with the split user input.
+5. The `Run` object is passed to `Output.printAddRun()` and a message acknowledging the successful adding is printed to the screen.
 
-5. The `Run` constructor adds the newly created object into `WorkoutList.WORKOUTS` and `WorkoutList.RUNS`.
-
-6. The `Run` object is passed to `Output.printAddRun()` and a message acknowledging the successful adding is printed to the screen.
-
-This is the sequence diagram for adding a run:
+This is the sequence diagram for adding a run from `parseRunInput()`:
 
 ![Run Sequence Diagram](img/sequence_diagrams/run_sequence_diagram.png)
 
-`validateRunInput` uses the `Validation` class to check the parameters specified when adding a Run. It follows the sequence diagram below:
-
-![Run Validation Sequence Diagram](img/sequence_diagrams/run_validation_sequence_diagram.png)
+`validateRunInput` uses the `Validation` class to check all the parameters specified by the user when adding a Run, and throws an exception if it is invalid.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -519,65 +391,51 @@ This is the sequence diagram for adding a run:
 
 #### Add Gym
 
-<code style="color: #D85D43;">
-WORKOUT /e:gym /n:[number_of_stations] /date:[date]
-</code>
+The user's input is processed to add a gym is as follows:
 
-- `[number_of_stations]` is a **positive integer** representing the number of gym stations done.
-- `[date]` is in `DD-MM-YYYY` format. **THIS IS AN OPTIONAL PARAMETER**.
+1. `Handler.handleWorkout()` determines the type of exercise which is `gym`, and calls the `Parser.parseRunInput()` method to process the user's run input.
 
-The bot will then prompt the user for the specific gym details in this format:
+2. `Parser.parseGymInput()` splits the input using `Parser.splitGymInput()`. Parameters are extracted using `extractSubstringFromSpecificIndex()` using the different flags.
+    - Method also extracts the `date` parameter if present.
+    - The method then returns a `String[]` variable with the required parameters extracted from the user input.
 
-<code style="color: #D85D43;">
-[station_name] /s:[number_of_sets] /r:[number_of_repetitions] /w:[weight]
-</code>
+3. `Validation.validateGymInput()` is called to validate each parameter. Once valid, correct parameters are used to construct a new `Gym` object.
 
-- `[station_name]` is a string containing **only alphanumeric characters and spaces**, representing the station name.
-- `[number_of_sets]` is a **positive integer** representing the number of sets done for the current station.
-- `[number_of_repetitions]` is a **positive integer** representing the number of repetitions done for the current station.
-- `[weight]` is a string containing **positive integers separated by commas**, representing the weight done for each set in kilograms.
-    - For example, if the user has done 3 sets of 10kg, 20kg and 15kg, the string entered is `10,20,15`.
-    - **No spaces can be present in this string**.
+4. The `Gym` constructor adds the newly created object into `WorkoutList.WORKOUTS` and `WorkoutList.GYMS`.  
 
-Example of Gym Station:
+5. Afterwards, `parseGymStationInput()` is called to retrieve input for each gym station.
 
-<code style="color: #D85D43;">Bench Press /s:2 /r:3 /w:100,200 </code>
+This is the sequence diagram for adding a `Gym` thus far:
 
-- Station name is `Bench Press`.
-- User has done **2 sets of 3 repetitions**.
-- The first set was done using 100kg, and the second using 200kg.
+![Gym Sequence Diagram](img/sequence_diagrams/gym_overall_sequence_diagram.png)
 
-> NOTE: The number of sets entered matches the number of weights added. If 4 sets have been done, the bot expects 4 positive inters separated by commas as the `weights` input.
+The `validateGymInput` method checks for the following validates the parameters from the user, and throws an exception if it is invalid.
 
-##### Gym Sequence
-Below is the sequence diagram for adding a gym and the reference diagram
-<div style="display: flex; ">
-    <img src="img/sequence_diagrams/gym_overall_sequence_diagram.png" alt="Image 1" style="width: 45%;">
-    <img src="img/sequence_diagrams/gym_parse_gym_station_input_sequence_diagram.png" alt="Par" style="width: 55%;">
-</div>
-1. User input is passed to `Handler.processInput()`, which determines the command used is `workout`, thus passing the input to `Handler.handleWorkout()`.
+##### Add Gym Station
 
-2. `Handler.handleWorkout()` determines the type of exercise which is `gym`, and calls the `Parser.parseGymInput()` method to process the user's input.
+After adding a `Gym` object, the user is then prompted for input for the gym station. It is processed as follows:
 
-3. `Parser.parseGymInput()` splits the input using `Parser.splitGymInput()`. It then validates each input using `Validation.validateRunInput()`.
-    - `CustomExceptions.InsufficientInput` is thrown if either not enough parameters are specified or blank parameters are found.
-    - `CustomExceptions.InvalidInput` is thrown if the parameters passed in are invalid and do not follow the stipulated format.
+1. `Parser.parseGymStationInput()` is called, which starts a loop that iterates `NUMBER_OF_STATION` times.
 
-4. If valid, a new `Gym` object is created with the split user input.
+2. In each loop, `Output.printGymStationPrompt()` is used to print the prompt for the user, and user input is retrieved.
 
-5. The `Gym` constructor adds the newly created object into `WorkoutList.WORKOUTS` and `WorkoutList.GYMS`.
+3. User input is passed to `Validation.splitAndValidateGymStationInput()`, which as the name suggests, splits and validates the parameters from the user. Parameters are extracted using `extractSubstringFromSpecificIndex()` using the different flags.
 
-6. `Parser.parseGymStationInput()` is then called to get the user's input for each station done.
-    - This method calls `Output.printGymStationPrompt()` to print the details required from the user.
+4. After splitting the input, the weights specified is validated via `Validation.validateWeightsArray()`.
 
-7. `Validation.splitAndValidateGymStationInput` is called to both split and validate the user's input for the gym station.
-    - This method calls `Validation.validateWeightsArray` to ensure the `weights` input is valid.
-    - `CustomExceptions.InsufficientInput` is thrown if either not enough parameters are specified or blank parameters are found.
-    - `CustomExceptions.InvalidInput` is thrown if the parameters passed in are invalid and do not follow the stipulated format.
+5. After all parameters are validated, it is passed to `Gym.addStation()` to add a `GymStation` object to the existing `Gym` object. The `GymStation` object is appended to an `ArrayList<GymStation>` variable.
 
-8. If valid, parameters are converted into either `int` for the number of repetitions and sets, or `Arraylist<Integer>` for the weights array. The parameters are then passed to `gym.addStation` to add a `GymStation` object to the new `Gym` object.
+6. Steps 2 to 4 repeat until all stations have been added.
 
-9. `Output.printAddGym()` is then called to print the message acknowledging the successful adding of a new `Gym` object.
+7. The final `Gym` object is passed to `Output.printAddGym()` and a message acknowledging the successful adding is printed to the screen.
+
+This is the sequence diagram for adding a `GymStation` object:
+
+![Gym Station Sequence](img/sequence_diagrams/gym_station_sequence_diagram.png)
+
+`splitAndValidateGymStationInput()` extracts parameters and validates them, then returns a `String[]` variable containing the parameters.
+
+The `validateWeightsArray()` method converts the `String[] weightsArray` variable returned from `splitAndValidateGymStationInput()`, validates the numbers, and returns an `ArrayList<Double>`.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -622,18 +480,6 @@ The sequence diagram below illustrates the process of period prediction.
 
 #### Add BMI
 
-<code style="color: #D85D43;">
-HEALTH /h:bmi /height:[height] /weight:[weight] /date:[date]
-</code>
-
-- `[height]` is a 2 **decimal place positive number** representing the user's height.
-
-- `[weight]`is a 2 **decimal place positive number** representing the user's weight.
-
-- `[date]` is in `DD-MM-YYYY` format (i.e. `19-03-2024`).
-
-##### BMI Sequence
-
 The sequence diagram below shows how a `Bmi` object is added to `BMIS`.
 
 1. Upon receiving `userInput` in `Handler.processInput()`, `Handler.handleHealth()` is called.
@@ -662,18 +508,6 @@ The sequence diagram below shows how a `Bmi` object is added to `BMIS`.
 
 #### Add Appointment
 
-<code style="color: #D85D43;">
-HEALTH /h:appointment /date:[date] /time:[time] /description:[description]
-</code>
-
-- `[date]` is in `DD-MM-YYYY` format representing the date of the appointment.
-
-- `[time]` is in `HH:mm` format representing the time of the appointment.
-
-- `[description]` is a string  representing the details of the appointment. The string can only contain alphanumeric characters and spaces.
-
-##### Appointment Sequence
-
 1. User input is passed to `Handler.processInput()`, which determines the command used is `health`, thus passing the input to `Handler.handleHealth()`.
 
 2. `Handler.handleHealth()` determines the type of health which is `appointment`, and calls the `Parser.parseAppointmentInput()` method to process the user's input.
@@ -697,9 +531,6 @@ HEALTH /h:appointment /date:[date] /time:[time] /description:[description]
 ---
 
 #### Make Period Prediction
-<code style="color: #D85D43;">
-HEALTH /h:prediction 
-</code>
 
 The sequence diagram below illustrates the process of period prediction.
 
@@ -757,12 +588,17 @@ The sequence diagram below illustrates the process of period prediction.
 * [User Stores](#user-stories)
 * [Non-Functional Requirements](#non-functional-requirements)
 * [Glossary](#glossary)
+* [Manual Testing](#manual-testing)
 
 ### Product scope
 
 #### Target user profile
 
-Outpatients who need to monitor their health activity and health parameters.
+PulsePilot is built for both patients and healthcare professionals.
+
+- Patients can upload data related to their well-being via the health tracker and progress on recovery exercises through the workout tracker.
+- Healthcare professionals can use PulsePilot to easily monitor their patient's recovery progress and general well-being outside of the hospital.
+- For users that are familiar with the CLI and can type fast.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -817,37 +653,32 @@ Simultaneously, PulsePilot facilitates access to this vital data for various hea
 - **BMI (Body Mass Index)**: A measure of body fat based on height and weight, used to assess overall health and fitness.
 - **Menstrual Period**: A recurring physiological event in females, characterized by the start and end dates.
 - **Medical Appointment**: An arrangement with a doctor, physiotherapist, or healthcare professional, to meet at a certain time and place.
+- **Flags**: The strings used by the bot to differentiate parameters. For example, `/date:` is the date flag, used to specify the date for a given command.
 
 ###### [Back to table of contents](#table-of-contents)
 
 ---
 
-## Appendix: Manual Testing
+### Manual Testing
 
 * [Launching and Termination](#launching-and-termination-testing)
-* [Workout](#workout-testing)
-    * [Run](#run-testing)
-    * [Gym](#gym-testing)
-* [Health](#health-testing)
-    * [Period](#period-testing)
-    * [Prediction](#prediction-testing)
-    * [BMI](#bmi-testing)
-    * [Appointment](#appointment-testing)
+* [Run](#run-testing)
+* [Gym](#gym-testing)
+* [Period](#period-testing)
+* [Prediction](#prediction-testing)
+* [BMI](#bmi-testing)
+* [Appointment](#appointment-testing)
 * [Storage](#storage-testing)
 
-{Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing}
-
 ###### [Back to table of contents](#table-of-contents)
 
 ---
 
-### Launching and Termination Testing
+#### Launching and Termination Testing
 
 ###### [Back to table of contents](#table-of-contents)
 
 ---
-
-### Workout Testing
 
 #### Run Testing
 
@@ -859,8 +690,6 @@ Simultaneously, PulsePilot facilitates access to this vital data for various hea
 ###### [Back to table of contents](#table-of-contents)
 
 ---
-
-### Health Testing
 
 #### Period Testing
 
@@ -886,16 +715,7 @@ Simultaneously, PulsePilot facilitates access to this vital data for various hea
 
 ---
 
-### Storage Testing
-
-###### [Back to table of contents](#table-of-contents)
-
----
-
-## Frequently Asked Questions
-
-1. **Q: How do I set up the development environment for the project?**  
-   A: You can set up the development environment by first cloning the repository to your local system. Then, load the project into your chosen IDE (we recommend IntelliJ IDEA).
+#### Storage Testing
 
 ###### [Back to table of contents](#table-of-contents)
 
