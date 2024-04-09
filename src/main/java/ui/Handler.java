@@ -255,7 +255,7 @@ public class Handler {
         String name;
         while (true) {
             name = this.in.nextLine();
-            if (!validation.validateUsername(name)) {
+            if (validation.validateIfUsernameIsValid(name)) {
                 System.err.println(ErrorConstant.INVALID_USERNAME_ERROR);
             } else {
                 break;

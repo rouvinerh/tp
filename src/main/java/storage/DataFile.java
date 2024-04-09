@@ -284,7 +284,7 @@ public class DataFile {
      * @param name The username read from the data file.
      */
     public void processName(String name) throws CustomExceptions.InvalidInput {
-        if (!validation.validateUsername(name)) {
+        if (validation.validateIfUsernameIsValid(name)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_USERNAME_ERROR);
         }
         userName = name.trim();
