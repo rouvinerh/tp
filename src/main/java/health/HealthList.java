@@ -266,9 +266,11 @@ public class HealthList extends ArrayList<Health> {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.INVALID_INDEX_DELETE_ERROR);
         }
         Bmi deletedBmi = BMIS.get(index);
+        Output.printLine();
         System.out.printf((HealthConstant.LOG_DELETE_BMI_FORMAT) + "%n",
                 deletedBmi.bmiValue,
                 deletedBmi.date);
+        Output.printLine();
         BMIS.remove(index);
         LogFile.writeLog(HealthConstant.BMI_REMOVED_MESSAGE_PREFIX + index, false);
     }
@@ -287,10 +289,12 @@ public class HealthList extends ArrayList<Health> {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.INVALID_INDEX_DELETE_ERROR);
         }
         Period deletedPeriod = PERIODS.get(index);
+        Output.printLine();
         System.out.printf((HealthConstant.LOG_DELETE_PERIOD_FORMAT) + "%n",
                 deletedPeriod.getStartDate(),
                 deletedPeriod.getEndDate());
         PERIODS.remove(index);
+        Output.printLine();
         LogFile.writeLog(HealthConstant.PERIOD_REMOVED_MESSAGE_PREFIX + index, false);
     }
 
@@ -324,10 +328,12 @@ public class HealthList extends ArrayList<Health> {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.INVALID_INDEX_DELETE_ERROR);
         }
         Appointment deletedAppointment = APPOINTMENTS.get(index);
+        Output.printLine();
         System.out.printf((HealthConstant.LOG_DELETE_APPOINTMENT_FORMAT) + "%n",
                 deletedAppointment.date,
                 deletedAppointment.time,
                 deletedAppointment.description);
+        Output.printLine();
         APPOINTMENTS.remove(index);
         LogFile.writeLog(HealthConstant.APPOINTMENT_REMOVED_MESSAGE_PREFIX + index, false);
         showAppointmentList();

@@ -1,6 +1,7 @@
 package workouts;
 
 import storage.LogFile;
+import ui.Output;
 import utility.CustomExceptions;
 import constants.ErrorConstant;
 import constants.WorkoutConstant;
@@ -139,9 +140,11 @@ public class WorkoutList  {
             throw new CustomExceptions.OutOfBounds("Invalid index to delete!");
         }
         Gym deletedGym = GYMS.get(index);
+        Output.printLine();
         System.out.println("Removed Gym entry with " +
                 deletedGym.stations.size() +
                 " stations.");
+        Output.printLine();
         WORKOUTS.remove(deletedGym);
         GYMS.remove(index);
         LogFile.writeLog("Removed gym with index: " + index, false);
@@ -157,11 +160,13 @@ public class WorkoutList  {
             throw new CustomExceptions.OutOfBounds("Invalid index to delete!");
         }
         Run deletedRun = RUNS.get(index);
+        Output.printLine();
         System.out.println("Removed Run entry with " +
                 deletedRun.distance +
                 "km at " +
                 deletedRun.getPace() +
                 ".");
+        Output.printLine();
         WORKOUTS.remove(deletedRun);
         RUNS.remove(index);
         LogFile.writeLog("Removed run with index: " + index, false);
