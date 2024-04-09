@@ -521,31 +521,31 @@ public class Parser {
      * @param gym              The Gym object.
      */
     public void parseGymStationInput(int numberOfStations, Gym gym) {
-        int i = 0;
-        while (i < numberOfStations) {
+        for (int i = 0; i < numberOfStations; i++) {
             try {
                 output.printGymStationPrompt(i + 1);
                 String userInput = this.in.nextLine();
                 if (countForwardSlash(userInput) > WorkoutConstant.NUM_OF_SLASHES_FOR_GYM_STATION) {
                     throw new CustomExceptions.InvalidInput(ErrorConstant.TOO_MANY_SLASHES_ERROR);
                 }
-                String[] validGymStationInput = validation.splitAndValidateGymStationInput(userInput);
+                String[] validGymStationInputs = validation.splitAndValidateGymStationInput(userInput);
 
-                int numberOfSets = Integer.parseInt(validGymStationInput[WorkoutConstant.GYM_STATION_SET_INDEX]);
+                int numberOfSets = Integer.parseInt(validGymStationInputs[WorkoutConstant.GYM_STATION_SET_INDEX]);
                 int numberOfRepetitions = Integer.parseInt(
-                        validGymStationInput[WorkoutConstant.GYM_STATION_REPS_INDEX]);
+                        validGymStationInputs[WorkoutConstant.GYM_STATION_REPS_INDEX]);
                 ArrayList<Double> weightsArray = validation.validateWeightsArray(
-                        validGymStationInput[WorkoutConstant.GYM_STATION_WEIGHTS_INDEX]);
+                        validGymStationInputs[WorkoutConstant.GYM_STATION_WEIGHTS_INDEX]);
 
-                gym.addStation(validGymStationInput[WorkoutConstant.GYM_STATION_NAME_INDEX], numberOfSets,
+                gym.addStation(validGymStationInputs[WorkoutConstant.GYM_STATION_NAME_INDEX], numberOfSets,
                         numberOfRepetitions, weightsArray);
-                i++;
+
                 LogFile.writeLog("Added Gym Station: " +
-                        validGymStationInput[WorkoutConstant.GYM_STATION_NAME_INDEX], false);
+                        validGymStationInputs[WorkoutConstant.GYM_STATION_NAME_INDEX], false);
             } catch (CustomExceptions.InsufficientInput | CustomExceptions.InvalidInput e) {
                 output.printException(e.getMessage());
             }
         }
+
         output.printAddGym(gym);
         LogFile.writeLog("Added Gym", false);
     }
@@ -662,12 +662,12 @@ public class Parser {
             throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_GYM_FORMAT_ERROR);
         }
 
-        ArrayList<Double> validatedWeightsArray = validation.validateWeightsArray(weightStrings);
-        if (validatedWeightsArray.size() != numberOfSets) {
+        ArrayList<Double> validatedWeights = validation.validateWeightsArray(weightStrings);
+        if (validatedWeights.size() != numberOfSets) {
             throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_NUMBER_OF_SETS_ERROR);
         }
 
-        gym.addStation(currentStationName, numberOfSets, reps, validatedWeightsArray);
+        gym.addStation(currentStationName, numberOfSets, reps, validatedWeights);
         baseCounter += WorkoutConstant.INCREMENT_OFFSET;
 
         return baseCounter;
