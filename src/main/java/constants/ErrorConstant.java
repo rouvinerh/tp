@@ -90,7 +90,7 @@ public class ErrorConstant {
     public static final String EMPTY_GYM_STATION_NAME_ERROR = "Exercise name cannot be blank!";
 
     public static final String INVALID_GYM_STATION_NAME_ERROR = "Exercise name can only have letters!";
-    public static final String GYM_STATION_NAME_LENGTH_ERROR = "Exercise name cannot be more than 40 characters!";
+    public static final String GYM_STATION_NAME_LENGTH_ERROR = "Exercise name cannot be more than 25 characters!";
     public static final String GYM_STATION_FORMAT_ERROR = "Remember that you are now adding gym station input!"
             + System.lineSeparator()
             + "Expected format: [Station Name] /s:[SETS] /r:[REPS] /w:[WEIGHTS]";
@@ -229,7 +229,6 @@ public class ErrorConstant {
 
     public static final String ZERO_RUN_TIME_ERROR = "Total time taken for run cannot be 0!";
     public static final String MAX_RUN_TIME_ERROR = "Total time taken for run cannot exceed 100 hours!";
-    public static final String INVALID_USERNAME_ERROR = "Username can only contain alphanumeric characters and " +
-            "spaces!";
-
+    public static final String INVALID_USERNAME_ERROR = "\u001b[31mUsername can only contain alphanumeric characters " +
+            "and spaces!\u001b[0m";
 }

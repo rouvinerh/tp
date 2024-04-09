@@ -130,7 +130,7 @@ Format: <code style="color: #D85D43;">STATION_NAME /s:SET /r:REPS /w:WEIGHT</cod
 * `REPS` is a **positive integer**  representing the number of repetitions done for one station.
 * `WEIGHT` is a **list of positive numbers** separated by commas. It represents the weights used for all the sets in the station.
 
-> ⚠️ `STATION_NAME` must always be the first parameter. The order of the other parameters can be in any order. `STATION_NAME` can **only contain letters and spaces**, and can be up to **40 characters long**.
+> ⚠️ `STATION_NAME` must always be the first parameter. The order of the other parameters can be in any order. `STATION_NAME` can **only contain letters and spaces**, and can be up to **25 characters long**.
 
 > ⚠️ `WEIGHT` must be in **multiples of 0.125 KG**! This is because the minimum weight increment in a gym is 0.125kg. Example `bench press /s:2 /r:10 /w:10.333,12.5` is not valid as 10.333 is not a multiple of 0.125kg.
 
