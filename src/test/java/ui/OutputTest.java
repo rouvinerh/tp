@@ -451,43 +451,30 @@ class OutputTest {
                     "1999-12-19",
                     "10.24",
                     "01:11:12",
-                    "6:57/km",
-                    UiConstant.DASH,
-                    UiConstant.DASH,
-                    UiConstant.DASH,
-                    UiConstant.DASH
+                    "6:57/km"
                     );
 
 
             String expectedGym1Set1 = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
                     WorkoutConstant.GYM,
                     "1992-11-11",
-                    UiConstant.DASH,
-                    UiConstant.DASH,
-                    UiConstant.DASH,
                     "Bench Press",
                     "2",
-                    "4,4",
-                    "10.0,20.0"
+                    UiConstant.DASH
             );
 
             String expectedGym1Set2 = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
                     UiConstant.EMPTY_STRING,
                     UiConstant.EMPTY_STRING,
-                    UiConstant.EMPTY_STRING,
-                    UiConstant.EMPTY_STRING,
-                    UiConstant.EMPTY_STRING,
                     "Squat Press",
                     "2",
-                    "4,4",
-                    "100.0,200.0"
+                    UiConstant.DASH
             );
 
             String expected2 = String.format(
                     WorkoutConstant.HISTORY_WORKOUTS_DATA_HEADER_FORMAT, "2", expectedGym1Set1)
                     + System.lineSeparator() +
                     String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_HEADER_FORMAT, "", expectedGym1Set2);
-
 
             String expected1 = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_HEADER_FORMAT, "1", expectedRun1);
 
