@@ -387,7 +387,7 @@ public class Validation {
                     throw new CustomExceptions.InvalidInput(ErrorConstant.GYM_WEIGHT_POSITIVE_ERROR);
                 }
 
-                if (weightDouble >= WorkoutConstant.MAX_GYM_WEIGHT) {
+                if (weightDouble > WorkoutConstant.MAX_GYM_WEIGHT) {
                     throw new CustomExceptions.InvalidInput(ErrorConstant.MAX_GYM_WEIGHT_ERROR);
                 }
 

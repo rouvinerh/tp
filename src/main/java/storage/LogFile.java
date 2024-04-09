@@ -7,10 +7,10 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import constants.UiConstant;
 
+//@@ author L5-Z
 /**
  * Represents a Logfile object used to write information and error logs for PulsePilot.
  */
-//@@ author L5-Z
 public class LogFile {
     protected static FileHandler logFileHandler = null;
     private static LogFile instance = null;
