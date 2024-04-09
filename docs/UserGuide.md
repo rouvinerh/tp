@@ -4,7 +4,7 @@
 
 ## Introduction
 
-PulsePilot is a **desktop app for tracking health-related information, optimised for users via a Command Line Interface (CLI)**. If one can type fast, you can key in and track health-related information faster than traditional GUI applications installed on your phone or computer.
+**PulsePilot** is a desktop application designed for **efficiently tracking health-related information** through a **Command Line Interface (CLI)**. For users who can type quickly, the CLI allows for faster data entry compared to traditional Graphical User Interface (GUI) applications on phones or computers.
 
 ## Table of Contents
 
@@ -33,8 +33,8 @@ PulsePilot is a **desktop app for tracking health-related information, optimised
 2. Download the latest `pulsepilot.jar`.
 3. Copy the file to the folder you want to use as the home folder for PulsePilot.
 4. Open a command terminal (either cmd.exe or bash), cd to the folder with `pulsepilot.jar` in it, and use `java -jar pulsepilot.jar` to run the application.
-5. The welcome message for PulsePilot should be printed to the screen.
-6. Type commands in the command line and press Enter to execute it. Using `help` and pressing Enter will print the help message.
+5. The application will display a welcome message when you start PulsePilot.
+6. Type commands in the command line and press Enter to execute it. Using `help` and pressing <kbd>Enter</kbd> will print the help message.
 
 The bot will prompt you for your name before starting.
 
@@ -44,17 +44,17 @@ The bot will prompt you for your name before starting.
 
 ## Notes About Command Format
 
-* Parameters in `UPPER_CASE` are the parameters to be **supplied by the user**.
-* Parameters in square brackets are optional.
+* Parameters in `UPPER_CASE` are to be **supplied by the user**.
+* Parameters in square brackets are **optional**.
   * `[/date:DATE]` means that the `DATE` parameter is **optional**.
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
   * This can result in errors despite valid commands being used!
 
 > ⚠️ PulsePilot is **not case-sensitive**. All commands are converted to upper case before being processed.
 
-> ⚠️ The order of flags (for example, `/e:`) can be changed **unless mentioned otherwise**.
+> ⚠️ The order of flags can be changed (for example, `/t: /d:` and `/d: /t:`) **unless mentioned otherwise**.
 
-> ⚠️ For all positive integer inputs, please omit additional `0` characters in front as it will trigger errors. For example, inputting `01` will cause an error!
+> ⚠️ Please input positive integers without leading zeros. Entering a number with a leading zero, such as '01', will trigger an error.
 
 > ⚠️ Follow instructions clearly. Ensure that the syntax is exactly the same as provided in the user guide. For instance, no extra characters in the commands, such as blank space, newline, etc.
 ---
@@ -160,7 +160,7 @@ Expected Output:
 
 ![Adding BMI](img/output/adding_bmi.png)
 
-The ranges for BMI are as follows:
+PulsePilot will categorize your BMI as follows:
 
 - BMI < 18.5 (less than 18.5): **Underweight**
 - 18.5 <= BMI < 25.0 (more than or equal to 18.5 and less than 25.0): **Normal**
@@ -216,8 +216,8 @@ Expected Output:
 
 ![Viewing Prediction](img/output/viewing_prediction.png)
 
-> ⚠️ There is no minimum and maximum lengths for a period and hence cycle, since underlying medical conditions can cause varying cycle lengths.
-> PulsePilot will only **notify** you if your cycle length is outside of the healthy range of **2 - 7 days**.
+> ⚠️ PulsePilot does not impose any minimum or maximum length requirements for menstrual cycles, as underlying medical conditions can cause variations in cycle lengths.
+> PulsePilot will only **notify** you if your cycle length is beyond the healthy range of **2 - 7 days**.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -354,17 +354,17 @@ Expected Output:
 
 ## Logging
 
-The latest logs are written to `pulsepilot_log.txt` once the bot exits. Each time the bot is run, the current `pulsepilot_log.txt` file is overwritten with the most recent logs. The logs record both info messages and any error messages.
-
+When you exit PulsePilot, the latest logs are written to the `pulsepilot_log.txt` file. Every time you run PulsePilot, the `pulsepilot_log.txt` file is overwritten with the most recent logs.
 ###### [Back to table of contents](#table-of-contents)
 
 ## Saving Data
 
-Data is saved to `pulsepilot_data.txt` once the bot exits. Each time the bot exits, the current 
-`pulsepilot_data.txt` file is overwritten with the most recent data.
+Your data is saved to the `pulsepilot_data.txt file` when you exit PulsePilot. Every time you exit the application, 
+the `pulsepilot_data.txt` file is overwritten with the most up-to-date data.
 
-**Warning:** Should this file be corrupted,there is a slim chance of recovery.
-**Tip:** Ensure that you always have a _backup copy stored safely_ to prevent permanent data loss.
+> ❗ **_WARNING_:** If the `pulsepilot_data.txt` file becomes corrupted, there is a very low chance of recovering the data.
+
+> 💡 Ensure that you always have a _backup copy stored safely_ to prevent permanent data loss.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -374,9 +374,9 @@ Data is saved to `pulsepilot_data.txt` once the bot exits. Each time the bot exi
 
 In some instances, the output from an error will result in odd characters being printed on screen:
 
-![Colour not rendering](img/output/colour_render.png)
+![Colour not rendering](img/output/colour_not_rendered.png)
 
-This issue affects Windows machines. The odd characters are actually escape sequences used to display colour in the terminal. Windows 10 users do not have this enabled by default in their terminals. For Windows 11, these escape characters are automatically enabled and hence rendered properly.
+This color rendering issue is specific to Windows machines. The odd characters you see are actually escape sequences used to display color in the terminal. Windows 10 terminals do not have this color rendering feature enabled by default, whereas Windows 11 terminals automatically enable it, displaying the colors correctly.
 
 This is what the output is supposed to look like when the same command is used on a Windows 11 machine:
 
@@ -388,17 +388,17 @@ This is a visual bug, and it can be safely ignored by the user.
 
 **1.** How do I transfer my data to another computer?
 
-Ensure that `pulsepilot.jar` is placed in the **same folder** as `pulsepilot_data.txt` **and** `pulsepilot_hash.txt`. PulsePilot should recognise and synchronise your data contents from `pulsepilot_data.txt` if done correctly.
+To transfer your data to another computer, make sure that `pulsepilot.jar` is placed in the **same folder** as `pulsepilot_data.txt` **and** `pulsepilot_hash.txt`. If done correctly, PulsePilot will recognize and synchronize your data from `pulsepilot_data.txt`.
 
-**Tip!** Create a _backup copy_ of both `pulsepilot_data.txt` and `pulsepilot_hash.txt` prior to file transfer to avoid data corruption. The _backup copies_ should be stored in a **separate** folder location from where 
+> ⚠️ Create a _backup copy_ of both `pulsepilot_data.txt` and `pulsepilot_hash.txt` prior to file transfer to avoid data corruption. The _backup copies_ should be stored in a **separate** folder location from where 
 the original `pulsepilot.jar` is saved.
 
-**Tip!** You can copy files by:
-
-- Selecting the file of interest and ensure it is highlighted
-- Copy the file with <kbd>Ctrl</kbd> + <kbd>C</kbd>
-- Opening up a new folder in a **separate** folder location from where `pulsepilot.jar` is saved
-- Paste the new file copy with <kbd>Ctrl</kbd> + <kbd>V</kbd>
+> 💡 You can copy file by:
+>
+>- Selecting the file of interest and ensure it is highlighted
+>- Copy the file with <kbd>Ctrl</kbd> + <kbd>C</kbd>
+>- Opening up a new folder in a **separate** folder location from where `pulsepilot.jar` is saved
+>- Paste the new file copy with <kbd>Ctrl</kbd> + <kbd>V</kbd>
 
 **2.** What happens if my data is corrupted or tampered with?
 
@@ -414,17 +414,16 @@ You may experience 2 scenarios:
 
 ![Missing Files](img/output/missing_files.png)
 
-A data file content corruption results in permanent and complete data loss. This occurs either due to intentional or accidental tampering with either `pulsepilot_data.txt` or `pulsepilot_hash.txt` files, or corruption due to unforeseen circumstances on the user-end during migration of files.
-
+Corruption of the `pulsepilot_data.txt` or `pulsepilot_hash.txt` files will result in permanent and complete data loss. This can happen due to intentional or accidental tampering with the files, or unforeseen circumstances during file migration.
 PulsePilot will automatically delete the corrupted files before exiting.
 
-A missing file error occurs when either `pulsepilot_data.txt` or `pulsepilot_hash.txt` is missing when PulsePilot is run. For safety and security purposes, PulsePilot will automatically delete the remaining file before exiting.
+A missing file error occurs when either `pulsepilot_data.txt` or `pulsepilot_hash.txt` is missing when PulsePilot is run. For safety and security reasons, PulsePilot will automatically delete any remaining data files before exiting the application.
 
 **Both cases will inevitably result in permanent and complete data loss.**
 
 > ❗ **DATA RECOVERY:** In both cases, you may want to recover data by utilising **both** your backup copies of  `pulsepilot_data.txt` and `pulsepilot_hash.txt` to restore your data. 
 
-Otherwise, you may opt to re-run `pulsepilot.jar` again with the same command, `java -jar pulsepilot.jar` to initialise a new save file.
+Otherwise, if you have lost your data, you can reinitialize a new save file by running the command `java -jar pulsepilot.jar` again.
 
 **3.** Is my tracking data private and confidential?
 
@@ -461,7 +460,7 @@ Example of the correct command:
 ![correct_command.png](img/correct_command.png)
 
 - Error of adding extra space(s) in fixed parameters:
-  - In this case, the altered fixed parameter is `/date:`, which has written as `/ date:` instead.
+  - In this case, the altered fixed parameter is `/date:`, which was written as `/ date:` instead.
   - Fixed parameters are non-optional and non-user-decided parameters. Check [Notes about command format](#notes-about-command-format).
 
 ![extra_space_error_command.png](img/extra_space_error_command.png)
@@ -470,7 +469,7 @@ Example of the correct command:
 
 ![extra_newline_error_command.png](img/extra_newline_error_command.png)
 
-Note that the errors mentioned above would lead to errors thrown. Any similar syntax errors could likely throw errors as well.
+The syntax errors mentioned above would likely result in PulsePilot throwing additional errors. Any similar syntax errors could likely throw errors as well.
 
 ###### [Back to table of contents](#table-of-contents)
 
