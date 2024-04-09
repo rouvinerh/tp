@@ -162,10 +162,10 @@ public class Validation {
         //if period list is not empty
         if (sizeOfPeriodList >= UiConstant.MINIMUM_PERIOD_COUNT) {
             LocalDate latestPeriodEndDate =
-                    Objects.requireNonNull(HealthList.getPeriod(sizeOfPeriodList - 1)).getEndDate();
+                    Objects.requireNonNull(HealthList.getPeriod(0)).getEndDate(); // index of latest period == 0
             //checks if new input's start date tallies with the existing latest start date or end date is not empty
             validateStartDatesTally(periodDetails[HealthConstant.PERIOD_START_DATE_INDEX],
-                    sizeOfPeriodList, latestPeriodEndDate, periodDetails);
+                    latestPeriodEndDate, periodDetails);
             //checks if start date is after the latest period input in list
             validateDateAfterLatestPeriodInput(
                     periodDetails[HealthConstant.PERIOD_START_DATE_INDEX], latestPeriodEndDate);
@@ -518,18 +518,17 @@ public class Validation {
      * and checks if end date exists.
      *
      * @param dateString          The string representation of the start date to be validated.
-     * @param sizeOfPeriodList    The size of the period list in the HealthList.
      * @param latestPeriodEndDate The end date of the latest period in the HealthList.
      * @param periodDetails       An array containing details of the current period input.
      * @throws CustomExceptions.InvalidInput If the start date does not match the start date of the latest period
      *                                        or if insufficient parameters are provided.
      */
-    public void validateStartDatesTally(String dateString, int sizeOfPeriodList, LocalDate latestPeriodEndDate,
+    public void validateStartDatesTally(String dateString, LocalDate latestPeriodEndDate,
                                                String[] periodDetails) throws CustomExceptions.InvalidInput {
         Parser parser = new Parser();
         LocalDate date = parser.parseDate(dateString);
         LocalDate latestPeriodStartDate =
-                Objects.requireNonNull(HealthList.getPeriod(sizeOfPeriodList - 1)).getStartDate();
+                Objects.requireNonNull(HealthList.getPeriod(0)).getStartDate(); // index of latest period == 0
 
         if (latestPeriodEndDate == null) {
             if (!date.equals(latestPeriodStartDate)) {
