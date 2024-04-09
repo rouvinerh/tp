@@ -30,11 +30,11 @@
 
 ## Quick Start
 
-1. Ensure that you have the latest Java 11.
+1. Ensure that you have the Java 11 installed.
 2. Download the latest `pulsepilot.jar`.
 3. Copy the file to the folder you want to use as the home folder for PulsePilot.
-4. Open a command terminal (either cmd.exe or bash), cd to the folder with `pulsepilot.jar` in it, and use `java -jar pulsepilot.jar` to run the application.
-5. The application will display a welcome message when you start PulsePilot.
+4. Open a command terminal (either cmd.exe or bash), `cd` to the folder with `pulsepilot.jar` in it, and use `java -jar pulsepilot.jar` to run the application.
+5. The application will display a welcome message if started successfully.
 6. Type commands in the command line and press Enter to execute it. Using `help` and pressing <kbd>Enter</kbd> will print the help message.
 
 The bot will prompt you for your name before starting.
@@ -51,13 +51,13 @@ The bot will prompt you for your name before starting.
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
   * This can result in errors despite valid commands being used!
 
-> ⚠️ PulsePilot is **not case-sensitive**. All commands are converted to upper case before being processed.
+> ⚠️ PulsePilot commands are **not case-sensitive**. All commands are converted to upper case before being processed.
 
 > ⚠️ The order of flags can be changed (for example, `/t: /d:` and `/d: /t:`) **unless mentioned otherwise**.
 
 > ⚠️ Please input positive integers without leading zeros. Entering a number with a leading zero, such as '01', will trigger an error.
 
-> ⚠️ Follow instructions clearly. Ensure that the syntax is exactly the same as provided in the user guide. For instance, no extra characters in the commands, such as blank space, newline, etc.
+> ⚠️ Ensure that the syntax is exactly the same as provided in the user guide. For instance, no extra characters in the commands, such as blank space, newline, etc.
 ---
 
 ## Commands
@@ -74,7 +74,6 @@ Format: <code style="color: #D85D43;">workout /e:run /d:DISTANCE /t:TIME [/date:
 
 > ⚠️ If `HH` is set to `00`, the bot will throw an error. Please use `MM:SS` if the `HH` field is not needed!
 
-
 Examples:
 - <code style="color: #D85D43;">workout /e:run /d:5.15 /t:25:03 /date:25-03-2023 </code>
 - <code style="color: #D85D43;">workout /e:run /d:5.15 /t:25:03</code>
@@ -83,8 +82,8 @@ Expected Output:
 
 ![Adding Runs](img/output/adding_runs.png)
 
-> ⚠️ Minimum and Maximum inputs:
-> Maximum Pace: 30:00/km, Minimum Pace: 1:00/km
+> ⚠️ **Minimum and Maximum inputs:**
+> Maximum Pace Value: 30:00/km, Minimum Pace Value: 1:00/km
 > Maximum Run Time: 99:59:59, Minimum Run Time: 00:01
 > Maximum Distance: 5000.00, Minimum Distance: 0.01
 > **Note that exceeding these bounds will trigger an error!**
@@ -117,7 +116,7 @@ Format: <code style="color: #D85D43;">STATION_NAME /s:SET /r:REPS /w:WEIGHT</cod
 * `REPS` is a **positive integer**  representing the number of repetitions done for one station.
 * `WEIGHT` is a **list of positive numbers** separated by commas. It represents the weights used for all the sets in the station.
 
-> ⚠️ `STATION_NAME` must always be the first parameter. The order of the other parameters can be in any order.
+> ⚠️ `STATION_NAME` must always be the first parameter. The order of the other parameters can be in any order. `STATION_NAME` can **only contain letters and spaces**, and can be up to **40 characters long**.
 
 > ⚠️ `WEIGHT` must be in **multiples of 0.125 KG**. This is because the minimum weight increment in a gym is 0.125kg. Example `bench press /s:2 /r:10 /w:10.333,12.5` is not valid as 10.333 is not a multiple of 0.125kg.
 
@@ -132,10 +131,8 @@ Expected Output:
 
 ![Adding Gyms](img/output/adding_gym.png)
 
-> ⚠️ Minimum inputs:
-Minimum weight: 0.00
-Minimum number of sets: 1
-Minimum number of repetitions: 1
+> ⚠️ **Minimum and Maximum inputs:**
+> Minimum Weight: 0kg, Maximum Weight: 2850kg
 > **Note that exceeding these bounds will trigger an error!**
 
 ###### [Back to table of contents](#table-of-contents)
@@ -157,10 +154,6 @@ Examples:
 * <code style="color: #D85D43;">health /h:bmi /height:1.70 /weight:75.42 /date:19-03-2024</code>
 * <code style="color: #D85D43;">health /h:bmi /date:19-03-2024 /height:1.70 /weight:75.42</code>
 
-Expected Output:
-
-![Adding BMI](img/output/adding_bmi.png)
-
 PulsePilot will categorize your BMI as follows:
 
 - BMI < 18.5 (less than 18.5): **Underweight**
@@ -168,6 +161,12 @@ PulsePilot will categorize your BMI as follows:
 - 25.0 <= BMI < 30.0 (more than or equal to 25.0 and less than 30.0): **Overweight**
 - 30.0 <= BMI < 40.0 (more than or equal to 30.0 and less than 40.0): **Obese**
 - BMI >= 40.0 (more than 40.0): **Severely Obese**
+
+Expected Output:
+
+![Adding BMI](img/output/adding_bmi.png)
+
+
 
 > ⚠️ Minimum and Maximum inputs:
 > Maximum Height: 2.75, Minimum Height: 0.01
@@ -191,7 +190,7 @@ Format: <code style="color: #D85D43;">health /h:period /start:START_DATE [/end:E
 
 * `END_DATE` is `DD-MM-YYYY` format (i.e. `19-03-2024`) representing the last day of period flow. This parameter is optional and can be input once the period flow ends. To add an end date, you need to input the correct corresponding start date of the period.
 
-**Warning:** Every period input needs to include a start date and end date before adding a new period input.
+> ⚠️  Every period input must have a start date and end date before adding a new period input. This prevents users from recording new periods when their current one has not ended.
 
 
 Examples:
@@ -221,7 +220,7 @@ Expected Output:
 
 ![Viewing Prediction](img/output/viewing_prediction.png)
 
-> ⚠️ PulsePilot does not impose any minimum or maximum length requirements for menstrual cycles, as underlying medical conditions can cause variations in cycle lengths.
+> ⚠️ PulsePilot **does not** impose minimum or maximum length requirements for menstrual cycles, as underlying medical conditions can cause variations in cycle lengths.
 > PulsePilot will only **notify** you if your cycle length is beyond the healthy range of **2 - 7 days**.
 
 ###### [Back to table of contents](#table-of-contents)
@@ -254,7 +253,7 @@ Expected Output:
 
 > ⚠️ Any characters that are **NOT** mentioned above used in the description will trigger an error! Please use the characters allowed.
 
-> ⚠️ There is **no validation of date and time**. This allows the user to record both past and future appointments for their own tracking.
+> ⚠️ There is **no validation of date and time**. This allows the user to record **both past and future** appointments for their own tracking.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -323,7 +322,7 @@ Examples:
 
 Expected output:
 
-![Deleting](img/output/deleting.png)
+![Deleting Object](img/output/deleting.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -361,13 +360,13 @@ Expected Output:
 
 ## Logging
 
-When you exit PulsePilot, the latest logs are written to the `pulsepilot_log.txt` file. Every time you run PulsePilot, the `pulsepilot_log.txt` file is overwritten with the most recent logs.
+When you exit PulsePilot, the latest logs are written to the `pulsepilot_log.txt` file. 
+
 ###### [Back to table of contents](#table-of-contents)
 
 ## Saving Data
 
-Your data is saved to the `pulsepilot_data.txt file` when you exit PulsePilot. Every time you exit the application, 
-the `pulsepilot_data.txt` file is overwritten with the most up-to-date data.
+Your data is saved to the `pulsepilot_data.txt file` when you exit PulsePilot. Every time you exit the application, the `pulsepilot_data.txt` file is overwritten with the most up-to-date data.
 
 > ❗ **_WARNING_:** If the `pulsepilot_data.txt` file becomes corrupted, there is a very low chance of recovering the data.
 
