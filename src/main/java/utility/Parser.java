@@ -176,13 +176,13 @@ public class Parser {
             if (countForwardSlash(userInput) > UiConstant.NUM_OF_SLASHES_FOR_LATEST_AND_HISTORY) {
                 throw new CustomExceptions.InvalidInput(ErrorConstant.TOO_MANY_SLASHES_ERROR);
             }
-            String type = extractSubstringFromSpecificIndex(userInput, UiConstant.ITEM_FLAG);
+            String filter = extractSubstringFromSpecificIndex(userInput, UiConstant.ITEM_FLAG);
 
-            if (type.isBlank()) {
+            if (filter.isBlank()) {
                 throw new CustomExceptions.InsufficientInput(ErrorConstant.INVALID_HISTORY_FILTER_ERROR);
             }
-            validation.validateFilter(type.toLowerCase());
-            return type.toLowerCase();
+            validation.validateFilter(filter.toLowerCase());
+            return filter.toLowerCase();
         } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
             output.printException(e.getMessage());
             return null;
