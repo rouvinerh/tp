@@ -651,7 +651,7 @@ public class Parser {
             throw new CustomExceptions.FileReadError(ErrorConstant.INVALID_GYM_STATION_NAME_ERROR);
         }
 
-        if (!currentStationName.matches(UiConstant.VALID_EXERCISE_NAME_REGEX)) {
+        if (!currentStationName.matches(UiConstant.VALID_GYM_STATION_NAME_REGEX)) {
             throw new CustomExceptions.FileReadError(ErrorConstant.INVALID_GYM_STATION_NAME_ERROR);
         }
 

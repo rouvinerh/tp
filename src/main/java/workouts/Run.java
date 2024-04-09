@@ -157,16 +157,16 @@ public class Run extends Workout {
             throw new CustomExceptions.InvalidInput(ErrorConstant.ZERO_RUN_TIME_ERROR);
         }
 
-        if (totalSeconds > WorkoutConstant.MAX_RUN_TIME_IN_SECONDS) {
+        if (totalSeconds >= WorkoutConstant.MAX_RUN_TIME_IN_SECONDS) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.MAX_RUN_TIME_ERROR);
         }
 
         double paceInDecimal = ((double) totalSeconds / this.distance) / UiConstant.NUM_SECONDS_IN_MINUTE;
 
-        if (paceInDecimal > WorkoutConstant.MAX_PACE) {
+        if (paceInDecimal >= WorkoutConstant.MAX_PACE) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.MAX_PACE_ERROR);
         }
-        if (paceInDecimal < WorkoutConstant.MIN_PACE) {
+        if (paceInDecimal <= WorkoutConstant.MIN_PACE) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.MIN_PACE_ERROR);
         }
 

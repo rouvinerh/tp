@@ -360,7 +360,7 @@ public class Validation {
         if (exerciseName.isEmpty()) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.EMPTY_GYM_STATION_NAME_ERROR);
         }
-        if (!exerciseName.matches(UiConstant.VALID_EXERCISE_NAME_REGEX)) {
+        if (!exerciseName.matches(UiConstant.VALID_GYM_STATION_NAME_REGEX)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_GYM_STATION_NAME_ERROR);
         }
 
