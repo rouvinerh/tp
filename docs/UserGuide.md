@@ -16,6 +16,7 @@
     * [Adding Gym Stations](#adding-gym-stations)
   * [Health: BMI](#health-bmi)
   * [Health: Period](#health-period)
+  * [Health: Prediction](#health-prediction)
   * [Health: Appointment](#health-appointment)
   * [History](#history)
   * [Latest](#latest)
@@ -203,6 +204,10 @@ Expected Output:
 
 ![Adding Periods](img/output/adding_period.png)
 
+###### [Back to table of contents](#table-of-contents)
+
+___
+
 ### Health: Prediction
 
 Predicts user's next period start date.
@@ -225,7 +230,7 @@ ___
 
 ### Health: Appointment
 
-Tracks the user's medical appointments.
+Tracks both **previous and upcoming** medical appointments.
 
 Format: <code style="color: #D85D43;">health /h:appointment /date:DATE /time:TIME /description:DESCRIPTION</code>
 
@@ -235,9 +240,7 @@ Format: <code style="color: #D85D43;">health /h:appointment /date:DATE /time:TIM
 
 * `TIME` is a `HH:mm` format (i.e. `14:15`) representing the time of the appointment.
 
-* `DESCRIPTION` is a string (i.e. `review checkup with surgeon`) representing the details of the appointment. The string can **only contain alphanumeric characters and spaces**.
-
-> ⚠️ Other characters entered in the appointment description will trigger an error!
+* `DESCRIPTION` is a string (i.e. `review checkup with surgeon`) representing the details of the appointment. The description can **only contain alphanumeric characters, spaces, inverted commas and quotes**.
 
 Examples:
 
@@ -248,6 +251,10 @@ Examples:
 Expected Output:
 
 ![Adding Appointment](img/output/adding_appointment.png)
+
+> ⚠️ Any characters that are **NOT** mentioned above used in the description will trigger an error! Please use the characters allowed.
+
+> ⚠️ There is **no validation of date and time**. This allows the user to record both past and future appointments for their own tracking.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -478,13 +485,14 @@ The syntax errors mentioned above would likely result in PulsePilot throwing add
 | Action        | Format, Examples                                                                                                              |
 |---------------|-------------------------------------------------------------------------------------------------------------------------------|
 | Print help    | `help`                                                                                                                        |
-| Add new run   | `workout /e:run /d:DISTANCE /t:TIME [/date:DATE]` Example: `workout /e:run /d:5.24 /t:25:23 /date:19-03-2024`                 |
-| Add gym       | `workout /e:gym /n:NUMBER_OF_STATIONS [/date:DATE]` Example: `workout /e:gym /n:4`                                            |
-| Track BMI     | `health /h:bmi /height:HEIGHT /weight:WEIGHT /date:DATE` Example: `health /h:bmi /height:1.70 /weight:75.42 /date:19-03-2024` |
-| Track Period  | `health /h:period /start:START_DATE [/end:END_DATE]` Example: `health /h:period /start:09-03-2022 /end:16-03-2022`            |
-| View history  | `history /item:TYPE` Example: `history /item:run`                                                                             |
-| View latest   | `latest /item:TYPE` Example: `latest /item:bmi`                                                                               |
-| Deleting item | `delete /item:TYPE /index:INDEX` Example: `delete /item:run /index:1`                                                         |
+| Add new run   | `workout /e:run /d:DISTANCE /t:TIME [/date:DATE]` <br> Example: `workout /e:run /d:5.24 /t:25:23 /date:19-03-2024`</br>                 |
+| Add gym       | `workout /e:gym /n:NUMBER_OF_STATIONS [/date:DATE]` <br> Example: `workout /e:gym /n:4`</br>                                           |
+| Track BMI     | `health /h:bmi /height:HEIGHT /weight:WEIGHT /date:DATE` <br> Example: `health /h:bmi /height:1.70 /weight:75.42 /date:19-03-2024`</br> |
+| Track Period  | `health /h:period /start:START_DATE [/end:END_DATE]` <br> Example: `health /h:period /start:09-03-2022 /end:16-03-2022`</br>            |
+| Track Appointment  | `health /h:appointment /date:DATE /time:TIME /description:DESCRIPTION` <br> Example: `health /h:appointment /date:29-04-2025 /time:12:00 /description:knee surgery` </br>           |
+| View history  | `history /item:TYPE` <br> Example: `history /item:run` </br>                                                                            |
+| View latest   | `latest /item:TYPE` <br> Example: `latest /item:bmi` </br>                                                                               |
+| Deleting item | `delete /item:TYPE /index:INDEX` <br> Example: `delete /item:run /index:1`  </br>                                                       |
 | Exit bot      | `exit`                                                                                                                        |
 
 ###### [Back to table of contents](#table-of-contents)

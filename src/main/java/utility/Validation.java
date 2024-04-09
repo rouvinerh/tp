@@ -8,7 +8,6 @@ import health.HealthList;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -336,8 +335,6 @@ public class Validation {
         }
         validateDateInput(appointmentDetails[HealthConstant.APPOINTMENT_DATE_INDEX]);
         validateTimeInput(appointmentDetails[HealthConstant.APPOINTMENT_TIME_INDEX]);
-        validateTimeAndDateBeforeNow(appointmentDetails[HealthConstant.APPOINTMENT_DATE_INDEX],
-                appointmentDetails[HealthConstant.APPOINTMENT_TIME_INDEX]);
 
         if (appointmentDetails[HealthConstant.APPOINTMENT_DESCRIPTION_INDEX].length()
                 > HealthConstant.MAX_DESCRIPTION_LENGTH) {
@@ -540,26 +537,6 @@ public class Validation {
             if (periodDetails[HealthConstant.PERIOD_END_DATE_INDEX] == null) {
                 throw new CustomExceptions.InvalidInput(ErrorConstant.END_DATE_NOT_FOUND_ERROR );
             }
-        }
-    }
-
-    //@@author syj02
-    /**
-     * Validates whether the date and time specified is before current date and time. Throws an error if it is.
-     *
-     * @param timeString A string representing the time.
-     * @throws CustomExceptions.InvalidInput If the time specified is before current time.
-     */
-    public void validateTimeAndDateBeforeNow(String dateString, String timeString)
-            throws CustomExceptions.InvalidInput {
-        Parser parser = new Parser();
-        LocalDate date = parser.parseDate(dateString);
-        LocalTime time = parser.parseTime(timeString);
-        LocalDate currentDate = LocalDate.now();
-        LocalTime currentTime = LocalTime.now();
-
-        if (date.isBefore(currentDate) || (date.isEqual(currentDate) && time.isBefore(currentTime))) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_APPOINTMENT_DATE_TIME_ERROR);
         }
     }
 }
