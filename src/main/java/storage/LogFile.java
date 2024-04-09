@@ -62,7 +62,7 @@ public class LogFile {
      */
     public static void writeLog(String input, boolean isError) {
         if (isError) {
-            logger.log(Level.WARNING, "Error: " + input);
+            logger.log(Level.WARNING, input);
         } else {
             logger.log(Level.INFO, input);
         }

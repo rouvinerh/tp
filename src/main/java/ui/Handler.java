@@ -100,6 +100,7 @@ public class Handler {
             } catch (CustomExceptions.InvalidInput e) {
                 output.printException(e.getMessage());
             } catch (IllegalArgumentException e) {
+                LogFile.writeLog("Invalid Command Error: " + userInput, true);
                 output.printException(ErrorConstant.INVALID_COMMAND_ERROR);
             }
         }
@@ -148,6 +149,7 @@ public class Handler {
         String filter = parser.parseHistoryAndLatestInput(userInput);
         if (filter != null) {
             output.printHistory(filter);
+            LogFile.writeLog("Viewed history for " + filter, false);
         }
     }
 
@@ -244,6 +246,7 @@ public class Handler {
         String filter = parser.parseHistoryAndLatestInput(userInput);
         if (filter != null) {
             output.printLatest(filter);
+            LogFile.writeLog("Viewed latest for " + filter, false);
         }
     }
 

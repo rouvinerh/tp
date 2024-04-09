@@ -8,6 +8,7 @@ import health.Appointment;
 import health.Bmi;
 import health.HealthList;
 import health.Period;
+import storage.LogFile;
 import ui.Output;
 
 import workouts.Gym;
@@ -205,6 +206,7 @@ public class Parser {
                 bmiDetails[HealthConstant.BMI_WEIGHT_INDEX],
                 bmiDetails[HealthConstant.BMI_DATE_INDEX]);
         output.printAddBmi(newBmi);
+        LogFile.writeLog("Added BMI", false);
     }
 
     /**
@@ -259,14 +261,17 @@ public class Parser {
                         periodDetails[HealthConstant.PERIOD_START_DATE_INDEX],
                         periodDetails[HealthConstant.PERIOD_END_DATE_INDEX]);
                 output.printAddPeriod(newPeriod);
+                LogFile.writeLog("Added Period", false);
             } else if (size > 0 && Objects.requireNonNull(HealthList.getPeriod(size - 1)).getEndDate() == null) {
                 Period latestPeriod = Objects.requireNonNull(HealthList.getPeriod(size - 1));
                 latestPeriod.updateEndDate(periodDetails[1]);
                 output.printAddPeriod(latestPeriod);
+                LogFile.writeLog("Added Period", false);
             }
         } else {
             Period newPeriod = new Period(periodDetails[HealthConstant.PERIOD_START_DATE_INDEX]);
             output.printAddPeriod(newPeriod);
+            LogFile.writeLog("Added Period", false);
         }
     }
 
@@ -315,6 +320,7 @@ public class Parser {
             HealthList.printLatestThreeCycles();
             LocalDate nextPeriodStartDate = HealthList.predictNextPeriodStartDate();
             Period.printNextCyclePrediction(nextPeriodStartDate);
+            LogFile.writeLog("Used prediction", false);
         } else {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.UNABLE_TO_MAKE_PREDICTIONS_ERROR);
         }
@@ -365,8 +371,8 @@ public class Parser {
                 appointmentDetails[HealthConstant.APPOINTMENT_DATE_INDEX],
                 appointmentDetails[HealthConstant.APPOINTMENT_TIME_INDEX],
                 appointmentDetails[HealthConstant.APPOINTMENT_DESCRIPTION_INDEX]);
-
         output.printAddAppointment(newAppointment);
+        LogFile.writeLog("Added appointment", false);
     }
 
     //@@author L5-Z
@@ -442,6 +448,7 @@ public class Parser {
         } else {
             newGym = new Gym(gymDetails[WorkoutConstant.GYM_DATE_INDEX]);
         }
+
         int numberOfStations = Integer.parseInt(gymDetails[WorkoutConstant.GYM_NUMBER_OF_STATIONS_INDEX]);
         parseGymStationInput(numberOfStations, newGym);
     }
@@ -504,6 +511,7 @@ public class Parser {
                     runDetails[WorkoutConstant.RUN_DATE_INDEX]);
         }
         output.printAddRun(newRun);
+        LogFile.writeLog("Added Run", false);
     }
 
     /**
@@ -532,11 +540,14 @@ public class Parser {
                 gym.addStation(validGymStationInput[WorkoutConstant.GYM_STATION_NAME_INDEX], numberOfSets,
                         numberOfRepetitions, weightsArray);
                 i++;
+                LogFile.writeLog("Added Gym Station: " +
+                        validGymStationInput[WorkoutConstant.GYM_STATION_NAME_INDEX], false);
             } catch (CustomExceptions.InsufficientInput | CustomExceptions.InvalidInput e) {
                 output.printException(e.getMessage());
             }
         }
         output.printAddGym(gym);
+        LogFile.writeLog("Added Gym", false);
     }
 
     //@@author L5-Z
