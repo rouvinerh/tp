@@ -170,33 +170,22 @@ public class Gym extends Workout {
         String gymStationString = station.getStationName();
         String gymSetString = String.valueOf(station.getNumberOfSets());
 
-        // Process the reps and weights into string format
-        String gymRepString = station.toRepString(UiConstant.COMMAS);
-        String gymWeightString = station.toWeightString(UiConstant.COMMAS);
-
         // If it is first iteration, includes dashes for irrelevant field
         if (index == 0){
             return String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
                     WorkoutConstant.GYM, gymDate,
-                    UiConstant.DASH,
-                    UiConstant.DASH,
-                    UiConstant.DASH,
                     gymStationString,
                     gymSetString,
-                    gymRepString,
-                    gymWeightString);
+                    UiConstant.DASH
+            );
         } else {
             // if it is not, then leave it blank
             return String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
                     UiConstant.EMPTY_STRING,
                     UiConstant.EMPTY_STRING,
-                    UiConstant.EMPTY_STRING,
-                    UiConstant.EMPTY_STRING,
-                    UiConstant.EMPTY_STRING,
                     gymStationString,
                     gymSetString,
-                    gymRepString,
-                    gymWeightString
+                    UiConstant.DASH
             );
 
         }

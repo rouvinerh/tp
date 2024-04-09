@@ -37,8 +37,8 @@ class WorkoutListTest {
             WorkoutList workoutListInstance = new WorkoutList();
             workoutListInstance.addRun(inputRun);
 
-            ArrayList<? extends Workout> runList = workoutListInstance.getWorkouts(WorkoutConstant.RUN);
-            ArrayList<? extends Workout> workoutList = workoutListInstance.getWorkouts(WorkoutConstant.ALL);
+            ArrayList<? extends Workout> runList = WorkoutList.getWorkouts(WorkoutConstant.RUN);
+            ArrayList<? extends Workout> workoutList = WorkoutList.getWorkouts(WorkoutConstant.ALL);
 
             Workout expectedRun = runList.get(runList.size() - 1);
             Workout expectedWorkout = workoutList.get(runList.size() - 1);
