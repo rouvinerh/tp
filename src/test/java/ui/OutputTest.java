@@ -451,23 +451,39 @@ class OutputTest {
                     "1999-12-19",
                     "10.24",
                     "01:11:12",
-                    "6:57/km",
-                    UiConstant.DASH,
-                    UiConstant.DASH
+                    "6:57/km"
                     );
 
 
             String expectedGym1Set1 = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
                     WorkoutConstant.GYM,
                     "1992-11-11",
-                    UiConstant.DASH,
-                    UiConstant.DASH,
-                    UiConstant.DASH,
                     "Bench Press",
-                    "2"
+                    "2",
+                    UiConstant.DASH
             );
 
-            String expected = getString(expectedGym1Set1, expectedRun1);
+            String expectedGym1Set2 = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
+                    UiConstant.EMPTY_STRING,
+                    UiConstant.EMPTY_STRING,
+                    "Squat Press",
+                    "2",
+                    UiConstant.DASH
+            );
+
+            String expected2 = String.format(
+                    WorkoutConstant.HISTORY_WORKOUTS_DATA_HEADER_FORMAT, "2", expectedGym1Set1)
+                    + System.lineSeparator() +
+                    String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_HEADER_FORMAT, "", expectedGym1Set2);
+
+            String expected1 = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_HEADER_FORMAT, "1", expectedRun1);
+
+            String expected = UiConstant.PARTITION_LINE + System.lineSeparator()
+                    + WorkoutConstant.HISTORY_WORKOUTS_HEADER + System.lineSeparator()
+                    + WorkoutConstant.HISTORY_WORKOUTS_HEADER_FORMAT + System.lineSeparator()
+                    + expected1 + System.lineSeparator()
+                    + expected2 + System.lineSeparator()
+                    + UiConstant.PARTITION_LINE + System.lineSeparator();
             Output output = new Output();
             output.printHistory(WorkoutConstant.ALL);
             assertEquals(expected, outContent.toString());
@@ -475,34 +491,6 @@ class OutputTest {
             fail("Shouldn't have failed");
         }
 
-    }
-
-    private static String getString(String expectedGym1Set1, String expectedRun1) {
-        String expectedGym1Set2 = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
-                UiConstant.EMPTY_STRING,
-                UiConstant.EMPTY_STRING,
-                UiConstant.EMPTY_STRING,
-                UiConstant.EMPTY_STRING,
-                UiConstant.EMPTY_STRING,
-                "Squat Press",
-                "2"
-        );
-
-        String expected2 = String.format(
-                WorkoutConstant.HISTORY_WORKOUTS_DATA_HEADER_FORMAT, "2", expectedGym1Set1)
-                + System.lineSeparator() +
-                String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_HEADER_FORMAT, "", expectedGym1Set2);
-
-
-        String expected1 = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_HEADER_FORMAT, "1", expectedRun1);
-
-        String expected = UiConstant.PARTITION_LINE + System.lineSeparator()
-                + WorkoutConstant.HISTORY_WORKOUTS_HEADER + System.lineSeparator()
-                + WorkoutConstant.HISTORY_WORKOUTS_HEADER_FORMAT + System.lineSeparator()
-                + expected1 + System.lineSeparator()
-                + expected2 + System.lineSeparator()
-                + UiConstant.PARTITION_LINE + System.lineSeparator();
-        return expected;
     }
 
 }
