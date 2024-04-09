@@ -41,7 +41,7 @@ public class UiConstant {
     public static final String NAME_LABEL = "NAME";
     public static final String LOG_FILE_PATH = "./pulsepilot_log.txt";
     public static String dataFilePath = "./pulsepilot_data.txt";
-    public static  String hashFilePath = "./pulsepilot_hash.txt";
+    public static String hashFilePath = "./pulsepilot_hash.txt";
     public static File saveFile = new File(UiConstant.dataFilePath);
     public static final int FILE_FOUND = 0;
     public static final int FILE_NOT_FOUND = 1;

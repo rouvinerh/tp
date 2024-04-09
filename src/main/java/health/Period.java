@@ -140,8 +140,6 @@ public class Period extends Health {
      * @return The sum of the cycle lengths of the latest three menstrual cycles.
      */
     public long getLastThreeCycleLengths() {
-        int size = HealthList.getPeriodSize();
-
         long sumOfCycleLengths = 0;
 
         int startIndexForPrediction = HealthConstant.LAST_CYCLE_INDEX; // == 1
