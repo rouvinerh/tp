@@ -37,21 +37,10 @@ public class Period extends Health {
     protected long cycleLength;
 
     private final Parser parser = new Parser();
+
     private final HealthList healthList = new HealthList();
+
     //@@author syj02
-    /**
-     * Constructor for Period object.
-     *
-     * @param stringStartDate A string representing the start date of the period.
-     * @param stringEndDate   A string representing the end date of the period.
-     */
-    public Period(String stringStartDate, String stringEndDate) {
-        this.startDate = parser.parseDate(stringStartDate);
-        this.endDate = parser.parseDate(stringEndDate);
-        this.periodLength = calculatePeriodLength();
-        this.cycleLength = 0;
-        healthList.addPeriod(this);
-    }
 
     /**
      * Constructs a new Period object with only the start date provided.
@@ -62,6 +51,20 @@ public class Period extends Health {
         this.startDate = parser.parseDate(stringStartDate);
         this.endDate = null;
         this.periodLength = 1;
+        this.cycleLength = 0;
+        healthList.addPeriod(this);
+    }
+
+    /**
+     * Constructor for Period object.
+     *
+     * @param stringStartDate A string representing the start date of the period.
+     * @param stringEndDate   A string representing the end date of the period.
+     */
+    public Period(String stringStartDate, String stringEndDate) {
+        this.startDate = parser.parseDate(stringStartDate);
+        this.endDate = parser.parseDate(stringEndDate);
+        this.periodLength = calculatePeriodLength();
         this.cycleLength = 0;
         healthList.addPeriod(this);
     }
@@ -108,31 +111,7 @@ public class Period extends Health {
         return periodLength;
     }
 
-    /**
-     * Calculates the length of the period in days.
-     *
-     * @return The length of the period.
-     */
-    public long calculatePeriodLength() {
-        assert getStartDate().isBefore(getEndDate()) : ErrorConstant.PERIOD_END_BEFORE_START_ERROR;
-
-        if (endDate == null || startDate == null) {
-            return 0;
-        } else {
-            // Add 1 to include both start and end dates
-            return ChronoUnit.DAYS.between(getStartDate(), getEndDate()) + 1;
-        }
-    }
-
-    /**
-     * Sets the cycle length of the current period based on the start date of the next period.
-     *
-     * @param nextStartDate The start date of the next period.
-     */
-    public void setCycleLength(LocalDate nextStartDate) {
-        this.cycleLength = ChronoUnit.DAYS.between(getStartDate(), nextStartDate);
-    }
-
+    //@@author j013n3
 
     /**
      * Calculates the sum of the cycle lengths of the latest three menstrual cycles.
@@ -155,6 +134,21 @@ public class Period extends Health {
         return sumOfCycleLengths;
     }
 
+    /**
+     * Calculates the length of the period in days.
+     *
+     * @return The length of the period.
+     */
+    public long calculatePeriodLength() {
+        assert getStartDate().isBefore(getEndDate()) : ErrorConstant.PERIOD_END_BEFORE_START_ERROR;
+
+        if (endDate == null || startDate == null) {
+            return 0;
+        } else {
+            // Add 1 to include both start and end dates
+            return ChronoUnit.DAYS.between(getStartDate(), getEndDate()) + 1;
+        }
+    }
 
     /**
      * Predicts the start date of the next period based on the average cycle length.
@@ -164,6 +158,15 @@ public class Period extends Health {
     public LocalDate nextCyclePrediction() {
         long averageCycleLength = getLastThreeCycleLengths() / HealthConstant.LATEST_THREE_CYCLE_LENGTHS;
         return getStartDate().plusDays(averageCycleLength);
+    }
+
+    /**
+     * Sets the cycle length of the current period based on the start date of the next period.
+     *
+     * @param nextStartDate The start date of the next period.
+     */
+    public void setCycleLength(LocalDate nextStartDate) {
+        this.cycleLength = ChronoUnit.DAYS.between(getStartDate(), nextStartDate);
     }
 
     /**
