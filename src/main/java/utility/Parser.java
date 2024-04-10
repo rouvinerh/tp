@@ -80,20 +80,14 @@ public class Parser {
 
     //@@author L5-Z
     /**
-     * Converts a LocalDate object to a formatted String representation.
+     * Converts a LocalDate object to a formatted String representation. Returns "NA" if date is null.
+     *
      * @param date LocalDate object representing the date.
      * @return Formatted String representation of the date in the format "dd-MM-yyyy".
-     *
-     * @throws DateTimeParseException If there is an error parsing the date.
      */
     public String parseFormattedDate(LocalDate date) {
-        DateTimeFormatter formatter = null;
-        try {
-            formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        } catch (DateTimeParseException e) {
-            output.printException(ErrorConstant.PARSING_DATE_ERROR);
-        }
-        if (date == null || formatter == null) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        if (date == null) {
             return "NA";
         }
         return date.format(formatter);
@@ -153,7 +147,6 @@ public class Parser {
      * @return A list of strings containing the filter string and index to delete.
      */
     public String[] parseDeleteInput(String userInput) {
-
         try {
             String[] deleteDetails = splitDeleteInput(userInput);
             validation.validateDeleteInput(deleteDetails);
@@ -632,7 +625,6 @@ public class Parser {
 
         int numberOfSets;
         int reps;
-        ArrayList<Double> weights = new ArrayList<>();
         try {
             currentStationName = gymDetails[baseCounter];
             numberOfSetsStr = gymDetails[baseCounter + WorkoutConstant.SETS_OFFSET];
