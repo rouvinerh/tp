@@ -470,7 +470,7 @@ This is the sequence diagram for adding a period from `parsePeriodInput()`:
 
 ![Set Cycle Length Diagram](img/sequence_diagrams/set_Cycle_Length.png)
 
-validatePeriodInput uses the Validation class to check all the parameters specified by the user when adding or updating a Period, and throws an exception if it is invalid.
+`validatePeriodInput()` uses the `Validation` class to check all the parameters specified by the user when adding or updating a Period, and throws an exception if it is invalid.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -487,7 +487,7 @@ The user's input is processed to add a run as follows:
 
 3. `Validation.validateBmiInput()` is called to validate each parameter. Once valid, correct parameters are used to construct a new `Bmi` object.
 
-4. The `Bmi` constructor adds the newly created object into `HealthList.BMIS`. The BMI value and Bmi category will be obtained from `calculateBmiValue()` and `getBmiCategory()` methods respectively. 
+4. The `Bmi` constructor adds the newly created object into `HealthList.BMIS`. The BMI value and Bmi category will be obtained from `calculateBmiValue()` and `getBmiCategory()` methods respectively.
 
 5. The `Bmi` object is passed to `Output.printAddBmi()` and a message acknowledging the successful adding is printed to the screen.
 
