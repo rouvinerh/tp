@@ -661,20 +661,48 @@ Simultaneously, PulsePilot facilitates access to this vital data for various hea
 
 ### Manual Testing
 
-* [Launching and Termination](#launching-and-termination-testing)
+* [Launching and Termination](#launching-and-termination)
+    * [Launching](#launching)
 * [Run](#run-testing)
 * [Gym](#gym-testing)
 * [Period](#period-testing)
 * [Prediction](#prediction-testing)
 * [BMI](#bmi-testing)
 * [Appointment](#appointment-testing)
+* [History](#history-testing)
+* [Latest](#latest-testing)
+* [Delete](#delete-testing)
 * [Storage](#storage-testing)
 
 ###### [Back to table of contents](#table-of-contents)
 
 ---
 
-#### Launching and Termination Testing
+#### Launching and Termination
+
+##### Launching
+
+1. Ensure that you have the Java 11 installed.
+2. Download the latest `pulsepilot.jar` from [here](https://github.com/AY2324S2-CS2113T-T09-4/tp/releases/tag/v2.1).
+3. Copy the file to the folder you want to use as the home folder for PulsePilot.
+4. Open a command terminal (either `cmd.exe` or `bash`);
+     - `cd` to the folder with `pulsepilot.jar` in it.
+     -  Run `java -jar pulsepilot.jar`.
+5. The application will display a welcome message if started successfully. 
+6. `pulsepilot_log.txt`, `pulsepilot_data.txt` and `pulsepilot_log.txt.lck` will be created.
+    - The `.lck` file is known as a Lock File, which prevents other processes from editing or accessing a single file, in this case `pulsepilot_log.txt`.
+7. Bot will begin with user induction to retrieve the username as shown below:
+
+![Opening Prompt from PulsePilot](img/output/start_prompt.png)
+
+##### Termination
+
+1. Quit the app using the `exit` command.
+2. A farewell message is printed as follows:
+
+![Shutdown](img/output/shutdown.png)
+
+3. `pulsepilot_hash.txt` is created upon `exit`, and `pulsepilot_data.txt` will be written to. The `.lck` file from start up will be deleted as well.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -682,22 +710,65 @@ Simultaneously, PulsePilot facilitates access to this vital data for various hea
 
 #### Run Testing
 
+**Adding a run:**
+
+1. Test Case: `workout /e:run /d:5.15 /t:25:00`
+    **Expected Result**: Run added. Successful adding message is printed.
+
+2. Test Case: `workout /e:run /d:15.15 /t:01:25:00 /date:25-02-2024`
+    **Expected Result**: Run added. Successful adding message is printed.
+
+3. Test Case: `workout /e:run /d:25.00 /t:00:25:00`
+    **Expected Result**: Run not added. Error message asking user to use `MM:SS` as hours cannot be `00` is printed in red.
+
+4. Test Case: `workout /e:run /d:30.00 /t:28:00`
+    **Expected Result**: Run not added. Error message stating that pace cannot be faster than `1.00/km` is printed in red.
+
 ###### [Back to table of contents](#table-of-contents)
 
 ---
 #### Gym Testing
 
-###### [Back to table of contents](#table-of-contents)
+**Adding a gym:**
 
----
+1. Test Case:
 
-#### Period Testing
+This test case for gym has **multiple lines of input**.
 
-###### [Back to table of contents](#table-of-contents)
+```
+workout /e:gym /n:1
+bench press /s:2 /r:4 /w:10,20
+```
 
----
+**Expected Result**: Gym added successfully. Successful adding message is printed.
 
-#### Prediction Testing
+2. Test Case: `workout /e:gym /n:0`
+
+    **Expected Result**: Gym not added. Error message stating that number of sets cannot be 0 is printed in red.
+
+
+3. Test Case:
+
+This test case for gym has **multiple lines of input**.
+
+```
+workout /e:gym /n:2
+bench press /s:1 /r:4 /w:10
+smith's press /s:1 /r:4 /w:10
+```
+
+**Expected Result**: Gym not added. Error message stating that gym station name can only have letters, and gym station prompt for station 2 is printed again.
+
+4. Test Case:
+
+This test case for gym has **multiple lines of input**.
+
+```
+workout /e:gym /n:1
+bench press /s:2 /r:4 /w:10
+```
+
+**Expected Result**: Gym not added. Error message stating that number of weight values must be the same as the number of sets is printed in red.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -705,17 +776,197 @@ Simultaneously, PulsePilot facilitates access to this vital data for various hea
 
 #### BMI Testing
 
+**Adding a BMI:**
+
+1. Test Case: `health /h:bmi /height:1.70 /weight:70.00 /date:29-04-2023`
+    - **Expected Result**: BMI added successfully. Successful adding message is printed.
+
+2. Test Case: `health /h:bmi /height:1.70 /weight:0.00 /date:29-04-2023`
+    - **Expected Result**: BMI not added. Error message stating height and weight must be more than 0 is printed in red.
+
+3. Test Case: `health /h:bmi /height:100.00 /weight:50.00 /date:29-04-2023`
+    - **Expected Result**: BMI not added. Error message stating that the tallest human being ever was 2.72m and to specify a height less than 2.75m is printed in red.
+
 ###### [Back to table of contents](#table-of-contents)
 
 ---
 
+#### Period Testing
+
+**Adding a Period:**
+
+Note that the bot's stored items are cleared after each test case for **period testing only**. This can be done using the `delete` command.
+
+1. Test Case: `health /h:period /start:10-03-2024 /end:17-03-2024`
+    **Expected Result**: Period is added. Successful adding message is printed. Notification that period length is out of healthy range is printed in red.
+
+2. Test Case: `health /h:period /start:10-03-2024`
+    **Expected Result**: Period is added. Successful adding message is printed with end date set to NA.
+
+3. Test Case:
+
+This test case for period has **multiple lines of input**.
+
+```
+health /h:period /start:10-03-2024
+health /h:period /start:10-03-2024 /end:16-03-2024
+health /h:period /start:10-04-2024 /end:16-04-2024
+```
+
+**Expected Result**: Only 1 Period is added, with successful message printing twice. Error message stating that date specified cannot be later than today's date is printed in red.
+
+
+4. Test Case:
+
+This test case for period has **multiple lines of input**.
+
+```
+health /h:period /start:10-03-2024
+health /h:period /start:10-04-2024 /end:16-04-2024
+```
+
+**Expected Result**: 1 period is added, with successful message printing once. Second command causes an error message stating that either end date for previous period is still empty, or start dates of current period do not tally.
+
+###### [Back to table of contents](#table-of-contents)
+
+---
+
+#### Prediction Testing
+
+
+
+**Checking prediction with 4 valid periods added:**
+
+
+
+1. Test Case:
+
+This test case for prediction has **multiple lines of input**.
+
+```
+health /h:period /start:10-12-2023 /end:16-12-2023
+health /h:period /start:10-01-2024 /end:16-01-2024
+health /h:period /start:10-02-2024 /end:16-02-2024
+health /h:period /start:10-03-2024 /end:16-03-2024
+health /h:prediction
+```
+
+**Expected Result**: Prediction successful. Last 3 periods and predicted start date is printed.
+
+**Checking prediction without 4 valid periods:**
+
+1. Test Case: `health /h:prediction`
+    **Expected Result**: Prediction not made. Error message stating that there are not enough period cycles recorded is printed in red.
+
+###### [Back to table of contents](#table-of-contents)
+
+---
+
+
 #### Appointment Testing
+
+Adding an appointment:
+
+1. Test Case: `health /h:appointment /date:19-03-2023 /description:surgery /time:19:00`
+    - **Expected Result**: Appointment added. Successful adding message is printed.
+
+2. Test Case `health /h:appointment /date:19-03-2023 /description:;;; /time:19:00`
+    - **Expected Result**: Appointment not added. Error stating that description can only contain alphanumeric characters, spaces, inverted commas and quotes is printed.
+
+
+###### [Back to table of contents](#table-of-contents)
+
+---
+
+#### History Testing
+
+Viewing History with 1 valid run and 1 valid gym:
+
+1. Test Case: `history /item:workouts`
+    - **Expected Result**: Run and Gym information is printed.
+
+
+Viewing history with no valid objects:
+
+1. Test Case: `history /item:appointment`
+    - **Expected Result**: Error message stating that no appointments have been found is printed in red.
+
+###### [Back to table of contents](#table-of-contents)
+
+---
+
+#### Latest Testing
+
+**Viewing Latest with 1 valid BMI entry and 1 valid run:**
+
+1. Test Case:
+
+This test case for latest has **multiple lines of input**.
+
+```
+latest /item:run
+latest /item:bmi
+latest /item:appointment
+```
+
+**Expected Result**: Run and BMI printed normally. Error message stating that no appointments found is printed in red.
+
+**Viewing Latest with no invalid string:**
+
+1. Test Case: `latest /item:test`
+    - **Expected Result**: Error message stating that invalid item has been specified is printed in red.
+
+###### [Back to table of contents](#table-of-contents)
+
+---
+
+#### Delete Testing
+
+**Deleting a run:**
+
+1. Test Case:
+
+This test case for delete has **multiple lines of input**.
+
+```
+workout /e:run /d:5.15 /t:25:00
+delete /item:run /index:1
+```
+
+**Expected Result**: Run is deleted and delete message is printed.
+
+**Deleting gym that does not exist:**
+
+1. Test Case: `delete /item:gym /index:1`
+    **Expected Result**: Error message stating invalid index to delete is printed in red.
+
 
 ###### [Back to table of contents](#table-of-contents)
 
 ---
 
 #### Storage Testing
+
+**PulsePilot placed in a directory where read and write permissions are given**:
+
+1. Test Case: Launching for first time:
+    **Expected Result**: Log file, log file lock and data file are created.
+
+2. Test Case: Missing hash file:
+    **Expected Result**: Error message stating key files for integrity are missing is printed in red, and bot exits.
+
+3. Test Case: Data file not present but hash file present:
+    **Expected Result**: Error message stating key files for integrity are missing is printed in red, and bot exits.
+
+4. Test Case: Data file hash does not match hash in hash file:
+    **Expected Result**: Error message stating data file integrity is compromised is printed in red, and bot exits.
+
+**PulsePilot placed in a directory with no read or write permissions**:
+
+1. Test Case: Launching PulsePilot:
+
+    **Expected Result**: Error message stating that the application cannot read or write to the current directory is printed in red, and bot exits.
+
 
 ###### [Back to table of contents](#table-of-contents)
 
