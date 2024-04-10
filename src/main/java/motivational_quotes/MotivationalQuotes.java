@@ -1,8 +1,5 @@
 package motivational_quotes;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MotivationalQuotes {
     private static final String[] QUOTES = {
         "The only way to achieve the impossible is to believe it is possible.",

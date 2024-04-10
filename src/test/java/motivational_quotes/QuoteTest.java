@@ -1,6 +1,5 @@
 package motivational_quotes;
 
-import motivational_quotes.Quote;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
