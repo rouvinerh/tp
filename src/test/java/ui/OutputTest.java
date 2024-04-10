@@ -22,6 +22,7 @@ import health.HealthList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.AfterEach;
@@ -126,17 +127,15 @@ class OutputTest {
      */
     @Test
     void printLatestRun_noRun_expectNoRunMessage() {
-        String expected = UiConstant.PARTITION_LINE +
+        String expected =  "\u001b[31mException Caught!" +
                 System.lineSeparator() +
-                "\u001B[31mOut of Bounds Error: " +
-                ErrorConstant.HISTORY_RUN_EMPTY_ERROR +
-                "\u001B[0m" +
-                System.lineSeparator() +
-                UiConstant.PARTITION_LINE +
+                "\u001b[31mOut of Bounds Error: " +
+                ErrorConstant.RUN_EMPTY_ERROR +
+                "\u001b[0m\u001b[0m" +
                 System.lineSeparator();
         Output output = new Output();
         output.printLatestRun();
-        assertEquals(expected, outContent.toString());
+        assertTrue(errContent.toString().contains(expected));
     }
 
     /**
@@ -193,18 +192,15 @@ class OutputTest {
      */
     @Test
     void printLatestGym_noGym_expectNoGymMessage() {
-        String expected = UiConstant.PARTITION_LINE +
+        String expected =  "\u001b[31mException Caught!" +
                 System.lineSeparator() +
-                "\u001B[31mOut of Bounds Error: " +
-                ErrorConstant.HISTORY_GYM_EMPTY_ERROR +
-                "\u001B[0m" +
-                System.lineSeparator() +
-                UiConstant.PARTITION_LINE +
+                "\u001b[31mOut of Bounds Error: " +
+                ErrorConstant.GYM_EMPTY_ERROR +
+                "\u001b[0m\u001b[0m" +
                 System.lineSeparator();
         Output output = new Output();
         output.printLatestGym();
-        assertEquals(expected, outContent.toString());
-        cleanup();
+        assertTrue(errContent.toString().contains(expected));
     }
 
     /**

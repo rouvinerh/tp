@@ -286,13 +286,15 @@ public class Output {
      * @throws CustomExceptions.InvalidInput If there is invalid input.
      */
     protected void printBmiHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
-        printLine();
+
         try {
+            printLine();
             HealthList.showBmiHistory();
+            printLine();
         } catch (CustomExceptions.OutOfBounds e) {
-            System.out.println(e.getMessage());
+            printException(e.getMessage());
         }
-        printLine();
+
     }
 
     /**
@@ -302,13 +304,15 @@ public class Output {
      * @throws CustomExceptions.InvalidInput If there is invalid input.
      */
     protected void printPeriodHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
-        printLine();
+
         try {
+            printLine();
             HealthList.showPeriodHistory();
+            printLine();
         } catch (CustomExceptions.OutOfBounds e) {
-            System.out.println(e.getMessage());
+            printException(e.getMessage());
         }
-        printLine();
+
     }
 
     //@@author syj02
@@ -319,13 +323,15 @@ public class Output {
      * @throws CustomExceptions.InvalidInput If there is invalid input.
      */
     protected void printAppointmentHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
-        printLine();
+
         try {
+            printLine();
             HealthList.showAppointmentList();
+            printLine();
         } catch (CustomExceptions.OutOfBounds e) {
-            System.out.println(e.getMessage());
+            printException(e.getMessage());
         }
-        printLine();
+
     }
 
     //@@author rouvinerh
@@ -333,75 +339,83 @@ public class Output {
      * Prints the latest Run recorded.
      */
     protected void printLatestRun() {
-        printLine();
-        try {
 
+        try {
+            printLine();
             Workout latestRun = WorkoutList.getLatestRun();
             String latestRunString = getFormattedRunWithIndex(WorkoutList.getRunSize(), latestRun);
             System.out.println("Your latest run:");
             System.out.println(WorkoutConstant.RUN_HEADER_INDEX_FORMAT);
             System.out.println(latestRunString);
-
+            printLine();
         } catch (CustomExceptions.OutOfBounds e) {
-            System.out.println(e.getMessage());
+            printException(e.getMessage());
         }
-        printLine();
+
     }
 
     /**
      * Prints the latest Gym recorded.
      */
     protected void printLatestGym() {
-        printLine();
+
         try {
+            printLine();
             Gym latestGym = WorkoutList.getLatestGym();
             int index = WorkoutList.getGymSize();
             System.out.println("Your latest gym:");
             System.out.println("Gym Session " + index + latestGym);
             printGymStats(latestGym);
+            printLine();
         } catch (CustomExceptions.OutOfBounds e) {
-            System.out.println(e.getMessage());
+            printException((e.getMessage()));
         }
-        printLine();
+
     }
 
     /**
      * Prints the latest BMI entry recorded.
      */
     protected void printLatestBmi() {
-        printLine();
+
         try {
+            printLine();
             HealthList.showCurrentBmi();
+            printLine();
         } catch (CustomExceptions.OutOfBounds e) {
-            System.out.println(e.getMessage());
+            printException(e.getMessage());
         }
-        printLine();
+
     }
 
     /**
      * Prints the latest Period entry recorded.
      */
     protected void printLatestPeriod() {
-        printLine();
+
         try {
+            printLine();
             HealthList.showLatestPeriod();
+            printLine();
         } catch (CustomExceptions.OutOfBounds e) {
-            System.out.println(e.getMessage());
+            printException(e.getMessage());
         }
-        printLine();
+
     }
 
     /**
      * Prints the latest Appointment entry recorded.
      */
     protected void printEarliestAppointment(){
-        printLine();
+
         try {
+            printLine();
             HealthList.showEarliestAppointment();
+            printLine();
         } catch (CustomExceptions.OutOfBounds e) {
-            System.out.println(e.getMessage());
+            printException(e.getMessage());
         }
-        printLine();
+
     }
 
     /**
@@ -453,6 +467,7 @@ public class Output {
             case WORKOUTS:
                 printWorkoutHistory();
                 break;
+
             case RUN:
                 printRunHistory();
                 break;

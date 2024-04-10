@@ -39,8 +39,6 @@
      - `cd` to the folder with `pulsepilot.jar` in it.
      -  Run `java -jar pulsepilot.jar`.
 5. The application will display a welcome message if started successfully.
-6. Type commands in the command line and press <kbd>Enter</kbd> to execute it.
-    - For example, typing `help` and pressing <kbd>Enter</kbd> will print the help message.
 
 **The bot will prompt you for your name before starting.**
 

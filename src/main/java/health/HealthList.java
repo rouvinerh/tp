@@ -63,7 +63,7 @@ public class HealthList extends ArrayList<Health> {
      */
     public static void showCurrentBmi() throws CustomExceptions.OutOfBounds {
         if (BMIS.isEmpty()) {
-            throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_BMI_EMPTY_ERROR);
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.BMI_EMPTY_ERROR);
         }
         assert !BMIS.isEmpty() : ErrorConstant.EMPTY_BMI_LIST_ERROR;
         System.out.println(BMIS.get(0));
@@ -76,7 +76,7 @@ public class HealthList extends ArrayList<Health> {
      */
     public static void showBmiHistory() throws CustomExceptions.OutOfBounds {
         if (BMIS.isEmpty()) {
-            throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_BMI_EMPTY_ERROR);
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.BMI_EMPTY_ERROR);
         }
         assert !BMIS.isEmpty() : ErrorConstant.EMPTY_BMI_LIST_ERROR;
         int index = 1;
@@ -113,7 +113,7 @@ public class HealthList extends ArrayList<Health> {
      */
     public static void showLatestPeriod() throws CustomExceptions.OutOfBounds {
         if (PERIODS.isEmpty()) {
-            throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_PERIOD_EMPTY_ERROR);
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.PERIOD_EMPTY_ERROR);
         }
         assert !PERIODS.isEmpty() : ErrorConstant.EMPTY_PERIOD_LIST_ERROR;
         System.out.println(PERIODS.get(0));
@@ -128,7 +128,7 @@ public class HealthList extends ArrayList<Health> {
      */
     public static void showPeriodHistory() throws CustomExceptions.OutOfBounds {
         if (PERIODS.isEmpty()) {
-            throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_PERIOD_EMPTY_ERROR);
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.PERIOD_EMPTY_ERROR);
         }
         assert !PERIODS.isEmpty() : ErrorConstant.EMPTY_PERIOD_LIST_ERROR;
         int index = 1;
@@ -261,7 +261,7 @@ public class HealthList extends ArrayList<Health> {
     public static void deleteBmi(int index) throws CustomExceptions.OutOfBounds {
         assert !BMIS.isEmpty() : ErrorConstant.EMPTY_BMI_LIST_ERROR;
         if (index < 0) {
-            throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_BMI_EMPTY_ERROR);
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.BMI_EMPTY_ERROR);
         } else if (index >= BMIS.size()) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.INVALID_INDEX_DELETE_ERROR);
         }
@@ -284,7 +284,7 @@ public class HealthList extends ArrayList<Health> {
     public static void deletePeriod(int index) throws CustomExceptions.OutOfBounds {
         assert !PERIODS.isEmpty() : ErrorConstant.EMPTY_PERIOD_LIST_ERROR;
         if (index < 0) {
-            throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_PERIOD_EMPTY_ERROR);
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.PERIOD_EMPTY_ERROR);
         } else if(index >= PERIODS.size()) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.INVALID_INDEX_DELETE_ERROR);
         }
@@ -323,8 +323,8 @@ public class HealthList extends ArrayList<Health> {
     public static void deleteAppointment(int index) throws CustomExceptions.OutOfBounds {
         assert !APPOINTMENTS.isEmpty() : ErrorConstant.EMPTY_APPOINTMENT_LIST_ERROR;
         if (index < 0) {
-            throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_APPOINTMENT_EMPTY_ERROR);
-        } else if (index > APPOINTMENTS.size()) {
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.APPOINTMENT_EMPTY_ERROR);
+        } else if (index >= APPOINTMENTS.size()) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.INVALID_INDEX_DELETE_ERROR);
         }
         Appointment deletedAppointment = APPOINTMENTS.get(index);
@@ -346,7 +346,7 @@ public class HealthList extends ArrayList<Health> {
      */
     public static void showAppointmentList() throws CustomExceptions.OutOfBounds {
         if (APPOINTMENTS.isEmpty()) {
-            throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_APPOINTMENT_EMPTY_ERROR);
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.APPOINTMENT_EMPTY_ERROR);
         }
         assert !APPOINTMENTS.isEmpty() : ErrorConstant.EMPTY_APPOINTMENT_LIST_ERROR;
         int index = 1;
@@ -365,7 +365,7 @@ public class HealthList extends ArrayList<Health> {
      */
     public static void showEarliestAppointment() throws CustomExceptions.OutOfBounds {
         if (APPOINTMENTS.isEmpty()) {
-            throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_APPOINTMENT_EMPTY_ERROR);
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.APPOINTMENT_EMPTY_ERROR);
         }
         assert !APPOINTMENTS.isEmpty() : ErrorConstant.EMPTY_APPOINTMENT_LIST_ERROR;
         System.out.println(APPOINTMENTS.get(0));

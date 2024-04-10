@@ -60,14 +60,14 @@ public class ErrorConstant {
     // EXERCISE ERRORS
 
     // HISTORY ERRORS
-    public static final String HISTORY_RUN_EMPTY_ERROR = "No runs found! You need to add a run first!";
-    public static final String HISTORY_GYM_EMPTY_ERROR = "No gyms found! You need to add a gym first!";
-    public static final String HISTORY_WORKOUTS_EMPTY_ERROR = "No workouts found! You need to add " +
-            "either a run or a gym first";
-    public static final String HISTORY_APPOINTMENT_EMPTY_ERROR = "No appointments found! You need to add an " +
-            "appointment first";
-    public static final String HISTORY_BMI_EMPTY_ERROR = "No BMI entries found! You need to add an entry first!";
-    public static final String HISTORY_PERIOD_EMPTY_ERROR = "No periods found! You need to add a period first!";
+    public static final String RUN_EMPTY_ERROR = "No runs found! You need to add a run entry first!";
+    public static final String GYM_EMPTY_ERROR = "No gyms found! You need to add a gym entry first!";
+    public static final String WORKOUTS_EMPTY_ERROR = "No workouts found! You need to add " +
+            "either a run or a gym entry first!";
+    public static final String APPOINTMENT_EMPTY_ERROR = "No appointments found! You need to add an " +
+            "appointment first!";
+    public static final String BMI_EMPTY_ERROR = "No BMI entries found! You need to add a BMI entry first!";
+    public static final String PERIOD_EMPTY_ERROR = "No periods found! You need to add a period entry first!";
 
     // RUN ERRORS
     public static final String INSUFFICIENT_RUN_PARAMETERS_ERROR = "Insufficient parameters for run! "
@@ -87,10 +87,10 @@ public class ErrorConstant {
             + System.lineSeparator()
             + "Only input what is required! Additional characters between flags will cause errors.";
     public static final String INVALID_NUMBER_OF_STATIONS_ERROR = "Number of stations is a positive number!";
-    public static final String EMPTY_GYM_STATION_NAME_ERROR = "Exercise name cannot be blank!";
+    public static final String EMPTY_GYM_STATION_NAME_ERROR = "Gym station name cannot be blank!";
 
-    public static final String INVALID_GYM_STATION_NAME_ERROR = "Exercise name can only have letters!";
-    public static final String GYM_STATION_NAME_LENGTH_ERROR = "Exercise name cannot be more than 25 characters!";
+    public static final String INVALID_GYM_STATION_NAME_ERROR = "Gym station name can only have letters!";
+    public static final String GYM_STATION_NAME_LENGTH_ERROR = "Gym station name cannot be more than 25 characters!";
     public static final String GYM_STATION_FORMAT_ERROR = "Remember that you are now adding gym station input!"
             + System.lineSeparator()
             + "Expected format: [Station Name] /s:[SETS] /r:[REPS] /w:[WEIGHTS]";
@@ -119,8 +119,8 @@ public class ErrorConstant {
     public static final String GYM_WEIGHT_POSITIVE_ERROR = "Weights specified must a positive integer! " +
             "e.g. /w:10,20,30";
          
-    public static final String GYM_WEIGHT_DIGIT_ERROR = " Weights must be a number! e.g. /w:5,10,20";
-    public static final String GYM_WEIGHTS_INCORRECT_NUMBER_ERROR = " Number of weight values must be the same as" +
+    public static final String GYM_WEIGHT_DIGIT_ERROR = "Weights must be a number! e.g. /w:5,10,20";
+    public static final String GYM_WEIGHTS_INCORRECT_NUMBER_ERROR = "Number of weight values must be the same as" +
             " the number of sets! e.g. bench press /s:2 /r:10 /w:10,20";
 
     // HEALTH ERRORS
@@ -231,4 +231,5 @@ public class ErrorConstant {
     public static final String MAX_RUN_TIME_ERROR = "Total time taken for run cannot exceed 100 hours!";
     public static final String INVALID_USERNAME_ERROR = "\u001b[31mUsername can only contain alphanumeric characters " +
             "and spaces!\u001b[0m";
+    public static final String NO_PERMISSIONS_ERROR = "Cannot read or write to current directory. Exiting.";
 }

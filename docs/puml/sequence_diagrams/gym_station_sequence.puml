@@ -24,23 +24,12 @@ Parser -> Parser : parseGymStationInput()
             deactivate Handler #FFBBBB
             Parser -> Validation: splitAndValidateGymStationInput()
             activate Validation #FFBBBB
-            alt Valid Input
-                Validation --> Parser: validGymStationInput[]
-            else Insufficient Input
-                Validation --> Parser: InsufficientInputException
-            else Invalid Input
-                Validation --> Parser: InvalidInputException
-                deactivate Validation
-            end
+            Validation --> Parser:
 
             deactivate Validation #FFBBBB
             Parser -> Validation: validateWeightsArray()
             activate Validation #FFBBBB
-            alt Valid weights array
-                Validation --> Parser: weightsArray
-            else Invalid Input
-                Validation --> Parser: InvalidInputException
-            end
+            Validation --> Parser: validatedWeightsArray
             deactivate Validation #FFBBBB
             Parser -> Gym: addStation() 
             note right : Using the same gym object that has \n been created in Parser.
