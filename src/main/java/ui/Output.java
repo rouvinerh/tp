@@ -348,7 +348,6 @@ public class Output {
             System.out.println(WorkoutConstant.RUN_HEADER_INDEX_FORMAT);
             System.out.println(latestRunString);
             printLine();
-
         } catch (CustomExceptions.OutOfBounds e) {
             printException(e.getMessage());
         }
