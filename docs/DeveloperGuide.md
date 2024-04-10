@@ -222,6 +222,7 @@ The Health component consists of `Health`, `HealthList`, `Bmi`, `Period`, and `A
 #### Health List
 
 The `HealthList` class contains three `ArrayList` variables, to store BMI, Appointment and Period objects, as well as the various methods to retrieve, delete and print the objects stored.
+![HealthList Class Diagram.png](img/class_diagrams/healthlist_class_diagram.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
