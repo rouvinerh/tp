@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Quote {
-    private static final String QUOTES_FILE_PATH = "/src/main/java/motivational_quotes/Quotes.txt";
+    private static final String QUOTES_FILE_PATH = "C:/src/main/java/motivational_quotes/Quotes.txt";
     private List<String> quotes;
 
     public Quote() {

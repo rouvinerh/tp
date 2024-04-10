@@ -289,6 +289,30 @@ Expected Output:
 
 ![Adding Appointment](img/output/adding_appointment.png)
 
+## Motivation Feature:
+
+### Accessing Motivational Quotes:
+To access motivational quotes, you can use the following commands or messages:
+- Type "motivate" to receive a random motivational quote.
+- Type "inspire" to receive another random motivational quote.
+
+### Interacting with the Motivational Chatbot:
+The motivational chatbot responds to various inputs and provides motivational messages accordingly:
+- Type "hello" or "hi" to initiate a conversation with the chatbot.
+- Type "thank" to express gratitude, and the chatbot will provide further encouragement.
+
+## Using the Help Command:
+To view available commands and learn how to access motivational features, you can use the help command:
+- Type "help" to display a list of commands, including instructions for accessing motivational quotes and interacting with the chatbot.
+
+### Exiting the Program:
+To exit the program, simply type:
+- "exit"
+
+### Note:
+- The motivational features aim to provide encouragement and support in achieving your health and fitness goals. Feel free to engage with the chatbot for motivational messages whenever you need a boost.
+
+
 > ⚠️ Any characters that are **NOT** mentioned above used in the description will trigger an error! Please only use the characters allowed.
 
 ###### [Back to table of contents](#table-of-contents)
@@ -524,46 +548,6 @@ Avoid using extra characters in the commands, such as blank space, newline, etc.
 
 ## Command Summary
 
-<<<<<<< HEAD
-| Action        | Format, Examples                                                                                      |
-|---------------|--------------------------------------------------------------------------------------------------------|
-| Print help    | `help`                                                                                                   |
-| Add new run   | `workout /e:run /d:DISTANCE /t:TIME [/date:DATE]` Example: `workout /e:run /d:5.24 /t:25:23 /date:19-03-2024` |
-| Add gym       | `workout /e:gym /n:NUMBER_OF_STATIONS [/date:DATE]` Example: `workout /e:gym /n:4`                       |
-| Track BMI     | `health /h:bmi /height:HEIGHT /weight:WEIGHT /date:DATE` Example: `health /h:bmi /height:1.70 /weight:75.42 /date:19-03-2024` |
-| Track Period  | `health /h:period /start:START_DATE /end:END_DATE` Example: `health /h:period /start:09-03-2022 /end:16-03-2022` |
-| View history  | `history /item:TYPE` Example: `history /item:run`                                                          |
-| View latest   | `latest /item:TYPE` Example: `latest /item:bmi`                                                            |
-| Exit bot      | `exit`                                                                                                   |
-
-
-###### [ Updated Design ]
-
-# Updated Design Guide
-
-## Motivation Feature Implementation:
-
-### Motivation Package:
-A new package named `motivation` has been added to incorporate motivational features. This package includes a class named `Quote` responsible for managing motivational quotes and providing chatbot functionality.
-
-### Quote Class:
-- This class contains methods to retrieve random quotes and provide motivational responses based on user input.
-- The `getRandomQuote()` method returns a random quote from the provided file.
-- The `getChatResponse()` method interprets user input and provides motivational responses accordingly.
-
-### Integration with Main Program:
-- In the main program, the user can interact with the motivational features by typing messages or specific commands related to motivation.
-- The main program communicates with the `Quote` class to fetch motivational quotes and responses.
-
-## User Interaction:
-- Users can access motivational features by typing commands or messages such as "motivate" or "inspire".
-- The chatbot responds to general greetings and gratitude as well, providing motivational messages.
-
-## Help Command Update:
-- The help command has been updated to include information about accessing motivational features.
-- Users can now refer to the help message for instructions on using motivational quotes and the chatbot.
-
-=======
 | Action        | Format, Examples                                                                                                              |
 |---------------|-------------------------------------------------------------------------------------------------------------------------------|
 | Print help    | `help`                                                                                                                        |
@@ -576,7 +560,6 @@ A new package named `motivation` has been added to incorporate motivational feat
 | View latest   | `latest /item:TYPE` <br> Example: `latest /item:bmi` </br>                                                                               |
 | Deleting item | `delete /item:TYPE /index:INDEX` <br> Example: `delete /item:run /index:1`  </br>                                                       |
 | Exit bot      | `exit`                                                                                                                        |
->>>>>>> b4557409b1815d6300ed57e0022171f8ceedc377
 
 ###### [Back to table of contents](#table-of-contents)
 

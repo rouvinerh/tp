@@ -1,7 +1,6 @@
 package seedu.pulsepilot;
 
 import ui.Handler;
-
 import motivational_quotes.Quote;
 
 /**
