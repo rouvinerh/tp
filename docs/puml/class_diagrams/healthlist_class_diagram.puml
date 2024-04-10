@@ -22,12 +22,12 @@ class HealthList {
     + deleteBmi(index: int): void
     + deletePeriod(index: int): void
     + deleteAppointment(index: int): void
-    + showLatestBmi(): void
-    + showLatestPeriod(): void
-    + showLatestAppointment(): void
-    + showBmiHistory(): void
-    + showPeriodHistory(): void
-    + showAppointmentList(): void
+    + printLatestBmi(): void
+    + printLatestPeriod(): void
+    + printLatestAppointment(): void
+    + printBmiHistory(): void
+    + printPeriodHistory(): void
+    + printAppointmentHistory(): void
     + clearHealthLists(): void
     + printLatestThreeCycles(): void
     + predictNextPeriodDate(): LocalDate

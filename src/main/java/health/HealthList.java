@@ -232,7 +232,7 @@ public class HealthList extends ArrayList<Health> {
         APPOINTMENTS.remove(index);
         LogFile.writeLog(HealthConstant.APPOINTMENT_REMOVED_MESSAGE_PREFIX + index, false);
         if (!APPOINTMENTS.isEmpty()) {
-            showAppointmentList();
+            printAppointmentHistory();
         }
     }
 
@@ -241,7 +241,7 @@ public class HealthList extends ArrayList<Health> {
      *
      * @throws AssertionError If bmis list is empty.
      */
-    public static void showLatestBmi() throws CustomExceptions.OutOfBounds {
+    public static void printLatestBmi() throws CustomExceptions.OutOfBounds {
         if (BMIS.isEmpty()) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.BMI_EMPTY_ERROR);
         }
@@ -254,7 +254,7 @@ public class HealthList extends ArrayList<Health> {
      *
      * @throws AssertionError If periods list is empty.
      */
-    public static void showLatestPeriod() throws CustomExceptions.OutOfBounds {
+    public static void printLatestPeriod() throws CustomExceptions.OutOfBounds {
         if (PERIODS.isEmpty()) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.PERIOD_EMPTY_ERROR);
         }
@@ -267,7 +267,7 @@ public class HealthList extends ArrayList<Health> {
      *
      * @throws AssertionError If appointments list is empty.
      */
-    public static void showLatestAppointment() throws CustomExceptions.OutOfBounds {
+    public static void printLatestAppointment() throws CustomExceptions.OutOfBounds {
         if (APPOINTMENTS.isEmpty()) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.APPOINTMENT_EMPTY_ERROR);
         }
@@ -281,7 +281,7 @@ public class HealthList extends ArrayList<Health> {
      *
      * @throws AssertionError If bmis list is empty.
      */
-    public static void showBmiHistory() throws CustomExceptions.OutOfBounds {
+    public static void printBmiHistory() throws CustomExceptions.OutOfBounds {
         if (BMIS.isEmpty()) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.BMI_EMPTY_ERROR);
         }
@@ -303,7 +303,7 @@ public class HealthList extends ArrayList<Health> {
      *
      * @throws AssertionError If periods list is empty.
      */
-    public static void showPeriodHistory() throws CustomExceptions.OutOfBounds {
+    public static void printPeriodHistory() throws CustomExceptions.OutOfBounds {
         if (PERIODS.isEmpty()) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.PERIOD_EMPTY_ERROR);
         }
@@ -324,7 +324,7 @@ public class HealthList extends ArrayList<Health> {
      *
      * @throws AssertionError If appointments list is empty.
      */
-    public static void showAppointmentList() throws CustomExceptions.OutOfBounds {
+    public static void printAppointmentHistory() throws CustomExceptions.OutOfBounds {
         if (APPOINTMENTS.isEmpty()) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.APPOINTMENT_EMPTY_ERROR);
         }

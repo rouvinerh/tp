@@ -215,7 +215,7 @@ The `Health` package is responsible for tracking user's BMI, period cycle, and m
 
 `HealthList` is a class that contains the `ArrayList` objects of `Bmi`, `Period`, and `Appointment`. The class diagram is as follows:
 
-![HealthList Class Diagram.png](img/class_diagrams/healthlist_class_diagram.png)
+![HealthList Class Diagram](img/class_diagrams/healthlist_class_diagram.png)
 
 The class contains methods to retrieve the different objects. Additionally, it contains the methods for:
 - **deleting** an object from the bot, which is used for the `delete` command implementation;
@@ -582,7 +582,7 @@ This is the sequence diagram for adding a period from `parsePeriodInput()`:
     - GYM: `printLatestGym()`
     - BMI: `printLatestBmi()`
     - PERIOD: `printLatestPeriod()`
-    - APPOINTMENT: `printEarliestAppointment()`
+    - APPOINTMENT: `printLatestAppointment()`
 
 ![Appointment Sequence Diagram](img/sequence_diagrams/history_printLatest.png)
 
