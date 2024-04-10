@@ -1,0 +1,29 @@
+@startuml
+
+mainframe sd setCycleLength
+participant "healthList:HealthList" as HealthList
+participant "period:Period" as Period
+
+activate HealthList #FFBBBB
+
+opt PERIODS is not empty
+
+HealthList -> HealthList: PERIODS.get(previousPeriod)
+activate HealthList #DarkSalmon
+HealthList --> HealthList: previousPeriod
+deactivate HealthList #FFBBBB
+
+
+HealthList -> Period: setCycleLength()
+activate Period #FFBBBB
+Period --> HealthList:
+deactivate Period #FFBBBB
+
+end
+
+HealthList -> HealthList: add(period)
+activate HealthList #DarkSalmon
+HealthList --> HealthList:
+deactivate HealthList #DarkSalmon
+
+@enduml
