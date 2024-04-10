@@ -1,4 +1,4 @@
-package motivational_quotes;
+package motivationalquotes;
 
 public class MotivationalQuotes {
     private static final String[] QUOTES = {

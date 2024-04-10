@@ -1,4 +1,4 @@
-package motivational_quotes;
+package motivationalquotes;
 
 
 import java.util.ArrayList;
