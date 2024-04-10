@@ -5,7 +5,10 @@ import java.util.logging.Level;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+
+
 import constants.UiConstant;
+import utility.Validation;
 
 //@@ author L5-Z
 /**
@@ -41,6 +44,8 @@ public class LogFile {
      * Parent handlers are set to false to prevent printing of logs to terminal.
      */
     public static void initializeLogFile() {
+        Validation validation = new Validation();
+        validation.validateDirectoryPermissions();
         try {
             if (logFileHandler == null) {
                 logFileHandler = new FileHandler(UiConstant.LOG_FILE_PATH);

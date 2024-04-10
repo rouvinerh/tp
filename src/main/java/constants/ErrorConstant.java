@@ -231,4 +231,5 @@ public class ErrorConstant {
     public static final String MAX_RUN_TIME_ERROR = "Total time taken for run cannot exceed 100 hours!";
     public static final String INVALID_USERNAME_ERROR = "\u001b[31mUsername can only contain alphanumeric characters " +
             "and spaces!\u001b[0m";
+    public static final String NO_PERMISSIONS_ERROR = "Cannot read or write to current directory. Exiting.";
 }

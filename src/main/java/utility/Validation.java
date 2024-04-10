@@ -5,11 +5,14 @@ import constants.HealthConstant;
 import constants.UiConstant;
 import constants.WorkoutConstant;
 import health.HealthList;
+import ui.Output;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * Represents the validation class used to validate all inputs for PulsePilot.
@@ -542,6 +545,20 @@ public class Validation {
             if (periodDetails[HealthConstant.PERIOD_END_DATE_INDEX] == null) {
                 throw new CustomExceptions.InvalidInput(ErrorConstant.END_DATE_NOT_FOUND_ERROR );
             }
+        }
+    }
+
+    /**
+     * Checks whether current directory is readable and writable. If no, print exception and exit bot.
+     * If yes, do nothing.
+     */
+    public void validateDirectoryPermissions() {
+        Path currentDirectory = Path.of("");
+        boolean isValidPermissions = Files.isReadable(currentDirectory) && Files.isWritable(currentDirectory);
+        if (!isValidPermissions) {
+            Output output = new Output();
+            output.printException(ErrorConstant.NO_PERMISSIONS_ERROR);
+            System.exit(1);
         }
     }
 }

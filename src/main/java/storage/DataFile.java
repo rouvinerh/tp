@@ -54,19 +54,6 @@ public class DataFile {
     }
 
     /**
-     * Retrieves the singleton instance of DataFile class.
-     * If the instance is null, it creates a new instance.
-     *
-     * @return Singleton instance of DataFile class.
-     */
-    public DataFile getInstance() {
-        if (instance == null) {
-            instance = new DataFile();
-        }
-        return instance;
-    }
-
-    /**
      * Generates the SHA-256 hash value of the pulsepilot_data.txt file.
      *
      * @param file The file for which to generate the hash.
@@ -117,6 +104,8 @@ public class DataFile {
         }
     }
 
+
+
     /**
      * Initializes the data file to be used. Or loads the existing data file, verifies its integrity, and processes
      * its content. The function exits if the file cannot be created or loaded.
@@ -125,6 +114,7 @@ public class DataFile {
      */
     public int loadDataFile() {
         int status = UiConstant.FILE_NOT_FOUND;
+        validation.validateDirectoryPermissions();
         try {
             File dataFile = UiConstant.saveFile;
             File hashFile = new File(UiConstant.hashFilePath);
