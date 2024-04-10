@@ -324,7 +324,7 @@ public class HealthList extends ArrayList<Health> {
         assert !APPOINTMENTS.isEmpty() : ErrorConstant.EMPTY_APPOINTMENT_LIST_ERROR;
         if (index < 0) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_APPOINTMENT_EMPTY_ERROR);
-        } else if (index > APPOINTMENTS.size()) {
+        } else if (index >= APPOINTMENTS.size()) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.INVALID_INDEX_DELETE_ERROR);
         }
         Appointment deletedAppointment = APPOINTMENTS.get(index);
