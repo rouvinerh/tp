@@ -1,5 +1,6 @@
 package ui;
 
+import constants.HealthConstant;
 import health.Appointment;
 
 import java.io.ByteArrayInputStream;
@@ -97,6 +98,8 @@ class OutputTest {
         Output output = new Output();
         assertThrows(IllegalArgumentException.class, () -> output.printHistory(input));
     }
+
+
 
     /**
      * Tests the behaviour of the printLatestRun function after a Run object is added.

@@ -6,6 +6,11 @@ package constants;
  */
 public class ErrorConstant {
 
+    // Format
+    public static final String COLOR_HEADING = "\u001b[31m";
+
+    public static final String COLOR_ENDING = "\u001b[0m";
+
     // General Errors
     public static final String NEGATIVE_VALUE_ERROR = "Requires a positive integer!";
     public static final String INVALID_INDEX_DELETE_ERROR = "Invalid index to delete!";
