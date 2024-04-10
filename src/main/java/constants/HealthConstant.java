@@ -100,4 +100,7 @@ public class HealthConstant {
     public static final int NUM_OF_SLASHES_FOR_PERIOD = 3;
     public static final int NUM_OF_SLASHES_FOR_BMI = 4;
     public static final int NUM_OF_SLASHES_FOR_APPOINTMENT = 4;
+
+    //Latest object
+    public static final int FIRST_INDEX = 0;
 }
