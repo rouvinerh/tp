@@ -207,7 +207,7 @@ public class HealthList extends ArrayList<Health> {
         LogFile.writeLog(HealthConstant.PERIOD_REMOVED_MESSAGE_PREFIX + index, false);
     }
 
-    //@@author syj_02
+    //@@author syj02
 
     /**
      * Deletes Appointment object based on index.
@@ -315,7 +315,7 @@ public class HealthList extends ArrayList<Health> {
         }
     }
 
-    //@@author syj_02
+    //@@author syj02
 
     /**
      * Prints all Appointment entries tracked.
