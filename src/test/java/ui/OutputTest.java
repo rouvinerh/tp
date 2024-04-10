@@ -129,7 +129,7 @@ class OutputTest {
         String expected = UiConstant.PARTITION_LINE +
                 System.lineSeparator() +
                 "\u001B[31mOut of Bounds Error: " +
-                ErrorConstant.HISTORY_RUN_EMPTY_ERROR +
+                ErrorConstant.RUN_EMPTY_ERROR +
                 "\u001B[0m" +
                 System.lineSeparator() +
                 UiConstant.PARTITION_LINE +
@@ -196,7 +196,7 @@ class OutputTest {
         String expected = UiConstant.PARTITION_LINE +
                 System.lineSeparator() +
                 "\u001B[31mOut of Bounds Error: " +
-                ErrorConstant.HISTORY_GYM_EMPTY_ERROR +
+                ErrorConstant.GYM_EMPTY_ERROR +
                 "\u001B[0m" +
                 System.lineSeparator() +
                 UiConstant.PARTITION_LINE +

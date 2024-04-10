@@ -60,14 +60,14 @@ public class ErrorConstant {
     // EXERCISE ERRORS
 
     // HISTORY ERRORS
-    public static final String HISTORY_RUN_EMPTY_ERROR = "No runs found! You need to add a run entry first!";
-    public static final String HISTORY_GYM_EMPTY_ERROR = "No gyms found! You need to add a gym entry first!";
-    public static final String HISTORY_WORKOUTS_EMPTY_ERROR = "No workouts found! You need to add " +
+    public static final String RUN_EMPTY_ERROR = "No runs found! You need to add a run entry first!";
+    public static final String GYM_EMPTY_ERROR = "No gyms found! You need to add a gym entry first!";
+    public static final String WORKOUTS_EMPTY_ERROR = "No workouts found! You need to add " +
             "either a run or a gym entry first!";
-    public static final String HISTORY_APPOINTMENT_EMPTY_ERROR = "No appointments found! You need to add an " +
+    public static final String APPOINTMENT_EMPTY_ERROR = "No appointments found! You need to add an " +
             "appointment first!";
-    public static final String HISTORY_BMI_EMPTY_ERROR = "No BMI entries found! You need to add a BMI entry first!";
-    public static final String HISTORY_PERIOD_EMPTY_ERROR = "No periods found! You need to add a period entry first!";
+    public static final String BMI_EMPTY_ERROR = "No BMI entries found! You need to add a BMI entry first!";
+    public static final String PERIOD_EMPTY_ERROR = "No periods found! You need to add a period entry first!";
 
     // RUN ERRORS
     public static final String INSUFFICIENT_RUN_PARAMETERS_ERROR = "Insufficient parameters for run! "
