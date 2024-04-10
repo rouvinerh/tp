@@ -4,6 +4,8 @@ import static ui.Handler.initialiseBot;
 import static ui.Handler.processInput;
 import static ui.Handler.terminateBot;
 
+import motivational_quotes.Quote;
+
 /**
  * Main class representing the entry-point for PulsePilot application.
  */

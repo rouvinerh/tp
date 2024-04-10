@@ -49,10 +49,12 @@ public class Output {
                 "Shows history of runs/gyms/bmi records/periods tracked/appointment records");
         System.out.println("latest /item:[run/gym/bmi/period] - " +
                 "Shows latest entry of runs/gyms/bmi records/periods tracked/appointment records");
+        System.out.println("motivate - Get a motivational quote");
         System.out.println("help - Show this help message");
         System.out.println("exit - Exit the program");
         printLine();
     }
+
 
     /**
      * Prints an ASCII Art depicting the word 'PulsePilot'.

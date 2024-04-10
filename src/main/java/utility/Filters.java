@@ -12,7 +12,8 @@ public class Filters {
         HEALTH,
         DELETE,
         HELP,
-        EXIT
+        EXIT,
+        MOTIVATE
     }
 
     public enum DeleteFilters {

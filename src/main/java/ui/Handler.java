@@ -1,6 +1,7 @@
 package ui;
 
 import health.HealthList;
+import motivational_quotes.Quote;
 import storage.DataFile;
 import utility.CustomExceptions;
 import constants.ErrorConstant;
@@ -69,6 +70,12 @@ public class Handler {
                 case HELP:
                     Output.printHelp();
                     break;
+                    
+                case MOTIVATE:
+                	Quote quoteProvider = new Quote();
+                    System.out.println("Here's your motivational quote:");
+                    System.out.println(quoteProvider.getRandomQuote());
+                	
 
                 default:
                     break; // valueOf results in immediate exception for non-match with enum Command
