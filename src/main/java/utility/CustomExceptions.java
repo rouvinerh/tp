@@ -1,5 +1,6 @@
 package utility;
 
+import constants.ErrorConstant;
 import storage.LogFile;
 /**
  * Represents a custom exception class designed for PulsePilot to handle errors during command processing.
@@ -12,7 +13,7 @@ public class CustomExceptions extends Exception {
      */
     public static class OutOfBounds extends Exception {
         public OutOfBounds(String message) {
-            super("\u001b[31mOut of Bounds Error: " + message + "\u001b[0m");
+            super(ErrorConstant.COLOR_HEADING + "Out of Bounds Error: " + message  + ErrorConstant.COLOR_ENDING);
             LogFile.writeLog("Out of Bounds Error:" + message, true);
         }
     }
@@ -22,7 +23,7 @@ public class CustomExceptions extends Exception {
      */
     public static class InvalidInput extends Exception {
         public InvalidInput(String message) {
-            super("\u001b[31mInvalid Input Error: " + message + "\u001b[0m");
+            super(ErrorConstant.COLOR_HEADING + "Invalid Input Error: " + message + ErrorConstant.COLOR_ENDING);
             LogFile.writeLog("Invalid Input Error:" + message, true);
         }
     }
@@ -33,7 +34,7 @@ public class CustomExceptions extends Exception {
      */
     public static class FileReadError extends Exception{
         public FileReadError(String message) {
-            super("\u001b[31mFile Read Error: " + message + "\u001b[0m");
+            super(ErrorConstant.COLOR_HEADING + "File Read Error: " + message + ErrorConstant.COLOR_ENDING);
             LogFile.writeLog("File Read Error:" + message, true);
         }
     }
@@ -43,7 +44,7 @@ public class CustomExceptions extends Exception {
      */
     public static class FileWriteError extends Exception{
         public FileWriteError(String message) {
-            super("\u001b[31mFile Write Error: " + message + "\u001b[0m");
+            super( ErrorConstant.COLOR_HEADING + "File Write Error: " + message + ErrorConstant.COLOR_ENDING);
             LogFile.writeLog("File Write Error:" + message, true);
         }
     }
@@ -53,7 +54,7 @@ public class CustomExceptions extends Exception {
      */
     public static class FileCreateError extends Exception{
         public FileCreateError(String message) {
-            super("\u001b[31mFile Create Error: " + message + "\u001b[0m");
+            super(ErrorConstant.COLOR_HEADING + "File Create Error: " + message + ErrorConstant.COLOR_ENDING);
             LogFile.writeLog("File Create Error:" + message, true);
         }
     }
@@ -64,7 +65,7 @@ public class CustomExceptions extends Exception {
      */
     public static class InsufficientInput extends Exception {
         public InsufficientInput(String message) {
-            super("\u001b[31mInsufficient Input Error: " + message + "\u001b[0m");
+            super(ErrorConstant.COLOR_HEADING + "Insufficient Input Error: " + message + ErrorConstant.COLOR_ENDING);
             LogFile.writeLog("Insufficient Input Error:" + message, true);
         }
     }
