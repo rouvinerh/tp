@@ -289,30 +289,6 @@ Expected Output:
 
 ![Adding Appointment](img/output/adding_appointment.png)
 
-## Motivation Feature:
-
-### Accessing Motivational Quotes:
-To access motivational quotes, you can use the following commands or messages:
-- Type "motivate" to receive a random motivational quote.
-- Type "inspire" to receive another random motivational quote.
-
-### Interacting with the Motivational Chatbot:
-The motivational chatbot responds to various inputs and provides motivational messages accordingly:
-- Type "hello" or "hi" to initiate a conversation with the chatbot.
-- Type "thank" to express gratitude, and the chatbot will provide further encouragement.
-
-## Using the Help Command:
-To view available commands and learn how to access motivational features, you can use the help command:
-- Type "help" to display a list of commands, including instructions for accessing motivational quotes and interacting with the chatbot.
-
-### Exiting the Program:
-To exit the program, simply type:
-- "exit"
-
-### Note:
-- The motivational features aim to provide encouragement and support in achieving your health and fitness goals. Feel free to engage with the chatbot for motivational messages whenever you need a boost.
-
-
 > ⚠️ Any characters that are **NOT** mentioned above used in the description will trigger an error! Please only use the characters allowed.
 
 ###### [Back to table of contents](#table-of-contents)

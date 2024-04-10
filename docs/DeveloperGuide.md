@@ -314,23 +314,6 @@ This is represented as enumerations. Attempts to use an invalid filter results i
 
 ---
 
-### Motivation Package:
-A new package named `motivation` has been added to incorporate motivational features. This package includes a class named `Quote` responsible for managing motivational quotes and providing chatbot functionality.
-
-### Quote Class:
-- This class contains methods to retrieve random quotes and provide motivational responses based on user input.
-- The `getRandomQuote()` method returns a random quote from the provided file.
-- The `getChatResponse()` method interprets user input and provides motivational responses accordingly.
-
-### Integration with Main Program:
-- In the main program, the user can interact with the motivational features by typing messages or specific commands related to motivation.
-- The main program communicates with the `Quote` class to fetch motivational quotes and responses.
-
-### User Interaction:
-- Users can access motivational features by typing commands or messages such as "motivate" or "inspire".
-- The chatbot responds to general greetings and gratitude as well, providing motivational messages.
----
-
 ### Storage Package
 
 `Storage` contains `DataFile` and `LogFile`. This component handles all logging of commands used and writing of data stored within PulsePilot to an external data file. The reading of the data file is also done here.
@@ -471,13 +454,13 @@ The user's input is processed to add a run as follows:
 1. `Handler.handleHealth()` determines the type of health which is period, and calls the `Parser.parsePeriodInput()` method to process the user's period input.
 
 2. `Parser.parsePeriodInput()` splits the input using `Parser.splitPeriodInput()`. Parameters are extracted using `extractSubstringFromSpecificIndex()` using the different flags.
-   - Method also extracts the end date parameter if present. 
+   - Method also extracts the end date parameter if present.
    - The method then returns a String[] variable with the required parameters extracted from the user input.
 
 3. `Validation.validatePeriodInput()` is called to validate each parameter. Once valid, correct parameters are used to construct a new `Period` object.
 
-4. If end date is absent, the `Period` constructor adds the newly created object into `HealthList.PERIODS`. Else, the `PERIOD.get(period)` is called to retrieve the latest period input and update end date using `updateEndDate()` method. 
-   - If the `HealthList.PERIODS` is not empty, `setCycleLength()` will be called to calculate the cycle length. 
+4. If end date is absent, the `Period` constructor adds the newly created object into `HealthList.PERIODS`. Else, the `PERIOD.get(period)` is called to retrieve the latest period input and update end date using `updateEndDate()` method.
+   - If the `HealthList.PERIODS` is not empty, `setCycleLength()` will be called to calculate the cycle length.
 
 5. The `Period` object is passed to `Output.printAddPeriod()` and a message acknowledging the successful adding is printed to the screen.
 
@@ -487,7 +470,7 @@ This is the sequence diagram for adding a period from `parsePeriodInput()`:
 
 ![Set Cycle Length Diagram](img/sequence_diagrams/set_Cycle_Length.png)
 
-validatePeriodInput uses the Validation class to check all the parameters specified by the user when adding or updating a Period, and throws an exception if it is invalid.
+`validatePeriodInput()` uses the `Validation` class to check all the parameters specified by the user when adding or updating a Period, and throws an exception if it is invalid.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -504,7 +487,7 @@ The user's input is processed to add a run as follows:
 
 3. `Validation.validateBmiInput()` is called to validate each parameter. Once valid, correct parameters are used to construct a new `Bmi` object.
 
-4. The `Bmi` constructor adds the newly created object into `HealthList.BMIS`. The BMI value and Bmi category will be obtained from `calculateBmiValue()` and `getBmiCategory()` methods respectively. 
+4. The `Bmi` constructor adds the newly created object into `HealthList.BMIS`. The BMI value and Bmi category will be obtained from `calculateBmiValue()` and `getBmiCategory()` methods respectively.
 
 5. The `Bmi` object is passed to `Output.printAddBmi()` and a message acknowledging the successful adding is printed to the screen.
 
