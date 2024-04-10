@@ -87,10 +87,10 @@ public class ErrorConstant {
             + System.lineSeparator()
             + "Only input what is required! Additional characters between flags will cause errors.";
     public static final String INVALID_NUMBER_OF_STATIONS_ERROR = "Number of stations is a positive number!";
-    public static final String EMPTY_GYM_STATION_NAME_ERROR = "Exercise name cannot be blank!";
+    public static final String EMPTY_GYM_STATION_NAME_ERROR = "Gym station name cannot be blank!";
 
-    public static final String INVALID_GYM_STATION_NAME_ERROR = "Exercise name can only have letters!";
-    public static final String GYM_STATION_NAME_LENGTH_ERROR = "Exercise name cannot be more than 25 characters!";
+    public static final String INVALID_GYM_STATION_NAME_ERROR = "Gym station name can only have letters!";
+    public static final String GYM_STATION_NAME_LENGTH_ERROR = "Gym station name cannot be more than 25 characters!";
     public static final String GYM_STATION_FORMAT_ERROR = "Remember that you are now adding gym station input!"
             + System.lineSeparator()
             + "Expected format: [Station Name] /s:[SETS] /r:[REPS] /w:[WEIGHTS]";
@@ -119,8 +119,8 @@ public class ErrorConstant {
     public static final String GYM_WEIGHT_POSITIVE_ERROR = "Weights specified must a positive integer! " +
             "e.g. /w:10,20,30";
          
-    public static final String GYM_WEIGHT_DIGIT_ERROR = " Weights must be a number! e.g. /w:5,10,20";
-    public static final String GYM_WEIGHTS_INCORRECT_NUMBER_ERROR = " Number of weight values must be the same as" +
+    public static final String GYM_WEIGHT_DIGIT_ERROR = "Weights must be a number! e.g. /w:5,10,20";
+    public static final String GYM_WEIGHTS_INCORRECT_NUMBER_ERROR = "Number of weight values must be the same as" +
             " the number of sets! e.g. bench press /s:2 /r:10 /w:10,20";
 
     // HEALTH ERRORS
