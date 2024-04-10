@@ -20,7 +20,6 @@ deactivate Parser #FFBBBB
 
 Parser -> Validation: validateBmiInput()
 activate Validation #FFBBBB
-ref over Validation: validateBmiInput
 Validation --> Parser:
 deactivate Validation
 
@@ -31,15 +30,19 @@ activate NBmi #DarkSalmon
 NBmi --> NBmi: bmiValue
 deactivate NBmi #DarkSalmon
 
+
 NBmi -> Bmi: getBmiCategory(bmiValue)
 activate Bmi #FFBBBB
-Bmi --> NBmi:
+Bmi --> NBmi: bmiCategory
 deactivate Bmi #FFBBBB
 
-NBmi -> HealthList: addBmi(height, weight, date)
+NBmi -> HealthList **: new
 activate HealthList #FFBBBB
+NBmi -> HealthList: addBmi(height, weight, date)
 HealthList --> NBmi:
 deactivate HealthList #FFBBBB
+destroy HealthList
+
 
 NBmi --> Parser:
 deactivate NBmi #FFBBBB
@@ -47,6 +50,7 @@ deactivate NBmi #FFBBBB
 Parser -> Output: printAddBmi()
 activate Output #FFBBBB
 Output --> Parser:
+destroy NBmi
 deactivate Output #FFBBBB
 
 @enduml

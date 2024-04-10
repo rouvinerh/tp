@@ -231,7 +231,9 @@ public class HealthList extends ArrayList<Health> {
         Output.printLine();
         APPOINTMENTS.remove(index);
         LogFile.writeLog(HealthConstant.APPOINTMENT_REMOVED_MESSAGE_PREFIX + index, false);
-        showAppointmentList();
+        if (!APPOINTMENTS.isEmpty()) {
+            showAppointmentList();
+        }
     }
 
     /**

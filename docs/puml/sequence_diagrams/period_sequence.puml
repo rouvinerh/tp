@@ -19,7 +19,6 @@ deactivate Parser #FFBBBB
 
 Parser -> Validation: validatePeriodInput()
 activate Validation #FFBBBB
-ref over Validation: validatePeriodInput
 Validation --> Parser:
 deactivate Validation
 
@@ -32,21 +31,24 @@ alt endFlag is present
 ref over HealthList: setCycleLength()
     HealthList --> Period:
     deactivate HealthList #FFBBBB
-    deactivate Period #FFBBBB
+
 
     else end date not present in latest period
     Parser -> HealthList1: getPeriod(latestPeriodIndex)
     activate HealthList1 #FFBBBB
+
     HealthList1 --> Parser:
+    deactivate HealthList1 #FFBBBB
     Parser -> "period:Period": updateEndDate(endDate)
     activate "period:Period" #FFBBBB
     "period:Period" --> Parser:
     deactivate HealthList1 #FFBBBB
     deactivate "period:Period" #FFBBBB
+    destroy "period:Period"
     end
 
 else endFlag is not present
-    Parser -> Period **: new
+
     activate Period #FFBBBB
     Period -> HealthList: addPeriod(startDate)
 ref over HealthList: setCycleLength()
@@ -54,8 +56,13 @@ ref over HealthList: setCycleLength()
     HealthList --> Period:
     deactivate HealthList #FFBBBB
     deactivate Period #FFBBBB
+    destroy HealthList
 
 end
-
+Parser -> "output:Output": printAddPeriod()
+activate "output:Output" #FFBBBB
+"output:Output" --> Parser:
+deactivate  "output:Output"
+destroy Period
 
 @enduml
