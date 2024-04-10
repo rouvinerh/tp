@@ -286,13 +286,15 @@ public class Output {
      * @throws CustomExceptions.InvalidInput If there is invalid input.
      */
     protected void printBmiHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
-        printLine();
+
         try {
+            printLine();
             HealthList.showBmiHistory();
+            printLine();
         } catch (CustomExceptions.OutOfBounds e) {
-            System.out.println(e.getMessage());
+            printException(e.getMessage());
         }
-        printLine();
+
     }
 
     /**
@@ -302,13 +304,15 @@ public class Output {
      * @throws CustomExceptions.InvalidInput If there is invalid input.
      */
     protected void printPeriodHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
-        printLine();
+
         try {
+            printLine();
             HealthList.showPeriodHistory();
+            printLine();
         } catch (CustomExceptions.OutOfBounds e) {
-            System.out.println(e.getMessage());
+            printException(e.getMessage());
         }
-        printLine();
+
     }
 
     //@@author syj02
@@ -319,13 +323,15 @@ public class Output {
      * @throws CustomExceptions.InvalidInput If there is invalid input.
      */
     protected void printAppointmentHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
-        printLine();
+
         try {
+            printLine();
             HealthList.showAppointmentList();
+            printLine();
         } catch (CustomExceptions.OutOfBounds e) {
-            System.out.println(e.getMessage());
+            printException(e.getMessage());
         }
-        printLine();
+
     }
 
     //@@author rouvinerh
@@ -335,7 +341,6 @@ public class Output {
     protected void printLatestRun() {
         printLine();
         try {
-
             Workout latestRun = WorkoutList.getLatestRun();
             String latestRunString = getFormattedRunWithIndex(WorkoutList.getRunSize(), latestRun);
             System.out.println("Your latest run:");
@@ -453,6 +458,7 @@ public class Output {
             case WORKOUTS:
                 printWorkoutHistory();
                 break;
+
             case RUN:
                 printRunHistory();
                 break;
