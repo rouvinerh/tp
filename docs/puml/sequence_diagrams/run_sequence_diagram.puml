@@ -20,7 +20,6 @@ deactivate Parser #FFBBBB
 
 Parser -> Validation: validateRunInput()
 activate Validation #FFBBBB
-ref over Validation: validateRunInput 
 Validation --> Parser: 
 deactivate Validation
 

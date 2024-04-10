@@ -18,7 +18,6 @@ deactivate Parser #FFBBBB
 
 Parser -> Validation: validateGymInput()
 activate Validation #FFBBBB
-ref over Validation: validateGymInput 
 Validation --> Parser: 
 deactivate Validation
 
