@@ -207,22 +207,22 @@ The class diagram for gym is as follows:
 
 ### Health Package
 
-The Health component consists of `Health`, `HealthList`, `Bmi`, `Period`, and `Appointment`.
-
-1. `Health` class stores date.
-2. `HealthList`class stores separate lists for different `Health` objects using ArrayList. It includes methods to add, delete, view history of the various `Health`lists.
-3. `Bmi`class stores bmi attributes (i.e. height, weight, date, bmi value and bmi category).
-4. `Period`class stores period attributes (i.e. start date of period, end date of period, period length and cycle length).
-5. `Appointment`class stores appointment attributes (i.e. date, time, appointment description). Primarily, `Appointment` has all necessary getter methods to access the attributes.
-
-###### [Back to table of contents](#table-of-contents)
+The `Health` package is responsible for tracking user's BMI, period cycle, and medical appointments.
 
 ---
 
 #### Health List
 
-The `HealthList` class contains three `ArrayList` variables, to store BMI, Appointment and Period objects, as well as the various methods to retrieve, delete and print the objects stored.
+`HealthList` is a class that contains the `ArrayList` objects of `Bmi`, `Period`, and `Appointment`. The class diagram is as follows:
+
 ![HealthList Class Diagram.png](img/class_diagrams/healthlist_class_diagram.png)
+
+The class contains methods to retrieve the different objects. Additionally, it contains the methods for:
+- **deleting** an object from the bot, which is used for the `delete` command implementation;
+- showing the **latest** object added to the bot, which is used for the `latest` command implementation;
+- showing the **history or list** of objects added to bot, which is used for the `history` command implementation.
+
+The `clearHealthLists()` method is used to clear all the data stored within each `ArrayList`, which is mainly used for unit testing.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -230,9 +230,13 @@ The `HealthList` class contains three `ArrayList` variables, to store BMI, Appoi
 
 #### BMI
 
-An object containing information about a user's Body Mass Index (BMI) data. The class automatically calculates the BMI score and determines the corresponding category, then stores that in the object.
+`Bmi` is a class that represents the BMI (Body Mass Index) of the user who has recorded height and weight. It contains the following variables:
 
-This class inherits from the `Health` superclass.
+- `height`: The height of the user in metres represented as a `double`.
+- `weight`: The weight of the user in kilograms represented as a `double`.
+- `bmiValue`: The calculate BMI value of the user derived from the height and weight given, also represented as a `double`.
+- `bmiCategory`: The category that the BMI value of the user falls in (i.e. Underweight, Normal, Overweight, etc), represented as a `String`.
+- `date`: A `LocalDate` parameter representing the date of the recorded/added BMI value.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -240,9 +244,12 @@ This class inherits from the `Health` superclass.
 
 #### Period
 
-An object containing information about a user's menstrual cycle. The object stores the start and end date as `LocalDate` objects. It also calculates and stores the length of the period flow and period cycle in **days**.
+`Period` is a class that represents the menstrual cycle of the user.
 
-This class inherits from the `Health` superclass.
+- `startDate`: The date of the first day of the menstrual flow (aka period flow), also the first day of the menstrual cycle, represented using a `LocalDate`.
+- `endDate`: The date of the last day of the menstrual flow, represented using a `LocalDate`.
+- `periodLength`: The number of days of menstrual flow (i.e. between the first and last day of flow, inclusive of the first day), represented as `long`.
+- `cycleLength`: The number of days in a menstrual cycle (i.e. between the first and last day of the cycle, inclusive of the first day), represented as a `long`. The cycle ends on the day before the first day of the next menstrual flow/cycle.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -250,7 +257,11 @@ This class inherits from the `Health` superclass.
 
 #### Appointment
 
-This class inherits from the `Health` superclass.
+`Appointment` is a class that represents the past and upcoming medical appointments of the user.
+
+- `date`: The date of the medical appointment, represented using a `LocalDate`.
+- `time`: The time of the medical appointment, represented using a `LocalTime`.
+- `description`: The information of the appointment, it can include things like the healthcare professional to consult, the type of appointment such as consultation, checkup, rehabilitation, therapy etc. This parameter is represented as a `String`.
 
 ###### [Back to table of contents](#table-of-contents)
 
