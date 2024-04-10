@@ -255,13 +255,13 @@ class OutputTest {
      * Tests the behaviour of the printLatestAppointment function when two Appointment objects are added.
      */
     @Test
-    void printEarliestAppointment_twoAppointments_expectOneAppointmentPrinted() {
+    void printLatestAppointment_twoAppointments_expectOneAppointmentPrinted() {
         Appointment firstAppointment = new Appointment("29-03-2025", "17:00", "test");
         Appointment secondAppointment = new Appointment("24-01-2026", "12:00", "test2");
 
 
         Output output = new Output();
-        output.printEarliestAppointment();
+        output.printLatestAppointment();
         String expected = UiConstant.PARTITION_LINE +
                 System.lineSeparator() +
                 "On 2025-03-29 at 17:00: test" +

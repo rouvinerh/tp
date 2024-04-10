@@ -363,11 +363,12 @@ public class HealthList extends ArrayList<Health> {
      *
      * @throws AssertionError If appointments list is empty.
      */
-    public static void showEarliestAppointment() throws CustomExceptions.OutOfBounds {
+    public static void showLatestAppointment() throws CustomExceptions.OutOfBounds {
         if (APPOINTMENTS.isEmpty()) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.APPOINTMENT_EMPTY_ERROR);
         }
+        int index = APPOINTMENTS.size() - 1;
         assert !APPOINTMENTS.isEmpty() : ErrorConstant.EMPTY_APPOINTMENT_LIST_ERROR;
-        System.out.println(APPOINTMENTS.get(0));
+        System.out.println(APPOINTMENTS.get(index));
     }
 }
