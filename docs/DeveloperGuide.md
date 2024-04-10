@@ -540,12 +540,51 @@ validatePeriodInput uses the Validation class to check all the parameters specif
 ---
 
 ### View History
+1. User input is passed to `Handler.processInput()`, which determines the command used is `History`, thus passing the input to `Handler.handleHistory()`.
+
+2. `Handler.handleHistory()` would call the `Parser.parseHistoryAndLatestInput()` method to validate the user input.
+
+3. `Parser.parseHistoryAndLatestInput()` will extract the filter string and validate the user input. 
+    - If the user input is valid, it will return the `filter:string`
+    - Else it will return `null`
+
+4. `Handler.handleHistory()` will then call `Output.printHistory(filter`
+
+5. Depending on the filter value, `Output.printHistory` will call the respective private output methods to print the history. The possible filters and their corresponding methods are:
+
+    - WORKOUTS: `printWorkoutHistory()`
+    - RUN: `printRunHistory()`
+    - GYM: `printGymHistory()`
+    - BMI: `printBmiHistory()`
+    - PERIOD: `printPeriodHistory()`
+    - APPOINTMENT: `printAppointmentHistory()`
+
+![Appointment Sequence Diagram](img/sequence_diagrams/history_printHistory.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
 ---
 
 ### View Latest
+1. User input is passed to `Handler.processInput()`, which determines the command used is `History`, thus passing the input to `Handler.handleLatest()`.
+
+2. `Handler.handleHistory()` would call the `Parser.parseHistoryAndLatestInput()` method to validate the user input.
+
+3. `Parser.parseHistoryAndLatestInput()` will extract the filter string and validate the user input. 
+    - If the user input is valid, it will return the `filter:string`
+    - Else it will return `null`
+
+4. `Handler.handleLatest()` will then call `Output.printLatest(filter`
+
+5. Depending on the filter value, `Output.printLatest` will call the respective private output methods to print the latest. The possible filters and their corresponding methods are:
+
+    - RUN: `printLatestRun()`
+    - GYM: `printLatestGym()`
+    - BMI: `printLatestBmi()`
+    - PERIOD: `printLatestPeriod()`
+    - APPOINTMENT: `printEarliestAppointment()`
+
+![Appointment Sequence Diagram](img/sequence_diagrams/history_printLatest.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
