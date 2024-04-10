@@ -2,7 +2,7 @@
 package ui;
 
 import health.HealthList;
-import motivational_quotes.Quote;
+import motivationalquotes.Quote;
 import storage.DataFile;
 import utility.CustomExceptions;
 import constants.ErrorConstant;
