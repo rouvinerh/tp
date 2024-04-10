@@ -282,8 +282,8 @@ public class Validation {
         }
         String [] parts = time.split(UiConstant.SPLIT_BY_COLON);
         int hours = WorkoutConstant.NO_HOURS_PRESENT;
-        int minutes;
-        int seconds;
+        int minutes = 0;
+        int seconds = 0;
         boolean isHoursPresent = false;
 
         if (parts.length == WorkoutConstant.NUMBER_OF_PARTS_FOR_RUN_TIME) {
@@ -294,9 +294,7 @@ public class Validation {
             minutes = Integer.parseInt(parts[1]);
             seconds = Integer.parseInt(parts[2]);
             isHoursPresent = true;
-        } else {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_RUN_TIME_ERROR);
-        }
+        } 
 
         if (hours == UiConstant.MIN_HOURS) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_HOUR_ERROR);

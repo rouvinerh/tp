@@ -278,7 +278,6 @@ public class Handler {
         System.out.println("FTL jump completed.");
     }
 
-
     //@@author L5-Z
     /**
      * Initializes PulsePilot by printing a welcome message, loading tasks from storage,

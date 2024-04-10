@@ -1,22 +1,49 @@
 package utility;
 
+import health.HealthList;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import workouts.WorkoutList;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
+
 public class ValidationTest {
     private Validation validation;
+
+    private final ByteArrayInputStream inContent = new ByteArrayInputStream("".getBytes());
+    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+    private final InputStream originalIn = System.in;
+    private final PrintStream originalOut = System.out;
+    private final PrintStream originalErr = System.err;
+
     @BeforeEach
-    public void setUp() {
+    public void setUpStreams() {
         validation = new Validation();
+        System.setOut(new PrintStream(outContent));
+        System.setIn(inContent);
+        System.setErr(new PrintStream(errContent));
     }
-    
-    
+
+    @AfterEach
+    public void restoreStreams() {
+        System.setOut(originalOut);
+        System.setIn(originalIn);
+        System.setErr(originalErr);
+        WorkoutList.clearWorkoutsRunGym();
+        HealthList.clearHealthLists();
+    }
+
+
     /**
      * Tests the behaviour of the validateDateInput function with a correctly formatted string.
      * Expects no exception to be thrown.
@@ -178,9 +205,9 @@ public class ValidationTest {
      * Expects no exception to be thrown.
      */
     @Test
-    void validatePeriodInput_correctParameters_noExceptionThrown()  {
+    void validatePeriodInput_correctParameters_noExceptionThrown() {
         boolean isParser = true;
-        String [] input = {"23-03-2024", "30-03-2024"};
+        String[] input = {"23-03-2024", "30-03-2024"};
         assertDoesNotThrow(() -> validation.validatePeriodInput(input, isParser));
     }
 
@@ -191,7 +218,7 @@ public class ValidationTest {
     @Test
     void validatePeriodInput_emptyString_expectsInsufficientInputException() {
         boolean isParser = true;
-        String [] input = {"", "29-03-2024"};
+        String[] input = {"", "29-03-2024"};
         assertThrows(CustomExceptions.InsufficientInput.class, () -> validation.validatePeriodInput(input, isParser));
     }
 
@@ -204,11 +231,11 @@ public class ValidationTest {
     void validatePeriodInput_invalidParameters_expectsInvalidInputException() {
         boolean isParser = true;
         // date after Today
-        String [] input1 = {"28-04-2025", "29-13-2025"};
+        String[] input1 = {"28-04-2025", "29-13-2025"};
         assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validatePeriodInput(input1, isParser));
 
         // end date before start date
-        String [] input2 = {"28-03-2024", "22-03-2024"};
+        String[] input2 = {"28-03-2024", "22-03-2024"};
         assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validatePeriodInput(input2, isParser));
     }
 
@@ -293,24 +320,24 @@ public class ValidationTest {
      * Expects no exceptions to be thrown.
      */
     @Test
-    void validateDeleteFilter_correctFilters_expectsNoExceptionsThrown () {
+    void validateDeleteFilter_correctFilters_expectsNoExceptionsThrown() {
         String input1 = "run";
-        assertDoesNotThrow( () -> validation.validateFilter(input1));
+        assertDoesNotThrow(() -> validation.validateFilter(input1));
 
         String input2 = "gym";
-        assertDoesNotThrow( () -> validation.validateFilter(input2));
+        assertDoesNotThrow(() -> validation.validateFilter(input2));
 
         String input3 = "bmi";
-        assertDoesNotThrow( () -> validation.validateFilter(input3));
+        assertDoesNotThrow(() -> validation.validateFilter(input3));
 
         String input4 = "period";
-        assertDoesNotThrow( () -> validation.validateFilter(input4));
+        assertDoesNotThrow(() -> validation.validateFilter(input4));
 
         String input5 = "appointment";
-        assertDoesNotThrow( () -> validation.validateFilter(input5));
+        assertDoesNotThrow(() -> validation.validateFilter(input5));
 
         String input6 = "workouts";
-        assertDoesNotThrow( () -> validation.validateFilter(input6));
+        assertDoesNotThrow(() -> validation.validateFilter(input6));
     }
 
     /**
@@ -331,11 +358,11 @@ public class ValidationTest {
     void validateRunInput_correctInput_expectsNoExceptionsThrown() {
         // with dates
         String[] input1 = {"20:25", "5.15", "29-03-2024"};
-        assertDoesNotThrow( () -> validation.validateRunInput(input1));
+        assertDoesNotThrow(() -> validation.validateRunInput(input1));
 
         // without dates
         String[] input2 = {"20:25", "5.15", null};
-        assertDoesNotThrow( () -> validation.validateRunInput(input2));
+        assertDoesNotThrow(() -> validation.validateRunInput(input2));
     }
 
     /**
@@ -364,6 +391,16 @@ public class ValidationTest {
         String[] input2 = {"20:25", "5.25", "31-3-2025"};
         assertThrows(CustomExceptions.InvalidInput.class, () ->
                 validation.validateRunInput(input2));
+
+        // dist exceed max
+        String[] input3 = {"20:25", "5000.25", "31-3-2025"};
+        assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateRunInput(input3));
+
+        // dist below min
+        String[] input4 = {"20:25", "0.00", "31-3-2025"};
+        assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateRunInput(input4));
     }
 
     /**
@@ -374,11 +411,11 @@ public class ValidationTest {
     void validateRunTimeInput_correctTimeInput_expectsNoExceptionThrown() {
         // without hours
         String input1 = "25:03";
-        assertDoesNotThrow( () -> validation.validateRunTimeInput(input1));
+        assertDoesNotThrow(() -> validation.validateRunTimeInput(input1));
 
         // with hours
         String input2 = "01:25:03";
-        assertDoesNotThrow( () -> validation.validateRunTimeInput(input2));
+        assertDoesNotThrow(() -> validation.validateRunTimeInput(input2));
     }
 
     /**
@@ -418,6 +455,14 @@ public class ValidationTest {
         // invalid hours
         String input8 = "00:12:34";
         assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateRunTimeInput(input8));
+
+        // invaid minute without hour
+        String input9 = "60:34";
+        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateRunTimeInput(input9));
+
+        // invaid second without hour
+        String input10 = "59:60";
+        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateRunTimeInput(input10));
     }
 
     /**
@@ -427,10 +472,10 @@ public class ValidationTest {
     @Test
     void validateExerciseName_correctName_noExceptionThrown() {
         String input1 = "Bench Press";
-        assertDoesNotThrow( () -> validation.validateGymStationName(input1));
+        assertDoesNotThrow(() -> validation.validateGymStationName(input1));
 
         String input2 = "squat";
-        assertDoesNotThrow( () -> validation.validateGymStationName(input2));
+        assertDoesNotThrow(() -> validation.validateGymStationName(input2));
     }
 
     /**
@@ -450,6 +495,10 @@ public class ValidationTest {
         // special characters in name
         String input3 = "bench-;";
         assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateGymStationName(input3));
+
+        // name length > 25 chars
+        String input4 = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA ";
+        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateGymStationName(input4));
     }
 
     /**
@@ -468,10 +517,10 @@ public class ValidationTest {
     @Test
     void validateGymInput_correctInput_noExceptionThrown() {
         String[] input1 = {"4", "29-04-2023"};
-        assertDoesNotThrow( () -> validation.validateGymInput(input1));
+        assertDoesNotThrow(() -> validation.validateGymInput(input1));
 
         String[] input2 = {"4", null};
-        assertDoesNotThrow( () -> validation.validateGymInput(input2));
+        assertDoesNotThrow(() -> validation.validateGymInput(input2));
     }
 
     /**
@@ -481,7 +530,7 @@ public class ValidationTest {
     @Test
     void validateGymInput_emptyString_expectsInsufficientInputException() {
         String[] input = {"", null};
-        assertThrows(CustomExceptions.InsufficientInput.class , () ->
+        assertThrows(CustomExceptions.InsufficientInput.class, () ->
                 validation.validateGymInput(input));
     }
 
@@ -492,7 +541,7 @@ public class ValidationTest {
     @Test
     void validateGymInput_invalidInput_expectsInvalidInputException() {
         String[] input = {"a", null};
-        assertThrows(CustomExceptions.InvalidInput.class , () ->
+        assertThrows(CustomExceptions.InvalidInput.class, () ->
                 validation.validateGymInput(input));
     }
 
@@ -501,7 +550,7 @@ public class ValidationTest {
      * Expects no exceptions thrown.
      *
      * @throws CustomExceptions.InsufficientInput If there are not enough parameters.
-     * @throws CustomExceptions.InvalidInput If there are invalid parameters specified.
+     * @throws CustomExceptions.InvalidInput      If there are invalid parameters specified.
      */
     @Test
     void splitAndValidateGymStationInput_validInput_correctParametersReturned() throws
@@ -548,14 +597,30 @@ public class ValidationTest {
         String input6 = "Bench Press /s:2 /r:a /w:10, 20";
         assertThrows(CustomExceptions.InvalidInput.class, () ->
                 validation.splitAndValidateGymStationInput(input6));
+
+        // weights array regex fail
+        String input7 = "Bench Press /s:2 /r:a /w:a";
+        assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.splitAndValidateGymStationInput(input7));
+
+        // no weights specified
+        String input8 = "Bench Press /s:2 /r:a /w:";
+        assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.splitAndValidateGymStationInput(input8));
+
+        // weights and sets do not match
+        String input9 = "Bench Press /s:1 /r:a /w:10,20";
+        assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.splitAndValidateGymStationInput(input9));
     }
 
     /**
-    * Tests the behaviour of a correct weights array being passed to validateWeightsArray.
-    * Expects no exception to be thrown, and the correct ArrayList of integers to be
-    * returned.
-    * @throws CustomExceptions.InvalidInput If the input string does not have the right format.
-    */
+     * Tests the behaviour of a correct weights array being passed to validateWeightsArray.
+     * Expects no exception to be thrown, and the correct ArrayList of integers to be
+     * returned.
+     *
+     * @throws CustomExceptions.InvalidInput If the input string does not have the right format.
+     */
     @Test
     void validateWeightsArray_correctInput_returnCorrectArrayList() throws CustomExceptions.InvalidInput {
         String input = "1.0,2.25,50.5,60.75, 0.0";
@@ -589,6 +654,11 @@ public class ValidationTest {
         String input3 = "1.3333, 1.444, 0.998";
         assertThrows(CustomExceptions.InvalidInput.class, () ->
                 validation.validateWeightsArray(input3));
+
+        // exceed max weights
+        String input4 = "3000";
+        assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateWeightsArray(input4));
 
     }
 }

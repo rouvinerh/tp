@@ -1,18 +1,36 @@
 package utility;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import workouts.Gym;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ParserTest {
+    private static final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+    private static final PrintStream originalErr = System.err;
     private Parser parser;
+    @BeforeAll
+    public static void setUpStreams() {
+        System.setErr(new PrintStream(errContent));
+    }
+
+    @AfterAll
+    public static void restoreStreams() {
+        System.setErr(originalErr);
+    }
     @BeforeEach
     void setUp() {
         parser = new Parser();
@@ -36,8 +54,54 @@ class ParserTest {
     void parseDate_incorrectDateInput_returnNull () {
         String input = "2024-03-08";
         LocalDate result = parser.parseDate(input);
-        assertEquals(null, result);
+        assertNull(result);
     }
+
+    /**
+     * Tests the behaviour of parseFormattedDate when valid LocalDate variable is passed.
+     * Expects correct string date returned.
+     */
+    @Test
+    void parseFormattedDate_correctDate_returnStringDate() {
+        LocalDate date = LocalDate.of(2024, 4, 10);
+        String result = parser.parseFormattedDate(date);
+        String expected = "10-04-2024";
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Tests the behaviour of parseFormattedDate when null LocalDate variable is passed.
+     * Expects "NA" returned
+     */
+    @Test
+    void parseFormattedDate_nullDate_returnNoDateString() {
+        String result = parser.parseFormattedDate(null);
+        String expected = "NA";
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Tests the behaviour of parseTime when a valid time string is passed.
+     * Expects correct LocalTime returned.
+     */
+    @Test
+    void parseTime_validTime_returnCorrectTime() {
+        LocalTime result = parser.parseTime("23:34");
+        LocalTime expected = LocalTime.of(23, 34);
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Tests the behaviour of parseTime when a valid time string is passed.
+     * Expects correct LocalTime returned.
+     */
+    @Test
+    void parseTime_invalidTime_returnCorrectTime() {
+        parser.parseTime("60:34");
+        String expected = "\u001b[31mException Caught!";
+        assertTrue(errContent.toString().contains(expected));
+    }
+
 
     /**
      * Tests the behaviour of correct parameters being passed to validateDate.
@@ -62,10 +126,32 @@ class ParserTest {
         assertThrows(CustomExceptions.InsufficientInput.class, () -> parser.splitDeleteInput(input));
     }
 
+    /**
+     * Tests the behaviour of splitDeleteInput when too many forward slashes have been specified.
+     * Expects InvalidInput exception to be thrown.
+     */
+    @Test
+    public void splitDeleteInput_tooManyForwardSlashes_throwsInvalidInputException() {
+        String input = "/item:appointment /index:1/";
+        assertThrows(CustomExceptions.InvalidInput.class, () -> parser.splitDeleteInput(input));
+    }
+
+    /**
+     * Tests the behaviour of parseDeleteInput when correct parameters are passed.
+     * Expects correct parameters returned.
+     */
+    @Test
+    public void parseDeleteInput_validParameters_expectValidDetailsReturned() {
+        String input = "/item:appointment /index:1";
+        String[] expected = {"appointment", "1"};
+        String[] result = parser.parseDeleteInput(input);
+        assertArrayEquals(expected, result);
+    }
+
 
     //@@author j013n3
     /**
-     * Tests the behaviour of a correctly formatted user input being passed into splitBmi.
+     * Tests the behaviour of a correctly formatted user input being passed into splitBmiInput.
      * Expects no exception to be thrown.
      */
     @Test
@@ -79,7 +165,7 @@ class ParserTest {
 
 
     /**
-     * Tests the behaviour of a string with missing parameter being passed into splitBmi.
+     * Tests the behaviour of a string with missing parameter being passed into splitBmiInput.
      * Expects InsufficientInput exception to be thrown.
      */
     @Test
@@ -88,9 +174,19 @@ class ParserTest {
         assertThrows(CustomExceptions.InsufficientInput.class, () -> parser.splitBmiInput(input));
     }
 
+    /**
+     * Tests the behaviour of too many forward slashes being passed into splitBmiInput.
+     * Expects InvalidInput exception to be thrown.
+     */
+    @Test
+    void splitBmiInput_tooManyForwardSlashes_throwsInvalidInputException() {
+        String input = "/h:bmi /height:1.71 /weight:80.00 /date:19-03-2024 /";
+        assertThrows(CustomExceptions.InvalidInput.class, () -> parser.splitBmiInput(input));
+    }
+
 
     /**
-     * Tests the behaviour of a correctly formatted string being passed into splitPeriod.
+     * Tests the behaviour of a correctly formatted string being passed into splitPeriodInput.
      * Expects no exception to be thrown.
      */
     @Test
@@ -103,7 +199,7 @@ class ParserTest {
     }
 
     /**
-     * Tests the behaviour of a string with a missing parameter being passed into splitPeriod.
+     * Tests the behaviour of a string with a missing parameter being passed into splitPeriodInput.
      * Expects InsufficientInput exception to be thrown.
      */
     @Test
@@ -114,7 +210,7 @@ class ParserTest {
 
     //@@author syj02
     /**
-     * Tests the behaviour of a correctly formatted string being passed into splitAppointment.
+     * Tests the behaviour of a correctly formatted string being passed into splitAppointmentInput.
      * Expects no exception to be thrown.
      */
     @Test
@@ -127,7 +223,7 @@ class ParserTest {
     }
 
     /**
-     * Tests the behaviour of a correctly formatted string being passed into splitAppointment.
+     * Tests the behaviour of a correctly formatted string being passed into splitAppointmentDetails.
      * Expects InsufficientInput exception to be thrown.
      */
     @Test
@@ -135,6 +231,18 @@ class ParserTest {
         String input = "/h:appointment /date:30-03-2024 /description:test";
         assertThrows(CustomExceptions.InsufficientInput.class, () -> parser.splitAppointmentDetails(input));
     }
+
+    /**
+     * Tests the behaviour of too many forward slashes being passed into splitAppointmentDetails.
+     * Expects InvalidInput exception to be thrown.
+     */
+    @Test
+    void splitAppointmentInput_tooManyForwardSlashes_throwsInvalidInputException() {
+        String input = "/h:appointment /date:30-03-2024 /time:19:30 /description:test/";
+        assertThrows(CustomExceptions.InvalidInput.class, () -> parser.splitAppointmentDetails(input));
+    }
+
+
 
     //@@author rouvinerh
     /**
@@ -155,9 +263,9 @@ class ParserTest {
      * Expects null to be returned.
      */
     @Test
-    void parseHistoryAndDeleteInput_emptyString_noExceptionThrown() {
+    void parseHistoryAndDeleteInput_emptyString_expectsNullReturned() {
         String input = "/item:";
-        assertEquals(parser.parseDeleteInput(input), null);
+        assertNull(parser.parseDeleteInput(input));
     }
 
     //@@author JustinSoh
@@ -274,7 +382,7 @@ class ParserTest {
             assertEquals(2, gymOutput.getStations().size());
             // make sure that the date is correct
             assertEquals("1997-11-11", gymOutput.getDate().toString());
-            assertEquals(null, gymOutput2.getDate());
+            assertNull(gymOutput2.getDate());
             // make sure the gym exercise names are correct
             assertEquals("bench press", gymOutput.getStationByIndex(0).getStationName());
             assertEquals("squats", gymOutput.getStationByIndex(1).getStationName());
