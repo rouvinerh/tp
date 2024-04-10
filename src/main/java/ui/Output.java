@@ -380,7 +380,7 @@ public class Output {
 
         try {
             printLine();
-            HealthList.showCurrentBmi();
+            HealthList.showLatestBmi();
             printLine();
         } catch (CustomExceptions.OutOfBounds e) {
             printException(e.getMessage());

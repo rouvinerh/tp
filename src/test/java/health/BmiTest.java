@@ -98,7 +98,7 @@ class BmiTest {
      * Tests the behaviour of showCurrentBmi.
      */
     @Test
-    void showCurrentBmi_bmiObject_printsCorrectCurrentBmi() throws CustomExceptions.OutOfBounds {
+    void showLatestBmi_bmiObject_printsCorrectLatestBmi() throws CustomExceptions.OutOfBounds {
         Bmi bmi = new Bmi("1.75", "70.00", "19-03-2024");
         HealthList healthList = new HealthList();
         healthList.addBmi(bmi);
@@ -109,7 +109,7 @@ class BmiTest {
                 + System.lineSeparator()
                 + "Great! You're within normal range."
                 + System.lineSeparator();
-        HealthList.showCurrentBmi();
+        HealthList.showLatestBmi();
         assertEquals(expected, outContent.toString());
     }
 
