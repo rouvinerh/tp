@@ -1,11 +1,11 @@
 package motivational_quotes;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class Quote {
-    private static final String QUOTES_FILE_PATH = "Quotes.txt";
     private List<String> quotes;
 
     public Quote() {
