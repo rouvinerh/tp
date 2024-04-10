@@ -179,8 +179,9 @@ public class ValidationTest {
      */
     @Test
     void validatePeriodInput_correctParameters_noExceptionThrown()  {
+        boolean isParser = true;
         String [] input = {"23-03-2024", "30-03-2024"};
-        assertDoesNotThrow(() -> validation.validatePeriodInput(input));
+        assertDoesNotThrow(() -> validation.validatePeriodInput(input, isParser));
     }
 
     /**
@@ -189,8 +190,9 @@ public class ValidationTest {
      */
     @Test
     void validatePeriodInput_emptyString_expectsInsufficientInputException() {
+        boolean isParser = true;
         String [] input = {"", "29-03-2024"};
-        assertThrows(CustomExceptions.InsufficientInput.class, () -> validation.validatePeriodInput(input));
+        assertThrows(CustomExceptions.InsufficientInput.class, () -> validation.validatePeriodInput(input, isParser));
     }
 
     /**
@@ -200,13 +202,14 @@ public class ValidationTest {
      */
     @Test
     void validatePeriodInput_invalidParameters_expectsInvalidInputException() {
+        boolean isParser = true;
         // date after Today
         String [] input1 = {"28-04-2025", "29-13-2025"};
-        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validatePeriodInput(input1));
+        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validatePeriodInput(input1, isParser));
 
         // end date before start date
         String [] input2 = {"28-03-2024", "22-03-2024"};
-        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validatePeriodInput(input2));
+        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validatePeriodInput(input2, isParser));
     }
 
     /**

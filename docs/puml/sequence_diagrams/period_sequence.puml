@@ -1,45 +1,61 @@
 @startuml
+
 skinparam sequenceReferenceBackgroundColor lightblue
-actor User
-participant Handler as Handler << Class >>
-participant Parser as Parser << Class >>
-participant Output as Output << Class >>
-participant "PeriodList:HealthList" as PeriodList
+participant "handler:Handler" as Handler
+participant "parser:Parser" as Parser
+participant "validation:Validation" as Validation
+participant "newPeriod:Period" as Period
+participant "healthList:HealthList" as HealthList
+participant HealthList as HealthList1 << Class >>
 
-User -> Handler: userInput
-activate Handler #FFBBBB
-Handler -> Handler : processInput()
-activate Handler #Salmon
-Handler -> Handler : handleHealth()
+Handler -> Parser: parsePeriodInput()
+activate Handler #salmon
+activate Parser #salmon
 
-activate Handler #DarkSalmon
-Handler -> Parser  : extractSubstringFromSpecificIndex()
-activate Parser  #FFBBBB
-Parser  --> Handler : typeOfHealth
-deactivate Parser  #FFBBBB
+Parser -> Parser: splitPeriodInput()
+activate Parser #FFBBBB
+Parser --> Parser: periodDetails[]
+deactivate Parser #FFBBBB
 
-Handler -> Parser : parsePeriodInput()
-activate Parser  #FFBBBB
-deactivate Handler #DarkSalmon
-Parser -> Parser : splitPeriodInput()
-ref over Parser: validatePeriodInput
+Parser -> Validation: validatePeriodInput()
+activate Validation #FFBBBB
+ref over Validation: validatePeriodInput
+Validation --> Parser:
+deactivate Validation
 
-activate Parser  #DarkSalmon
-Parser --> Parser : periodDetails
-deactivate Parser  #DarkSalmon
+alt endFlag is present
+    alt list is empty || end date present in latest period
+    Parser -> Period **: new
+    activate Period #FFBBBB
+    Period -> HealthList: addPeriod(startDate, endDate)
+    activate HealthList #FFBBBB
+ref over HealthList: setCycleLength()
+    HealthList --> Period:
+    deactivate HealthList #FFBBBB
+    deactivate Period #FFBBBB
 
-Parser -> ":Period" **: new
-activate ":Period" #FFBBBB
-":Period" --> Parser: newPeriod:Period
-deactivate ":Period" #FFBBBB
-Parser -> PeriodList : addPeriod()
-activate PeriodList  #FFBBBB
-PeriodList --> Parser :
-deactivate PeriodList  #FFBBBB
+    else end date not present in latest period
+    Parser -> HealthList1: getPeriod(latestPeriodIndex)
+    activate HealthList1 #FFBBBB
+    HealthList1 --> Parser:
+    Parser -> "period:Period": updateEndDate(endDate)
+    activate "period:Period" #FFBBBB
+    "period:Period" --> Parser:
+    deactivate HealthList1 #FFBBBB
+    deactivate "period:Period" #FFBBBB
+    end
 
-Parser -> Output : printAddPeriod()
-activate Output #FFBBBB
-Output --> User:
-deactivate Output #FFBBBB
+else endFlag is not present
+    Parser -> Period **: new
+    activate Period #FFBBBB
+    Period -> HealthList: addPeriod(startDate)
+ref over HealthList: setCycleLength()
+    activate HealthList #FFBBBB
+    HealthList --> Period:
+    deactivate HealthList #FFBBBB
+    deactivate Period #FFBBBB
+
+end
+
+
 @enduml
-

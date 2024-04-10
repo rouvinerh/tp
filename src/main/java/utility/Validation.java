@@ -139,7 +139,7 @@ public class Validation {
      * @param periodDetails List of strings representing Period details.
      * @throws CustomExceptions.InvalidInput If there are any errors in the details entered.
      */
-    public void validatePeriodInput(String[] periodDetails) throws CustomExceptions.InvalidInput,
+    public void validatePeriodInput(String[] periodDetails, boolean isParser) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
         if (isEmptyParameterPresent(periodDetails)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_PERIOD_PARAMETERS_ERROR);
@@ -161,15 +161,17 @@ public class Validation {
                     + e.getMessage());
         }
 
-        int sizeOfPeriodList = HealthList.getPeriodsSize();
-        if (sizeOfPeriodList >= UiConstant.MINIMUM_PERIOD_COUNT) {
-            LocalDate latestPeriodEndDate = Objects.requireNonNull(HealthList.getPeriod(0)).getEndDate();
+        if (isParser) {
+            int sizeOfPeriodList = HealthList.getPeriodsSize();
+            if (sizeOfPeriodList >= UiConstant.MINIMUM_PERIOD_COUNT) {
+                LocalDate latestPeriodEndDate = Objects.requireNonNull(HealthList.getPeriod(0)).getEndDate();
+                validateStartDatesTally(latestPeriodEndDate, periodDetails);
 
-            validateStartDatesTally(periodDetails[HealthConstant.PERIOD_START_DATE_INDEX],
-                    latestPeriodEndDate, periodDetails);
-            validateDateAfterLatestPeriodInput(
-                    periodDetails[HealthConstant.PERIOD_START_DATE_INDEX], latestPeriodEndDate);
+                validateDateAfterLatestPeriodInput(periodDetails[HealthConstant.PERIOD_START_DATE_INDEX],
+                        latestPeriodEndDate);
+            }
         }
+
         validateDateNotAfterToday(periodDetails[HealthConstant.PERIOD_START_DATE_INDEX]);
 
         Parser parser = new Parser();
@@ -525,21 +527,20 @@ public class Validation {
      * Validates whether the specified start date matches the start date of the latest period in the HealthList
      * and checks if end date exists.
      *
-     * @param dateString          The string representation of the start date to be validated.
      * @param latestPeriodEndDate The end date of the latest period in the HealthList.
      * @param periodDetails       An array containing details of the current period input.
      * @throws CustomExceptions.InvalidInput If the start date does not match the start date of the latest period
      *                                        or if insufficient parameters are provided.
      */
-    public void validateStartDatesTally(String dateString, LocalDate latestPeriodEndDate,
-                                               String[] periodDetails) throws CustomExceptions.InvalidInput {
+    public void validateStartDatesTally(LocalDate latestPeriodEndDate, String[] periodDetails)
+            throws CustomExceptions.InvalidInput {
         Parser parser = new Parser();
-        LocalDate date = parser.parseDate(dateString);
+        LocalDate startDate = parser.parseDate(periodDetails[HealthConstant.PERIOD_START_DATE_INDEX]);
         LocalDate latestPeriodStartDate =
                 Objects.requireNonNull(HealthList.getPeriod(0)).getStartDate(); // index of latest period == 0
 
         if (latestPeriodEndDate == null) {
-            if (!date.equals(latestPeriodStartDate)) {
+            if (!startDate.equals(latestPeriodStartDate)) {
                 throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_START_DATE_INPUT_ERROR);
             }
             if (periodDetails[HealthConstant.PERIOD_END_DATE_INDEX] == null) {

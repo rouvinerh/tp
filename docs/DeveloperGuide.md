@@ -443,36 +443,34 @@ The `validateWeightsArray()` method converts the `String[] weightsArray` variabl
 
 ### Health
 
-#### Add Period
-<code style="color: #D85D43;">
-HEALTH /h:period /start:[start_date] /end:[end_date]
-</code>
+User input is passed to Handler.processInput(), which determines the command used is health. The input is then passed to Handler.handleHealth() as shown in the Handler architecture above. It is then split into either 'bmi', 'period', 'prediction' or 'appointment' commands.
 
-- `[start_date]`  and `[end_date]` are in DD-MM-YYYY format.
+#### Add Period
 
 ##### Period Sequence
 
-The sequence diagram below illustrates the process of period prediction.
+The user's input is processed to add a run as follows:
 
-1. The Handler class receives `userInput` through `Handler.processInput()` which calls `Handler.handleHealth` to handle health-related operations.
+1. `Handler.handleHealth()` determines the type of health which is period, and calls the `Parser.parsePeriodInput()` method to process the user's period input.
 
-2. `Parser.extractSubstringaFromSpecificIndex()` is then called to extract `typeOfHealth`, in this case, `prediction`.
+2. `Parser.parsePeriodInput()` splits the input using `Parser.splitPeriodInput()`. Parameters are extracted using `extractSubstringFromSpecificIndex()` using the different flags.
+   - Method also extracts the end date parameter if present. 
+   - The method then returns a String[] variable with the required parameters extracted from the user input.
 
-3. The Handler class then calls `Parser.parsePredictionInput()`.
+3. `Validation.validatePeriodInput()` is called to validate each parameter. Once valid, correct parameters are used to construct a new `Period` object.
 
-4. `HealthList.getPeriodSize()` is then called to retrieve the size of `Periods` to ensure sufficient `Period` inputs are present for prediction.
+4. If end date is absent, the `Period` constructor adds the newly created object into `HealthList.PERIODS`. Else, the `PERIOD.get(period)` is called to retrieve the latest period input and update end date using `updateEndDate()` method. 
+   - If the `HealthList.PERIODS` is not empty, `setCycleLength()` will be called to calculate the cycle length. 
 
-5. `HealthList.printLatestThreeCycles()` prints the user's latest three menstrual cycles.
+5. The `Period` object is passed to `Output.printAddPeriod()` and a message acknowledging the successful adding is printed to the screen.
 
-6. `HealthList.predictNextPeriodStartDate()` gets the predicted start date by calling `Period.nextCyclePrediction()`.
-
-7. `Period.getLastThreeCycleLengths()` is called to find the sum of the latest three cycle lengths before returning to `Period.nextCyclePrediction()` for necessary calculation to obtain the predicted start date.
-
-8. The `Parser` class calls `Period.printNextCyclePrediction()` with the predicted start date as a parameter. This method prints a string indicating the number of days until the predicted start date of the next period, or how many days late the period is if the current date is after the predicted start date.
+This is the sequence diagram for adding a period from `parsePeriodInput()`:
 
 ![Period Sequence Diagram](img/sequence_diagrams/period_sequence.png)
 
-![Period Validation Diagram](img/sequence_diagrams/period_validation.png)
+![Set Cycle Length Diagram](img/sequence_diagrams/set_Cycle_Length.png)
+
+validatePeriodInput uses the Validation class to check all the parameters specified by the user when adding or updating a Period, and throws an exception if it is invalid.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -480,27 +478,24 @@ The sequence diagram below illustrates the process of period prediction.
 
 #### Add BMI
 
-The sequence diagram below shows how a `Bmi` object is added to `BMIS`.
+The user's input is processed to add a run as follows:
 
-1. Upon receiving `userInput` in `Handler.processInput()`, `Handler.handleHealth()` is called.
+1. `Handler.handleHealth()` determines the type of health which is period, and calls the `Parser.parseBmiInput()` method to process the user's period input.
 
-2. `Parser.extractSubstringaFromSpecificIndex()` is then called to extract `typeOfHealth`, in this case, `bmi`.
+2. `Parser.parseBmiInput()` splits the input using `Parser.splitPeriodInput()`. Parameters are extracted using `extractSubstringFromSpecificIndex()` using the different flags.
+    - The method returns a String[] variable with the required parameters extracted from the user input.
 
-3. The Handler class then calls `Parser.parseBmiInput()`, passing in `userInput`.
+3. `Validation.validateBmiInput()` is called to validate each parameter. Once valid, correct parameters are used to construct a new `Bmi` object.
 
-4. `Parser.splitBmiInput` splits the input and returns `bmiDetails` which consists of height, weight and date.
+4. The `Bmi` constructor adds the newly created object into `HealthList.BMIS`. The BMI value and Bmi category will be obtained from `calculateBmiValue()` and `getBmiCategory()` methods respectively. 
 
-5. The `Parser` class calls `Validation.validateBmiInput` to validate `bmiDetails` using `Validation.validateDataInput()` and `Validation.validateDateNotAfterToday()` methods.
+5. The `Bmi` object is passed to `Output.printAddBmi()` and a message acknowledging the successful adding is printed to the screen.
 
-6. Upon successful validation, a new `Bmi` object is created based on `bmiDetails` with `bmiValue` obtained from `Bmi.calculateBmiValue()` and the corresponding BMI category obtained from `Bmi.getBmiCategory()`.
-
-7. `HealthList.addBmi()` adds the newly created `Bmi` into `BMIS`.
-
-8. `Output.printAddBmi()` prints `Bmi` string containing height, weight, date, BMI and BMI category to user.
+This is the sequence diagram for adding a period from `parseBMiInput()`:
 
 ![Bmi Sequence Diagram](img/sequence_diagrams/bmi_sequence.png)
 
-![Bmi Validation Sequence Diagram](img/sequence_diagrams/bmi_validation.png)
+validateBmiInput uses the Validation class to check all the parameters specified by the user when adding a Bmi, and throws an exception if it is invalid.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -531,26 +526,6 @@ The sequence diagram below shows how a `Bmi` object is added to `BMIS`.
 ---
 
 #### Make Period Prediction
-
-The sequence diagram below illustrates the process of period prediction.
-
-1. The Handler class receives `userInput` through `Handler.processInput()` which calls `Handler.handleHealth` to handle health-related operations.
-
-2. `Parser.extractSubstringaFromSpecificIndex()` is then called to extract `typeOfHealth`, in this case, `prediction`.
-
-3. The Handler class then calls `Parser.parsePredictionInput()`.
-
-4. `HealthList.getPeriodSize()` is then called to retrieve the size of `Periods` to ensure sufficient `Period` inputs are present for prediction.
-
-5. `HealthList.printLatestThreeCycles()` prints the user's latest three menstrual cycles.
-
-6. `HealthList.predictNextPeriodStartDate()` gets the predicted start date by calling `Period.nextCyclePrediction()`.
-
-7. `Period.getLastThreeCycleLengths()` is called to find the sum of the latest three cycle lengths before returning to `Period.nextCyclePrediction()` for necessary calculation to obtain the predicted start date.
-
-8. The `Parser` class calls `Period.printNextCyclePrediction()` with the predicted start date as a parameter. This method prints a string indicating the number of days until the predicted start date of the next period, or how many days late the period is if the current date is after the predicted start date.
-
-![Prediction Sequence Diagram](img/sequence_diagrams/prediction_sequence_diagram.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
