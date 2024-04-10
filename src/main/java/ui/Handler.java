@@ -99,6 +99,7 @@ public class Handler {
                     Quote quoteProvider = new Quote();
                     System.out.println("Here's your motivational quote:");
                     System.out.println(quoteProvider.getRandomQuote());
+                    break;
 
                 default:
                     break; // valueOf results in immediate exception for non-match with enum Command

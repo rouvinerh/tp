@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.Random;
 
 public class Quote {
-    private static final String QUOTES_FILE_PATH = "C:/src/main/java/motivational_quotes/Quotes.txt";
+    private static final String QUOTES_FILE_PATH = "Quotes.txt";
     private List<String> quotes;
 
     public Quote() {
-        quotes = readQuotesFromFile();
+        quotes = readQuotesFromMotivationalQuotesClass();
     }
 
     public String getRandomQuote() {
@@ -29,11 +29,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -42,11 +42,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
     
@@ -55,11 +55,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
     
@@ -68,11 +68,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
     
@@ -81,11 +81,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
     
@@ -94,11 +94,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
     
@@ -107,11 +107,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
     
@@ -120,11 +120,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
     
@@ -133,11 +133,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
     
@@ -146,11 +146,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
     
@@ -159,11 +159,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
     
@@ -172,11 +172,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
     
@@ -185,11 +185,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
     
@@ -198,11 +198,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
     
@@ -211,11 +211,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
     
@@ -224,11 +224,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
     
@@ -237,11 +237,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
     
@@ -250,11 +250,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
     
@@ -263,11 +263,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
     
@@ -276,11 +276,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -289,11 +289,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -303,11 +303,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -317,11 +317,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -331,11 +331,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -345,11 +345,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -359,11 +359,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -373,11 +373,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -387,11 +387,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -401,11 +401,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -415,11 +415,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -429,11 +429,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -443,11 +443,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -457,11 +457,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -471,11 +471,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -485,11 +485,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -499,11 +499,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -513,11 +513,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -527,11 +527,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -541,11 +541,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -555,11 +555,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -569,11 +569,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -583,11 +583,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -597,11 +597,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -611,11 +611,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -625,11 +625,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -639,11 +639,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -652,11 +652,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -665,11 +665,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -678,11 +678,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -691,11 +691,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -704,11 +704,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -717,11 +717,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -730,11 +730,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
     
@@ -743,11 +743,11 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
@@ -756,46 +756,26 @@ public class Quote {
         if (userInput.contains("motivate") || userInput.contains("inspire")) {
             return getRandomQuote();
         } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! What can I do for you today?";
+            return "Hello! How can I motivate you today?";
         } else if (userInput.contains("thank")) {
             return "You're welcome! Keep pushing forward!";
         } else {
-            return "I'm here for you. Just ask!";
+            return "I'm here to motivate you. Just ask!";
         }
     }
         
         
     
         
-    private List<String> readQuotesFromFile() {
+    private List<String> readQuotesFromMotivationalQuotesClass() {
         List<String> quotes = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(QUOTES_FILE_PATH))) {
-            String line;
-            StringBuilder sb = new StringBuilder();
-            boolean readingQuote = false;
-            while ((line = br.readLine()) != null) {
-                if (line.trim().startsWith("Quote")) {
-                    // Start reading a new quote
-                    if (readingQuote) {
-                        // Save the previous quote
-                        quotes.add(sb.toString().trim());
-                        sb.setLength(0); // Clear the StringBuilder for the next quote
-                    }
-                    readingQuote = true;
-                } else if (readingQuote) {
-                    // Add line to the current quote
-                    sb.append(line.trim()).append(" ");
-                }
-            }
-            // Add the last quote (if any)
-            if (sb.length() > 0) {
-                quotes.add(sb.toString().trim());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        String[] quotesArray = MotivationalQuotes.getQuotes();
+        for (String quote : quotesArray) {
+            quotes.add(quote.trim());
         }
         return quotes;
     }
+
 
 
 }
