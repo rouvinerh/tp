@@ -12,11 +12,15 @@ import constants.WorkoutConstant;
  * Represents a Run object.
  */
 public class Run extends Workout {
+    //@@author rouvinerh
     protected Integer[] times;
     protected double distance;
     protected LocalDate date = null;
     protected String pace;
     protected boolean isHourPresent;
+    private final Parser parser = new Parser();
+    private final WorkoutList workoutList = new WorkoutList();
+
 
     /**
      * Constructs a new Run object with the time and distance from user input.
@@ -29,7 +33,7 @@ public class Run extends Workout {
         times = splitRunTime(stringTime);
         distance = Double.parseDouble(stringDistance);
         pace = calculatePace();
-        WorkoutList.addRun(this);
+        workoutList.addRun(this);
     }
 
     /**
@@ -43,9 +47,9 @@ public class Run extends Workout {
     public Run(String stringTime, String stringDistance, String stringDate) throws CustomExceptions.InvalidInput {
         times = splitRunTime(stringTime);
         distance = Double.parseDouble(stringDistance);
-        date = Parser.parseDate(stringDate);
+        date = parser.parseDate(stringDate);
         pace = calculatePace();
-        WorkoutList.addRun(this);
+        workoutList.addRun(this);
     }
 
     /**
@@ -93,10 +97,6 @@ public class Run extends Workout {
         this.date = date;
     }
 
-    public boolean isHourPresent() {
-        return isHourPresent;
-    }
-
     /**
      * Method parses the time format in either hh:mm:ss or mm:ss.
      * Sets {@code isHourPresent} variable to true if hours have been specified.
@@ -139,7 +139,7 @@ public class Run extends Workout {
                     + this.times[1] * UiConstant.NUM_SECONDS_IN_MINUTE
                     + this.times[2];
         } else {
-            totalSeconds = this.times[0] * 60 + this.times[1];
+            totalSeconds = this.times[0] * UiConstant.NUM_SECONDS_IN_MINUTE + this.times[1];
         }
         return totalSeconds;
     }
@@ -147,17 +147,35 @@ public class Run extends Workout {
     /**
      * Method calculates the pace of the run, and formats it into M:SS/km.
      *
+     *
      * @return Formatted string the pace of the run.
+     * @throws CustomExceptions.InvalidInput If the total time taken or pace calculated is too large or small.
      */
-    public String calculatePace() {
+    public String calculatePace() throws CustomExceptions.InvalidInput {
         int totalSeconds = calculateTotalSeconds();
+        if (totalSeconds <= WorkoutConstant.MIN_RUN_TIME_IN_SECONDS) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.ZERO_RUN_TIME_ERROR);
+        }
+
+        if (totalSeconds >= WorkoutConstant.MAX_RUN_TIME_IN_SECONDS) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.MAX_RUN_TIME_ERROR);
+        }
+
         double paceInDecimal = ((double) totalSeconds / this.distance) / UiConstant.NUM_SECONDS_IN_MINUTE;
+
+        if (paceInDecimal > WorkoutConstant.MAX_PACE) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.MAX_PACE_ERROR);
+        }
+        if (paceInDecimal < WorkoutConstant.MIN_PACE) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.MIN_PACE_ERROR);
+        }
 
         int minutes = (int) paceInDecimal;
         double remainingSeconds = paceInDecimal - minutes;
         int seconds = (int) Math.round(remainingSeconds * UiConstant.NUM_SECONDS_IN_MINUTE);
         return String.format("%d:%02d/km", minutes, seconds);
     }
+    //@@author JustinSoh
 
     /**
      * Retrieves the string representation of a Run object.

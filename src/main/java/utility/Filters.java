@@ -1,8 +1,10 @@
+//@@author L5-Z
 package utility;
 
 /**
  * Class representing the filters used for PulsePilot.
  */
+
 public class Filters {
 
     public enum Command {

@@ -1,5 +1,6 @@
 package health;
 
+import constants.UiConstant;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,10 +34,6 @@ public class AppointmentTest {
         Appointment firstAppointment = new Appointment("25-03-2024", "16:30", "Physiotherapy session");
         Appointment secondAppointment = new Appointment("22-03-2024", "16:00", "Wound dressing change");
         Appointment thirdAppointment = new Appointment("22-03-2024", "11:00", "Doctor consultation");
-
-        HealthList.addAppointment(firstAppointment);
-        HealthList.addAppointment(secondAppointment);
-        HealthList.addAppointment(thirdAppointment);
 
         String expected = "Your Appointment history:"
                 + System.lineSeparator()
@@ -72,16 +69,17 @@ public class AppointmentTest {
         Appointment secondAppointment = new Appointment("22-03-2024", "16:00", "Wound dressing change");
         Appointment thirdAppointment = new Appointment("22-03-2024", "11:00", "Doctor consultation");
 
-        HealthList.addAppointment(firstAppointment);
-        HealthList.addAppointment(secondAppointment);
-        HealthList.addAppointment(thirdAppointment);
 
-        String expected = "Removed appointment on "
-                + secondAppointment.getDate()
+        String expected = UiConstant.PARTITION_LINE
+                + System.lineSeparator()
+                + "Removed appointment on "
+                + firstAppointment.getDate()
                 + " at "
-                + secondAppointment.getTime()
+                + firstAppointment.getTime()
                 + ": "
-                + secondAppointment.getDescription()
+                + firstAppointment.getDescription()
+                + System.lineSeparator()
+                + UiConstant.PARTITION_LINE
                 + System.lineSeparator()
                 + "Your Appointment history:"
                 + System.lineSeparator()
@@ -93,11 +91,11 @@ public class AppointmentTest {
                 + thirdAppointment.getDescription()
                 + System.lineSeparator()
                 + "2. On "
-                + firstAppointment.getDate()
+                + secondAppointment.getDate()
                 + " at "
-                + firstAppointment.getTime()
+                + secondAppointment.getTime()
                 + ": "
-                + firstAppointment.getDescription()
+                + secondAppointment.getDescription()
                 + System.lineSeparator();
 
         HealthList.deleteAppointment(2);

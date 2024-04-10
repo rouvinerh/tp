@@ -6,8 +6,9 @@ import constants.WorkoutConstant;
  * Represents a GymSet object.
  */
 public class GymSet {
-    int weight;
-    int numberOfRepetitions;
+    //@@author JustinSoh
+    private double weight;
+    private int numberOfRepetitions;
 
     /**
      * Constructs a new GymSet object using the weight and reps for 1 set of a gym station.
@@ -15,16 +16,16 @@ public class GymSet {
      * @param weight The weight done for the set.
      * @param numberOfRepetitions The number of reps done for the set.
      */
-    public GymSet(int weight, int numberOfRepetitions){
+    public GymSet(Double weight, int numberOfRepetitions){
         this.weight = weight;
         this.numberOfRepetitions = numberOfRepetitions;
     }
 
-    public int getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 

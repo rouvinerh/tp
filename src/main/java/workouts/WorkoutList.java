@@ -1,6 +1,7 @@
 package workouts;
 
 import storage.LogFile;
+import ui.Output;
 import utility.CustomExceptions;
 import constants.ErrorConstant;
 import constants.WorkoutConstant;
@@ -10,18 +11,21 @@ import java.util.ArrayList;
 /**
  * Represents the WorkoutList object.
  */
-public class WorkoutList extends ArrayList<Workout> {
+public class WorkoutList  {
+    //@@author JustinSoh
     private static final ArrayList<Workout> WORKOUTS = new ArrayList<>();
     private static final ArrayList<Run> RUNS = new ArrayList<>();
     private static final ArrayList<Gym> GYMS = new ArrayList<>();
 
+    protected WorkoutList() {
 
+    }
     /**
      * Adds a workout to the list of workouts.
      *
      * @param workout Workout object to be added.
      */
-    private static void addWorkout(Workout workout) {
+    protected void addWorkout(Workout workout) {
         WORKOUTS.add(workout);
     }
 
@@ -30,7 +34,7 @@ public class WorkoutList extends ArrayList<Workout> {
      *
      * @param run Run object to be added.
      */
-    protected static void addRun(Run run) {
+    protected void addRun(Run run) {
         RUNS.add(run);
         addWorkout(run);
     }
@@ -40,7 +44,7 @@ public class WorkoutList extends ArrayList<Workout> {
      *
      * @param gym Gym object to be added.
      */
-    public static void addGym(Gym gym) {
+    protected void addGym(Gym gym) {
         GYMS.add(gym);
         addWorkout(gym);
     }
@@ -69,16 +73,14 @@ public class WorkoutList extends ArrayList<Workout> {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_HISTORY_FILTER_ERROR);
         }
         if(filter.equals(WorkoutConstant.RUN) && RUNS.isEmpty()){
-            throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_RUN_EMPTY_ERROR);
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.RUN_EMPTY_ERROR);
         }
         if(filter.equals(WorkoutConstant.ALL) && WORKOUTS.isEmpty()){
-            throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_WORKOUTS_EMPTY_ERROR);
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.WORKOUTS_EMPTY_ERROR);
         }
         if(filter.equals(WorkoutConstant.GYM) && GYMS.isEmpty()){
-            throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_GYM_EMPTY_ERROR);
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.GYM_EMPTY_ERROR);
         }
-
-
 
         if(filter.equals(WorkoutConstant.RUN)){
             return RUNS;
@@ -90,15 +92,6 @@ public class WorkoutList extends ArrayList<Workout> {
 
     }
 
-    public static ArrayList<Gym> getGyms() {
-        return GYMS;
-    }
-
-    public static ArrayList<Run> getRuns() {
-        return RUNS;
-    }
-
-
     /**
      * Returns latest run.
      *
@@ -107,14 +100,14 @@ public class WorkoutList extends ArrayList<Workout> {
      */
     public static Run getLatestRun() throws CustomExceptions.OutOfBounds {
         if (RUNS.isEmpty()) {
-            throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_RUN_EMPTY_ERROR);
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.RUN_EMPTY_ERROR);
         }
         return RUNS.get(RUNS.size() - 1);
     }
 
     public static Gym getLatestGym() throws CustomExceptions.OutOfBounds {
         if (GYMS.isEmpty()) {
-            throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_GYM_EMPTY_ERROR);
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.GYM_EMPTY_ERROR);
         }
         return GYMS.get(GYMS.size() - 1);
     }
@@ -147,9 +140,11 @@ public class WorkoutList extends ArrayList<Workout> {
             throw new CustomExceptions.OutOfBounds("Invalid index to delete!");
         }
         Gym deletedGym = GYMS.get(index);
+        Output.printLine();
         System.out.println("Removed Gym entry with " +
                 deletedGym.stations.size() +
                 " stations.");
+        Output.printLine();
         WORKOUTS.remove(deletedGym);
         GYMS.remove(index);
         LogFile.writeLog("Removed gym with index: " + index, false);
@@ -165,11 +160,13 @@ public class WorkoutList extends ArrayList<Workout> {
             throw new CustomExceptions.OutOfBounds("Invalid index to delete!");
         }
         Run deletedRun = RUNS.get(index);
+        Output.printLine();
         System.out.println("Removed Run entry with " +
                 deletedRun.distance +
                 "km at " +
                 deletedRun.getPace() +
                 ".");
+        Output.printLine();
         WORKOUTS.remove(deletedRun);
         RUNS.remove(index);
         LogFile.writeLog("Removed run with index: " + index, false);

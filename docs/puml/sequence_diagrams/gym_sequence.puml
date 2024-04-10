@@ -1,0 +1,58 @@
+@startuml
+skinparam sequenceReferenceBackgroundColor lightblue
+
+participant "handler:Handler" as Handler
+participant "parser:Parser" as Parser
+participant "validation:Validation" as Validation
+participant "newGym:Gym" as Run
+participant "workoutList:WorkoutList" as WorkoutList
+
+Handler -> Parser: parseGymInput()
+activate Handler #salmon
+activate Parser #salmon
+
+Parser -> Parser: splitGymInput()
+activate Parser #FFBBBB
+Parser --> Parser: gymDetails[]
+deactivate Parser #FFBBBB
+
+Parser -> Validation: validateGymInput()
+activate Validation #FFBBBB
+Validation --> Parser: 
+deactivate Validation
+
+Parser -> Run **: new
+activate Run #FFBBBB   
+Run -> WorkoutList **: new
+activate WorkoutList #FFBBBB
+WorkoutList --> Run:
+deactivate WorkoutList #FFBBBB
+
+alt date is present
+    Run -> WorkoutList: addGym(date)
+    activate WorkoutList #FFBBBB
+    WorkoutList -> WorkoutList: addWorkout(date)
+    activate WorkoutList #DarkSalmon
+    WorkoutList --> WorkoutList:
+    deactivate WorkoutList #DarkSalmon
+    WorkoutList --> Run:
+    deactivate WorkoutList #FFBBBB
+ 
+else date is not present
+    Run -> WorkoutList: addGym()
+    activate WorkoutList #FFBBBB
+    WorkoutList -> WorkoutList: addWorkout()
+    activate WorkoutList #DarkSalmon
+    WorkoutList --> WorkoutList:
+    deactivate WorkoutList #DarkSalmon
+    WorkoutList --> Run:
+    deactivate WorkoutList #FFBBBB
+end
+
+Parser -> Parser: parseGymStationInput()
+activate Parser #FFBBBB
+ref over Parser: parseGymStationInput
+Parser --> Parser:
+deactivate Parser #FFBBBB
+
+@enduml

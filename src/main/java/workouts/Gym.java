@@ -10,17 +10,19 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
- * Represents a Gym object that contains an ArrayList of GymStation objects.
+ * Represents a Gym object that contains an ArrayList of GymStation objects and an optional date.
  */
 public class Gym extends Workout {
+    //@@author JustinSoh
     protected LocalDate date = null;
     protected ArrayList<GymStation> stations = new ArrayList<>();
-
+    private final Parser parser = new Parser();
+    private final WorkoutList workoutList = new WorkoutList();
     /**
      * Constructor that adds a Gym object to WorkoutList.
      */
     public Gym() {
-        WorkoutList.addGym(this);
+        workoutList.addGym(this);
     }
 
     /**
@@ -29,8 +31,8 @@ public class Gym extends Workout {
      * @param stringDate String representing the date parameter specified.
      */
     public Gym(String stringDate) {
-        this.date = Parser.parseDate(stringDate);
-        WorkoutList.addGym(this);
+        this.date = parser.parseDate(stringDate);
+        workoutList.addGym(this);
     }
 
     /**
@@ -43,7 +45,7 @@ public class Gym extends Workout {
      * @throws CustomExceptions.InvalidInput If there is invalid input in any parameter.
      */
     public void addStation(String name, int numberOfSet, int numberOfRepetitions,
-                           ArrayList<Integer> weightsList) throws CustomExceptions.InvalidInput {
+                           ArrayList<Double> weightsList) throws CustomExceptions.InvalidInput {
         try {
             GymStation newStation = new GymStation(name, numberOfSet, numberOfRepetitions, weightsList);
             appendIntoStations(newStation);
@@ -62,7 +64,7 @@ public class Gym extends Workout {
         return stations;
     }
 
-    public void appendIntoStations(GymStation station) {
+    private void appendIntoStations(GymStation station) {
         stations.add(station);
     }
 
@@ -114,7 +116,7 @@ public class Gym extends Workout {
         if(this.getDate() == null){
             date = ErrorConstant.NO_DATE_SPECIFIED_ERROR;
         } else {
-            date = Parser.parseFormattedDate(this.getDate());
+            date = parser.parseFormattedDate(this.getDate());
         }
 
         fileString.append(type);
@@ -168,33 +170,22 @@ public class Gym extends Workout {
         String gymStationString = station.getStationName();
         String gymSetString = String.valueOf(station.getNumberOfSets());
 
-        // Process the reps and weights into string format
-        String gymRepString = station.toRepString(UiConstant.COMMAS);
-        String gymWeightString = station.toWeightString(UiConstant.COMMAS);
-
         // If it is first iteration, includes dashes for irrelevant field
         if (index == 0){
             return String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
                     WorkoutConstant.GYM, gymDate,
-                    UiConstant.DASH,
-                    UiConstant.DASH,
-                    UiConstant.DASH,
                     gymStationString,
                     gymSetString,
-                    gymRepString,
-                    gymWeightString);
+                    UiConstant.DASH
+            );
         } else {
             // if it is not, then leave it blank
             return String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
                     UiConstant.EMPTY_STRING,
                     UiConstant.EMPTY_STRING,
-                    UiConstant.EMPTY_STRING,
-                    UiConstant.EMPTY_STRING,
-                    UiConstant.EMPTY_STRING,
                     gymStationString,
                     gymSetString,
-                    gymRepString,
-                    gymWeightString
+                    UiConstant.DASH
             );
 
         }

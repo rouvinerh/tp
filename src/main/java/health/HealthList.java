@@ -7,6 +7,7 @@ import constants.HealthConstant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
+import ui.Output;
 
 /**
  * The HealthList class extends the ArrayList class.
@@ -36,6 +37,8 @@ public class HealthList extends ArrayList<Health> {
     private static final ArrayList<Period> PERIODS = new ArrayList<>();
 
 
+    protected HealthList() {
+    }
     //@@author j013n3
 
     /**
@@ -44,9 +47,11 @@ public class HealthList extends ArrayList<Health> {
      * @param bmi Bmi object.
      * @throws AssertionError If Bmi object is null.
      */
-    public static void addBmi(Bmi bmi) {
+    protected void addBmi(Bmi bmi) {
         assert bmi != null : ErrorConstant.NULL_BMI_ERROR;
         BMIS.add(bmi);
+        // bmi sorted from latest to earliest date
+        BMIS.sort(Comparator.comparing(Bmi::getDate).reversed());
     }
 
     //@@author syj02
@@ -58,11 +63,10 @@ public class HealthList extends ArrayList<Health> {
      */
     public static void showCurrentBmi() throws CustomExceptions.OutOfBounds {
         if (BMIS.isEmpty()) {
-            throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_BMI_EMPTY_ERROR);
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.BMI_EMPTY_ERROR);
         }
         assert !BMIS.isEmpty() : ErrorConstant.EMPTY_BMI_LIST_ERROR;
-        int currentIndex = BMIS.size();
-        System.out.println(BMIS.get(currentIndex - 1));
+        System.out.println(BMIS.get(0));
     }
 
     /**
@@ -72,13 +76,17 @@ public class HealthList extends ArrayList<Health> {
      */
     public static void showBmiHistory() throws CustomExceptions.OutOfBounds {
         if (BMIS.isEmpty()) {
-            throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_BMI_EMPTY_ERROR);
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.BMI_EMPTY_ERROR);
         }
         assert !BMIS.isEmpty() : ErrorConstant.EMPTY_BMI_LIST_ERROR;
+        int index = 1;
         System.out.println(HealthConstant.BMI_HISTORY_HEADER);
         for (Bmi bmi : BMIS) {
+            System.out.print(index + ". ");
             System.out.println(bmi);
+            index += 1;
         }
+
     }
 
     /**
@@ -87,13 +95,15 @@ public class HealthList extends ArrayList<Health> {
      * @param period Period object to be added.
      * @throws AssertionError If period object is null.
      */
-    public static void addPeriod(Period period) {
+    protected void addPeriod(Period period) {
         assert period != null : ErrorConstant.NULL_PERIOD_ERROR;
         if (!PERIODS.isEmpty()) {
-            Period previousPeriod = PERIODS.get(PERIODS.size() - 1);
+            Period previousPeriod = PERIODS.get(0);
             previousPeriod.setCycleLength(period.getStartDate());
         }
         PERIODS.add(period);
+        // period sorted from latest to earliest start date
+        PERIODS.sort(Comparator.comparing(Period::getStartDate).reversed());
     }
 
     /**
@@ -103,11 +113,10 @@ public class HealthList extends ArrayList<Health> {
      */
     public static void showLatestPeriod() throws CustomExceptions.OutOfBounds {
         if (PERIODS.isEmpty()) {
-            throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_PERIOD_EMPTY_ERROR);
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.PERIOD_EMPTY_ERROR);
         }
         assert !PERIODS.isEmpty() : ErrorConstant.EMPTY_PERIOD_LIST_ERROR;
-        int currentIndex = PERIODS.size();
-        System.out.println(PERIODS.get(currentIndex - 1));
+        System.out.println(PERIODS.get(0));
     }
 
     //@@author j013n3
@@ -119,12 +128,15 @@ public class HealthList extends ArrayList<Health> {
      */
     public static void showPeriodHistory() throws CustomExceptions.OutOfBounds {
         if (PERIODS.isEmpty()) {
-            throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_PERIOD_EMPTY_ERROR);
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.PERIOD_EMPTY_ERROR);
         }
         assert !PERIODS.isEmpty() : ErrorConstant.EMPTY_PERIOD_LIST_ERROR;
+        int index = 1;
         System.out.println(HealthConstant.PERIOD_HISTORY_HEADER);
         for (Period period : PERIODS) {
+            System.out.print(index + ". ");
             System.out.println(period);
+            index += 1;
         }
     }
 
@@ -132,15 +144,16 @@ public class HealthList extends ArrayList<Health> {
      * Prints the last three Period objects added to the periods list.
      */
     public static void printLatestThreeCycles() {
+        Output.printLine();
         int size = PERIODS.size();
-        int startIndex = size - HealthConstant.LATEST_THREE_CYCLE_LENGTHS;
+        int startIndex = 0;
+        int endIndex = HealthConstant.LATEST_THREE_CYCLE_LENGTHS;
         assert startIndex >= 0 : ErrorConstant.START_INDEX_NEGATIVE_ERROR;
 
-        int endIndex = size - HealthConstant.LAST_CYCLE_OFFSET;
-
-        for (int i = startIndex; i <= endIndex; i++) {
+        for (int i = startIndex; i < endIndex; i++) {
             System.out.println(PERIODS.get(i));
         }
+
     }
 
     /**
@@ -201,7 +214,7 @@ public class HealthList extends ArrayList<Health> {
     public static LocalDate predictNextPeriodStartDate() {
         assert !PERIODS.isEmpty() : ErrorConstant.EMPTY_PERIOD_LIST_ERROR;
 
-        Period latestPeriod = PERIODS.get(PERIODS.size() - 1);
+        Period latestPeriod = PERIODS.get(0);
         return latestPeriod.nextCyclePrediction();
     }
 
@@ -247,13 +260,17 @@ public class HealthList extends ArrayList<Health> {
      */
     public static void deleteBmi(int index) throws CustomExceptions.OutOfBounds {
         assert !BMIS.isEmpty() : ErrorConstant.EMPTY_BMI_LIST_ERROR;
-        if (index < 0 || index >= BMIS.size()) {
+        if (index < 0) {
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.BMI_EMPTY_ERROR);
+        } else if (index >= BMIS.size()) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.INVALID_INDEX_DELETE_ERROR);
         }
         Bmi deletedBmi = BMIS.get(index);
+        Output.printLine();
         System.out.printf((HealthConstant.LOG_DELETE_BMI_FORMAT) + "%n",
                 deletedBmi.bmiValue,
                 deletedBmi.date);
+        Output.printLine();
         BMIS.remove(index);
         LogFile.writeLog(HealthConstant.BMI_REMOVED_MESSAGE_PREFIX + index, false);
     }
@@ -266,14 +283,18 @@ public class HealthList extends ArrayList<Health> {
      */
     public static void deletePeriod(int index) throws CustomExceptions.OutOfBounds {
         assert !PERIODS.isEmpty() : ErrorConstant.EMPTY_PERIOD_LIST_ERROR;
-        if (index < 0 || index >= PERIODS.size()) {
+        if (index < 0) {
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.PERIOD_EMPTY_ERROR);
+        } else if(index >= PERIODS.size()) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.INVALID_INDEX_DELETE_ERROR);
         }
         Period deletedPeriod = PERIODS.get(index);
+        Output.printLine();
         System.out.printf((HealthConstant.LOG_DELETE_PERIOD_FORMAT) + "%n",
                 deletedPeriod.getStartDate(),
                 deletedPeriod.getEndDate());
         PERIODS.remove(index);
+        Output.printLine();
         LogFile.writeLog(HealthConstant.PERIOD_REMOVED_MESSAGE_PREFIX + index, false);
     }
 
@@ -287,7 +308,7 @@ public class HealthList extends ArrayList<Health> {
      * @param appointment Appointment object.
      * @throws AssertionError If Appointment object is null.
      */
-    public static void addAppointment(Appointment appointment) {
+    public void addAppointment(Appointment appointment) {
         assert appointment != null : ErrorConstant.NULL_APPOINTMENT_ERROR;
         APPOINTMENTS.add(appointment);
         APPOINTMENTS.sort(Comparator.comparing(Appointment::getDate).thenComparing(Appointment::getTime));
@@ -301,15 +322,18 @@ public class HealthList extends ArrayList<Health> {
      */
     public static void deleteAppointment(int index) throws CustomExceptions.OutOfBounds {
         assert !APPOINTMENTS.isEmpty() : ErrorConstant.EMPTY_APPOINTMENT_LIST_ERROR;
-        if (index < 1 || index > APPOINTMENTS.size()) {
+        if (index < 0) {
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.APPOINTMENT_EMPTY_ERROR);
+        } else if (index >= APPOINTMENTS.size()) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.INVALID_INDEX_DELETE_ERROR);
         }
-        index -= 1;
         Appointment deletedAppointment = APPOINTMENTS.get(index);
+        Output.printLine();
         System.out.printf((HealthConstant.LOG_DELETE_APPOINTMENT_FORMAT) + "%n",
                 deletedAppointment.date,
                 deletedAppointment.time,
                 deletedAppointment.description);
+        Output.printLine();
         APPOINTMENTS.remove(index);
         LogFile.writeLog(HealthConstant.APPOINTMENT_REMOVED_MESSAGE_PREFIX + index, false);
         showAppointmentList();
@@ -322,7 +346,7 @@ public class HealthList extends ArrayList<Health> {
      */
     public static void showAppointmentList() throws CustomExceptions.OutOfBounds {
         if (APPOINTMENTS.isEmpty()) {
-            throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_APPOINTMENT_EMPTY_ERROR);
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.APPOINTMENT_EMPTY_ERROR);
         }
         assert !APPOINTMENTS.isEmpty() : ErrorConstant.EMPTY_APPOINTMENT_LIST_ERROR;
         int index = 1;
@@ -339,12 +363,11 @@ public class HealthList extends ArrayList<Health> {
      *
      * @throws AssertionError If appointments list is empty.
      */
-    public static void showLatestAppointment() throws CustomExceptions.OutOfBounds {
+    public static void showEarliestAppointment() throws CustomExceptions.OutOfBounds {
         if (APPOINTMENTS.isEmpty()) {
-            throw new CustomExceptions.OutOfBounds(ErrorConstant.HISTORY_APPOINTMENT_EMPTY_ERROR);
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.APPOINTMENT_EMPTY_ERROR);
         }
         assert !APPOINTMENTS.isEmpty() : ErrorConstant.EMPTY_APPOINTMENT_LIST_ERROR;
-        int currentIndex = APPOINTMENTS.size();
-        System.out.println(APPOINTMENTS.get(currentIndex - 1));
+        System.out.println(APPOINTMENTS.get(0));
     }
 }

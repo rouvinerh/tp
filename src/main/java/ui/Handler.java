@@ -1,3 +1,4 @@
+//@@author L5-Z
 package ui;
 
 import health.HealthList;
@@ -13,6 +14,7 @@ import utility.Filters.DeleteFilters;
 import utility.Filters.HealthFilters;
 import utility.Parser;
 import utility.Filters.WorkoutFilters;
+import utility.Validation;
 import workouts.WorkoutList;
 
 import java.util.Scanner;
@@ -22,21 +24,43 @@ import storage.LogFile;
  * Represents user input parsing and handling before providing feedback to the user.
  */
 public class Handler {
-    public static Scanner in;
-    static LogFile logFile = LogFile.getInstance();
 
+    //@@author JustinSoh
+    static LogFile logFile = LogFile.getInstance();
+    private final Scanner in;
+    private final Parser parser;
+    private final DataFile dataFile;
+    private final Output output;
+    private final Validation validation;
+
+    public Handler(){
+        in = new Scanner(System.in);
+        parser = new Parser(in);
+        dataFile = new DataFile();
+        output = new Output();
+        validation = new Validation();
+    }
+
+    public Handler(String input){
+        in = new Scanner(input); // use for JUnit Testing
+        parser = new Parser(in);
+        dataFile = new DataFile();
+        output = new Output();
+        validation = new Validation();
+    }
+
+    //@@author L5-Z
     /**
      * Processes user input and filters for valid command words from enum {@code Command},
      * then creates the relevant object based on details entered.
      *
      * @throws IllegalArgumentException If an error occurs during command processing.
      */
-    public static void processInput() {
+    public void processInput() {
         while (in.hasNextLine()) {
             String userInput = in.nextLine();
             String instruction = userInput.toUpperCase().split(UiConstant.SPLIT_BY_WHITESPACE)[0];
             LogFile.writeLog("User Input: " + userInput, false);
-
             assert userInput != null : "Object cannot be null";
 
             try {
@@ -68,7 +92,7 @@ public class Handler {
                     break;
 
                 case HELP:
-                    Output.printHelp();
+                    output.printHelp();
                     break;
                     
                 case MOTIVATE:
@@ -81,9 +105,10 @@ public class Handler {
                     break; // valueOf results in immediate exception for non-match with enum Command
                 }
             } catch (CustomExceptions.InvalidInput e) {
-                Output.printException(e.getMessage());
+                output.printException(e.getMessage());
             } catch (IllegalArgumentException e) {
-                Output.printException(ErrorConstant.INVALID_COMMAND_ERROR);
+                LogFile.writeLog("Invalid Command Error: " + userInput, true);
+                output.printException(ErrorConstant.INVALID_COMMAND_ERROR);
             }
         }
     }
@@ -96,40 +121,42 @@ public class Handler {
      *
      * @param userInput The user input string.
      */
-    public static void handleWorkout(String userInput) {
+    public void handleWorkout(String userInput) {
         try {
-            String typeOfWorkout = Parser.extractSubstringFromSpecificIndex(userInput,
+            String typeOfWorkout = parser.extractSubstringFromSpecificIndex(userInput,
                     WorkoutConstant.EXERCISE_FLAG);
             WorkoutFilters filter = WorkoutFilters.valueOf(typeOfWorkout.toUpperCase());
             switch(filter) {
             case RUN:
-                Parser.parseRunInput(userInput);
+                parser.parseRunInput(userInput);
                 break;
 
             case GYM:
-                Parser.parseGymInput(userInput);
+                parser.parseGymInput(userInput);
                 break;
 
             default:
                 break;
             }
         } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
-            Output.printException(e.getMessage());
+            output.printException(e.getMessage());
         } catch (IllegalArgumentException e) {
-            Output.printException("Invalid workout type! Please input either /e:run or /e:gym!");
+            output.printException("Invalid workout type! Please input either /e:run or /e:gym!");
         }
     }
 
+    //@@author rouvinerh
     /**
      * Handles history command.
      * Show history of all exercises, run or gym.
      *
      * @param userInput The user input string.
      */
-    public static void handleHistory(String userInput) {
-        String filter = Parser.parseHistoryAndLatestInput(userInput);
+    public void handleHistory(String userInput) {
+        String filter = parser.parseHistoryAndLatestInput(userInput);
         if (filter != null) {
-            Output.printHistory(filter);
+            output.printHistory(filter);
+            LogFile.writeLog("Viewed history for " + filter, false);
         }
     }
 
@@ -140,8 +167,8 @@ public class Handler {
      * @param userInput The user input string.
      * @throws CustomExceptions.InvalidInput If the user input is invalid.
      */
-    public static void handleDelete(String userInput) throws CustomExceptions.InvalidInput {
-        String[] parsedInputs = Parser.parseDeleteInput(userInput);
+    public void handleDelete(String userInput) throws CustomExceptions.InvalidInput {
+        String[] parsedInputs = parser.parseDeleteInput(userInput);
         if (parsedInputs == null) {
             return;
         }
@@ -173,7 +200,7 @@ public class Handler {
                 break;
             }
         } catch (CustomExceptions.OutOfBounds e) {
-            Output.printException(e.getMessage());
+            output.printException(e.getMessage());
         }
     }
 
@@ -184,34 +211,34 @@ public class Handler {
      *
      * @param userInput A string containing health data information of user.
      */
-    public static void handleHealth(String userInput) {
+    public void handleHealth(String userInput) {
         try {
-            String typeOfHealth = Parser.extractSubstringFromSpecificIndex(userInput, HealthConstant.HEALTH_FLAG);
+            String typeOfHealth = parser.extractSubstringFromSpecificIndex(userInput, HealthConstant.HEALTH_FLAG);
             HealthFilters filter = HealthFilters.valueOf(typeOfHealth.toUpperCase());
             switch(filter) {
             case BMI:
-                Parser.parseBmiInput(userInput);
+                parser.parseBmiInput(userInput);
                 break;
 
             case PERIOD:
-                Parser.parsePeriodInput(userInput);
+                parser.parsePeriodInput(userInput);
                 break;
 
             case PREDICTION:
-                Parser.parsePredictionInput();
+                parser.parsePredictionInput();
                 break;
 
             case APPOINTMENT:
-                Parser.parseAppointmentInput(userInput);
+                parser.parseAppointmentInput(userInput);
                 break;
 
             default:
                 break;
             }
         } catch (CustomExceptions.InvalidInput |  CustomExceptions.InsufficientInput e) {
-            Output.printException(e.getMessage());
+            output.printException(e.getMessage());
         } catch (IllegalArgumentException e) {
-            Output.printException(ErrorConstant.INVALID_HEALTH_INPUT_ERROR);
+            output.printException(ErrorConstant.INVALID_HEALTH_INPUT_ERROR);
         }
     }
 
@@ -222,99 +249,91 @@ public class Handler {
      *
      * @param userInput String representing user input.
      */
-    public static void handleLatest(String userInput) {
-        String filter = Parser.parseHistoryAndLatestInput(userInput);
+    public void handleLatest(String userInput) {
+        String filter = parser.parseHistoryAndLatestInput(userInput);
         if (filter != null) {
-            Output.printLatest(filter);
+            output.printLatest(filter);
+            LogFile.writeLog("Viewed latest for " + filter, false);
         }
     }
 
-    //@@author
+    //@@author L5-Z
 
     /**
      * Get user's name, and print profile induction messages.
      */
-    public static void userInduction() {
-        String name = in.nextLine();
+    public void userInduction() {
+        String name;
+        while (true) {
+            name = this.in.nextLine();
+            if (validation.validateIfUsernameIsValid(name)) {
+                System.err.println(ErrorConstant.INVALID_USERNAME_ERROR);
+            } else {
+                break;
+            }
+        }
+
         DataFile.userName = name;
         System.out.println("Welcome aboard, Captain " + name);
-        Output.printLine();
+        output.printLine();
 
         System.out.println("Tips: Enter 'help' to view the pilot manual!");
         System.out.println("Initiating FTL jump sequence...");
 
         // DataFile.saveName(name);
         LogFile.writeLog("Name Entered: " + name, false);
-
         System.out.println("FTL jump completed.");
     }
 
-    /**
-     * Initialise scanner to read user input.
-     */
-    public static void initialiseScanner() {
-        in = new Scanner(System.in);
-        assert in != null : "Object cannot be null";
-    }
 
-    /**
-     * Close scanner to stop reading user input.
-     */
-    public static void destroyScanner() {
-        if (in != null) {
-            assert in != null : "Object cannot be null";
-            in.close();
-        }
-    }
-
+    //@@author L5-Z
     /**
      * Initializes PulsePilot by printing a welcome message, loading tasks from storage,
      * and returning the tasks list.
      */
-    public static void initialiseBot() {
-        Output.printWelcomeBanner();
-        initialiseScanner();
+    public void initialiseBot() {
+        output.printWelcomeBanner();
         LogFile.writeLog("Started bot", false);
 
-        int status = DataFile.loadDataFile();
+        int status = dataFile.loadDataFile();
 
         if (status == 0) {
             try {
-                DataFile.readDataFile(); // File read
-                Output.printGreeting(status, DataFile.userName);
+                dataFile.readDataFile(); // File read
+                output.printGreeting(status, DataFile.userName);
             } catch (CustomExceptions.FileReadError e) {
-                Output.printException(e.getMessage());
+                output.printException(e.getMessage());
             }
         } else {
-            Output.printGreeting(status, DataFile.userName);
+            output.printGreeting(status, DataFile.userName);
             userInduction();
         }
 
         System.out.println("Terminal primed. Command inputs are now accepted...");
-        Output.printLine();
+        output.printLine();
     }
 
     /**
      * Terminates PulsePilot by saving tasks to storage, printing a goodbye message,
      * and indicating the filename where tasks are saved.
      */
-    public static void terminateBot() {
+    public void terminateBot() {
         LogFile.writeLog("User terminating PulsePilot", false);
         try {
             LogFile.writeLog("Attempting to save data file", false);
 
 
-            DataFile.saveDataFile(DataFile.userName, HealthList.getBmis(), HealthList.getAppointments(),
+            dataFile.saveDataFile(DataFile.userName, HealthList.getBmis(), HealthList.getAppointments(),
                     HealthList.getPeriods(), WorkoutList.getWorkouts());
             LogFile.writeLog("File saved", false);
         } catch (CustomExceptions.FileWriteError e) {
             LogFile.writeLog("File write error", true);
-            Output.printException(e.getMessage());
+            output.printException(e.getMessage());
         }
-        Output.printGoodbyeMessage();
+        output.printGoodbyeMessage();
         // Yet to implement : Reply.printReply("Saved tasks as: " + Constant.FILE_NAME);
         LogFile.writeLog("Bot exited gracefully", false);
-        destroyScanner();
         System.exit(0);
     }
+
 }

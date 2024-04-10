@@ -100,7 +100,8 @@ class BmiTest {
     @Test
     void showCurrentBmi_bmiObject_printsCorrectCurrentBmi() throws CustomExceptions.OutOfBounds {
         Bmi bmi = new Bmi("1.75", "70.00", "19-03-2024");
-        HealthList.addBmi(bmi);
+        HealthList healthList = new HealthList();
+        healthList.addBmi(bmi);
 
         String expected = "2024-03-19"
                 + System.lineSeparator()
@@ -118,26 +119,27 @@ class BmiTest {
      */
     @Test
     void showBmiHistory_twoBmiObjects_printsCorrectBmiHistory() throws CustomExceptions.OutOfBounds {
-        Bmi firstBmi = new Bmi("1.75", "80.0", "20-03-2024");
-        Bmi secondBmi = new Bmi("1.80", "74.0", "21-03-2024");
+        new Bmi("1.75", "80.0", "20-03-2024");
+        new Bmi("1.80", "74.0", "21-03-2024");
 
-        HealthList.addBmi(firstBmi);
-        HealthList.addBmi(secondBmi);
 
         String expected = "Your BMI history:"
                 + System.lineSeparator()
-                + "2024-03-20"
-                + System.lineSeparator()
-                + "Your BMI is 26.12"
-                + System.lineSeparator()
-                + "You're overweight."
-                + System.lineSeparator()
+                + "1. "
                 + "2024-03-21"
                 + System.lineSeparator()
                 + "Your BMI is 22.84"
                 + System.lineSeparator()
                 + "Great! You're within normal range."
+                + System.lineSeparator()
+                + "2. "
+                + "2024-03-20"
+                + System.lineSeparator()
+                + "Your BMI is 26.12"
+                + System.lineSeparator()
+                + "You're overweight."
                 + System.lineSeparator();
+
 
         HealthList.showBmiHistory();
         assertEquals(expected, outContent.toString());
@@ -151,10 +153,9 @@ class BmiTest {
      */
     @Test
     void deleteBmi_properList_listOfSizeOne() throws CustomExceptions.OutOfBounds {
-        Bmi firstBmi = new Bmi("1.75", "80.0", "20-03-2024");
-        Bmi secondBmi = new Bmi("1.80", "74.0", "21-03-2024");
-        HealthList.addBmi(firstBmi);
-        HealthList.addBmi(secondBmi);
+        new Bmi("1.75", "80.0", "20-03-2024");
+        new Bmi("1.80", "74.0", "21-03-2024");
+
 
         int index = 1;
         HealthList.deleteBmi(index);
@@ -178,7 +179,8 @@ class BmiTest {
     @Test
     void deleteBmi_properListInvalidIndex_throwOutOfBoundsForBmi() {
         Bmi firstBmi = new Bmi("1.75", "80.0", "20-03-2024");
-        HealthList.addBmi(firstBmi);
+        HealthList healthList = new HealthList();
+        healthList.addBmi(firstBmi);
         int invalidIndex = 5;
         assertThrows (CustomExceptions.OutOfBounds.class, () ->
                 HealthList.deleteBmi(invalidIndex));

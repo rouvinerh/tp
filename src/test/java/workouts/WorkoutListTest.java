@@ -33,7 +33,10 @@ class WorkoutListTest {
     void addRun_normalInput_expectAppend()  {
         try {
             Run inputRun = new Run("40:10", "10.3", "15-03-2024");
-            WorkoutList.addRun(inputRun);
+
+            WorkoutList workoutListInstance = new WorkoutList();
+            workoutListInstance.addRun(inputRun);
+
             ArrayList<? extends Workout> runList = WorkoutList.getWorkouts(WorkoutConstant.RUN);
             ArrayList<? extends Workout> workoutList = WorkoutList.getWorkouts(WorkoutConstant.ALL);
 
@@ -189,8 +192,8 @@ class WorkoutListTest {
     @Test
     void deleteGym_properList_listOfSizeOne() throws CustomExceptions.InvalidInput, CustomExceptions.OutOfBounds {
         Gym gym1 = new Gym();
-        ArrayList<Integer> array1 = new ArrayList<>(Arrays.asList(1));
-        ArrayList<Integer> array2 = new ArrayList<>(Arrays.asList(1,2));
+        ArrayList<Double> array1 = new ArrayList<>(Arrays.asList(1.0));
+        ArrayList<Double> array2 = new ArrayList<>(Arrays.asList(1.0,2.0));
 
         gym1.addStation("Bench Press", 1, 50, array1);
         gym1.addStation("Shoulder Press", 2, 10, array2);
@@ -224,8 +227,8 @@ class WorkoutListTest {
     @Test
     void deleteGym_properListInvalidIndex_throwOutOfBoundsForRun() throws CustomExceptions.InvalidInput {
         Gym gym1 = new Gym();
-        ArrayList<Integer> array1 = new ArrayList<>(Arrays.asList(1));
-        ArrayList<Integer> array2 = new ArrayList<>(Arrays.asList(1,2));
+        ArrayList<Double> array1 = new ArrayList<>(Arrays.asList(1.0));
+        ArrayList<Double> array2 = new ArrayList<>(Arrays.asList(1.0,2.0));
         gym1.addStation("Bench Press", 1, 50, array1);
         gym1.addStation("Shoulder Press", 2, 10, array2);
         int invalidIndex = 5;

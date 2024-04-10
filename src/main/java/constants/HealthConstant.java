@@ -28,9 +28,14 @@ public class HealthConstant {
 
     // Threshold
     public static final double UNDERWEIGHT_BMI_THRESHOLD = 18.5;
-    public static final double NORMAL_BMI_THRESHOLD = 24.9;
-    public static final double OVERWEIGHT_BMI_THRESHOLD = 29.9;
-    public static final double OBESE_BMI_THRESHOLD = 39.9;
+    public static final double NORMAL_BMI_THRESHOLD = 25.0;
+    public static final double OVERWEIGHT_BMI_THRESHOLD = 30.0;
+    public static final double OBESE_BMI_THRESHOLD = 40.0;
+    public static final double MIN_WEIGHT = 0;
+    public static final double MIN_HEIGHT = 0;
+    public static final double MAX_HEIGHT = 2.75;
+    public static final double MAX_WEIGHT = 640;
+
 
     // Formatted Strings/Messages
     // BMI
@@ -48,7 +53,7 @@ public class HealthConstant {
     // PERIOD
     public static final String PRINT_PERIOD_FORMAT = "Period Start: %s Period End: %s"
             + System.lineSeparator()
-            + "Period Length: %d days";
+            + "Period Length: %d %s";
     public static final String PRINT_BMI_FORMAT = "%s"
             + System.lineSeparator()
             + "Your BMI is %.2f"
@@ -58,17 +63,21 @@ public class HealthConstant {
     public static final String PERIOD_ADDED_MESSAGE_PREFIX = "Added: period | ";
     public static final String PERIOD_REMOVED_MESSAGE_PREFIX = "Removed period with index: ";
     public static final String PERIOD_HISTORY_HEADER = "Your Period history:";
+    public static final String PERIOD_TOO_LONG_MESSAGE = "Your period length is out of the healthy range. " +
+            "Please consult a gynaecologist if this persists.";
 
     // PREDICTION
     public static final String PRINT_CYCLE_FORMAT = "Cycle Length: %d days";
     public static final Integer LATEST_THREE_CYCLE_LENGTHS = 3;
-    public static final Integer LAST_CYCLE_INDEX_OFFSET = 2;
-    public static final Integer LAST_CYCLE_OFFSET = 1;
+    public static final Integer FIRST_CYCLE_INDEX = 3;
+    public static final Integer LAST_CYCLE_INDEX = 1;
     public static final Integer MIN_SIZE_FOR_PREDICTION = 4;
     public static final String PREDICTED_START_DATE_MESSAGE = "Your next cycle's predicted start date is ";
     public static final String COUNT_DAYS_MESSAGE = ", in ";
     public static final String PERIOD_IS_LATE = ". Your period is late by ";
-    public static final String DAYS_MESSAGE = " days.";
+    public static final String PREDICTED_DATE_IS_TODAY_MESSAGE = ", which is today! ";
+    public static final String DAY_MESSAGE = "day";
+    public static final String DAYS_MESSAGE = "days";
 
     // APPOINTMENT
     public static final String PRINT_APPOINTMENT_FORMAT = "On %s at %s: %s";
@@ -87,4 +96,11 @@ public class HealthConstant {
     public static final int APPOINTMENT_DATE_INDEX = 0;
     public static final int APPOINTMENT_TIME_INDEX = 1;
     public static final int APPOINTMENT_DESCRIPTION_INDEX = 2;
+
+    public static final int NUM_OF_SLASHES_FOR_PERIOD = 3;
+    public static final int NUM_OF_SLASHES_FOR_BMI = 4;
+    public static final int NUM_OF_SLASHES_FOR_APPOINTMENT = 4;
+
+    //Latest object
+    public static final int FIRST_INDEX = 0;
 }

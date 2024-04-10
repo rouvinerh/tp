@@ -1,0 +1,70 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide circle 
+!define ABSTRACT &#123;abstract&#125;
+
+
+class WorkoutList {
+    - WORKOUTS: ArrayList<Workout>
+    - RUNS: ArrayList<Run>
+    - GYMS: ArrayList<Gym>
+    
+    - addWorkout(workout: Workout): void
+    # addRun(run: Run): void
+    # addGym(gym: Gym): void
+    + getWorkouts(filter: String): ArrayList<Workout>
+    + getLatestRun(): Run 
+    + getLatestGym(): Gym
+    + getRunSize(): int
+    + getGymSize(): int
+    + deleteRun(index: int): void
+    + deleteGym(index: int): void
+    + clearWorkoutsRunGym(): void
+}
+
+class Workout  {
+    # date: LocalDate
+    + Workout() 
+    + Workout(stringDate: String)
+    + getDate(): LocalDate
+}
+
+class Run extends Workout {
+    # times: Integer[]
+    # distance: double
+    # date: LocalDate
+    # pace: String
+    # isHourPresent: boolean
+
+    + Run(stringTime: String, stringDistance: String)
+    + Run(stringTime: String, stringDistance: String, stringDate: String)
+    + getTimes(): String
+    + getDistance(): String
+    + getPace(): String
+    + getDate(): LocalDate
+    + getFormatForAllHistory(): String
+    + setDate(date: LocalDate): void
+}
+
+class Gym extends Workout {
+    # date: LocalDate
+    # stations: ArrayList<GymStation>
+
+    + Gym()
+    + Gym(stringDate: String)
+    + addStation(name: String, numberOfSet: int, numberOfRepetition: int,
+    weightsList: ArrayList<Double>): void
+    + getStations(): ArrayList<GymStation>
+    + getStationByIndex(index: int): GymStation
+    + getDate(): LocalDate
+    + getHistoryFormatForSpecificGymStation(index: int): String
+    + setDate(date: LocalDate): void
+
+}
+
+
+WorkoutList *-- "*" Run : contains
+WorkoutList *-- "*" Gym : contains
+WorkoutList *-- "*" Workout : contains
+
+@enduml

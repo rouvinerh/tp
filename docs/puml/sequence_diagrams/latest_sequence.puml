@@ -1,0 +1,29 @@
+@startuml
+skinparam sequenceReferenceBackgroundColor lightblue
+participant "handler:Handler" as Handler
+participant "parser:Parser" as Parser
+participant "validation:Validation" as Validation
+
+
+Handler -> Parser: parseHistoryAndLatest(userInput)
+activate Handler #FFBBBB
+activate Parser #FFBBBB
+
+    Parser -> Parser: extractSubstring() 
+    note right of Parser: Extracts filter string\nfrom userInput
+    activate Parser #Salmon
+    Parser --> Parser: filter:String
+    deactivate Parser #Salmon
+
+    Parser -> Validation: validateFilter(filter) 
+    activate Validation #FFBBBB
+    Validation --> Parser: 
+    deactivate Validation #FFBBBB
+
+    Parser --> Handler
+deactivate Parser
+Handler -> Output : printLatest(filter)
+activate Output #FFBBBB
+Output --> Handler
+deactivate Output
+@enduml

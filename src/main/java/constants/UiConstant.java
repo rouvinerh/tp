@@ -19,17 +19,17 @@ public class UiConstant {
     public static final String LINE = " | ";
     public static final String PARTITION_LINE = "____________________________________________________________";
     public static final String EMPTY_STRING = "";
-
+    public static final String FULL_STOP = ".";
     // Regex
     public static final String VALID_DATE_REGEX = "^\\d{2}-\\d{2}-\\d{4}$";
     public static final String VALID_TWO_DP_NUMBER_REGEX = "^\\d+\\.\\d{2}$";
     public static final String VALID_TIME_REGEX = "^\\d{2}:\\d{2}$";
     public static final String VALID_TIME_WITH_HOURS_REGEX = "^\\d{2}:\\d{2}:\\d{2}$";
     public static final String VALID_POSITIVE_INTEGER_REGEX = "^[1-9]\\d*$";
-    public static final String VALID_APPOINTMENT_DESCRIPTION_REGEX = "^[0-9a-zA-Z\\s]+$";
-    public static final String VALID_EXERCISE_NAME_REGEX = "^[A-Za-z\\s]+$";
-    public static final String VALID_WEIGHTS_ARRAY_REGEX = "^\\d+(,\\d+)*$";
-
+    public static final String VALID_APPOINTMENT_DESCRIPTION_REGEX = "^[0-9a-zA-Z\\s'\"]+$";
+    public static final String VALID_GYM_STATION_NAME_REGEX = "^[A-Za-z\\s]+$";
+    public static final String VALID_USERNAME_REGEX = "^[A-Za-z\\s]+$";
+    public static final String VALID_WEIGHTS_ARRAY_REGEX = "^\\d+(\\.\\d{1,3})?(,\\d+(\\.\\d{1,3})?)*$";
 
     // PulsePilot UI replies
     public static final String EXIT_MESSAGE = "Initiating PulsePilot landing sequence...";
@@ -40,13 +40,14 @@ public class UiConstant {
     public static final int NAME_INDEX = 1;
     public static final String NAME_LABEL = "NAME";
     public static final String LOG_FILE_PATH = "./pulsepilot_log.txt";
-    public static final String DATA_FILE_PATH = "./pulsepilot_data.txt";
-    public static final String HASH_FILE_PATH = "./pulsepilot_hash.txt";
-    public static final File SAVE_FILE = new File(UiConstant.DATA_FILE_PATH);
+    public static String dataFilePath = "./pulsepilot_data.txt";
+    public static String hashFilePath = "./pulsepilot_hash.txt";
+    public static File saveFile = new File(UiConstant.dataFilePath);
     public static final int FILE_FOUND = 0;
     public static final int FILE_NOT_FOUND = 1;
     public static final String MISSING_FILE = "What is your name, voyager?";
     public static final String SUCCESSFUL_LOAD = "Prior data found. Orbit has been synchronised.";
+
 
     // History
     public static final String ITEM_FLAG = "/item:";
@@ -60,10 +61,6 @@ public class UiConstant {
     public static final Integer MIN_RUNTIME_ARRAY_LENGTH = 2;
     public static final int NUM_SECONDS_IN_MINUTE = 60;
     public static final int NUM_SECONDS_IN_HOUR = 3600;
-    public static final Integer MIN_DAY = 1;
-    public static final Integer MAX_DAY = 31;
-    public static final Integer MIN_MONTH = 1;
-    public static final Integer MAX_MONTH = 12;
     public static final Integer MIN_MINUTES = 0;
     public static final Integer MAX_MINUTES = 59;
     public static final Integer MIN_SECONDS = 0;
@@ -73,9 +70,11 @@ public class UiConstant {
     public static final double POWER_OF_TWO = 2.0;
     public static final double ROUNDING_FACTOR = 100.0;
     public static final int NUM_DELETE_PARAMETERS = 2;
+    public static final int MINIMUM_PERIOD_COUNT = 1;
 
     // SPLIT INDEX
     public static final int DELETE_ITEM_STRING_INDEX = 0;
     public static final int DELETE_ITEM_NUMBER_INDEX = 1;
-
+    public static final int NUM_OF_SLASHES_FOR_DELETE = 2;
+    public static final int NUM_OF_SLASHES_FOR_LATEST_AND_HISTORY = 1;
 }

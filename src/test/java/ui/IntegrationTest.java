@@ -17,10 +17,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeAll;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -43,16 +44,11 @@ public class IntegrationTest {
     }
 
     @AfterEach
-    public void cleanup() {
+    public void tearDown(){
         WorkoutList.clearWorkoutsRunGym();
         HealthList.clearHealthLists();
         outContent.reset();
         errContent.reset();
-        Handler.destroyScanner();
-        if (Handler.in == null) {
-            return;
-        }
-        assert HandlerTest.isScannerClosed(Handler.in) : "Scanner is not closed";
     }
 
     @AfterAll
@@ -70,27 +66,29 @@ public class IntegrationTest {
     void testSaveAndLoadGym_gymObjectInput_expectSamePrintHistory(){
         Gym newGym = new Gym();
         try {
-            ArrayList<Integer> array1 = new ArrayList<>(List.of(1));
-            ArrayList<Integer> array2 = new ArrayList<>(Arrays.asList(1, 2));
-            newGym.addStation("Exercise 1", 1, 10, array1);
-            newGym.addStation("Exercise 2", 2, 20 , array2);
+            ArrayList<Double> array1 = new ArrayList<>(List.of(1.0));
+            ArrayList<Double> array2 = new ArrayList<>(Arrays.asList(1.0, 2.0));
+            newGym.addStation("ExerciseA", 1, 10, array1);
+            newGym.addStation("ExerciseB", 2, 20 , array2);
 
             // Save the expected output
-            Output.printAddGym(newGym);
+            Output output = new Output();
+            output.printAddGym(newGym);
             String expectedString = outContent.toString();
 
             // Save the string, clear the static list, and then simulate load
             String saveString = newGym.toFileString();
-            cleanup();
-            Gym loadedGym = Parser.parseGymFileInput(saveString);
-            Output.printAddGym(loadedGym);
-            String output = outContent.toString();
+            tearDown();
+            Parser parser = new Parser();
+            Gym loadedGym = parser.parseGymFileInput(saveString);
+            output.printAddGym(loadedGym);
+            String outputContent = outContent.toString();
 
             // Expect the same value
-            assertEquals(expectedString, output);
+            assertEquals(expectedString, outputContent);
 
 
-        } catch (CustomExceptions.InvalidInput | CustomExceptions.FileReadError e){
+        } catch (CustomExceptions.InvalidInput | CustomExceptions.FileReadError | CustomExceptions.InsufficientInput e){
             fail("Should not throw an exception");
         }
 
@@ -103,7 +101,7 @@ public class IntegrationTest {
     @Test
     void testLatestDisplay_userInputsTwoGymAndRuns_expectsLatestGymAndRun(){
         String run1 = "WORKOUT /e:run /d:10.30 /t:40:10 /date:15-03-2024";
-        String run2 = "WORKOUT /e:run /d:40.30 /t:30:10 /date:17-03-2024";
+        String run2 = "WORKOUT /e:run /d:11.59 /t:30:10 /date:17-03-2024";
         String gym1 = "WORKOUT /e:gym /n:2 /date:18-03-2024";
         String gym1Station1 = "benchpress /s:2 /r:4 /w:40,60";
         String gym1Station2 = "squats /s:3 /r:4 /w:10,20,30";
@@ -129,40 +127,39 @@ public class IntegrationTest {
                 + showHistoryRun + System.lineSeparator() 
                 + showHistoryAll + System.lineSeparator();
 
-        System.setIn(new ByteArrayInputStream(inputString.getBytes()));
-        Handler.initialiseScanner();
-        Handler.processInput();
+        Handler newHandler = new Handler(inputString);
+        newHandler.processInput();
         String result = outContent.toString();
-
-        cleanup();
+        tearDown();
 
         // Craft expected output
         try{
             Run run1Expected = new Run("40:10", "10.30", "15-03-2024");
-            Run run2Expected = new Run("30:10", "40.30", "17-03-2024");
+            Run run2Expected = new Run("30:10", "11.59", "17-03-2024");
 
             Gym gym1expected = new Gym("18-03-2024");
             gym1expected.addStation("benchpress", 2, 4,
-                    new ArrayList<>(Arrays.asList(40,60)));
+                    new ArrayList<>(Arrays.asList(40.0,60.0)));
             gym1expected.addStation("squats", 3, 4,
-                    new ArrayList<>(Arrays.asList(10,20,30)));
+                    new ArrayList<>(Arrays.asList(10.0,20.0,30.0)));
 
             Gym gym2expected = new Gym("22-03-2024");
             gym2expected.addStation("deadlift",  4, 4,
-                    new ArrayList<>(Arrays.asList(120,130,140,160)));
+                    new ArrayList<>(Arrays.asList(120.0,130.0,140.0,160.0)));
 
-            Output.printAddRun(run1Expected);
-            Output.printAddRun(run2Expected);
-            Output.printGymStationPrompt(1);
-            Output.printGymStationPrompt(2);
-            Output.printAddGym(gym1expected);
-            Output.printGymStationPrompt(1);
-            Output.printAddGym(gym2expected);
-            Output.printLatestGym();
-            Output.printLatestRun();
-            Output.printHistory(WorkoutConstant.GYM);
-            Output.printHistory(WorkoutConstant.RUN);
-            Output.printHistory(WorkoutConstant.ALL);
+            Output output = new Output();
+            output.printAddRun(run1Expected);
+            output.printAddRun(run2Expected);
+            output.printGymStationPrompt(1);
+            output.printGymStationPrompt(2);
+            output.printAddGym(gym1expected);
+            output.printGymStationPrompt(1);
+            output.printAddGym(gym2expected);
+            output.printLatestGym();
+            output.printLatestRun();
+            output.printHistory(WorkoutConstant.GYM);
+            output.printHistory(WorkoutConstant.RUN);
+            output.printHistory(WorkoutConstant.ALL);
 
             String expected = outContent.toString();
             assertEquals(expected, result);
@@ -189,30 +186,29 @@ public class IntegrationTest {
                 + period3 + System.lineSeparator()
                 + period4 + System.lineSeparator()
                 + prediction + System.lineSeparator();
-        
-        System.setIn(new ByteArrayInputStream(inputString.getBytes()));
-        Handler.initialiseScanner();
-        Handler.processInput();
+
+
+        Handler newHandler = new Handler(inputString);
+        newHandler.processInput();
         String result = outContent.toString();
-        cleanup();
+        tearDown();
+
+        Output output = new Output();
 
         Period expectedPeriod1 = new Period("18-12-2023" , "26-12-2023");
+        output.printAddPeriod(expectedPeriod1);
+
         Period expectedPeriod2 = new Period("18-01-2024" , "26-01-2024");
+        output.printAddPeriod(expectedPeriod2);
+
         Period expectedPeriod3 = new Period("21-02-2024", "28-02-2024");
+        output.printAddPeriod(expectedPeriod3);
+
         Period expectedPeriod4 = new Period("22-03-2024", "29-03-2024");
+        output.printAddPeriod(expectedPeriod4);
 
-        HealthList.addPeriod(expectedPeriod1);
-        Output.printAddPeriod(expectedPeriod1);
-
-        HealthList.addPeriod(expectedPeriod2);
-        Output.printAddPeriod(expectedPeriod2);
-
-        HealthList.addPeriod(expectedPeriod3);
-        Output.printAddPeriod(expectedPeriod3);
-
-        HealthList.addPeriod(expectedPeriod4);
-        Output.printAddPeriod(expectedPeriod4);
-        Parser.parsePredictionInput();
+        Parser parser = new Parser();
+        parser.parsePredictionInput();
 
         String expected = outContent.toString();
         assertEquals(expected, result);
@@ -235,34 +231,29 @@ public class IntegrationTest {
                 + period3 + System.lineSeparator()
                 + prediction + System.lineSeparator();
 
-        System.setIn(new ByteArrayInputStream(inputString.getBytes()));
-        Handler.initialiseScanner();
-        Handler.processInput();
+        Handler newHandler = new Handler(inputString);
+        Output output = new Output();
+        newHandler.processInput();
         String result = outContent.toString();
         String resultErr = errContent.toString();
-        cleanup();
+        tearDown();
 
         Period expectedPeriod1 = new Period("18-12-2023" , "26-12-2023");
+        output.printAddPeriod(expectedPeriod1);
         Period expectedPeriod2 = new Period("18-01-2024" , "26-01-2024");
+        output.printAddPeriod(expectedPeriod2);
         Period expectedPeriod3 = new Period("21-02-2024", "28-02-2024");
-
-        HealthList.addPeriod(expectedPeriod1);
-        Output.printAddPeriod(expectedPeriod1);
-
-        HealthList.addPeriod(expectedPeriod2);
-        Output.printAddPeriod(expectedPeriod2);
-
-        HealthList.addPeriod(expectedPeriod3);
-        Output.printAddPeriod(expectedPeriod3);
+        output.printAddPeriod(expectedPeriod3);
 
         String expected = outContent.toString();
         assertEquals(expected, result);
 
         // expect error message
         try {
-            Parser.parsePredictionInput();
+            Parser parser = new Parser();
+            parser.parsePredictionInput();
         } catch (CustomExceptions.InsufficientInput e) {
-            Output.printException(e.getMessage());
+            output.printException(e.getMessage());
         }
         String expectedErr = errContent.toString();
         assertEquals(expectedErr, resultErr);

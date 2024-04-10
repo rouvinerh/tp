@@ -15,6 +15,7 @@ public class Appointment extends Health {
     /**
      * The date of the appointment.
      */
+
     protected LocalDate date;
 
     /**
@@ -27,6 +28,9 @@ public class Appointment extends Health {
      */
     protected String description;
 
+    private final Parser parser = new Parser();
+    private final HealthList healthList = new HealthList();
+
     /**
      * Constructor for Appointment object.
      *
@@ -35,9 +39,10 @@ public class Appointment extends Health {
      * @param description A string describing the appointment.
      */
     public Appointment(String stringDate, String stringTime, String description) {
-        this.date = Parser.parseDate(stringDate);
-        this.time = Parser.parseTime(stringTime);
+        this.date = parser.parseDate(stringDate);
+        this.time = parser.parseTime(stringTime);
         this.description = description;
+        healthList.addAppointment(this);
     }
 
     /**
@@ -60,6 +65,7 @@ public class Appointment extends Health {
         return this.time;
     }
 
+    //@@author syj02
     /**
      * Retrieves the description of the appointment of String type.
      *
