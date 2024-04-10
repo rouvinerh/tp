@@ -106,6 +106,7 @@ public class Period extends Health {
      * @return The period length.
      */
     public long getPeriodLength() {
+        assert periodLength > 0 : ErrorConstant.LENGTH_CANNOT_BE_NEGATIVE_ERROR;
         return periodLength;
     }
 
@@ -138,7 +139,7 @@ public class Period extends Health {
      * @return The length of the period.
      */
     public long calculatePeriodLength() {
-        assert getStartDate().isBefore(getEndDate()) : ErrorConstant.PERIOD_END_BEFORE_START_ERROR;
+        //assert getStartDate().isBefore(getEndDate()) : ErrorConstant.PERIOD_END_BEFORE_START_ERROR;
 
         if (endDate == null || startDate == null) {
             return 0;

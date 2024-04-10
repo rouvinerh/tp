@@ -174,7 +174,7 @@ public class IntegrationTest {
      * accordingly with a valid prediction on when the next cycle is.
      */
     @Test
-    void testPrediction_userInputsFourPeriods_expectPrediction() throws CustomExceptions.InsufficientInput {
+    void testPrediction_userInputsFourPeriods_expectPrediction() throws CustomExceptions.InsufficientInput, CustomExceptions.OutOfBounds {
         String period1 = "health /h:period /start:18-12-2023 /end:26-12-2023";
         String period2 = "health /h:period /start:18-01-2024 /end:26-01-2024";
         String period3 = "health /h:period /start:21-02-2024 /end:28-02-2024";
@@ -253,6 +253,8 @@ public class IntegrationTest {
             Parser parser = new Parser();
             parser.parsePredictionInput();
         } catch (CustomExceptions.InsufficientInput e) {
+            output.printException(e.getMessage());
+        } catch (CustomExceptions.OutOfBounds e) {
             output.printException(e.getMessage());
         }
         String expectedErr = errContent.toString();

@@ -170,6 +170,7 @@ public class ErrorConstant {
             + System.lineSeparator()
             + "2. Start dates of current period do not tally. " +
             "Enter 'history /item:period' to view existing period inputs.";
+    public static final String LENGTH_MUST_BE_POSITIVE_ERROR = "Length cannot be less than 1 day.";
 
     // APPOINTMENT ERRORS
     public static final String INSUFFICIENT_APPOINTMENT_PARAMETERS_ERROR = "Insufficient parameters for appointment! " +

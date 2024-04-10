@@ -232,6 +232,8 @@ public class Handler {
             output.printException(e.getMessage());
         } catch (IllegalArgumentException e) {
             output.printException(ErrorConstant.INVALID_HEALTH_INPUT_ERROR);
+        } catch (CustomExceptions.OutOfBounds e) {
+            output.printException(e.getMessage());
         }
     }
 

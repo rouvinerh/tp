@@ -168,12 +168,12 @@ public class HealthList extends ArrayList<Health> {
      * @throws CustomExceptions.OutOfBounds If the index of the Bmi object given does not exist.
      */
     public static void deleteBmi(int index) throws CustomExceptions.OutOfBounds {
-        assert !BMIS.isEmpty() : ErrorConstant.EMPTY_BMI_LIST_ERROR;
         if (index < 0) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.BMI_EMPTY_ERROR);
         } else if (index >= BMIS.size()) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.INVALID_INDEX_DELETE_ERROR);
         }
+        assert !BMIS.isEmpty() : ErrorConstant.EMPTY_BMI_LIST_ERROR;
         Bmi deletedBmi = BMIS.get(index);
         Output.printLine();
         System.out.printf((HealthConstant.LOG_DELETE_BMI_FORMAT) + "%n",
@@ -191,12 +191,12 @@ public class HealthList extends ArrayList<Health> {
      * @throws CustomExceptions.OutOfBounds If the index of the Period object given does not exist.
      */
     public static void deletePeriod(int index) throws CustomExceptions.OutOfBounds {
-        assert !PERIODS.isEmpty() : ErrorConstant.EMPTY_PERIOD_LIST_ERROR;
         if (index < 0) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.PERIOD_EMPTY_ERROR);
         } else if(index >= PERIODS.size()) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.INVALID_INDEX_DELETE_ERROR);
         }
+        assert !PERIODS.isEmpty() : ErrorConstant.EMPTY_PERIOD_LIST_ERROR;
         Period deletedPeriod = PERIODS.get(index);
         Output.printLine();
         System.out.printf((HealthConstant.LOG_DELETE_PERIOD_FORMAT) + "%n",
@@ -216,12 +216,12 @@ public class HealthList extends ArrayList<Health> {
      * @throws CustomExceptions.OutOfBounds If the index of the Appointment object given does not exist.
      */
     public static void deleteAppointment(int index) throws CustomExceptions.OutOfBounds {
-        assert !APPOINTMENTS.isEmpty() : ErrorConstant.EMPTY_APPOINTMENT_LIST_ERROR;
         if (index < 0) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.APPOINTMENT_EMPTY_ERROR);
         } else if (index >= APPOINTMENTS.size()) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.INVALID_INDEX_DELETE_ERROR);
         }
+        assert !APPOINTMENTS.isEmpty() : ErrorConstant.EMPTY_APPOINTMENT_LIST_ERROR;
         Appointment deletedAppointment = APPOINTMENTS.get(index);
         Output.printLine();
         System.out.printf((HealthConstant.LOG_DELETE_APPOINTMENT_FORMAT) + "%n",
@@ -271,8 +271,8 @@ public class HealthList extends ArrayList<Health> {
         if (APPOINTMENTS.isEmpty()) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.APPOINTMENT_EMPTY_ERROR);
         }
-        int index = APPOINTMENTS.size() - 1;
         assert !APPOINTMENTS.isEmpty() : ErrorConstant.EMPTY_APPOINTMENT_LIST_ERROR;
+        int index = APPOINTMENTS.size() - 1;
         System.out.println(APPOINTMENTS.get(index));
     }
 
@@ -361,7 +361,6 @@ public class HealthList extends ArrayList<Health> {
      */
     public static void printLatestThreeCycles() {
         Output.printLine();
-        int size = PERIODS.size();
         int startIndex = 0;
         int endIndex = HealthConstant.LATEST_THREE_CYCLE_LENGTHS;
         assert startIndex >= 0 : ErrorConstant.START_INDEX_NEGATIVE_ERROR;
@@ -378,7 +377,10 @@ public class HealthList extends ArrayList<Health> {
      * @return The predicted start date of the next period.
      * @throws AssertionError If periods lists is empty.
      */
-    public static LocalDate predictNextPeriodStartDate() {
+    public static LocalDate predictNextPeriodStartDate() throws CustomExceptions.OutOfBounds {
+        if (PERIODS.isEmpty()) {
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.PERIOD_EMPTY_ERROR);
+        }
         assert !PERIODS.isEmpty() : ErrorConstant.EMPTY_PERIOD_LIST_ERROR;
 
         Period latestPeriod = PERIODS.get(0);
