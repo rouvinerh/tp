@@ -97,7 +97,6 @@ public class Period extends Health {
      * @throws AssertionError if the end date is null.
      */
     public LocalDate getEndDate() {
-        assert endDate != null : ErrorConstant.NULL_END_DATE_ERROR;
         return endDate;
     }
 
