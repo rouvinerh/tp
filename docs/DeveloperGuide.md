@@ -459,7 +459,7 @@ The user's input is processed to add a run as follows:
 
 3. `Validation.validatePeriodInput()` is called to validate each parameter. Once valid, correct parameters are used to construct a new `Period` object.
 
-4. If end date is absent, the `Period` constructor adds the newly created object into `HealthList.PERIODS`. Else, the `PERIOD.get(period)` is called to retrieve the latest period input and update end start using `updateEndDate()` method. 
+4. If end date is absent, the `Period` constructor adds the newly created object into `HealthList.PERIODS`. Else, the `PERIOD.get(period)` is called to retrieve the latest period input and update end date using `updateEndDate()` method. 
    - If the `HealthList.PERIODS` is not empty, `setCycleLength()` will be called to calculate the cycle length. 
 
 5. The `Period` object is passed to `Output.printAddPeriod()` and a message acknowledging the successful adding is printed to the screen.
@@ -469,6 +469,8 @@ This is the sequence diagram for adding a period from `parsePeriodInput()`:
 ![Period Sequence Diagram](img/sequence_diagrams/period_sequence.png)
 
 ![Set Cycle Length Diagram](img/sequence_diagrams/set_Cycle_Length.png)
+
+validatePeriodInput uses the Validation class to check all the parameters specified by the user when adding or updating a Period, and throws an exception if it is invalid.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -485,13 +487,15 @@ The user's input is processed to add a run as follows:
 
 3. `Validation.validateBmiInput()` is called to validate each parameter. Once valid, correct parameters are used to construct a new `Bmi` object.
 
-4. The `Bmi` constructor adds the newly created object into `HealthList.BMIS`. The BMI value and Bmi category will be obtained from `calculateBmiValue()` method and `getBmiCategory()' respectively. 
+4. The `Bmi` constructor adds the newly created object into `HealthList.BMIS`. The BMI value and Bmi category will be obtained from `calculateBmiValue()` and `getBmiCategory()` methods respectively. 
 
 5. The `Bmi` object is passed to `Output.printAddBmi()` and a message acknowledging the successful adding is printed to the screen.
 
 This is the sequence diagram for adding a period from `parseBMiInput()`:
 
 ![Bmi Sequence Diagram](img/sequence_diagrams/bmi_sequence.png)
+
+validateBmiInput uses the Validation class to check all the parameters specified by the user when adding a Bmi, and throws an exception if it is invalid.
 
 ###### [Back to table of contents](#table-of-contents)
 
