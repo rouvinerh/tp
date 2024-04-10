@@ -167,8 +167,8 @@ class BmiTest {
      * Expected behaviour is for an AssertionError to be thrown.
      */
     @Test
-    void deleteBmi_emptyList_throwsAssertionError() {
-        assertThrows(AssertionError.class, () ->
+    void deleteBmi_emptyList_throwsCustomExceptions() {
+        assertThrows(CustomExceptions.OutOfBounds.class, () ->
                 HealthList.deleteBmi(0));
     }
 

@@ -106,7 +106,7 @@ public class Period extends Health {
      * @return The period length.
      */
     public long getPeriodLength() {
-        assert periodLength > 0 : ErrorConstant.LENGTH_CANNOT_BE_NEGATIVE_ERROR;
+        assert periodLength > 0 : ErrorConstant.LENGTH_MUST_BE_POSITIVE_ERROR;
         return periodLength;
     }
 

@@ -135,8 +135,8 @@ class PeriodTest {
      * Expected behaviour is for an AssertionError to be thrown.
      */
     @Test
-    void deletePeriod_emptyList_throwsAssertionError() {
-        assertThrows(AssertionError.class, () ->
+    void deletePeriod_emptyList_throwsCustomExceptions() {
+        assertThrows(CustomExceptions.OutOfBounds.class, () ->
                 HealthList.deletePeriod(0));
     }
 
