@@ -457,9 +457,34 @@ The `validateWeightsArray()` method converts the `String[] weightsArray` variabl
 
 User input is passed to Handler.processInput(), which determines the command used is health. The input is then passed to Handler.handleHealth() as shown in the Handler architecture above. It is then split into either 'bmi', 'period', 'prediction' or 'appointment' commands.
 
-#### Add Period
+---
 
-##### Period Sequence
+#### Add BMI
+
+The user's input is processed to add a run as follows:
+
+1. `Handler.handleHealth()` determines the type of health which is period, and calls the `Parser.parseBmiInput()` method to process the user's period input.
+
+2. `Parser.parseBmiInput()` splits the input using `Parser.splitPeriodInput()`. Parameters are extracted using `extractSubstringFromSpecificIndex()` using the different flags.
+    - The method returns a String[] variable with the required parameters extracted from the user input.
+
+3. `Validation.validateBmiInput()` is called to validate each parameter. Once valid, correct parameters are used to construct a new `Bmi` object.
+
+4. The `Bmi` constructor adds the newly created object into `HealthList.BMIS`. The BMI value and Bmi category will be obtained from `calculateBmiValue()` and `getBmiCategory()` methods respectively.
+
+5. The `Bmi` object is passed to `Output.printAddBmi()` and a message acknowledging the successful adding is printed to the screen.
+
+This is the sequence diagram for adding a period from `parseBMiInput()`:
+
+![Bmi Sequence Diagram](img/sequence_diagrams/bmi_sequence.png)
+
+validateBmiInput uses the Validation class to check all the parameters specified by the user when adding a Bmi, and throws an exception if it is invalid.
+
+###### [Back to table of contents](#table-of-contents)
+
+---
+
+#### Add Period
 
 The user's input is processed to add a run as follows:
 
@@ -484,30 +509,7 @@ This is the sequence diagram for adding a period from `parsePeriodInput()`:
 
 validatePeriodInput uses the Validation class to check all the parameters specified by the user when adding or updating a Period, and throws an exception if it is invalid.
 
-###### [Back to table of contents](#table-of-contents)
-
----
-
-#### Add BMI
-
-The user's input is processed to add a run as follows:
-
-1. `Handler.handleHealth()` determines the type of health which is period, and calls the `Parser.parseBmiInput()` method to process the user's period input.
-
-2. `Parser.parseBmiInput()` splits the input using `Parser.splitPeriodInput()`. Parameters are extracted using `extractSubstringFromSpecificIndex()` using the different flags.
-    - The method returns a String[] variable with the required parameters extracted from the user input.
-
-3. `Validation.validateBmiInput()` is called to validate each parameter. Once valid, correct parameters are used to construct a new `Bmi` object.
-
-4. The `Bmi` constructor adds the newly created object into `HealthList.BMIS`. The BMI value and Bmi category will be obtained from `calculateBmiValue()` and `getBmiCategory()` methods respectively. 
-
-5. The `Bmi` object is passed to `Output.printAddBmi()` and a message acknowledging the successful adding is printed to the screen.
-
-This is the sequence diagram for adding a period from `parseBMiInput()`:
-
-![Bmi Sequence Diagram](img/sequence_diagrams/bmi_sequence.png)
-
-validateBmiInput uses the Validation class to check all the parameters specified by the user when adding a Bmi, and throws an exception if it is invalid.
+##### Make Period Prediction
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -532,12 +534,6 @@ validateBmiInput uses the Validation class to check all the parameters specified
 ![Appointment Sequence Diagram](img/sequence_diagrams/appointment_sequence.png)
 
 ![Appointment Validation Diagram](img/sequence_diagrams/appointment_validation.png)
-
-###### [Back to table of contents](#table-of-contents)
-
----
-
-#### Make Period Prediction
 
 ###### [Back to table of contents](#table-of-contents)
 
