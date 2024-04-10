@@ -252,7 +252,8 @@ public class Parser {
             CustomExceptions.InsufficientInput {
         int size = HealthList.getPeriodSize();
         String[] periodDetails = splitPeriodInput(userInput);
-        validation.validatePeriodInput(periodDetails);
+        boolean isParser = true;
+        validation.validatePeriodInput(periodDetails, isParser);
 
         if (userInput.contains(HealthConstant.END_FLAG)) {
             if ((size == 0) || (size > 0 &&

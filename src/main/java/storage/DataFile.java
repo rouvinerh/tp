@@ -315,7 +315,8 @@ public class DataFile {
         String startDate = input[1].trim(); // start
         String endDate = input[2].trim(); // end, skip 3 duration
         String[] checkPeriodInput = {startDate, endDate};
-        validation.validatePeriodInput(checkPeriodInput);
+        boolean isParser = false;
+        validation.validatePeriodInput(checkPeriodInput, isParser);
         if (endDate.equals(ErrorConstant.NO_DATE_SPECIFIED_ERROR)) {
             new Period(startDate);
         } else {
