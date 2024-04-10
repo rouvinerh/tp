@@ -264,7 +264,7 @@ class OutputTest {
         output.printLatestAppointment();
         String expected = UiConstant.PARTITION_LINE +
                 System.lineSeparator() +
-                "On 2025-03-29 at 17:00: test" +
+                "On 2026-01-24 at 12:00: test2" +
                 System.lineSeparator() +
                 UiConstant.PARTITION_LINE +
                 System.lineSeparator();
