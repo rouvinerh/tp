@@ -278,16 +278,6 @@ public class Handler {
         System.out.println("FTL jump completed.");
     }
 
-    //@@author JustinSoh
-    /**
-     * Close scanner to stop reading user input.
-     */
-    public void destroyScanner() {
-        if (this.in != null) {
-            assert this.in != null : "Object cannot be null";
-            this.in.close();
-        }
-    }
 
     //@@author L5-Z
     /**
