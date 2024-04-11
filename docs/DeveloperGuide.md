@@ -612,7 +612,65 @@ Deleting an item follows this sequence:
 
 ### Storage of Data
 
+The storage is split into `DataFile` for the reading and saving of user data, and `LogFile` for writing logs. `DataFile` is covered here, since the storing and reading of user data is more important to a developer.
 
+#### Saving Data
+
+Saving of data happens only when the `exit` command is used:
+
+1. Upon `exit`, `Handler.terminateBot()` is called, which calls `DataFile.saveDataFile()`.
+
+2. The name of the user, health data and workout data are written to `pulsepilot_data.txt` via `writeName()`, `writeHealthData()` and `writeWorkoutData()`.
+
+3. To prevent tampering of the file, the SHA-256 hash of the data file is calculated via `generateFileHash()` and written to `pulsepilot_hash.txt` via `writeHashToFile()`.
+
+```plantuml
+@startuml
+
+participant "handler:Handler" as Handler
+participant "dataFile:DataFile" as DataFile
+
+activate Handler #FFBBBB
+Handler -> DataFile: saveDataFile()
+activate DataFile #FFBBBB
+
+DataFile -> DataFile: writeName()
+activate DataFile #salmon
+DataFile --> DataFile: name written
+deactivate DataFile #salmon
+
+DataFile -> DataFile: writeHealthData()
+activate DataFile #salmon
+DataFile --> DataFile: health data written
+deactivate DataFile #salmon
+
+DataFile -> DataFile: writeWorkoutData()
+activate DataFile #salmon
+DataFile --> DataFile: workout data written
+deactivate DataFile #salmon
+
+DataFile -> DataFile: writeHashToFile()
+activate DataFile #salmon
+DataFile --> DataFile: file hash written
+deactivate DataFile #salmon
+
+DataFile --> Handler: both hash and data\nfile written
+deactivate DataFile #salmon
+deactivate DataFile #FFBBBB
+
+@enduml
+```
+
+#### Reading Data
+
+The reading of files has been implemented as follows:
+
+1. The file hash from `pulsepilot_hash.txt` is read, and the SHA-256 hash of `pulsepilot_data.txt` is calculated.
+    - If the hashes do not match, file has been tampered with. The data and log file are thus deleted and bot exits.
+
+2. The first line is read and split to get the user's name.
+
+3. Subsequent lines contain the health and workout data stored, which is split and added to `HealthList` and `WorkoutList` respectively.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -870,8 +928,6 @@ health /h:period /start:10-04-2024 /end:16-04-2024
 ---
 
 #### Prediction Testing
-
-
 
 **Checking prediction with 4 valid periods added:**
 
