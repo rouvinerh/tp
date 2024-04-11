@@ -16,6 +16,8 @@ public class ErrorConstant {
 
     public static final String INSUFFICIENT_INPUT_HEADER = "Invalid Input Exception: ";
 
+    public static final String OUT_OF_BOUND_HEADER = "Out of Bounds Error: ";
+
 
     // General Errors
     public static final String NEGATIVE_VALUE_ERROR = "Requires a positive integer!";
@@ -260,8 +262,6 @@ public class ErrorConstant {
             + "- run"
             + System.lineSeparator()
             + "- gym"
-            + System.lineSeparator()
-            + "- workouts"
             + System.lineSeparator()
             + "- period"
             + System.lineSeparator()

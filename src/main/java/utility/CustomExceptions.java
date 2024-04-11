@@ -13,8 +13,11 @@ public class CustomExceptions extends Exception {
      */
     public static class OutOfBounds extends Exception {
         public OutOfBounds(String message) {
-            super(ErrorConstant.COLOR_HEADING + "Out of Bounds Error: " + message  + ErrorConstant.COLOR_ENDING);
-            LogFile.writeLog("Out of Bounds Error:" + message, true);
+            super(ErrorConstant.COLOR_HEADING
+                    + ErrorConstant.OUT_OF_BOUND_HEADER
+                    + message
+                    + ErrorConstant.COLOR_ENDING);
+            LogFile.writeLog(ErrorConstant.OUT_OF_BOUND_HEADER + message, true);
         }
     }
 
@@ -23,7 +26,10 @@ public class CustomExceptions extends Exception {
      */
     public static class InvalidInput extends Exception {
         public InvalidInput(String message) {
-            super(ErrorConstant.COLOR_HEADING + ErrorConstant.INVALID_INPUT_HEADER + message + ErrorConstant.COLOR_ENDING);
+            super(ErrorConstant.COLOR_HEADING
+                    + ErrorConstant.INVALID_INPUT_HEADER
+                    + message
+                    + ErrorConstant.COLOR_ENDING);
             LogFile.writeLog(ErrorConstant.INVALID_INPUT_HEADER + message, true);
         }
     }
@@ -65,7 +71,10 @@ public class CustomExceptions extends Exception {
      */
     public static class InsufficientInput extends Exception {
         public InsufficientInput(String message) {
-            super(ErrorConstant.COLOR_HEADING + ErrorConstant.INSUFFICIENT_INPUT_HEADER + message + ErrorConstant.COLOR_ENDING);
+            super(ErrorConstant.COLOR_HEADING
+                    + ErrorConstant.INSUFFICIENT_INPUT_HEADER
+                    + message
+                    + ErrorConstant.COLOR_ENDING);
             LogFile.writeLog(ErrorConstant.INSUFFICIENT_INPUT_HEADER + message, true);
         }
     }
