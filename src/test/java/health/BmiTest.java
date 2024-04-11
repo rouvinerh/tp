@@ -1,5 +1,6 @@
 package health;
 
+import constants.ErrorConstant;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -184,5 +185,22 @@ class BmiTest {
         int invalidIndex = 5;
         assertThrows (CustomExceptions.OutOfBounds.class, () ->
                 HealthList.deleteBmi(invalidIndex));
+    }
+
+    /**
+     * Test deleting of bmi with invalid negative index.
+     * Expected behaviour is for an OutOfBounds error to be thrown.
+     */
+    @Test
+    void deleteBmi_negativeIndex_throwOutOfBoundsForBmi() {
+        int invalidIndex = -1;
+        CustomExceptions.OutOfBounds exception = assertThrows(
+                CustomExceptions.OutOfBounds.class,
+                () -> HealthList.deleteBmi(invalidIndex)
+        );
+        String expected = "\u001b[31mOut of Bounds Error: "
+                + ErrorConstant.BMI_EMPTY_ERROR
+                + "\u001b[0m";
+        assertEquals(expected, exception.getMessage());
     }
 }

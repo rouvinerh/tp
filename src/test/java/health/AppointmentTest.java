@@ -1,5 +1,6 @@
 package health;
 
+import constants.ErrorConstant;
 import constants.UiConstant;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import utility.CustomExceptions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -101,5 +103,22 @@ public class AppointmentTest {
         HealthList.deleteAppointment(2);
 
         assertEquals(expected, outContent.toString());
+    }
+
+    /**
+     * Test deleting of appointment with negative invalid index.
+     * Expected behaviour is for an OutOfBounds error to be thrown.
+     */
+    @Test
+    void deleteAppointment_negativeIndex_throwOutOfBoundsForAppointment() {
+        int invalidIndex = -1;
+        CustomExceptions.OutOfBounds exception = assertThrows(
+                CustomExceptions.OutOfBounds.class,
+                () -> HealthList.deleteAppointment(invalidIndex)
+        );
+        String expected = "\u001b[31mOut of Bounds Error: "
+                + ErrorConstant.APPOINTMENT_EMPTY_ERROR
+                + "\u001b[0m";
+        assertEquals(expected, exception.getMessage());
     }
 }

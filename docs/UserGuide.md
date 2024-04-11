@@ -334,7 +334,7 @@ Format: <code style="color: #D85D43;">latest /item:TYPE</code>
   - `gym` shows the latest gym
   - `bmi` shows the latest BMI
   - `period` shows the latest Period
-  - `appointment` show the latest Appointment
+  - `appointment` shows the latest Appointment, which returns the **largest** date and time sorted by their numerical values.
 
 Examples:
 * <code style="color: #D85D43;">latest /item:appointment</code>
