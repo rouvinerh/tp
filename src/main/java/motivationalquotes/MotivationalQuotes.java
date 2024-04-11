@@ -1,3 +1,4 @@
+//@@author raajamani
 package motivationalquotes;
 
 public class MotivationalQuotes {
@@ -7,7 +8,7 @@ public class MotivationalQuotes {
         "Push yourself, because no one else is going to do it for you.",
         "Great things never come from comfort zones.",
         "Dream it. Wish it. Do it.",
-        "Success doesn’t just find you. You have to go out and get it.",
+        "Success does not just find you. You have to go out and get it.",
         "The harder you work for something, the greater you’ll feel when you achieve it.",
         "Dream bigger. Do bigger.",
         "Don’t stop when you’re tired. Stop when you’re done.",
@@ -43,8 +44,8 @@ public class MotivationalQuotes {
         "Motivation is what gets you started. Habit is what keeps you going.",
         "Don’t count the days, make the days count.",
         "Today I will do what others won’t, so tomorrow I can accomplish what others can’t.",
-        "Difficult doesn’t mean impossible. It simply means that you have to work hard.",
-        "The only bad workout is the one that didn’t happen.",
+        "Difficult does not mean impossible. It simply means that you have to work hard.",
+        "The only bad workout is the one that did not happen.",
         "To give anything less than your best is to sacrifice the gift.",
         "Stop wishing. Start doing.",
         "Pain is temporary. Quitting lasts forever.",

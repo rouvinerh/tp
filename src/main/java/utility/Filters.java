@@ -14,7 +14,6 @@ public class Filters {
         HEALTH,
         DELETE,
         HELP,
-        MOTIVATE,
         EXIT
     }
 

@@ -95,12 +95,6 @@ public class Handler {
                     output.printHelp();
                     break;
 
-                case MOTIVATE:
-                    Quote quoteProvider = new Quote();
-                    System.out.println("Here's your motivational quote:");
-                    System.out.println(quoteProvider.getRandomQuote());
-                    break;
-
                 default:
                     break; // valueOf results in immediate exception for non-match with enum Command
                 }
@@ -310,6 +304,12 @@ public class Handler {
         }
 
         System.out.println("Terminal primed. Command inputs are now accepted...");
+
+        // Motivational Quote
+        Quote quoteProvider = new Quote();
+        System.out.println("Here's your motivational quote:");
+        System.out.println(quoteProvider.getRandomQuote());
+
         output.printLine();
     }
 

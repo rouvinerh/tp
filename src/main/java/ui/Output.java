@@ -54,7 +54,6 @@ public class Output {
         System.out.println("delete /item:[run/gym/bmi/period/appointment] /index:INDEX - " +
                 "Deletes a run/gym/bmi/period/appointment record");
 
-        System.out.println("motivate - Get a motivational quote");
         System.out.println("help - Show this help message");
         System.out.println("exit - Exit the program");
         printLine();
