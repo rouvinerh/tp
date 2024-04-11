@@ -1,5 +1,6 @@
 package health;
 
+import constants.ErrorConstant;
 import constants.UiConstant;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,14 +8,15 @@ import org.junit.jupiter.api.Test;
 
 import utility.CustomExceptions;
 import constants.HealthConstant;
+import utility.Parser;
 
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class PeriodTest {
     private static final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -267,5 +269,18 @@ class PeriodTest {
 
         HealthList.printLatestThreeCycles();
         assertEquals(expected, outContent.toString());
+    }
+
+    /**
+     * Test get period with out of bounds index.
+     * Expected behaviour is for null return.
+     */
+    @Test
+    void getPeriod_emptyPeriodList_expectNull() throws CustomExceptions.OutOfBounds {
+        HealthList healthList = new HealthList();
+        Period period = new Period("09-01-2024", "16-01-2024");
+        Period result = healthList.getPeriod(1);
+
+        assertEquals(null, result);
     }
 }
