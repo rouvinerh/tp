@@ -25,7 +25,7 @@ Our team has referenced [Address Book (Level-3)](https://github.com/se-edu/addre
 
 ## Introduction
 
-The purpose of this guide is to provide an explanation for all the functions and internal workings in PulsePilot. This enables any technical readers to get a detailed understanding of the application's implementation, making it easier for them to contribute to the project or adapt it according to their preferences.
+The purpose of this guide is to provide an explanation for all the functions and internal workings in PulsePilot. This enables any technical readers to get a detailed understanding of the application's implementation, making it easier for them to contribute to the project or adapt it according to their preferences. This is made to complement the User Guide. 
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -37,8 +37,8 @@ The purpose of this guide is to provide an explanation for all the functions and
 * [UI](#ui-package)
     * [Handler](#handler)
     * [Output](#output)
-* [Workout](#workout-package)
-    * [WorkoutList](#workout-list)
+* [Workouts](#workouts-package)
+    * [Workout List](#workouts-list)
     * [Gym](#gym)
         * [GymStation](#gym-station)
         * [GymSet](#gym-set)
@@ -60,29 +60,23 @@ The purpose of this guide is to provide an explanation for all the functions and
 
 ### Overview of Components
 
-This part of the guide provides a high-level overview of each package and its classes via a class or sequence diagrams. A quick description of each class is given as well. Developers can refer to the code for specific implementation via code documentation.
+This part of the guide provides a high-level overview of each package and its classes via a class or sequence diagrams. A brief description of each class is given as well.
 
-The application follows an **Object-Oriented Design** approach, with separate classes for handling different components of the application, such as user input, output, exercise logging, and health data management.
+PulsePilot follows an **Object-Oriented Design** approach, with separate packages for handling different components of the application, such as user input, output, workout logging, and health data management.
+
+The **_Architecture Diagram_** is given below:
 
 ![Architecture Diagram](img/architecture_diagram.png)
 
-The **_Architecture Diagram_** given above explains the high-level design of the PulsePilot.
+The `seedu.pulsepilot` package contains the `Main` method, the entry point of the application. It is responsible for the initialising, processing of user input and termination of the bot.
 
-Given below is a quick overview of main components and how they interact with each other.
-
-`Main` is responsible for the initialising, processing of user input and termination of the bot. It creates a `PulsePilot` instance.
-
-The application can be further broken down into the following packages:
-
-- `Ui`: The user interface of PulsePilot.
+- `Ui`: The user interface of PulsePilot used for handling user input and printing messages. 
 - `Storage`: Contains the data storage components for PulsePilot.
 - `Health`: Stores health-related information.
-- `Workout`: Stores workout-related information.
+- `Workouts`: Stores workout-related information.
 - `Utility`: Contains utility functions, such as input parsing and validation.
 - `PulsePilot`: The main entry point for the application.
 - `Constants`: Contains all constants used in PulsePilot.
-
-**The workflow and sequence diagrams of adding objects is covered in the commands section.**
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -90,33 +84,28 @@ The application can be further broken down into the following packages:
 
 ### UI Package
 
-The `UI` package contains `Handler` and `Output`, which are responsible for handling user input and printing of output fo the screen respectively.
+The `UI` package contains the `Handler` and `Output` classes, which are responsible for handling user input and printing of output fo the screen respectively.
 
 #### Handler
 
-The main entry point of the application is the `Handler` class, used to determine the command used and send the user's input to the correct handler method to process and carry out the action.
+The main entry point of the application is the `Handler` class, used to determine the command used. The user's input is then passed to the right handler method to carry out the action.
 
 The sequence diagram below shows how the application is initialised and processes the user's input using the `Handler` class:
 
 ![Handler Sequence Diagram](img/sequence_diagrams/handler_sequence_diagram.png)
 
+1. PulsePilot is started via `handler.initialiseBot()`, which checks whether the data file is present and its integrity if applicable. How this is done will be covered [here](#storage-of-data).
+
+2. `handler.processInput()` is then used to get the user's input for commands.
+
+3. When PulsePilot exits gracefully via the `exit` command, `terminateBot()` is called to write to the data and hash files.
+    - If a user exits without calling terminateBot(), **data will be lost!** Likewise, this is covered [here](#storage-of-data).
+
 The `Handler` class creates other classes when it is used as shown in this sequence diagram:
 
 ![Handler Class Creation](img/sequence_diagrams/handler_class_creation.png)
 
-The creation of the above classes will be left out of other class diagrams to prevent making complex class diagrams. **It is assumed in other class diagrams for `Handler` that the classes have already been created.**
-
-##### Initialising Bot
-
- This method is used to check whether the data file is present and not corrupted. How this is done will be covered in `Storage`.
-
-##### Process Input
-
-The `processInput()` method is responsible for determining what command the user has entered, and passes the input to the right handler method.
-
-##### Terminating Bot
-
-The `terminateBot()` method is responsible for **writing to the data file** and exiting the bot gracefully. If a user exits without calling `terminateBot()`, **data will be lost!**
+The creation of the above classes will be left out of other sequence diagrams to prevent cluttering the diagram. **It is assumed in other class diagrams for `Handler` that the classes have already been created.**
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -126,19 +115,19 @@ The `terminateBot()` method is responsible for **writing to the data file** and 
 
 The `Output` class is responsible for printing messages, prompts, errors and other information to the terminal for the user.
 
-The class diagram for `Output` has been omitted as it does not value-add to the guide, since a developer can read the code itself to gain a better understanding of `Output.`
+The class diagram for `Output` has been omitted, since a developer can read the code itself to gain a better understanding of its methods.
 
 ###### [Back to table of contents](#table-of-contents)
 
 ---
 
-### Workout Package
+### Workouts Package
 
 The `Workout` package is responsible for tracking run and gym workouts from the user.
 
-#### Workout List
+#### Workouts List
 
-`WorkoutList` is a class that contains the `ArrayList` objects of `Run`, `Gym` and the superclass `Workout`. The class diagram is as follows:
+`WorkoutList` is a class that contains the `ArrayList` objects of `Run`, `Gym` and `Workout`. The class diagram is as follows:
 
 ![WorkoutList Class Diagram](img/class_diagrams/workoutlist_class_diagram.png)
 
@@ -152,9 +141,9 @@ The `clearWorkoutsRunGym()` method is used to clear all the data stored within e
 
 #### Gym
 
-`Gym` is a class that represents a gym session that the user has recorded. It contains the following variables:
+`Gym` is a class that represents a gym session that the user has recorded. It contains the following attributes:
 
-- `date`: An **optional** `LocalDate` parameter representing the date of the workout. Implemented via an overloaded `Gym()` constructor.
+- `date`: An **optional** `LocalDate` attribute representing the date of the workout. Implemented via an overloaded `Gym()` constructor.
 
 **A `Gym` object contains 1 or more `GymStation` objects.**
 
@@ -168,7 +157,7 @@ The class diagram for gym is as follows:
 
 ##### Gym Station
 
-`GymStation` is a class that represents one gym station the user has done in a particular gym session. It contains the following variables:
+`GymStation` is a class that represents one gym station the user has done in a particular gym session. It contains the following attributes:
 
 - `stationName`: Name of the gym station as a `String`.
 -  `ArrayList<GymSet>`: An `ArrayList` of `GymSet` object, representing the varying number of sets done at one station.
@@ -182,7 +171,7 @@ The class diagram for gym is as follows:
 
 ##### Gym Set
 
-`GymSet` is a class that represents one gym set the user has done in one gym station. It contains the following variables:
+`GymSet` is a class that represents one gym set the user has done in one gym station. It contains the following attributes:
 
 - `weight`: The weight done for a gym set represented as a `double`.
 - `numberOfRepetitions`: The number of repetitions for a gym set represented as an `int`.
@@ -193,11 +182,11 @@ The class diagram for gym is as follows:
 
 #### Run
 
-`Run` is a class that represents a run workout the user has recorded. It contains the following variables:
+`Run` is a class that represents a run workout the user has recorded. It contains the following attributes:
 
-- `times`: A `Integer[]` variable representing the hours, minutes and seconds taken for a run.
-- `distance`: The distance run represented as a `double`.
-- `date`: An **optional** `LocalDate` parameter representing the date of the workout. Implemented via an overloaded `Gym()` constructor.
+- `times`: An `Integer[]` variable representing the hours, minutes and seconds taken for a run.
+- `distance`: The distance run in **kilometers** represented as a `double`.
+- `date`: An **optional** `LocalDate` parameter representing the date of the workout. Implemented via an overloaded `Run()` constructor.
 - `pace`: The pace of the run in minutes/km represented as a `String`.
 - `isHourPresent`: A `boolean` variable to indicate if an hour has been indicated, since the bot accepts both `HH:MM:SS` and `MM:SS` formats.
 
@@ -218,9 +207,10 @@ The `Health` package is responsible for tracking user's BMI, period cycle, and m
 ![HealthList Class Diagram](img/class_diagrams/healthlist_class_diagram.png)
 
 The class contains methods to retrieve the different objects. Additionally, it contains the methods for:
-- **deleting** an object from the bot, which is used for the `delete` command implementation;
-- showing the **latest** object added to the bot, which is used for the `latest` command implementation;
-- showing the **history or list** of objects added to bot, which is used for the `history` command implementation.
+
+- **Deleting** an object from the bot, which is used for the `delete` command implementation.
+- Showing the **latest** object added to the bot, which is used for the `latest` command implementation.
+- Showing the **history or list** of objects added to bot, which is used for the `history` command implementation.
 
 The `clearHealthLists()` method is used to clear all the data stored within each `ArrayList`, which is mainly used for unit testing.
 
@@ -230,7 +220,7 @@ The `clearHealthLists()` method is used to clear all the data stored within each
 
 #### BMI
 
-`Bmi` is a class that represents the BMI (Body Mass Index) of the user who has recorded height and weight. It contains the following variables:
+`Bmi` is a class that represents the BMI (Body Mass Index) calculated using the height and weight specified. It contains the following attributes:
 
 - `height`: The height of the user in metres represented as a `double`.
 - `weight`: The weight of the user in kilograms represented as a `double`.
@@ -244,7 +234,7 @@ The `clearHealthLists()` method is used to clear all the data stored within each
 
 #### Period
 
-`Period` is a class that represents the menstrual cycle of the user.
+`Period` is a class that represents the menstrual cycle of the user. It contains the following attributes:
 
 - `startDate`: The date of the first day of the menstrual flow (aka period flow), also the first day of the menstrual cycle, represented using a `LocalDate`.
 - `endDate`: The date of the last day of the menstrual flow, represented using a `LocalDate`.
@@ -257,11 +247,11 @@ The `clearHealthLists()` method is used to clear all the data stored within each
 
 #### Appointment
 
-`Appointment` is a class that represents the past and upcoming medical appointments of the user.
+`Appointment` is a class that represents the past and upcoming medical appointments of the user. It contains the following attributes:
 
 - `date`: The date of the medical appointment, represented using a `LocalDate`.
 - `time`: The time of the medical appointment, represented using a `LocalTime`.
-- `description`: The information of the appointment, it can include things like the healthcare professional to consult, the type of appointment such as consultation, checkup, rehabilitation, therapy etc. This parameter is represented as a `String`.
+- `description`: The details of the appointment, which can include things like the healthcare professional to consult, the type of appointment such as consultation, checkup, rehabilitation, therapy etc. This parameter is represented as a `String`.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -270,7 +260,7 @@ The `clearHealthLists()` method is used to clear all the data stored within each
 
 The `Utility` package includes classes and methods that handle exceptions, user input parsing, user input validation, and the various filter strings using enumerations.
 
-It consists of `CustomExceptions`, `Filters`, `Parser` and `Validation` classes.
+It consists of `CustomExceptions`, `Filters`, `Parser` and `Validation` classes, which are covered below.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -278,11 +268,9 @@ It consists of `CustomExceptions`, `Filters`, `Parser` and `Validation` classes.
 
 #### Parser
 
-The `Parser` class is responsible for the resolving of the user's input. This involves the validating the user input, and then splitting it.
+The `Parser` class is responsible for splitting the user's input into lists of parameters.
 
-The input **must contain the flags required for each command**, else an exception will be thrown. The number of `/` characters is checked as well, as it can trigger errors. Afterwards, the split input is validated using methods within the `Validated` class. 
-
-The specific usage of `Parser` is covered below in the commands section of this guide.
+The input **must contain the flags required for each command**, else an exception will be thrown. The number of `/` characters is checked as well, as it can trigger errors. Afterwards, the split input is validated using methods within the `Validated` class as `String[]` variables.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -290,9 +278,9 @@ The specific usage of `Parser` is covered below in the commands section of this 
 
 #### Validation
 
-The `Validation` class is responsible for validating the user's split input. The split input comes from the `Parser` class in `String[]` variables. Each variable is then checked using regex to ensure that it follows the requirements needed, and that the values are within the stipulated ranges.
+The `Validation` class is responsible for validating the user's split input. The split input comes from the `Parser` class in `String[]` variables.
 
-The specific usage of `Validation` is covered below for the implementation of each command via sequence diagrams.
+Each variable is then checked to ensure that it follows the format needed. This is done by ensuring there are no empty strings, whether it matches regex, etc. If not, the methods in this class throws exceptions.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -300,7 +288,7 @@ The specific usage of `Validation` is covered below for the implementation of ea
 
 #### Custom Exceptions
 
-The `CustomExceptions` class inherits from the `Exception` class from Java. This class is in charge of printing the various errors from the user's input.
+The `CustomExceptions` class inherits from the `Exception` class from Java. This class is in charge of printing formatted errors.
 
 The exceptions are further broken down into the following:
 
@@ -309,7 +297,7 @@ The exceptions are further broken down into the following:
 - `FileReadError`: Unable to read the files for `Storage`.
 - `FileWriteError`: Unable to write files for `Storage`.
 - `FileCreateError`: Unable to create files for `Storage`.
-- `InsufficientInput`: When not enough parameters are found for a command.
+- `InsufficientInput`: When not enough parameters or blank parameters for a command are detected.
 
 
 ###### [Back to table of contents](#table-of-contents)
@@ -328,7 +316,7 @@ This is represented as enumerations. Attempts to use an invalid filter results i
 
 ### Storage Package
 
-`Storage` contains `DataFile` and `LogFile`. This component handles all logging of commands used and writing of data stored within PulsePilot to an external data file. The reading of the data file is also done here.
+`Storage` contains `DataFile` and `LogFile`. This component handles all logging of commands used and writing of data stored within PulsePilot to an external data file. The reading of the data file is also done here, allowing PulsePilot to resume a previous saved state.
 
 - `DataFile` is responsible for the writing of data to `pulsepilot_data.txt`, and generating the hash for it in `pulsepilot_hash.txt`. It also checks whether the data has been tampered with or files are missing, and creates or deletes files if needed.
 
@@ -355,7 +343,7 @@ The constants are broken down into the following 4 classes:
 
 ## Commands and Implementation
 
-**NOTE**: Not all methods are fully explained here, as any developer can read the source code to find out all the specifics. This helps to keep the guide shorter and easier to read. For example, `extractSubstringFromSpecificIndex()` is mentioned, but its implementation is not covered.
+**NOTE**: Not all methods are explained here, as any developer can read the source code to find out all the specifics. This helps to keep the guide shorter and easier to read. For example, `extractSubstringFromSpecificIndex()` is mentioned, but its implementation is not covered.
 
 * [Workout](#workout)
     * [Add Run](#add-run)
@@ -372,30 +360,27 @@ The constants are broken down into the following 4 classes:
 
 ### Workout
 
-User input is passed to `Handler.processInput()`, which determines the command used is `workout`. The input is then passed to `Handler.handleWorkout()` as shown in the `Handler` architecture above. It is then split into either 'run' or 'gym' commands.
+User input is passed to `Handler.processInput()`, which determines the command used is `workout`. The input is then passed to `Handler.handleWorkout()` as shown in the `Handler` architecture above. Either a `Run` or `Gym` object is then added.
 
 #### Add Run
 
 The user's input is processed to add a run as follows:
 
-1. `Handler.handleWorkout()` determines the type of exercise which is `run`, and calls the `Parser.parseRunInput()` method to process the user's run input.
+1. `handler.handleWorkout()` determines the type of workout to add is `run`, and calls the `parser.parseRunInput()` method to process the user's run input.
 
-2. `Parser.parseRunInput()` splits the input using `Parser.splitRunInput()`. Parameters are extracted using `extractSubstringFromSpecificIndex()` using the different flags.
+2. `Parser.parseRunInput()` splits the input using `parser.splitRunInput()`. Parameters are extracted using `extractSubstringFromSpecificIndex()` using the different flags.
     - Method also extracts the `date` parameter if present.
     - The method then returns a `String[]` variable with the required parameters extracted from the user input.
 
-3. `Validation.validateRunInput()` is called to validate each parameter. Once valid, correct parameters are used to construct a new `Run` object.
+3. `validation.validateRunInput()` is called to validate each parameter. If no exceptions are thrown, the validated parameters are used to create the new `Run` object.
 
-4. The `Run` constructor adds the newly created object into `WorkoutList.WORKOUTS` and `WorkoutList.RUNS`.  Total run time is converted to seconds for calculation of pace.
+4. The `Run` constructor adds the newly created object into `workoutList.WORKOUTS` and `workoutList.RUNS`. The running pace in minutes/km (i.e. `5:00/km`) is calculated and stored as well.
 
-
-5. The `Run` object is passed to `Output.printAddRun()` and a message acknowledging the successful adding is printed to the screen.
+5. The new `Run` object is passed to `output.printAddRun()` and a message acknowledging the successful adding is printed to the screen.
 
 This is the sequence diagram for adding a run from `parseRunInput()`:
 
 ![Run Sequence Diagram](img/sequence_diagrams/run_sequence_diagram.png)
-
-`validateRunInput` uses the `Validation` class to check all the parameters specified by the user when adding a Run, and throws an exception if it is invalid.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -405,15 +390,15 @@ This is the sequence diagram for adding a run from `parseRunInput()`:
 
 The user's input is processed to add a gym is as follows:
 
-1. `Handler.handleWorkout()` determines the type of exercise which is `gym`, and calls the `Parser.parseRunInput()` method to process the user's run input.
+1. `handler.handleWorkout()` determines the type of workout which is `gym`, and calls the `parser.parseGymInput()` method to process the user's gym input.
 
-2. `Parser.parseGymInput()` splits the input using `Parser.splitGymInput()`. Parameters are extracted using `extractSubstringFromSpecificIndex()` using the different flags.
+2. `parser.parseGymInput()` splits the input using `parser.splitGymInput()`. Parameters are extracted using `extractSubstringFromSpecificIndex()` using the different flags.
     - Method also extracts the `date` parameter if present.
     - The method then returns a `String[]` variable with the required parameters extracted from the user input.
 
-3. `Validation.validateGymInput()` is called to validate each parameter. Once valid, correct parameters are used to construct a new `Gym` object.
+3. `validation.validateGymInput()` is called to validate each parameter. If no exceptions are thrown, the validated parameters are used to create the new `Gym` object.
 
-4. The `Gym` constructor adds the newly created object into `WorkoutList.WORKOUTS` and `WorkoutList.GYMS`.  
+4. The `Gym` constructor adds the newly created object into `workoutList.WORKOUTS` and `workoutList.GYMS`.  
 
 5. Afterwards, `parseGymStationInput()` is called to retrieve input for each gym station.
 
@@ -553,26 +538,25 @@ This is the sequence diagram for adding an Appointment from `parseAppointmentInp
 ---
 
 ### View History
-1. User input is passed to `Handler.processInput()`, which determines the command used is `History`, thus passing the input to `Handler.handleHistory()`.
 
-2. `Handler.handleHistory()` would call the `Parser.parseHistoryAndLatestInput()` method to validate the user input.
+1. User input is passed to `Handler.processInput()`, which determines the command used is `history`, thus passing the input to `Handler.handleHistory()`.
 
-3. `Parser.parseHistoryAndLatestInput()` will extract the filter string and validate the user input. 
-    - If the user input is valid, it will return the `filter:string`
-    - Else it will return `null`
+2. `Handler.handleHistory()` would uses the `Parser.parseHistory()` method to extract and validate the filter string entered.
+    - If the user input is valid, it will return the `filter` set to lower case.
+    - Else, returns `null`.
 
-4. `Handler.handleHistory()` will then call `Output.printHistory(filter`
+3. `Handler.handleHistory()` will then call `Output.printHistory(filter)` which uses the filter string to determine which history to print:
 
-5. Depending on the filter value, `Output.printHistory` will call the respective private output methods to print the history. The possible filters and their corresponding methods are:
+    - `workouts`: `printWorkoutHistory()`
+    - `run`: `printRunHistory()`
+    - `gym`: `printGymHistory()`
+    - `bmi`: `printBmiHistory()`
+    - `period`: `printPeriodHistory()`
+    - `appointment`: `printAppointmentHistory()`
 
-    - WORKOUTS: `printWorkoutHistory()`
-    - RUN: `printRunHistory()`
-    - GYM: `printGymHistory()`
-    - BMI: `printBmiHistory()`
-    - PERIOD: `printPeriodHistory()`
-    - APPOINTMENT: `printAppointmentHistory()`
+This is the sequence diagram for `history`:
 
-![Appointment Sequence Diagram](img/sequence_diagrams/history_printHistory.png)
+![History Sequence Diagram](img/sequence_diagrams/history_sequence.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -580,25 +564,23 @@ This is the sequence diagram for adding an Appointment from `parseAppointmentInp
 
 ### View Latest
 
-1. User input is passed to `Handler.processInput()`, which determines the command used is `History`, thus passing the input to `Handler.handleLatest()`.
+1. User input is passed to `Handler.processInput()`, which determines the command used is `history`, thus passing the input to `Handler.handleLatest()`.
 
-2. `Handler.handleHistory()` would call the `Parser.parseHistoryAndLatestInput()` method to validate the user input.
+2. `Handler.handleLatest()` would uses the `Parser.parseLatest()` method to extract and validate the filter string entered.
+    - If the user input is valid, it will return the `filter` set to lower case.
+    - Else, returns `null`.
 
-3. `Parser.parseHistoryAndLatestInput()` will extract the filter string and validate the user input. 
-    - If the user input is valid, it will return the `filter:string`
-    - Else it will return `null`
+3. `Handler.handleLatest()` will then call `Output.printLatest(filter)` which uses the filter string to determine which history to print:
 
-4. `Handler.handleLatest()` will then call `Output.printLatest(filter`
+    - `run`: `printLatestRun()`
+    - `ym`: `printLatestGym()`
+    - `bmi`: `printLatestBmi()`
+    - `period`: `printLatestPeriod()`
+    - `appointment`: `printLatestAppointment()`
+    
+This is the sequence diagram for `latest`:
 
-5. Depending on the filter value, `Output.printLatest` will call the respective private output methods to print the latest. The possible filters and their corresponding methods are:
-
-    - RUN: `printLatestRun()`
-    - GYM: `printLatestGym()`
-    - BMI: `printLatestBmi()`
-    - PERIOD: `printLatestPeriod()`
-    - APPOINTMENT: `printLatestAppointment()`
-
-![Appointment Sequence Diagram](img/sequence_diagrams/history_printLatest.png)
+![Latest Sequence Diagram](img/sequence_diagrams/latest_sequence.png)
 
 ###### [Back to table of contents](#table-of-contents)
 

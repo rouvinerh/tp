@@ -13,6 +13,7 @@ component {
 [Constants]
 }
 
+User -d-> [PulsePilot]
 User -d-> [UI]
 [PulsePilot] -r-> [UI]
 
