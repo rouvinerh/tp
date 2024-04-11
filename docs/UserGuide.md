@@ -332,9 +332,9 @@ Format: <code style="color: #D85D43;">latest /item:TYPE</code>
 * `TYPE` is either `run`, `gym`, `bmi`, `period` or `appointment`.
   - `run` shows the latest run
   - `gym` shows the latest gym
-  - `bmi` shows the latest BMI by date
+  - `bmi` shows the latest BMI
   - `period` shows the latest Period
-  - `appointment` show the earliest upcoming Appointment
+  - `appointment` show the latest Appointment
 
 Examples:
 * <code style="color: #D85D43;">latest /item:appointment</code>
