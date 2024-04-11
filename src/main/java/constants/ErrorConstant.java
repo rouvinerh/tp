@@ -145,7 +145,7 @@ public class ErrorConstant {
     public static final String NULL_BMI_ERROR = "Bmi object cannot be null.";
     public static final String EMPTY_BMI_LIST_ERROR = "BMI List is empty.";
     public static final String BMI_LIST_UNCLEARED_ERROR = "Bmi list is not cleared.";
-    public static final String HEIGHT_WEIGHT_INPUT_ERROR =
+    public static final String INVALID_HEIGHT_WEIGHT_INPUT_ERROR =
             "Height and weight should be 2 decimal place positive numbers!";
 
     // PERIOD ERRORS

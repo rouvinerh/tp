@@ -226,6 +226,20 @@ public class IntegrationTest {
                 System.lineSeparator();
     }
 
+    /**
+     * Used to get the invalid exception string for invalid command (without the exception header)
+     * @param errorString to be printed
+     * @return String
+     */
+    private String getInvalidCommandString(String errorString) {
+        return ErrorConstant.COLOR_HEADING +
+                "Exception Caught!" +
+                System.lineSeparator() +
+                errorString +
+                ErrorConstant.COLOR_ENDING +
+                System.lineSeparator();
+    }
+
 
     private String getInsufficientInput(String errorString){
         return ErrorConstant.COLOR_HEADING +
@@ -245,6 +259,26 @@ public class IntegrationTest {
         StringBuilder inputString = new StringBuilder();
         StringBuilder expectedString = new StringBuilder();
 
+        inputString.append("health /h:bmiiii /height:1.75 /weight:70.00000 /date:18-03-2024");
+        inputString.append(System.lineSeparator());
+        expectedString.append(getInvalidCommandString(ErrorConstant.INVALID_HEALTH_INPUT_ERROR));
+
+        inputString.append("healthsssss /h:bmiiii /height:1.75 /weight:70.00000 /date:18-03-2024");
+        inputString.append(System.lineSeparator());
+        expectedString.append(getInvalidCommandString(ErrorConstant.INVALID_COMMAND_ERROR));
+
+        inputString.append("health /h:bmiiii /height:1.75 /weight:70.00000 /date:18-03-2024");
+        inputString.append(System.lineSeparator());
+        expectedString.append(getInvalidCommandString(ErrorConstant.INVALID_HEALTH_INPUT_ERROR));
+
+        inputString.append("health /h:bmi /height:1.750000 /////weight:70.00 /date:18-03-2024");
+        inputString.append(System.lineSeparator());
+        expectedString.append(getInvalidInputString(ErrorConstant.TOO_MANY_SLASHES_ERROR));
+
+        inputString.append("health /h:bmi /height:1.750000 /weight:70.00 /date:18-03-2024");
+        inputString.append(System.lineSeparator());
+        expectedString.append(getInvalidInputString(ErrorConstant.INVALID_HEIGHT_WEIGHT_INPUT_ERROR));
+
         inputString.append("health /h:bmi /height:1.75 /weight:70.00 ///date:18-03-2024");
         inputString.append(System.lineSeparator());
         expectedString.append(getInvalidInputString(ErrorConstant.TOO_MANY_SLASHES_ERROR));
@@ -252,16 +286,26 @@ public class IntegrationTest {
 
         inputString.append("health /h:bmi /height:1.75000 /weight:70.00 /date:18-03-2024");
         inputString.append(System.lineSeparator());
-        expectedString.append(getInvalidInputString(ErrorConstant.HEIGHT_WEIGHT_INPUT_ERROR));
+        expectedString.append(getInvalidInputString(ErrorConstant.INVALID_HEIGHT_WEIGHT_INPUT_ERROR));
 
 
         inputString.append("health /h:bmi /height:1.75 /weight:70.00000 /date:18-03-2024");
         inputString.append(System.lineSeparator());
-        expectedString.append(getInvalidInputString(ErrorConstant.HEIGHT_WEIGHT_INPUT_ERROR));
+        expectedString.append(getInvalidInputString(ErrorConstant.INVALID_HEIGHT_WEIGHT_INPUT_ERROR));
+
+
 
         inputString.append("latest /item:invalidFlag");
         inputString.append(System.lineSeparator());
         expectedString.append(getInvalidInputString(ErrorConstant.INVALID_LATEST_FILTER_ERROR));
+
+        inputString.append("latest /////item:");
+        inputString.append(System.lineSeparator());
+        expectedString.append(getInvalidInputString(ErrorConstant.TOO_MANY_SLASHES_ERROR));
+
+        inputString.append("latest /item:");
+        inputString.append(System.lineSeparator());
+        expectedString.append(getInsufficientInput(ErrorConstant.INSUFFICIENT_LATEST_FILTER_ERROR));
 
         inputString.append("latest");
         inputString.append(System.lineSeparator());
