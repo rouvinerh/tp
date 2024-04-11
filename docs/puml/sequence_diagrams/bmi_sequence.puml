@@ -38,7 +38,7 @@ deactivate Bmi #FFBBBB
 
 NBmi -> HealthList **: new
 activate HealthList #FFBBBB
-NBmi -> HealthList: addBmi(height, weight, date)
+NBmi -> HealthList: addBmi()
 HealthList --> NBmi:
 deactivate HealthList #FFBBBB
 destroy HealthList
