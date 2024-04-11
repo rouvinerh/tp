@@ -566,6 +566,7 @@ This is the sequence diagram for adding a period from `parsePeriodInput()`:
 ---
 
 ### View Latest
+
 1. User input is passed to `Handler.processInput()`, which determines the command used is `History`, thus passing the input to `Handler.handleLatest()`.
 
 2. `Handler.handleHistory()` would call the `Parser.parseHistoryAndLatestInput()` method to validate the user input.
@@ -592,11 +593,26 @@ This is the sequence diagram for adding a period from `parsePeriodInput()`:
 
 ### Delete Item
 
+Deleting an item follows this sequence:
+
+1. User input is passed to `Handler.processInput()`, determining that the command used is `delete`, thus calling `Handler.handleDelete()`.
+
+2. User input is passed to `Parser.parseDeleteInput()`, and the input is split by `Parser.splitDeleteInput()`.
+
+3. Split `deleteDetails` are passed to `Validation.validateDeleteInput()`. If valid, return the details. If not, return `null`.
+
+4. `validDeleteDetails` is passed back to `Handler`, which calls the respective `deleteItem()` method from either `HealthList` or `WorkoutList` depending on the details passed.
+
+![Delete Sequence](img/sequence_diagrams/delete_sequence.png)
+
+
 ###### [Back to table of contents](#table-of-contents)
 
 ---
 
 ### Storage of Data
+
+
 
 ###### [Back to table of contents](#table-of-contents)
 
