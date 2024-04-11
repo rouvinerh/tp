@@ -317,4 +317,31 @@ class PeriodTest {
                 + "\u001b[0m";
         assertEquals(expected, exception.getMessage());
     }
+
+    /**
+     * Test Period constructor without end date.
+     * Expected behaviour is to add a Period object without end date.
+     */
+    @Test
+    public void periodConstructor_expectCreatePeriodWithoutEndDate() {
+        HealthList healthList = new HealthList();
+        Period period = new Period("03-04-2024");
+
+        Parser parser = new Parser();
+        assertEquals(parser.parseDate("03-04-2024"), period.getStartDate());
+        assertNull(period.getEndDate());
+        assertEquals(1, period.getPeriodLength());
+
+        String expected = "Period Start: "
+                + period.getStartDate()
+                + " Period End: NA"
+                + System.lineSeparator()
+                + "Period Length: "
+                + period.getPeriodLength()
+                + " day"
+                + System.lineSeparator();
+
+        System.out.println(period);
+        assertEquals(expected, outContent.toString());
+    }
 }
