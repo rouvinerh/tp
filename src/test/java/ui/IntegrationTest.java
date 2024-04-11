@@ -214,6 +214,89 @@ public class IntegrationTest {
                 System.lineSeparator();
     }
 
+    private String getInvalidInputString(String errorString) {
+        return ErrorConstant.COLOR_HEADING +
+                "Exception Caught!" +
+                System.lineSeparator() +
+                ErrorConstant.COLOR_HEADING +
+                ErrorConstant.INVALID_INPUT_HEADER +
+                errorString +
+                ErrorConstant.COLOR_ENDING +
+                ErrorConstant.COLOR_ENDING +
+                System.lineSeparator();
+    }
+
+
+    private String getInsufficientInput(String errorString){
+        return ErrorConstant.COLOR_HEADING +
+                "Exception Caught!" +
+                System.lineSeparator() +
+                ErrorConstant.COLOR_HEADING +
+                ErrorConstant.INSUFFICIENT_INPUT_HEADER +
+                errorString +
+                ErrorConstant.COLOR_ENDING +
+                ErrorConstant.COLOR_ENDING +
+                System.lineSeparator();
+    }
+
+    @Test
+    void addHealthAndShowLatest_incorrectInput_expectErrors(){
+        // Craft the input String to be passed to handler
+        StringBuilder inputString = new StringBuilder();
+        StringBuilder expectedString = new StringBuilder();
+
+        inputString.append("health /h:bmi /height:1.75 /weight:70.00 ///date:18-03-2024");
+        inputString.append(System.lineSeparator());
+        expectedString.append(getInvalidInputString(ErrorConstant.TOO_MANY_SLASHES_ERROR));
+
+
+        inputString.append("health /h:bmi /height:1.75000 /weight:70.00 /date:18-03-2024");
+        inputString.append(System.lineSeparator());
+        expectedString.append(getInvalidInputString(ErrorConstant.HEIGHT_WEIGHT_INPUT_ERROR));
+
+
+        inputString.append("health /h:bmi /height:1.75 /weight:70.00000 /date:18-03-2024");
+        inputString.append(System.lineSeparator());
+        expectedString.append(getInvalidInputString(ErrorConstant.HEIGHT_WEIGHT_INPUT_ERROR));
+
+        inputString.append("latest /item:invalidFlag");
+        inputString.append(System.lineSeparator());
+        expectedString.append(getInvalidInputString(ErrorConstant.INVALID_LATEST_FILTER_ERROR));
+
+        inputString.append("latest");
+        inputString.append(System.lineSeparator());
+        expectedString.append(getInsufficientInput(ErrorConstant.INSUFFICIENT_LATEST_FILTER_ERROR));
+
+
+
+
+        // Craft the expected String to be printed
+
+        //
+
+
+//        expectedString.append(latestBmiString);
+//        expectedString.append(addBmiString2);
+//        expectedString.append(latestBmiString2);
+//        expectedString.append(addPeriodString);
+//        expectedString.append(latestPeriodString);
+//        expectedString.append(addPeriodString2);
+//        expectedString.append(latestPeriodString2);
+//        expectedString.append(addAppointmentString);
+//        expectedString.append(latestAppointmentString);
+//        expectedString.append(addAppointmentString2);
+//        expectedString.append(latestAppointmentString2); // the latest appointment is earlier so it should print first
+//        expectedString.append(addAppointmentString3);
+//        expectedString.append(latestAppointmentString2); // the latest appointment is earlier then appointment3
+
+        // Run the process to test the output
+        Handler handler= new Handler(inputString.toString());
+        handler.processInput();
+        assertEquals(expectedString.toString(), errContent.toString());
+        outContent.reset();
+    }
+
+
     /**
      * Test the behaviour of print latest when given the filter period/bmi/appointment
      * This is the flow of sequence
@@ -234,7 +317,7 @@ public class IntegrationTest {
      *
      */
     @Test
-    void addHealth_correctInput_expectCorrectLatestOutput() {
+    void addHealthAndShowLatest_correctInput_expectCorrectLatestOutput() {
 
         // Craft the input String to be passed to handler
         StringBuilder inputString = new StringBuilder();

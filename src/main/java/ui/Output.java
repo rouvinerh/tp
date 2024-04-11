@@ -448,7 +448,7 @@ public class Output {
                 break;
 
             default:
-                throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_LATEST_FILTER_ERROR);
+                throw new CustomExceptions.InvalidInput(ErrorConstant.INSUFFICIENT_LATEST_FILTER_ERROR);
             }
         } catch (CustomExceptions.InvalidInput e) {
             System.out.println(e.getMessage());
