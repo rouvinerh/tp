@@ -62,7 +62,7 @@ public class Output {
     /**
      * Prints an ASCII Art depicting the word 'PulsePilot'.
      */
-    public void printArt() {
+    private void printArt() {
         System.out.println(" _              _");
         System.out.println("|_)    |  _  _ |_) o  |  _ _|_");
         System.out.println("|  |_| | _> (/_|   |  | (_) |_");
@@ -423,7 +423,7 @@ public class Output {
      *
      * @param filter String used to determine the latest Run, Gym, Period, or BMI objects is to be printed.
      */
-    public void printLatest(String filter) {
+    protected void printLatest(String filter) {
         try {
             HistoryAndLatestFilters parsedFilter = HistoryAndLatestFilters.valueOf(filter.toUpperCase());
             switch (parsedFilter) {
@@ -448,10 +448,10 @@ public class Output {
                 break;
 
             default:
-                throw new CustomExceptions.InvalidInput(ErrorConstant.INSUFFICIENT_LATEST_FILTER_ERROR);
+                break;
             }
-        } catch (CustomExceptions.InvalidInput e) {
-            System.out.println(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            printException(ErrorConstant.INVALID_LATEST_FILTER_ERROR);
         }
     }
 
@@ -491,8 +491,10 @@ public class Output {
             default:
                 break;
             }
-        } catch (CustomExceptions.OutOfBounds | CustomExceptions.InvalidInput e) {
+        } catch (CustomExceptions.OutOfBounds | CustomExceptions.InvalidInput e ) {
             printException(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            printException(ErrorConstant.INVALID_HISTORY_FILTER_ERROR);
         }
     }
 
@@ -524,12 +526,12 @@ public class Output {
      * @param status Integer representing whether the storage file has been loaded. If set to 0, file is present. Else,
      *               file is not present.
      */
-    public void printGreeting(int status, String name) {
-        if (status == 0) {
-            System.out.println("Welcome back, Captain " + name);
+    protected void printGreeting(int status, String name) {
+        if (status == UiConstant.FILE_FOUND) {
+            System.out.println(UiConstant.FILE_FOUND_MESSAGE + name);
             System.out.println(UiConstant.SUCCESSFUL_LOAD);
         } else {
-            System.out.println(UiConstant.MISSING_FILE);
+            System.out.println(UiConstant.FILE_MISSING_MESSAGE);
         }
         printLine();
     }
@@ -537,7 +539,7 @@ public class Output {
     /**
      * Prints the goodbye message for PulsePilot.
      */
-    public void printGoodbyeMessage() {
+    protected void printGoodbyeMessage() {
         printLine();
         System.out.println("PulsePilot successful touchdown");
         System.out.println("See you soon, Captain!");

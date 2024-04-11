@@ -2,9 +2,7 @@ package ui;
 
 import constants.ErrorConstant;
 import constants.HealthConstant;
-import constants.UiConstant;
 import constants.WorkoutConstant;
-import health.Bmi;
 import health.HealthList;
 import health.Period;
 import utility.CustomExceptions;
@@ -12,6 +10,7 @@ import utility.Parser;
 import workouts.Gym;
 import workouts.Run;
 import workouts.WorkoutList;
+import helper.TestHelper;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -63,275 +62,101 @@ public class IntegrationTest {
     }
 
     /**
-     * Helper method to help create the output string when BMI is added
-     * @param weight weight of the user
-     * @param height height of the user
-     * @param date date of the user in the format yyyy-mm-dd
-     * @param bmiValue bmi value of the user in 2 decimal places
-     * @param bmiCategory the category (use the constants in HealthConstant)
-     * @return String representing the output
+     * Integration testing for adding a Bmi and Show latest when error is present
      */
-    private String addBmiOutputString (String weight, String height, String date, double bmiValue, String bmiCategory){
-
-        StringBuilder outputString = new StringBuilder();
-        outputString.append(UiConstant.PARTITION_LINE);
-        outputString.append(System.lineSeparator());
-        outputString.append(HealthConstant.BMI_ADDED_MESSAGE_PREFIX);
-        outputString.append(height);
-        outputString.append(UiConstant.LINE);
-        outputString.append(weight);
-        outputString.append(UiConstant.LINE);
-        outputString.append(date);
-        outputString.append(System.lineSeparator());
-        outputString.append(String.format(HealthConstant.PRINT_BMI_FORMAT,
-                date, bmiValue, Bmi.getBmiCategory(bmiValue)));
-        outputString.append(System.lineSeparator());
-        outputString.append(UiConstant.PARTITION_LINE);
-        outputString.append(System.lineSeparator());
-        return outputString.toString();
-    }
-
-    /**
-     * Helper method to help create the latestString for Period
-     * @param date date of the bmi in the format yyyy-mm-dd
-     * @param bmiValue bmi value of the user in 2 decimal places
-     * @param bmiMessage the category (use the constants in HealthConstant)
-     * @return String representing the output
-     */
-    private String bmiLatestOutputString(String date, double bmiValue, String bmiMessage ) {
-        return UiConstant.PARTITION_LINE +
-                System.lineSeparator() +
-                date +
-                System.lineSeparator() +
-                "Your BMI is " +
-                String.format("%.2f" , bmiValue) +
-                System.lineSeparator() +
-                bmiMessage +
-                System.lineSeparator() +
-                UiConstant.PARTITION_LINE +
-                System.lineSeparator();
-    }
-
-    /**
-     * Helper method to help create the output string when Period is added
-     *
-     * @param startDate    start date of the period in the format yyyy-mm-dd
-     * @param endDate      end date of the period in the format yyyy-mm-dd
-     * @param periodLength length of the period in days
-     * @return String representing the output
-     */
-    private String addPeriodOutputString (String startDate,
-                                          String endDate,
-                                          int periodLength){
-
-        StringBuilder outputString = new StringBuilder();
-        outputString.append(UiConstant.PARTITION_LINE);
-        outputString.append(System.lineSeparator());
-        outputString.append(HealthConstant.PERIOD_ADDED_MESSAGE_PREFIX);
-        outputString.append(startDate);
-        outputString.append(UiConstant.LINE);
-        outputString.append(endDate);
-        outputString.append(System.lineSeparator());
-        outputString.append(String.format(HealthConstant.PRINT_PERIOD_FORMAT,
-                startDate,
-                endDate ,
-                periodLength,
-                HealthConstant.DAYS_MESSAGE));
-        outputString.append(System.lineSeparator());
-        if (!HealthConstant.PERIOD_TOO_LONG_MESSAGE.isBlank()) {
-            outputString.append(ErrorConstant.COLOR_HEADING +
-                    HealthConstant.PERIOD_TOO_LONG_MESSAGE +
-                    ErrorConstant.COLOR_ENDING);
-            outputString.append(System.lineSeparator());
-        }
-        outputString.append(UiConstant.PARTITION_LINE);
-        outputString.append(System.lineSeparator());
-
-
-        return outputString.toString();
-    }
-
-    /**
-     * Helper method to help create the latestString for Period
-     * @param startDate start date of the period in the format yyyy-mm-dd
-     * @param endDate end date of the period in the format yyyy-mm-dd
-     * @param periodLength length of the period in days
-     * @param period the "days" message (use the constants in HealthConstant)
-     * @return String representing the output
-     */
-    private String periodLatestOutputString(String startDate, String endDate, int periodLength, String period) {
-        return UiConstant.PARTITION_LINE +
-                System.lineSeparator() +
-                String.format(HealthConstant.PRINT_PERIOD_FORMAT,
-                        startDate,
-                        endDate,
-                        periodLength,
-                        period) +
-                System.lineSeparator() +
-                UiConstant.PARTITION_LINE +
-                System.lineSeparator();
-
-    }
-
-    /**
-     * Helper method to help create the output string when Appointment is added
-     * @param date date of the appointment in the format yyyy-mm-dd
-     * @param time time of the appointment in the format hh:mm
-     * @param description description of the appointment
-     * @return String representing the output
-     */
-    private String addAppointmentString(String date, String time, String description) {
-        StringBuilder outputString = new StringBuilder();
-        outputString.append(UiConstant.PARTITION_LINE);
-        outputString.append(System.lineSeparator());
-        outputString.append(HealthConstant.APPOINTMENT_ADDED_MESSAGE_PREFIX);
-        outputString.append(date);
-        outputString.append(UiConstant.LINE);
-        outputString.append(time);
-        outputString.append(UiConstant.LINE);
-        outputString.append(description);
-        outputString.append(System.lineSeparator());
-        outputString.append(String.format(HealthConstant.PRINT_APPOINTMENT_FORMAT, date, time, description));
-        outputString.append(System.lineSeparator());
-        outputString.append(UiConstant.PARTITION_LINE);
-        outputString.append(System.lineSeparator());
-        return outputString.toString();
-    }
-
-    /**
-     * Helper method to help create the latestString for Appointment
-     * @param date date of the appointment in the format yyyy-mm-dd
-     * @param time time of the appointment in the format hh:mm
-     * @param description description of the appointment
-     * @return String representing the output
-     */
-    private String appointmentLatestOutputString(String date, String time, String description) {
-        return UiConstant.PARTITION_LINE +
-                System.lineSeparator() +
-                String.format(HealthConstant.PRINT_APPOINTMENT_FORMAT, date, time, description) +
-                System.lineSeparator() +
-                UiConstant.PARTITION_LINE +
-                System.lineSeparator();
-    }
-
-    private String getInvalidInputString(String errorString) {
-        return ErrorConstant.COLOR_HEADING +
-                "Exception Caught!" +
-                System.lineSeparator() +
-                ErrorConstant.COLOR_HEADING +
-                ErrorConstant.INVALID_INPUT_HEADER +
-                errorString +
-                ErrorConstant.COLOR_ENDING +
-                ErrorConstant.COLOR_ENDING +
-                System.lineSeparator();
-    }
-
-    /**
-     * Used to get the invalid exception string for invalid command (without the exception header)
-     * @param errorString to be printed
-     * @return String
-     */
-    private String getInvalidCommandString(String errorString) {
-        return ErrorConstant.COLOR_HEADING +
-                "Exception Caught!" +
-                System.lineSeparator() +
-                errorString +
-                ErrorConstant.COLOR_ENDING +
-                System.lineSeparator();
-    }
-
-
-    private String getInsufficientInput(String errorString){
-        return ErrorConstant.COLOR_HEADING +
-                "Exception Caught!" +
-                System.lineSeparator() +
-                ErrorConstant.COLOR_HEADING +
-                ErrorConstant.INSUFFICIENT_INPUT_HEADER +
-                errorString +
-                ErrorConstant.COLOR_ENDING +
-                ErrorConstant.COLOR_ENDING +
-                System.lineSeparator();
-    }
-
     @Test
-    void addHealthAndShowLatest_incorrectInput_expectErrors(){
+    void addBmiAndShowLatest_incorrectInput_expectErrors(){
         // Craft the input String to be passed to handler
         StringBuilder inputString = new StringBuilder();
         StringBuilder expectedString = new StringBuilder();
 
+        // test to see if incorrect health input can be captured
         inputString.append("health /h:bmiiii /height:1.75 /weight:70.00000 /date:18-03-2024");
         inputString.append(System.lineSeparator());
-        expectedString.append(getInvalidCommandString(ErrorConstant.INVALID_HEALTH_INPUT_ERROR));
+        expectedString.append(TestHelper.errorInvalidCommandString(ErrorConstant.INVALID_HEALTH_INPUT_ERROR));
 
+        inputString.append("health /h: /height:1.75 /weight:70.00 /date:22.11.2001");
+        inputString.append(System.lineSeparator());
+        expectedString.append(TestHelper.errorInvalidCommandString(ErrorConstant.INVALID_HEALTH_INPUT_ERROR));
+
+        inputString.append("health /h:123123 /height:1.75 /weight:70.00 /date:22.11.2001");
+        inputString.append(System.lineSeparator());
+        expectedString.append(TestHelper.errorInvalidCommandString(ErrorConstant.INVALID_HEALTH_INPUT_ERROR));
+
+        // test to see if incorrect command can be captured
         inputString.append("healthsssss /h:bmiiii /height:1.75 /weight:70.00000 /date:18-03-2024");
         inputString.append(System.lineSeparator());
-        expectedString.append(getInvalidCommandString(ErrorConstant.INVALID_COMMAND_ERROR));
+        expectedString.append(TestHelper.errorInvalidCommandString(ErrorConstant.INVALID_COMMAND_ERROR));
 
-        inputString.append("health /h:bmiiii /height:1.75 /weight:70.00000 /date:18-03-2024");
-        inputString.append(System.lineSeparator());
-        expectedString.append(getInvalidCommandString(ErrorConstant.INVALID_HEALTH_INPUT_ERROR));
 
+
+
+        // test to see if incorrect slashes can be captured
         inputString.append("health /h:bmi /height:1.750000 /////weight:70.00 /date:18-03-2024");
         inputString.append(System.lineSeparator());
-        expectedString.append(getInvalidInputString(ErrorConstant.TOO_MANY_SLASHES_ERROR));
+        expectedString.append(TestHelper.errorInvalidInputString(ErrorConstant.TOO_MANY_SLASHES_ERROR));
 
+        // test to see if incorrect height can be captured
         inputString.append("health /h:bmi /height:1.750000 /weight:70.00 /date:18-03-2024");
         inputString.append(System.lineSeparator());
-        expectedString.append(getInvalidInputString(ErrorConstant.INVALID_HEIGHT_WEIGHT_INPUT_ERROR));
+        expectedString.append(TestHelper.errorInvalidInputString(ErrorConstant.INVALID_HEIGHT_WEIGHT_INPUT_ERROR));
 
-        inputString.append("health /h:bmi /height:1.75 /weight:70.00 ///date:18-03-2024");
+        // test to see if incorrect weight can be captured
+        inputString.append("health /h:bmi /height:1.75 /weight:70.00000 /date:18-03-2024");
         inputString.append(System.lineSeparator());
-        expectedString.append(getInvalidInputString(ErrorConstant.TOO_MANY_SLASHES_ERROR));
+        expectedString.append(TestHelper.errorInvalidInputString(ErrorConstant.INVALID_HEIGHT_WEIGHT_INPUT_ERROR));
+
+        // test to see if date error can be captured (invalid date)
+        inputString.append("health /h:bmi /height:1.75 /weight:70.00 /date:00-00-0000");
+        inputString.append(System.lineSeparator());
+        expectedString.append(TestHelper.errorInvalidInputString(ErrorConstant.INVALID_YEAR_ERROR));
+
+        // test to see if date error can be captured (invalid date)
+        inputString.append("health /h:bmi /height:1.75 /weight:70.00 /date:30-00-0000");
+        inputString.append(System.lineSeparator());
+        expectedString.append(TestHelper.errorInvalidInputString(ErrorConstant.INVALID_YEAR_ERROR));
+
+        // test to see if date error can be captured (invalid date)
+        inputString.append("health /h:bmi /height:1.75 /weight:70.00 /date:30-13-2000");
+        inputString.append(System.lineSeparator());
+        expectedString.append(TestHelper.errorInvalidInputString(ErrorConstant.INVALID_DATE_ERROR));
+
+        // test to see if date error can be captured (invalid date)
+        inputString.append("health /h:bmi /height:1.75 /weight:70.00 /date:33-11-2001");
+        inputString.append(System.lineSeparator());
+        expectedString.append(TestHelper.errorInvalidInputString(ErrorConstant.INVALID_DATE_ERROR));
+
+        // test to see if incorrect date can be captured
+        inputString.append("health /h:bmi /height:1.75 /weight:70.00 /date:22.11.2001");
+        inputString.append(System.lineSeparator());
+        expectedString.append(TestHelper.errorInvalidInputString(ErrorConstant.INVALID_DATE_ERROR));
+
 
 
         inputString.append("health /h:bmi /height:1.75000 /weight:70.00 /date:18-03-2024");
         inputString.append(System.lineSeparator());
-        expectedString.append(getInvalidInputString(ErrorConstant.INVALID_HEIGHT_WEIGHT_INPUT_ERROR));
-
+        expectedString.append(TestHelper.errorInvalidInputString(ErrorConstant.INVALID_HEIGHT_WEIGHT_INPUT_ERROR));
 
         inputString.append("health /h:bmi /height:1.75 /weight:70.00000 /date:18-03-2024");
         inputString.append(System.lineSeparator());
-        expectedString.append(getInvalidInputString(ErrorConstant.INVALID_HEIGHT_WEIGHT_INPUT_ERROR));
-
+        expectedString.append(TestHelper.errorInvalidInputString(ErrorConstant.INVALID_HEIGHT_WEIGHT_INPUT_ERROR));
 
 
         inputString.append("latest /item:invalidFlag");
         inputString.append(System.lineSeparator());
-        expectedString.append(getInvalidInputString(ErrorConstant.INVALID_LATEST_FILTER_ERROR));
+        expectedString.append(TestHelper.errorInvalidInputString(ErrorConstant.INVALID_LATEST_FILTER_ERROR));
 
         inputString.append("latest /////item:");
         inputString.append(System.lineSeparator());
-        expectedString.append(getInvalidInputString(ErrorConstant.TOO_MANY_SLASHES_ERROR));
+        expectedString.append(TestHelper.errorInvalidInputString(ErrorConstant.TOO_MANY_SLASHES_ERROR));
 
         inputString.append("latest /item:");
         inputString.append(System.lineSeparator());
-        expectedString.append(getInsufficientInput(ErrorConstant.INSUFFICIENT_LATEST_FILTER_ERROR));
+        expectedString.append(TestHelper.errorInsufficientInput(ErrorConstant.INSUFFICIENT_LATEST_FILTER_ERROR));
 
         inputString.append("latest");
         inputString.append(System.lineSeparator());
-        expectedString.append(getInsufficientInput(ErrorConstant.INSUFFICIENT_LATEST_FILTER_ERROR));
-
-
-
-
-        // Craft the expected String to be printed
-
-        //
-
-
-//        expectedString.append(latestBmiString);
-//        expectedString.append(addBmiString2);
-//        expectedString.append(latestBmiString2);
-//        expectedString.append(addPeriodString);
-//        expectedString.append(latestPeriodString);
-//        expectedString.append(addPeriodString2);
-//        expectedString.append(latestPeriodString2);
-//        expectedString.append(addAppointmentString);
-//        expectedString.append(latestAppointmentString);
-//        expectedString.append(addAppointmentString2);
-//        expectedString.append(latestAppointmentString2); // the latest appointment is earlier so it should print first
-//        expectedString.append(addAppointmentString3);
-//        expectedString.append(latestAppointmentString2); // the latest appointment is earlier then appointment3
+        expectedString.append(TestHelper.errorInsufficientInput(ErrorConstant.INSUFFICIENT_LATEST_FILTER_ERROR));
 
         // Run the process to test the output
         Handler handler= new Handler(inputString.toString());
@@ -355,9 +180,9 @@ public class IntegrationTest {
      * 9. Add an appointment (appointment1)
      * 10. Print latest appointment (prints appointment1)
      * 11. Add an appointment (appointment2) that is earlier than appointment1
-     * 12. Print latest appointment (prints appointment2) - latest appointment should be appointment2 as it is earlier
+     * 12. Print latest appointment (prints appointment2) - latest appointment should be appointment1 still
      * 13. Add an appointment (appointment3) that is the latest (2026)
-     * 14. Print latest appointment (prints appointment2) - latest appointment should be appointment2 as it is earliest
+     * 14. Print latest appointment (prints appointment2) - latest appointment should be appointment 3
      *
      */
     @Test
@@ -397,64 +222,68 @@ public class IntegrationTest {
         // Craft the expected String to be printed
         StringBuilder expectedString = new StringBuilder();
 
-        String addBmiString = addBmiOutputString("70.00",
+        String addBmiString = TestHelper.addBmiOutputString("70.00",
                 "1.75",
                 "2024-03-18",
                 22.86,
                 HealthConstant.NORMAL_WEIGHT_MESSAGE);
 
-        String latestBmiString = bmiLatestOutputString("2024-03-18",
+        String latestBmiString = TestHelper.latestBmiOutputString("2024-03-18",
                 22.86,
                 HealthConstant.NORMAL_WEIGHT_MESSAGE);
 
 
-        String addBmiString2 = addBmiOutputString("40.00",
+        String addBmiString2 = TestHelper.addBmiOutputString("40.00",
                 "2.00",
                 "2024-03-20",
                 10.00,
                 HealthConstant.UNDERWEIGHT_MESSAGE);
 
-        String latestBmiString2 = bmiLatestOutputString("2024-03-20",
+        String latestBmiString2 = TestHelper.latestBmiOutputString("2024-03-20",
                 10.00,
                 HealthConstant.UNDERWEIGHT_MESSAGE);
 
-        String addPeriodString = addPeriodOutputString("2023-12-18",
+        String addPeriodString = TestHelper.addPeriodOutputString("2023-12-18",
                 "2023-12-26",
                 9
         );
 
-        String latestPeriodString = periodLatestOutputString("2023-12-18",
+        String latestPeriodString = TestHelper.latestPeriodOutputString("2023-12-18",
                 "2023-12-26",
                 9,
                 HealthConstant.DAYS_MESSAGE);
 
-        String addPeriodString2 = addPeriodOutputString("2024-01-27",
+        String addPeriodString2 = TestHelper.addPeriodOutputString("2024-01-27",
                 "2024-03-03",
                 37
         );
 
-        String latestPeriodString2 = periodLatestOutputString("2024-01-27",
+        String latestPeriodString2 = TestHelper.latestPeriodOutputString("2024-01-27",
                 "2024-03-03",
                 37,
                 HealthConstant.DAYS_MESSAGE);
 
-        String addAppointmentString = addAppointmentString("2025-04-29",
+        String addAppointmentString = TestHelper.addAppointmentString("2025-04-29",
                 "12:00",
                 "knee surgery");
 
-        String latestAppointmentString = appointmentLatestOutputString("2025-04-29",
+        String latestAppointmentString = TestHelper.latestAppointmentOutputString("2025-04-29",
                 "12:00",
                 "knee surgery");
 
-        String addAppointmentString2 = addAppointmentString("2024-03-25",
+        String addAppointmentString2 = TestHelper.addAppointmentString("2024-03-25",
                 "23:01",
                 "knee surgery 2");
 
-        String latestAppointmentString2 = appointmentLatestOutputString("2024-03-25",
+        String latestAppointmentString2 = TestHelper.latestAppointmentOutputString("2024-03-25",
                 "23:01",
                 "knee surgery 2");
 
-        String addAppointmentString3 = addAppointmentString("2026-03-25",
+        String addAppointmentString3 = TestHelper.addAppointmentString("2026-03-25",
+                "10:01",
+                "plastic surgery");
+
+        String latestAppointmentString3 = TestHelper.latestAppointmentOutputString("2026-03-25",
                 "10:01",
                 "plastic surgery");
 
@@ -470,9 +299,9 @@ public class IntegrationTest {
         expectedString.append(addAppointmentString);
         expectedString.append(latestAppointmentString);
         expectedString.append(addAppointmentString2);
-        expectedString.append(latestAppointmentString2); // the latest appointment is earlier so it should print first
+        expectedString.append(latestAppointmentString); // the latest appointment is earlier so it should print first
         expectedString.append(addAppointmentString3);
-        expectedString.append(latestAppointmentString2); // the latest appointment is earlier then appointment3
+        expectedString.append(latestAppointmentString3); // the latest appointment is earlier then appointment3
 
         // Run the process to test the output
         Handler handler= new Handler(inputString.toString());
@@ -592,6 +421,8 @@ public class IntegrationTest {
         } catch (CustomExceptions.InvalidInput e) {
             fail("Shouldn't have failed");
         }
+
+        tearDown();
     }
 
     /**
