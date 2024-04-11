@@ -300,4 +300,21 @@ class PeriodTest {
                 + "\u001b[0m";
         assertEquals(expected, exception.getMessage());
     }
+
+    /**
+     * Test prediction of period with empty period list.
+     * Expected behaviour is for an OutOfBounds error to be thrown.
+     */
+    @Test
+    void predictNextPeriodStartDate_emptyPeriodList_throwOutOfBoundsForPeriod() {
+        int invalidIndex = -1;
+        CustomExceptions.OutOfBounds exception = assertThrows(
+                CustomExceptions.OutOfBounds.class,
+                () -> HealthList.predictNextPeriodStartDate()
+        );
+        String expected = "\u001b[31mOut of Bounds Error: "
+                + ErrorConstant.PERIOD_EMPTY_ERROR
+                + "\u001b[0m";
+        assertEquals(expected, exception.getMessage());
+    }
 }
