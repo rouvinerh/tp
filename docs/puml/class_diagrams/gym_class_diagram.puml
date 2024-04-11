@@ -21,7 +21,6 @@ class GymSet {
     + GymSet(weight: Double, numberOfRepetitions: int)
     + getWeight(): double
     + getNumberOfRepetitions(): int
-    + setWeight(weight: double): void
 }
 
 Gym *-- "1..*" GymStation: contains

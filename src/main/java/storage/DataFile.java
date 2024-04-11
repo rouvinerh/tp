@@ -212,13 +212,10 @@ public class DataFile {
                 LogFile.writeLog("Name Loaded", false);
 
             } catch (Exception e) {
-                LogFile.writeLog("Data file is missing name, exiting." + e, true);
-                output.printException(ErrorConstant.CORRUPT_ERROR);
                 File dataFile = UiConstant.saveFile;
                 File hashFile = new File(UiConstant.hashFilePath);
-                dataFile.delete();
-                hashFile.delete();
-                System.exit(1);
+                LogFile.writeLog("Data file is missing name, exiting." + e, true);
+                processFail(ErrorConstant.CORRUPT_ERROR, hashFile, dataFile);
             }
 
             while (readFile.hasNextLine()) {
@@ -257,14 +254,10 @@ public class DataFile {
                 lineNumberCount += 1;
             }
         } catch (Exception e) {
-            LogFile.writeLog("Data file is corrupted, exiting." + e, true);
-            output.printException(e.getMessage());
-            output.printException(ErrorConstant.CORRUPT_ERROR);
             File dataFile = UiConstant.saveFile;
             File hashFile = new File(UiConstant.hashFilePath);
-            dataFile.delete();
-            hashFile.delete();
-            System.exit(1);
+            LogFile.writeLog("Data file is missing name, exiting." + e, true);
+            processFail(ErrorConstant.CORRUPT_ERROR, hashFile, dataFile);
         }
     }
 

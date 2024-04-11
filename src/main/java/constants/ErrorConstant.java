@@ -305,4 +305,6 @@ public class ErrorConstant {
     public static final String INVALID_USERNAME_ERROR = "\u001b[31mUsername can only contain alphanumeric characters " +
             "and spaces!\u001b[0m";
     public static final String NO_PERMISSIONS_ERROR = "Cannot read or write to current directory. Exiting.";
+    public static final String INVALID_WORKOUT_TYPE_ERROR = "Invalid workout type! Please input" +
+            " either /e:run or /e:gym!";
 }

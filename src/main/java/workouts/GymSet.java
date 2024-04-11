@@ -25,10 +25,6 @@ public class GymSet {
         return weight;
     }
 
-    public void setWeight(double weight) {
-        this.weight = weight;
-    }
-
     public int getNumberOfRepetitions() {
         return numberOfRepetitions;
     }

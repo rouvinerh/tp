@@ -144,12 +144,31 @@ class HandlerTest {
     @Test
     void processInput_invalidCommand_printsInvalidCommandException() {
         String input = "INVALID";
-        Handler myHandler = new Handler(input);
-        myHandler.processInput();
+        Handler handler = new Handler(input);
+        handler.processInput();
         String expected = "\u001b[31mException Caught!" +
                 System.lineSeparator() +
                 ErrorConstant.INVALID_COMMAND_ERROR +
                 "\u001b[0m" +
+                System.lineSeparator();
+        assertEquals(expected, errContent.toString());
+    }
+
+    /**
+     * Tests the behaviour of processInput when an run command with invalid distance is passed in.
+     * Expects invalid distance error to be printed.
+     */
+    @Test
+    void processInput_invalidRunCommand_printsInvalidDistanceError() {
+        String input = "workout /e:run /t:22:11 /d:5";
+        Handler handler = new Handler(input);
+        handler.processInput();
+        String expected = "\u001b[31mException Caught!" +
+                System.lineSeparator() +
+                "\u001b[31m" +
+                "Invalid Input Exception: " +
+                ErrorConstant.INVALID_RUN_DISTANCE_ERROR +
+                "\u001b[0m\u001b[0m" +
                 System.lineSeparator();
         assertEquals(expected, errContent.toString());
     }
@@ -311,8 +330,6 @@ class HandlerTest {
         assertTrue(errContent.toString().contains("\u001b[31mException Caught!"));
     }
 
-
-
     /**
      * Tests the behaviour of userInduction when valid username is entered.
      * Expects welcome greeting to be printed.
@@ -333,5 +350,27 @@ class HandlerTest {
                 + "FTL jump completed."
                 + System.lineSeparator();
         assertEquals(outContent.toString(), expected);
+    }
+
+    /**
+     * Tests the behaviour of handleWorkout when an invalid string is passed.
+     * Expects error message stating invalid workout to be printed.
+     */
+    @Test
+    void handleWorkout_invalidInput_expectsErrorMessagePrinted() {
+        Handler myHandler = new Handler();
+        myHandler.handleWorkout("boo");
+        assertTrue(errContent.toString().contains("\u001b[31mException Caught!"));
+    }
+
+    /**
+     * Tests the behaviour of handleHealth when an invalid string is passed.
+     * Expects error message stating invalid workout to be printed.
+     */
+    @Test
+    void handleHealth_invalidInput_expectsErrorMessagePrinted() {
+        Handler myHandler = new Handler();
+        myHandler.handleWorkout("boo");
+        assertTrue(errContent.toString().contains("\u001b[31mException Caught!"));
     }
 }

@@ -28,6 +28,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 
 public class DataFileTest {
     private  final String testDataFilePath = "./test_data.txt";
@@ -247,7 +249,7 @@ public class DataFileTest {
 
     @Test
     void loadDataFile_existingFile_readsCorrectly() throws CustomExceptions.FileReadError,
-            CustomExceptions.FileWriteError {
+            CustomExceptions.FileWriteError, CustomExceptions.InvalidInput {
         // Arrange
         String name = "John Doe";
         ArrayList<Bmi> bmiArrayList = new ArrayList<>(Arrays.asList(
@@ -261,8 +263,18 @@ public class DataFileTest {
 
         // Has additional elements added to ArrayList and will thus be skipped
         ArrayList<Period> periodArrayList = new ArrayList<>(Arrays.asList(
+                new Period ("08-05-2023"),
+                new Period("01-04-2023", "07-04-2023")
+
+
         ));
+        Gym gym1 = new Gym();
+        ArrayList<Double> array1 = new ArrayList<>(Arrays.asList(1.0));
+        gym1.addStation("Squat Press", 1, 50, array1);
         ArrayList<Workout> workoutArrayList = new ArrayList<>(Arrays.asList(
+                new Run("40:10", "10.3", "15-03-2024"),
+                new Run("40:10", "10.3"),
+                gym1
         ));
 
         DataFile dataFile = new DataFile();
@@ -286,4 +298,14 @@ public class DataFileTest {
                 Arrays.toString(WorkoutList.getWorkouts().toArray()));
     }
 
+    /**
+     * Tests the behaviour of verifyIntegrity when an invalid File object is passed.
+     * Expects FileCreateError exception to be thrown.
+     */
+    @Test
+    void verifyIntegrity_invalidFileName_expectsFileCreateErrorException() {
+        File testFile = new File("");
+        DataFile dataFile = new DataFile();
+        assertThrows(CustomExceptions.FileCreateError.class, () -> dataFile.verifyIntegrity(testFile));
+    }
 }
