@@ -344,4 +344,35 @@ class PeriodTest {
         System.out.println(period);
         assertEquals(expected, outContent.toString());
     }
+
+    /**
+     * Test update end date of Period object without an end date.
+     * Expected behaviour is to update the end date of the Period object.
+     */
+    @Test
+    public void updateEndDate_expectUpdatePeriodWithEndDate () {
+        HealthList healthList = new HealthList();
+        Period period = new Period("03-04-2024");
+
+        Parser parser = new Parser();
+        assertEquals(parser.parseDate("03-04-2024"), period.getStartDate());
+        assertNull(period.getEndDate());
+        assertEquals(1, period.getPeriodLength());
+
+        period.updateEndDate("05-04-2024");
+        assertEquals(parser.parseDate("05-04-2024"), period.getEndDate());
+
+        String expected = "Period Start: "
+                + period.getStartDate()
+                + " Period End: "
+                + period.getEndDate()
+                + System.lineSeparator()
+                + "Period Length: "
+                + period.getPeriodLength()
+                + " days"
+                + System.lineSeparator();
+
+        System.out.println(period);
+        assertEquals(expected, outContent.toString());
+    }
 }
