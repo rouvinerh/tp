@@ -1,6 +1,10 @@
 //@@author raajamani
 package motivationalquotes;
 
+/**
+ * A utility class that stores a fixed array of motivational quotes.
+ * This class provides a static method to access these quotes.
+ */
 public class MotivationalQuotes {
     private static final String[] QUOTES = {
         "The only way to achieve the impossible is to believe it is possible.",
@@ -55,6 +59,11 @@ public class MotivationalQuotes {
         "Hard work beats talent when talent doesn't work hard."
     };
 
+    /**
+     * Retrieves the array of motivational quotes.
+     *
+     * @return An array of strings, where each string is a motivational quote.
+     */
     public static String[] getQuotes() {
         return QUOTES;
     }
