@@ -23,8 +23,8 @@ public class CustomExceptions extends Exception {
      */
     public static class InvalidInput extends Exception {
         public InvalidInput(String message) {
-            super(ErrorConstant.COLOR_HEADING + "Invalid Input Error: " + message + ErrorConstant.COLOR_ENDING);
-            LogFile.writeLog("Invalid Input Error:" + message, true);
+            super(ErrorConstant.COLOR_HEADING + ErrorConstant.INVALID_INPUT_HEADER + message + ErrorConstant.COLOR_ENDING);
+            LogFile.writeLog(ErrorConstant.INVALID_INPUT_HEADER + message, true);
         }
     }
 
@@ -65,8 +65,8 @@ public class CustomExceptions extends Exception {
      */
     public static class InsufficientInput extends Exception {
         public InsufficientInput(String message) {
-            super(ErrorConstant.COLOR_HEADING + "Insufficient Input Error: " + message + ErrorConstant.COLOR_ENDING);
-            LogFile.writeLog("Insufficient Input Error:" + message, true);
+            super(ErrorConstant.COLOR_HEADING + ErrorConstant.INSUFFICIENT_INPUT_HEADER + message + ErrorConstant.COLOR_ENDING);
+            LogFile.writeLog(ErrorConstant.INSUFFICIENT_INPUT_HEADER + message, true);
         }
     }
 }
