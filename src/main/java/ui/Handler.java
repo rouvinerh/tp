@@ -134,7 +134,7 @@ public class Handler {
         } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
             output.printException(e.getMessage());
         } catch (IllegalArgumentException e) {
-            output.printException("Invalid workout type! Please input either /e:run or /e:gym!");
+            output.printException(ErrorConstant.INVALID_WORKOUT_TYPE_ERROR);
         }
     }
 
@@ -228,12 +228,10 @@ public class Handler {
             default:
                 break;
             }
-        } catch (CustomExceptions.InvalidInput |  CustomExceptions.InsufficientInput e) {
+        } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput | CustomExceptions.OutOfBounds e) {
             output.printException(e.getMessage());
         } catch (IllegalArgumentException e) {
             output.printException(ErrorConstant.INVALID_HEALTH_INPUT_ERROR);
-        } catch (CustomExceptions.OutOfBounds e) {
-            output.printException(e.getMessage());
         }
     }
 
