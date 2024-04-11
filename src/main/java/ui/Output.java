@@ -289,7 +289,7 @@ public class Output {
 
         try {
             printLine();
-            HealthList.showBmiHistory();
+            HealthList.printBmiHistory();
             printLine();
         } catch (CustomExceptions.OutOfBounds e) {
             printException(e.getMessage());
@@ -307,7 +307,7 @@ public class Output {
 
         try {
             printLine();
-            HealthList.showPeriodHistory();
+            HealthList.printPeriodHistory();
             printLine();
         } catch (CustomExceptions.OutOfBounds e) {
             printException(e.getMessage());
@@ -326,7 +326,7 @@ public class Output {
 
         try {
             printLine();
-            HealthList.showAppointmentList();
+            HealthList.printAppointmentHistory();
             printLine();
         } catch (CustomExceptions.OutOfBounds e) {
             printException(e.getMessage());
@@ -380,7 +380,7 @@ public class Output {
 
         try {
             printLine();
-            HealthList.showCurrentBmi();
+            HealthList.printLatestBmi();
             printLine();
         } catch (CustomExceptions.OutOfBounds e) {
             printException(e.getMessage());
@@ -395,7 +395,7 @@ public class Output {
 
         try {
             printLine();
-            HealthList.showLatestPeriod();
+            HealthList.printLatestPeriod();
             printLine();
         } catch (CustomExceptions.OutOfBounds e) {
             printException(e.getMessage());
@@ -406,11 +406,11 @@ public class Output {
     /**
      * Prints the latest Appointment entry recorded.
      */
-    protected void printEarliestAppointment(){
+    protected void printLatestAppointment(){
 
         try {
             printLine();
-            HealthList.showEarliestAppointment();
+            HealthList.printLatestAppointment();
             printLine();
         } catch (CustomExceptions.OutOfBounds e) {
             printException(e.getMessage());
@@ -444,7 +444,7 @@ public class Output {
                 break;
 
             case APPOINTMENT:
-                printEarliestAppointment();
+                printLatestAppointment();
                 break;
 
             default:

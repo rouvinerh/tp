@@ -41,7 +41,9 @@ public class Bmi extends Health {
     protected HealthList healthList = new HealthList();
 
     private Parser parser = new Parser();
+
     //@@author j013n3
+
     /**
      * Constructor for Bmi object.
      *
@@ -64,15 +66,6 @@ public class Bmi extends Health {
     }
 
     /**
-     * Retrieves BMI value recorded in Bmi object of String type.
-     *
-     * @return The BMI value recorded in the Bmi object.
-     */
-    public String getBmiValue() {
-        return String.format(HealthConstant.TWO_DECIMAL_PLACE_FORMAT, bmiValue);
-    }
-
-    /**
      * Retrieves height recorded in Bmi object of String type.
      *
      * @return The height recorded in the Bmi object.
@@ -91,26 +84,12 @@ public class Bmi extends Health {
     }
 
     /**
-     * Retrieves date recorded in Bmi object of LocalDate type.
+     * Retrieves BMI value recorded in Bmi object of String type.
      *
-     * @return The date recorded in the Bmi object.
+     * @return The BMI value recorded in the Bmi object.
      */
-    public LocalDate getDate() {
-        return date;
-    }
-
-    //@@author j013n3
-    /**
-     * Calculates the Bmi value based on height and weight.
-     *
-     * @return The calculated Bmi value.
-     * @throws AssertionError If calculated value is not positive.
-     */
-    private double calculateBmiValue() {
-        double bmi = Math.round((weight / (Math.pow(height, UiConstant.POWER_OF_TWO))) * UiConstant.ROUNDING_FACTOR)
-                / UiConstant.ROUNDING_FACTOR;
-        assert bmi > 0: ErrorConstant.NEGATIVE_BMI_ERROR;
-        return bmi;
+    public String getBmiValue() {
+        return String.format(HealthConstant.TWO_DECIMAL_PLACE_FORMAT, bmiValue);
     }
 
     /**
@@ -134,6 +113,28 @@ public class Bmi extends Health {
         } else {
             return HealthConstant.SEVERELY_OBESE_MESSAGE;
         }
+    }
+
+    /**
+     * Retrieves date recorded in Bmi object of LocalDate type.
+     *
+     * @return The date recorded in the Bmi object.
+     */
+    public LocalDate getDate() {
+        return date;
+    }
+
+    /**
+     * Calculates the Bmi value based on height and weight.
+     *
+     * @return The calculated Bmi value.
+     * @throws AssertionError If calculated value is not positive.
+     */
+    private double calculateBmiValue() {
+        double bmi = Math.round((weight / (Math.pow(height, UiConstant.POWER_OF_TWO))) * UiConstant.ROUNDING_FACTOR)
+                / UiConstant.ROUNDING_FACTOR;
+        assert bmi > 0: ErrorConstant.NEGATIVE_BMI_ERROR;
+        return bmi;
     }
 
     /**

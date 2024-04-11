@@ -309,8 +309,9 @@ public class Parser {
      * Prints period prediction if possible.
      *
      * @throws CustomExceptions.InsufficientInput If prediction cannot be made.
+     * @throws CustomExceptions.OutOfBounds If period list is empty
      */
-    public void parsePredictionInput() throws CustomExceptions.InsufficientInput {
+    public void parsePredictionInput() throws CustomExceptions.InsufficientInput, CustomExceptions.OutOfBounds {
         if (HealthList.getPeriodSize() >= HealthConstant.MIN_SIZE_FOR_PREDICTION) {
             HealthList.printLatestThreeCycles();
             LocalDate nextPeriodStartDate = HealthList.predictNextPeriodStartDate();

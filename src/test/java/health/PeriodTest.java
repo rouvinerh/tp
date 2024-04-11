@@ -57,7 +57,7 @@ class PeriodTest {
      * the last Period object added.
      */
     @Test
-    void showLatestPeriod_twoPeriodInputs_printCorrectPeriod() throws CustomExceptions.OutOfBounds {
+    void printLatestPeriod_twoPeriodInputs_printCorrectPeriod() throws CustomExceptions.OutOfBounds {
         Period firstPeriod = new Period("09-02-2023", "16-02-2023");
         Period secondPeriod = new Period("09-03-2023", "16-03-2023");
 
@@ -72,7 +72,7 @@ class PeriodTest {
                 + " days"
                 + System.lineSeparator();
 
-        HealthList.showLatestPeriod();
+        HealthList.printLatestPeriod();
         assertEquals(expected, outContent.toString());
     }
 
@@ -110,7 +110,7 @@ class PeriodTest {
                 + " days"
                 + System.lineSeparator();
 
-        HealthList.showPeriodHistory();
+        HealthList.printPeriodHistory();
         assertEquals(expected, outContent.toString());
     }
 
@@ -135,8 +135,8 @@ class PeriodTest {
      * Expected behaviour is for an AssertionError to be thrown.
      */
     @Test
-    void deletePeriod_emptyList_throwsAssertionError() {
-        assertThrows(AssertionError.class, () ->
+    void deletePeriod_emptyList_throwsCustomExceptions() {
+        assertThrows(CustomExceptions.OutOfBounds.class, () ->
                 HealthList.deletePeriod(0));
     }
 

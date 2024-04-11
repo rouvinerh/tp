@@ -207,21 +207,22 @@ The class diagram for gym is as follows:
 
 ### Health Package
 
-The Health component consists of `Health`, `HealthList`, `Bmi`, `Period`, and `Appointment`.
-
-1. `Health` class stores date.
-2. `HealthList`class stores separate lists for different `Health` objects using ArrayList. It includes methods to add, delete, view history of the various `Health`lists.
-3. `Bmi`class stores bmi attributes (i.e. height, weight, date, bmi value and bmi category).
-4. `Period`class stores period attributes (i.e. start date of period, end date of period, period length and cycle length).
-5. `Appointment`class stores appointment attributes (i.e. date, time, appointment description). Primarily, `Appointment` has all necessary getter methods to access the attributes.
-
-###### [Back to table of contents](#table-of-contents)
+The `Health` package is responsible for tracking user's BMI, period cycle, and medical appointments.
 
 ---
 
 #### Health List
 
-The `HealthList` class contains three `ArrayList` variables, to store BMI, Appointment and Period objects, as well as the various methods to retrieve, delete and print the objects stored.
+`HealthList` is a class that contains the `ArrayList` objects of `Bmi`, `Period`, and `Appointment`. The class diagram is as follows:
+
+![HealthList Class Diagram](img/class_diagrams/healthlist_class_diagram.png)
+
+The class contains methods to retrieve the different objects. Additionally, it contains the methods for:
+- **deleting** an object from the bot, which is used for the `delete` command implementation;
+- showing the **latest** object added to the bot, which is used for the `latest` command implementation;
+- showing the **history or list** of objects added to bot, which is used for the `history` command implementation.
+
+The `clearHealthLists()` method is used to clear all the data stored within each `ArrayList`, which is mainly used for unit testing.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -229,9 +230,13 @@ The `HealthList` class contains three `ArrayList` variables, to store BMI, Appoi
 
 #### BMI
 
-An object containing information about a user's Body Mass Index (BMI) data. The class automatically calculates the BMI score and determines the corresponding category, then stores that in the object.
+`Bmi` is a class that represents the BMI (Body Mass Index) of the user who has recorded height and weight. It contains the following variables:
 
-This class inherits from the `Health` superclass.
+- `height`: The height of the user in metres represented as a `double`.
+- `weight`: The weight of the user in kilograms represented as a `double`.
+- `bmiValue`: The calculate BMI value of the user derived from the height and weight given, also represented as a `double`.
+- `bmiCategory`: The category that the BMI value of the user falls in (i.e. Underweight, Normal, Overweight, etc), represented as a `String`.
+- `date`: A `LocalDate` parameter representing the date of the recorded/added BMI value.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -239,9 +244,12 @@ This class inherits from the `Health` superclass.
 
 #### Period
 
-An object containing information about a user's menstrual cycle. The object stores the start and end date as `LocalDate` objects. It also calculates and stores the length of the period flow and period cycle in **days**.
+`Period` is a class that represents the menstrual cycle of the user.
 
-This class inherits from the `Health` superclass.
+- `startDate`: The date of the first day of the menstrual flow (aka period flow), also the first day of the menstrual cycle, represented using a `LocalDate`.
+- `endDate`: The date of the last day of the menstrual flow, represented using a `LocalDate`.
+- `periodLength`: The number of days of menstrual flow (i.e. between the first and last day of flow, inclusive of the first day), represented as `long`.
+- `cycleLength`: The number of days in a menstrual cycle (i.e. between the first and last day of the cycle, inclusive of the first day), represented as a `long`. The cycle ends on the day before the first day of the next menstrual flow/cycle.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -249,7 +257,11 @@ This class inherits from the `Health` superclass.
 
 #### Appointment
 
-This class inherits from the `Health` superclass.
+`Appointment` is a class that represents the past and upcoming medical appointments of the user.
+
+- `date`: The date of the medical appointment, represented using a `LocalDate`.
+- `time`: The time of the medical appointment, represented using a `LocalTime`.
+- `description`: The information of the appointment, it can include things like the healthcare professional to consult, the type of appointment such as consultation, checkup, rehabilitation, therapy etc. This parameter is represented as a `String`.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -349,10 +361,10 @@ The constants are broken down into the following 4 classes:
     * [Add Run](#add-run)
     * [Add Gym](#add-gym)
 * [Health](#health)
-    * [Add Period](#add-period)
     * [Add BMI](#add-bmi)
-    * [Add Appointment](#add-appointment)
+    * [Add Period](#add-period)
     * [Make Period Prediction](#make-period-prediction)
+    * [Add Appointment](#add-appointment)
 * [View History](#view-history)
 * [View Latest](#view-latest)
 * [Delete Item](#delete-item)
@@ -445,35 +457,6 @@ The `validateWeightsArray()` method converts the `String[] weightsArray` variabl
 
 User input is passed to Handler.processInput(), which determines the command used is health. The input is then passed to Handler.handleHealth() as shown in the Handler architecture above. It is then split into either 'bmi', 'period', 'prediction' or 'appointment' commands.
 
-#### Add Period
-
-##### Period Sequence
-
-The user's input is processed to add a run as follows:
-
-1. `Handler.handleHealth()` determines the type of health which is period, and calls the `Parser.parsePeriodInput()` method to process the user's period input.
-
-2. `Parser.parsePeriodInput()` splits the input using `Parser.splitPeriodInput()`. Parameters are extracted using `extractSubstringFromSpecificIndex()` using the different flags.
-   - Method also extracts the end date parameter if present.
-   - The method then returns a String[] variable with the required parameters extracted from the user input.
-
-3. `Validation.validatePeriodInput()` is called to validate each parameter. Once valid, correct parameters are used to construct a new `Period` object.
-
-4. If end date is absent, the `Period` constructor adds the newly created object into `HealthList.PERIODS`. Else, the `PERIOD.get(period)` is called to retrieve the latest period input and update end date using `updateEndDate()` method.
-   - If the `HealthList.PERIODS` is not empty, `setCycleLength()` will be called to calculate the cycle length.
-
-5. The `Period` object is passed to `Output.printAddPeriod()` and a message acknowledging the successful adding is printed to the screen.
-
-This is the sequence diagram for adding a period from `parsePeriodInput()`:
-
-![Period Sequence Diagram](img/sequence_diagrams/period_sequence.png)
-
-![Set Cycle Length Diagram](img/sequence_diagrams/set_Cycle_Length.png)
-
-`validatePeriodInput()` uses the `Validation` class to check all the parameters specified by the user when adding or updating a Period, and throws an exception if it is invalid.
-
-###### [Back to table of contents](#table-of-contents)
-
 ---
 
 #### Add BMI
@@ -501,6 +484,37 @@ validateBmiInput uses the Validation class to check all the parameters specified
 
 ---
 
+#### Add Period
+
+The user's input is processed to add a run as follows:
+
+1. `Handler.handleHealth()` determines the type of health which is period, and calls the `Parser.parsePeriodInput()` method to process the user's period input.
+
+2. `Parser.parsePeriodInput()` splits the input using `Parser.splitPeriodInput()`. Parameters are extracted using `extractSubstringFromSpecificIndex()` using the different flags.
+   - Method also extracts the end date parameter if present.
+   - The method then returns a String[] variable with the required parameters extracted from the user input.
+
+3. `Validation.validatePeriodInput()` is called to validate each parameter. Once valid, correct parameters are used to construct a new `Period` object.
+
+4. If end date is absent, the `Period` constructor adds the newly created object into `HealthList.PERIODS`. Else, the `PERIOD.get(period)` is called to retrieve the latest period input and update end date using `updateEndDate()` method.
+   - If the `HealthList.PERIODS` is not empty, `setCycleLength()` will be called to calculate the cycle length.
+
+5. The `Period` object is passed to `Output.printAddPeriod()` and a message acknowledging the successful adding is printed to the screen.
+
+This is the sequence diagram for adding a period from `parsePeriodInput()`:
+
+![Period Sequence Diagram](img/sequence_diagrams/period_sequence.png)
+
+![Set Cycle Length Diagram](img/sequence_diagrams/set_Cycle_Length.png)
+
+`validatePeriodInput()` uses the `Validation` class to check all the parameters specified by the user when adding or updating a Period, and throws an exception if it is invalid.
+
+##### Make Period Prediction
+
+###### [Back to table of contents](#table-of-contents)
+
+---
+
 #### Add Appointment
 
 1. User input is passed to `Handler.processInput()`, which determines the command used is `health`, thus passing the input to `Handler.handleHealth()`.
@@ -520,12 +534,6 @@ validateBmiInput uses the Validation class to check all the parameters specified
 ![Appointment Sequence Diagram](img/sequence_diagrams/appointment_sequence.png)
 
 ![Appointment Validation Diagram](img/sequence_diagrams/appointment_validation.png)
-
-###### [Back to table of contents](#table-of-contents)
-
----
-
-#### Make Period Prediction
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -574,7 +582,7 @@ validateBmiInput uses the Validation class to check all the parameters specified
     - GYM: `printLatestGym()`
     - BMI: `printLatestBmi()`
     - PERIOD: `printLatestPeriod()`
-    - APPOINTMENT: `printEarliestAppointment()`
+    - APPOINTMENT: `printLatestAppointment()`
 
 ![Appointment Sequence Diagram](img/sequence_diagrams/history_printLatest.png)
 
