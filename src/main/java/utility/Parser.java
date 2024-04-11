@@ -159,12 +159,12 @@ public class Parser {
 
     //@@author JustinSoh
     /**
-     * Function validates and parses the user input for the history and latest commands.
+     * Function validates and parses the user input for the history
      *
      * @param userInput String representing the user input.
-     * @return The filter string, set to either 'gym', 'run', 'bmi' or 'period'.
+     * @return The filter string, set to either 'gym', 'run', 'workouts', 'bmi', 'appointment' or 'period'.
      */
-    public String parseHistoryAndLatestInput(String userInput) {
+    public String parseHistory(String userInput) {
         try {
             if (countForwardSlash(userInput) > UiConstant.NUM_OF_SLASHES_FOR_LATEST_AND_HISTORY) {
                 throw new CustomExceptions.InvalidInput(ErrorConstant.TOO_MANY_SLASHES_ERROR);
@@ -172,9 +172,34 @@ public class Parser {
             String filter = extractSubstringFromSpecificIndex(userInput, UiConstant.ITEM_FLAG);
 
             if (filter.isBlank()) {
-                throw new CustomExceptions.InsufficientInput(ErrorConstant.INVALID_HISTORY_FILTER_ERROR);
+                throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_HISTORY_FILTER_ERROR);
             }
-            validation.validateFilter(filter.toLowerCase());
+            validation.validateHistoryFilter(filter.toLowerCase());
+            return filter.toLowerCase();
+        } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
+            output.printException(e.getMessage());
+            return null;
+        }
+    }
+
+    //@@author JustinSoh
+    /**
+     * Function validates and parses the user input for the history and latest commands.
+     *
+     * @param userInput String representing the user input.
+     * @return The filter string, set to either 'gym', 'run', 'bmi' or 'period'.
+     */
+    public String parseLatest(String userInput) {
+        try {
+            if (countForwardSlash(userInput) > UiConstant.NUM_OF_SLASHES_FOR_LATEST_AND_HISTORY) {
+                throw new CustomExceptions.InvalidInput(ErrorConstant.TOO_MANY_SLASHES_ERROR);
+            }
+            String filter = extractSubstringFromSpecificIndex(userInput, UiConstant.ITEM_FLAG);
+
+            if (filter.isBlank()) {
+                throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_LATEST_FILTER_ERROR);
+            }
+            validation.validateLatestFilter(filter.toLowerCase());
             return filter.toLowerCase();
         } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
             output.printException(e.getMessage());

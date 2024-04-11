@@ -70,7 +70,7 @@ public class WorkoutList  {
 
         if(!filter.equals(WorkoutConstant.ALL) && !filter.equals(WorkoutConstant.RUN)
                 && !filter.equals(WorkoutConstant.GYM)) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_HISTORY_FILTER_ERROR);
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INSUFFICIENT_HISTORY_FILTER_ERROR);
         }
         if(filter.equals(WorkoutConstant.RUN) && RUNS.isEmpty()){
             throw new CustomExceptions.OutOfBounds(ErrorConstant.RUN_EMPTY_ERROR);

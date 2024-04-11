@@ -146,7 +146,7 @@ public class Handler {
      * @param userInput The user input string.
      */
     public void handleHistory(String userInput) {
-        String filter = parser.parseHistoryAndLatestInput(userInput);
+        String filter = parser.parseHistory(userInput);
         if (filter != null) {
             output.printHistory(filter);
             LogFile.writeLog("Viewed history for " + filter, false);
@@ -243,7 +243,7 @@ public class Handler {
      * @param userInput String representing user input.
      */
     public void handleLatest(String userInput) {
-        String filter = parser.parseHistoryAndLatestInput(userInput);
+        String filter = parser.parseLatest(userInput);
         if (filter != null) {
             output.printLatest(filter);
             LogFile.writeLog("Viewed latest for " + filter, false);
