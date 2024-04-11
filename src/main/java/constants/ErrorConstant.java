@@ -6,6 +6,19 @@ package constants;
  */
 public class ErrorConstant {
 
+    // Format for Exception Class
+    public static final String COLOR_HEADING = "\u001b[31m";
+
+    public static final String COLOR_ENDING = "\u001b[0m";
+
+    // Invalid Input Header for Exception Class
+    public static final String INVALID_INPUT_HEADER = "Invalid Input Exception: ";
+
+    public static final String INSUFFICIENT_INPUT_HEADER = "Invalid Input Exception: ";
+
+    public static final String OUT_OF_BOUND_HEADER = "Out of Bounds Error: ";
+
+
     // General Errors
     public static final String NEGATIVE_VALUE_ERROR = "Requires a positive integer!";
     public static final String INVALID_INDEX_DELETE_ERROR = "Invalid index to delete!";
@@ -33,8 +46,6 @@ public class ErrorConstant {
     public static final String INVALID_COMMAND_ERROR = "Invalid command. Enter 'help' to view " +
             "available commands.";
     public static final String NO_DATE_SPECIFIED_ERROR = "NA";
-    public static final String INVALID_ITEM_ERROR = "Invalid item specified.";
-    public static final String CORRECT_FILTER_ITEM_FORMAT = "/item:run/gym/workouts/bmi/period/appointment";
 
     // Date errors
     public static final String INVALID_DATE_ERROR = "Invalid date format. Format is DD-MM-YYYY in integers. " +
@@ -136,7 +147,7 @@ public class ErrorConstant {
     public static final String NULL_BMI_ERROR = "Bmi object cannot be null.";
     public static final String EMPTY_BMI_LIST_ERROR = "BMI List is empty.";
     public static final String BMI_LIST_UNCLEARED_ERROR = "Bmi list is not cleared.";
-    public static final String HEIGHT_WEIGHT_INPUT_ERROR =
+    public static final String INVALID_HEIGHT_WEIGHT_INPUT_ERROR =
             "Height and weight should be 2 decimal place positive numbers!";
 
     // PERIOD ERRORS
@@ -191,13 +202,74 @@ public class ErrorConstant {
     public static final String INVALID_APPOINTMENT_DATE_TIME_ERROR = "Date and time specified for appointment cannot " +
             "be earlier than current date and time.";
 
-    public static final String INVALID_HISTORY_FILTER_ERROR = "Missing/invalid filter used!" +
-            System.lineSeparator() +
-            "Use /item:run/gym/workouts/period/bmi/appointment";
+    public static final String INSUFFICIENT_HISTORY_FILTER_ERROR = "Missing filter used!"
+            + System.lineSeparator()
+            + "Please use the 'latest' command followed by the '/item:' flag and one of the following options:"
+            + System.lineSeparator()
+            + "- run"
+            + System.lineSeparator()
+            + "- gym"
+            + System.lineSeparator()
+            + "- workouts"
+            + System.lineSeparator()
+            + "- period"
+            + System.lineSeparator()
+            + "- bmi"
+            + System.lineSeparator()
+            + "- appointment"
+            + System.lineSeparator()
+            + "For example: 'latest /item:run'";
 
-    public static final String INVALID_LATEST_FILTER_ERROR = "Missing/invalid filter used!" +
-            System.lineSeparator() +
-            "Use /item:run/gym/period/bmi/appointment";
+    public static final String INSUFFICIENT_LATEST_FILTER_ERROR = "Filter is missing!"
+            + System.lineSeparator()
+            + "Please use the 'latest' command followed by the '/item:' flag and one of the following options:"
+            + System.lineSeparator()
+            + "- run"
+            + System.lineSeparator()
+            + "- gym"
+            + System.lineSeparator()
+            + "- period"
+            + System.lineSeparator()
+            + "- bmi"
+            + System.lineSeparator()
+            + "- appointment"
+            + System.lineSeparator()
+            + "For example: 'latest /item:run'";
+
+
+    public static final String INVALID_HISTORY_FILTER_ERROR = "Filter is invalid!"
+            + System.lineSeparator()
+            + "Please only use the following flags"
+            + System.lineSeparator()
+            + "- run"
+            + System.lineSeparator()
+            + "- gym"
+            + System.lineSeparator()
+            + "- workouts"
+            + System.lineSeparator()
+            + "- period"
+            + System.lineSeparator()
+            + "- bmi"
+            + System.lineSeparator()
+            + "- appointment"
+            + System.lineSeparator()
+            + "For example: 'history /item:run'";
+
+    public static final String INVALID_LATEST_FILTER_ERROR = "Filter is invalid!"
+            + System.lineSeparator()
+            + "Please only use the following flags"
+            + System.lineSeparator()
+            + "- run"
+            + System.lineSeparator()
+            + "- gym"
+            + System.lineSeparator()
+            + "- period"
+            + System.lineSeparator()
+            + "- bmi"
+            + System.lineSeparator()
+            + "- appointment"
+            + System.lineSeparator()
+            + "For example: 'history /item:run'";
 
     public static final String TOO_MANY_SLASHES_ERROR = "Too many '/' characters specified within input. " +
             "Parameters cannot contain any '/' characters!";

@@ -67,11 +67,31 @@ public class Validation {
         if (isEmptyParameterPresent(deleteDetails)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_DELETE_PARAMETERS_ERROR);
         }
-        validateFilter(deleteDetails[UiConstant.DELETE_ITEM_STRING_INDEX].toLowerCase());
+        validateHistoryFilter(deleteDetails[UiConstant.DELETE_ITEM_STRING_INDEX].toLowerCase());
 
         if (!deleteDetails[UiConstant.DELETE_ITEM_NUMBER_INDEX].matches(UiConstant.VALID_POSITIVE_INTEGER_REGEX)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_INDEX_ERROR);
         }
+    }
+
+
+    // @@author L5-Z
+    /**
+     * Validates whether the filter string is either 'run', 'gym', 'workouts', 'bmi', 'period' or 'appointment'.
+     *
+     * @param filter The filter string to be checked.
+     * @throws CustomExceptions.InvalidInput If the filter string is none of them.
+     */
+    public void validateHistoryFilter(String filter) throws CustomExceptions.InvalidInput {
+        if (filter.equals(WorkoutConstant.RUN)
+                || filter.equals(WorkoutConstant.GYM)
+                || filter.equals(HealthConstant.BMI)
+                || filter.equals(HealthConstant.PERIOD)
+                || filter.equals(HealthConstant.APPOINTMENT)
+                || filter.equals(WorkoutConstant.ALL)) {
+            return;
+        }
+        throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_HISTORY_FILTER_ERROR);
     }
 
     // @@author L5-Z
@@ -81,19 +101,17 @@ public class Validation {
      * @param filter The filter string to be checked.
      * @throws CustomExceptions.InvalidInput If the filter string is none of them.
      */
-    public void validateFilter(String filter) throws CustomExceptions.InvalidInput {
+    public void validateLatestFilter(String filter) throws CustomExceptions.InvalidInput {
         if (filter.equals(WorkoutConstant.RUN)
                 || filter.equals(WorkoutConstant.GYM)
                 || filter.equals(HealthConstant.BMI)
                 || filter.equals(HealthConstant.PERIOD)
-                || filter.equals(HealthConstant.APPOINTMENT)
-                || filter.equals(WorkoutConstant.ALL)) {
+                || filter.equals(HealthConstant.APPOINTMENT)) {
             return;
         }
-        throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_ITEM_ERROR
-                + System.lineSeparator()
-                + ErrorConstant.CORRECT_FILTER_ITEM_FORMAT);
+        throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_LATEST_FILTER_ERROR);
     }
+
 
     // @@author j013n3
     /**
@@ -110,7 +128,7 @@ public class Validation {
 
         if (!bmiDetails[HealthConstant.BMI_HEIGHT_INDEX].matches(UiConstant.VALID_TWO_DP_NUMBER_REGEX)
                 || !bmiDetails[HealthConstant.BMI_WEIGHT_INDEX].matches(UiConstant.VALID_TWO_DP_NUMBER_REGEX)) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.HEIGHT_WEIGHT_INPUT_ERROR);
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_HEIGHT_WEIGHT_INPUT_ERROR);
         }
 
         double height = Double.parseDouble(bmiDetails[HealthConstant.BMI_HEIGHT_INDEX]);
