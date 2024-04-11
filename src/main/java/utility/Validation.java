@@ -128,7 +128,7 @@ public class Validation {
 
         if (!bmiDetails[HealthConstant.BMI_HEIGHT_INDEX].matches(UiConstant.VALID_TWO_DP_NUMBER_REGEX)
                 || !bmiDetails[HealthConstant.BMI_WEIGHT_INDEX].matches(UiConstant.VALID_TWO_DP_NUMBER_REGEX)) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.HEIGHT_WEIGHT_INPUT_ERROR);
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_HEIGHT_WEIGHT_INPUT_ERROR);
         }
 
         double height = Double.parseDouble(bmiDetails[HealthConstant.BMI_HEIGHT_INDEX]);
