@@ -566,6 +566,7 @@ This is the sequence diagram for adding a period from `parsePeriodInput()`:
 ---
 
 ### View Latest
+
 1. User input is passed to `Handler.processInput()`, which determines the command used is `History`, thus passing the input to `Handler.handleLatest()`.
 
 2. `Handler.handleHistory()` would call the `Parser.parseHistoryAndLatestInput()` method to validate the user input.
@@ -592,11 +593,49 @@ This is the sequence diagram for adding a period from `parsePeriodInput()`:
 
 ### Delete Item
 
+Deleting an item follows this sequence:
+
+1. User input is passed to `Handler.processInput()`, determining that the command used is `delete`, thus calling `Handler.handleDelete()`.
+
+2. User input is passed to `Parser.parseDeleteInput()`, and the input is split by `Parser.splitDeleteInput()`.
+
+3. Split `deleteDetails` are passed to `Validation.validateDeleteInput()`. If valid, return the details. If not, return `null`.
+
+4. `validDeleteDetails` is passed back to `Handler`, which calls the respective `deleteItem()` method from either `HealthList` or `WorkoutList` depending on the details passed.
+
+![Delete Sequence](img/sequence_diagrams/delete_sequence.png)
+
+
 ###### [Back to table of contents](#table-of-contents)
 
 ---
 
 ### Storage of Data
+
+The storage is split into `DataFile` for the reading and saving of user data, and `LogFile` for writing logs. `DataFile` is covered here, since the storing and reading of user data is more important to a developer.
+
+#### Saving Data
+
+Saving of data happens only when the `exit` command is used:
+
+1. Upon `exit`, `Handler.terminateBot()` is called, which calls `DataFile.saveDataFile()`.
+
+2. The name of the user, health data and workout data are written to `pulsepilot_data.txt` via `writeName()`, `writeHealthData()` and `writeWorkoutData()`.
+
+3. To prevent tampering of the file, the SHA-256 hash of the data file is calculated via `generateFileHash()` and written to `pulsepilot_hash.txt` via `writeHashToFile()`.
+
+![Storage Sequence](img/sequence_diagrams/storage_sequence.png)
+
+#### Reading Data
+
+The reading of files has been implemented as follows:
+
+1. The file hash from `pulsepilot_hash.txt` is read, and the SHA-256 hash of `pulsepilot_data.txt` is calculated.
+    - If the hashes do not match, file has been tampered with. The data and log file are thus deleted and bot exits.
+
+2. The first line is read and split to get the user's name.
+
+3. Subsequent lines contain the health and workout data stored, which is split and added to `HealthList` and `WorkoutList` respectively.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -854,8 +893,6 @@ health /h:period /start:10-04-2024 /end:16-04-2024
 ---
 
 #### Prediction Testing
-
-
 
 **Checking prediction with 4 valid periods added:**
 
