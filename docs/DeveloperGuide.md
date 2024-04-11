@@ -624,42 +624,7 @@ Saving of data happens only when the `exit` command is used:
 
 3. To prevent tampering of the file, the SHA-256 hash of the data file is calculated via `generateFileHash()` and written to `pulsepilot_hash.txt` via `writeHashToFile()`.
 
-```plantuml
-@startuml
-
-participant "handler:Handler" as Handler
-participant "dataFile:DataFile" as DataFile
-
-activate Handler #FFBBBB
-Handler -> DataFile: saveDataFile()
-activate DataFile #FFBBBB
-
-DataFile -> DataFile: writeName()
-activate DataFile #salmon
-DataFile --> DataFile: name written
-deactivate DataFile #salmon
-
-DataFile -> DataFile: writeHealthData()
-activate DataFile #salmon
-DataFile --> DataFile: health data written
-deactivate DataFile #salmon
-
-DataFile -> DataFile: writeWorkoutData()
-activate DataFile #salmon
-DataFile --> DataFile: workout data written
-deactivate DataFile #salmon
-
-DataFile -> DataFile: writeHashToFile()
-activate DataFile #salmon
-DataFile --> DataFile: file hash written
-deactivate DataFile #salmon
-
-DataFile --> Handler: both hash and data\nfile written
-deactivate DataFile #salmon
-deactivate DataFile #FFBBBB
-
-@enduml
-```
+![Storage Sequence](img/sequence_diagrams/storage_sequence.png)
 
 #### Reading Data
 
