@@ -283,4 +283,21 @@ class PeriodTest {
 
         assertEquals(null, result);
     }
+
+    /**
+     * Test deleting of period with invalid negative index.
+     * Expected behaviour is for an OutOfBounds error to be thrown.
+     */
+    @Test
+    void deletePeriod_NegativeIndex_throwOutOfBoundsForPeriod() {
+        int invalidIndex = -1;
+        CustomExceptions.OutOfBounds exception = assertThrows(
+                CustomExceptions.OutOfBounds.class,
+                () -> HealthList.deletePeriod(invalidIndex)
+        );
+        String expected = "\u001b[31mOut of Bounds Error: "
+                + ErrorConstant.PERIOD_EMPTY_ERROR
+                + "\u001b[0m";
+        assertEquals(expected, exception.getMessage());
+    }
 }
