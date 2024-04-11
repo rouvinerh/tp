@@ -31,21 +31,6 @@ public class Quote {
         return quotes.get(random.nextInt(quotes.size()));
     }
 
-/*
-    public String getChatResponse(String userInput) {
-        userInput = userInput.toLowerCase();
-        if (userInput.contains("motivate") || userInput.contains("inspire")) {
-            return getRandomQuote();
-        } else if (userInput.contains("hello") || userInput.contains("hi")) {
-            return "Hello! How can I motivate you today?";
-        } else if (userInput.contains("thank")) {
-            return "You're welcome! Keep pushing forward!";
-        } else {
-            return "I'm here to motivate you. Just ask!";
-        }
-    }
-*/
-
     /**
      * Reads and processes the quotes from the {@code MotivationalQuotes} class.
      * The quotes are trimmed for any leading or trailing whitespace.
