@@ -376,6 +376,7 @@ public class HealthList extends ArrayList<Health> {
      *
      * @return The predicted start date of the next period.
      * @throws AssertionError If periods lists is empty.
+     * @throws CustomExceptions.OutOfBounds If period list is empty.
      */
     public static LocalDate predictNextPeriodStartDate() throws CustomExceptions.OutOfBounds {
         if (PERIODS.isEmpty()) {
