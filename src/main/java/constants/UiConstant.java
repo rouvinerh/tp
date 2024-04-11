@@ -45,7 +45,8 @@ public class UiConstant {
     public static File saveFile = new File(UiConstant.dataFilePath);
     public static final int FILE_FOUND = 0;
     public static final int FILE_NOT_FOUND = 1;
-    public static final String MISSING_FILE = "What is your name, voyager?";
+    public static final String FILE_FOUND_MESSAGE = "Welcome back, Captain ";
+    public static final String FILE_MISSING_MESSAGE = "What is your name, voyager?";
     public static final String SUCCESSFUL_LOAD = "Prior data found. Orbit has been synchronised.";
 
 

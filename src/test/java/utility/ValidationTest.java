@@ -322,22 +322,22 @@ public class ValidationTest {
     @Test
     void validateDeleteFilter_correctFilters_expectsNoExceptionsThrown() {
         String input1 = "run";
-        assertDoesNotThrow(() -> validation.validateFilter(input1));
+        assertDoesNotThrow(() -> validation.validateHistoryFilter(input1));
 
         String input2 = "gym";
-        assertDoesNotThrow(() -> validation.validateFilter(input2));
+        assertDoesNotThrow(() -> validation.validateHistoryFilter(input2));
 
         String input3 = "bmi";
-        assertDoesNotThrow(() -> validation.validateFilter(input3));
+        assertDoesNotThrow(() -> validation.validateHistoryFilter(input3));
 
         String input4 = "period";
-        assertDoesNotThrow(() -> validation.validateFilter(input4));
+        assertDoesNotThrow(() -> validation.validateHistoryFilter(input4));
 
         String input5 = "appointment";
-        assertDoesNotThrow(() -> validation.validateFilter(input5));
+        assertDoesNotThrow(() -> validation.validateHistoryFilter(input5));
 
         String input6 = "workouts";
-        assertDoesNotThrow(() -> validation.validateFilter(input6));
+        assertDoesNotThrow(() -> validation.validateHistoryFilter(input6));
     }
 
     /**
@@ -347,7 +347,7 @@ public class ValidationTest {
     void validateDeleteFilter_incorrectFilter_expectsInvalidInputException() {
         String input = "fake";
         assertThrows(CustomExceptions.InvalidInput.class, () ->
-                validation.validateFilter(input));
+                validation.validateHistoryFilter(input));
     }
 
     /**

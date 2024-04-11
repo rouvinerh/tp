@@ -253,7 +253,7 @@ class ParserTest {
     @Test
     void parseHistoryAndDeleteInput_correctInput_noExceptionThrown() {
         String input = "/item:appointment";
-        String result = parser.parseHistoryAndLatestInput(input);
+        String result = parser.parseHistory(input);
         String expected = "appointment";
         assertEquals(expected, result);
     }
