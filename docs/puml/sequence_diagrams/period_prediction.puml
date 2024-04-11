@@ -1,53 +1,39 @@
 @startuml
-actor User
-participant Handler as Handler << Class >>
-participant Parser as Parser << Class >>
-participant HealthList as "PeriodList: HealthList"
-participant Period as Period << Class >>
 
-User -> Handler : userInput
-activate Handler #FFBBBB
-Handler -> Handler : processInput()
-activate Handler #Salmon
-Handler -> Handler : handleHealth()
-activate Handler #DarkSalmon
-Handler -> Parser  : extractSubstringFromSpecificIndex()
-activate Parser  #FFBBBB
-Parser  --> Handler : typeOfHealth
-deactivate Parser  #FFBBBB
+skinparam sequenceReferenceBackgroundColor lightblue
+participant "handler:Handler" as Handler
+participant "parser:Parser" as Parser
+participant "HealthList" as HealthList <<Class>>
+participant "period:Period" as Period
+participant "Period" as Period1 <<Class>>
 
-Handler -> Parser : parsePredictionInput
-activate Parser  #FFBBBB
+Handler -> Parser: parsePredictionInput()
+activate Handler #salmon
+activate Parser #salmon
 
-Parser -> HealthList : getPeriodSize
+opt Period List size >= 4
+Parser -> HealthList: printLatestThreeCycles()
 activate HealthList #FFBBBB
-HealthList --> Parser : size
+HealthList --> Parser:
 deactivate HealthList #FFBBBB
-deactivate Handler #FFBBBB
-
-Parser -> HealthList : printLatestThreeCycles
-activate HealthList  #FFBBBB
-HealthList --> Parser
-deactivate HealthList  #FFBBBB
-
-Parser -> HealthList : predictNextPeriodStartDate
-activate HealthList  #FFBBBB
-HealthList -> ":Period" : nextCyclePrediction
-activate ":Period" #FFBBBB
-":Period" -> ":Period" : getLastThreeCycleLengths
-activate ":Period" #DarkSalmon
-":Period" --> ":Period" : sumOfCycleLengths
-deactivate ":Period" #DarkSalmon
-
-":Period" --> HealthList : predicted start date
-deactivate ":Period" #FFBBBB
-HealthList --> Parser : predicted start date
-deactivate HealthList  #FFBBBB
-
-Parser -> Period : printNextCyclePrediction
-activate Period  #FFBBBB
-Period --> User :
+Parser -> HealthList: predictNextPeriodStartDate()
+activate HealthList #FFBBBB
+HealthList -> Period: nextCyclePrediction()
+activate Period #FFBBBB
+Period -> Period: getLastThreeCycleLengths()
+activate Period #DarkSalmon
+Period --> Period:
+deactivate Period #DarkSalmon
+Period --> HealthList:
 deactivate Period #FFBBBB
+destroy Period
+HealthList --> Parser: nextPeriodStartDate
 
+Parser -> Period1: printNextCyclePrediction()
+activate Period1 #FFBBBB
+Period1 --> Parser:
+deactivate Period1 #FFBBBB
+
+end
 
 @enduml

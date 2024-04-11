@@ -1,44 +1,45 @@
 @startuml
+
 skinparam sequenceReferenceBackgroundColor lightblue
-actor User
-participant Handler as Handler << Class >>
-participant Parser as Parser << Class >>
-participant Output as Output << Class >>
-participant "AppointmentList:HealthList" as AppointmentList
+participant "handler:Handler" as Handler
+participant "parser:Parser" as Parser
+participant "validation:Validation" as Validation
+participant "newAppointment:Appointment" as Appointment
+participant "healthList:HealthList" as HealthList
+participant "output:Output" as Output
 
-User -> Handler: userInput
-activate Handler #FFBBBB
-Handler -> Handler : processInput()
-activate Handler #Salmon
-Handler -> Handler : handleHealth()
+Handler -> Parser: parseAppointmentInput()
+activate Handler #salmon
+activate Parser #salmon
 
-activate Handler #DarkSalmon
-Handler -> Parser  : extractSubstringFromSpecificIndex()
-activate Parser  #FFBBBB
-Parser  --> Handler : typeOfHealth
-deactivate Parser  #FFBBBB
+Parser -> Parser: splitAppointmentDetails()
+activate Parser #FFBBBB
+Parser --> Parser: appointmentDetails[]
+deactivate Parser #FFBBBB
 
-Handler -> Parser : parseAppointmentInput()
-activate Parser  #FFBBBB
-deactivate Handler #DarkSalmon
-Parser -> Parser : splitAppointmentDetails()
-ref over Parser: validateAppointmentDetails
+Parser -> Validation: validateAppointmentDetails()
+activate Validation #FFBBBB
+Validation --> Parser:
+deactivate Validation
 
-activate Parser  #DarkSalmon
-Parser --> Parser : appointmentDetails
-deactivate Parser  #DarkSalmon
+Parser -> Appointment **: new
+activate Appointment #FFBBBB
 
-Parser -> ":Appointment" **: new
-activate ":Appointment" #FFBBBB
-":Appointment" --> Parser: newAppointment:Appointment
-deactivate ":Appointment" #FFBBBB
-Parser -> AppointmentList : addAppointment()
-activate AppointmentList  #FFBBBB
-AppointmentList --> Parser :
-deactivate AppointmentList  #FFBBBB
+Appointment -> HealthList **: new
+activate HealthList #FFBBBB
+Appointment -> HealthList: addAppointment(date,time,description)
+HealthList --> Appointment:
+deactivate HealthList #FFBBBB
+destroy HealthList
+Appointment --> Parser:
+deactivate Appointment #FFBBBB
 
-Parser -> Output : printAddAppointment()
+
+
+Parser -> Output: printAddAppointment()
 activate Output #FFBBBB
-Output --> User:
+Output --> Parser:
+destroy Appointment
 deactivate Output #FFBBBB
+
 @enduml

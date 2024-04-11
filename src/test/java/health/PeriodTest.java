@@ -14,9 +14,10 @@ import utility.Parser;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class PeriodTest {
     private static final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -289,7 +290,7 @@ class PeriodTest {
      * Expected behaviour is for an OutOfBounds error to be thrown.
      */
     @Test
-    void deletePeriod_NegativeIndex_throwOutOfBoundsForPeriod() {
+    void deletePeriod_negativeIndex_throwOutOfBoundsForPeriod() {
         int invalidIndex = -1;
         CustomExceptions.OutOfBounds exception = assertThrows(
                 CustomExceptions.OutOfBounds.class,

@@ -461,24 +461,24 @@ User input is passed to Handler.processInput(), which determines the command use
 
 #### Add BMI
 
-The user's input is processed to add a run as follows:
+The user's input is processed to add a Bmi as follows:
 
-1. `Handler.handleHealth()` determines the type of health which is period, and calls the `Parser.parseBmiInput()` method to process the user's period input.
+1. `Handler.handleHealth()` determines the type of health which is bmi, and calls the `Parser.parseBmiInput()` method to process the user's bmi input.
 
-2. `Parser.parseBmiInput()` splits the input using `Parser.splitPeriodInput()`. Parameters are extracted using `extractSubstringFromSpecificIndex()` using the different flags.
+2. `Parser.parseBmiInput()` splits the input using `Parser.splitBmiInput()`. Parameters are extracted using `extractSubstringFromSpecificIndex()` using the different flags.
     - The method returns a String[] variable with the required parameters extracted from the user input.
 
 3. `Validation.validateBmiInput()` is called to validate each parameter. Once valid, correct parameters are used to construct a new `Bmi` object.
 
-4. The `Bmi` constructor adds the newly created object into `HealthList.BMIS`. The BMI value and Bmi category will be obtained from `calculateBmiValue()` and `getBmiCategory()` methods respectively.
+4. The `Bmi` constructor adds the newly created object into `HealthList.BMIS`. The BMI value and BMI category will be obtained from `calculateBmiValue()` and `getBmiCategory()` methods respectively.
 
 5. The `Bmi` object is passed to `Output.printAddBmi()` and a message acknowledging the successful adding is printed to the screen.
 
-This is the sequence diagram for adding a period from `parseBMiInput()`:
+This is the sequence diagram for adding a Bmi from `parseBmiInput()`:
 
 ![Bmi Sequence Diagram](img/sequence_diagrams/bmi_sequence.png)
 
-validateBmiInput uses the Validation class to check all the parameters specified by the user when adding a Bmi, and throws an exception if it is invalid.
+`validateBmiInput` uses the `Validation` class to check all the parameters specified by the user when adding a `Bmi`, and throws an exception if it is invalid.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -486,7 +486,7 @@ validateBmiInput uses the Validation class to check all the parameters specified
 
 #### Add Period
 
-The user's input is processed to add a run as follows:
+The user's input is processed to add a Period as follows:
 
 1. `Handler.handleHealth()` determines the type of health which is period, and calls the `Parser.parsePeriodInput()` method to process the user's period input.
 
@@ -496,8 +496,8 @@ The user's input is processed to add a run as follows:
 
 3. `Validation.validatePeriodInput()` is called to validate each parameter. Once valid, correct parameters are used to construct a new `Period` object.
 
-4. If end date is absent, the `Period` constructor adds the newly created object into `HealthList.PERIODS`. Else, the `PERIOD.get(period)` is called to retrieve the latest period input and update end date using `updateEndDate()` method.
-   - If the `HealthList.PERIODS` is not empty, `setCycleLength()` will be called to calculate the cycle length.
+4. If end date is absent, the `Period` constructor adds the newly created object into `HealthList.PERIODS`. Else, `getPeriod()` is called to retrieve the latest period input and update end date using `updateEndDate()` method.
+   - If the `HealthList.PERIODS` is not empty, `setCycleLength()` will also be called to calculate the cycle length.
 
 5. The `Period` object is passed to `Output.printAddPeriod()` and a message acknowledging the successful adding is printed to the screen.
 
@@ -507,9 +507,21 @@ This is the sequence diagram for adding a period from `parsePeriodInput()`:
 
 ![Set Cycle Length Diagram](img/sequence_diagrams/set_Cycle_Length.png)
 
-`validatePeriodInput()` uses the `Validation` class to check all the parameters specified by the user when adding or updating a Period, and throws an exception if it is invalid.
+`validatePeriodInput()` uses the `Validation` class to check all the parameters specified by the user when adding or updating a `Period`, and throws an exception if it is invalid.
 
 ##### Make Period Prediction
+
+The user's input is processed to predict user's next period start date as follows:
+
+1. `Handler.handleHealth()` determines the type of health which is prediction, and calls the `Parser.parsePredictionInput()` method to process the user's prediction input.
+
+2. If the size of `PeriodList` is larger or equals to `4`, `printLatestThreeCycles()` is called to print the latest three cycles. Else, an exception is thrown. 
+
+3. `predictNextPeriodStartDate()` calls `nextCyclePrediction()` which further calls `getLastThreeCycleLengths()` to calculate the `sumOfCycleLengths` of latest three cycles. `sumOfCycleLengths` divided by `3` to find the average cycle length. 
+
+4. `printNextCyclePrediction()` prints the predicted start date to the screen.
+
+![Period Prediction Sequence Diagram](img/sequence_diagrams/prediction_sequence_diagram.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -517,23 +529,24 @@ This is the sequence diagram for adding a period from `parsePeriodInput()`:
 
 #### Add Appointment
 
-1. User input is passed to `Handler.processInput()`, which determines the command used is `health`, thus passing the input to `Handler.handleHealth()`.
+The user's input is processed to add an Appointment  as follows:
 
-2. `Handler.handleHealth()` determines the type of health which is `appointment`, and calls the `Parser.parseAppointmentInput()` method to process the user's input.
+1. `Handler.handleHealth()` determines the type of health which is appointment, and calls the `Parser.parseAppointmentInput()` method to process the user's appointment input.
 
-3. `Parser.parseAppointmentInput()` splits the input using `Parser.splitAppointmentDetails()`. It then validates each input using `Validation.validateAppointmentDetails()`.
-    - `CustomExceptions.InsufficientInput` is thrown if either not enough parameters are specified or blank parameters are found.
-    - `CustomExceptions.InvalidInput` is thrown if the parameters passed in are invalid and do not follow the stipulated format.
+2. `Parser.parseAppointmentInput()` splits the input using `Parser.splitAppointmentDetails()`. Parameters are extracted using `extractSubstringFromSpecificIndex()` using the different flags.
+    - The method returns a String[] variable with the required parameters extracted from the user input.
 
-4. If valid, a new `Appointment` object is created with the split user input.
+3. `Validation.validateAppointmentDetails()` is called to validate each parameter. Once valid, correct parameters are used to construct a new `Appointment` object.
 
-5. The `Appointment` constructor adds the newly created object into `HealthList.APPOINTMENTS`.
+4. The `Appointment` constructor adds the newly created object into `HealthList.APPOINTMENTS`.
 
-6. The `Appointment` object is passed to `Output.printAddAppointment()` and a message acknowledging the successful adding is printed to the screen.
+5. The `Appointment` object is passed to `Output.printAddAppointment()` and a message acknowledging the successful adding is printed to the screen.
+
+This is the sequence diagram for adding an Appointment from `parseAppointmentInput()`:
 
 ![Appointment Sequence Diagram](img/sequence_diagrams/appointment_sequence.png)
 
-![Appointment Validation Diagram](img/sequence_diagrams/appointment_validation.png)
+`validateAppointmentInput()` uses the `Validation` class to check all the parameters specified by the user when adding an `Appointment`, and throws an exception if it is invalid.
 
 ###### [Back to table of contents](#table-of-contents)
 

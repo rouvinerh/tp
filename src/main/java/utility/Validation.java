@@ -351,7 +351,7 @@ public class Validation {
     public void validateAppointmentDetails(String[] appointmentDetails)
             throws CustomExceptions.InvalidInput, CustomExceptions.InsufficientInput {
         if (isEmptyParameterPresent(appointmentDetails)) {
-            throw new CustomExceptions.InsufficientInput( ErrorConstant
+            throw new CustomExceptions.InsufficientInput(ErrorConstant
                     .INSUFFICIENT_APPOINTMENT_PARAMETERS_ERROR);
         }
         validateDateInput(appointmentDetails[HealthConstant.APPOINTMENT_DATE_INDEX]);

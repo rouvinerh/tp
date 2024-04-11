@@ -6,7 +6,7 @@ participant "period:Period" as Period
 
 activate HealthList #FFBBBB
 
-opt PERIODS is not empty
+opt  PERIODS is not empty
 
 HealthList -> HealthList: PERIODS.get(previousPeriod)
 activate HealthList #DarkSalmon
@@ -21,7 +21,7 @@ deactivate Period #FFBBBB
 
 end
 
-HealthList -> HealthList: add(period)
+HealthList -> HealthList: PERIODS.add(period)
 activate HealthList #DarkSalmon
 HealthList --> HealthList:
 deactivate HealthList #DarkSalmon
