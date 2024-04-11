@@ -375,4 +375,18 @@ class PeriodTest {
         System.out.println(period);
         assertEquals(expected, outContent.toString());
     }
+
+    /**
+     * Test calculation of length of the period in days when end date is null.
+     * Expected behaviour is 0 return.
+     */
+    @Test
+    void calculatePeriodLength_nullEndDate_expectZeroReturn() {
+        HealthList healthList = new HealthList();
+        Period period = new Period("03-04-2024");
+
+        assertEquals(0, period.calculatePeriodLength());
+    }
+
+
 }
