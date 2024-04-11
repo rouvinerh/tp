@@ -44,7 +44,8 @@ Parser -> Parser : parseGymStationInput()
     Parser -> Output: printAddGym()
     activate Output #FFBBBB
     Output --> Parser:
+    destroy Gym
     deactivate Output
     Parser --> Parser :
-deactivate Parser #DarkSalmon
+    deactivate Parser #DarkSalmon
 @enduml
