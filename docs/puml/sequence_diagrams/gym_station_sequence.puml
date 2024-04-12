@@ -10,7 +10,7 @@ participant "output:Output" as Output
 activate Parser  #FFBBBB
 Parser -> Parser : parseGymStationInput()
     activate Parser #DarkSalmon
-        loop until i == number of stations
+        loop until all gym stations recorded
             Parser -> Output : printGymStationPrompt()
             activate Output #FFBBBB
             Output --> Parser : 

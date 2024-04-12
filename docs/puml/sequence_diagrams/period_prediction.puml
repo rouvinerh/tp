@@ -11,7 +11,6 @@ Handler -> Parser: parsePredictionInput()
 activate Handler #salmon
 activate Parser #salmon
 
-opt Period List size >= 4
 Parser -> HealthList: printLatestThreeCycles()
 activate HealthList #FFBBBB
 HealthList --> Parser:
@@ -33,7 +32,5 @@ Parser -> Period1: printNextCyclePrediction()
 activate Period1 #FFBBBB
 Period1 --> Parser:
 deactivate Period1 #FFBBBB
-
-end
 
 @enduml
