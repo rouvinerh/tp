@@ -99,7 +99,7 @@ class HandlerTest {
      */
     @Test
     void processInput_historyCommand_printsHistoryRun() {
-        String inputRun = "WORKOUT /e:run /d:10.3 /t:00:40:10 /date:15-03-2024" +
+        String inputRun = "WORKOUT /e:run /d:10.30 /t:40:10" +
                 System.lineSeparator() +
                 "HISTORY /item:run";
         Handler myHandler = new Handler(inputRun);
@@ -155,7 +155,7 @@ class HandlerTest {
     }
 
     /**
-     * Tests the behaviour of processInput when an run command with invalid distance is passed in.
+     * Tests the behaviour of processInput when and invalid run command with invalid distance is passed in.
      * Expects invalid distance error to be printed.
      */
     @Test
@@ -328,6 +328,23 @@ class HandlerTest {
         Handler myHandler = new Handler(input);
         myHandler.processInput();
         assertTrue(errContent.toString().contains("\u001b[31mException Caught!"));
+    }
+
+    /**
+     * Tests the behaviour of processInput when a gym command is entered, one station is added, and then the user
+     * types 'back' to exit.
+     */
+    @Test
+    void processInput_workoutCommandWithGymStationExit_expectsNoGymAddedAndDeleteMessage() {
+        String input = "workout /e:gym /n:2 /date:25-03-2023"
+                + System.lineSeparator()
+                + "bench press /s:2 /r:4 /w:10,20"
+                + System.lineSeparator()
+                + "back"
+                + System.lineSeparator();
+        Handler myHandler = new Handler(input);
+        myHandler.processInput();
+        assertTrue(outContent.toString().contains("Removed Gym entry with 1 station(s)."));
     }
 
     /**

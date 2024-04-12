@@ -219,18 +219,14 @@ public class Validation {
         if (isEmptyParameterPresent(runDetails)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_RUN_PARAMETERS_ERROR);
         }
-        validateRunTimeInput(runDetails[WorkoutConstant.RUN_TIME_INDEX]);
+
+        if (!runDetails[WorkoutConstant.RUN_TIME_INDEX].matches(UiConstant.VALID_TIME_REGEX) &&
+                !runDetails[WorkoutConstant.RUN_TIME_INDEX].matches(UiConstant.VALID_TIME_WITH_HOURS_REGEX)) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_RUN_TIME_ERROR);
+        }
+
         if (!runDetails[WorkoutConstant.RUN_DISTANCE_INDEX].matches(UiConstant.VALID_TWO_DP_NUMBER_REGEX)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_RUN_DISTANCE_ERROR);
-        }
-
-        double runDistance = Double.parseDouble(runDetails[WorkoutConstant.RUN_DISTANCE_INDEX]);
-        if (runDistance > WorkoutConstant.MAX_RUN_DISTANCE) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.DISTANCE_TOO_LONG_ERROR);
-        }
-
-        if (runDistance <= WorkoutConstant.MIN_RUN_DISTANCE) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.ZERO_DISTANCE_ERROR);
         }
 
         if (validateDateNotEmpty(runDetails[WorkoutConstant.RUN_DATE_INDEX])) {
@@ -255,6 +251,11 @@ public class Validation {
         if (!gymDetails[WorkoutConstant.GYM_NUMBER_OF_STATIONS_INDEX]
                 .matches(UiConstant.VALID_POSITIVE_INTEGER_REGEX)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_NUMBER_OF_STATIONS_ERROR);
+        }
+
+        int numberOfStations = Integer.parseInt(gymDetails[WorkoutConstant.GYM_NUMBER_OF_STATIONS_INDEX]);
+        if (numberOfStations > WorkoutConstant.MAX_GYM_STATION_NUMBER) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.MAX_STATIONS_ERROR);
         }
 
         if (validateDateNotEmpty(gymDetails[WorkoutConstant.GYM_DATE_INDEX])) {
@@ -287,60 +288,6 @@ public class Validation {
         }
     }
 
-    //@@author JustinSoh
-    /**
-     * Validates the time used in HH:MM format.
-     *
-     * @param time String representing the time to check.
-     * @throws CustomExceptions.InvalidInput If time is formatted wrongly.
-     */
-    public void validateRunTimeInput(String time) throws CustomExceptions.InvalidInput {
-        if (!time.matches(UiConstant.VALID_TIME_REGEX) &&
-                !time.matches(UiConstant.VALID_TIME_WITH_HOURS_REGEX)) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_RUN_TIME_ERROR);
-        }
-        String [] parts = time.split(UiConstant.SPLIT_BY_COLON);
-        int hours = WorkoutConstant.NO_HOURS_PRESENT;
-        int minutes = 0;
-        int seconds = 0;
-        boolean isHoursPresent = false;
-
-        if (parts.length == WorkoutConstant.NUMBER_OF_PARTS_FOR_RUN_TIME) {
-            minutes = Integer.parseInt(parts[0]);
-            seconds = Integer.parseInt(parts[1]);
-        } else if (parts.length == WorkoutConstant.NUMBER_OF_PARTS_FOR_RUN_TIME_WITH_HOURS) {
-            hours = Integer.parseInt(parts[0]);
-            minutes = Integer.parseInt(parts[1]);
-            seconds = Integer.parseInt(parts[2]);
-            isHoursPresent = true;
-        } 
-
-        if (hours == UiConstant.MIN_HOURS) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_HOUR_ERROR);
-        }
-
-        if (isHoursPresent) {
-            if (minutes > UiConstant.MAX_MINUTES) {
-                throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_MINUTE_ERROR);
-            }
-
-            if (seconds > UiConstant.MAX_SECONDS) {
-                throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_SECOND_ERROR);
-            }
-        }
-        // hour is not present
-        if (minutes > UiConstant.MAX_MINUTES) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_MINUTE_ERROR);
-        }
-
-        if (seconds < UiConstant.MIN_SECONDS || seconds > UiConstant.MAX_SECONDS) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_SECOND_ERROR);
-        }
-
-        if (minutes == 0 && seconds == 0) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.ZERO_TIME_ERROR);
-        }
-    }
     //@@author syj02
     /**
      * Validates Appointment details entered.

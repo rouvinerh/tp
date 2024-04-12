@@ -119,6 +119,7 @@ public class ErrorConstant {
             + "This is because the smallest weight increment in most gyms is 0.125kg."
             + System.lineSeparator() 
             + GYM_STATION_FORMAT_ERROR;
+    public static final String MAX_STATIONS_ERROR = "Number of stations done cannot be more than 50!";
 
     public static final String INVALID_WEIGHTS_ARRAY_FORMAT_ERROR = "Weights array format is incorrect!"
             + System.lineSeparator()
@@ -202,8 +203,6 @@ public class ErrorConstant {
     public static final String DESCRIPTION_LENGTH_ERROR = "Description cannot be more than 100 characters";
     public static final String INVALID_DESCRIPTION_ERROR = "Appointment description can only " +
             "contain alphanumeric characters, spaces, inverted commas and quotes!";
-    public static final String INVALID_APPOINTMENT_DATE_TIME_ERROR = "Date and time specified for appointment cannot " +
-            "be earlier than current date and time.";
 
     public static final String INSUFFICIENT_HISTORY_FILTER_ERROR = "Missing filter used!"
             + System.lineSeparator()
@@ -221,7 +220,7 @@ public class ErrorConstant {
             + System.lineSeparator()
             + "- appointment"
             + System.lineSeparator()
-            + "For example: 'latest /item:run'";
+            + "For example: 'history /item:run'";
 
     public static final String INSUFFICIENT_LATEST_FILTER_ERROR = "Filter is missing!"
             + System.lineSeparator()
