@@ -575,31 +575,19 @@ public class Parser {
      * @param gym              The Gym object.
      */
     public void parseGymStationInput(int numberOfStations, Gym gym) {
-        for (int i = 0; i < numberOfStations; i++) {
+        for(int i = 0; i < numberOfStations; i++) {
             try {
                 // Prompt user for gym station details
                 output.printGymStationPrompt(i + 1);
                 String userInput = this.in.nextLine();
-
-                // If user wants to exit the gym station input
-                if (userInput.equals(WorkoutConstant.BACK)) {
-                    output.printGymStationExit();
-                    WorkoutLists.deleteGym(WorkoutLists.getGymSize() - 1);
-                    return;
-                }
-
-                // Split the gym station input
                 String[] splitGymStationInputs = splitGymStationInput(userInput);
                 String exerciseName = splitGymStationInputs[WorkoutConstant.GYM_STATION_NAME_INDEX];
                 String numberOfSets = splitGymStationInputs[WorkoutConstant.GYM_STATION_SET_INDEX];
                 String numberOfReps = splitGymStationInputs[WorkoutConstant.GYM_STATION_REPS_INDEX];
                 String weights = splitGymStationInputs[WorkoutConstant.GYM_STATION_WEIGHTS_INDEX];
-
-                // Create a new GymStation object and add it to the Gym
                 gym.addStation(exerciseName, numberOfSets, numberOfReps, weights);
-
-            } catch (CustomExceptions.InsufficientInput | CustomExceptions.InvalidInput
-                     | CustomExceptions.OutOfBounds e) {
+                i++;
+            } catch (CustomExceptions.InsufficientInput | CustomExceptions.InvalidInput e) {
                 i -= 1;
                 output.printException(e.getMessage());
             }

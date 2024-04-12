@@ -110,16 +110,16 @@ class GymTest {
     void toFileString_correctInput_expectedCorrectString(){
         String expected1 = "GYM:2:11-11-1997:bench press:4:4:10.0,20.0,30.0,40.0:squats:4:3:20.0,30.0,40.0,50.0";
         String expected2WithNoDate = "GYM:2:NA:bench press:4:4:10.0,20.0,30.0,40.0:squats:4:3:20.0,30.0,40.0,50.0";
+        ArrayList<Double> array1 = new ArrayList<>(Arrays.asList(10.0,20.0,30.0,40.0));
+        ArrayList<Double> array2 = new ArrayList<>(Arrays.asList(20.0,30.0,40.0,50.0));
+        Gym newGym = new Gym("11-11-1997");
+        Gym newGym2 = new Gym();
 
-        try {
-            Gym newGym = new Gym("11-11-1997");
-            Gym newGym2 = new Gym();
-
-            newGym.addStation("bench press", "4", "4", "10.0,20.0,30.0,40.0");
-            newGym.addStation("squats", "4", "3", "20.0,30.0,40.0,50.0");
-            newGym2.addStation("bench press", "4", "4", "10.0,20.0,30.0,40.0");
-            newGym2.addStation("squats", "4", "3", "20.0,30.0,40.0,50.0");
-
+        try{
+            newGym.addStation("bench press", 4, 4, array1);
+            newGym.addStation("squats", 4, 3, array2);
+            newGym2.addStation("bench press", 4, 4, array1);
+            newGym2.addStation("squats", 4, 3, array2);
             String output = newGym.toFileString();
             String output2 = newGym2.toFileString();
             assertEquals(expected1, output);
@@ -129,7 +129,20 @@ class GymTest {
         }
     }
 
+    // @@author rouvinerh
+    /**
+     * Tests the behaviour of valid exercise names being passed to validateExerciseName.
+     * Expects no exceptions to be thrown.
+     */
+    @Test
+    void validateExerciseName_correctName_noExceptionThrown() {
+        String input1 = "Bench Press";
+        Gym gym = new Gym();
+        assertDoesNotThrow(() -> gym.validateGymStationName(input1));
 
+        String input2 = "squat";
+        assertDoesNotThrow(() -> gym.validateGymStationName(input2));
+    }
 
     /**
      * Tests the behaviour of incorrect inputs being passed to

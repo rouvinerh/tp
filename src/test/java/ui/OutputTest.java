@@ -503,7 +503,8 @@ class OutputTest {
      * added.
      */
     @Test
-    void printGymHistory_correctInput_expectPrintGymHistory() {
+    void printGymHistory_correctInput_expectPrintGymHistory(){
+        try{
 
         try {
             Gym gym1 = new Gym();
@@ -574,6 +575,14 @@ class OutputTest {
         } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
             fail("Shouldn't have failed");
         }
+        
+            String expectedRun1 = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
+                    WorkoutConstant.RUN,
+                    "1999-12-19",
+                    "10.24",
+                    "01:11:12",
+                    "6:57/km"
+                    );
 
         String expectedRun1 = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
                 WorkoutConstant.RUN,
@@ -605,6 +614,18 @@ class OutputTest {
                 + System.lineSeparator() +
                 String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_HEADER_FORMAT, "", expectedGym1Set2);
 
+            String expected = UiConstant.PARTITION_LINE + System.lineSeparator()
+                    + WorkoutConstant.HISTORY_WORKOUTS_HEADER + System.lineSeparator()
+                    + WorkoutConstant.HISTORY_WORKOUTS_HEADER_FORMAT + System.lineSeparator()
+                    + expected1 + System.lineSeparator()
+                    + expected2 + System.lineSeparator()
+                    + UiConstant.PARTITION_LINE + System.lineSeparator();
+            Output output = new Output();
+            output.printHistory(WorkoutConstant.ALL);
+        assertEquals(expected, outContent.toString());
+        } catch (CustomExceptions.InvalidInput e) {
+            fail("Shouldn't have failed");
+        }
         String expected1 = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_HEADER_FORMAT, "1", expectedRun1);
 
         String expected = UiConstant.PARTITION_LINE + System.lineSeparator()
