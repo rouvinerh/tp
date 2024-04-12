@@ -434,7 +434,7 @@ After adding a `Gym` object, the user is then prompted for input for the gym sta
 
 2. `output.printGymStationPrompt()` is used to print the prompt for the user, and user input is retrieved.
 
-3. User input is split using `Parser.splitGymStationInput` which as the name suggests, splits the parameters from the user, returning a `String[]` variable.
+3. User input is split using `Parser.splitGymStationInput()` which as the name suggests, splits the parameters from the user, returning a `String[]` variable.
 
 4. After splitting the input, the parameters are passed to  to `newGym.addStation()`. 
 

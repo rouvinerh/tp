@@ -57,8 +57,7 @@ public class Workout {
      *
      * @param workout The workout object to be added.
      */
-    protected void addIntoWorkoutList(Workout workout) {
-        WorkoutLists workoutLists = new WorkoutLists();
+    private void addIntoWorkoutList(Workout workout) {
         if (workout instanceof Run) {
             workoutLists.addRun((Run) workout);
         } else if (workout instanceof Gym) {
