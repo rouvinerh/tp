@@ -497,7 +497,7 @@ The user's input is processed to add a Period as follows:
 3. `Validation.validatePeriodInput()` is called to validate each parameter. Once valid, correct parameters are used to construct a new `Period` object.
 
 4. If end date is absent, the `Period` constructor adds the newly created object into `HealthList.PERIODS`. Else, `getPeriod()` is called to retrieve the latest period input and update end date using `updateEndDate()` method.
-   - If the `HealthList.PERIODS` is not empty, `setCycleLength()` will also be called to calculate the cycle length.
+   - If the size of `HealthList.PERIODS` is greater than `1`, `HealthList.PERIODS` will be iterated through to set cycle length using `setCycleLength()` method.
 
 5. The `Period` object is passed to `Output.printAddPeriod()` and a message acknowledging the successful adding is printed to the screen.
 
