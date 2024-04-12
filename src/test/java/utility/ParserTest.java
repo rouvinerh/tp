@@ -406,33 +406,33 @@ class ParserTest {
 
     /**
      * Tests the behaviour of parseGymFileInput when invalid input strings are given.
-     * Expects FileReadError exception to be thrown.
+     * Expects InvalidInput exception to be thrown.
      */
     @Test
-    void parseGymFileInput_incorrectInput_returnsGymObject() {
+    void parseGymFileInput_incorrectInput_throwsInvalidInputException() {
         // not enough parameters
         String input1 = "gym:2:11-11-1997:bench press:4:10:10,20,30,40:squats:2:5";
-        assertThrows(CustomExceptions.FileReadError.class, () -> parser.parseGymFileInput(input1));
+        assertThrows(CustomExceptions.InvalidInput.class, () -> parser.parseGymFileInput(input1));
 
         // blank parameters
         String input2 = "gym:2:11-11-1997:bench press:4:10:10,20,30,40:squats:2:5:";
-        assertThrows(CustomExceptions.FileReadError.class, () -> parser.parseGymFileInput(input2));
+        assertThrows(CustomExceptions.InvalidInput.class, () -> parser.parseGymFileInput(input2));
 
         // station name too long
         String input3 = "gym:2:11-11-1997:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA:4:10:10,20,30,40:squats:2:5:10,20";
-        assertThrows(CustomExceptions.FileReadError.class, () -> parser.parseGymFileInput(input3));
+        assertThrows(CustomExceptions.InvalidInput.class, () -> parser.parseGymFileInput(input3));
 
         // station name does not follow regex
         String input4 = "gym:2:11-11-1997:aa;:4:10:10,20,30,40:squats:2:5:10,20";
-        assertThrows(CustomExceptions.FileReadError.class, () -> parser.parseGymFileInput(input4));
+        assertThrows(CustomExceptions.InvalidInput.class, () -> parser.parseGymFileInput(input4));
 
         // non-numerical sets
         String input5 = "gym:2:11-11-1997:bench press:a:10:10,20,30,40:squats:2:5:10,20";
-        assertThrows(CustomExceptions.FileReadError.class, () -> parser.parseGymFileInput(input5));
+        assertThrows(CustomExceptions.InvalidInput.class, () -> parser.parseGymFileInput(input5));
 
         // weights size more than number of sets
         String input6 = "gym:2:11-11-1997:bench press:a:10:10,20,30,40:squats:2:5:10";
-        assertThrows(CustomExceptions.FileReadError.class, () -> parser.parseGymFileInput(input6));
+        assertThrows(CustomExceptions.InvalidInput.class, () -> parser.parseGymFileInput(input6));
     }
 
 }

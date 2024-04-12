@@ -21,6 +21,7 @@ public class AppointmentTest {
 
     @BeforeEach
     void setUpStreams() {
+        HealthList.clearHealthLists();
         System.setOut(new PrintStream(outContent));
     }
 
