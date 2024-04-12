@@ -434,15 +434,17 @@ After adding a `Gym` object, the user is then prompted for input for the gym sta
 
 2. `output.printGymStationPrompt()` is used to print the prompt for the user, and user input is retrieved.
 
-3. User input is passed to `validation.splitAndValidateGymStationInput()`, which as the name suggests, splits and validates the parameters from the user, returning a `String[]` variable.
+3. User input is split using `Parser.splitGymStationInput` which as the name suggests, splits the parameters from the user, returning a `String[]` variable.
 
-4. After splitting the input, the weights parameter is validated via `validation.validateWeightsArray()`, returning a `ArrayList<Double>` variable containing the valid weights.
+4. After splitting the input, the parameters are passed to  to `newGym.addStation()`. 
 
-5. After all parameters are validated, it is passed to `newGym.addStation()` to add a `GymStation` object to the existing `Gym` object. The `GymStation` object is appended to an `ArrayList<GymStation>` variable.
+5. `newGym.addStation()` will then create a `GymStation` object and validate the provided values. 
 
-6. Steps 2 to 5 repeat until all stations have been added.
+6. If the values are valid, the `GymStation` object is appended to an `ArrayList<GymStation>` stored in the `newGym` object. 
 
-7. The final `Gym` object is passed to `output.printAddGym()` and a message acknowledging the successful adding is printed to the screen.
+7. Steps 2 to 6 repeat until all stations have been added.
+
+8. The final `Gym` object is passed to `output.printAddGym()` and a message acknowledging the successful adding is printed to the screen.
 
 This is the sequence diagram for adding a `GymStation` object:
 
