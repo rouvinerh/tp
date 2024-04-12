@@ -10,7 +10,7 @@ import workouts.Gym;
 import workouts.GymStation;
 import workouts.Run;
 import workouts.Workout;
-import workouts.WorkoutList;
+import workouts.WorkoutLists;
 import health.HealthList;
 import health.Bmi;
 import health.Period;
@@ -196,7 +196,7 @@ public class Output {
         System.out.println(WorkoutConstant.HISTORY_WORKOUTS_HEADER);
         System.out.println(WorkoutConstant.HISTORY_WORKOUTS_HEADER_FORMAT);
 
-        ArrayList<? extends Workout> workoutList = WorkoutList.getWorkouts(WorkoutConstant.ALL);
+        ArrayList<? extends Workout> workoutList = WorkoutLists.getWorkouts(WorkoutConstant.ALL);
         for (int i = 0; i < workoutList.size(); i++) {
             Workout workout = workoutList.get(i);
             if (workout instanceof Run) {
@@ -231,7 +231,7 @@ public class Output {
     protected void printRunHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
         printLine();
         System.out.println("Your run history:");
-        ArrayList<? extends Workout> workoutList = WorkoutList.getWorkouts(WorkoutConstant.RUN);
+        ArrayList<? extends Workout> workoutList = WorkoutLists.getWorkouts(WorkoutConstant.RUN);
         String runHeader = String.format(WorkoutConstant.RUN_HEADER_INDEX_FORMAT);
         System.out.println(runHeader);
 
@@ -265,7 +265,7 @@ public class Output {
     protected void printGymHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
         printLine();
         System.out.println("Your gym history:");
-        ArrayList<? extends Workout> workoutList = WorkoutList.getWorkouts(WorkoutConstant.GYM);
+        ArrayList<? extends Workout> workoutList = WorkoutLists.getWorkouts(WorkoutConstant.GYM);
         for (int i = 0; i < workoutList.size(); i++) {
             int index = i + 1;
             Gym currentWorkout = (Gym) workoutList.get(i);
@@ -342,8 +342,8 @@ public class Output {
 
         try {
             printLine();
-            Workout latestRun = WorkoutList.getLatestRun();
-            String latestRunString = getFormattedRunWithIndex(WorkoutList.getRunSize(), latestRun);
+            Workout latestRun = WorkoutLists.getLatestRun();
+            String latestRunString = getFormattedRunWithIndex(WorkoutLists.getRunSize(), latestRun);
             System.out.println("Your latest run:");
             System.out.println(WorkoutConstant.RUN_HEADER_INDEX_FORMAT);
             System.out.println(latestRunString);
@@ -361,8 +361,8 @@ public class Output {
 
         try {
             printLine();
-            Gym latestGym = WorkoutList.getLatestGym();
-            int index = WorkoutList.getGymSize();
+            Gym latestGym = WorkoutLists.getLatestGym();
+            int index = WorkoutLists.getGymSize();
             System.out.println("Your latest gym:");
             System.out.println("Gym Session " + index + latestGym);
             printGymStats(latestGym);

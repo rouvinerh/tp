@@ -14,7 +14,7 @@ import utility.Filters.HealthFilters;
 import utility.Parser;
 import utility.Filters.WorkoutFilters;
 import utility.Validation;
-import workouts.WorkoutList;
+import workouts.WorkoutLists;
 
 import java.util.Scanner;
 import storage.LogFile;
@@ -178,11 +178,11 @@ public class Handler {
                 break;
 
             case GYM:
-                WorkoutList.deleteGym(index);
+                WorkoutLists.deleteGym(index);
                 break;
 
             case RUN:
-                WorkoutList.deleteRun(index);
+                WorkoutLists.deleteRun(index);
                 break;
 
             case APPOINTMENT:
@@ -316,7 +316,7 @@ public class Handler {
 
 
             dataFile.saveDataFile(DataFile.userName, HealthList.getBmis(), HealthList.getAppointments(),
-                    HealthList.getPeriods(), WorkoutList.getWorkouts());
+                    HealthList.getPeriods(), WorkoutLists.getWorkouts());
             LogFile.writeLog("File saved", false);
         } catch (CustomExceptions.FileWriteError e) {
             LogFile.writeLog("File write error", true);

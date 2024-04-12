@@ -21,7 +21,7 @@ class GymTest {
 
     @AfterEach
     void cleanup() {
-        WorkoutList.clearWorkoutsRunGym();
+        WorkoutLists.clearWorkoutsRunGym();
     }
 
     /**
