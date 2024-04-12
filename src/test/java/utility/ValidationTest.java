@@ -1,5 +1,7 @@
 package utility;
 
+import health.Bmi;
+import health.Period;
 import health.HealthList;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +12,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -661,4 +664,111 @@ public class ValidationTest {
                 validation.validateWeightsArray(input4));
 
     }
+
+    /**
+     * Tests the behaviour of a valid start date being passed to validateDateAfterLatestPeriod.
+     * Expects no exception to be thrown.
+     */
+    @Test
+    void validateDateAfterLatestPeriodInput_validInput_noExceptionThrown() {
+        LocalDate latestPeriodEndDate1 = null;
+        String input1 =  "10-04-2024";
+        assertDoesNotThrow(() ->
+                validation.validateDateAfterLatestPeriodInput(input1, latestPeriodEndDate1));
+
+        LocalDate latestPeriodEndDate2 = LocalDate.of(2024, 3, 9);
+        String input2 = "11-04-2024";
+        assertDoesNotThrow(() ->
+                validation.validateDateAfterLatestPeriodInput(input2, latestPeriodEndDate2));
+    }
+
+    /**
+     * Tests the behaviour of invalid start dates being passed to validateDateAfterLatestPeriod.
+     * Expects InvalidInput exception to be thrown.
+     */
+    @Test
+    void validateDateAfterLatestPeriodInput_invalidDateInput_expectsInvalidExceptionThrown() {
+        LocalDate latestPeriodEndDate = LocalDate.of(2024, 3, 9);
+
+        //date is before latestPeriodEndDate
+        String input1 = "09-02-2024";
+        assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateDateAfterLatestPeriodInput(input1, latestPeriodEndDate));
+
+        //date same as latestPeriodEndDate
+        String input2 = "09-03-2024";
+        assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateDateAfterLatestPeriodInput(input2, latestPeriodEndDate));
+    }
+
+    /**
+     * Tests the behaviour of start dates being passed to validateStartDatesTally.
+     * Expects no exception to be thrown.
+     */
+    @Test
+    void validateStartDatesTally_validInput_noExceptionThrown() {
+        Period period = new Period("01-01-2024");
+
+        LocalDate latestPeriodEndDate1 = null;
+        String[] input1 = {"01-01-2024", "05-01-2024"};
+        assertDoesNotThrow(() ->
+                validation.validateStartDatesTally(latestPeriodEndDate1, input1));
+
+        LocalDate latestPeriodEndDate2 = LocalDate.of(2024,01,01);
+        String[] input2 = {"01-01-2024", "05-02-2024"};
+        assertDoesNotThrow(() ->
+                validation.validateStartDatesTally(latestPeriodEndDate2, input2));
+    }
+
+    /**
+     * Tests the behaviour of invalid start dates being passed to validateStartDatesTally.
+     * Expects InvalidInput exception to be thrown.
+     */
+    @Test
+    void validateStartDatesTally_invalidInput_expectsInvalidExceptionThrown() {
+        Period period = new Period("01-01-2024");
+
+        //start dates do not tally
+        LocalDate latestPeriodEndDate1 = null;
+        String[] input1 = {"01-01-2023", "05-01-2024"};
+        assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateStartDatesTally(latestPeriodEndDate1, input1));
+
+        //end date is missing from user input
+        LocalDate latestPeriodEndDate2 = null;
+        String[] input2 = {"01-01-2024", null};
+        assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateStartDatesTally(latestPeriodEndDate2, input2));
+    }
+
+    /**
+     * Tests the behaviour of a date that is not found the list being passed to validateDateNotPresent.
+     * Expects no exception to be thrown.
+     */
+    @Test
+    void validateDateNotPresent_validInput_noExceptionThrown() {
+        Bmi bmi1 = new Bmi("1.75", "70.00", "02-02-2024");
+        Bmi bmi2 = new Bmi("1.75", "71.00", "02-03-2024");
+
+        //date not found in list
+        String input1 = "03-03-2024";
+        assertDoesNotThrow(() ->
+                validation.validateDateNotPresent(input1));
+    }
+
+    /**
+     * Tests the behaviour of a date that is found the list being passed to validateDateNotPresent.
+     * Expects InvalidException to be thrown.
+     */
+    @Test
+    void validateDateNotPresent_invalidInput_expectsInvalidExceptionThrown() {
+        Bmi bmi1 = new Bmi("1.75", "70.00", "02-02-2024");
+        Bmi bmi2 = new Bmi("1.75", "71.00", "02-03-2024");
+
+        //date found in list
+        String input1 = "02-02-2024";
+        assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateDateNotPresent(input1));
+    }
+
 }
