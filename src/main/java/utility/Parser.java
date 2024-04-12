@@ -567,7 +567,12 @@ public class Parser {
      * @param gym              The Gym object.
      */
     public void parseGymStationInput(int numberOfStations, Gym gym) {
+<<<<<<< HEAD
         for(int i = 0; i < numberOfStations; i++) {
+=======
+        int i = 0;
+        while (i < numberOfStations) {
+>>>>>>> d164252a67720b3ab0ae3aaf000c1f8037ee8398
             try {
                 output.printGymStationPrompt(i + 1);
                 String userInput = this.in.nextLine();
