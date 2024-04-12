@@ -9,7 +9,10 @@ import constants.WorkoutConstant;
 import java.util.ArrayList;
 
 /**
- * Represents the WorkoutList object.
+ * WorkoutLists class contains a static list of workouts, runs and gyms.
+ * You cannot add a new object to the list directly
+ * It will automatically be added when you create a new Run/Gym object.
+ * To retrieve the list of workouts/gym/run, you can use the static 'get' methods provided.
  */
 public class WorkoutLists {
     //@@author JustinSoh
@@ -49,48 +52,18 @@ public class WorkoutLists {
         addWorkout(gym);
     }
 
-    public static ArrayList<Workout> getWorkouts(){
+    public static ArrayList<Workout> getWorkouts() {
         return WORKOUTS;
     }
 
-    /**
-     * Returns a list of workouts based on the filter.
-     *
-     * @param filter can be "all", "run" or "gym".
-     *               "all" returns all workouts.
-     *               "run" returns only runs.
-     *               "gym" returns only gym workouts.
-     * @return ArrayList of workouts.
-     */
-    public static ArrayList<? extends Workout> getWorkouts(String filter)
-            throws CustomExceptions.OutOfBounds,
-            CustomExceptions.InvalidInput {
-
-        filter = filter.toLowerCase();
-
-        if(!filter.equals(WorkoutConstant.ALL) && !filter.equals(WorkoutConstant.RUN)
-                && !filter.equals(WorkoutConstant.GYM)) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INSUFFICIENT_HISTORY_FILTER_ERROR);
-        }
-        if(filter.equals(WorkoutConstant.RUN) && RUNS.isEmpty()){
-            throw new CustomExceptions.OutOfBounds(ErrorConstant.RUN_EMPTY_ERROR);
-        }
-        if(filter.equals(WorkoutConstant.ALL) && WORKOUTS.isEmpty()){
-            throw new CustomExceptions.OutOfBounds(ErrorConstant.WORKOUTS_EMPTY_ERROR);
-        }
-        if(filter.equals(WorkoutConstant.GYM) && GYMS.isEmpty()){
-            throw new CustomExceptions.OutOfBounds(ErrorConstant.GYM_EMPTY_ERROR);
-        }
-
-        if(filter.equals(WorkoutConstant.RUN)){
-            return RUNS;
-        } else if (filter.equals(WorkoutConstant.GYM)) {
-            return GYMS;
-        } else {
-            return WORKOUTS;
-        }
-
+    public static ArrayList<Run> getRuns(){
+        return RUNS;
     }
+
+    public static ArrayList<Gym> getGyms() {
+        return GYMS;
+    }
+
 
     /**
      * Returns latest run.
@@ -111,6 +84,47 @@ public class WorkoutLists {
         }
         return GYMS.get(GYMS.size() - 1);
     }
+
+//    /**
+//     * Returns a list of workouts based on the filter.
+//     *
+//     * @param filter can be "all", "run" or "gym".
+//     *               "all" returns all workouts.
+//     *               "run" returns only runs.
+//     *               "gym" returns only gym workouts.
+//     * @return ArrayList of workouts.
+//     */
+////    public static ArrayList<? extends Workout> getWorkouts(String filter)
+////            throws CustomExceptions.OutOfBounds,
+////            CustomExceptions.InvalidInput {
+////
+////        filter = filter.toLowerCase();
+////
+////        if(!filter.equals(WorkoutConstant.ALL) && !filter.equals(WorkoutConstant.RUN)
+////                && !filter.equals(WorkoutConstant.GYM)) {
+////            throw new CustomExceptions.InvalidInput(ErrorConstant.INSUFFICIENT_HISTORY_FILTER_ERROR);
+////        }
+////        if(filter.equals(WorkoutConstant.RUN) && RUNS.isEmpty()){
+////            throw new CustomExceptions.OutOfBounds(ErrorConstant.RUN_EMPTY_ERROR);
+////        }
+////        if(filter.equals(WorkoutConstant.ALL) && WORKOUTS.isEmpty()){
+////            throw new CustomExceptions.OutOfBounds(ErrorConstant.WORKOUTS_EMPTY_ERROR);
+////        }
+////        if(filter.equals(WorkoutConstant.GYM) && GYMS.isEmpty()){
+////            throw new CustomExceptions.OutOfBounds(ErrorConstant.GYM_EMPTY_ERROR);
+////        }
+////
+////        if(filter.equals(WorkoutConstant.RUN)){
+////            return getWorkouts();
+////        } else if (filter.equals(WorkoutConstant.GYM)) {
+////            return getGym
+////        } else {
+////            return WORKOUTS;
+////        }
+////
+////    }
+
+
 
     /**
      * Returns the number of runs in the list.
