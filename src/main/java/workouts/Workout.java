@@ -11,8 +11,6 @@ import utility.Parser;
 public class Workout {
     //@@author JustinSoh
     private LocalDate date = null;
-    private final Parser parser;
-    private final WorkoutLists workoutLists;
 
 
     /**
@@ -21,8 +19,7 @@ public class Workout {
      * @param stringDate String representing the date of the workout.
      */
     public Workout(String stringDate) {
-        parser = new Parser();
-        workoutLists = new WorkoutLists();
+        Parser parser = new Parser();
         this.date = parser.parseDate(stringDate);
         addIntoWorkoutList(this);
     }
@@ -31,8 +28,6 @@ public class Workout {
      * Constructor that builds a new Workout object.
      */
     public Workout() {
-        parser = new Parser();
-        workoutLists = new WorkoutLists();
         addIntoWorkoutList(this);
     }
 
@@ -55,6 +50,7 @@ public class Workout {
     }
 
     public String getDateForFile(){
+        Parser parser = new Parser();
         return parser.parseFormattedDate(this.date);
     }
 
@@ -64,6 +60,7 @@ public class Workout {
      * @param workout The workout object to be added.
      */
     private void addIntoWorkoutList(Workout workout) {
+        WorkoutLists workoutLists = new WorkoutLists();
         if (workout instanceof Run) {
             workoutLists.addRun((Run) workout);
         } else if (workout instanceof Gym) {
