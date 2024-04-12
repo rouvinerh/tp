@@ -65,13 +65,19 @@ public class HealthList extends ArrayList<Health> {
      */
     protected void addPeriod(Period period) {
         assert period != null : ErrorConstant.NULL_PERIOD_ERROR;
-        if (!PERIODS.isEmpty()) {
-            Period previousPeriod = PERIODS.get(0);
-            previousPeriod.setCycleLength(period.getStartDate());
-        }
+
         PERIODS.add(period);
-        // period sorted from latest to earliest start date
+
         PERIODS.sort(Comparator.comparing(Period::getStartDate).reversed());
+
+        int size = PERIODS.size();
+        if (size > 1) {
+            for (int i = size - 1 ; i > 0; i--) {
+                Period newerPeriod = PERIODS.get(i -  1);
+                Period olderPeriod = PERIODS.get(i);
+                olderPeriod.setCycleLength(newerPeriod.getStartDate());
+            }
+        }
     }
 
     /**
