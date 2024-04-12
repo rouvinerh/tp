@@ -57,7 +57,7 @@ public class Handler {
      */
     public void processInput() {
         while (in.hasNextLine()) {
-            String userInput = in.nextLine();
+            String userInput = in.nextLine().trim();
             String instruction = userInput.toUpperCase().split(UiConstant.SPLIT_BY_WHITESPACE)[0];
             LogFile.writeLog("User Input: " + userInput, false);
             assert userInput != null : "Object cannot be null";
@@ -258,7 +258,7 @@ public class Handler {
     public void userInduction() {
         String name;
         while (true) {
-            name = this.in.nextLine();
+            name = this.in.nextLine().trim();
             if (validation.validateIfUsernameIsValid(name)) {
                 System.err.println(ErrorConstant.INVALID_USERNAME_ERROR);
             } else {

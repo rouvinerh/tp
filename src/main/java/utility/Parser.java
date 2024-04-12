@@ -4,6 +4,7 @@ import constants.ErrorConstant;
 import constants.HealthConstant;
 import constants.UiConstant;
 import constants.WorkoutConstant;
+import workouts.WorkoutList;
 import health.Appointment;
 import health.Bmi;
 import health.HealthList;
@@ -537,6 +538,7 @@ public class Parser {
 
     /**
      * Retrieves the gym station details and adds a GymStation object to Gym.
+     * Exits to the main menu if the user inputs 'back'.
      *
      * @param numberOfStations The number of stations in one gym session.
      * @param gym              The Gym object.
@@ -545,10 +547,18 @@ public class Parser {
         for (int i = 0; i < numberOfStations; i++) {
             try {
                 output.printGymStationPrompt(i + 1);
-                String userInput = this.in.nextLine();
+                String userInput = this.in.nextLine().trim();
+
+                if (userInput.equals(WorkoutConstant.BACK)) {
+                    output.printGymStationExit();
+                    WorkoutList.deleteGym(WorkoutList.getGymSize() - 1);
+                    return;
+                }
+
                 if (countForwardSlash(userInput) > WorkoutConstant.NUM_OF_SLASHES_FOR_GYM_STATION) {
                     throw new CustomExceptions.InvalidInput(ErrorConstant.TOO_MANY_SLASHES_ERROR);
                 }
+
                 String[] validGymStationInputs = validation.splitAndValidateGymStationInput(userInput);
 
                 int numberOfSets = Integer.parseInt(validGymStationInputs[WorkoutConstant.GYM_STATION_SET_INDEX]);
@@ -562,11 +572,12 @@ public class Parser {
 
                 LogFile.writeLog("Added Gym Station: " +
                         validGymStationInputs[WorkoutConstant.GYM_STATION_NAME_INDEX], false);
-            } catch (CustomExceptions.InsufficientInput | CustomExceptions.InvalidInput e) {
+            } catch (CustomExceptions.InsufficientInput | CustomExceptions.InvalidInput |
+                     CustomExceptions.OutOfBounds e) {
+                i -= 1;
                 output.printException(e.getMessage());
             }
         }
-
         output.printAddGym(gym);
         LogFile.writeLog("Added Gym", false);
     }
@@ -637,7 +648,6 @@ public class Parser {
      * @param gymDetails the array of strings containing the gym details
      * @param baseCounter the base counter to start adding the station
      * @return the new base counter after adding the station
-     * @throws CustomExceptions.FileReadError if there is an error in the file input
      * @throws CustomExceptions.InvalidInput if the input is invalid
      */
     private int addStationFromFile(Gym gym, String[] gymDetails, int baseCounter)

@@ -331,6 +331,23 @@ class HandlerTest {
     }
 
     /**
+     * Tests the behaviour of processInput when a gym command is entered, one station is added, and then the user
+     * types 'back' to exit.
+     */
+    @Test
+    void processInput_workoutCommandWithGymStationExit_expectsNoGymAddedAndDeleteMessage() {
+        String input = "workout /e:gym /n:2 /date:25-03-2023"
+                + System.lineSeparator()
+                + "bench press /s:2 /r:4 /w:10,20"
+                + System.lineSeparator()
+                + "back"
+                + System.lineSeparator();
+        Handler myHandler = new Handler(input);
+        myHandler.processInput();
+        assertTrue(outContent.toString().contains("Removed Gym entry with 1 station."));
+    }
+
+    /**
      * Tests the behaviour of userInduction when valid username is entered.
      * Expects welcome greeting to be printed.
      */

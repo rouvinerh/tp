@@ -79,6 +79,7 @@ public class Output {
         System.out.println("Please enter the details of station "
                 + stationNumber
                 + ". (Format: " + WorkoutConstant.STATION_GYM_FORMAT + ")");
+        System.out.println("Enter 'back' to go back to the main menu!");
         printLine();
     }
 
@@ -275,6 +276,16 @@ public class Output {
                 printLine();
             }
         }
+        printLine();
+    }
+
+    /**
+     * Prints the message when user exits from entering gym station input.
+     */
+    public void printGymStationExit() {
+        printLine();
+        System.out.println("No longer entering gym input.");
+        System.out.println("Exiting to main menu!");
         printLine();
     }
 

@@ -52,6 +52,7 @@ public class WorkoutConstant {
 
 
     // KEYWORDS
+    public static final String BACK = "back";
     public static final String RUN = "run";
     public static final String GYM = "gym";
     public static final String ALL = "workouts";

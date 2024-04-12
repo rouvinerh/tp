@@ -141,9 +141,14 @@ public class WorkoutList  {
         }
         Gym deletedGym = GYMS.get(index);
         Output.printLine();
+        String stationString = "stations.";
+        if (deletedGym.stations.size() == 1) {
+            stationString = "station.";
+        }
         System.out.println("Removed Gym entry with " +
                 deletedGym.stations.size() +
-                " stations.");
+                " " +
+                stationString);
         Output.printLine();
         WORKOUTS.remove(deletedGym);
         GYMS.remove(index);
