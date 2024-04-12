@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
-class WorkoutListTest {
+class WorkoutListsTest {
     @BeforeEach
     void setUp() {
 
@@ -21,7 +21,7 @@ class WorkoutListTest {
 
     @AfterEach
     void cleanup() {
-        WorkoutList.clearWorkoutsRunGym();
+        WorkoutLists.clearWorkoutsRunGym();
     }
 
 
@@ -34,11 +34,11 @@ class WorkoutListTest {
         try {
             Run inputRun = new Run("40:10", "10.3", "15-03-2024");
 
-            WorkoutList workoutListInstance = new WorkoutList();
-            workoutListInstance.addRun(inputRun);
+            WorkoutLists workoutListsInstance = new WorkoutLists();
+            workoutListsInstance.addRun(inputRun);
 
-            ArrayList<? extends Workout> runList = WorkoutList.getWorkouts(WorkoutConstant.RUN);
-            ArrayList<? extends Workout> workoutList = WorkoutList.getWorkouts(WorkoutConstant.ALL);
+            ArrayList<? extends Workout> runList = WorkoutLists.getWorkouts(WorkoutConstant.RUN);
+            ArrayList<? extends Workout> workoutList = WorkoutLists.getWorkouts(WorkoutConstant.ALL);
 
             Workout expectedRun = runList.get(runList.size() - 1);
             Workout expectedWorkout = workoutList.get(runList.size() - 1);
@@ -68,7 +68,7 @@ class WorkoutListTest {
             inputList.add(new Run("30:10", "20.3", "30-03-2023"));
 
 
-            ArrayList<? extends Workout> runList = WorkoutList.getWorkouts(WorkoutConstant.RUN);
+            ArrayList<? extends Workout> runList = WorkoutLists.getWorkouts(WorkoutConstant.RUN);
             for(int i = 0; i < inputList.size(); i++) {
                 Run expected = inputList.get(i);
                 Run actual = (Run) runList.get(i);
@@ -91,7 +91,7 @@ class WorkoutListTest {
         inputList.add(new Run("30:10", "20.3", "30-03-2023"));
 
         assertThrows(CustomExceptions.InvalidInput.class, () -> {
-            ArrayList<? extends Workout> runList = WorkoutList.getWorkouts("invalidFilter");
+            ArrayList<? extends Workout> runList = WorkoutLists.getWorkouts("invalidFilter");
         });
     }
 
@@ -101,8 +101,8 @@ class WorkoutListTest {
      */
     @Test
     void getWorkouts_emptyList_throwOutOfBoundsForRun() {
-        assertThrows(CustomExceptions.OutOfBounds.class, () -> WorkoutList.getWorkouts(WorkoutConstant.GYM));
-        assertThrows(CustomExceptions.OutOfBounds.class, () -> WorkoutList.getWorkouts(WorkoutConstant.RUN));
+        assertThrows(CustomExceptions.OutOfBounds.class, () -> WorkoutLists.getWorkouts(WorkoutConstant.GYM));
+        assertThrows(CustomExceptions.OutOfBounds.class, () -> WorkoutLists.getWorkouts(WorkoutConstant.RUN));
     }
 
     /**
@@ -111,7 +111,7 @@ class WorkoutListTest {
      */
     @Test
     void getWorkouts_emptyList_throwOutOfBoundsForAll() {
-        assertThrows(CustomExceptions.OutOfBounds.class, () -> WorkoutList.getWorkouts(WorkoutConstant.ALL));
+        assertThrows(CustomExceptions.OutOfBounds.class, () -> WorkoutLists.getWorkouts(WorkoutConstant.ALL));
     }
 
     /**
@@ -124,7 +124,7 @@ class WorkoutListTest {
             new Run("20:10", "10.3", "15-03-2024");
             Run secondRun = new Run("20:10", "10.3", "15-03-2024");
 
-            Run actual = WorkoutList.getLatestRun();
+            Run actual = WorkoutLists.getLatestRun();
             assertEquals(secondRun, actual);
         } catch (CustomExceptions.OutOfBounds | CustomExceptions.InvalidInput e) {
             fail("Should not throw an exception");
@@ -138,7 +138,7 @@ class WorkoutListTest {
     @Test
     void getLatestRun_emptyList_throwOutOfBound() {
         // Call the method or code that should throw the exception
-        assertThrows(CustomExceptions.OutOfBounds.class, WorkoutList::getLatestRun);
+        assertThrows(CustomExceptions.OutOfBounds.class, WorkoutLists::getLatestRun);
     }
 
 
@@ -154,8 +154,8 @@ class WorkoutListTest {
         new Run("20:10", "10.3", "15-03-2024");
         new Run("20:11", "10.3", "15-03-2023");
         int index = 1;
-        WorkoutList.deleteRun(index);
-        assertEquals(1, WorkoutList.getRunSize());
+        WorkoutLists.deleteRun(index);
+        assertEquals(1, WorkoutLists.getRunSize());
     }
 
     /**
@@ -165,7 +165,7 @@ class WorkoutListTest {
     @Test
     void deleteRun_emptyList_throwsAssertionError() {
         assertThrows (AssertionError.class, () ->
-                WorkoutList.deleteRun(0));
+                WorkoutLists.deleteRun(0));
     }
 
     /**
@@ -179,7 +179,7 @@ class WorkoutListTest {
         new Run("20:11", "10.3", "15-03-2023");
         int invalidIndex = 5;
         assertThrows (CustomExceptions.OutOfBounds.class, () ->
-                WorkoutList.deleteRun(invalidIndex));
+                WorkoutLists.deleteRun(invalidIndex));
     }
 
     /**
@@ -204,8 +204,8 @@ class WorkoutListTest {
         gym2.addStation("Bicep curls", 1, 10, array1);
 
         int index = 1;
-        WorkoutList.deleteGym(index);
-        assertEquals(1, WorkoutList.getGymSize());
+        WorkoutLists.deleteGym(index);
+        assertEquals(1, WorkoutLists.getGymSize());
     }
 
     /**
@@ -215,7 +215,7 @@ class WorkoutListTest {
     @Test
     void deleteGym_emptyList_throwsAssertionError() {
         assertThrows (AssertionError.class, () ->
-                WorkoutList.deleteGym(0));
+                WorkoutLists.deleteGym(0));
     }
 
     /**
@@ -233,6 +233,6 @@ class WorkoutListTest {
         gym1.addStation("Shoulder Press", 2, 10, array2);
         int invalidIndex = 5;
         assertThrows (CustomExceptions.OutOfBounds.class, () ->
-                WorkoutList.deleteGym(invalidIndex));
+                WorkoutLists.deleteGym(invalidIndex));
     }
 }

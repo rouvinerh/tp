@@ -17,7 +17,7 @@ import utility.CustomExceptions;
 import constants.WorkoutConstant;
 import workouts.Gym;
 import workouts.Run;
-import workouts.WorkoutList;
+import workouts.WorkoutLists;
 import health.Bmi;
 import health.Period;
 import health.HealthList;
@@ -51,7 +51,7 @@ class OutputTest {
 
     @AfterEach
     public void cleanup() {
-        WorkoutList.clearWorkoutsRunGym();
+        WorkoutLists.clearWorkoutsRunGym();
         HealthList.clearHealthLists();
         outContent.reset();
         errContent.reset();

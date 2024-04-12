@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import constants.ErrorConstant;
-import workouts.WorkoutList;
+import workouts.WorkoutLists;
 
 import java.io.ByteArrayOutputStream;
 import java.io.ByteArrayInputStream;
@@ -36,7 +36,7 @@ class HandlerTest {
         System.setOut(originalOut);
         System.setIn(originalIn);
         System.setErr(originalErr);
-        WorkoutList.clearWorkoutsRunGym();
+        WorkoutLists.clearWorkoutsRunGym();
         HealthList.clearHealthLists();
     }
 

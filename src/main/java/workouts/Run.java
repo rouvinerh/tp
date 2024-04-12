@@ -19,7 +19,7 @@ public class Run extends Workout {
     protected String pace;
     protected boolean isHourPresent;
     private final Parser parser = new Parser();
-    private final WorkoutList workoutList = new WorkoutList();
+    private final WorkoutLists workoutLists = new WorkoutLists();
 
 
     /**
@@ -33,7 +33,7 @@ public class Run extends Workout {
         times = splitRunTime(stringTime);
         distance = Double.parseDouble(stringDistance);
         pace = calculatePace();
-        workoutList.addRun(this);
+        workoutLists.addRun(this);
     }
 
     /**
@@ -49,7 +49,7 @@ public class Run extends Workout {
         distance = Double.parseDouble(stringDistance);
         date = parser.parseDate(stringDate);
         pace = calculatePace();
-        workoutList.addRun(this);
+        workoutLists.addRun(this);
     }
 
     /**

@@ -17,12 +17,12 @@ public class Gym extends Workout {
     protected LocalDate date = null;
     protected ArrayList<GymStation> stations = new ArrayList<>();
     private final Parser parser = new Parser();
-    private final WorkoutList workoutList = new WorkoutList();
+    private final WorkoutLists workoutLists = new WorkoutLists();
     /**
      * Constructor that adds a Gym object to WorkoutList.
      */
     public Gym() {
-        workoutList.addGym(this);
+        workoutLists.addGym(this);
     }
 
     /**
@@ -32,7 +32,7 @@ public class Gym extends Workout {
      */
     public Gym(String stringDate) {
         this.date = parser.parseDate(stringDate);
-        workoutList.addGym(this);
+        workoutLists.addGym(this);
     }
 
     /**
