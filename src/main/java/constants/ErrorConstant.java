@@ -304,8 +304,8 @@ public class ErrorConstant {
             + System.lineSeparator()
             + "Please enter a more realistic weight less than 640kg!";
 
-    public static final String INVALID_WEIGHT_MAX_ERROR = "The heaviest object ever lifted by a human (Paul Anderson) " +
-            "was 2840kg."
+    public static final String INVALID_WEIGHT_MAX_ERROR = "The heaviest object ever lifted by a human (Paul Anderson) "
+            + "was 2840kg."
             + System.lineSeparator()
             + "Please enter a more realistic gym weight less than 2850kg!";
     public static final String ZERO_DISTANCE_ERROR = "Distance run cannot be 0!";
