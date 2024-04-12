@@ -344,7 +344,7 @@ class HandlerTest {
                 + System.lineSeparator();
         Handler myHandler = new Handler(input);
         myHandler.processInput();
-        assertTrue(outContent.toString().contains("Removed Gym entry with 1 station."));
+        assertTrue(outContent.toString().contains("Removed Gym entry with 1 station(s)."));
     }
 
     /**

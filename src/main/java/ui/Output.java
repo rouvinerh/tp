@@ -606,6 +606,7 @@ public class Output {
         Output.printLine();
         String messageString = String.format(WorkoutConstant.GYM_DELETE_MESSAGE_FORMAT,
                 gym.getStations().size());
+
         System.out.println(messageString);
         Output.printLine();
     }

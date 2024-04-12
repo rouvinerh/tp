@@ -4,7 +4,6 @@ import constants.ErrorConstant;
 import constants.HealthConstant;
 import constants.UiConstant;
 import constants.WorkoutConstant;
-import workouts.WorkoutList;
 import health.Appointment;
 import health.Bmi;
 import health.HealthList;
@@ -14,6 +13,7 @@ import ui.Output;
 
 import workouts.Gym;
 import workouts.Run;
+import workouts.WorkoutLists;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -551,7 +551,7 @@ public class Parser {
 
                 if (userInput.equals(WorkoutConstant.BACK)) {
                     output.printGymStationExit();
-                    WorkoutList.deleteGym(WorkoutList.getGymSize() - 1);
+                    WorkoutLists.deleteGym(WorkoutLists.getGymSize() - 1);
                     return;
                 }
 

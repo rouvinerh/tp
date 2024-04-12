@@ -93,7 +93,7 @@ public class WorkoutConstant {
     public static final String GYM_STATION_FORMAT = "%s: ";
     public static final String GYM_SET_FORMAT = "%d reps at %.3f KG";
     public static final String GYM_SET_INDEX_FORMAT = "\t- Set %d. %s";
-    public static final String GYM_DELETE_MESSAGE_FORMAT = "Removed Gym entry with %d stations.";
+    public static final String GYM_DELETE_MESSAGE_FORMAT = "Removed Gym entry with %d station(s).";
 
     public static final String INDIVIDUAL_GYM_STATION_FORMAT = "%d sets";
     public static final String RUN_HEADER = "Type\tTime\t\tDistance\tPace\t\tDate";
