@@ -542,8 +542,6 @@ public class Parser {
             throw new CustomExceptions.InvalidInput(ErrorConstant.TOO_MANY_SLASHES_ERROR);
         }
 
-
-
         Parser parser = new Parser();
         String exerciseName = input.split(UiConstant.SPLIT_BY_SLASH)[WorkoutConstant.STATION_NAME_INDEX].trim();
         String sets = parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.SETS_FLAG).trim();
@@ -559,31 +557,39 @@ public class Parser {
         return validatedGymStationInputs;
     }
 
+
     /**
-     * Retrieves the gym station details and adds a GymStation object to Gym.
-     * Exits to the main menu if the user inputs 'back'.
-     *
+     * Parses the gym station input from the user and adds it to the Gym object.
+     * This method is used in the {@code parseGymInput} method.
+     * User can input 'back' to exit the gym station input.
+     * The gym object will be deleted and control returned to handler.
      * @param numberOfStations The number of stations in one gym session.
      * @param gym              The Gym object.
      */
     public void parseGymStationInput(int numberOfStations, Gym gym) {
-<<<<<<< HEAD
         for(int i = 0; i < numberOfStations; i++) {
-=======
-        int i = 0;
-        while (i < numberOfStations) {
->>>>>>> d164252a67720b3ab0ae3aaf000c1f8037ee8398
             try {
+                // Prompt user for gym station details
                 output.printGymStationPrompt(i + 1);
                 String userInput = this.in.nextLine();
+
+                // If user wants to exit the gym station input
+                if (userInput.equals(WorkoutConstant.BACK)) {
+                    output.printGymStationExit();
+                    WorkoutLists.deleteGym(WorkoutLists.getGymSize() - 1);
+                    return;
+                }
+
+                // Split the gym station input
                 String[] splitGymStationInputs = splitGymStationInput(userInput);
                 String exerciseName = splitGymStationInputs[WorkoutConstant.GYM_STATION_NAME_INDEX];
                 String numberOfSets = splitGymStationInputs[WorkoutConstant.GYM_STATION_SET_INDEX];
                 String numberOfReps = splitGymStationInputs[WorkoutConstant.GYM_STATION_REPS_INDEX];
                 String weights = splitGymStationInputs[WorkoutConstant.GYM_STATION_WEIGHTS_INDEX];
+
+                // Create a new GymStation object and add it to the Gym
                 gym.addStation(exerciseName, numberOfSets, numberOfReps, weights);
-                i++;
-            } catch (CustomExceptions.InsufficientInput | CustomExceptions.InvalidInput e) {
+            } catch (CustomExceptions.InsufficientInput | CustomExceptions.InvalidInput | CustomExceptions.OutOfBounds e) {
                 i -= 1;
                 output.printException(e.getMessage());
             }

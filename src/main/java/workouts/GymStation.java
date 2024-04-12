@@ -131,7 +131,7 @@ public class GymStation {
      * "[Exercise Name]:[Number of Sets]:[Repetitions]:[Weights1, Weight2,Weight3 ...]"
      * @return A formatted string representing a GymStation object with the format above.
      */
-    public String toFileString(){
+    protected String toFileString(){
         StringBuilder fileString = new StringBuilder();
         String stationName = getStationName();
         String numOfSets = String.valueOf(getNumberOfSets());
