@@ -257,6 +257,11 @@ public class Validation {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_NUMBER_OF_STATIONS_ERROR);
         }
 
+        int numberOfStations = Integer.parseInt(gymDetails[WorkoutConstant.GYM_NUMBER_OF_STATIONS_INDEX]);
+        if (numberOfStations > WorkoutConstant.MAX_GYM_STATION_NUMBER) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.MAX_STATIONS_ERROR);
+        }
+
         if (validateDateNotEmpty(gymDetails[WorkoutConstant.GYM_DATE_INDEX])) {
             validateDateInput(gymDetails[WorkoutConstant.GYM_DATE_INDEX]);
             validateDateNotAfterToday(gymDetails[WorkoutConstant.GYM_DATE_INDEX]);

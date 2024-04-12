@@ -176,13 +176,15 @@ Expected Output:
 
 ![Adding Gyms](img/output/adding_gym.png)
 
+> ⚠️ **Minimum and Maximum inputs:**
+> Minimum number of stations: 0, Maximum number of stations: 50
+> **Note that exceeding these bounds will trigger an error!**
+
 If you want to exit the gym station input prompt and go back to the main menu to use other commands, use `back` to do so. PulsePilot will delete the latest gym added and you can then use the other commands.
 
 Expected Output:
 
 ![Going Back](img/output/gym_station_back.png)
-
-
 
 > ⚠️ **Minimum and Maximum inputs:**
 > Minimum Weight: 0kg, Maximum Weight: 2850kg

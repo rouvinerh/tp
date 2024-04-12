@@ -535,6 +535,8 @@ public class ValidationTest {
         String[] input = {"", null};
         assertThrows(CustomExceptions.InsufficientInput.class, () ->
                 validation.validateGymInput(input));
+
+
     }
 
     /**
@@ -543,9 +545,20 @@ public class ValidationTest {
      */
     @Test
     void validateGymInput_invalidInput_expectsInvalidInputException() {
-        String[] input = {"a", null};
+        // non integer number of sets
+        String[] input1 = {"a", null};
         assertThrows(CustomExceptions.InvalidInput.class, () ->
-                validation.validateGymInput(input));
+                validation.validateGymInput(input1));
+
+        // number of sets exceeds maximum allowed
+        String[] input2 = {"51", null};
+        assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateGymInput(input2));
+
+        // number of sets below minimum allowed
+        String[] input3 = {"-1", null};
+        assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateGymInput(input3));
     }
 
     /**
