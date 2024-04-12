@@ -126,12 +126,14 @@ public class DataFile {
                 if (expectedHash.equals(actualHash)) {
                     status = verifyIntegrity(dataFile);
                 } else {
-                    processFail(ErrorConstant.DATA_INTEGRITY_ERROR, hashFile, dataFile);
+                    processFail(ErrorConstant.DATA_INTEGRITY_ERROR);
+                    System.exit(1);
                 }
             } else if (!dataFile.exists() && !hashFile.exists()) {
                 status = verifyIntegrity(dataFile);
             } else {
-                processFail(ErrorConstant.MISSING_INTEGRITY_ERROR, hashFile, dataFile);
+                processFail(ErrorConstant.MISSING_INTEGRITY_ERROR);
+                System.exit(1);
             }
         } catch (CustomExceptions.FileCreateError e) {
             System.err.println(ErrorConstant.CREATE_FILE_ERROR);
@@ -154,15 +156,16 @@ public class DataFile {
      * It logs the error, prints the exception, deletes the data file and hash file, and exits the application.
      *
      * @param errorString The error message to be logged and printed.
-     * @param hashFile The hash file to be deleted.
-     * @param dataFile The data file to be deleted.
      */
-    private void processFail(String errorString, File hashFile, File dataFile) {
+    protected void processFail(String errorString) {
+        File dataFile = UiConstant.saveFile;
+        File hashFile = new File(UiConstant.hashFilePath);
+
         LogFile.writeLog(errorString, true);
         output.printException(errorString);
+
         hashFile.delete();
         dataFile.delete();
-        System.exit(1);
     }
 
     /**
@@ -172,7 +175,7 @@ public class DataFile {
      * @return The hash value read from the file.
      * @throws IOException If an I/O error occurs.
      */
-    private String readHashFromFile(File hashFile) throws IOException {
+    protected String readHashFromFile(File hashFile) throws IOException {
         StringBuilder sb = new StringBuilder();
         Scanner scanner = new Scanner(hashFile);
         while (scanner.hasNextLine()) {
@@ -185,11 +188,10 @@ public class DataFile {
     /**
      * Writes the hash value to a hash file.
      *
-     * @param hashFile The hash file to write to.
      * @param hash     The hash value to write.
      * @throws IOException If an I/O error occurs.
      */
-    private void writeHashToFile(FileWriter hashFile, String hash) throws IOException {
+    private void writeHashToFile(String hash) throws IOException {
         FileOutputStream fos = new FileOutputStream(UiConstant.hashFilePath);
         fos.write(hash.getBytes());
         fos.close();
@@ -212,10 +214,9 @@ public class DataFile {
                 LogFile.writeLog("Name Loaded", false);
 
             } catch (Exception e) {
-                File dataFile = UiConstant.saveFile;
-                File hashFile = new File(UiConstant.hashFilePath);
                 LogFile.writeLog("Data file is missing name, exiting." + e, true);
-                processFail(ErrorConstant.CORRUPT_ERROR, hashFile, dataFile);
+                processFail(ErrorConstant.CORRUPT_ERROR);
+                System.exit(1);
             }
 
             while (readFile.hasNextLine()) {
@@ -254,10 +255,10 @@ public class DataFile {
                 lineNumberCount += 1;
             }
         } catch (Exception e) {
-            File dataFile = UiConstant.saveFile;
-            File hashFile = new File(UiConstant.hashFilePath);
-            LogFile.writeLog("Data file is missing name, exiting." + e, true);
-            processFail(ErrorConstant.CORRUPT_ERROR, hashFile, dataFile);
+            LogFile.writeLog("Data file is missing content at line " + lineNumberCount + ", exiting." + e,
+                    true);
+            processFail(ErrorConstant.CORRUPT_ERROR);
+            System.exit(1);
         }
     }
 
@@ -391,7 +392,7 @@ public class DataFile {
         try (FileWriter hashFile = new FileWriter(UiConstant.hashFilePath)) {
             LogFile.writeLog("Attempting to write hash", false);
             File dataFile = UiConstant.saveFile;
-            writeHashToFile(hashFile, generateFileHash(dataFile));
+            writeHashToFile(generateFileHash(dataFile));
 
             LogFile.writeLog("Write end", false);
 

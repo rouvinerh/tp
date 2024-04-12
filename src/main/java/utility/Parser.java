@@ -641,8 +641,7 @@ public class Parser {
      * @throws CustomExceptions.InvalidInput if the input is invalid
      */
     private int addStationFromFile(Gym gym, String[] gymDetails, int baseCounter)
-            throws CustomExceptions.FileReadError,
-            CustomExceptions.InvalidInput {
+            throws CustomExceptions.InvalidInput {
 
         String currentStationName;
         String numberOfSetsStr;
@@ -657,34 +656,34 @@ public class Parser {
             repsStr = gymDetails[baseCounter + WorkoutConstant.REPS_OFFSET];
             weightStrings = gymDetails[baseCounter + WorkoutConstant.WEIGHTS_OFFSET];
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_GYM_FORMAT_ERROR);
+            throw new CustomExceptions.InvalidInput(ErrorConstant.LOAD_GYM_FORMAT_ERROR);
         }
 
         if(currentStationName.isBlank() ||
                 numberOfSetsStr.isBlank() ||
                 repsStr.isBlank() ||
                 weightStrings.isBlank()){
-            throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_GYM_FORMAT_ERROR);
+            throw new CustomExceptions.InvalidInput(ErrorConstant.LOAD_GYM_FORMAT_ERROR);
         }
 
         if (currentStationName.length() > WorkoutConstant.MAX_GYM_STATION_NAME_LENGTH) {
-            throw new CustomExceptions.FileReadError(ErrorConstant.INVALID_GYM_STATION_NAME_ERROR);
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_GYM_STATION_NAME_ERROR);
         }
 
         if (!currentStationName.matches(UiConstant.VALID_GYM_STATION_NAME_REGEX)) {
-            throw new CustomExceptions.FileReadError(ErrorConstant.INVALID_GYM_STATION_NAME_ERROR);
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_GYM_STATION_NAME_ERROR);
         }
 
         try {
             numberOfSets = Integer.parseInt(numberOfSetsStr);
             reps = Integer.parseInt(repsStr);
         } catch (NumberFormatException e) {
-            throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_GYM_FORMAT_ERROR);
+            throw new CustomExceptions.InvalidInput(ErrorConstant.LOAD_GYM_FORMAT_ERROR);
         }
 
         ArrayList<Double> validatedWeights = validation.validateWeightsArray(weightStrings);
         if (validatedWeights.size() != numberOfSets) {
-            throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_NUMBER_OF_SETS_ERROR);
+            throw new CustomExceptions.InvalidInput(ErrorConstant.LOAD_NUMBER_OF_SETS_ERROR);
         }
 
         gym.addStation(currentStationName, numberOfSets, reps, validatedWeights);
