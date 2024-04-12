@@ -80,12 +80,14 @@ public class WorkoutConstant {
     // Formatted Strings/Messages
     public static final String RUN_DATA_FORMAT = "%-6s\t%-10s\t%-10s\t%-10s\t%-12s";
     public static final String RUN_DATA_INDEX_FORMAT = "%-6d\t%-6s";
-
     public static final String RUN_HEADER_INDEX_FORMAT = String.format("%-6s\t%-6s\t%-10s\t%-10s\t%-10s\t%-12s",
             "Index", "Type", "Time", "Distance", "Pace", "Date");
+    public static final String RUN_DELETE_MESSAGE_FORMAT = "Removed Run entry with %s km at %s.";
     public static final String GYM_STATION_FORMAT = "%s: ";
     public static final String GYM_SET_FORMAT = "%d reps at %.3f KG";
     public static final String GYM_SET_INDEX_FORMAT = "\t- Set %d. %s";
+    public static final String GYM_DELETE_MESSAGE_FORMAT = "Removed Gym entry with %d stations.";
+
     public static final String INDIVIDUAL_GYM_STATION_FORMAT = "%d sets";
     public static final String RUN_HEADER = "Type\tTime\t\tDistance\tPace\t\tDate";
     public static final String ADD_RUN = "Successfully added a new run session";

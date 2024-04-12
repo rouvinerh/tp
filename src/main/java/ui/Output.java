@@ -199,8 +199,7 @@ public class Output {
         ArrayList<? extends Workout> workoutList = WorkoutLists.getWorkouts();
         if (workoutList.isEmpty()) {
             printWorkoutEmptyMessage();
-        }
-        else {
+        } else {
             for (int i = 0; i < workoutList.size(); i++) {
                 Workout workout = workoutList.get(i);
                 if (workout instanceof Run) {
@@ -579,5 +578,24 @@ public class Output {
         System.out.println("PulsePilot successful touchdown");
         System.out.println("See you soon, Captain!");
         printLine();
+    }
+
+    // Print Delete Message
+
+    public static void printDeleteRunMessage(Run run){
+        printLine();
+        String messageString = String.format(WorkoutConstant.RUN_DELETE_MESSAGE_FORMAT,
+                run.getDistance(),
+                run.getPace());
+        System.out.println(messageString);
+        printLine();
+    }
+
+    public static void printDeleteGymMessage(Gym gym){
+        Output.printLine();
+        String messageString = String.format(WorkoutConstant.GYM_DELETE_MESSAGE_FORMAT,
+                gym.getStations().size());
+        System.out.println(messageString);
+        Output.printLine();
     }
 }

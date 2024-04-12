@@ -4,7 +4,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import utility.CustomExceptions;
-import constants.WorkoutConstant;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -78,26 +77,6 @@ class WorkoutListsTest {
         }
     }
 
-
-
-//    /**
-//     * Tests the behavior of getting an empty run / gym list
-//     * Expected behaviour is to raise {@code OutOfBounds} exception.
-//     */
-//    @Test
-//    void getWorkouts_emptyList_throwOutOfBoundsForRun() {
-//        assertThrows(CustomExceptions.OutOfBounds.class, () -> WorkoutLists.getGyms());
-//        assertThrows(CustomExceptions.OutOfBounds.class, () -> WorkoutLists.getRuns());
-//    }
-
-//    /**
-//     * Tests the behavior of getting an empty run list
-//     * Expected behaviour is to raise {@code OutOfBounds} exception.
-//     */
-//    @Test
-//    void getWorkouts_emptyList_throwOutOfBoundsForAll() {
-//        assertThrows(CustomExceptions.OutOfBounds.class, () -> WorkoutLists.getWorkouts(WorkoutConstant.ALL));
-//    }
 
     /**
      * Tests the behavior of getting the latest run from the run list.
