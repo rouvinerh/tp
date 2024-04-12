@@ -99,7 +99,7 @@ class HandlerTest {
      */
     @Test
     void processInput_historyCommand_printsHistoryRun() {
-        String inputRun = "WORKOUT /e:run /d:10.3 /t:00:40:10 /date:15-03-2024" +
+        String inputRun = "WORKOUT /e:run /d:10.30 /t:40:10" +
                 System.lineSeparator() +
                 "HISTORY /item:run";
         Handler myHandler = new Handler(inputRun);
@@ -155,7 +155,7 @@ class HandlerTest {
     }
 
     /**
-     * Tests the behaviour of processInput when an run command with invalid distance is passed in.
+     * Tests the behaviour of processInput when and invalid run command with invalid distance is passed in.
      * Expects invalid distance error to be printed.
      */
     @Test

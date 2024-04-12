@@ -404,68 +404,31 @@ public class ValidationTest {
         String[] input4 = {"20:25", "0.00", "31-3-2025"};
         assertThrows(CustomExceptions.InvalidInput.class, () ->
                 validation.validateRunInput(input4));
-    }
 
-    /**
-     * Tests the behaviour of valid parameters being passed to validateRunTimeInput.
-     * Expects no exceptions to be thrown.
-     */
-    @Test
-    void validateRunTimeInput_correctTimeInput_expectsNoExceptionThrown() {
-        // without hours
-        String input1 = "25:03";
-        assertDoesNotThrow(() -> validation.validateRunTimeInput(input1));
-
-        // with hours
-        String input2 = "01:25:03";
-        assertDoesNotThrow(() -> validation.validateRunTimeInput(input2));
-    }
-
-    /**
-     * Tests the behaviour of invalid parameters being passed to validateRunTimeInput.
-     * Expects an InvalidInput exception to be thrown.
-     */
-    @Test
-    void validateRunTimeInput_invalidTimeInput_expectsInvalidInputException() {
-        // has non integer characters
-        String input1 = "2a:03";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateRunTimeInput(input1));
+        // has non integer values in time
+        String[] input5 = {"2a:03", "5.00"};
+        assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateRunInput(input5));
 
         // invalid delimiter
-        String input2 = "25-03";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateRunTimeInput(input2));
+        String[] input6 = {"25-03", "5.00"};
+        assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateRunInput(input6));
 
         // too many parts
-        String input3 = "25:03:04:22";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateRunTimeInput(input3));
+        String[] input7 = {"25:03:04:22", "5.00"};
+        assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateRunInput(input7));
+
+        // invalid format test 1
+        String[] input8 = {"1:2:3", "5.00"};
+        assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateRunInput(input8));
 
         // invalid format
-        String input4 = "1:2:3";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateRunTimeInput(input4));
-
-        // invalid format
-        String input5 = "1:2:3";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateRunTimeInput(input5));
-
-        // invalid minutes
-        String input6 = "01:65:03";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateRunTimeInput(input6));
-
-        // invalid seconds
-        String input7 = "01:55:83";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateRunTimeInput(input7));
-
-        // invalid hours
-        String input8 = "00:12:34";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateRunTimeInput(input8));
-
-        // invaid minute without hour
-        String input9 = "60:34";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateRunTimeInput(input9));
-
-        // invaid second without hour
-        String input10 = "59:60";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateRunTimeInput(input10));
+        String[] input9 = {"100:00:00", "5.00"};
+        assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateRunInput(input9));
     }
 
     /**

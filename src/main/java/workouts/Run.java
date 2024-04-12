@@ -17,8 +17,6 @@ public class Run extends Workout {
     private final Integer[] times;
     private final double distance;
     private final String pace;
-    private boolean isHourPresent;
-
 
     /**
      * Constructs a new Run object with the time and distance from user input.
@@ -28,8 +26,8 @@ public class Run extends Workout {
      * @throws CustomExceptions.InvalidInput If there is invalid input.
      */
     public Run(String stringTime, String stringDistance) throws CustomExceptions.InvalidInput {
-        times = splitRunTime(stringTime);
-        distance = Double.parseDouble(stringDistance);
+        times = checkRunTime(stringTime);
+        distance = checkDistance(stringDistance);
         pace = calculatePace();
     }
 
@@ -43,9 +41,21 @@ public class Run extends Workout {
      */
     public Run(String stringTime, String stringDistance, String stringDate) throws CustomExceptions.InvalidInput {
         super(stringDate);
-        times = splitRunTime(stringTime);
+        times = checkRunTime(stringTime);
         distance = Double.parseDouble(stringDistance);
         pace = calculatePace();
+    }
+
+    protected Double checkDistance(String stringDistance) throws CustomExceptions.InvalidInput {
+        double runDistance = Double.parseDouble(stringDistance);
+        if (runDistance > WorkoutConstant.MAX_RUN_DISTANCE) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.DISTANCE_TOO_LONG_ERROR);
+        }
+
+        if (runDistance <= WorkoutConstant.MIN_RUN_DISTANCE) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.ZERO_DISTANCE_ERROR);
+        }
+        return runDistance;
     }
 
     /**
@@ -56,15 +66,15 @@ public class Run extends Workout {
      * @return Formatted string of the time for the run.
      */
     public String getTimes() {
-        if (isHourPresent()) {
-            int hours = times[WorkoutConstant.RUN_TIME_FIRST_PART];
-            int minutes = times[WorkoutConstant.RUN_TIME_SECOND_PART];
-            int seconds = times[WorkoutConstant.RUN_TIME_THIRD_PART];
+        if (times[0] > 0) {
+            int hours = times[0];
+            int minutes = times[1];
+            int seconds = times[2];
             return String.format(WorkoutConstant.TIME_WITH_HOURS_FORMAT, hours, minutes, seconds);
 
         } else {
-            int minutes = times[WorkoutConstant.RUN_TIME_FIRST_PART];
-            int seconds = times[WorkoutConstant.RUN_TIME_SECOND_PART];
+            int minutes = times[1];
+            int seconds = times[2];
             return String.format(WorkoutConstant.TIME_WITHOUT_HOURS_FORMAT, minutes, seconds);
         }
     }
@@ -84,25 +94,6 @@ public class Run extends Workout {
      */
     public String getPace() {
         return pace;
-    }
-
-    /**
-     * Returns true if hours are present in the time taken for the run.
-     *
-     * @return true if hours are present, false otherwise.
-     */
-    public boolean isHourPresent() {
-        return isHourPresent;
-    }
-
-    /**
-     * Sets the boolean variable {@code isHourPresent} to true if hours are present in the time taken for the run.
-     * This is set in the {@code splitRunTime()} method which is called during the construction of the Run object.
-     *
-     * @param hourPresent boolean variable representing if hours are present in the time taken for the run.
-     */
-    public void setHourPresent(boolean hourPresent) {
-        isHourPresent = hourPresent;
     }
 
     //@@author JustinSoh
@@ -149,25 +140,50 @@ public class Run extends Workout {
      * @return A list of integers representing the hours (if present), minutes and seconds.
      * @throws CustomExceptions.InvalidInput if the input time is not in the correct format.
      */
-    protected Integer[] splitRunTime(String inputTime) throws CustomExceptions.InvalidInput {
+    protected Integer[] checkRunTime(String inputTime) throws CustomExceptions.InvalidInput {
+        String [] parts = inputTime.split(UiConstant.SPLIT_BY_COLON);
+        int hours = WorkoutConstant.NO_HOURS_PRESENT;
+        int minutes = 0;
+        int seconds = 0;
 
-        String[] stringTimeParts = inputTime.split(WorkoutConstant.COLON);
-        int inputLength = stringTimeParts.length;
-        Integer[] integerTimes = new Integer[inputLength];
-
-        if (inputLength == UiConstant.MAX_RUNTIME_ARRAY_LENGTH) {
-            setHourPresent(true);
-            integerTimes[0] = Integer.parseInt(stringTimeParts[WorkoutConstant.RUN_TIME_FIRST_PART]);
-            integerTimes[1] = Integer.parseInt(stringTimeParts[WorkoutConstant.RUN_TIME_SECOND_PART]);
-            integerTimes[2] = Integer.parseInt(stringTimeParts[WorkoutConstant.RUN_TIME_THIRD_PART]);
-        } else if (inputLength == UiConstant.MIN_RUNTIME_ARRAY_LENGTH) {
-            setHourPresent(false);
-            integerTimes[0] = Integer.parseInt(stringTimeParts[WorkoutConstant.RUN_TIME_FIRST_PART]);
-            integerTimes[1] = Integer.parseInt(stringTimeParts[WorkoutConstant.RUN_TIME_SECOND_PART]);
-        } else {
-            throw new CustomExceptions.InvalidInput(WorkoutConstant.INVALID_RUN_TIME);
+        if (parts.length == WorkoutConstant.NUMBER_OF_PARTS_FOR_RUN_TIME) {
+            minutes = Integer.parseInt(parts[0]);
+            seconds = Integer.parseInt(parts[1]);
+        } else if (parts.length == WorkoutConstant.NUMBER_OF_PARTS_FOR_RUN_TIME_WITH_HOURS) {
+            hours = Integer.parseInt(parts[0]);
+            minutes = Integer.parseInt(parts[1]);
+            seconds = Integer.parseInt(parts[2]);
         }
-        return integerTimes;
+
+        Integer[] runTimeParts = new Integer[]{hours, minutes, seconds};
+        validateRunTime(runTimeParts);
+        return runTimeParts;
+    }
+
+    private void validateRunTime(Integer[] runTimeParts) throws CustomExceptions.InvalidInput {
+        int hours = runTimeParts[0];
+        int minutes = runTimeParts[1];
+        int seconds = runTimeParts[2];
+
+        if (hours == UiConstant.MIN_HOURS) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_HOUR_ERROR);
+        }
+
+        // minutes can always be 00
+        if (minutes > UiConstant.MAX_MINUTES) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_MINUTE_ERROR);
+        }
+
+        // seconds can never be > 59
+        if (seconds > UiConstant.MAX_SECONDS) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_SECOND_ERROR);
+        }
+        if (hours == -1) {
+            // if hours not present, minutes and seconds cannot be 00
+            if (minutes == 0 && seconds == 0) {
+                throw new CustomExceptions.InvalidInput(ErrorConstant.ZERO_TIME_ERROR);
+            }
+        }
     }
 
     /**
@@ -179,14 +195,6 @@ public class Run extends Workout {
      */
     protected String calculatePace() throws CustomExceptions.InvalidInput {
         int totalSeconds = calculateTotalSeconds();
-        if (totalSeconds <= WorkoutConstant.MIN_RUN_TIME_IN_SECONDS) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.ZERO_RUN_TIME_ERROR);
-        }
-
-        if (totalSeconds >= WorkoutConstant.MAX_RUN_TIME_IN_SECONDS) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.MAX_RUN_TIME_ERROR);
-        }
-
         double paceInDecimal = ((double) totalSeconds / this.distance) / UiConstant.NUM_SECONDS_IN_MINUTE;
 
         if (paceInDecimal > WorkoutConstant.MAX_PACE) {
@@ -209,16 +217,16 @@ public class Run extends Workout {
      *
      * @return The total number of seconds in the run.
      */
-    protected int calculateTotalSeconds() {
+    private int calculateTotalSeconds() {
         int totalSeconds;
 
-        if (isHourPresent()) {
-            totalSeconds = this.times[WorkoutConstant.RUN_TIME_FIRST_PART] * UiConstant.NUM_SECONDS_IN_HOUR
-                    + this.times[WorkoutConstant.RUN_TIME_SECOND_PART] * UiConstant.NUM_SECONDS_IN_MINUTE
-                    + this.times[WorkoutConstant.RUN_TIME_THIRD_PART];
+        if (times[0] > 0) {
+            totalSeconds = this.times[0] * UiConstant.NUM_SECONDS_IN_HOUR
+                    + this.times[1] * UiConstant.NUM_SECONDS_IN_MINUTE
+                    + this.times[2];
         } else {
-            totalSeconds = this.times[WorkoutConstant.RUN_TIME_FIRST_PART] * UiConstant.NUM_SECONDS_IN_MINUTE
-                    + this.times[WorkoutConstant.RUN_TIME_SECOND_PART];
+            totalSeconds = this.times[1] * UiConstant.NUM_SECONDS_IN_MINUTE
+                    + this.times[2];
         }
         return totalSeconds;
     }
