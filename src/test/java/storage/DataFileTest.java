@@ -38,6 +38,9 @@ public class DataFileTest {
     private final String originalDataFilePath = "./pulsepilot_data.txt";
     private final String originalHashFilePath = "./pulsepilot_hash.txt";
 
+    /**
+     * Sets up the test environment by setting the file paths to the test files.
+     */
     @BeforeEach
     void setUp() {
         // Set the file paths to the test files
