@@ -105,13 +105,16 @@ public class WorkoutLists {
     public static void deleteGym(int index) throws CustomExceptions.OutOfBounds {
         assert !GYMS.isEmpty() : "Gym list is empty.";
         boolean indexIsValid = Validation.validateIndexWithinBounds(index, 0 , GYMS.size());
-        if (indexIsValid) {
-            Gym deletedGym = GYMS.get(index);
-            Output.printDeleteGymMessage(deletedGym);
-            WORKOUTS.remove(deletedGym);
-            GYMS.remove(index);
-            LogFile.writeLog("Removed gym with index: " + index, false);
+
+        if (!indexIsValid) {
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.INVALID_INDEX_DELETE_ERROR);
         }
+
+        Gym deletedGym = GYMS.get(index);
+        Output.printDeleteGymMessage(deletedGym);
+        WORKOUTS.remove(deletedGym);
+        GYMS.remove(index);
+        LogFile.writeLog("Removed gym with index: " + index, false);
     }
 
     /**
@@ -122,13 +125,14 @@ public class WorkoutLists {
     public static void deleteRun(int index) throws CustomExceptions.OutOfBounds {
         assert !RUNS.isEmpty() : "Run list is empty.";
         boolean indexIsValid = Validation.validateIndexWithinBounds(index, 0 , RUNS.size());
-        if (indexIsValid) {
+        if (!indexIsValid) {
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.INVALID_INDEX_DELETE_ERROR);
+        }
             Run deletedRun = RUNS.get(index);
             Output.printDeleteRunMessage(deletedRun);
             WORKOUTS.remove(deletedRun);
             RUNS.remove(index);
             LogFile.writeLog("Removed run with index: " + index, false);
-        }
     }
 
     /**

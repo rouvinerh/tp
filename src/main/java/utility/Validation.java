@@ -315,107 +315,6 @@ public class Validation {
         }
     }
 
-    //@@author JustinSoh
-    /**
-     * Checks if gym station name only has alphanumeric and space characters, and if it is less than 25 characters.
-     * Only alphanumeric and space characters can be in the name.
-     *
-     * @param exerciseName The exercise name string.
-     * @throws CustomExceptions.InvalidInput If the details specified are invalid.
-     * @throws CustomExceptions.InsufficientInput If empty strings are used.
-     */
-    public void validateGymStationName(String exerciseName) throws CustomExceptions.InvalidInput,
-            CustomExceptions.InsufficientInput {
-        if (exerciseName.isEmpty()) {
-            throw new CustomExceptions.InsufficientInput(ErrorConstant.EMPTY_GYM_STATION_NAME_ERROR);
-        }
-        if (!exerciseName.matches(UiConstant.VALID_GYM_STATION_NAME_REGEX)) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_GYM_STATION_NAME_ERROR);
-        }
-
-        if (exerciseName.length() > WorkoutConstant.MAX_GYM_STATION_NAME_LENGTH) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.GYM_STATION_NAME_LENGTH_ERROR);
-        }
-    }
-
-    /**
-     * Validates the weight string such that it only has numbers.
-     *
-     * @param weightsString The string representing the weights in the format "weight1,weight2,weight3..."
-     * @return ArrayList of integers representing the weights in the format [weight1, weight2, weight3 ...]
-     * @throws CustomExceptions.InvalidInput If an invalid weights string is passed in.
-     */
-    public ArrayList<Double> validateWeightsArray(String weightsString)
-            throws CustomExceptions.InvalidInput {
-        String[] weightsArray = weightsString.split(UiConstant.SPLIT_BY_COMMAS);
-        ArrayList<Double> validatedWeightsArray = new ArrayList<>();
-        try {
-            for(String weight: weightsArray){
-                double weightDouble = Double.parseDouble(weight);
-                if (weightDouble < WorkoutConstant.MIN_GYM_WEIGHT){
-                    throw new CustomExceptions.InvalidInput(ErrorConstant.GYM_WEIGHT_POSITIVE_ERROR);
-                }
-
-                if (weightDouble > WorkoutConstant.MAX_GYM_WEIGHT) {
-                    throw new CustomExceptions.InvalidInput(ErrorConstant.MAX_GYM_WEIGHT_ERROR);
-                }
-
-                if (weightDouble % WorkoutConstant.WEIGHT_MULTIPLE != 0 ){
-                    throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_WEIGHT_VALUE_ERROR);
-                }
-                validatedWeightsArray.add(weightDouble);
-            }
-        } catch (NumberFormatException e){
-            throw new CustomExceptions.InvalidInput(ErrorConstant.GYM_WEIGHT_DIGIT_ERROR);
-        }
-        return validatedWeightsArray;
-    }
-
-    /**
-     * Splits and validates the user input for adding a station to a Gym object.
-     *
-     * @param input The user input string.
-     * @return A list of validated parameters for adding a GymStation.
-     * @throws CustomExceptions.InvalidInput If the details specified are invalid.
-     * @throws CustomExceptions.InsufficientInput If empty strings are used.
-     */
-    public String[] splitAndValidateGymStationInput(String input) throws CustomExceptions.InvalidInput,
-            CustomExceptions.InsufficientInput {
-        String exerciseName = input.split(UiConstant.SPLIT_BY_SLASH)[WorkoutConstant.STATION_NAME_INDEX].trim();
-        validateGymStationName(exerciseName);
-        Parser parser = new Parser();
-        String sets = parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.SETS_FLAG).trim();
-        if (!sets.matches(UiConstant.VALID_POSITIVE_INTEGER_REGEX)) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_SETS_ERROR);
-        }
-
-        String reps = parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.REPS_FLAG).trim();
-        if (!reps.matches(UiConstant.VALID_POSITIVE_INTEGER_REGEX)) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_REPS_ERROR);
-        }
-
-        String weights = parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.WEIGHTS_FLAG).trim();
-
-        if (!weights.matches(UiConstant.VALID_WEIGHTS_ARRAY_REGEX)) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_WEIGHTS_ARRAY_FORMAT_ERROR);
-        }
-
-        String[] weightsArray = weights.split(UiConstant.SPLIT_BY_COMMAS);
-        if (weightsArray.length < WorkoutConstant.MIN_GYM_STATION_WEIGHTS_ARRAY_LENGTH) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.EMPTY_WEIGHTS_ARRAY_ERROR);
-        }
-
-        if (weightsArray.length != Integer.parseInt(sets)) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.GYM_WEIGHTS_INCORRECT_NUMBER_ERROR);
-        }
-
-        String[] validatedGymStationInputs = new String[WorkoutConstant.NUMBER_OF_GYM_STATION_PARAMETERS];
-        validatedGymStationInputs[WorkoutConstant.GYM_STATION_NAME_INDEX] = exerciseName;
-        validatedGymStationInputs[WorkoutConstant.GYM_STATION_SET_INDEX] = sets;
-        validatedGymStationInputs[WorkoutConstant.GYM_STATION_REPS_INDEX] = reps;
-        validatedGymStationInputs[WorkoutConstant.GYM_STATION_WEIGHTS_INDEX] = weights;
-        return validatedGymStationInputs;
-    }
 
     //@@author rouvinerh
     /**
@@ -550,12 +449,12 @@ public class Validation {
      * @param end the ending bound (exclusive - e.g. end = 5 means index must be < 5).
      * @return true if the index is within the bounds, false otherwise.
      */
-    public static boolean validateIndexWithinBounds(int index, int start, int end)
-            throws CustomExceptions.OutOfBounds {
-
-        if (index < start || index >= end){
-            throw new CustomExceptions.OutOfBounds(ErrorConstant.INVALID_INDEX_BOUND_ERROR);
-        }
-        return true;
+    public static boolean validateIndexWithinBounds(int index, int start, int end) {
+        return index >= start && index < end;
     }
+
+    public static boolean validateIntegerIsPositive(String value) throws CustomExceptions.InvalidInput {
+        return value.matches(UiConstant.VALID_POSITIVE_INTEGER_REGEX);
+    }
+
 }

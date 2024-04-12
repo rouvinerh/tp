@@ -22,7 +22,7 @@ public class ErrorConstant {
     // General Errors
     public static final String NEGATIVE_VALUE_ERROR = "Requires a positive integer!";
     public static final String INVALID_INDEX_DELETE_ERROR = "Invalid index to delete!";
-    public static final String INVALID_INDEX_BOUND_ERROR = "Index is Out of Bounds";
+    public static final String INVALID_INDEX_SEARCH_ERROR = "Given index is invalid.";
 
     public static final String INVALID_INDEX_ERROR = "Index must be a valid positive integer.";
 
@@ -107,13 +107,13 @@ public class ErrorConstant {
     public static final String GYM_STATION_FORMAT_ERROR = "Remember that you are now adding gym station input!"
             + System.lineSeparator()
             + "Expected format: [Station Name] /s:[SETS] /r:[REPS] /w:[WEIGHTS]";
-    public static final String INVALID_SETS_ERROR = "Number of sets must be a positive integer!"
+    public static final String INVALID_SETS_POSITIVE_DIGIT_ERROR = "Number of sets must be a positive integer!"
             + System.lineSeparator()
             + GYM_STATION_FORMAT_ERROR;
-    public static final String INVALID_REPS_ERROR = "Number of reps must be a positive integer!"
+    public static final String INVALID_REPS_POSITIVE_DIGIT_ERROR = "Number of reps must be a positive integer!"
             + System.lineSeparator()
             + GYM_STATION_FORMAT_ERROR;
-    public static final String INVALID_WEIGHT_VALUE_ERROR = "The weight done for each set must "
+    public static final String INVALID_WEIGHTS_VALUE_ERROR = "The weight done for each set must "
             + "be a multiple of 0.125." 
             + System.lineSeparator() 
             + "This is because the smallest weight increment in most gyms is 0.125kg."
@@ -127,15 +127,17 @@ public class ErrorConstant {
             "and be a positive decimal (up to 3 decimal places)"
             + System.lineSeparator()
             + GYM_STATION_FORMAT_ERROR;
-    public static final String EMPTY_WEIGHTS_ARRAY_ERROR = "Weights array cannot be empty"
+    public static final String INVALID_WEIGHTS_EMPTY_ERROR = "Weights array cannot be empty"
             + System.lineSeparator()
             + GYM_STATION_FORMAT_ERROR;
-    public static final String GYM_WEIGHT_POSITIVE_ERROR = "Weights specified must a positive integer! " +
-            "e.g. /w:10,20,30";
+
          
-    public static final String GYM_WEIGHT_DIGIT_ERROR = "Weights must be a number! e.g. /w:5,10,20";
-    public static final String GYM_WEIGHTS_INCORRECT_NUMBER_ERROR = "Number of weight values must be the same as" +
-            " the number of sets! e.g. bench press /s:2 /r:10 /w:10,20";
+    public static final String INVALID_WEIGHTS_NUMBER_ERROR = "Number of weight values must be the same as"
+            + " the number of sets!"
+            + System.lineSeparator()
+            + "Please check the number of sets (/s:[value]) and the number of weight values (/w:value1,value2,...)"
+            + System.lineSeparator()
+            + GYM_STATION_FORMAT_ERROR;
 
     // HEALTH ERRORS
     public static final String INVALID_HEALTH_INPUT_ERROR = "Invalid input for health type! " +
@@ -279,7 +281,7 @@ public class ErrorConstant {
             + System.lineSeparator()
             + "Please enter a more realistic weight less than 640kg!";
 
-    public static final String MAX_GYM_WEIGHT_ERROR = "The heaviest object ever lifted by a human (Paul Anderson) " +
+    public static final String INVALID_WEIGHT_MAX_ERROR = "The heaviest object ever lifted by a human (Paul Anderson) " +
             "was 2840kg."
             + System.lineSeparator()
             + "Please enter a more realistic gym weight less than 2850kg!";
