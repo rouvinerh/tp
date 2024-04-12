@@ -125,10 +125,10 @@ public class ErrorConstant {
             + "Expected format: [Station Name] /s:[SETS] /r:[REPS] /w:[WEIGHTS]";
     public static final String INVALID_SETS_POSITIVE_DIGIT_ERROR = "Number of sets must be a positive integer!"
             + System.lineSeparator()
-            + GYM_STATION_FORMAT_ERROR;
+            + INVALID_GYM_STATION_FORMAT_ERROR;
     public static final String INVALID_REPS_POSITIVE_DIGIT_ERROR = "Number of reps must be a positive integer!"
             + System.lineSeparator()
-            + GYM_STATION_FORMAT_ERROR;
+            + INVALID_GYM_STATION_FORMAT_ERROR;
     public static final String INVALID_WEIGHTS_VALUE_ERROR = "The weight done for each set must "
             + "be a multiple of 0.125." 
             + System.lineSeparator() 
@@ -142,10 +142,10 @@ public class ErrorConstant {
             + "Weights must be separated by commas (with no whitespaces) " +
             "and be a positive decimal (up to 3 decimal places)"
             + System.lineSeparator()
-            + GYM_STATION_FORMAT_ERROR;
+            + INVALID_GYM_STATION_FORMAT_ERROR;
     public static final String INVALID_WEIGHTS_EMPTY_ERROR = "Weights array cannot be empty"
             + System.lineSeparator()
-            + GYM_STATION_FORMAT_ERROR;
+            + INVALID_GYM_STATION_FORMAT_ERROR;
 
          
     public static final String INVALID_WEIGHTS_NUMBER_ERROR = "Number of weight values must be the same as"
@@ -153,7 +153,7 @@ public class ErrorConstant {
             + System.lineSeparator()
             + "Please check the number of sets (/s:[value]) and the number of weight values (/w:value1,value2,...)"
             + System.lineSeparator()
-            + GYM_STATION_FORMAT_ERROR;
+            + INVALID_GYM_STATION_FORMAT_ERROR;
 
     // HEALTH ERRORS
     public static final String INVALID_HEALTH_INPUT_ERROR = "Invalid input for health type! " +

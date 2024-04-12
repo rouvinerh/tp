@@ -110,8 +110,7 @@ class GymTest {
     void toFileString_correctInput_expectedCorrectString(){
         String expected1 = "GYM:2:11-11-1997:bench press:4:4:10.0,20.0,30.0,40.0:squats:4:3:20.0,30.0,40.0,50.0";
         String expected2WithNoDate = "GYM:2:NA:bench press:4:4:10.0,20.0,30.0,40.0:squats:4:3:20.0,30.0,40.0,50.0";
-        ArrayList<Double> array1 = new ArrayList<>(Arrays.asList(10.0,20.0,30.0,40.0));
-        ArrayList<Double> array2 = new ArrayList<>(Arrays.asList(20.0,30.0,40.0,50.0));
+
         try {
             Gym newGym = new Gym("11-11-1997");
             Gym newGym2 = new Gym();

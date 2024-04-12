@@ -40,6 +40,7 @@ public class Gym extends Workout {
 
     /**
      * Adds a new GymStation object into the Gym object.
+     * Before adding, it validates the input parameters.
      * It also logs the addition of the gym station into the log file.
      *
      * @param name String containing the name of the gym station.
@@ -148,6 +149,7 @@ public class Gym extends Workout {
                 prefix, date, gymStationString, gymSetString, UiConstant.DASH);
     }
 
+    // Private methods
 
     private void appendIntoStations(GymStation station) {
         stations.add(station);
@@ -167,10 +169,8 @@ public class Gym extends Workout {
 
         validateWeightString(weightsString);
 
-
         String[] weightsArray = weightsString.split(UiConstant.SPLIT_BY_COMMAS);
         ArrayList<Double> validatedWeightsArray = new ArrayList<>();
-
 
         for (String weight: weightsArray){
             boolean isValidWeight = validateWeight(weight);
@@ -181,6 +181,17 @@ public class Gym extends Workout {
         return validatedWeightsArray;
     }
 
+    /**
+     * Validates the gym station name ensuring that
+     * - it is not empty
+     * - follows the correct pattern (UiConstant.VALID_GYM_STATION_NAME_REGEX)
+     * - does not exceed the maximum length. (WorkoutConstant.MAX_GYM_STATION_NAME_LENGTH)
+     *
+     * @param exerciseName The string representing the gym station name
+     * @return String representing the gym station name
+     * @throws CustomExceptions.InvalidInput if an invalid gym station name is passed in
+     * @throws CustomExceptions.InsufficientInput if an empty gym station name is passed in
+     */
     protected String validateGymStationName(String exerciseName) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
 
@@ -190,6 +201,13 @@ public class Gym extends Workout {
         return exerciseName;
     }
 
+    /**
+     * Validates the number of sets ensuring that it is a positive integer.
+     *
+     * @param numberOfSets The string representing the number of sets
+     * @return int representing the number of sets
+     * @throws CustomExceptions.InvalidInput if an invalid number of sets is passed in
+     */
     protected int validateNumberOfSets(String numberOfSets) throws CustomExceptions.InvalidInput {
         boolean isSetsValid = Validation.validateIntegerIsPositive(numberOfSets);
         if (!isSetsValid) {
@@ -199,10 +217,17 @@ public class Gym extends Workout {
         return Integer.parseInt(numberOfSets);
     }
 
-
+    /**
+     * Validates the number of repetitions ensuring that it is a positive integer.
+     *
+     * @param numberOfRepetitions The string representing the number of repetitions
+     * @return int representing the number of repetitions
+     * @throws CustomExceptions.InvalidInput if an invalid number of repetitions is passed in
+     */
     protected int validateNumberOfRepetitions(String numberOfRepetitions) throws CustomExceptions.InvalidInput {
 
         boolean isRepsValid = Validation.validateIntegerIsPositive(numberOfRepetitions);
+
         if (!isRepsValid) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_REPS_POSITIVE_DIGIT_ERROR);
         }
@@ -210,7 +235,16 @@ public class Gym extends Workout {
         return Integer.parseInt(numberOfRepetitions);
     }
 
-
+    /**
+     * Validates the weight string ensuring that
+     * - The weight is positive
+     * - The weight does not exceed the maximum weight (@code WorkoutConstant.MAX_GYM_WEIGHT)
+     * - The weight is a multiple of 0.125 (as that is the increment of weights in a gym)
+     *
+     * @param weight The string representing the weight
+     * @return boolean true if the weight is valid
+     * @throws CustomExceptions.InvalidInput if an invalid weight is passed in
+     */
     protected boolean validateWeight(String weight) throws CustomExceptions.InvalidInput {
         try{
             double weightDouble = Double.parseDouble(weight);
@@ -226,9 +260,10 @@ public class Gym extends Workout {
     }
 
 
+    // Private Methods
     private void validateExerciseNameNotEmpty(String exerciseName) throws CustomExceptions.InsufficientInput {
         if (exerciseName.isEmpty()) {
-            throw new CustomExceptions.InsufficientInput(ErrorConstant.EMPTY_GYM_STATION_NAME_ERROR);
+            throw new CustomExceptions.InsufficientInput(ErrorConstant.INVALID_GYM_STATION_EMPTY_NAME_ERROR);
         }
     }
 
@@ -240,10 +275,9 @@ public class Gym extends Workout {
 
     private void validateExerciseNameLength(String exerciseName) throws CustomExceptions.InvalidInput {
         if (exerciseName.length() > WorkoutConstant.MAX_GYM_STATION_NAME_LENGTH) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.GYM_STATION_NAME_LENGTH_ERROR);
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_GYM_STATION_NAME_ERROR);
         }
     }
-
 
     private void validateWeightIsPositive(double weight) throws CustomExceptions.InvalidInput {
         if (weight < WorkoutConstant.MIN_GYM_WEIGHT){
@@ -277,5 +311,9 @@ public class Gym extends Workout {
         if (!weightsString.matches(UiConstant.VALID_WEIGHTS_ARRAY_REGEX)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_WEIGHTS_ARRAY_FORMAT_ERROR);
         }
+    }
+
+    private void appendIntoStations(GymStation station) {
+        stations.add(station);
     }
 }
