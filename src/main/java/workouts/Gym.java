@@ -297,7 +297,8 @@ public class Gym extends Workout {
         }
     }
 
-    private void checkIfNumberOfWeightsMatchesSets(ArrayList<Double> weights, int numberOfSets) throws CustomExceptions.InvalidInput {
+    private void checkIfNumberOfWeightsMatchesSets(ArrayList<Double> weights, int numberOfSets)
+            throws CustomExceptions.InvalidInput {
         if (weights.size() != numberOfSets){
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_WEIGHTS_NUMBER_ERROR);
         }

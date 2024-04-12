@@ -506,7 +506,7 @@ class OutputTest {
      * added.
      */
     @Test
-    void printGymHistory_correctInput_expectPrintGymHistory(){
+    void printGymHistory_correctInput_expectPrintGymHistory() {
 
         try {
             Gym gym1 = new Gym();
@@ -520,6 +520,47 @@ class OutputTest {
         } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
             fail("Shouldn't have failed");
         }
+
+        String expected = UiConstant.PARTITION_LINE +
+                System.lineSeparator() +
+                "Your gym history:" +
+                System.lineSeparator() +
+                "Gym Session 1 (Date: NA)" +
+                System.lineSeparator() +
+                String.format(WorkoutConstant.GYM_STATION_FORMAT, "Station 1 Bench Press") +
+                String.format(WorkoutConstant.INDIVIDUAL_GYM_STATION_FORMAT, 1) +
+                System.lineSeparator() +
+                String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, 1, "50 reps at 1.000 KG") +
+                System.lineSeparator() +
+                String.format(WorkoutConstant.GYM_STATION_FORMAT, "Station 2 Shoulder Press") +
+                String.format(WorkoutConstant.INDIVIDUAL_GYM_STATION_FORMAT, 2) +
+                System.lineSeparator() +
+                String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, 1, "10 reps at 1.000 KG") +
+                System.lineSeparator() +
+                String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, 2, "10 reps at 2.000 KG") +
+                System.lineSeparator() +
+                UiConstant.PARTITION_LINE +
+                System.lineSeparator() +
+                "Gym Session 2 (Date: NA)" +
+                System.lineSeparator() +
+                String.format(WorkoutConstant.GYM_STATION_FORMAT, "Station 1 Squat Press") +
+                String.format(WorkoutConstant.INDIVIDUAL_GYM_STATION_FORMAT, 1) +
+                System.lineSeparator() +
+                String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, 1, "50 reps at 1.000 KG") +
+                System.lineSeparator() +
+                String.format(WorkoutConstant.GYM_STATION_FORMAT, "Station 2 Lat Press") +
+                String.format(WorkoutConstant.INDIVIDUAL_GYM_STATION_FORMAT, 2) +
+                System.lineSeparator() +
+                String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, 1, "10 reps at 1.000 KG") +
+                System.lineSeparator() +
+                String.format(WorkoutConstant.GYM_SET_INDEX_FORMAT, 2, "10 reps at 2.000 KG") +
+                System.lineSeparator() +
+                UiConstant.PARTITION_LINE +
+                System.lineSeparator();
+        Output output = new Output();
+        output.printHistory(WorkoutConstant.GYM);
+        assertEquals(expected, outContent.toString());
+
     }
 
     /**
@@ -533,13 +574,9 @@ class OutputTest {
             gym1.addStation("Bench Press", "2", "4", "10.0,20.0");
             gym1.addStation("Squat Press", "2", "4", "100.0,200.0");
 
-            String expectedRun1 = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
-                    WorkoutConstant.RUN,
-                    "1999-12-19",
-                    "10.24",
-                    "01:11:12",
-                    "6:57/km"
-                    );
+        } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
+            fail("Shouldn't have failed");
+        }
 
         String expectedRun1 = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
                 WorkoutConstant.RUN,
@@ -549,6 +586,13 @@ class OutputTest {
                 "6:57/km"
         );
 
+        String expectedRun1 = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
+                WorkoutConstant.RUN,
+                "1999-12-19",
+                "10.24",
+                "01:11:12",
+                "6:57/km"
+        );
 
         String expectedGym1Set1 = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
                 WorkoutConstant.GYM,
@@ -571,18 +615,17 @@ class OutputTest {
                 + System.lineSeparator() +
                 String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_HEADER_FORMAT, "", expectedGym1Set2);
 
-            String expected = UiConstant.PARTITION_LINE + System.lineSeparator()
-                    + WorkoutConstant.HISTORY_WORKOUTS_HEADER + System.lineSeparator()
-                    + WorkoutConstant.HISTORY_WORKOUTS_HEADER_FORMAT + System.lineSeparator()
-                    + expected1 + System.lineSeparator()
-                    + expected2 + System.lineSeparator()
-                    + UiConstant.PARTITION_LINE + System.lineSeparator();
-            Output output = new Output();
-            output.printHistory(WorkoutConstant.ALL);
-            assertEquals(expected, outContent.toString());
-        } catch (CustomExceptions.InvalidInput e) {
-            fail("Shouldn't have failed");
-        }
+        String expected1 = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_HEADER_FORMAT, "1", expectedRun1);
+
+        String expected = UiConstant.PARTITION_LINE + System.lineSeparator()
+                + WorkoutConstant.HISTORY_WORKOUTS_HEADER + System.lineSeparator()
+                + WorkoutConstant.HISTORY_WORKOUTS_HEADER_FORMAT + System.lineSeparator()
+                + expected1 + System.lineSeparator()
+                + expected2 + System.lineSeparator()
+                + UiConstant.PARTITION_LINE + System.lineSeparator();
+        Output output = new Output();
+        output.printHistory(WorkoutConstant.ALL);
+        assertEquals(expected, outContent.toString());
 
         String expected = UiConstant.PARTITION_LINE + System.lineSeparator()
                 + WorkoutConstant.HISTORY_WORKOUTS_HEADER + System.lineSeparator()
