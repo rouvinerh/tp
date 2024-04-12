@@ -4,8 +4,10 @@ skinparam sequenceReferenceBackgroundColor lightblue
 participant "handler:Handler" as Handler
 participant "parser:Parser" as Parser
 participant "validation:Validation" as Validation
-participant "newGym:Gym" as Run
+participant "newGym:Gym" as Gym
+participant "workout:Workout" as Workout
 participant "workoutList:WorkoutList" as WorkoutList
+participant "parser:Parser" as newParser
 
 Handler -> Parser: parseGymInput()
 activate Handler #salmon
@@ -21,34 +23,59 @@ activate Validation #FFBBBB
 Validation --> Parser: 
 deactivate Validation
 
-Parser -> Run **: new
-activate Run #FFBBBB   
-Run -> WorkoutList **: new
-activate WorkoutList #FFBBBB
-WorkoutList --> Run:
-deactivate WorkoutList #FFBBBB
+Parser -> Gym **: new
+
+
 
 alt date is present
-    Run -> WorkoutList: addGym(date)
+    activate Gym #FFBBBB   
+    Gym -> Workout **: <<super>> Super(date)
+    activate Workout #FFBBBB
+    Workout -> newParser **: parseDate(date)
+    activate newParser #FFBBBB
+    newParser --> Workout:
+    deactivate newParser #FFBBBB
+    destroy newParser
+
+    Workout -> Workout: addIntoWorkoutList()
+    activate Workout #salmon
+    Workout -> WorkoutList **: addGym()
     activate WorkoutList #FFBBBB
-    WorkoutList -> WorkoutList: addWorkout(date)
-    activate WorkoutList #DarkSalmon
-    WorkoutList --> WorkoutList:
-    deactivate WorkoutList #DarkSalmon
-    WorkoutList --> Run:
-    deactivate WorkoutList #FFBBBB
- 
-else date is not present
-    Run -> WorkoutList: addGym()
-    activate WorkoutList #FFBBBB
-    WorkoutList -> WorkoutList: addWorkout()
-    activate WorkoutList #DarkSalmon
-    WorkoutList --> WorkoutList:
-    deactivate WorkoutList #DarkSalmon
-    WorkoutList --> Run:
+    WorkoutList --> Workout:
     deactivate WorkoutList #FFBBBB
     destroy WorkoutList
+
+    Workout --> Workout :
+    deactivate Workout #Salmon
+
+    Workout --> Gym:
+    deactivate Workout #FFBBBB
+ 
+else date is not present
+    Gym -> Workout **: <<super>> Super()
+    activate Workout #FFBBBB
+    Workout -> newParser **: parseDate(date)
+    activate newParser #FFBBBB
+    newParser --> Workout:
+    deactivate newParser #FFBBBB
+    destroy newParser
+
+    Workout -> Workout: addIntoWorkoutList()
+    activate Workout #salmon
+    Workout -> WorkoutList **: addGym()
+    activate WorkoutList #FFBBBB
+    WorkoutList --> Workout:
+    deactivate WorkoutList #FFBBBB
+    destroy WorkoutList
+
+    Workout --> Workout :
+    deactivate Workout #Salmon
+
+    Workout --> Gym:
+    deactivate Workout #FFBBBB
 end
+Gym --> Parser:
+deactivate Gym #FFBBBB
 
 Parser -> Parser: parseGymStationInput()
 activate Parser #FFBBBB
