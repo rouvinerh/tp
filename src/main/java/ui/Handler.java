@@ -1,7 +1,10 @@
 //@@author L5-Z
 package ui;
 
+import health.Appointment;
+import health.Bmi;
 import health.HealthList;
+import health.Period;
 import storage.DataFile;
 import utility.CustomExceptions;
 import constants.ErrorConstant;
@@ -14,8 +17,10 @@ import utility.Filters.HealthFilters;
 import utility.Parser;
 import utility.Filters.WorkoutFilters;
 import utility.Validation;
-import workouts.WorkoutList;
+import workouts.Workout;
+import workouts.WorkoutLists;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import storage.LogFile;
 
@@ -178,11 +183,11 @@ public class Handler {
                 break;
 
             case GYM:
-                WorkoutList.deleteGym(index);
+                WorkoutLists.deleteGym(index);
                 break;
 
             case RUN:
-                WorkoutList.deleteRun(index);
+                WorkoutLists.deleteRun(index);
                 break;
 
             case APPOINTMENT:
@@ -311,17 +316,22 @@ public class Handler {
      */
     public void terminateBot() {
         LogFile.writeLog("User terminating PulsePilot", false);
+
         try {
             LogFile.writeLog("Attempting to save data file", false);
 
+            String userName = DataFile.userName; // need to make it non static
+            ArrayList<Workout> workoutList = WorkoutLists.getWorkouts();
+            ArrayList<Bmi> bmiList = HealthList.getBmis();
+            ArrayList<Appointment> appointmentList = HealthList.getAppointments();
+            ArrayList<Period> periodList = HealthList.getPeriods();
+            dataFile.saveDataFile(userName, bmiList, appointmentList, periodList, workoutList);
 
-            dataFile.saveDataFile(DataFile.userName, HealthList.getBmis(), HealthList.getAppointments(),
-                    HealthList.getPeriods(), WorkoutList.getWorkouts());
-            LogFile.writeLog("File saved", false);
         } catch (CustomExceptions.FileWriteError e) {
             LogFile.writeLog("File write error", true);
             output.printException(e.getMessage());
         }
+
         output.printGoodbyeMessage();
         // Yet to implement : Reply.printReply("Saved tasks as: " + Constant.FILE_NAME);
         LogFile.writeLog("Bot exited gracefully", false);

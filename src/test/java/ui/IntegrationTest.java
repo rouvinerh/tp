@@ -9,7 +9,7 @@ import utility.CustomExceptions;
 import utility.Parser;
 import workouts.Gym;
 import workouts.Run;
-import workouts.WorkoutList;
+import workouts.WorkoutLists;
 import helper.TestHelper;
 
 import java.io.ByteArrayInputStream;
@@ -48,7 +48,7 @@ public class IntegrationTest {
 
     @AfterEach
     public void tearDown(){
-        WorkoutList.clearWorkoutsRunGym();
+        WorkoutLists.clearWorkoutsRunGym();
         HealthList.clearHealthLists();
         outContent.reset();
         errContent.reset();
