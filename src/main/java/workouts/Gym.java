@@ -13,7 +13,6 @@ import java.util.ArrayList;
  * Represents a Gym object that extends the Workout class.
  * A gym object can have multiple GymStation objects.
  *
- *
  */
 public class Gym extends Workout {
     //@@author JustinSoh
@@ -40,12 +39,14 @@ public class Gym extends Workout {
     }
 
     /**
-     * Adds station to an ArrayList of GymStation object.
+     * Adds a new GymStation object into the Gym object.
+     * Before adding, it validates the input parameters.
+     * It also logs the addition of the gym station into the log file.
      *
-     * @param name Name of the gym station.
-     * @param numberOfSet Number of sets done.
-     * @param numberOfRepetitions Number of repetitions done.
-     * @param weightsList Weights used for the station.
+     * @param name String containing the name of the gym station.
+     * @param numberOfSet String of the number of sets done.
+     * @param numberOfRepetitions String of the number of repetitions done.
+     * @param weights String of weights separated by commas. (e.g. "10,20,30,40")
      */
     public void addStation(String name,
                            String numberOfSet,
@@ -99,58 +100,41 @@ public class Gym extends Workout {
         return String.format(" (Date: %s)", super.getDate());
     }
 
-
     /**
-     * Retrieves the string representation of a Gym object.
-     * Used for the formatting of the Gym Object before writing into a file.
+     * Converts the Gym object into a string format suitable for writing into a file.
+     * This method serializes the Gym object, including all its GymStation objects, into a string. The resulting string
+     * follows a specific format to ensure that it can be correctly deserialized later.
+     * For more examples, refer to the GymTest method {@code toFileString_correctInput_expectedCorrectString()}.
      *
-     * @return StringBuilder Object that contains the formatted string.
-     */
-    private StringBuilder formatFileString(){
-        StringBuilder fileString = new StringBuilder();
-        String type = WorkoutConstant.GYM.toUpperCase();
-        String numOfStation = String.valueOf(stations.size());
-        String date = super.getDateForFile();
-        fileString.append(type);
-        fileString.append(UiConstant.SPLIT_BY_COLON);
-        fileString.append(numOfStation);
-        fileString.append(UiConstant.SPLIT_BY_COLON);
-        fileString.append(date);
-        fileString.append(UiConstant.SPLIT_BY_COLON);
-        return fileString;
-    }
-
-    /**
-     * Converts the Gym Object into the String format for writing into a file.
-     * The format that this output is
-     *  gym:NUM_STATIONS:DATE:STATION1_NAME:NUM_SETS:REPS:WEIGHT1,WEIGHT2,WEIGHT3,WEIGHT4
-     *  :STATION2_NAME:NUM_SETS:REPS:WEIGHT1,WEIGHT2,WEIGHT3,WEIGHT4 ....
-     *  Example: "gym:2:1997-11-11:bench press:4:4,4,4,4:10,20,30,40:squats:4:3,3,3,3:20,30,40,50"
-     *  Can refer to GymTest {@code toFileString_correctInput_expectedCorrectString()} for more examples
-     *
-     * @return A formatted string in the format specified above.
+     * @return A string representing the Gym object and its GymStation objects isuitable for writing into a file.
      */
     public String toFileString(){
+        StringBuilder formattedString = new StringBuilder();
 
-        StringBuilder fileString = formatFileString();
-        ArrayList<GymStation> stations = getStations();
-        for (GymStation station : stations) {
-            fileString.append(station.toFileString());
-            if (stations.indexOf(station) != stations.size() - 1) {
-                fileString.append(UiConstant.SPLIT_BY_COLON);
+        // Append the type, number of stations, and date (GYM:NUM_STATIONS:DATE:)
+        formattedString.append(WorkoutConstant.GYM.toUpperCase())
+                .append(UiConstant.SPLIT_BY_COLON)
+                .append(stations.size())
+                .append(UiConstant.SPLIT_BY_COLON)
+                .append(super.getDateForFile())
+                .append(UiConstant.SPLIT_BY_COLON);
+
+        int lastIndex = stations.size() - 1;
+        for (int i = 0; i < stations.size(); i++) {
+            formattedString.append(stations.get(i).toFileString());
+            if (i != lastIndex) {
+                formattedString.append(UiConstant.SPLIT_BY_COLON);
             }
         }
-        return fileString.toString();
+        return formattedString.toString();
     }
 
     /**
-     * Used when printing all the workouts. This method takes in two parameters {@code isFirstIteration} and {@code i}
+     * Used when printing all the workouts. This method takes in parameters {@code index}
      * @param index indicates which particular gymStation is being queried.
      * @return A string representing the history format for gym.
      */
     public String getHistoryFormatForSpecificGymStation(int index) {
-
-        String gymDate = super.getDate();
 
         // Get the string format for a specific gym station
         GymStation station = getStations().get(index);
@@ -158,34 +142,14 @@ public class Gym extends Workout {
         String gymSetString = String.valueOf(station.getNumberOfSets());
 
         // If it is first iteration, includes dashes for irrelevant field
-        if (index == 0){
-            return String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
-                    WorkoutConstant.GYM, gymDate,
-                    gymStationString,
-                    gymSetString,
-                    UiConstant.DASH
-            );
-        } else {
-            // if it is not, then leave it blank
-            return String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
-                    UiConstant.EMPTY_STRING,
-                    UiConstant.EMPTY_STRING,
-                    gymStationString,
-                    gymSetString,
-                    UiConstant.DASH
-            );
+        String prefix = index == 0 ? WorkoutConstant.GYM : UiConstant.EMPTY_STRING;
+        String date = index == 0 ? super.getDate() : UiConstant.EMPTY_STRING;
 
-        }
+        return String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
+                prefix, date, gymStationString, gymSetString, UiConstant.DASH);
     }
 
-    // Private methods
-
-    private void appendIntoStations(GymStation station) {
-        stations.add(station);
-    }
-
-
-    // Validation Functions
+    // Protected Functions
     /**
      * Validates the weight string such that it only has numbers.
      *
@@ -198,10 +162,8 @@ public class Gym extends Workout {
 
         validateWeightString(weightsString);
 
-
         String[] weightsArray = weightsString.split(UiConstant.SPLIT_BY_COMMAS);
         ArrayList<Double> validatedWeightsArray = new ArrayList<>();
-
 
         for (String weight: weightsArray){
             boolean isValidWeight = validateWeight(weight);
@@ -212,6 +174,17 @@ public class Gym extends Workout {
         return validatedWeightsArray;
     }
 
+    /**
+     * Validates the gym station name ensuring that
+     * - it is not empty
+     * - follows the correct pattern (UiConstant.VALID_GYM_STATION_NAME_REGEX)
+     * - does not exceed the maximum length. (WorkoutConstant.MAX_GYM_STATION_NAME_LENGTH)
+     *
+     * @param exerciseName The string representing the gym station name
+     * @return String representing the gym station name
+     * @throws CustomExceptions.InvalidInput if an invalid gym station name is passed in
+     * @throws CustomExceptions.InsufficientInput if an empty gym station name is passed in
+     */
     protected String validateGymStationName(String exerciseName) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
 
@@ -221,6 +194,13 @@ public class Gym extends Workout {
         return exerciseName;
     }
 
+    /**
+     * Validates the number of sets ensuring that it is a positive integer.
+     *
+     * @param numberOfSets The string representing the number of sets
+     * @return int representing the number of sets
+     * @throws CustomExceptions.InvalidInput if an invalid number of sets is passed in
+     */
     protected int validateNumberOfSets(String numberOfSets) throws CustomExceptions.InvalidInput {
         boolean isSetsValid = Validation.validateIntegerIsPositive(numberOfSets);
         if (!isSetsValid) {
@@ -230,10 +210,17 @@ public class Gym extends Workout {
         return Integer.parseInt(numberOfSets);
     }
 
-
+    /**
+     * Validates the number of repetitions ensuring that it is a positive integer.
+     *
+     * @param numberOfRepetitions The string representing the number of repetitions
+     * @return int representing the number of repetitions
+     * @throws CustomExceptions.InvalidInput if an invalid number of repetitions is passed in
+     */
     protected int validateNumberOfRepetitions(String numberOfRepetitions) throws CustomExceptions.InvalidInput {
 
         boolean isRepsValid = Validation.validateIntegerIsPositive(numberOfRepetitions);
+
         if (!isRepsValid) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_REPS_POSITIVE_DIGIT_ERROR);
         }
@@ -241,7 +228,16 @@ public class Gym extends Workout {
         return Integer.parseInt(numberOfRepetitions);
     }
 
-
+    /**
+     * Validates the weight string ensuring that
+     * - The weight is positive
+     * - The weight does not exceed the maximum weight (@code WorkoutConstant.MAX_GYM_WEIGHT)
+     * - The weight is a multiple of 0.125 (as that is the increment of weights in a gym)
+     *
+     * @param weight The string representing the weight
+     * @return boolean true if the weight is valid
+     * @throws CustomExceptions.InvalidInput if an invalid weight is passed in
+     */
     protected boolean validateWeight(String weight) throws CustomExceptions.InvalidInput {
         try{
             double weightDouble = Double.parseDouble(weight);
@@ -257,9 +253,10 @@ public class Gym extends Workout {
     }
 
 
+    // Private Methods
     private void validateExerciseNameNotEmpty(String exerciseName) throws CustomExceptions.InsufficientInput {
         if (exerciseName.isEmpty()) {
-            throw new CustomExceptions.InsufficientInput(ErrorConstant.EMPTY_GYM_STATION_NAME_ERROR);
+            throw new CustomExceptions.InsufficientInput(ErrorConstant.INVALID_GYM_STATION_EMPTY_NAME_ERROR);
         }
     }
 
@@ -271,10 +268,9 @@ public class Gym extends Workout {
 
     private void validateExerciseNameLength(String exerciseName) throws CustomExceptions.InvalidInput {
         if (exerciseName.length() > WorkoutConstant.MAX_GYM_STATION_NAME_LENGTH) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.GYM_STATION_NAME_LENGTH_ERROR);
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_GYM_STATION_NAME_ERROR);
         }
     }
-
 
     private void validateWeightIsPositive(double weight) throws CustomExceptions.InvalidInput {
         if (weight < WorkoutConstant.MIN_GYM_WEIGHT){
@@ -308,5 +304,9 @@ public class Gym extends Workout {
         if (!weightsString.matches(UiConstant.VALID_WEIGHTS_ARRAY_REGEX)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_WEIGHTS_ARRAY_FORMAT_ERROR);
         }
+    }
+
+    private void appendIntoStations(GymStation station) {
+        stations.add(station);
     }
 }

@@ -95,30 +95,43 @@ public class ErrorConstant {
     public static final String INVALID_MINUTE_ERROR = "Minutes must be a positive integer between 01 and 59!";
 
     // GYM ERRORS
+    public static final String INVALID_GYM_STATION_FORMAT_ERROR = "Remember that you are now adding gym station input!"
+            + System.lineSeparator()
+            + "Expected format: [Station Name] /s:[SETS] /r:[REPS] /w:[WEIGHTS]";
     public static final String INSUFFICIENT_GYM_PARAMETERS_ERROR = "Insufficient parameters for gym! "
             + "Example input: /e:gym /n:2 [/date:DATE]"
             + System.lineSeparator()
             + "Only input what is required! Additional characters between flags will cause errors.";
-    public static final String INVALID_NUMBER_OF_STATIONS_ERROR = "Number of stations is a positive number!";
-    public static final String EMPTY_GYM_STATION_NAME_ERROR = "Gym station name cannot be blank!";
-
-    public static final String INVALID_GYM_STATION_NAME_ERROR = "Gym station name can only have letters!";
-    public static final String GYM_STATION_NAME_LENGTH_ERROR = "Gym station name cannot be more than 25 characters!";
-    public static final String GYM_STATION_FORMAT_ERROR = "Remember that you are now adding gym station input!"
+    public static final String INVALID_NUMBER_OF_STATIONS_ERROR = "Number of stations is a positive number!"
             + System.lineSeparator()
-            + "Expected format: [Station Name] /s:[SETS] /r:[REPS] /w:[WEIGHTS]";
+            + "For instance, '/n:a' is invalid as it is not a number"
+            + INVALID_GYM_STATION_FORMAT_ERROR;
+    public static final String INVALID_GYM_STATION_EMPTY_NAME_ERROR = "Gym station name cannot be blank!" +
+            System.lineSeparator() +
+            "Please input an station name" +
+            System.lineSeparator() +
+            INVALID_GYM_STATION_FORMAT_ERROR;
+
+    public static final String INVALID_GYM_STATION_NAME_ERROR = "Gym station name can only have letters and cannot" +
+            "be more than 25 characters!" +
+            System.lineSeparator() +
+            "Please input a shorter name." +
+            System.lineSeparator() +
+            INVALID_GYM_STATION_FORMAT_ERROR;
+
+
     public static final String INVALID_SETS_POSITIVE_DIGIT_ERROR = "Number of sets must be a positive integer!"
             + System.lineSeparator()
-            + GYM_STATION_FORMAT_ERROR;
+            + INVALID_GYM_STATION_FORMAT_ERROR;
     public static final String INVALID_REPS_POSITIVE_DIGIT_ERROR = "Number of reps must be a positive integer!"
             + System.lineSeparator()
-            + GYM_STATION_FORMAT_ERROR;
+            + INVALID_GYM_STATION_FORMAT_ERROR;
     public static final String INVALID_WEIGHTS_VALUE_ERROR = "The weight done for each set must "
             + "be a multiple of 0.125." 
             + System.lineSeparator() 
             + "This is because the smallest weight increment in most gyms is 0.125kg."
             + System.lineSeparator() 
-            + GYM_STATION_FORMAT_ERROR;
+            + INVALID_GYM_STATION_FORMAT_ERROR;
     public static final String MAX_STATIONS_ERROR = "Number of stations done cannot be more than 50!";
 
     public static final String INVALID_WEIGHTS_ARRAY_FORMAT_ERROR = "Weights array format is incorrect!"
@@ -126,10 +139,10 @@ public class ErrorConstant {
             + "Weights must be separated by commas (with no whitespaces) " +
             "and be a positive decimal (up to 3 decimal places)"
             + System.lineSeparator()
-            + GYM_STATION_FORMAT_ERROR;
+            + INVALID_GYM_STATION_FORMAT_ERROR;
     public static final String INVALID_WEIGHTS_EMPTY_ERROR = "Weights array cannot be empty"
             + System.lineSeparator()
-            + GYM_STATION_FORMAT_ERROR;
+            + INVALID_GYM_STATION_FORMAT_ERROR;
 
          
     public static final String INVALID_WEIGHTS_NUMBER_ERROR = "Number of weight values must be the same as"
@@ -137,7 +150,7 @@ public class ErrorConstant {
             + System.lineSeparator()
             + "Please check the number of sets (/s:[value]) and the number of weight values (/w:value1,value2,...)"
             + System.lineSeparator()
-            + GYM_STATION_FORMAT_ERROR;
+            + INVALID_GYM_STATION_FORMAT_ERROR;
 
     // HEALTH ERRORS
     public static final String INVALID_HEALTH_INPUT_ERROR = "Invalid input for health type! " +
