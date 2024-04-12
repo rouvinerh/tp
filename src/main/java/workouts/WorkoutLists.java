@@ -4,7 +4,7 @@ import storage.LogFile;
 import ui.Output;
 import utility.CustomExceptions;
 import constants.ErrorConstant;
-import constants.WorkoutConstant;
+import utility.Validation;
 
 import java.util.ArrayList;
 
@@ -23,47 +23,35 @@ public class WorkoutLists {
     protected WorkoutLists() {
 
     }
-    /**
-     * Adds a workout to the list of workouts.
-     *
-     * @param workout Workout object to be added.
-     */
-    protected void addWorkout(Workout workout) {
-        WORKOUTS.add(workout);
-    }
 
     /**
-     * Adds a run to the list of runs and workouts.
+     * Returns the static list of workouts objects which contains both runs and gyms.
+     * It is important to note that the list is not sorted by date (as it is optional)
+     * Rather, it is ordered by when it has been created.
      *
-     * @param run Run object to be added.
+     * @return The list of workouts.
      */
-    protected void addRun(Run run) {
-        RUNS.add(run);
-        addWorkout(run);
-    }
-
-    /**
-     * Adds a gym to the list of gyms and workouts.
-     *
-     * @param gym Gym object to be added.
-     */
-    protected void addGym(Gym gym) {
-        GYMS.add(gym);
-        addWorkout(gym);
-    }
-
     public static ArrayList<Workout> getWorkouts() {
         return WORKOUTS;
     }
 
+    /**
+     * Returns the static list of runs objects.
+     *
+     * @return The list of runs.
+     */
     public static ArrayList<Run> getRuns(){
         return RUNS;
     }
 
+    /**
+     * Returns the static list of gyms objects.
+     *
+     * @return The list of gyms.
+     */
     public static ArrayList<Gym> getGyms() {
         return GYMS;
     }
-
 
     /**
      * Returns latest run.
@@ -78,53 +66,18 @@ public class WorkoutLists {
         return RUNS.get(RUNS.size() - 1);
     }
 
+    /**
+     * Returns latest gym.
+     *
+     * @return The latest Gym object added.
+     * @throws CustomExceptions.OutOfBounds If no gyms are found in the list.
+     */
     public static Gym getLatestGym() throws CustomExceptions.OutOfBounds {
         if (GYMS.isEmpty()) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.GYM_EMPTY_ERROR);
         }
         return GYMS.get(GYMS.size() - 1);
     }
-
-//    /**
-//     * Returns a list of workouts based on the filter.
-//     *
-//     * @param filter can be "all", "run" or "gym".
-//     *               "all" returns all workouts.
-//     *               "run" returns only runs.
-//     *               "gym" returns only gym workouts.
-//     * @return ArrayList of workouts.
-//     */
-////    public static ArrayList<? extends Workout> getWorkouts(String filter)
-////            throws CustomExceptions.OutOfBounds,
-////            CustomExceptions.InvalidInput {
-////
-////        filter = filter.toLowerCase();
-////
-////        if(!filter.equals(WorkoutConstant.ALL) && !filter.equals(WorkoutConstant.RUN)
-////                && !filter.equals(WorkoutConstant.GYM)) {
-////            throw new CustomExceptions.InvalidInput(ErrorConstant.INSUFFICIENT_HISTORY_FILTER_ERROR);
-////        }
-////        if(filter.equals(WorkoutConstant.RUN) && RUNS.isEmpty()){
-////            throw new CustomExceptions.OutOfBounds(ErrorConstant.RUN_EMPTY_ERROR);
-////        }
-////        if(filter.equals(WorkoutConstant.ALL) && WORKOUTS.isEmpty()){
-////            throw new CustomExceptions.OutOfBounds(ErrorConstant.WORKOUTS_EMPTY_ERROR);
-////        }
-////        if(filter.equals(WorkoutConstant.GYM) && GYMS.isEmpty()){
-////            throw new CustomExceptions.OutOfBounds(ErrorConstant.GYM_EMPTY_ERROR);
-////        }
-////
-////        if(filter.equals(WorkoutConstant.RUN)){
-////            return getWorkouts();
-////        } else if (filter.equals(WorkoutConstant.GYM)) {
-////            return getGym
-////        } else {
-////            return WORKOUTS;
-////        }
-////
-////    }
-
-
 
     /**
      * Returns the number of runs in the list.
@@ -145,53 +98,83 @@ public class WorkoutLists {
     }
 
     /**
-     * Deletes Gym object based on index.
+     * Deletes Gym object based on the {@code index} that will be validated.
      * @param index Index of the Gym object to be deleted.
+     * @throws CustomExceptions.OutOfBounds If the index is invalid.
      */
     public static void deleteGym(int index) throws CustomExceptions.OutOfBounds {
         assert !GYMS.isEmpty() : "Gym list is empty.";
-        if (index < 0 || index >= GYMS.size()) {
-            throw new CustomExceptions.OutOfBounds("Invalid index to delete!");
+        boolean indexIsValid = Validation.validateIndexWithinBounds(index, 0 , GYMS.size());
+        if (indexIsValid) {
+            Gym deletedGym = GYMS.get(index);
+            Output.printDeleteGymMessage(deletedGym);
+            WORKOUTS.remove(deletedGym);
+            GYMS.remove(index);
+            LogFile.writeLog("Removed gym with index: " + index, false);
         }
-        Gym deletedGym = GYMS.get(index);
-        Output.printLine();
-        System.out.println("Removed Gym entry with " +
-                deletedGym.stations.size() +
-                " stations.");
-        Output.printLine();
-        WORKOUTS.remove(deletedGym);
-        GYMS.remove(index);
-        LogFile.writeLog("Removed gym with index: " + index, false);
     }
 
     /**
-     * Deletes Run object based on index.
+     * Deletes Run object based on the {@code index} that will be validated
      * @param index Index of the Run object to be deleted.
+     * @throws CustomExceptions.OutOfBounds If the index is invalid.
      */
     public static void deleteRun(int index) throws CustomExceptions.OutOfBounds {
         assert !RUNS.isEmpty() : "Run list is empty.";
-        if (index < 0 || index >= RUNS.size()) {
-            throw new CustomExceptions.OutOfBounds("Invalid index to delete!");
+        boolean indexIsValid = Validation.validateIndexWithinBounds(index, 0 , RUNS.size());
+        if (indexIsValid) {
+            Run deletedRun = RUNS.get(index);
+            Output.printDeleteRunMessage(deletedRun);
+            WORKOUTS.remove(deletedRun);
+            RUNS.remove(index);
+            LogFile.writeLog("Removed run with index: " + index, false);
         }
-        Run deletedRun = RUNS.get(index);
-        Output.printLine();
-        System.out.println("Removed Run entry with " +
-                deletedRun.distance +
-                "km at " +
-                deletedRun.getPace() +
-                ".");
-        Output.printLine();
-        WORKOUTS.remove(deletedRun);
-        RUNS.remove(index);
-        LogFile.writeLog("Removed run with index: " + index, false);
     }
 
     /**
      * Clears the workouts, runs and gyms ArrayLists.
+     * Used mainly for JUnit testing to clear the list after each test.
      */
     public static void clearWorkoutsRunGym() {
         WORKOUTS.clear();
         RUNS.clear();
         GYMS.clear();
     }
+
+    // Protected Methods
+    /**
+     * Only classes within the workouts package can add a new run to the list of runs.
+     * This is called automatically when a new run object is created in the Run class.
+     * It will also automatically add the run to the workouts list by calling {@code addWorkout}.
+     *
+     * @param run the Run object to be added
+     */
+    protected void addRun(Run run) {
+        RUNS.add(run);
+        addWorkout(run);
+    }
+
+    /**
+     * Only classes within the workouts package can add a new gym to the list of gyms.
+     * This is called automatically when a new gym object is created in the Gym class.
+     * It will also automatically add the gym to the workouts list by calling {@code addWorkout}.
+     *
+     * @param gym the Gym object to be added.
+     */
+    protected void addGym(Gym gym) {
+        GYMS.add(gym);
+        addWorkout(gym);
+    }
+
+    // Private Methods
+
+    /**
+     * Automatically adds a workout to the list of workouts.
+     *
+     * @param workout Workout object to be added to the {@code WORKOUTS} lists.
+     */
+    private void addWorkout(Workout workout) {
+        WORKOUTS.add(workout);
+    }
+
 }
