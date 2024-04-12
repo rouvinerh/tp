@@ -22,6 +22,9 @@ public class ErrorConstant {
     // General Errors
     public static final String NEGATIVE_VALUE_ERROR = "Requires a positive integer!";
     public static final String INVALID_INDEX_DELETE_ERROR = "Invalid index to delete!";
+    public static final String INVALID_INDEX_BOUND_ERROR = "Index is Out of Bounds";
+
+    public static final String INVALID_INDEX_ERROR = "Index must be a valid positive integer.";
 
 
     // Storage Errors
@@ -66,7 +69,6 @@ public class ErrorConstant {
             "Example input: /item:item /index:index"
             + System.lineSeparator()
             + "Only input what is required! Additional characters between flags will cause errors.";
-    public static final String INVALID_INDEX_ERROR = "Index must be a valid positive integer.";
 
     // EXERCISE ERRORS
 

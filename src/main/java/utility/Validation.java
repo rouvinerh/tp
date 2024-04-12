@@ -600,4 +600,21 @@ public class Validation {
             }
         }
     }
+
+    /**
+     * Validates whether the current index provided is within the start and end
+     *
+     * @param index the index to be validated
+     * @param start the starting bound
+     * @param end the ending bound (exclusive - e.g. end = 5 means index must be < 5)
+     * @return true if the index is within the bounds, false otherwise
+     */
+    public static boolean validateIndexWithinBounds(int index, int start, int end)
+            throws CustomExceptions.OutOfBounds {
+
+        if (index < start || index >= end){
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.INVALID_INDEX_BOUND_ERROR);
+        }
+        return true;
+    }
 }

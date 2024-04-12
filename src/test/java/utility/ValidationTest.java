@@ -6,7 +6,7 @@ import health.HealthList;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import workouts.WorkoutList;
+import workouts.WorkoutLists;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -42,7 +42,7 @@ public class ValidationTest {
         System.setOut(originalOut);
         System.setIn(originalIn);
         System.setErr(originalErr);
-        WorkoutList.clearWorkoutsRunGym();
+        WorkoutLists.clearWorkoutsRunGym();
         HealthList.clearHealthLists();
     }
 
