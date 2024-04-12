@@ -4,6 +4,7 @@ import constants.ErrorConstant;
 import constants.HealthConstant;
 import constants.UiConstant;
 import constants.WorkoutConstant;
+import health.Bmi;
 import health.HealthList;
 import ui.Output;
 
@@ -148,6 +149,7 @@ public class Validation {
 
         validateDateInput(bmiDetails[HealthConstant.BMI_DATE_INDEX]);
         validateDateNotAfterToday(bmiDetails[HealthConstant.BMI_DATE_INDEX]);
+        validateDateNotPresent(bmiDetails[HealthConstant.BMI_DATE_INDEX]);
 
     }
 
@@ -184,7 +186,6 @@ public class Validation {
             if (sizeOfPeriodList >= UiConstant.MINIMUM_PERIOD_COUNT) {
                 LocalDate latestPeriodEndDate = Objects.requireNonNull(HealthList.getPeriod(0)).getEndDate();
                 validateStartDatesTally(latestPeriodEndDate, periodDetails);
-
                 validateDateAfterLatestPeriodInput(periodDetails[HealthConstant.PERIOD_START_DATE_INDEX],
                         latestPeriodEndDate);
             }
@@ -576,6 +577,22 @@ public class Validation {
             Output output = new Output();
             output.printException(ErrorConstant.NO_PERMISSIONS_ERROR);
             System.exit(1);
+        }
+    }
+
+    /**
+     * Validates whether the specified date can be found in HealthList and throws error if it is.
+     *
+     * @param dateString The date of the Bmi input to be added
+     * @throws CustomExceptions.InvalidInput If the same date is found.
+     */
+    public void validateDateNotPresent(String dateString) throws CustomExceptions.InvalidInput {
+        Parser parser = new Parser();
+        LocalDate dateToVerify = parser.parseDate(dateString);
+        for (Bmi bmi :  HealthList.getBmis()) {
+            if (bmi.getDate().isEqual(dateToVerify)) {
+                throw new CustomExceptions.InvalidInput(ErrorConstant.DATE_ALREADY_EXISTS_ERROR);
+            }
         }
     }
 }

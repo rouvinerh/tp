@@ -149,6 +149,7 @@ public class ErrorConstant {
     public static final String BMI_LIST_UNCLEARED_ERROR = "Bmi list is not cleared.";
     public static final String INVALID_HEIGHT_WEIGHT_INPUT_ERROR =
             "Height and weight should be 2 decimal place positive numbers!";
+    public static final String DATE_ALREADY_EXISTS_ERROR = "A Bmi input with the same date already exists.";
 
     // PERIOD ERRORS
     public static final String INSUFFICIENT_PERIOD_PARAMETERS_ERROR = "Insufficient parameters for period! "
@@ -179,7 +180,7 @@ public class ErrorConstant {
             + "1. End date for previous period is still empty. " +
             "Add an end date before starting a new period input!"
             + System.lineSeparator()
-            + "2. Start dates of current period do not tally. " +
+            + "2. If you're adding an end date to the latest period input, the start dates do not match! " +
             "Enter 'history /item:period' to view existing period inputs.";
     public static final String LENGTH_MUST_BE_POSITIVE_ERROR = "Length cannot be less than 1 day.";
 
