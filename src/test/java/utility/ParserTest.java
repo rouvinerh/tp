@@ -435,4 +435,23 @@ class ParserTest {
         assertThrows(CustomExceptions.InvalidInput.class, () -> parser.parseGymFileInput(input6));
     }
 
+    // @@author rouvinerh
+    /**
+     * Tests the behaviour of correct inputs being passed to splitAndValidateGymStationInput
+     * Expects no exceptions thrown.
+     *
+     * @throws CustomExceptions.InsufficientInput If there are not enough parameters.
+     * @throws CustomExceptions.InvalidInput      If there are invalid parameters specified.
+     */
+    @Test
+    void splitAndValidateGymStationInput_validInput_correctParametersReturned() throws
+            CustomExceptions.InvalidInput {
+        String input = "Bench Press /s:2 /r:4 /w:10,20";
+        String[] expected = {"Bench Press", "2", "4", "10,20"};
+        String[] result = parser.splitGymStationInput(input);
+        assertArrayEquals(expected, result);
+    }
+
+    
+
 }
