@@ -480,14 +480,13 @@ public class DataFile {
     public void writeWorkoutData(FileWriter dataFile,
                                  ArrayList<Workout> workoutArrayList) throws IOException {
 
-        Parser newParser = new Parser();
         // Write each run entry in a specific format
         // run format: run:DISTANCE:TIME:DATE
         if (!workoutArrayList.isEmpty()) {
             for (Workout workoutEntry : workoutArrayList) {
                 if (workoutEntry instanceof Run) {
                     Run runEntry = (Run) workoutEntry;
-                    String formattedDate = newParser.parseFormattedDate(runEntry.getDate());
+                    String formattedDate = runEntry.getDateForFile();
                     String formattedTime = runEntry.getTimes().replace(":", ".");
 
                     dataFile.write(DataType.RUN + UiConstant.SPLIT_BY_COLON + runEntry.getDistance() +

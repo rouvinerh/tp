@@ -381,8 +381,8 @@ class ParserTest {
             // make sure that there is two gym station created
             assertEquals(2, gymOutput.getStations().size());
             // make sure that the date is correct
-            assertEquals("1997-11-11", gymOutput.getDate().toString());
-            assertNull(gymOutput2.getDate());
+            assertEquals("1997-11-11", gymOutput.getDate());
+            assertEquals(gymOutput2.getDate(), "NA");
             // make sure the gym exercise names are correct
             assertEquals("bench press", gymOutput.getStationByIndex(0).getStationName());
             assertEquals("squats", gymOutput.getStationByIndex(1).getStationName());

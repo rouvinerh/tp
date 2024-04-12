@@ -10,7 +10,7 @@ import workouts.Gym;
 import workouts.GymStation;
 import workouts.Run;
 import workouts.Workout;
-import workouts.WorkoutList;
+import workouts.WorkoutLists;
 import health.HealthList;
 import health.Bmi;
 import health.Period;
@@ -86,11 +86,10 @@ public class Output {
      * Returns the formatted string for printing runs.
      *
      * @param index          The index of the run.
-     * @param currentWorkout The current Workout object within the list.
      * @return A string
      */
-    private String getFormattedRunWithIndex(int index, Workout currentWorkout) {
-        return String.format(WorkoutConstant.RUN_DATA_INDEX_FORMAT, index, currentWorkout);
+    private String getFormattedRunWithIndex(int index, Run currentRun) {
+        return String.format(WorkoutConstant.RUN_DATA_INDEX_FORMAT, index, currentRun);
     }
 
     /**
@@ -184,6 +183,7 @@ public class Output {
         printLine();
     }
 
+
     /**
      * Prints all Workout objects (Run and Gym) based on the time it was added.
      * The list is sorted in descending order. (Latest one first)
@@ -196,29 +196,35 @@ public class Output {
         System.out.println(WorkoutConstant.HISTORY_WORKOUTS_HEADER);
         System.out.println(WorkoutConstant.HISTORY_WORKOUTS_HEADER_FORMAT);
 
-        ArrayList<? extends Workout> workoutList = WorkoutList.getWorkouts(WorkoutConstant.ALL);
-        for (int i = 0; i < workoutList.size(); i++) {
-            Workout workout = workoutList.get(i);
-            if (workout instanceof Run) {
-                Run run = (Run) workout;
-                System.out.printf((WorkoutConstant.HISTORY_WORKOUTS_DATA_HEADER_FORMAT) + "%n",
-                        (i + 1), run.getFormatForAllHistory());
-            } else {
-                Gym gym = (Gym) workout;
-                int numberOfStation = gym.getStations().size();
-                for (int j = 0; j < numberOfStation; j++) {
-                    String gymString;
-                    if (j == 0) {
-                        gymString = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_HEADER_FORMAT,
-                                (i + 1), gym.getHistoryFormatForSpecificGymStation(j));
-                    } else {
-                        gymString = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_HEADER_FORMAT,
-                                "", gym.getHistoryFormatForSpecificGymStation(j));
+        ArrayList<? extends Workout> workoutList = WorkoutLists.getWorkouts();
+        if (workoutList.isEmpty()) {
+            printWorkoutEmptyMessage();
+        } else {
+            for (int i = 0; i < workoutList.size(); i++) {
+                Workout workout = workoutList.get(i);
+                if (workout instanceof Run) {
+                    Run run = (Run) workout;
+                    String formattedRunString = run.getFormatForAllHistory();
+                    System.out.printf((WorkoutConstant.HISTORY_WORKOUTS_DATA_HEADER_FORMAT) + "%n",
+                            (i + 1), formattedRunString);
+                } else {
+                    Gym gym = (Gym) workout;
+                    int numberOfStation = gym.getStations().size();
+                    for (int j = 0; j < numberOfStation; j++) {
+                        String gymString;
+                        if (j == 0) {
+                            gymString = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_HEADER_FORMAT,
+                                    (i + 1), gym.getHistoryFormatForSpecificGymStation(j));
+                        } else {
+                            gymString = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_HEADER_FORMAT,
+                                    "", gym.getHistoryFormatForSpecificGymStation(j));
+                        }
+                        System.out.println(gymString);
                     }
-                    System.out.println(gymString);
                 }
             }
         }
+
         printLine();
     }
 
@@ -231,16 +237,22 @@ public class Output {
     protected void printRunHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
         printLine();
         System.out.println("Your run history:");
-        ArrayList<? extends Workout> workoutList = WorkoutList.getWorkouts(WorkoutConstant.RUN);
-        String runHeader = String.format(WorkoutConstant.RUN_HEADER_INDEX_FORMAT);
-        System.out.println(runHeader);
+        ArrayList<Run> runList = WorkoutLists.getRuns();
 
-        for (int i = 0; i < workoutList.size(); i++) {
-            int index = i + 1;
-            Workout currentWorkout = workoutList.get(i);
-            String output = getFormattedRunWithIndex(index, currentWorkout);
-            System.out.println(output);
+        if(runList.isEmpty()){
+            printRunEmptyMessage();
+        } else {
+            String runHeader = String.format(WorkoutConstant.RUN_HEADER_INDEX_FORMAT);
+            System.out.println(runHeader);
+
+            for (int i = 0; i < runList.size(); i++) {
+                int index = i + 1;
+                Run currentRun = runList.get(i);
+                String output = getFormattedRunWithIndex(index, currentRun);
+                System.out.println(output);
+            }
         }
+
         printLine();
     }
 
@@ -256,24 +268,46 @@ public class Output {
         }
     }
 
+
+    private void printGymList(ArrayList<Gym> gymList){
+        for (int i = 0; i < gymList.size(); i++) {
+            int index = i + 1;
+            Gym currentWorkout = gymList.get(i);
+            System.out.println("Gym Session " + index + currentWorkout);
+            printGymStats(currentWorkout);
+            if (i != gymList.size() - 1) {
+                printLine();
+            }
+        }
+    }
+
+    /**
+     * Prints a message when the Gym list is empty.
+     */
+
+    private void printGymEmptyMessage(){
+        printException(ErrorConstant.GYM_EMPTY_ERROR);
+    }
+
+    private void printRunEmptyMessage(){
+        printException(ErrorConstant.RUN_EMPTY_ERROR);
+    }
+
+    private void printWorkoutEmptyMessage(){
+        printException(ErrorConstant.WORKOUTS_EMPTY_ERROR);
+    }
     /**
      * Prints all the information for all Gym objects within the list.
      *
-     * @throws CustomExceptions.OutOfBounds  If index is out of bounds.
-     * @throws CustomExceptions.InvalidInput If user input is invalid.
      */
-    protected void printGymHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
+    protected void printGymHistory() {
         printLine();
         System.out.println("Your gym history:");
-        ArrayList<? extends Workout> workoutList = WorkoutList.getWorkouts(WorkoutConstant.GYM);
-        for (int i = 0; i < workoutList.size(); i++) {
-            int index = i + 1;
-            Gym currentWorkout = (Gym) workoutList.get(i);
-            System.out.println("Gym Session " + index + currentWorkout);
-            printGymStats(currentWorkout);
-            if (i != workoutList.size() - 1) {
-                printLine();
-            }
+        ArrayList<Gym> gymList = WorkoutLists.getGyms();
+        if (gymList.isEmpty()) {
+            printGymEmptyMessage();
+        } else {
+            printGymList(gymList);
         }
         printLine();
     }
@@ -342,8 +376,8 @@ public class Output {
 
         try {
             printLine();
-            Workout latestRun = WorkoutList.getLatestRun();
-            String latestRunString = getFormattedRunWithIndex(WorkoutList.getRunSize(), latestRun);
+            Run latestRun = WorkoutLists.getLatestRun();
+            String latestRunString = getFormattedRunWithIndex(WorkoutLists.getRunSize(), latestRun);
             System.out.println("Your latest run:");
             System.out.println(WorkoutConstant.RUN_HEADER_INDEX_FORMAT);
             System.out.println(latestRunString);
@@ -361,8 +395,8 @@ public class Output {
 
         try {
             printLine();
-            Gym latestGym = WorkoutList.getLatestGym();
-            int index = WorkoutList.getGymSize();
+            Gym latestGym = WorkoutLists.getLatestGym();
+            int index = WorkoutLists.getGymSize();
             System.out.println("Your latest gym:");
             System.out.println("Gym Session " + index + latestGym);
             printGymStats(latestGym);
@@ -544,5 +578,24 @@ public class Output {
         System.out.println("PulsePilot successful touchdown");
         System.out.println("See you soon, Captain!");
         printLine();
+    }
+
+    // Print Delete Message
+
+    public static void printDeleteRunMessage(Run run){
+        printLine();
+        String messageString = String.format(WorkoutConstant.RUN_DELETE_MESSAGE_FORMAT,
+                run.getDistance(),
+                run.getPace());
+        System.out.println(messageString);
+        printLine();
+    }
+
+    public static void printDeleteGymMessage(Gym gym){
+        Output.printLine();
+        String messageString = String.format(WorkoutConstant.GYM_DELETE_MESSAGE_FORMAT,
+                gym.getStations().size());
+        System.out.println(messageString);
+        Output.printLine();
     }
 }
