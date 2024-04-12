@@ -2,6 +2,8 @@
 
 ![Logo](img/logo.jpg)
 
+<!-- @@author L5-Z -->
+
 ## Introduction
 
 **PulsePilot** is a desktop application designed for **efficiently tracking health-related information** through a **Command Line Interface (CLI)**. For users who can type quickly, the CLI allows for faster data entry compared to traditional Graphical User Interface (GUI) applications on phones or computers.
@@ -89,6 +91,9 @@ This profile will be used to store all your health and workout data.
 
 ## Commands
 
+<!-- @@author rouvinerh -->
+
+
 ### Workout: Run
 
 Adds a new run session to track.
@@ -121,6 +126,8 @@ Expected Output:
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<!-- @@author JustinSoh -->
 
 ### Workout: Gym
 
@@ -178,6 +185,8 @@ Expected Output:
 ###### [Back to table of contents](#table-of-contents)
 
 ___
+
+<!-- @@author j013n3 -->
 
 ### Health: BMI
 
@@ -247,6 +256,8 @@ Expected Output:
 
 ___
 
+<!-- @@author syj02 -->
+
 ### Health: Prediction
 
 Predicts user's next period start date.
@@ -294,6 +305,8 @@ Expected Output:
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<!-- @@author rouvinerh -->
 
 ### History
 
@@ -371,6 +384,8 @@ Expected output:
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<!-- @@author L5-Z -->
 
 ### Help
 
@@ -521,6 +536,8 @@ Avoid using extra characters in the commands, such as blank space, newline, etc.
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<!-- @@author JustinSoh -->
 
 ## Command Summary
 

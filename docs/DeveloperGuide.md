@@ -17,6 +17,8 @@
 
 ---
 
+<!-- @@author syj02 -->
+
 ## Acknowledgements
 
 Our team has referenced [Address Book (Level-3)](https://github.com/se-edu/addressbook-level3) and used their [Developer Guide (DG)](https://se-education.org/addressbook-level3/DeveloperGuide.html) to better structure our own Developer Guide.
@@ -25,7 +27,7 @@ Our team has referenced [Address Book (Level-3)](https://github.com/se-edu/addre
 
 ## Introduction
 
-The purpose of this guide is to provide an explanation for all the functions and internal workings in PulsePilot. This enables any technical readers to get a detailed understanding of the application's implementation, making it easier for them to contribute to the project or adapt it according to their preferences. This is made to complement the User Guide. 
+The purpose of this guide is to provide an explanation for all the functions and internal workings in PulsePilot. This enables any technical readers to get a detailed understanding of the application's implementation, making it easier for them to contribute to the project or adapt it according to their preferences. This is made to complement the User Guide.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -82,6 +84,8 @@ The `seedu.pulsepilot` package contains the `Main` method, the entry point of th
 
 ---
 
+<!-- @@author L5-Z -->
+
 ### UI Package
 
 The `UI` package contains the `Handler` and `Output` classes, which are responsible for handling user input and printing of output fo the screen respectively.
@@ -121,6 +125,8 @@ The class diagram for `Output` has been omitted, since a developer can read the 
 
 ---
 
+<!-- @@author rouvinerh -->
+
 ### Workouts Package
 
 The `Workout` package is responsible for tracking run and gym workouts from the user.
@@ -138,6 +144,8 @@ The `clearWorkoutsRunGym()` method is used to clear all the data stored within e
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<!-- @@author JustinSoh -->
 
 #### Gym
 
@@ -180,6 +188,8 @@ The class diagram for gym is as follows:
 
 ---
 
+<!-- @@author rouvinerh -->
+
 #### Run
 
 `Run` is a class that represents a run workout the user has recorded. It contains the following attributes:
@@ -193,6 +203,8 @@ The class diagram for gym is as follows:
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<!-- @@author j013n3 -->
 
 ### Health Package
 
@@ -245,6 +257,8 @@ The `clearHealthLists()` method is used to clear all the data stored within each
 
 ---
 
+<!-- @@author syj02 -->
+
 #### Appointment
 
 `Appointment` is a class that represents the past and upcoming medical appointments of the user. It contains the following attributes:
@@ -256,6 +270,9 @@ The `clearHealthLists()` method is used to clear all the data stored within each
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<!-- @@author rouvinerh -->
+
 ### Utility Package
 
 The `Utility` package includes classes and methods that handle exceptions, user input parsing, user input validation, and the various filter strings using enumerations.
@@ -299,7 +316,6 @@ The exceptions are further broken down into the following:
 - `FileCreateError`: Unable to create files for `Storage`.
 - `InsufficientInput`: When not enough parameters or blank parameters for a command are detected.
 
-
 ###### [Back to table of contents](#table-of-contents)
 
 ---
@@ -313,6 +329,8 @@ This is represented as enumerations. Attempts to use an invalid filter results i
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<!-- @@author L5-Z -->
 
 ### Storage Package
 
@@ -340,6 +358,8 @@ The constants are broken down into the following 4 classes:
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<!-- @@author rouvinerh -->
 
 ## Commands and Implementation
 
@@ -385,6 +405,8 @@ This is the sequence diagram for adding a run from `parseRunInput()`:
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<!-- @@author JustinSoh -->
 
 #### Add Gym
 
@@ -436,7 +458,9 @@ The `validateWeightsArray()` method converts the `String[] weightsArray` variabl
 
 ###### [Back to table of contents](#table-of-contents)
 
---- 
+---
+
+<!-- @@author j013n3 -->
 
 ### Health
 
@@ -512,6 +536,8 @@ The user's input is processed to predict user's next period start date as follow
 
 ---
 
+<!-- @@author syj02 -->
+
 #### Add Appointment
 
 The user's input is processed to add an Appointment  as follows:
@@ -536,6 +562,8 @@ This is the sequence diagram for adding an Appointment from `parseAppointmentInp
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<!-- @@author JustinSoh -->
 
 ### View History
 
@@ -586,6 +614,8 @@ This is the sequence diagram for `latest`:
 
 ---
 
+<!-- @@author rouvinerh -->
+
 ### Delete Item
 
 Deleting an item follows this sequence:
@@ -604,6 +634,8 @@ Deleting an item follows this sequence:
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<!-- @@author L5-Z -->
 
 ### Storage of Data
 
@@ -635,6 +667,8 @@ The reading of files has been implemented as follows:
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<!-- @@author JustinSoh -->
 
 ## Appendix: Requirements
 
@@ -715,6 +749,8 @@ Simultaneously, PulsePilot facilitates access to this vital data for various hea
 
 ---
 
+<!-- @@author rouvinerh -->
+
 ### Manual Testing
 
 * [Launching and Termination](#launching-and-termination)
@@ -783,6 +819,9 @@ Simultaneously, PulsePilot facilitates access to this vital data for various hea
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<!-- @@author JustinSoh -->
+
 #### Gym Testing
 
 **Adding a gym:**
@@ -829,6 +868,8 @@ bench press /s:2 /r:4 /w:10
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<!-- @@author j013n3 -->
 
 #### BMI Testing
 
@@ -887,6 +928,8 @@ health /h:period /start:10-04-2024 /end:16-04-2024
 
 ---
 
+<!-- @@author syj02 -->
+
 #### Prediction Testing
 
 **Checking prediction with 4 valid periods added:**
@@ -931,6 +974,8 @@ Adding an appointment:
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<!-- @@author rouvinerh -->
 
 #### History Testing
 
@@ -998,6 +1043,8 @@ delete /item:run /index:1
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<!-- @@author L5-Z -->
 
 #### Storage Testing
 
