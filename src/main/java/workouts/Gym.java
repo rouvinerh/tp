@@ -25,8 +25,6 @@ public class Gym extends Workout {
      *
      */
     public Gym() {
-        super();
-        super.addIntoWorkoutList(this);
     }
 
     /**
