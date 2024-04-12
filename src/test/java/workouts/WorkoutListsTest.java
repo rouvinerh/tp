@@ -37,8 +37,8 @@ class WorkoutListsTest {
             WorkoutLists workoutListsInstance = new WorkoutLists();
             workoutListsInstance.addRun(inputRun);
 
-            ArrayList<? extends Workout> runList = WorkoutLists.getWorkouts(WorkoutConstant.RUN);
-            ArrayList<? extends Workout> workoutList = WorkoutLists.getWorkouts(WorkoutConstant.ALL);
+            ArrayList<Run> runList = WorkoutLists.getRuns();
+            ArrayList<Workout> workoutList = WorkoutLists.getWorkouts();
 
             Workout expectedRun = runList.get(runList.size() - 1);
             Workout expectedWorkout = workoutList.get(runList.size() - 1);
@@ -46,8 +46,6 @@ class WorkoutListsTest {
             assertEquals(inputRun, expectedRun);
             assertEquals(inputRun, expectedWorkout);
 
-        } catch (CustomExceptions.OutOfBounds e) {
-            fail("Should not throw an exception");
         } catch (CustomExceptions.InvalidInput e) {
             fail("Should not throw an exception.");
         }
@@ -68,51 +66,38 @@ class WorkoutListsTest {
             inputList.add(new Run("30:10", "20.3", "30-03-2023"));
 
 
-            ArrayList<? extends Workout> runList = WorkoutLists.getWorkouts(WorkoutConstant.RUN);
+            ArrayList<Run> runList = WorkoutLists.getRuns();
             for(int i = 0; i < inputList.size(); i++) {
                 Run expected = inputList.get(i);
                 Run actual = (Run) runList.get(i);
                 assertEquals(expected, actual);
             }
 
-        } catch (CustomExceptions.OutOfBounds | CustomExceptions.InvalidInput e) {
+        } catch (CustomExceptions.InvalidInput e) {
             fail("Should not throw an exception.");
         }
     }
 
-    /**
-     * Tests the behavior of getting the workout list with {@code RUN} , {@code ALL}
-     * Verifies whether the method is able to correct retrieve the list of workouts.
-     */
-    @Test
-    void getWorkouts_improperFilters_throwInvalidInput() throws CustomExceptions.InvalidInput {
-        ArrayList<Workout> inputList = new ArrayList<>();
-        inputList.add(new Run("40:10", "10.3", "15-03-2024"));
-        inputList.add(new Run("30:10", "20.3", "30-03-2023"));
 
-        assertThrows(CustomExceptions.InvalidInput.class, () -> {
-            ArrayList<? extends Workout> runList = WorkoutLists.getWorkouts("invalidFilter");
-        });
-    }
 
-    /**
-     * Tests the behavior of getting an empty run / gym list
-     * Expected behaviour is to raise {@code OutOfBounds} exception.
-     */
-    @Test
-    void getWorkouts_emptyList_throwOutOfBoundsForRun() {
-        assertThrows(CustomExceptions.OutOfBounds.class, () -> WorkoutLists.getWorkouts(WorkoutConstant.GYM));
-        assertThrows(CustomExceptions.OutOfBounds.class, () -> WorkoutLists.getWorkouts(WorkoutConstant.RUN));
-    }
+//    /**
+//     * Tests the behavior of getting an empty run / gym list
+//     * Expected behaviour is to raise {@code OutOfBounds} exception.
+//     */
+//    @Test
+//    void getWorkouts_emptyList_throwOutOfBoundsForRun() {
+//        assertThrows(CustomExceptions.OutOfBounds.class, () -> WorkoutLists.getGyms());
+//        assertThrows(CustomExceptions.OutOfBounds.class, () -> WorkoutLists.getRuns());
+//    }
 
-    /**
-     * Tests the behavior of getting an empty run list
-     * Expected behaviour is to raise {@code OutOfBounds} exception.
-     */
-    @Test
-    void getWorkouts_emptyList_throwOutOfBoundsForAll() {
-        assertThrows(CustomExceptions.OutOfBounds.class, () -> WorkoutLists.getWorkouts(WorkoutConstant.ALL));
-    }
+//    /**
+//     * Tests the behavior of getting an empty run list
+//     * Expected behaviour is to raise {@code OutOfBounds} exception.
+//     */
+//    @Test
+//    void getWorkouts_emptyList_throwOutOfBoundsForAll() {
+//        assertThrows(CustomExceptions.OutOfBounds.class, () -> WorkoutLists.getWorkouts(WorkoutConstant.ALL));
+//    }
 
     /**
      * Tests the behavior of getting the latest run from the run list.

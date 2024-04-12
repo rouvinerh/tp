@@ -144,19 +144,19 @@ class OutputTest {
 
         // printing latest of an empty run list
         output.printHistory(WorkoutConstant.RUN);
-        expectedString = TestHelper.errorOutOfBoundsString(ErrorConstant.RUN_EMPTY_ERROR);
-        assertTrue(errContent.toString().contains(expectedString));
+        expectedString = TestHelper.errorInvalidCommandString(ErrorConstant.RUN_EMPTY_ERROR);
+        assertEquals(errContent.toString(), expectedString);
         cleanup();
 
         // printing latest of an empty gym list
         output.printHistory(WorkoutConstant.GYM);
-        expectedString = TestHelper.errorOutOfBoundsString(ErrorConstant.GYM_EMPTY_ERROR);
+        expectedString = TestHelper.errorInvalidCommandString(ErrorConstant.GYM_EMPTY_ERROR);
         assertTrue(errContent.toString().contains(expectedString));
         cleanup();
 
         // printing latest of an empty workout list
         output.printHistory(WorkoutConstant.ALL);
-        expectedString = TestHelper.errorOutOfBoundsString(ErrorConstant.WORKOUTS_EMPTY_ERROR);
+        expectedString = TestHelper.errorInvalidCommandString(ErrorConstant.WORKOUTS_EMPTY_ERROR);
         assertTrue(errContent.toString().contains(expectedString));
         cleanup();
 
