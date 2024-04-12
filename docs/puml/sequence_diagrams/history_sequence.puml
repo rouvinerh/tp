@@ -5,21 +5,15 @@ participant "parser:Parser" as Parser
 participant "validation:Validation" as Validation
 
 
-Handler -> Parser: parseHistoryAndLatestInput(userInput)
+Handler -> Parser: parseHistory(userInput)
 activate Handler #FFBBBB
 activate Parser #FFBBBB
 
-    Parser -> Parser: extractSubstring() 
-    note right of Parser: Extracts filter string\nfrom userInput
-    activate Parser #Salmon
-    Parser --> Parser: filter:String
-    deactivate Parser #Salmon
-
-    Parser -> Validation: validateFilter(filter) 
+    Parser -> Validation: validateHistoryFilter(filter) 
     activate Validation #FFBBBB
     Validation --> Parser: 
     deactivate Validation #FFBBBB
-    Parser --> Handler
+    Parser --> Handler: filter
 deactivate Parser
 Handler -> Output : printHistory(filter)
 activate Output #FFBBBB
