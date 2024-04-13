@@ -467,7 +467,6 @@ public class Validation {
     public boolean validateDateNotEmpty (String date) {
         return date != null && !date.equals("NA");
     }
-
     //@@author j013n3
     /**
      * Validates whether the start date is before or equal to the end date of the latest period in the HealthList.
