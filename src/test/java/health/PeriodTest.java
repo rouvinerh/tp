@@ -48,7 +48,7 @@ class PeriodTest {
                 + System.lineSeparator()
                 + "Period Length: "
                 + period.getPeriodLength()
-                + " days"
+                + " day(s)"
                 + System.lineSeparator();
 
         System.out.println(period);
@@ -72,7 +72,7 @@ class PeriodTest {
                 + System.lineSeparator()
                 + "Period Length: "
                 + secondPeriod.getPeriodLength()
-                + " days"
+                + " day(s)"
                 + System.lineSeparator();
 
         HealthList.printLatestPeriod();
@@ -97,7 +97,7 @@ class PeriodTest {
                 + System.lineSeparator()
                 + "Period Length: "
                 + secondPeriod.getPeriodLength()
-                + " days"
+                + " day(s)"
                 + System.lineSeparator()
                 + "2. Period Start: "
                 + firstPeriod.getStartDate()
@@ -106,11 +106,11 @@ class PeriodTest {
                 + System.lineSeparator()
                 + "Period Length: "
                 + firstPeriod.getPeriodLength()
-                + " days"
+                + " day(s)"
                 + System.lineSeparator()
                 + "Cycle Length: "
                 + firstPeriod.cycleLength
-                + " days"
+                + " day(s)"
                 + System.lineSeparator();
 
         HealthList.printPeriodHistory();
@@ -239,7 +239,7 @@ class PeriodTest {
                 + System.lineSeparator()
                 + "Period Length: "
                 + fourthPeriod.getPeriodLength()
-                + " days"
+                + " day(s)"
                 + System.lineSeparator()
                 + "Period Start: "
                 + thirdPeriod.getStartDate()
@@ -248,11 +248,11 @@ class PeriodTest {
                 + System.lineSeparator()
                 + "Period Length: "
                 + thirdPeriod.getPeriodLength()
-                + " days"
+                + " day(s)"
                 + System.lineSeparator()
                 + "Cycle Length: "
                 + thirdPeriod.cycleLength
-                + " days"
+                + " day(s)"
                 + System.lineSeparator()
                 + "Period Start: "
                 + secondPeriod.getStartDate()
@@ -261,11 +261,11 @@ class PeriodTest {
                 + System.lineSeparator()
                 + "Period Length: "
                 + secondPeriod.getPeriodLength()
-                + " days"
+                + " day(s)"
                 + System.lineSeparator()
                 + "Cycle Length: "
                 + secondPeriod.cycleLength
-                + " days"
+                + " day(s)"
                 + System.lineSeparator();
 
         HealthList.printLatestThreeCycles();
@@ -339,7 +339,7 @@ class PeriodTest {
                 + System.lineSeparator()
                 + "Period Length: "
                 + period.getPeriodLength()
-                + " day"
+                + " day(s)"
                 + System.lineSeparator();
 
         System.out.println(period);
@@ -370,7 +370,7 @@ class PeriodTest {
                 + System.lineSeparator()
                 + "Period Length: "
                 + period.getPeriodLength()
-                + " days"
+                + " day(s)"
                 + System.lineSeparator();
 
         System.out.println(period);

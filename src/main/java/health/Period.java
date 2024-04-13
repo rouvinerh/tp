@@ -36,8 +36,14 @@ public class Period extends Health {
      */
     protected long cycleLength;
 
+    /**
+     * A parser object to access Parser Class.
+     */
     private final Parser parser = new Parser();
 
+    /**
+     * A healthlist object to access HealthList Class which manages and stores health data.
+     */
     private final HealthList healthList = new HealthList();
 
     //@@author syj02
@@ -106,7 +112,7 @@ public class Period extends Health {
      * @return The period length.
      */
     public long getPeriodLength() {
-        assert periodLength > 0 : ErrorConstant.LENGTH_MUST_BE_POSITIVE_ERROR;
+        assert periodLength > HealthConstant.MIN_LENGTH : ErrorConstant.LENGTH_MUST_BE_POSITIVE_ERROR;
         return periodLength;
     }
 
@@ -120,10 +126,10 @@ public class Period extends Health {
     public long getLastThreeCycleLengths() {
         long sumOfCycleLengths = 0;
 
-        int startIndexForPrediction = HealthConstant.LAST_CYCLE_INDEX; // == 1
-        assert startIndexForPrediction >= 0 : ErrorConstant.START_INDEX_NEGATIVE_ERROR;
+        int startIndexForPrediction = HealthConstant.LAST_CYCLE_INDEX;
+        assert startIndexForPrediction >= HealthConstant.FIRST_ITEM : ErrorConstant.START_INDEX_NEGATIVE_ERROR;
 
-        int endIndexForPrediction = HealthConstant.FIRST_CYCLE_INDEX; // == 3
+        int endIndexForPrediction = HealthConstant.FIRST_CYCLE_INDEX;
         assert endIndexForPrediction >= startIndexForPrediction : ErrorConstant.END_INDEX_SMALLER_THAN_START_ERROR;
 
         for (int i = startIndexForPrediction; i <= endIndexForPrediction; i++) {
@@ -180,9 +186,9 @@ public class Period extends Health {
                     + nextPeriodStartDate
                     + HealthConstant.COUNT_DAYS_MESSAGE
                     + daysUntilNextPeriod
-                    + ((daysUntilNextPeriod == 1) ?
-                    UiConstant.SPLIT_BY_WHITESPACE + HealthConstant.DAY_MESSAGE + UiConstant.FULL_STOP
-                    : UiConstant.SPLIT_BY_WHITESPACE + HealthConstant.DAYS_MESSAGE + UiConstant.FULL_STOP));
+                    + UiConstant.SPLIT_BY_WHITESPACE
+                    + HealthConstant.DAYS_MESSAGE
+                    + UiConstant.FULL_STOP);
         }
 
         if (today.isEqual(nextPeriodStartDate)) {
@@ -196,9 +202,9 @@ public class Period extends Health {
                     + nextPeriodStartDate
                     + HealthConstant.PERIOD_IS_LATE
                     + -daysUntilNextPeriod
-                    + ((-daysUntilNextPeriod == 1) ?
-                    UiConstant.SPLIT_BY_WHITESPACE + HealthConstant.DAY_MESSAGE + UiConstant.FULL_STOP
-                    : UiConstant.SPLIT_BY_WHITESPACE + HealthConstant.DAYS_MESSAGE + UiConstant.FULL_STOP));
+                    + UiConstant.SPLIT_BY_WHITESPACE
+                    + HealthConstant.DAYS_MESSAGE
+                    + UiConstant.FULL_STOP);
         }
         Output.printLine();
     }
@@ -210,14 +216,13 @@ public class Period extends Health {
      */
     @Override
     public String toString() {
-        String periodLengthUnit = (periodLength == 1) ? HealthConstant.DAY_MESSAGE : HealthConstant.DAYS_MESSAGE;
         String endDateUnit = (getEndDate() == null) ? ErrorConstant.NO_DATE_SPECIFIED_ERROR : getEndDate().toString();
         return String.format(HealthConstant.PRINT_PERIOD_FORMAT,
                 getStartDate(),
                 endDateUnit,
                 getPeriodLength(),
-                periodLengthUnit)
-                + (this.cycleLength > 0 ? System.lineSeparator()
+                HealthConstant.DAYS_MESSAGE)
+                + (this.cycleLength > HealthConstant.MIN_LENGTH ? System.lineSeparator()
                 + String.format(HealthConstant.PRINT_CYCLE_FORMAT, this.cycleLength) : UiConstant.EMPTY_STRING);
     }
 }

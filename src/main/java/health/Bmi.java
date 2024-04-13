@@ -38,8 +38,14 @@ public class Bmi extends Health {
      */
     protected LocalDate date;
 
+    /**
+     * A healthlist object to access HealthList Class which manages and stores health data.
+     */
     protected HealthList healthList = new HealthList();
 
+    /**
+     * A parser object to access Parser Class.
+     */
     private Parser parser = new Parser();
 
     //@@author j013n3
@@ -55,7 +61,8 @@ public class Bmi extends Health {
         this.height = Double.parseDouble(height);
         this.weight = Double.parseDouble(weight);
 
-        assert this.height > 0 && this.weight > 0 : ErrorConstant.NEGATIVE_VALUE_ERROR;
+        assert this.height > HealthConstant.MIN_HEIGHT && this.weight > HealthConstant.MIN_WEIGHT
+                : ErrorConstant.NEGATIVE_VALUE_ERROR;
 
         this.date = parser.parseDate(date);
 
@@ -100,7 +107,7 @@ public class Bmi extends Health {
      * @throws AssertionError If calculated value is not positive.
      */
     public static String getBmiCategory(double bmiValue) {
-        assert bmiValue > 0: ErrorConstant.NEGATIVE_BMI_ERROR;
+        assert bmiValue > HealthConstant.MIN_BMI: ErrorConstant.NEGATIVE_BMI_ERROR;
 
         if (bmiValue < HealthConstant.UNDERWEIGHT_BMI_THRESHOLD) {
             return HealthConstant.UNDERWEIGHT_MESSAGE;
@@ -133,7 +140,7 @@ public class Bmi extends Health {
     private double calculateBmiValue() {
         double bmi = Math.round((weight / (Math.pow(height, UiConstant.POWER_OF_TWO))) * UiConstant.ROUNDING_FACTOR)
                 / UiConstant.ROUNDING_FACTOR;
-        assert bmi > 0: ErrorConstant.NEGATIVE_BMI_ERROR;
+        assert bmi > HealthConstant.MIN_BMI: ErrorConstant.NEGATIVE_BMI_ERROR;
         return bmi;
     }
 

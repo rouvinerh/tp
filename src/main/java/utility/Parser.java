@@ -276,15 +276,15 @@ public class Parser {
 
         if (userInput.contains(HealthConstant.END_FLAG)) {
             if ((size == 0) || (size > 0 &&
-                    Objects.requireNonNull(HealthList.getPeriod(HealthConstant.FIRST_INDEX).getEndDate() != null))) {
+                    Objects.requireNonNull(HealthList.getPeriod(HealthConstant.FIRST_ITEM).getEndDate() != null))) {
                 Period newPeriod = new Period(
                         periodDetails[HealthConstant.PERIOD_START_DATE_INDEX],
                         periodDetails[HealthConstant.PERIOD_END_DATE_INDEX]);
                 output.printAddPeriod(newPeriod);
                 LogFile.writeLog("Added Period", false);
             } else if (size > 0 &&
-                    Objects.requireNonNull(HealthList.getPeriod(HealthConstant.FIRST_INDEX)).getEndDate() == null) {
-                Period latestPeriod = Objects.requireNonNull(HealthList.getPeriod(HealthConstant.FIRST_INDEX));
+                    Objects.requireNonNull(HealthList.getPeriod(HealthConstant.FIRST_ITEM)).getEndDate() == null) {
+                Period latestPeriod = Objects.requireNonNull(HealthList.getPeriod(HealthConstant.FIRST_ITEM));
                 latestPeriod.updateEndDate(periodDetails[HealthConstant.PERIOD_END_DATE_INDEX]);
                 output.printAddPeriod(latestPeriod);
                 LogFile.writeLog("Added Period", false);
