@@ -156,14 +156,14 @@ Format: <code style="color: #D85D43;">STATION_NAME /s:SET /r:REPS /w:WEIGHT</cod
 
 * `STATION_NAME` is a **string**  representing the name of the gym station.
 * `SET` is a **positive integer**  representing the number of sets done for one station.
-* `REPS` is a **positive integer**  representing the number of repetitions done for one station.
+* `REPS` is a **positive integer**  representing the number of repetitions done per set for one station.
 * `WEIGHT` is a **list of positive numbers** separated by commas. It represents the weights used for all the sets in the station.
 
 > ⚠️ `STATION_NAME` must always be the first parameter. The order of the other parameters can be in any order. `STATION_NAME` can **only contain letters and spaces**, and can be up to **25 characters long**.
 
 > ⚠️ `WEIGHT` must be in **multiples of 0.125 KG**! This is because the minimum weight increment in a gym is 0.125kg. Example `bench press /s:2 /r:10 /w:10.333,12.5` is not valid as 10.333 is not a multiple of 0.125kg.
 
-> ⚠️ Note that the **number of weights must equal to the number of sets**! For example, if you have done 2 sets at 10 kg, PulsePilot still expects 2 weights to be specified like this `squats /s:2 /r:5 /w:10.25,10.5`.
+> ⚠️ Note that the **number of weights must equal to the number of sets**! For example, if you have done 2 sets at 10 kg, PulsePilot still expects 2 weights to be specified like this `squats /s:2 /r:5 /w:10,10`.
 
 > ⚠️ Please input positive integers for `SETS` and `REPS` without leading zeros. Entering a number with a leading zero, such as `01`, will trigger an error.
 
