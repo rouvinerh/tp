@@ -693,37 +693,8 @@ public class Parser {
         } catch (ArrayIndexOutOfBoundsException e) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.LOAD_GYM_FORMAT_ERROR);
         }
-
-        if(currentStationName.isBlank() ||
-                numberOfSetsStr.isBlank() ||
-                repsStr.isBlank() ||
-                weightStrings.isBlank()){
-            throw new CustomExceptions.InvalidInput(ErrorConstant.LOAD_GYM_FORMAT_ERROR);
-        }
-
-        if (currentStationName.length() > WorkoutConstant.MAX_GYM_STATION_NAME_LENGTH) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_GYM_STATION_NAME_ERROR);
-        }
-
-        if (!currentStationName.matches(UiConstant.VALID_GYM_STATION_NAME_REGEX)) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_GYM_STATION_NAME_ERROR);
-        }
-
-        try {
-            numberOfSets = Integer.parseInt(numberOfSetsStr);
-            reps = Integer.parseInt(repsStr);
-        } catch (NumberFormatException e) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.LOAD_GYM_FORMAT_ERROR);
-        }
-
-        ArrayList<Double> validatedWeights = validation.validateWeightsArray(weightStrings);
-        if (validatedWeights.size() != numberOfSets) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.LOAD_NUMBER_OF_SETS_ERROR);
-        }
-
-        gym.addStation(currentStationName, numberOfSets, reps, validatedWeights);
+        gym.addStation(currentStationName, numberOfSetsStr, repsStr, weightStrings);
         baseCounter += WorkoutConstant.INCREMENT_OFFSET;
-
         return baseCounter;
     }
 

@@ -316,10 +316,7 @@ class OutputTest {
         Output output = new Output();
         output.printLatestGym();
 
-
-        }  catch (CustomExceptions.InvalidInput e) {
-            System.out.println(e.getMessage());
-        }
+        assertEquals(expected, outContent.toString());
     }
 
     /**
@@ -586,13 +583,13 @@ class OutputTest {
                 "6:57/km"
         );
 
-        String expectedRun1 = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
-                WorkoutConstant.RUN,
-                "1999-12-19",
-                "10.24",
-                "01:11:12",
-                "6:57/km"
-        );
+            String expectedGym1Set1 = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
+                    WorkoutConstant.GYM,
+                    "1992-11-11",
+                    "Bench Press",
+                    "2",
+                    UiConstant.DASH
+            );
 
         String expectedGym1Set1 = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
                 WorkoutConstant.GYM,
@@ -616,26 +613,6 @@ class OutputTest {
                 String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_HEADER_FORMAT, "", expectedGym1Set2);
 
         String expected1 = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_HEADER_FORMAT, "1", expectedRun1);
-
-        String expected = UiConstant.PARTITION_LINE + System.lineSeparator()
-                + WorkoutConstant.HISTORY_WORKOUTS_HEADER + System.lineSeparator()
-                + WorkoutConstant.HISTORY_WORKOUTS_HEADER_FORMAT + System.lineSeparator()
-                + expected1 + System.lineSeparator()
-                + expected2 + System.lineSeparator()
-                + UiConstant.PARTITION_LINE + System.lineSeparator();
-        Output output = new Output();
-        output.printHistory(WorkoutConstant.ALL);
-        assertEquals(expected, outContent.toString());
-
-        String expected = UiConstant.PARTITION_LINE + System.lineSeparator()
-                + WorkoutConstant.HISTORY_WORKOUTS_HEADER + System.lineSeparator()
-                + WorkoutConstant.HISTORY_WORKOUTS_HEADER_FORMAT + System.lineSeparator()
-                + expected1 + System.lineSeparator()
-                + expected2 + System.lineSeparator()
-                + UiConstant.PARTITION_LINE + System.lineSeparator();
-        Output output = new Output();
-        output.printHistory(WorkoutConstant.ALL);
-        assertEquals(expected, outContent.toString());
 
     }
 

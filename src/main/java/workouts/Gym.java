@@ -25,6 +25,7 @@ public class Gym extends Workout {
      *
      */
     public Gym() {
+        super();
     }
 
     /**
