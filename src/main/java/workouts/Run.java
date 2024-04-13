@@ -29,8 +29,7 @@ public class Run extends Workout {
         times = processRunTime(stringTime);
         distance = checkDistance(stringDistance);
         pace = calculatePace();
-        Workout workout = new Workout();
-        workout.addIntoWorkoutList(this);
+        super.addIntoWorkoutList(this);
     }
 
     /**

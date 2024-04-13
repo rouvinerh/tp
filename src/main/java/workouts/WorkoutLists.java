@@ -40,7 +40,7 @@ public class WorkoutLists {
      *
      * @return The list of runs.
      */
-    public static ArrayList<Run> getRuns(){
+    public static ArrayList<Run> getRuns() {
         return RUNS;
     }
 
@@ -99,36 +99,42 @@ public class WorkoutLists {
 
     /**
      * Deletes Gym object based on the {@code index} that will be validated.
+     *
      * @param index Index of the Gym object to be deleted.
      * @throws CustomExceptions.OutOfBounds If the index is invalid.
      */
     public static void deleteGym(int index) throws CustomExceptions.OutOfBounds {
         assert !GYMS.isEmpty() : "Gym list is empty.";
-        boolean indexIsValid = Validation.validateIndexWithinBounds(index, 0 , GYMS.size());
-        if (indexIsValid) {
-            Gym deletedGym = GYMS.get(index);
-            Output.printDeleteGymMessage(deletedGym);
-            WORKOUTS.remove(deletedGym);
-            GYMS.remove(index);
-            LogFile.writeLog("Removed gym with index: " + index, false);
+        boolean indexIsValid = Validation.validateIndexWithinBounds(index, 0, GYMS.size());
+
+        if (!indexIsValid) {
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.INVALID_INDEX_DELETE_ERROR);
         }
+
+        Gym deletedGym = GYMS.get(index);
+        Output.printDeleteGymMessage(deletedGym);
+        WORKOUTS.remove(deletedGym);
+        GYMS.remove(index);
+        LogFile.writeLog("Removed gym with index: " + index, false);
     }
 
     /**
      * Deletes Run object based on the {@code index} that will be validated
+     *
      * @param index Index of the Run object to be deleted.
      * @throws CustomExceptions.OutOfBounds If the index is invalid.
      */
     public static void deleteRun(int index) throws CustomExceptions.OutOfBounds {
         assert !RUNS.isEmpty() : "Run list is empty.";
-        boolean indexIsValid = Validation.validateIndexWithinBounds(index, 0 , RUNS.size());
-        if (indexIsValid) {
-            Run deletedRun = RUNS.get(index);
-            Output.printDeleteRunMessage(deletedRun);
-            WORKOUTS.remove(deletedRun);
-            RUNS.remove(index);
-            LogFile.writeLog("Removed run with index: " + index, false);
+        boolean indexIsValid = Validation.validateIndexWithinBounds(index, 0, RUNS.size());
+        if (!indexIsValid) {
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.INVALID_INDEX_DELETE_ERROR);
         }
+        Run deletedRun = RUNS.get(index);
+        Output.printDeleteRunMessage(deletedRun);
+        WORKOUTS.remove(deletedRun);
+        RUNS.remove(index);
+        LogFile.writeLog("Removed run with index: " + index, false);
     }
 
     /**
@@ -142,6 +148,7 @@ public class WorkoutLists {
     }
 
     // Protected Methods
+
     /**
      * Only classes within the workouts package can add a new run to the list of runs.
      * This is called automatically when a new run object is created in the Run class.

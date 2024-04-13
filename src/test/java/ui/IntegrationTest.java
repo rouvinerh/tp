@@ -16,10 +16,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -320,10 +316,9 @@ public class IntegrationTest {
     void testSaveAndLoadGym_gymObjectInput_expectSamePrintHistory(){
         Gym newGym = new Gym();
         try {
-            ArrayList<Double> array1 = new ArrayList<>(List.of(1.0));
-            ArrayList<Double> array2 = new ArrayList<>(Arrays.asList(1.0, 2.0));
-            newGym.addStation("ExerciseA", 1, 10, array1);
-            newGym.addStation("ExerciseB", 2, 20 , array2);
+
+            newGym.addStation("ExerciseA", "1", "10", "1.0");
+            newGym.addStation("ExerciseB", "2", "20" , "1.0,2.0");
 
             // Save the expected output
             Output output = new Output();
@@ -392,14 +387,12 @@ public class IntegrationTest {
             Run run2Expected = new Run("30:10", "11.59", "17-03-2024");
 
             Gym gym1expected = new Gym("18-03-2024");
-            gym1expected.addStation("benchpress", 2, 4,
-                    new ArrayList<>(Arrays.asList(40.0,60.0)));
-            gym1expected.addStation("squats", 3, 4,
-                    new ArrayList<>(Arrays.asList(10.0,20.0,30.0)));
+            gym1expected.addStation("benchpress", "2", "4", "40.0,60.0");
+            gym1expected.addStation("squats", "3", "4", "10.0,20.0,30.0");
 
             Gym gym2expected = new Gym("22-03-2024");
-            gym2expected.addStation("deadlift",  4, 4,
-                    new ArrayList<>(Arrays.asList(120.0,130.0,140.0,160.0)));
+            gym2expected.addStation("deadlift",  "4",
+                    "4", "120.0,130.0,140.0,160.0");
 
             Output output = new Output();
             output.printAddRun(run1Expected);
@@ -418,7 +411,7 @@ public class IntegrationTest {
             String expected = outContent.toString();
             assertEquals(expected, result);
 
-        } catch (CustomExceptions.InvalidInput e) {
+        } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e){
             fail("Shouldn't have failed");
         }
 

@@ -19,7 +19,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -32,19 +31,20 @@ public class Parser {
     private final Validation validation;
     private final Output output;
 
-    public Parser (Scanner inputScanner){
+    public Parser(Scanner inputScanner) {
         in = inputScanner;
         validation = new Validation();
         output = new Output();
     }
 
-    public Parser (){
+    public Parser() {
         in = new Scanner(System.in);
         validation = new Validation();
         output = new Output();
     }
 
     //@@author rouvinerh
+
     /**
      * Counts the number of '/' characters there are in a given string.
      *
@@ -63,9 +63,9 @@ public class Parser {
 
     /**
      * Parses and converts String date to a LocalDate variable.
+     *
      * @param date String representing the date.
      * @return LocalDate variable representing the date.
-     *
      * @throws DateTimeParseException If there is an error parsing the date.
      */
     public LocalDate parseDate(String date) {
@@ -80,6 +80,7 @@ public class Parser {
     }
 
     //@@author L5-Z
+
     /**
      * Converts a LocalDate object to a formatted String representation. Returns "NA" if date is null.
      *
@@ -95,12 +96,12 @@ public class Parser {
     }
 
     //@@author syj02
-    
+
     /**
      * Parses and converts String time to a LocalDate variable.
+     *
      * @param stringTime String representing the time.
      * @return LocalTime variable representing the time.
-     *
      * @throws DateTimeParseException If there is an error parsing the time.
      */
     public LocalTime parseTime(String stringTime) throws DateTimeParseException {
@@ -115,6 +116,7 @@ public class Parser {
     }
 
     //@@author rouvinerh
+
     /**
      * Splits user input for Delete command into item and index.
      *
@@ -159,6 +161,7 @@ public class Parser {
     }
 
     //@@author JustinSoh
+
     /**
      * Function validates and parses the user input for the history
      *
@@ -184,6 +187,7 @@ public class Parser {
     }
 
     //@@author JustinSoh
+
     /**
      * Function validates and parses the user input for the history and latest commands.
      *
@@ -209,6 +213,7 @@ public class Parser {
     }
 
     //@@author syj02
+
     /**
      * Parses input for Bmi command. Adds Bmi object to HealthList if valid.
      *
@@ -248,7 +253,7 @@ public class Parser {
             throw new CustomExceptions.InvalidInput(ErrorConstant.TOO_MANY_SLASHES_ERROR);
         }
 
-        String [] results = new String[HealthConstant.NUM_BMI_PARAMETERS];
+        String[] results = new String[HealthConstant.NUM_BMI_PARAMETERS];
         results[HealthConstant.BMI_HEIGHT_INDEX] = extractSubstringFromSpecificIndex(input,
                 HealthConstant.HEIGHT_FLAG).trim();
         results[HealthConstant.BMI_WEIGHT_INDEX] = extractSubstringFromSpecificIndex(input,
@@ -335,7 +340,7 @@ public class Parser {
      * Prints period prediction if possible.
      *
      * @throws CustomExceptions.InsufficientInput If prediction cannot be made.
-     * @throws CustomExceptions.OutOfBounds If period list is empty
+     * @throws CustomExceptions.OutOfBounds       If period list is empty
      */
     public void parsePredictionInput() throws CustomExceptions.InsufficientInput, CustomExceptions.OutOfBounds {
         if (HealthList.getPeriodSize() >= HealthConstant.MIN_SIZE_FOR_PREDICTION) {
@@ -349,6 +354,7 @@ public class Parser {
     }
 
     //@@author syj02
+
     /**
      * Split user input into Appointment command, date, time and description.
      *
@@ -358,7 +364,7 @@ public class Parser {
      */
     public String[] splitAppointmentDetails(String input)
             throws CustomExceptions.InsufficientInput, CustomExceptions.InvalidInput {
-        String [] results = new String[HealthConstant.NUM_APPOINTMENT_PARAMETERS];
+        String[] results = new String[HealthConstant.NUM_APPOINTMENT_PARAMETERS];
         if (!input.contains(HealthConstant.DATE_FLAG)
                 || !input.contains(HealthConstant.TIME_FLAG)
                 || !input.contains(HealthConstant.DESCRIPTION_FLAG)) {
@@ -435,7 +441,7 @@ public class Parser {
         }
 
         if (countForwardSlash(input) != WorkoutConstant.NUM_OF_SLASHES_FOR_GYM_WITH_DATE &&
-            countForwardSlash(input) != WorkoutConstant.NUM_OF_SLASHES_FOR_GYM_WITHOUT_DATE) {
+                countForwardSlash(input) != WorkoutConstant.NUM_OF_SLASHES_FOR_GYM_WITHOUT_DATE) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.TOO_MANY_SLASHES_ERROR);
         }
 
@@ -487,7 +493,7 @@ public class Parser {
     public String[] splitRunInput(String input) throws CustomExceptions.InsufficientInput,
             CustomExceptions.InvalidInput {
         if (!input.contains(WorkoutConstant.DISTANCE_FLAG) ||
-            !input.contains(WorkoutConstant.RUN_TIME_FLAG)) {
+                !input.contains(WorkoutConstant.RUN_TIME_FLAG)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_RUN_PARAMETERS_ERROR);
         }
 
@@ -510,6 +516,7 @@ public class Parser {
     }
 
     //@@author JustinSoh
+
     /**
      * Parses input for the Run command. Adds a Run object if valid.
      *
@@ -536,9 +543,33 @@ public class Parser {
         LogFile.writeLog("Added Run", false);
     }
 
+    protected String[] splitGymStationInput(String input) throws CustomExceptions.InvalidInput {
+
+        if (countForwardSlash(input) > WorkoutConstant.NUM_OF_SLASHES_FOR_GYM_STATION) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.TOO_MANY_SLASHES_ERROR);
+        }
+
+        Parser parser = new Parser();
+        String exerciseName = input.split(UiConstant.SPLIT_BY_SLASH)[WorkoutConstant.STATION_NAME_INDEX].trim();
+        String sets = parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.SETS_FLAG).trim();
+        String reps = parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.REPS_FLAG).trim();
+        String weights = parser.extractSubstringFromSpecificIndex(input, WorkoutConstant.WEIGHTS_FLAG).trim();
+
+
+        String[] validatedGymStationInputs = new String[WorkoutConstant.NUMBER_OF_GYM_STATION_PARAMETERS];
+        validatedGymStationInputs[WorkoutConstant.GYM_STATION_NAME_INDEX] = exerciseName;
+        validatedGymStationInputs[WorkoutConstant.GYM_STATION_SET_INDEX] = sets;
+        validatedGymStationInputs[WorkoutConstant.GYM_STATION_REPS_INDEX] = reps;
+        validatedGymStationInputs[WorkoutConstant.GYM_STATION_WEIGHTS_INDEX] = weights;
+        return validatedGymStationInputs;
+    }
+
+
     /**
-     * Retrieves the gym station details and adds a GymStation object to Gym.
-     * Exits to the main menu if the user inputs 'back'.
+     * Parses the gym station input from the user and adds it to the Gym object.
+     * This method is used in the {@code parseGymInput} method.
+     * User can input 'back' to exit the gym station input.
+     * The gym object will be deleted and control returned to handler.
      *
      * @param numberOfStations The number of stations in one gym session.
      * @param gym              The Gym object.
@@ -546,34 +577,29 @@ public class Parser {
     public void parseGymStationInput(int numberOfStations, Gym gym) {
         for (int i = 0; i < numberOfStations; i++) {
             try {
+                // Prompt user for gym station details
                 output.printGymStationPrompt(i + 1);
-                String userInput = this.in.nextLine().trim();
+                String userInput = this.in.nextLine();
 
+                // If user wants to exit the gym station input
                 if (userInput.equals(WorkoutConstant.BACK)) {
                     output.printGymStationExit();
                     WorkoutLists.deleteGym(WorkoutLists.getGymSize() - 1);
                     return;
                 }
 
-                if (countForwardSlash(userInput) > WorkoutConstant.NUM_OF_SLASHES_FOR_GYM_STATION) {
-                    throw new CustomExceptions.InvalidInput(ErrorConstant.TOO_MANY_SLASHES_ERROR);
-                }
+                // Split the gym station input
+                String[] splitGymStationInputs = splitGymStationInput(userInput);
+                String exerciseName = splitGymStationInputs[WorkoutConstant.GYM_STATION_NAME_INDEX];
+                String numberOfSets = splitGymStationInputs[WorkoutConstant.GYM_STATION_SET_INDEX];
+                String numberOfReps = splitGymStationInputs[WorkoutConstant.GYM_STATION_REPS_INDEX];
+                String weights = splitGymStationInputs[WorkoutConstant.GYM_STATION_WEIGHTS_INDEX];
 
-                String[] validGymStationInputs = validation.splitAndValidateGymStationInput(userInput);
+                // Create a new GymStation object and add it to the Gym
+                gym.addStation(exerciseName, numberOfSets, numberOfReps, weights);
 
-                int numberOfSets = Integer.parseInt(validGymStationInputs[WorkoutConstant.GYM_STATION_SET_INDEX]);
-                int numberOfRepetitions = Integer.parseInt(
-                        validGymStationInputs[WorkoutConstant.GYM_STATION_REPS_INDEX]);
-                ArrayList<Double> weightsArray = validation.validateWeightsArray(
-                        validGymStationInputs[WorkoutConstant.GYM_STATION_WEIGHTS_INDEX]);
-
-                gym.addStation(validGymStationInputs[WorkoutConstant.GYM_STATION_NAME_INDEX], numberOfSets,
-                        numberOfRepetitions, weightsArray);
-
-                LogFile.writeLog("Added Gym Station: " +
-                        validGymStationInputs[WorkoutConstant.GYM_STATION_NAME_INDEX], false);
-            } catch (CustomExceptions.InsufficientInput | CustomExceptions.InvalidInput |
-                     CustomExceptions.OutOfBounds e) {
+            } catch (CustomExceptions.InsufficientInput | CustomExceptions.InvalidInput
+                     | CustomExceptions.OutOfBounds e) {
                 i -= 1;
                 output.printException(e.getMessage());
             }
@@ -583,6 +609,7 @@ public class Parser {
     }
 
     //@@author L5-Z
+
     /**
      * Splits the Gym File Input that comes from Storage.
      * Validates the numberOfStation and Date input.
@@ -591,9 +618,9 @@ public class Parser {
      * @return String[] containing the gym details
      * @throws CustomExceptions.FileReadError If the file cannot be read.
      */
-    private String[] splitGymFileInput (String input) throws CustomExceptions.FileReadError {
+    private String[] splitGymFileInput(String input) throws CustomExceptions.FileReadError {
 
-        String [] gymDetails = input.split(UiConstant.SPLIT_BY_COLON);
+        String[] gymDetails = input.split(UiConstant.SPLIT_BY_COLON);
         String gymType;
         String numOfStationStr;
         int numOfStation;
@@ -617,21 +644,21 @@ public class Parser {
         }
 
         // Check if the number of station is blank
-        if (numOfStationStr.isBlank()){
+        if (numOfStationStr.isBlank()) {
             throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_NUMBER_OF_STATION_ERROR);
         }
 
         // Check if the date is correct
-        if (date.isBlank()){
+        if (date.isBlank()) {
             throw new CustomExceptions.FileReadError(ErrorConstant.INVALID_DATE_ERROR);
         }
 
         // if the date is not NA, then validate and make sure it is correct
-        try{
-            if (!date.equals(ErrorConstant.NO_DATE_SPECIFIED_ERROR)){
+        try {
+            if (!date.equals(ErrorConstant.NO_DATE_SPECIFIED_ERROR)) {
                 validation.validateDateInput(date);
             }
-        } catch (CustomExceptions.InvalidInput e){
+        } catch (CustomExceptions.InvalidInput e) {
             throw new CustomExceptions.FileReadError(ErrorConstant.INVALID_DATE_ERROR);
         }
 
@@ -644,22 +671,20 @@ public class Parser {
      * How the method works is that it will check if the station details are valid
      * and then add the station to the gym.
      *
-     * @param gym the gym object that the station will be added to
-     * @param gymDetails the array of strings containing the gym details
+     * @param gym         the gym object that the station will be added to
+     * @param gymDetails  the array of strings containing the gym details
      * @param baseCounter the base counter to start adding the station
      * @return the new base counter after adding the station
      * @throws CustomExceptions.InvalidInput if the input is invalid
      */
     private int addStationFromFile(Gym gym, String[] gymDetails, int baseCounter)
-            throws CustomExceptions.InvalidInput {
+            throws CustomExceptions.InvalidInput, CustomExceptions.InsufficientInput {
 
         String currentStationName;
         String numberOfSetsStr;
         String repsStr;
         String weightStrings;
 
-        int numberOfSets;
-        int reps;
         try {
             currentStationName = gymDetails[baseCounter];
             numberOfSetsStr = gymDetails[baseCounter + WorkoutConstant.SETS_OFFSET];
@@ -668,37 +693,8 @@ public class Parser {
         } catch (ArrayIndexOutOfBoundsException e) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.LOAD_GYM_FORMAT_ERROR);
         }
-
-        if(currentStationName.isBlank() ||
-                numberOfSetsStr.isBlank() ||
-                repsStr.isBlank() ||
-                weightStrings.isBlank()){
-            throw new CustomExceptions.InvalidInput(ErrorConstant.LOAD_GYM_FORMAT_ERROR);
-        }
-
-        if (currentStationName.length() > WorkoutConstant.MAX_GYM_STATION_NAME_LENGTH) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_GYM_STATION_NAME_ERROR);
-        }
-
-        if (!currentStationName.matches(UiConstant.VALID_GYM_STATION_NAME_REGEX)) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_GYM_STATION_NAME_ERROR);
-        }
-
-        try {
-            numberOfSets = Integer.parseInt(numberOfSetsStr);
-            reps = Integer.parseInt(repsStr);
-        } catch (NumberFormatException e) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.LOAD_GYM_FORMAT_ERROR);
-        }
-
-        ArrayList<Double> validatedWeights = validation.validateWeightsArray(weightStrings);
-        if (validatedWeights.size() != numberOfSets) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.LOAD_NUMBER_OF_SETS_ERROR);
-        }
-
-        gym.addStation(currentStationName, numberOfSets, reps, validatedWeights);
+        gym.addStation(currentStationName, numberOfSetsStr, repsStr, weightStrings);
         baseCounter += WorkoutConstant.INCREMENT_OFFSET;
-
         return baseCounter;
     }
 
@@ -711,7 +707,7 @@ public class Parser {
      *
      * @param input in the format specified above
      * @return gym object created from the input
-     * @throws CustomExceptions.InvalidInput If there is invalid input from the file.
+     * @throws CustomExceptions.InvalidInput  If there is invalid input from the file.
      * @throws CustomExceptions.FileReadError If the file cannot be read.
      */
     public Gym parseGymFileInput(String input)
@@ -719,7 +715,7 @@ public class Parser {
             CustomExceptions.FileReadError, CustomExceptions.InsufficientInput {
 
         String[] gymDetails = splitGymFileInput(input);
-        String [] checkGymDetails = new String[WorkoutConstant.NUMBER_OF_GYM_PARAMETERS];
+        String[] checkGymDetails = new String[WorkoutConstant.NUMBER_OF_GYM_PARAMETERS];
         checkGymDetails[0] = gymDetails[1];
         checkGymDetails[1] = gymDetails[2];
         validation.validateGymInput(checkGymDetails);
@@ -734,7 +730,7 @@ public class Parser {
 
         int counter = WorkoutConstant.GYM_FILE_BASE_COUNTER;
         while (counter < gymDetails.length) {
-            counter = addStationFromFile(gym , gymDetails, counter);
+            counter = addStationFromFile(gym, gymDetails, counter);
         }
         return gym;
     }
