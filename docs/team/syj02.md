@@ -21,11 +21,9 @@ I wrote the UG portion of Appointment and Period.
 #### Contributions to the DG
 
 - Overview of components and the Architecture diagram.
-- Design of Health package and HealthList class diagram
-- Add Appointment command and its sequence diagram.
-
-##### Review/mentoring contributions
-
+- Design of Health package and HealthList class diagram.
+- Add descriptions of add Appointment command.
 
 #### Contributions beyond the project team
 
+- Reported a high number of bugs in PE-D (Top 10%).
