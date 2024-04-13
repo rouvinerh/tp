@@ -92,7 +92,7 @@ The `UI` package contains the `Handler` and `Output` classes, which are responsi
 
 #### Handler
 
-The main entry point of the application is the `Handler` class, used to determine the command used. The user's input is then passed to the right handler method to carry out the action.
+The main entry point of the application is the `Handler` class, used to determine the command used. The user's input is then passed to the corresponding handler method to carry out the action.
 
 The sequence diagram below shows how the application is initialised and then processes the user's input using the `Handler` class:
 
