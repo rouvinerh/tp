@@ -574,46 +574,6 @@ class OutputTest {
         } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
             fail("Shouldn't have failed");
         }
-
-        String expectedRun1 = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
-                WorkoutConstant.RUN,
-                "1999-12-19",
-                "10.24",
-                "01:11:12",
-                "6:57/km"
-        );
-
-            String expectedGym1Set1 = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
-                    WorkoutConstant.GYM,
-                    "1992-11-11",
-                    "Bench Press",
-                    "2",
-                    UiConstant.DASH
-            );
-
-        String expectedGym1Set1 = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
-                WorkoutConstant.GYM,
-                "1992-11-11",
-                "Bench Press",
-                "2",
-                UiConstant.DASH
-        );
-
-        String expectedGym1Set2 = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
-                UiConstant.EMPTY_STRING,
-                UiConstant.EMPTY_STRING,
-                "Squat Press",
-                "2",
-                UiConstant.DASH
-        );
-
-        String expected2 = String.format(
-                WorkoutConstant.HISTORY_WORKOUTS_DATA_HEADER_FORMAT, "2", expectedGym1Set1)
-                + System.lineSeparator() +
-                String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_HEADER_FORMAT, "", expectedGym1Set2);
-
-        String expected1 = String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_HEADER_FORMAT, "1", expectedRun1);
-
     }
 
 }

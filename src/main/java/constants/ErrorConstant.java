@@ -119,10 +119,6 @@ public class ErrorConstant {
             System.lineSeparator() +
             INVALID_GYM_STATION_FORMAT_ERROR;
 
-
-    public static final String INVALID_SETS_POSITIVE_DIGIT_ERROR = "Number of sets must be a positive integer!"
-            + System.lineSeparator()
-            + "Expected format: [Station Name] /s:[SETS] /r:[REPS] /w:[WEIGHTS]";
     public static final String INVALID_SETS_POSITIVE_DIGIT_ERROR = "Number of sets must be a positive integer!"
             + System.lineSeparator()
             + INVALID_GYM_STATION_FORMAT_ERROR;

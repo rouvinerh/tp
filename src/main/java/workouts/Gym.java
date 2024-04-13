@@ -26,6 +26,7 @@ public class Gym extends Workout {
      */
     public Gym() {
         super();
+        super.addIntoWorkoutList(this);
     }
 
     /**
@@ -36,7 +37,7 @@ public class Gym extends Workout {
      */
     public Gym(String stringDate) {
         super(stringDate);
-        workout.addIntoWorkoutList(this);
+        super.addIntoWorkoutList(this);
     }
 
     /**
