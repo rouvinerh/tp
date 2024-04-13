@@ -17,6 +17,8 @@ public class Gym extends Workout {
      * Constructor that adds a Gym object to WorkoutList.
      */
     public Gym() {
+        Workout workout = new Workout();
+        workout.addIntoWorkoutList(this);
     }
 
     /**
@@ -26,6 +28,8 @@ public class Gym extends Workout {
      */
     public Gym(String stringDate) {
         super(stringDate);
+        Workout workout = new Workout();
+        workout.addIntoWorkoutList(this);
     }
 
     /**

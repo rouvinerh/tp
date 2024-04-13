@@ -18,7 +18,7 @@ public class Health {
     }
 
     /**
-     * Retrieves the date of Health object of LocalDate type.
+     * Retrieves the date of Health object of {@code LocalDate} type.
      *
      * @return The date of the Health object.
      */
@@ -27,9 +27,9 @@ public class Health {
     }
 
     /**
-     * Returns a string containing the date of the Health object.
+     * Returns a string containing the date of the {@code Health} object.
      *
-     * @return A formatted string representing the date of a Health object.
+     * @return A formatted string representing a {@code Health} object.
      */
     @Override
     public String toString(){

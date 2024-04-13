@@ -133,9 +133,9 @@ The `Workout` package is responsible for tracking run and gym workouts from the 
 
 #### Workouts List
 
-`WorkoutList` is a class that contains the `ArrayList` objects of `Run`, `Gym` and `Workout`. The class diagram is as follows:
+`WorkoutLists` is a class that contains the `ArrayList` objects of `Run`, `Gym` and `Workout`. The class diagram is as follows:
 
-![WorkoutList Class Diagram](img/class_diagrams/workoutlist_class_diagram.png)
+![WorkoutLists Class Diagram](img/class_diagrams/workoutlist_class_diagram.png)
 
 The class contains methods to retrieve the different objects. Additionally, it contains the methods for **deleting** an object from PulsePilot, which is used for the `delete` command implementation.
 
@@ -389,13 +389,17 @@ The user's input is processed to add a run as follows:
 
 3. `validation.validateRunInput()` is called to validate each parameter. If no exceptions caused by invalid parameters are thrown, the validated parameters are used to create the new `Run` object.
 
-4. The `Run` constructor adds the newly created object into `workoutList.WORKOUTS` and `workoutList.RUNS` via `addWorkout()` and `addRun()`. The running pace in minutes/km (i.e. `5:00/km`) is calculated and stored as well.
+4. The `Run` constructor checks whether the distance given and pace calculated is within the valid range. If not, it throws an exception.
 
-5. The new `Run` object is passed to `output.printAddRun()` and a message acknowledging the successful adding is printed to the screen.
+5. Afterwards, the `Workout` constructor is implicitly called since `Run` inherits from `Workout`. `workout.addIntoWorkoutList()` is called, which calls `workoutLists.addRun()` to add the `Run`.  
+
+5. The new `Run` object is then passed to `output.printAddRun()` and a message acknowledging the successful adding is printed to the screen.
+
+An overloaded `Run` and `Workout` constructor is used to allow for `date` to be optional. 
 
 This is the sequence diagram for adding a run:
 
-![Run Sequence Diagram](img/sequence_diagrams/run_sequence_diagram.png)
+[Run Sequence Diagram](img/sequence_diagrams/run_sequence_diagram.png)
 
 ###### [Back to table of contents](#table-of-contents)
 

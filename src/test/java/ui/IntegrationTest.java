@@ -144,7 +144,7 @@ public class IntegrationTest {
 
         inputString.append("latest /item:invalidFlag");
         inputString.append(System.lineSeparator());
-        expectedString.append(TestHelper.errorInvalidInputString(ErrorConstant.INVALID_LATEST_FILTER_ERROR));
+        expectedString.append(TestHelper.errorInvalidInputString(ErrorConstant.INVALID_LATEST_OR_DELETE_FILTER));
 
         inputString.append("latest /////item:");
         inputString.append(System.lineSeparator());

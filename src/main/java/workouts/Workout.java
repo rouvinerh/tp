@@ -24,7 +24,6 @@ public class Workout {
         parser = new Parser();
         workoutLists = new WorkoutLists();
         this.date = parser.parseDate(stringDate);
-        addIntoWorkoutList(this);
     }
 
     /**
@@ -33,7 +32,6 @@ public class Workout {
     public Workout() {
         parser = new Parser();
         workoutLists = new WorkoutLists();
-        addIntoWorkoutList(this);
     }
 
 
@@ -63,7 +61,7 @@ public class Workout {
      *
      * @param workout The workout object to be added.
      */
-    private void addIntoWorkoutList(Workout workout) {
+    protected void addIntoWorkoutList(Workout workout) {
         if (workout instanceof Run) {
             workoutLists.addRun((Run) workout);
         } else if (workout instanceof Gym) {

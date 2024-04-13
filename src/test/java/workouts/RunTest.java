@@ -23,32 +23,32 @@ class RunTest {
         // with hours
         String testTime = "01:59:10";
         Run runTest = new Run(testTime, "15.3");
-        Integer[] result = runTest.checkRunTime(testTime);
+        Integer[] result = runTest.processRunTime(testTime);
         Integer[] expected = {1, 59, 10};
         assertArrayEquals(expected, result);
 
         // without hours
-        Integer[] result2 = runTest.checkRunTime("50:52");
+        Integer[] result2 = runTest.processRunTime("50:52");
         Integer[] expected2 = {-1, 50, 52};
         assertArrayEquals(expected2, result2);
 
         // with hours, zero minutes zero seconds
-        Integer[] result3 = runTest.checkRunTime("01:00:00");
+        Integer[] result3 = runTest.processRunTime("01:00:00");
         Integer[] expected3 = {1, 0, 0};
         assertArrayEquals(expected3, result3);
 
         // max time
-        Integer[] result4 = runTest.checkRunTime("99:59:59");
+        Integer[] result4 = runTest.processRunTime("99:59:59");
         Integer[] expected4 = {99, 59, 59};
         assertArrayEquals(expected4, result4);
 
         // min time
-        Integer[] result5 = runTest.checkRunTime("00:01");
+        Integer[] result5 = runTest.processRunTime("00:01");
         Integer[] expected5 = {-1, 0, 1};
         assertArrayEquals(expected5, result5);
 
         // max minute max second
-        Integer[] result6 = runTest.checkRunTime("59:59");
+        Integer[] result6 = runTest.processRunTime("59:59");
         Integer[] expected6 = {-1, 59, 59};
         assertArrayEquals(expected6, result6);
     }

@@ -164,7 +164,6 @@ public class ErrorConstant {
             "Please add an end date to the latest period input in order to input a new period.";
     public static final String NULL_PERIOD_ERROR = "Period object cannot be null.";
     public static final String NULL_START_DATE_ERROR = "Start date of period cannot be empty.";
-    public static final String NULL_END_DATE_ERROR = "End date of period cannot be empty.";
     public static final String INVALID_START_DATE_ERROR = "Invalid start date!";
     public static final String INVALID_END_DATE_ERROR = "Invalid end date!";
     public static final String EMPTY_PERIOD_LIST_ERROR = "Period List is empty.";
@@ -218,9 +217,7 @@ public class ErrorConstant {
             + System.lineSeparator()
             + "- bmi"
             + System.lineSeparator()
-            + "- appointment"
-            + System.lineSeparator()
-            + "For example: 'history /item:run'";
+            + "- appointment";
 
     public static final String INSUFFICIENT_LATEST_FILTER_ERROR = "Filter is missing!"
             + System.lineSeparator()
@@ -234,10 +231,7 @@ public class ErrorConstant {
             + System.lineSeparator()
             + "- bmi"
             + System.lineSeparator()
-            + "- appointment"
-            + System.lineSeparator()
-            + "For example: 'latest /item:run'";
-
+            + "- appointment";
 
     public static final String INVALID_HISTORY_FILTER_ERROR = "Filter is invalid!"
             + System.lineSeparator()
@@ -253,11 +247,9 @@ public class ErrorConstant {
             + System.lineSeparator()
             + "- bmi"
             + System.lineSeparator()
-            + "- appointment"
-            + System.lineSeparator()
-            + "For example: 'history /item:run'";
+            + "- appointment";
 
-    public static final String INVALID_LATEST_FILTER_ERROR = "Filter is invalid!"
+    public static final String INVALID_LATEST_OR_DELETE_FILTER = "Filter is invalid!"
             + System.lineSeparator()
             + "Please only use the following flags"
             + System.lineSeparator()
@@ -269,9 +261,7 @@ public class ErrorConstant {
             + System.lineSeparator()
             + "- bmi"
             + System.lineSeparator()
-            + "- appointment"
-            + System.lineSeparator()
-            + "For example: 'history /item:run'";
+            + "- appointment";
 
     public static final String TOO_MANY_SLASHES_ERROR = "Too many '/' characters specified within input. " +
             "Parameters cannot contain any '/' characters!";
@@ -301,9 +291,6 @@ public class ErrorConstant {
     public static final String MIN_PACE_ERROR = "The calculated pace is too fast!"
             + System.lineSeparator()
             + "Pace calculated cannot be faster than 1:00/km!";
-
-    public static final String ZERO_RUN_TIME_ERROR = "Total time taken for run cannot be 0!";
-    public static final String MAX_RUN_TIME_ERROR = "Total time taken for run cannot exceed 100 hours!";
     public static final String INVALID_USERNAME_ERROR = "\u001b[31mUsername can only contain alphanumeric characters " +
             "and spaces!\u001b[0m";
     public static final String NO_PERMISSIONS_ERROR = "Cannot read or write to current directory. Exiting.";

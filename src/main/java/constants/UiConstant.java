@@ -15,7 +15,6 @@ public class UiConstant {
     public static final String SPLIT_BY_WHITESPACE = " ";
     public static final String SPLIT_BY_COMMAS = ",";
     public static final String DASH = "-";
-    public static final String COMMAS = ",";
     public static final String LINE = " | ";
     public static final String PARTITION_LINE = "____________________________________________________________";
     public static final String EMPTY_STRING = "";
@@ -59,24 +58,25 @@ public class UiConstant {
 
 
     // Numerical values
-    public static final Integer MAX_RUNTIME_ARRAY_LENGTH = 3;
-    public static final Integer MIN_RUNTIME_ARRAY_LENGTH = 2;
     public static final int NUM_SECONDS_IN_MINUTE = 60;
     public static final int NUM_SECONDS_IN_HOUR = 3600;
-    public static final Integer MIN_MINUTES = 0;
-    public static final Integer MAX_MINUTES = 59;
-    public static final Integer MIN_SECONDS = 0;
-    public static final Integer MAX_SECONDS = 59;
-    public static final Integer MIN_HOURS = 0;
-    public static final Integer MAX_HOURS = 23;
+    public static final int MIN_MINUTES = 0;
+    public static final int MAX_MINUTES = 59;
+    public static final int MAX_SECONDS = 59;
+    public static final int MIN_HOURS = 0;
+    public static final int MAX_HOURS = 23;
     public static final double POWER_OF_TWO = 2.0;
     public static final double ROUNDING_FACTOR = 100.0;
     public static final int NUM_DELETE_PARAMETERS = 2;
     public static final int MINIMUM_PERIOD_COUNT = 1;
+    public static final int MIN_SECONDS = 0;
+    public static final int NUM_OF_SLASHES_FOR_DELETE = 2;
+    public static final int NUM_OF_SLASHES_FOR_LATEST_AND_HISTORY = 1;
 
     // SPLIT INDEX
     public static final int DELETE_ITEM_STRING_INDEX = 0;
     public static final int DELETE_ITEM_NUMBER_INDEX = 1;
-    public static final int NUM_OF_SLASHES_FOR_DELETE = 2;
-    public static final int NUM_OF_SLASHES_FOR_LATEST_AND_HISTORY = 1;
+    public static final int SPLIT_TIME_HOUR_INDEX = 0;
+    public static final int SPLIT_TIME_MINUTES_INDEX = 1;
+
 }
