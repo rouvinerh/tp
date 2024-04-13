@@ -35,7 +35,7 @@ public class HealthConstant {
     public static final double MIN_HEIGHT = 0;
     public static final double MAX_HEIGHT = 2.75;
     public static final double MAX_WEIGHT = 640;
-
+    public static final double MIN_BMI = 0;
 
     // Formatted Strings/Messages
     // BMI
@@ -51,6 +51,7 @@ public class HealthConstant {
     public static final String BMI_HISTORY_HEADER = "Your BMI history:";
 
     // PERIOD
+    public static final int MIN_SIZE_FOR_COMPARISON = 1;
     public static final String PRINT_PERIOD_FORMAT = "Period Start: %s Period End: %s"
             + System.lineSeparator()
             + "Period Length: %d %s";
@@ -67,17 +68,17 @@ public class HealthConstant {
             "Please consult a gynaecologist if this persists.";
 
     // PREDICTION
-    public static final String PRINT_CYCLE_FORMAT = "Cycle Length: %d days";
+    public static final String PRINT_CYCLE_FORMAT = "Cycle Length: %d day(s)";
     public static final Integer LATEST_THREE_CYCLE_LENGTHS = 3;
     public static final Integer FIRST_CYCLE_INDEX = 3;
     public static final Integer LAST_CYCLE_INDEX = 1;
     public static final Integer MIN_SIZE_FOR_PREDICTION = 4;
+    public static final Integer MIN_LENGTH = 0;
     public static final String PREDICTED_START_DATE_MESSAGE = "Your next cycle's predicted start date is ";
     public static final String COUNT_DAYS_MESSAGE = ", in ";
     public static final String PERIOD_IS_LATE = ". Your period is late by ";
     public static final String PREDICTED_DATE_IS_TODAY_MESSAGE = ", which is today! ";
-    public static final String DAY_MESSAGE = "day";
-    public static final String DAYS_MESSAGE = "days";
+    public static final String DAYS_MESSAGE = "day(s)";
 
     // APPOINTMENT
     public static final String PRINT_APPOINTMENT_FORMAT = "On %s at %s: %s";
@@ -102,5 +103,5 @@ public class HealthConstant {
     public static final int NUM_OF_SLASHES_FOR_APPOINTMENT = 4;
 
     //Latest object
-    public static final int FIRST_INDEX = 0;
+    public static final int FIRST_ITEM = 0;
 }

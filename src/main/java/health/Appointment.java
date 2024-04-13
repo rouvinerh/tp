@@ -28,7 +28,14 @@ public class Appointment extends Health {
      */
     protected String description;
 
+    /**
+     * A parser object to access Parser Class.
+     */
     private final Parser parser = new Parser();
+
+    /**
+     * A healthlist object to access HealthList Class which manages and stores health data.
+     */
     private final HealthList healthList = new HealthList();
 
     //@@author syj02
