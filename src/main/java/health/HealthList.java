@@ -183,7 +183,7 @@ public class HealthList extends ArrayList<Health> {
         assert !BMIS.isEmpty() : ErrorConstant.EMPTY_BMI_LIST_ERROR;
         Bmi deletedBmi = BMIS.get(index);
         Output.printLine();
-        System.out.printf((HealthConstant.LOG_DELETE_BMI_FORMAT) + UiConstant.NEW_LINE,
+        System.out.printf((HealthConstant.LOG_DELETE_BMI_FORMAT) + System.lineSeparator(),
                 deletedBmi.bmiValue,
                 deletedBmi.date);
         Output.printLine();
@@ -206,7 +206,7 @@ public class HealthList extends ArrayList<Health> {
         assert !PERIODS.isEmpty() : ErrorConstant.EMPTY_PERIOD_LIST_ERROR;
         Period deletedPeriod = PERIODS.get(index);
         Output.printLine();
-        System.out.printf((HealthConstant.LOG_DELETE_PERIOD_FORMAT) + UiConstant.NEW_LINE,
+        System.out.printf((HealthConstant.LOG_DELETE_PERIOD_FORMAT) + System.lineSeparator(),
                 deletedPeriod.getStartDate(),
                 deletedPeriod.getEndDate());
         PERIODS.remove(index);
@@ -231,7 +231,7 @@ public class HealthList extends ArrayList<Health> {
         assert !APPOINTMENTS.isEmpty() : ErrorConstant.EMPTY_APPOINTMENT_LIST_ERROR;
         Appointment deletedAppointment = APPOINTMENTS.get(index);
         Output.printLine();
-        System.out.printf((HealthConstant.LOG_DELETE_APPOINTMENT_FORMAT) + UiConstant.NEW_LINE,
+        System.out.printf((HealthConstant.LOG_DELETE_APPOINTMENT_FORMAT) + System.lineSeparator(),
                 deletedAppointment.date,
                 deletedAppointment.time,
                 deletedAppointment.description);
@@ -296,7 +296,7 @@ public class HealthList extends ArrayList<Health> {
         int index = 1;
         System.out.println(HealthConstant.BMI_HISTORY_HEADER);
         for (Bmi bmi : BMIS) {
-            System.out.print(index + UiConstant.INDEX);
+            System.out.print(index + UiConstant.FULL_STOP + UiConstant.SPLIT_BY_WHITESPACE);
             System.out.println(bmi);
             index += 1;
         }
@@ -318,7 +318,7 @@ public class HealthList extends ArrayList<Health> {
         int index = 1;
         System.out.println(HealthConstant.PERIOD_HISTORY_HEADER);
         for (Period period : PERIODS) {
-            System.out.print(index + UiConstant.INDEX);
+            System.out.print(index + UiConstant.FULL_STOP + UiConstant.SPLIT_BY_WHITESPACE);
             System.out.println(period);
             index += 1;
         }
@@ -339,7 +339,7 @@ public class HealthList extends ArrayList<Health> {
         int index = 1;
         System.out.println(HealthConstant.APPOINTMENT_HISTORY_HEADER);
         for (Appointment appointment : APPOINTMENTS) {
-            System.out.print(index + UiConstant.INDEX);
+            System.out.print(index + UiConstant.FULL_STOP + UiConstant.SPLIT_BY_WHITESPACE);
             System.out.println(appointment);
             index += 1;
         }
