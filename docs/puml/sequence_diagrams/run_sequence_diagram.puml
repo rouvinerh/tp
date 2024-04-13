@@ -6,7 +6,8 @@ participant "handler:Handler" as Handler
 participant "parser:Parser" as Parser
 participant "validation:Validation" as Validation
 participant "newRun:Run" as Run
-participant "workoutList:WorkoutList" as WorkoutList
+participant "workout:Workout" as Workout
+participant "workoutLists:WorkoutLists" as WorkoutLists
 participant "output:Output" as Output
 
 Handler -> Parser: parseRunInput()
@@ -18,40 +19,28 @@ activate Parser #FFBBBB
 Parser --> Parser: runDetails[]
 deactivate Parser #FFBBBB
 
-Parser -> Validation: validateRunInput()
+Parser -> Validation: validateRunInput(runDetails)
 activate Validation #FFBBBB
 Validation --> Parser: 
 deactivate Validation
 
 Parser -> Run **: new
-activate Run #FFBBBB   
-Run -> WorkoutList **: new
-activate WorkoutList #FFBBBB
-WorkoutList --> Run:
-deactivate WorkoutList #FFBBBB
+activate Run #salmon
+Run -> Workout **: new
+activate Workout #salmon
 
-alt date is present
-    Run -> WorkoutList: addRun(date)
-    activate WorkoutList #FFBBBB
-    WorkoutList -> WorkoutList: addWorkout(date)
-    activate WorkoutList #DarkSalmon
-    WorkoutList --> WorkoutList:
-    deactivate WorkoutList #DarkSalmon
-    WorkoutList --> Run:
-    deactivate WorkoutList #FFBBBB
+Workout -> WorkoutLists **: new
+Workout -> Workout: addIntoWorkoutList(Run)
+activate Workout #FFBBBB
+Workout --> WorkoutLists: addRun()
+activate WorkoutLists #salmon
+WorkoutLists --> Workout: 
+destroy WorkoutLists
+Workout --> Workout:
+deactivate Workout #FFBBBB
+Workout --> Run:
+destroy Workout
 
- 
-else date is not present
-    Run -> WorkoutList: addRun()
-    activate WorkoutList #FFBBBB
-    WorkoutList -> WorkoutList: addWorkout()
-    activate WorkoutList #DarkSalmon
-    WorkoutList --> WorkoutList:
-    deactivate WorkoutList #DarkSalmon
-    WorkoutList --> Run:
-    deactivate WorkoutList #FFBBBB
-    destroy WorkoutList
-end
 Run --> Parser:
 deactivate Run #FFBBBB
 Parser -> Output: printAddRun()

@@ -75,7 +75,6 @@ public class Validation {
         }
     }
 
-
     // @@author L5-Z
     /**
      * Validates whether the filter string is either 'run', 'gym', 'workouts', 'bmi', 'period' or 'appointment'.
@@ -116,9 +115,9 @@ public class Validation {
 
     // @@author j013n3
     /**
-     * Validates Bmi details entered.
+     * Validates the BMI details entered.
      *
-     * @param bmiDetails List of strings representing BMI details.
+     * @param bmiDetails An array of strings with split BMI details.
      * @throws CustomExceptions.InvalidInput If there are any errors in the details entered.
      */
     public void validateBmiInput(String[] bmiDetails) throws CustomExceptions.InvalidInput,
@@ -150,13 +149,12 @@ public class Validation {
         validateDateInput(bmiDetails[HealthConstant.BMI_DATE_INDEX]);
         validateDateNotAfterToday(bmiDetails[HealthConstant.BMI_DATE_INDEX]);
         validateDateNotPresent(bmiDetails[HealthConstant.BMI_DATE_INDEX]);
-
     }
 
     /**
-     * Validates Period details entered.
+     * Validates the period details entered.
      *
-     * @param periodDetails List of strings representing Period details.
+     * @param periodDetails An array of strings with split period details.
      * @throws CustomExceptions.InvalidInput If there are any errors in the details entered.
      */
     public void validatePeriodInput(String[] periodDetails, boolean isParser) throws CustomExceptions.InvalidInput,
@@ -206,12 +204,12 @@ public class Validation {
         }
     }
 
-    //@@author JustinSoh
+    //@@author rouvinerh
     /**
-     * Validates the details for adding a Run.
+     * Validates the run details entered.
      *
-     * @param runDetails A list containing Run details.
-     * @throws CustomExceptions.InvalidInput If the details specified are invalid.
+     * @param runDetails An array of strings with split run details.
+     * @throws CustomExceptions.InvalidInput If the details are wrongly formatted, or if date is in future or invalid.
      * @throws CustomExceptions.InsufficientInput If empty strings are used.
      */
     public void validateRunInput(String[] runDetails) throws CustomExceptions.InvalidInput,
@@ -235,10 +233,12 @@ public class Validation {
         }
     }
 
+    //@@author JustinSoh
+
     /**
-     * Validates the details for adding a Gym.
+     * Validates the gym details entered.
      *
-     * @param gymDetails A list containing Gym details.
+     * @param gymDetails An array of strings with split Gym details.
      * @throws CustomExceptions.InvalidInput If the details specified are invalid.
      * @throws CustomExceptions.InsufficientInput If empty strings are used.
      */
@@ -267,18 +267,18 @@ public class Validation {
     //@@author rouvinerh
 
     /**
-     * Validates the time used in HH:MM format.
+     * Validates that time is in HH:MM 24 hours format, and if it is a valid time.
      *
-     * @param time String representing the time to check.
-     * @throws CustomExceptions.InvalidInput If time is formatted wrongly.
+     * @param time The {@code String} time to check.
+     * @throws CustomExceptions.InvalidInput If time is formatted wrongly or is not valid.
      */
     public void validateTimeInput(String time) throws CustomExceptions.InvalidInput {
         if (!time.matches(UiConstant.VALID_TIME_REGEX)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_ACTUAL_TIME_ERROR);
         }
         String [] parts = time.split(UiConstant.SPLIT_BY_COLON);
-        int hours = Integer.parseInt(parts[0]);
-        int minutes = Integer.parseInt(parts[1]);
+        int hours = Integer.parseInt(parts[UiConstant.SPLIT_TIME_HOUR_INDEX]);
+        int minutes = Integer.parseInt(parts[UiConstant.SPLIT_TIME_MINUTES_INDEX]);
 
         if (hours < UiConstant.MIN_HOURS || hours > UiConstant.MAX_HOURS) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_ACTUAL_TIME_HOUR_ERROR);
@@ -290,11 +290,11 @@ public class Validation {
 
     //@@author syj02
     /**
-     * Validates Appointment details entered.
+     * Validates the appointment details entered.
      *
-     * @param appointmentDetails List of strings representing Appointment details.
+     * @param appointmentDetails An array of strings with split appointment details.
      * @throws CustomExceptions.InvalidInput If there are any errors in the details entered.
-     * @throws CustomExceptions.InsufficientInput If date, time, or description parameters are missing.
+     * @throws CustomExceptions.InsufficientInput If date, time, or description parameters are empty or invalid.
      */
     public void validateAppointmentDetails(String[] appointmentDetails)
             throws CustomExceptions.InvalidInput, CustomExceptions.InsufficientInput {
@@ -317,7 +317,7 @@ public class Validation {
 
     //@@author JustinSoh
     /**
-     * Validates the string for an exercise name, and that it has no special characters.
+     * Checks if gym station name only has alphanumeric and space characters, and if it is less than 25 characters.
      * Only alphanumeric and space characters can be in the name.
      *
      * @param exerciseName The exercise name string.
@@ -530,7 +530,7 @@ public class Validation {
     /**
      * Validates whether the specified date can be found in HealthList and throws error if it is.
      *
-     * @param dateString The date of the Bmi input to be added
+     * @param dateString The date of the Bmi input to be added.
      * @throws CustomExceptions.InvalidInput If the same date is found.
      */
     public void validateDateNotPresent(String dateString) throws CustomExceptions.InvalidInput {
@@ -544,12 +544,12 @@ public class Validation {
     }
 
     /**
-     * Validates whether the current index provided is within the start and end
+     * Validates whether the current index provided is within the start and end.
      *
-     * @param index the index to be validated
-     * @param start the starting bound
-     * @param end the ending bound (exclusive - e.g. end = 5 means index must be < 5)
-     * @return true if the index is within the bounds, false otherwise
+     * @param index The index to be validated.
+     * @param start The starting bound.
+     * @param end the ending bound (exclusive - e.g. end = 5 means index must be < 5).
+     * @return true if the index is within the bounds, false otherwise.
      */
     public static boolean validateIndexWithinBounds(int index, int start, int end)
             throws CustomExceptions.OutOfBounds {

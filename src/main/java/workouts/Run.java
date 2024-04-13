@@ -42,7 +42,7 @@ public class Run extends Workout {
     public Run(String stringTime, String stringDistance, String stringDate) throws CustomExceptions.InvalidInput {
         super(stringDate);
         times = processRunTime(stringTime);
-        distance = Double.parseDouble(stringDistance);
+        distance = checkDistance(stringDistance);
         pace = calculatePace();
     }
 

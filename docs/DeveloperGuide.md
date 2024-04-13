@@ -393,9 +393,13 @@ The user's input is processed to add a run as follows:
 
 3. `validation.validateRunInput()` is called to validate each parameter. If no exceptions caused by invalid parameters are thrown, the validated parameters are used to create the new `Run` object.
 
-4. The `Run` constructor adds the newly created object into `workoutList.WORKOUTS` and `workoutList.RUNS` via `addWorkout()` and `addRun()`. The running pace in minutes/km (i.e. `5:00/km`) is calculated and stored as well.
+4. The `Run` constructor checks whether the distance given and pace calculated is within the valid range. If not, it throws an exception.
 
-5. The new `Run` object is passed to `output.printAddRun()` and a message acknowledging the successful adding is printed to the screen.
+5. Afterwards, the `Workout` constructor is implicitly called since `Run` inherits from `Workout`. `workout.addIntoWorkoutList()` is called, which calls `workoutLists.addRun()` to add the `Run`.  
+
+5. The new `Run` object is then passed to `output.printAddRun()` and a message acknowledging the successful adding is printed to the screen.
+
+An overloaded `Run` and `Workout` constructor is used to allow for `date` to be optional. 
 
 This is the sequence diagram for adding a run:
 
