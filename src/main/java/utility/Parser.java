@@ -200,7 +200,7 @@ public class Parser {
             if (filter.isBlank()) {
                 throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_LATEST_FILTER_ERROR);
             }
-            validation.validateLatestFilter(filter.toLowerCase());
+            validation.validateLatestAndDeleteFilter(filter.toLowerCase());
             return filter.toLowerCase();
         } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
             output.printException(e.getMessage());

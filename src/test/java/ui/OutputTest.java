@@ -202,7 +202,7 @@ class OutputTest {
 
 
         output.printLatest("invalidFilter");
-        expectedString = TestHelper.errorInvalidCommandString(ErrorConstant.INVALID_LATEST_FILTER_ERROR);
+        expectedString = TestHelper.errorInvalidCommandString(ErrorConstant.INVALID_LATEST_OR_DELETE_FILTER);
         assertEquals(expectedString, errContent.toString());
         cleanup();
 
@@ -238,7 +238,7 @@ class OutputTest {
         cleanup();
 
         output.printLatest("");
-        expectedString = TestHelper.errorInvalidCommandString(ErrorConstant.INVALID_LATEST_FILTER_ERROR);
+        expectedString = TestHelper.errorInvalidCommandString(ErrorConstant.INVALID_LATEST_OR_DELETE_FILTER);
         assertEquals(expectedString.toString(), errContent.toString());
 
         cleanup();

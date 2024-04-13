@@ -26,10 +26,10 @@ public class Validation {
     }
     // @@author rouvinerh
     /**
-     * Validates that the input date string is correctly formatted in DD-MM-YYYY.
+     * Validates that the input date string is correctly formatted in DD-MM-YYYY and is a valid date.
      *
      * @param date The string date from user input.
-     * @throws CustomExceptions.InvalidInput If there are invalid date inputs.
+     * @throws CustomExceptions.InvalidInput If the year is before 1967, the
      */
     public void validateDateInput(String date) throws CustomExceptions.InvalidInput {
         if (!date.matches(UiConstant.VALID_DATE_REGEX)) {
@@ -59,16 +59,16 @@ public class Validation {
     /**
      * Validates the delete input details.
      *
-     * @param deleteDetails A list containing the details for the delete command.
+     * @param deleteDetails An array containing the details for the delete command.
      * @throws CustomExceptions.InvalidInput If the details specified are invalid.
-     * @throws CustomExceptions.InsufficientInput If empty strings are used.
+     * @throws CustomExceptions.InsufficientInput If empty strings are found.
      */
     public void validateDeleteInput(String[] deleteDetails) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
         if (isEmptyParameterPresent(deleteDetails)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_DELETE_PARAMETERS_ERROR);
         }
-        validateHistoryFilter(deleteDetails[UiConstant.DELETE_ITEM_STRING_INDEX].toLowerCase());
+        validateDeleteAndLatestFilter(deleteDetails[UiConstant.DELETE_ITEM_STRING_INDEX].toLowerCase());
 
         if (!deleteDetails[UiConstant.DELETE_ITEM_NUMBER_INDEX].matches(UiConstant.VALID_POSITIVE_INTEGER_REGEX)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_INDEX_ERROR);
@@ -102,7 +102,7 @@ public class Validation {
      * @param filter The filter string to be checked.
      * @throws CustomExceptions.InvalidInput If the filter string is none of them.
      */
-    public void validateLatestFilter(String filter) throws CustomExceptions.InvalidInput {
+    public void validateDeleteAndLatestFilter(String filter) throws CustomExceptions.InvalidInput {
         if (filter.equals(WorkoutConstant.RUN)
                 || filter.equals(WorkoutConstant.GYM)
                 || filter.equals(HealthConstant.BMI)
@@ -110,7 +110,7 @@ public class Validation {
                 || filter.equals(HealthConstant.APPOINTMENT)) {
             return;
         }
-        throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_LATEST_FILTER_ERROR);
+        throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_LATEST_OR_DELETE_FILTER);
     }
 
 

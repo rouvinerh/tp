@@ -217,9 +217,7 @@ public class ErrorConstant {
             + System.lineSeparator()
             + "- bmi"
             + System.lineSeparator()
-            + "- appointment"
-            + System.lineSeparator()
-            + "For example: 'history /item:run'";
+            + "- appointment";
 
     public static final String INSUFFICIENT_LATEST_FILTER_ERROR = "Filter is missing!"
             + System.lineSeparator()
@@ -233,10 +231,7 @@ public class ErrorConstant {
             + System.lineSeparator()
             + "- bmi"
             + System.lineSeparator()
-            + "- appointment"
-            + System.lineSeparator()
-            + "For example: 'latest /item:run'";
-
+            + "- appointment";
 
     public static final String INVALID_HISTORY_FILTER_ERROR = "Filter is invalid!"
             + System.lineSeparator()
@@ -252,11 +247,9 @@ public class ErrorConstant {
             + System.lineSeparator()
             + "- bmi"
             + System.lineSeparator()
-            + "- appointment"
-            + System.lineSeparator()
-            + "For example: 'history /item:run'";
+            + "- appointment";
 
-    public static final String INVALID_LATEST_FILTER_ERROR = "Filter is invalid!"
+    public static final String INVALID_LATEST_OR_DELETE_FILTER = "Filter is invalid!"
             + System.lineSeparator()
             + "Please only use the following flags"
             + System.lineSeparator()
@@ -268,9 +261,7 @@ public class ErrorConstant {
             + System.lineSeparator()
             + "- bmi"
             + System.lineSeparator()
-            + "- appointment"
-            + System.lineSeparator()
-            + "For example: 'history /item:run'";
+            + "- appointment";
 
     public static final String TOO_MANY_SLASHES_ERROR = "Too many '/' characters specified within input. " +
             "Parameters cannot contain any '/' characters!";

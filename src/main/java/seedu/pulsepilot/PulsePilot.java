@@ -3,7 +3,7 @@ package seedu.pulsepilot;
 import ui.Handler;
 
 /**
- * Main class representing the entry-point for PulsePilot application.
+ * Main class representing the entry-point for PulsePilot.
  */
 public class PulsePilot {
     /**
