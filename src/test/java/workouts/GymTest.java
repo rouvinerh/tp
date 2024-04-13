@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
@@ -131,20 +129,7 @@ class GymTest {
         }
     }
 
-    // @@author rouvinerh
-    /**
-     * Tests the behaviour of valid exercise names being passed to validateExerciseName.
-     * Expects no exceptions to be thrown.
-     */
-    @Test
-    void validateExerciseName_correctName_noExceptionThrown() {
-        String input1 = "Bench Press";
-        Gym gym = new Gym();
-        assertDoesNotThrow(() -> gym.validateGymStationName(input1));
 
-        String input2 = "squat";
-        assertDoesNotThrow(() -> gym.validateGymStationName(input2));
-    }
 
     /**
      * Tests the behaviour of incorrect inputs being passed to

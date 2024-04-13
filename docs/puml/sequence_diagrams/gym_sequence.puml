@@ -7,7 +7,6 @@ participant "validation:Validation" as Validation
 participant "newGym:Gym" as Gym
 participant "workout:Workout" as Workout
 participant "workoutList:WorkoutList" as WorkoutList
-participant "parser:Parser" as newParser
 
 Handler -> Parser: parseGymInput()
 activate Handler #salmon

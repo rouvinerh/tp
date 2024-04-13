@@ -597,6 +597,7 @@ public class Parser {
 
                 // Create a new GymStation object and add it to the Gym
                 gym.addStation(exerciseName, numberOfSets, numberOfReps, weights);
+
             } catch (CustomExceptions.InsufficientInput | CustomExceptions.InvalidInput
                      | CustomExceptions.OutOfBounds e) {
                 i -= 1;
