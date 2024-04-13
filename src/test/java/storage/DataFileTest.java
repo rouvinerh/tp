@@ -134,7 +134,7 @@ public class DataFileTest {
         newGym2.addStation("squats", 4, 3, array2);
 
         ArrayList<Workout> workoutArrayList = new ArrayList<>(List.of(
-                new Run("00:30:00", "5.0", "01-04-2023"),
+                new Run("30:00", "5.00", "01-04-2023"),
                 newGym,
                 newGym2
         ));
@@ -155,7 +155,7 @@ public class DataFileTest {
             assertEquals("APPOINTMENT:15-05-2023:14.30:Doctor's Checkup", lines.get(4));
             assertEquals("PERIOD:01-03-2023:05-03-2023:5", lines.get(5));
             assertEquals("PERIOD:01-04-2023:04-04-2023:4", lines.get(6));
-            assertEquals("RUN:5.00:00.30.00:01-04-2023", lines.get(7));
+            assertEquals("RUN:5.00:30.00:01-04-2023", lines.get(7));
             assertEquals("GYM:2:11-11-1997:bench press:4:4:10.0,20.0,30.0," +
                     "40.0:squats:4:3:20.0,30.0,40.0,50.0", lines.get(8));
             assertEquals("GYM:2:NA:bench press:4:4:10.0,20.0,30.0,40.0:squats:4:3:20.0,30.0,40.0,50.0",
@@ -204,7 +204,7 @@ public class DataFileTest {
                 new Period("01-04-2023", "04-04-2023")
         ));
         ArrayList<Workout> workoutArrayList = new ArrayList<>(Arrays.asList(
-                new Run("00:30:00", "5.0", "01-04-2023")
+                new Run("30:00", "5.00", "01-04-2023")
         ));
 
         // Act
@@ -236,7 +236,7 @@ public class DataFileTest {
                 new Period("01-04-2023", "04-04-2023")
         ));
         ArrayList<Workout> workoutArrayList = new ArrayList<>(Arrays.asList(
-                new Run("00:30:00", "5.0", "01-04-2023")
+                new Run("30:00", "5.00", "01-04-2023")
         ));
 
         File dataFileName = new File(testDataFilePath);
@@ -276,8 +276,8 @@ public class DataFileTest {
         ArrayList<Double> array1 = new ArrayList<>(Arrays.asList(1.0));
         gym1.addStation("Squat Press", 1, 50, array1);
         ArrayList<Workout> workoutArrayList = new ArrayList<>(Arrays.asList(
-                new Run("40:10", "10.3", "15-03-2024"),
-                new Run("40:10", "10.3"),
+                new Run("40:10", "10.32", "15-03-2024"),
+                new Run("40:10", "10.32"),
                 gym1
         ));
 
