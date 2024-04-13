@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
@@ -83,6 +81,29 @@ class GymTest {
         }
     }
 
+    /**
+     * Test to see if getStationByIndex handles invalid index correctly by throwing an OutOfBounds exception.
+     */
+    @Test
+    void getStationByIndex_invalidIndex_throwOutOfBoundsError(){
+        Gym newGym = new Gym();
+        Exception exception;
+        try {
+            newGym.addStation("ExerciseOne", "1", "10", "1.0");
+            newGym.addStation("ExerciseTwo", "2", "20", "1.0,2.0");
+            newGym.addStation("ExerciseThree", "3", "30", "1.0,2.0,3.0");
+
+            exception = assertThrows(CustomExceptions.OutOfBounds.class, () -> newGym.getStationByIndex(-1));
+            assertTrue(exception.getMessage().contains(ErrorConstant.INVALID_INDEX_SEARCH_ERROR));
+
+            exception = assertThrows(CustomExceptions.OutOfBounds.class, () -> newGym.getStationByIndex(3));
+            assertTrue(exception.getMessage().contains(ErrorConstant.INVALID_INDEX_SEARCH_ERROR));
+
+        } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
+            fail("Should not throw an exception");
+        }
+    }
+
 
     // Test for toFileString method
     @Test
@@ -108,105 +129,7 @@ class GymTest {
         }
     }
 
-    // @@author rouvinerh
-    /**
-     * Tests the behaviour of valid exercise names being passed to validateExerciseName.
-     * Expects no exceptions to be thrown.
-     */
-    @Test
-    void validateExerciseName_correctName_noExceptionThrown() {
-        String input1 = "Bench Press";
-        Gym gym = new Gym();
-        assertDoesNotThrow(() -> gym.validateGymStationName(input1));
 
-        String input2 = "squat";
-        assertDoesNotThrow(() -> gym.validateGymStationName(input2));
-    }
-
-    /**
-     * Tests the behaviour of invalid exercise names being passed to validateExerciseName.
-     * Expects InvalidInput exception to be thrown.
-     */
-    @Test
-    void validateExerciseName_invalidNames_expectsInvalidInputException() {
-        Gym gym = new Gym();
-        // numbers in name
-        String input1 = "bench1";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> gym.validateGymStationName(input1));
-
-        // special characters in name
-        String input2 = "bench-;";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> gym.validateGymStationName(input2));
-
-        // special characters in name
-        String input3 = "bench-;";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> gym.validateGymStationName(input3));
-
-        // name length > 25 chars
-        String input4 = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA ";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> gym.validateGymStationName(input4));
-    }
-
-    /**
-     * Tests the behaviour of empty exercise names being passed to validateExerciseName.
-     * Expects InsufficientInput exception to be thrown.
-     */
-    @Test
-    void validateExerciseName_emptyNames_expectsInsufficientInputException() {
-        Gym gym = new Gym();
-        assertThrows(CustomExceptions.InsufficientInput.class, () -> gym.validateGymStationName(""));
-    }
-
-    /**
-     * Tests the behaviour of a correct weights array being passed to validateWeightsArray.
-     * Expects no exception to be thrown, and the correct ArrayList of integers to be
-     * returned.
-     *
-     * @throws CustomExceptions.InvalidInput If the input string does not have the right format.
-     */
-    @Test
-    void validateWeightsArray_correctInput_returnCorrectArrayList() throws CustomExceptions.InvalidInput {
-        String input = "1.0,2.25,50.5,60.75,0.0";
-        ArrayList<Double> expected = new ArrayList<>();
-        expected.add(1.0);
-        expected.add(2.25);
-        expected.add(50.5);
-        expected.add(60.75);
-        expected.add(0.0);
-
-        Gym gym = new Gym();
-        ArrayList<Double> result = gym.processWeightsArray(input);
-        assertArrayEquals(expected.toArray(), result.toArray());
-    }
-
-    /**
-     * Tests the behaviour of incorrect weights array being passed to validateWeightsArray.
-     * Expects InvalidInput exception to be thrown.
-     */
-    @Test
-    void validateWeightsArray_invalidInput_expectInvalidInputException() {
-        // negative weights
-        String input1 = "-1,2";
-        Gym gym = new Gym();
-        assertThrows(CustomExceptions.InvalidInput.class, () ->
-                gym.processWeightsArray(input1));
-
-        // non integer weights
-        String input2 = "1,a";
-        assertThrows(CustomExceptions.InvalidInput.class, () ->
-                gym.processWeightsArray(input2));
-
-        // incorrect multiple of weights
-        String input3 = "1.3333, 1.444, 0.998";
-        assertThrows(CustomExceptions.InvalidInput.class, () ->
-                gym.processWeightsArray(input3));
-
-        // exceed max weights
-        String input4 = "3000";
-        assertThrows(CustomExceptions.InvalidInput.class, () ->
-                gym.processWeightsArray(input4));
-
-    }
 
     /**
      * Tests the behaviour of incorrect inputs being passed to
@@ -268,6 +191,4 @@ class GymTest {
                 gym.addStation("Bench Press", "1", "3", "10,20"));
         assertTrue(exception.getMessage().contains((ErrorConstant.INVALID_WEIGHTS_NUMBER_ERROR)));
     }
-
-
 }

@@ -434,7 +434,7 @@ After adding a `Gym` object, the user is then prompted for input for the gym sta
 
 4. After splitting the input, the parameters are passed to  to `newGym.addStation()`. 
 
-5. `newGym.addStation()` will then create a `GymStation` object and validate the provided values. 
+5. `newGym.addStation()` will then create a `GymStation` object during which the input is checked within the `GymStation` object. 
 
 6. If the values are valid, the `GymStation` object is appended to an `ArrayList<GymStation>` stored in the `newGym` object. 
 
