@@ -177,7 +177,8 @@ Expected Output:
 ![Adding Gyms](img/output/adding_gym.png)
 
 > ⚠️ **Minimum and Maximum inputs:**
-> Minimum number of stations: 0, Maximum number of stations: 50
+> Minimum number of stations: 1, Maximum number of stations: 50
+> 
 > **Note that exceeding these bounds will trigger an error!**
 
 If you want to exit the gym station input prompt and go back to the main menu to use other commands, use `back` to do so. PulsePilot will delete the latest gym added and you can then use the other commands.
@@ -226,8 +227,6 @@ Expected Output:
 
 ![Adding BMI](img/output/adding_bmi.png)
 
-
-
 > ⚠️ **Minimum and Maximum inputs:**
 > Maximum Height: 2.75m, Minimum Height: 0.01m
 > Maximum Weight: 640.00kg, Minimum Weight: 0.01kg
@@ -245,11 +244,19 @@ Tracks the start and end of user's menstrual cycle.
 Format: <code style="color: #D85D43;">health /h:period /start:START_DATE [/end:END_DATE]</code>
 
 
-* `START_DATE` is `DD-MM-YYYY` format (i.e. `19-03-2024`) representing the first day of period flow which is also the first day of the cycle. 
+* `START_DATE` is `DD-MM-YYYY` format (i.e. `19-03-2024`) representing the first day of period flow, which is also the first day of the cycle. 
 
-* `END_DATE` is `DD-MM-YYYY` format (i.e. `19-03-2024`) representing the last day of period flow. This parameter is **optional** and can be added once the period flow ends. To add an end date for a specific period, you need to input the correct corresponding start date.
+* `END_DATE` is `DD-MM-YYYY` format (i.e. `19-03-2024`) representing the last day of period flow. This parameter is **optional** and can be added once the period flow ends. To add the end date, use the command with `START_DATE` being the corresponding start date and `END_DATE` being the end date to be added.
+
+> ⚠️ Both start and end dates specified cannot be later than the current date!
+
+> ⚠️ The start date of a new period entry must come after the end date of the previous period entry. 
 
 > ⚠️ An outstanding period entry must have an end date specified before a new entry can be added.
+
+> ⚠️ PulsePilot **does not** impose minimum or maximum length requirements for menstrual cycles, as underlying medical conditions can cause variations in cycle lengths.
+>
+> PulsePilot will only **notify** you if your cycle length is beyond the healthy range of **2 - 7 days**.
 
 Examples:
 
@@ -280,10 +287,6 @@ Expected Output:
 
 ![Viewing Prediction](img/output/viewing_prediction.png)
 
-> ⚠️ PulsePilot **does not** impose minimum or maximum length requirements for menstrual cycles, as underlying medical conditions can cause variations in cycle lengths.
-> 
-> PulsePilot will only **notify** you if your cycle length is beyond the healthy range of **2 - 7 days**.
-
 ###### [Back to table of contents](#table-of-contents)
 
 ___
@@ -296,7 +299,7 @@ Format: <code style="color: #D85D43;">health /h:appointment /date:DATE /time:TIM
 
 * `DATE` is a `DD-MM-YYYY` format (i.e. `03-04-2024`) representing the date of the appointment.
 
-* `TIME` is a `HH:mm` format (i.e. `14:15`) representing the time of the appointment.
+* `TIME` is a `HH:mm` format (i.e. `14:15`) representing the time of the appointment in 24-hour format.
 
 * `DESCRIPTION` is a string (i.e. `review checkup with surgeon`) representing the details of the appointment. The description can **only contain alphanumeric characters, spaces, inverted commas and quotes**.
 
@@ -324,13 +327,13 @@ Prints all tracked instances of `run`, `gym`, `workouts`,  `bmi`, `period`, `app
 
 Format: <code style="color: #D85D43;">history /item:TYPE</code>
 
-* `TYPE` is either `run`, `gym`, `workouts`, `bmi`, `period`, `appointment`.
+* `TYPE` is either `run`, `gym`, `workouts`, `bmi`, `period`, or `appointment`.
   - `run` shows all entries of runs.
   - `gym` shows all entries of gym.
   - `workouts` shows all entries of gym and runs.
   - `bmi` shows all BMI entries.
   - `period` shows all Period entries.
-  - `appointment` show all Appointment entries.
+  - `appointment` shows all Appointment entries.
 
 > 💡 `workouts` prints a summary of the `run` and `gym` objects. Full details can be viewed using `history /item:run/gym` respectively.
 
