@@ -20,6 +20,7 @@ public class UiConstant {
     public static final String PARTITION_LINE = "____________________________________________________________";
     public static final String EMPTY_STRING = "";
     public static final String FULL_STOP = ".";
+
     // Regex
     public static final String VALID_DATE_REGEX = "^\\d{2}-\\d{2}-\\d{4}$";
     public static final String VALID_TWO_DP_NUMBER_REGEX = "^\\d+\\.\\d{2}$";

@@ -1,5 +1,6 @@
 package health;
 
+import constants.UiConstant;
 import storage.LogFile;
 import utility.CustomExceptions;
 import constants.ErrorConstant;
@@ -71,8 +72,8 @@ public class HealthList extends ArrayList<Health> {
         PERIODS.sort(Comparator.comparing(Period::getStartDate).reversed());
 
         int size = PERIODS.size();
-        if (size > 1) {
-            for (int i = size - 1 ; i > 0; i--) {
+        if (size > HealthConstant.MIN_SIZE_FOR_COMPARISON) {
+            for (int i = size - 1; i > HealthConstant.FIRST_ITEM; i--) {
                 Period newerPeriod = PERIODS.get(i -  1);
                 Period olderPeriod = PERIODS.get(i);
                 olderPeriod.setCycleLength(newerPeriod.getStartDate());
@@ -130,7 +131,7 @@ public class HealthList extends ArrayList<Health> {
      * @return The Period object at the specified index, or null if the index is out of bounds.
      */
     public static Period getPeriod(int index) {
-        if (index < 0 || index >= PERIODS.size()) {
+        if (index < HealthConstant.FIRST_ITEM || index >= PERIODS.size()) {
             return null;
         }
         return PERIODS.get(index);
@@ -174,7 +175,7 @@ public class HealthList extends ArrayList<Health> {
      * @throws CustomExceptions.OutOfBounds If the index of the Bmi object given does not exist.
      */
     public static void deleteBmi(int index) throws CustomExceptions.OutOfBounds {
-        if (index < 0) {
+        if (index < HealthConstant.FIRST_ITEM) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.BMI_EMPTY_ERROR);
         } else if (index >= BMIS.size()) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.INVALID_INDEX_DELETE_ERROR);
@@ -182,7 +183,7 @@ public class HealthList extends ArrayList<Health> {
         assert !BMIS.isEmpty() : ErrorConstant.EMPTY_BMI_LIST_ERROR;
         Bmi deletedBmi = BMIS.get(index);
         Output.printLine();
-        System.out.printf((HealthConstant.LOG_DELETE_BMI_FORMAT) + "%n",
+        System.out.printf((HealthConstant.LOG_DELETE_BMI_FORMAT) + System.lineSeparator(),
                 deletedBmi.bmiValue,
                 deletedBmi.date);
         Output.printLine();
@@ -197,7 +198,7 @@ public class HealthList extends ArrayList<Health> {
      * @throws CustomExceptions.OutOfBounds If the index of the Period object given does not exist.
      */
     public static void deletePeriod(int index) throws CustomExceptions.OutOfBounds {
-        if (index < 0) {
+        if (index < HealthConstant.FIRST_ITEM) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.PERIOD_EMPTY_ERROR);
         } else if(index >= PERIODS.size()) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.INVALID_INDEX_DELETE_ERROR);
@@ -205,7 +206,7 @@ public class HealthList extends ArrayList<Health> {
         assert !PERIODS.isEmpty() : ErrorConstant.EMPTY_PERIOD_LIST_ERROR;
         Period deletedPeriod = PERIODS.get(index);
         Output.printLine();
-        System.out.printf((HealthConstant.LOG_DELETE_PERIOD_FORMAT) + "%n",
+        System.out.printf((HealthConstant.LOG_DELETE_PERIOD_FORMAT) + System.lineSeparator(),
                 deletedPeriod.getStartDate(),
                 deletedPeriod.getEndDate());
         PERIODS.remove(index);
@@ -222,7 +223,7 @@ public class HealthList extends ArrayList<Health> {
      * @throws CustomExceptions.OutOfBounds If the index of the Appointment object given does not exist.
      */
     public static void deleteAppointment(int index) throws CustomExceptions.OutOfBounds {
-        if (index < 0) {
+        if (index < HealthConstant.FIRST_ITEM) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.APPOINTMENT_EMPTY_ERROR);
         } else if (index >= APPOINTMENTS.size()) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.INVALID_INDEX_DELETE_ERROR);
@@ -230,7 +231,7 @@ public class HealthList extends ArrayList<Health> {
         assert !APPOINTMENTS.isEmpty() : ErrorConstant.EMPTY_APPOINTMENT_LIST_ERROR;
         Appointment deletedAppointment = APPOINTMENTS.get(index);
         Output.printLine();
-        System.out.printf((HealthConstant.LOG_DELETE_APPOINTMENT_FORMAT) + "%n",
+        System.out.printf((HealthConstant.LOG_DELETE_APPOINTMENT_FORMAT) + System.lineSeparator(),
                 deletedAppointment.date,
                 deletedAppointment.time,
                 deletedAppointment.description);
@@ -252,7 +253,7 @@ public class HealthList extends ArrayList<Health> {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.BMI_EMPTY_ERROR);
         }
         assert !BMIS.isEmpty() : ErrorConstant.EMPTY_BMI_LIST_ERROR;
-        System.out.println(BMIS.get(0));
+        System.out.println(BMIS.get(HealthConstant.FIRST_ITEM));
     }
 
     /**
@@ -265,7 +266,7 @@ public class HealthList extends ArrayList<Health> {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.PERIOD_EMPTY_ERROR);
         }
         assert !PERIODS.isEmpty() : ErrorConstant.EMPTY_PERIOD_LIST_ERROR;
-        System.out.println(PERIODS.get(0));
+        System.out.println(PERIODS.get(HealthConstant.FIRST_ITEM));
     }
 
     /**
@@ -295,7 +296,7 @@ public class HealthList extends ArrayList<Health> {
         int index = 1;
         System.out.println(HealthConstant.BMI_HISTORY_HEADER);
         for (Bmi bmi : BMIS) {
-            System.out.print(index + ". ");
+            System.out.print(index + UiConstant.FULL_STOP + UiConstant.SPLIT_BY_WHITESPACE);
             System.out.println(bmi);
             index += 1;
         }
@@ -317,7 +318,7 @@ public class HealthList extends ArrayList<Health> {
         int index = 1;
         System.out.println(HealthConstant.PERIOD_HISTORY_HEADER);
         for (Period period : PERIODS) {
-            System.out.print(index + ". ");
+            System.out.print(index + UiConstant.FULL_STOP + UiConstant.SPLIT_BY_WHITESPACE);
             System.out.println(period);
             index += 1;
         }
@@ -338,7 +339,7 @@ public class HealthList extends ArrayList<Health> {
         int index = 1;
         System.out.println(HealthConstant.APPOINTMENT_HISTORY_HEADER);
         for (Appointment appointment : APPOINTMENTS) {
-            System.out.print(index + ". ");
+            System.out.print(index + UiConstant.FULL_STOP + UiConstant.SPLIT_BY_WHITESPACE);
             System.out.println(appointment);
             index += 1;
         }
@@ -367,9 +368,9 @@ public class HealthList extends ArrayList<Health> {
      */
     public static void printLatestThreeCycles() {
         Output.printLine();
-        int startIndex = 0;
+        int startIndex = HealthConstant.FIRST_ITEM;
         int endIndex = HealthConstant.LATEST_THREE_CYCLE_LENGTHS;
-        assert startIndex >= 0 : ErrorConstant.START_INDEX_NEGATIVE_ERROR;
+        assert startIndex >= HealthConstant.FIRST_ITEM : ErrorConstant.START_INDEX_NEGATIVE_ERROR;
 
         for (int i = startIndex; i < endIndex; i++) {
             System.out.println(PERIODS.get(i));
@@ -390,7 +391,7 @@ public class HealthList extends ArrayList<Health> {
         }
         assert !PERIODS.isEmpty() : ErrorConstant.EMPTY_PERIOD_LIST_ERROR;
 
-        Period latestPeriod = PERIODS.get(0);
+        Period latestPeriod = PERIODS.get(HealthConstant.FIRST_ITEM);
         return latestPeriod.nextCyclePrediction();
     }
 }

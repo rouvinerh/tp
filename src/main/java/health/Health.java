@@ -29,7 +29,7 @@ public class Health {
     /**
      * Returns a string containing the date of the Health object.
      *
-     * @return A formatted string representing a Health object.
+     * @return A formatted string representing the date of a Health object.
      */
     @Override
     public String toString(){
