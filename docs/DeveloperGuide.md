@@ -133,9 +133,9 @@ The `Workout` package is responsible for tracking run and gym workouts from the 
 
 #### Workouts List
 
-`WorkoutList` is a class that contains the `ArrayList` objects of `Run`, `Gym` and `Workout`. The class diagram is as follows:
+`WorkoutLists` is a class that contains the `ArrayList` objects of `Run`, `Gym` and `Workout`. The class diagram is as follows:
 
-![WorkoutList Class Diagram](img/class_diagrams/workoutlist_class_diagram.png)
+![WorkoutLists Class Diagram](img/class_diagrams/workoutlist_class_diagram.png)
 
 The class contains methods to retrieve the different objects. Additionally, it contains the methods for **deleting** an object from PulsePilot, which is used for the `delete` command implementation.
 
