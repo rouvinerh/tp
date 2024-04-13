@@ -30,6 +30,9 @@ Run -> Workout **: new
 activate Workout #salmon
 
 Workout -> WorkoutLists **: new
+activate WorkoutLists #salmon
+WorkoutLists --> Workout: 
+deactivate WorkoutLists #salmon
 Workout -> Workout: addIntoWorkoutList(Run)
 activate Workout #FFBBBB
 Workout --> WorkoutLists: addRun()
@@ -44,8 +47,8 @@ destroy Workout
 Run --> Parser:
 deactivate Run #FFBBBB
 Parser -> Output: printAddRun()
-activate Output #FFBBBB
+activate Output #salmon
 Output --> Parser:
-deactivate Output #FFBBBB
+deactivate Output #salmon
 destroy Run
 @enduml

@@ -403,7 +403,7 @@ An overloaded `Run` and `Workout` constructor is used to allow for `date` to be 
 
 This is the sequence diagram for adding a run:
 
-![Run Sequence Diagram](img/sequence_diagrams/run_sequence_diagram.png)
+[Run Sequence Diagram](img/sequence_diagrams/run_sequence_diagram.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
