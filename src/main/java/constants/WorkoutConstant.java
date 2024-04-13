@@ -32,6 +32,12 @@ public class WorkoutConstant {
     public static final double MAX_GYM_WEIGHT = 2850.000;
     public static final double WEIGHT_MULTIPLE = 0.125;
     public static final int MAX_GYM_STATION_NUMBER = 50;
+    public static final int RUN_TIME_HOUR_INDEX = 0;
+    public static final int RUN_TIME_MINUTE_INDEX = 1;
+    public static final int RUN_TIME_SECOND_INDEX = 2;
+    public static final int RUN_TIME_NO_HOURS_MINUTE_INDEX = 0;
+    public static final int RUN_TIME_NO_HOURS_SECOND_INDEX = 1;
+
 
     // INDEX
     public static final Integer STATION_NAME_INDEX = 0;

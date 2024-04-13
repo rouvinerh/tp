@@ -54,15 +54,15 @@ public class Run extends Workout {
      * @return Formatted string of the time for the run.
      */
     public String getTimes() {
-        if (times[0] > 0) {
-            int hours = times[0];
-            int minutes = times[1];
-            int seconds = times[2];
+        if (times[WorkoutConstant.RUN_TIME_HOUR_INDEX] > UiConstant.MIN_HOURS) {
+            int hours = times[WorkoutConstant.RUN_TIME_HOUR_INDEX];
+            int minutes = times[WorkoutConstant.RUN_TIME_MINUTE_INDEX];
+            int seconds = times[WorkoutConstant.RUN_TIME_SECOND_INDEX];
             return String.format(WorkoutConstant.TIME_WITH_HOURS_FORMAT, hours, minutes, seconds);
 
         } else {
-            int minutes = times[1];
-            int seconds = times[2];
+            int minutes = times[WorkoutConstant.RUN_TIME_MINUTE_INDEX];
+            int seconds = times[WorkoutConstant.RUN_TIME_SECOND_INDEX];
             return String.format(WorkoutConstant.TIME_WITHOUT_HOURS_FORMAT, minutes, seconds);
         }
     }
@@ -125,12 +125,12 @@ public class Run extends Workout {
         int totalSeconds;
 
         if (times[0] > 0) {
-            totalSeconds = this.times[0] * UiConstant.NUM_SECONDS_IN_HOUR
-                    + this.times[1] * UiConstant.NUM_SECONDS_IN_MINUTE
-                    + this.times[2];
+            totalSeconds = this.times[WorkoutConstant.RUN_TIME_HOUR_INDEX] * UiConstant.NUM_SECONDS_IN_HOUR
+                    + this.times[WorkoutConstant.RUN_TIME_MINUTE_INDEX] * UiConstant.NUM_SECONDS_IN_MINUTE
+                    + this.times[WorkoutConstant.RUN_TIME_SECOND_INDEX];
         } else {
-            totalSeconds = this.times[1] * UiConstant.NUM_SECONDS_IN_MINUTE
-                    + this.times[2];
+            totalSeconds = this.times[WorkoutConstant.RUN_TIME_MINUTE_INDEX] * UiConstant.NUM_SECONDS_IN_MINUTE
+                    + this.times[WorkoutConstant.RUN_TIME_SECOND_INDEX];
         }
         return totalSeconds;
     }
@@ -142,9 +142,9 @@ public class Run extends Workout {
      * @throws CustomExceptions.InvalidInput If the run time specified is not allowed.
      */
     private void checkRunTimeValues(Integer[] runTimeParts) throws CustomExceptions.InvalidInput {
-        int hours = runTimeParts[0];
-        int minutes = runTimeParts[1];
-        int seconds = runTimeParts[2];
+        int hours = runTimeParts[WorkoutConstant.RUN_TIME_HOUR_INDEX];
+        int minutes = runTimeParts[WorkoutConstant.RUN_TIME_MINUTE_INDEX];
+        int seconds = runTimeParts[WorkoutConstant.RUN_TIME_SECOND_INDEX];
 
         if (hours == UiConstant.MIN_HOURS) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_HOUR_ERROR);
@@ -159,9 +159,9 @@ public class Run extends Workout {
         if (seconds > UiConstant.MAX_SECONDS) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_SECOND_ERROR);
         }
-        if (hours == -1) {
+        if (hours == WorkoutConstant.NO_HOURS_PRESENT) {
             // if hours not present, minutes and seconds cannot be 00
-            if (minutes == 0 && seconds == 0) {
+            if (minutes == UiConstant.MIN_MINUTES && seconds == UiConstant.MIN_SECONDS) {
                 throw new CustomExceptions.InvalidInput(ErrorConstant.ZERO_TIME_ERROR);
             }
         }
@@ -179,16 +179,16 @@ public class Run extends Workout {
     protected Integer[] processRunTime(String inputTime) throws CustomExceptions.InvalidInput {
         String [] parts = inputTime.split(UiConstant.SPLIT_BY_COLON);
         int hours = WorkoutConstant.NO_HOURS_PRESENT;
-        int minutes = 0;
-        int seconds = 0;
+        int minutes = UiConstant.MIN_MINUTES;
+        int seconds = UiConstant.MIN_SECONDS;
 
         if (parts.length == WorkoutConstant.NUMBER_OF_PARTS_FOR_RUN_TIME) {
-            minutes = Integer.parseInt(parts[0]);
-            seconds = Integer.parseInt(parts[1]);
+            minutes = Integer.parseInt(parts[WorkoutConstant.RUN_TIME_NO_HOURS_MINUTE_INDEX]);
+            seconds = Integer.parseInt(parts[WorkoutConstant.RUN_TIME_NO_HOURS_SECOND_INDEX]);
         } else if (parts.length == WorkoutConstant.NUMBER_OF_PARTS_FOR_RUN_TIME_WITH_HOURS) {
-            hours = Integer.parseInt(parts[0]);
-            minutes = Integer.parseInt(parts[1]);
-            seconds = Integer.parseInt(parts[2]);
+            hours = Integer.parseInt(parts[WorkoutConstant.RUN_TIME_HOUR_INDEX]);
+            minutes = Integer.parseInt(parts[WorkoutConstant.RUN_TIME_MINUTE_INDEX]);
+            seconds = Integer.parseInt(parts[WorkoutConstant.RUN_TIME_SECOND_INDEX]);
         }
 
         Integer[] runTimeParts = new Integer[]{hours, minutes, seconds};
