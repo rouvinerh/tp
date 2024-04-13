@@ -7,7 +7,6 @@ participant "validation:Validation" as Validation
 participant "newGym:Gym" as Gym
 participant "workout:Workout" as Workout
 participant "workoutList:WorkoutList" as WorkoutList
-participant "parser:Parser" as newParser
 
 Handler -> Parser: parseGymInput()
 activate Handler #salmon
@@ -26,54 +25,29 @@ deactivate Validation
 Parser -> Gym **: new
 
 
-
-alt date is present
     activate Gym #FFBBBB   
-    Gym -> Workout **: <<super>> Super(date)
+    Gym -> Workout **: new()
     activate Workout #FFBBBB
-    Workout -> newParser **: parseDate(date)
-    activate newParser #FFBBBB
-    newParser --> Workout:
-    deactivate newParser #FFBBBB
-    destroy newParser
+    Workout --> Gym: 
+    deactivate Workout #FFBBBB
 
-    Workout -> Workout: addIntoWorkoutList()
-    activate Workout #salmon
-    Workout -> WorkoutList **: addGym()
+    Gym -> Workout: addIntoWorkoutList()
+    activate Workout #FFBBBB
+    Workout -> WorkoutList **: new
+    activate WorkoutList #FFBBBB
+    WorkoutList --> Workout:
+    deactivate WorkoutList #FFBBBB
+
+    Workout -> WorkoutList: addGym()
     activate WorkoutList #FFBBBB
     WorkoutList --> Workout:
     deactivate WorkoutList #FFBBBB
     destroy WorkoutList
-
-    Workout --> Workout :
-    deactivate Workout #Salmon
-
-    Workout --> Gym:
+    
+    Workout --> Gym :
     deactivate Workout #FFBBBB
- 
-else date is not present
-    Gym -> Workout **: <<super>> Super()
-    activate Workout #FFBBBB
-    Workout -> newParser **: parseDate(date)
-    activate newParser #FFBBBB
-    newParser --> Workout:
-    deactivate newParser #FFBBBB
-    destroy newParser
+    destroy Workout
 
-    Workout -> Workout: addIntoWorkoutList()
-    activate Workout #salmon
-    Workout -> WorkoutList **: addGym()
-    activate WorkoutList #FFBBBB
-    WorkoutList --> Workout:
-    deactivate WorkoutList #FFBBBB
-    destroy WorkoutList
-
-    Workout --> Workout :
-    deactivate Workout #Salmon
-
-    Workout --> Gym:
-    deactivate Workout #FFBBBB
-end
 Gym --> Parser:
 deactivate Gym #FFBBBB
 
@@ -82,5 +56,8 @@ activate Parser #FFBBBB
 ref over Parser: parseGymStationInput
 Parser --> Parser:
 deactivate Parser #FFBBBB
+Parser --> Handler 
 
+deactivate Parser #salmon
+deactivate Handler #salmon
 @enduml
