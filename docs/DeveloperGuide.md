@@ -442,7 +442,7 @@ After adding a `Gym` object, the user is then prompted for input for the gym sta
 
 6. If the values are valid, the `GymStation` object is appended to an `ArrayList<GymStation>` stored in the `newGym` object. 
 
-7. Steps 2 to 6 repeat until all stations have been added.
+7. Steps 2 to 6 repeats until all stations have been added.
 
 8. The final `Gym` object is passed to `output.printAddGym()` and a message acknowledging the successful adding is printed to the screen.
 
