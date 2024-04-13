@@ -1,5 +1,6 @@
 package health;
 
+import constants.ErrorConstant;
 import constants.UiConstant;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,14 +8,16 @@ import org.junit.jupiter.api.Test;
 
 import utility.CustomExceptions;
 import constants.HealthConstant;
+import utility.Parser;
 
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.time.LocalDate;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class PeriodTest {
     private static final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -57,7 +60,7 @@ class PeriodTest {
      * the last Period object added.
      */
     @Test
-    void showLatestPeriod_twoPeriodInputs_printCorrectPeriod() throws CustomExceptions.OutOfBounds {
+    void printLatestPeriod_twoPeriodInputs_printCorrectPeriod() throws CustomExceptions.OutOfBounds {
         Period firstPeriod = new Period("09-02-2023", "16-02-2023");
         Period secondPeriod = new Period("09-03-2023", "16-03-2023");
 
@@ -72,7 +75,7 @@ class PeriodTest {
                 + " days"
                 + System.lineSeparator();
 
-        HealthList.showLatestPeriod();
+        HealthList.printLatestPeriod();
         assertEquals(expected, outContent.toString());
     }
 
@@ -110,7 +113,7 @@ class PeriodTest {
                 + " days"
                 + System.lineSeparator();
 
-        HealthList.showPeriodHistory();
+        HealthList.printPeriodHistory();
         assertEquals(expected, outContent.toString());
     }
 
@@ -135,8 +138,8 @@ class PeriodTest {
      * Expected behaviour is for an AssertionError to be thrown.
      */
     @Test
-    void deletePeriod_emptyList_throwsAssertionError() {
-        assertThrows(AssertionError.class, () ->
+    void deletePeriod_emptyList_throwsCustomExceptions() {
+        assertThrows(CustomExceptions.OutOfBounds.class, () ->
                 HealthList.deletePeriod(0));
     }
 
@@ -268,4 +271,123 @@ class PeriodTest {
         HealthList.printLatestThreeCycles();
         assertEquals(expected, outContent.toString());
     }
+
+    /**
+     * Test get period with out of bounds index.
+     * Expected behaviour is for null return.
+     */
+    @Test
+    void getPeriod_emptyPeriodList_expectNull() throws CustomExceptions.OutOfBounds {
+        HealthList healthList = new HealthList();
+        Period period = new Period("09-01-2024", "16-01-2024");
+        Period result = healthList.getPeriod(1);
+
+        assertEquals(null, result);
+    }
+
+    /**
+     * Test deleting of period with invalid negative index.
+     * Expected behaviour is for an OutOfBounds error to be thrown.
+     */
+    @Test
+    void deletePeriod_negativeIndex_throwOutOfBoundsForPeriod() {
+        int invalidIndex = -1;
+        CustomExceptions.OutOfBounds exception = assertThrows(
+                CustomExceptions.OutOfBounds.class,
+                () -> HealthList.deletePeriod(invalidIndex)
+        );
+        String expected = "\u001b[31mOut of Bounds Error: "
+                + ErrorConstant.PERIOD_EMPTY_ERROR
+                + "\u001b[0m";
+        assertEquals(expected, exception.getMessage());
+    }
+
+    /**
+     * Test prediction of period with empty period list.
+     * Expected behaviour is for an OutOfBounds error to be thrown.
+     */
+    @Test
+    void predictNextPeriodStartDate_emptyPeriodList_throwOutOfBoundsForPeriod() {
+        int invalidIndex = -1;
+        CustomExceptions.OutOfBounds exception = assertThrows(
+                CustomExceptions.OutOfBounds.class,
+                () -> HealthList.predictNextPeriodStartDate()
+        );
+        String expected = "\u001b[31mOut of Bounds Error: "
+                + ErrorConstant.PERIOD_EMPTY_ERROR
+                + "\u001b[0m";
+        assertEquals(expected, exception.getMessage());
+    }
+
+    /**
+     * Test Period constructor without end date.
+     * Expected behaviour is to add a Period object without end date.
+     */
+    @Test
+    public void periodConstructor_expectCreatePeriodWithoutEndDate() {
+        HealthList healthList = new HealthList();
+        Period period = new Period("03-04-2024");
+
+        Parser parser = new Parser();
+        assertEquals(parser.parseDate("03-04-2024"), period.getStartDate());
+        assertNull(period.getEndDate());
+        assertEquals(1, period.getPeriodLength());
+
+        String expected = "Period Start: "
+                + period.getStartDate()
+                + " Period End: NA"
+                + System.lineSeparator()
+                + "Period Length: "
+                + period.getPeriodLength()
+                + " day"
+                + System.lineSeparator();
+
+        System.out.println(period);
+        assertEquals(expected, outContent.toString());
+    }
+
+    /**
+     * Test update end date of Period object without an end date.
+     * Expected behaviour is to update the end date of the Period object.
+     */
+    @Test
+    public void updateEndDate_expectUpdatePeriodWithEndDate () {
+        HealthList healthList = new HealthList();
+        Period period = new Period("03-04-2024");
+
+        Parser parser = new Parser();
+        assertEquals(parser.parseDate("03-04-2024"), period.getStartDate());
+        assertNull(period.getEndDate());
+        assertEquals(1, period.getPeriodLength());
+
+        period.updateEndDate("05-04-2024");
+        assertEquals(parser.parseDate("05-04-2024"), period.getEndDate());
+
+        String expected = "Period Start: "
+                + period.getStartDate()
+                + " Period End: "
+                + period.getEndDate()
+                + System.lineSeparator()
+                + "Period Length: "
+                + period.getPeriodLength()
+                + " days"
+                + System.lineSeparator();
+
+        System.out.println(period);
+        assertEquals(expected, outContent.toString());
+    }
+
+    /**
+     * Test calculation of length of the period in days when end date is null.
+     * Expected behaviour is 0 return.
+     */
+    @Test
+    void calculatePeriodLength_nullEndDate_expectZeroReturn() {
+        HealthList healthList = new HealthList();
+        Period period = new Period("03-04-2024");
+
+        assertEquals(0, period.calculatePeriodLength());
+    }
+
+
 }

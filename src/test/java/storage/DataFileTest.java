@@ -12,9 +12,10 @@ import utility.CustomExceptions;
 import workouts.Gym;
 import workouts.Run;
 import workouts.Workout;
-import workouts.WorkoutList;
+import workouts.WorkoutLists;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -28,12 +29,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 
 public class DataFileTest {
-    private  final String testDataFilePath = "./test_data.txt";
-    private  final String testHashFilePath = "./test_hash.txt";
-    private  final String originalDataFilePath = "./pulsepilot_data.txt";
-    private  final String originalHashFilePath = "./pulsepilot_hash.txt";
+    private final String testDataFilePath = "./test_data.txt";
+    private final String testHashFilePath = "./test_hash.txt";
+    private final String originalDataFilePath = "./pulsepilot_data.txt";
+    private final String originalHashFilePath = "./pulsepilot_hash.txt";
 
     @BeforeEach
     void setUp() {
@@ -56,7 +59,7 @@ public class DataFileTest {
     }
 
     private void cleanup(){
-        WorkoutList.clearWorkoutsRunGym();
+        WorkoutLists.clearWorkoutsRunGym();
         HealthList.clearHealthLists();
     }
     private void assertDataFileContents(String name, ArrayList<Bmi> bmiArrayList,
@@ -128,7 +131,7 @@ public class DataFileTest {
         newGym2.addStation("squats", 4, 3, array2);
 
         ArrayList<Workout> workoutArrayList = new ArrayList<>(List.of(
-                new Run("00:30:00", "5.0", "01-04-2023"),
+                new Run("30:00", "5.00", "01-04-2023"),
                 newGym,
                 newGym2
         ));
@@ -149,7 +152,7 @@ public class DataFileTest {
             assertEquals("APPOINTMENT:15-05-2023:14.30:Doctor's Checkup", lines.get(4));
             assertEquals("PERIOD:01-03-2023:05-03-2023:5", lines.get(5));
             assertEquals("PERIOD:01-04-2023:04-04-2023:4", lines.get(6));
-            assertEquals("RUN:5.00:00.30.00:01-04-2023", lines.get(7));
+            assertEquals("RUN:5.00:30.00:01-04-2023", lines.get(7));
             assertEquals("GYM:2:11-11-1997:bench press:4:4:10.0,20.0,30.0," +
                     "40.0:squats:4:3:20.0,30.0,40.0,50.0", lines.get(8));
             assertEquals("GYM:2:NA:bench press:4:4:10.0,20.0,30.0,40.0:squats:4:3:20.0,30.0,40.0,50.0",
@@ -160,7 +163,7 @@ public class DataFileTest {
     }
 
     @Test
-    void saveDataFile_emptyData_writesCorrectly() throws IOException, CustomExceptions.FileWriteError {
+    void saveDataFile_emptyData_writesCorrectly() throws CustomExceptions.FileWriteError {
         // Arrange
         String name = "Jane Doe";
         ArrayList<Bmi> bmiArrayList = new ArrayList<>();
@@ -181,7 +184,7 @@ public class DataFileTest {
     }
 
     @Test
-    void loadDataFile_nonExistentFile_createsNew() throws CustomExceptions.FileCreateError,
+    void loadDataFile_nonExistentFile_createsNew() throws
             CustomExceptions.InvalidInput, CustomExceptions.FileWriteError {
         // Arrange
         String name = "John Doe";
@@ -198,7 +201,7 @@ public class DataFileTest {
                 new Period("01-04-2023", "04-04-2023")
         ));
         ArrayList<Workout> workoutArrayList = new ArrayList<>(Arrays.asList(
-                new Run("00:30:00", "5.0", "01-04-2023")
+                new Run("30:00", "5.00", "01-04-2023")
         ));
 
         // Act
@@ -230,7 +233,7 @@ public class DataFileTest {
                 new Period("01-04-2023", "04-04-2023")
         ));
         ArrayList<Workout> workoutArrayList = new ArrayList<>(Arrays.asList(
-                new Run("00:30:00", "5.0", "01-04-2023")
+                new Run("30:00", "5.00", "01-04-2023")
         ));
 
         File dataFileName = new File(testDataFilePath);
@@ -247,7 +250,7 @@ public class DataFileTest {
 
     @Test
     void loadDataFile_existingFile_readsCorrectly() throws CustomExceptions.FileReadError,
-            CustomExceptions.FileWriteError {
+            CustomExceptions.FileWriteError, CustomExceptions.InvalidInput {
         // Arrange
         String name = "John Doe";
         ArrayList<Bmi> bmiArrayList = new ArrayList<>(Arrays.asList(
@@ -261,8 +264,18 @@ public class DataFileTest {
 
         // Has additional elements added to ArrayList and will thus be skipped
         ArrayList<Period> periodArrayList = new ArrayList<>(Arrays.asList(
+                new Period ("08-05-2023"),
+                new Period("01-04-2023", "07-04-2023")
+
+
         ));
+        Gym gym1 = new Gym();
+        ArrayList<Double> array1 = new ArrayList<>(Arrays.asList(1.0));
+        gym1.addStation("Squat Press", 1, 50, array1);
         ArrayList<Workout> workoutArrayList = new ArrayList<>(Arrays.asList(
+                new Run("40:10", "10.32", "15-03-2024"),
+                new Run("40:10", "10.32"),
+                gym1
         ));
 
         DataFile dataFile = new DataFile();
@@ -283,7 +296,118 @@ public class DataFileTest {
         assertEquals(Arrays.toString(periodArrayList.toArray()),
                 Arrays.toString(HealthList.getPeriods().toArray()));
         assertEquals(Arrays.toString(workoutArrayList.toArray()),
-                Arrays.toString(WorkoutList.getWorkouts().toArray()));
+                Arrays.toString(WorkoutLists.getWorkouts().toArray()));
     }
 
+    /**
+     * Tests the behaviour of verifyIntegrity when an invalid File object is passed.
+     * Expects FileCreateError exception to be thrown.
+     */
+    @Test
+    void verifyIntegrity_invalidFileName_expectsFileCreateErrorException() {
+        File testFile = new File("");
+        DataFile dataFile = new DataFile();
+        assertThrows(CustomExceptions.FileCreateError.class, () -> dataFile.verifyIntegrity(testFile));
+    }
+
+    @Test
+    void readHashFromFile_validHashFile_returnsCorrectHash() throws IOException {
+        // Arrange
+        String expectedHash = "abc123def456";
+        File hashFile = new File(testHashFilePath);
+        try (FileWriter writer = new FileWriter(hashFile)) {
+            writer.write(expectedHash);
+        }
+
+        // Act
+        DataFile dataFile = new DataFile();
+        String actualHash = dataFile.readHashFromFile(hashFile);
+
+        // Assert
+        assertEquals(expectedHash, actualHash);
+    }
+
+    @Test
+    void processName_invalidUsername_throwsInvalidInputException() {
+        // Arrange
+        String invalidUsername = "John~Doe123";
+
+        // Act and Assert
+        DataFile dataFile = new DataFile();
+        assertThrows(CustomExceptions.InvalidInput.class, () -> dataFile.processName(invalidUsername));
+    }
+
+    @Test
+    void processAppointment_missingAppointmentDetails_throwsInvalidInputException() {
+        // Arrange
+        String[] input = {"APPOINTMENT", "01-05-2025", "10:00", "invalid_description~"};
+
+        // Act and Assert
+        DataFile dataFile = new DataFile();
+        assertThrows(CustomExceptions.InvalidInput.class, () -> dataFile.processAppointment(input));
+    }
+
+    @Test
+    void processPeriod_invalidPeriodInput_throwsInvalidInputException() {
+        // Arrange
+        String[] input = {"PERIOD", "01-04-2023", "invalid_date"};
+
+        // Act and Assert
+        DataFile dataFile = new DataFile();
+        assertThrows(CustomExceptions.InvalidInput.class, () -> dataFile.processPeriod(input));
+    }
+
+    @Test
+    void processBmi_invalidBmiInput_throwsInvalidInputException() {
+        // Arrange
+        String[] input = {"BMI", "invalid_height", "70.00", "24.22", "01-04-2023"};
+
+        // Act and Assert
+        DataFile dataFile = new DataFile();
+        assertThrows(CustomExceptions.InvalidInput.class, () -> dataFile.processBmi(input));
+    }
+
+    @Test
+    void processRun_invalidRunInput_throwsInvalidInputException() {
+        // Arrange
+        String[] input = {"RUN", "invalid_distance", "00:30:00", "01-04-2023"};
+
+        // Act and Assert
+        DataFile dataFile = new DataFile();
+        assertThrows(CustomExceptions.InvalidInput.class, () -> dataFile.processRun(input));
+    }
+
+    @Test
+    void processGym_invalidGymInput_throwsInvalidInputException() {
+        // Arrange
+        String rawInput = "GYM:2:11-11-1997:bench press:" +
+                "4:4:10.0,20.0,30.0,40.0:invalid_station:4:3:20.0,30.0,40.0,50.0";
+
+        // Act and Assert
+        DataFile dataFile = new DataFile();
+        assertThrows(CustomExceptions.InvalidInput.class, () -> dataFile.processGym(rawInput));
+    }
+
+    @Test
+    void processFail_logsErrorAndDeletesFiles() {
+        // Arrange
+        DataFile dataFile = new DataFile();
+        String errorString = "Test error string";
+        String dataFilePath = testDataFilePath;
+        String hashFilePath = testHashFilePath;
+
+        // Act
+        dataFile.processFail(errorString);
+
+        // Assert
+        // Check if the error was logged
+        String logContent = LogFile.readLogContent();
+        assertTrue(logContent.contains(errorString));
+
+        // Check if the data file was deleted
+        assertFalse(new File(dataFilePath).exists());
+
+        // Check if the hash file was deleted
+        assertFalse(new File(hashFilePath).exists());
+    }
 }

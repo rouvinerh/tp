@@ -28,7 +28,7 @@ public class UiConstant {
     public static final String VALID_POSITIVE_INTEGER_REGEX = "^[1-9]\\d*$";
     public static final String VALID_APPOINTMENT_DESCRIPTION_REGEX = "^[0-9a-zA-Z\\s'\"]+$";
     public static final String VALID_GYM_STATION_NAME_REGEX = "^[A-Za-z\\s]+$";
-    public static final String VALID_USERNAME_REGEX = "^[A-Za-z\\s]+$";
+    public static final String VALID_USERNAME_REGEX = "^[0-9A-Za-z\\s]+$";
     public static final String VALID_WEIGHTS_ARRAY_REGEX = "^\\d+(\\.\\d{1,3})?(,\\d+(\\.\\d{1,3})?)*$";
 
     // PulsePilot UI replies
@@ -45,7 +45,8 @@ public class UiConstant {
     public static File saveFile = new File(UiConstant.dataFilePath);
     public static final int FILE_FOUND = 0;
     public static final int FILE_NOT_FOUND = 1;
-    public static final String MISSING_FILE = "What is your name, voyager?";
+    public static final String FILE_FOUND_MESSAGE = "Welcome back, Captain ";
+    public static final String FILE_MISSING_MESSAGE = "What is your name, voyager?";
     public static final String SUCCESSFUL_LOAD = "Prior data found. Orbit has been synchronised.";
 
 

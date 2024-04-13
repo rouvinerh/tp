@@ -17,7 +17,12 @@ public class WorkoutConstant {
     public static final String REPS_FLAG = "/r:";
     public static final String WEIGHTS_FLAG = "/w:";
 
+    public static final String COLON = ":";
     // Integers
+    public static final int RUN_TIME_FIRST_PART = 0;
+    public static final int RUN_TIME_SECOND_PART = 1;
+    public static final int RUN_TIME_THIRD_PART = 2;
+
     public static final int NUMBER_OF_RUN_PARAMETERS = 3;
     public static final int NUMBER_OF_GYM_PARAMETERS = 2;
     public static final int NUMBER_OF_GYM_STATION_PARAMETERS = 4;
@@ -33,6 +38,7 @@ public class WorkoutConstant {
     public static final double MAX_RUN_TIME_IN_SECONDS = 360000; // 100 hours in seconds
     public static final double MAX_GYM_WEIGHT = 2850.000;
     public static final double WEIGHT_MULTIPLE = 0.125;
+    public static final int MAX_GYM_STATION_NUMBER = 50;
 
     // INDEX
     public static final Integer STATION_NAME_INDEX = 0;
@@ -52,6 +58,7 @@ public class WorkoutConstant {
 
 
     // KEYWORDS
+    public static final String BACK = "back";
     public static final String RUN = "run";
     public static final String GYM = "gym";
     public static final String ALL = "workouts";
@@ -71,27 +78,37 @@ public class WorkoutConstant {
 
     // HISTORY (ALL WORKOUTS) CONSTANTS
     public static final String HISTORY_WORKOUTS_HEADER = "Showing all workouts (runs and gyms):";
-    public static final String HISTORY_WORKOUTS_DATA_FORMAT = "%-5s\t%-12s\t%-25s\t%-15s\t%-8s";
+    public static final String HISTORY_WORKOUTS_DATA_FORMAT = "%-5s\t%-12s\t%-25s\t%-20s\t%-8s";
     public static final String HISTORY_WORKOUTS_HEADER_FORMAT = String.format(
-            "%-6s\t%-5s\t%-12s\t%-25s\t%-15s\t%-8s", "Index",
-            "Type", "Date", "Distance (km) / Station", "Duration / Sets", "Pace (min/km)");
+            "%-6s\t%-5s\t%-12s\t%-25s\t%-20s\t%-8s", "Index",
+            "Type", "Date", "[Distance (km) / Station]", "[Duration / Sets]", "Pace (min/km)");
     public static final String HISTORY_WORKOUTS_DATA_HEADER_FORMAT = "%-6s\t%s";
 
     // Formatted Strings/Messages
     public static final String RUN_DATA_FORMAT = "%-6s\t%-10s\t%-10s\t%-10s\t%-12s";
     public static final String RUN_DATA_INDEX_FORMAT = "%-6d\t%-6s";
-
     public static final String RUN_HEADER_INDEX_FORMAT = String.format("%-6s\t%-6s\t%-10s\t%-10s\t%-10s\t%-12s",
             "Index", "Type", "Time", "Distance", "Pace", "Date");
+    public static final String RUN_DELETE_MESSAGE_FORMAT = "Removed Run entry with %s km at %s.";
     public static final String GYM_STATION_FORMAT = "%s: ";
     public static final String GYM_SET_FORMAT = "%d reps at %.3f KG";
     public static final String GYM_SET_INDEX_FORMAT = "\t- Set %d. %s";
+    public static final String GYM_DELETE_MESSAGE_FORMAT = "Removed Gym entry with %d station(s).";
+
     public static final String INDIVIDUAL_GYM_STATION_FORMAT = "%d sets";
     public static final String RUN_HEADER = "Type\tTime\t\tDistance\tPace\t\tDate";
     public static final String ADD_RUN = "Successfully added a new run session";
     public static final String ADD_GYM = "Successfully added a new gym session";
     public static final String STATION_GYM_FORMAT = "e.g. Bench Press /s:2 /r:4 " +
             "/w:10,20";
+
+    public static final String TIME_WITH_HOURS_FORMAT = TWO_DIGIT_PLACE_FORMAT
+            + COLON + TWO_DIGIT_PLACE_FORMAT
+            + COLON + TWO_DIGIT_PLACE_FORMAT;
+    public static final String TIME_WITHOUT_HOURS_FORMAT = TWO_DIGIT_PLACE_FORMAT
+            + COLON + TWO_DIGIT_PLACE_FORMAT;
+
+    public static final String RUN_PACE_FORMAT = "%d:%02d/km";
     public static final String INVALID_RUN_TIME = "Invalid run time!";
     public static final String INVALID_GYM_INPUT = "Invalid gym parameters!";
     public static final String INVALID_GYM_STATION_INDEX = "Invalid gym station index!";

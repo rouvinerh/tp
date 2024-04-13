@@ -1,5 +1,6 @@
 package health;
 
+import constants.ErrorConstant;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -98,7 +99,7 @@ class BmiTest {
      * Tests the behaviour of showCurrentBmi.
      */
     @Test
-    void showCurrentBmi_bmiObject_printsCorrectCurrentBmi() throws CustomExceptions.OutOfBounds {
+    void printLatestBmi_bmiObject_printsCorrectLatestBmi() throws CustomExceptions.OutOfBounds {
         Bmi bmi = new Bmi("1.75", "70.00", "19-03-2024");
         HealthList healthList = new HealthList();
         healthList.addBmi(bmi);
@@ -109,7 +110,7 @@ class BmiTest {
                 + System.lineSeparator()
                 + "Great! You're within normal range."
                 + System.lineSeparator();
-        HealthList.showCurrentBmi();
+        HealthList.printLatestBmi();
         assertEquals(expected, outContent.toString());
     }
 
@@ -118,7 +119,7 @@ class BmiTest {
      * Test the behaviour of printing Bmi history.
      */
     @Test
-    void showBmiHistory_twoBmiObjects_printsCorrectBmiHistory() throws CustomExceptions.OutOfBounds {
+    void printBmiHistory_twoBmiObjects_printsCorrectBmiHistory() throws CustomExceptions.OutOfBounds {
         new Bmi("1.75", "80.0", "20-03-2024");
         new Bmi("1.80", "74.0", "21-03-2024");
 
@@ -141,7 +142,7 @@ class BmiTest {
                 + System.lineSeparator();
 
 
-        HealthList.showBmiHistory();
+        HealthList.printBmiHistory();
         assertEquals(expected, outContent.toString());
     }
 
@@ -167,8 +168,8 @@ class BmiTest {
      * Expected behaviour is for an AssertionError to be thrown.
      */
     @Test
-    void deleteBmi_emptyList_throwsAssertionError() {
-        assertThrows(AssertionError.class, () ->
+    void deleteBmi_emptyList_throwsCustomExceptions() {
+        assertThrows(CustomExceptions.OutOfBounds.class, () ->
                 HealthList.deleteBmi(0));
     }
 
@@ -184,5 +185,22 @@ class BmiTest {
         int invalidIndex = 5;
         assertThrows (CustomExceptions.OutOfBounds.class, () ->
                 HealthList.deleteBmi(invalidIndex));
+    }
+
+    /**
+     * Test deleting of bmi with invalid negative index.
+     * Expected behaviour is for an OutOfBounds error to be thrown.
+     */
+    @Test
+    void deleteBmi_negativeIndex_throwOutOfBoundsForBmi() {
+        int invalidIndex = -1;
+        CustomExceptions.OutOfBounds exception = assertThrows(
+                CustomExceptions.OutOfBounds.class,
+                () -> HealthList.deleteBmi(invalidIndex)
+        );
+        String expected = "\u001b[31mOut of Bounds Error: "
+                + ErrorConstant.BMI_EMPTY_ERROR
+                + "\u001b[0m";
+        assertEquals(expected, exception.getMessage());
     }
 }

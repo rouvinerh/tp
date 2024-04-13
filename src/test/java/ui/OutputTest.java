@@ -1,5 +1,6 @@
 package ui;
 
+import constants.HealthConstant;
 import health.Appointment;
 
 import java.io.ByteArrayInputStream;
@@ -11,17 +12,17 @@ import java.util.Arrays;
 
 import constants.ErrorConstant;
 import constants.UiConstant;
+import helper.TestHelper;
 import utility.CustomExceptions;
 import constants.WorkoutConstant;
 import workouts.Gym;
 import workouts.Run;
-import workouts.WorkoutList;
+import workouts.WorkoutLists;
 import health.Bmi;
 import health.Period;
 import health.HealthList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -50,9 +51,10 @@ class OutputTest {
 
     @AfterEach
     public void cleanup() {
-        WorkoutList.clearWorkoutsRunGym();
+        WorkoutLists.clearWorkoutsRunGym();
         HealthList.clearHealthLists();
         outContent.reset();
+        errContent.reset();
     }
 
     @AfterAll
@@ -89,13 +91,158 @@ class OutputTest {
     }
 
     /**
-     * Tests the behaviour of the printHistory function when an invalid filter is used.
+     *
      */
     @Test
-    void printHistory_invalidHistoryFilter_throwError() {
-        String input = "invalidFilter";
+    void printGreeting_correctInput_expectGreetingPrinted() {
         Output output = new Output();
-        assertThrows(IllegalArgumentException.class, () -> output.printHistory(input));
+        String expected;
+
+        output.printGreeting(UiConstant.FILE_FOUND, "Captain Voyager");
+        expected = TestHelper.printGreetingsFoundString("Captain Voyager");
+        assertEquals(expected, outContent.toString());
+        cleanup();
+
+        output.printGreeting(UiConstant.FILE_FOUND, "Captain 123");
+        expected = TestHelper.printGreetingsFoundString("Captain 123");
+        assertEquals(expected, outContent.toString());
+        cleanup();
+
+        output.printGreeting(UiConstant.FILE_NOT_FOUND, "Captain Voyager");
+        expected = TestHelper.printGreetingNotFoundString("Captain Voyager");
+        assertEquals(expected, outContent.toString());
+        cleanup();
+    }
+
+    @Test
+    void printGreeting_incorrectInput_expectMissingFilePrinted(){
+        Output output = new Output();
+        String expected;
+
+
+
+
+    }
+
+    /**
+     * Tests the behaviour of the printLatest for incorrect Input which would result in an error
+     * Behaviour Tested
+     * - invalid filter
+     * - empty run/gym/workouts/bmi/appointment/period list
+     * - empty input
+     */
+    @Test
+    void printHistory_incorrectInput_throwError() {
+
+        Output output = new Output();
+        String expectedString;
+
+        output.printHistory("invalidFilter");
+        expectedString = TestHelper.errorInvalidCommandString(ErrorConstant.INVALID_HISTORY_FILTER_ERROR);
+        assertEquals(expectedString, errContent.toString());
+        cleanup();
+
+        // printing latest of an empty run list
+        output.printHistory(WorkoutConstant.RUN);
+        expectedString = TestHelper.errorInvalidCommandString(ErrorConstant.RUN_EMPTY_ERROR);
+        assertEquals(errContent.toString(), expectedString);
+        cleanup();
+
+        // printing latest of an empty gym list
+        output.printHistory(WorkoutConstant.GYM);
+        expectedString = TestHelper.errorInvalidCommandString(ErrorConstant.GYM_EMPTY_ERROR);
+        assertTrue(errContent.toString().contains(expectedString));
+        cleanup();
+
+        // printing latest of an empty workout list
+        output.printHistory(WorkoutConstant.ALL);
+        expectedString = TestHelper.errorInvalidCommandString(ErrorConstant.WORKOUTS_EMPTY_ERROR);
+        assertTrue(errContent.toString().contains(expectedString));
+        cleanup();
+
+
+        // printing latest of an empty BMI list
+        output.printHistory(HealthConstant.BMI);
+        expectedString = TestHelper.errorOutOfBoundsString(ErrorConstant.BMI_EMPTY_ERROR);
+        assertTrue(errContent.toString().contains(expectedString));
+        cleanup();
+
+        // printing latest of an empty PERIOD list
+        output.printHistory(HealthConstant.PERIOD);
+        expectedString = TestHelper.errorOutOfBoundsString(ErrorConstant.PERIOD_EMPTY_ERROR);
+        assertTrue(errContent.toString().contains(expectedString));
+        cleanup();
+
+        // printing latest of an empty APPOINTMENT list
+        output.printHistory(HealthConstant.APPOINTMENT);
+        expectedString = TestHelper.errorOutOfBoundsString(ErrorConstant.APPOINTMENT_EMPTY_ERROR);
+        assertTrue(errContent.toString().contains(expectedString));
+        cleanup();
+
+        output.printHistory("");
+        expectedString = TestHelper.errorInvalidCommandString(ErrorConstant.INVALID_HISTORY_FILTER_ERROR);
+        assertEquals(expectedString.toString(), errContent.toString());
+
+        cleanup();
+    }
+
+
+
+    /**
+     * Tests the behaviour of the printLatest for incorrect Input which would result in an error
+     * Behaviour Tested
+     * - invalid filter
+     * - empty run/gym/bmi/appointment/period list
+     * - empty input
+     */
+    @Test
+    void printLatest_incorrectInput_throwError(){
+        Output output = new Output();
+        String expectedString;
+
+
+        output.printLatest("invalidFilter");
+        expectedString = TestHelper.errorInvalidCommandString(ErrorConstant.INVALID_LATEST_FILTER_ERROR);
+        assertEquals(expectedString, errContent.toString());
+        cleanup();
+
+        // printing latest of an empty run list
+        output.printLatest(WorkoutConstant.RUN);
+        expectedString = TestHelper.errorOutOfBoundsString(ErrorConstant.RUN_EMPTY_ERROR);
+        assertTrue(errContent.toString().contains(expectedString));
+        cleanup();
+
+        // printing latest of an empty gym list
+        output.printLatest(WorkoutConstant.GYM);
+        expectedString = TestHelper.errorOutOfBoundsString(ErrorConstant.GYM_EMPTY_ERROR);
+        assertTrue(errContent.toString().contains(expectedString));
+        cleanup();
+
+
+        // printing latest of an empty BMI list
+        output.printLatest(HealthConstant.BMI);
+        expectedString = TestHelper.errorOutOfBoundsString(ErrorConstant.BMI_EMPTY_ERROR);
+        assertTrue(errContent.toString().contains(expectedString));
+        cleanup();
+
+        // printing latest of an empty PERIOD list
+        output.printLatest(HealthConstant.PERIOD);
+        expectedString = TestHelper.errorOutOfBoundsString(ErrorConstant.PERIOD_EMPTY_ERROR);
+        assertTrue(errContent.toString().contains(expectedString));
+        cleanup();
+
+        // printing latest of an empty APPOINTMENT list
+        output.printLatest(HealthConstant.APPOINTMENT);
+        expectedString = TestHelper.errorOutOfBoundsString(ErrorConstant.APPOINTMENT_EMPTY_ERROR);
+        assertTrue(errContent.toString().contains(expectedString));
+        cleanup();
+
+        output.printLatest("");
+        expectedString = TestHelper.errorInvalidCommandString(ErrorConstant.INVALID_LATEST_FILTER_ERROR);
+        assertEquals(expectedString.toString(), errContent.toString());
+
+        cleanup();
+
     }
 
     /**
@@ -255,16 +402,16 @@ class OutputTest {
      * Tests the behaviour of the printLatestAppointment function when two Appointment objects are added.
      */
     @Test
-    void printEarliestAppointment_twoAppointments_expectOneAppointmentPrinted() {
+    void printLatestAppointment_twoAppointments_expectOneAppointmentPrinted() {
         Appointment firstAppointment = new Appointment("29-03-2025", "17:00", "test");
         Appointment secondAppointment = new Appointment("24-01-2026", "12:00", "test2");
 
 
         Output output = new Output();
-        output.printEarliestAppointment();
+        output.printLatestAppointment();
         String expected = UiConstant.PARTITION_LINE +
                 System.lineSeparator() +
-                "On 2025-03-29 at 17:00: test" +
+                "On 2026-01-24 at 12:00: test2" +
                 System.lineSeparator() +
                 UiConstant.PARTITION_LINE +
                 System.lineSeparator();

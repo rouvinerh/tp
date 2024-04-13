@@ -4,6 +4,7 @@ import constants.ErrorConstant;
 import constants.HealthConstant;
 import constants.UiConstant;
 import constants.WorkoutConstant;
+import health.Bmi;
 import health.HealthList;
 import ui.Output;
 
@@ -67,11 +68,31 @@ public class Validation {
         if (isEmptyParameterPresent(deleteDetails)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_DELETE_PARAMETERS_ERROR);
         }
-        validateFilter(deleteDetails[UiConstant.DELETE_ITEM_STRING_INDEX].toLowerCase());
+        validateHistoryFilter(deleteDetails[UiConstant.DELETE_ITEM_STRING_INDEX].toLowerCase());
 
         if (!deleteDetails[UiConstant.DELETE_ITEM_NUMBER_INDEX].matches(UiConstant.VALID_POSITIVE_INTEGER_REGEX)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_INDEX_ERROR);
         }
+    }
+
+
+    // @@author L5-Z
+    /**
+     * Validates whether the filter string is either 'run', 'gym', 'workouts', 'bmi', 'period' or 'appointment'.
+     *
+     * @param filter The filter string to be checked.
+     * @throws CustomExceptions.InvalidInput If the filter string is none of them.
+     */
+    public void validateHistoryFilter(String filter) throws CustomExceptions.InvalidInput {
+        if (filter.equals(WorkoutConstant.RUN)
+                || filter.equals(WorkoutConstant.GYM)
+                || filter.equals(HealthConstant.BMI)
+                || filter.equals(HealthConstant.PERIOD)
+                || filter.equals(HealthConstant.APPOINTMENT)
+                || filter.equals(WorkoutConstant.ALL)) {
+            return;
+        }
+        throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_HISTORY_FILTER_ERROR);
     }
 
     // @@author L5-Z
@@ -81,19 +102,17 @@ public class Validation {
      * @param filter The filter string to be checked.
      * @throws CustomExceptions.InvalidInput If the filter string is none of them.
      */
-    public void validateFilter(String filter) throws CustomExceptions.InvalidInput {
+    public void validateLatestFilter(String filter) throws CustomExceptions.InvalidInput {
         if (filter.equals(WorkoutConstant.RUN)
                 || filter.equals(WorkoutConstant.GYM)
                 || filter.equals(HealthConstant.BMI)
                 || filter.equals(HealthConstant.PERIOD)
-                || filter.equals(HealthConstant.APPOINTMENT)
-                || filter.equals(WorkoutConstant.ALL)) {
+                || filter.equals(HealthConstant.APPOINTMENT)) {
             return;
         }
-        throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_ITEM_ERROR
-                + System.lineSeparator()
-                + ErrorConstant.CORRECT_FILTER_ITEM_FORMAT);
+        throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_LATEST_FILTER_ERROR);
     }
+
 
     // @@author j013n3
     /**
@@ -110,7 +129,7 @@ public class Validation {
 
         if (!bmiDetails[HealthConstant.BMI_HEIGHT_INDEX].matches(UiConstant.VALID_TWO_DP_NUMBER_REGEX)
                 || !bmiDetails[HealthConstant.BMI_WEIGHT_INDEX].matches(UiConstant.VALID_TWO_DP_NUMBER_REGEX)) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.HEIGHT_WEIGHT_INPUT_ERROR);
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_HEIGHT_WEIGHT_INPUT_ERROR);
         }
 
         double height = Double.parseDouble(bmiDetails[HealthConstant.BMI_HEIGHT_INDEX]);
@@ -130,6 +149,7 @@ public class Validation {
 
         validateDateInput(bmiDetails[HealthConstant.BMI_DATE_INDEX]);
         validateDateNotAfterToday(bmiDetails[HealthConstant.BMI_DATE_INDEX]);
+        validateDateNotPresent(bmiDetails[HealthConstant.BMI_DATE_INDEX]);
 
     }
 
@@ -166,7 +186,6 @@ public class Validation {
             if (sizeOfPeriodList >= UiConstant.MINIMUM_PERIOD_COUNT) {
                 LocalDate latestPeriodEndDate = Objects.requireNonNull(HealthList.getPeriod(0)).getEndDate();
                 validateStartDatesTally(latestPeriodEndDate, periodDetails);
-
                 validateDateAfterLatestPeriodInput(periodDetails[HealthConstant.PERIOD_START_DATE_INDEX],
                         latestPeriodEndDate);
             }
@@ -200,18 +219,14 @@ public class Validation {
         if (isEmptyParameterPresent(runDetails)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_RUN_PARAMETERS_ERROR);
         }
-        validateRunTimeInput(runDetails[WorkoutConstant.RUN_TIME_INDEX]);
+
+        if (!runDetails[WorkoutConstant.RUN_TIME_INDEX].matches(UiConstant.VALID_TIME_REGEX) &&
+                !runDetails[WorkoutConstant.RUN_TIME_INDEX].matches(UiConstant.VALID_TIME_WITH_HOURS_REGEX)) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_RUN_TIME_ERROR);
+        }
+
         if (!runDetails[WorkoutConstant.RUN_DISTANCE_INDEX].matches(UiConstant.VALID_TWO_DP_NUMBER_REGEX)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_RUN_DISTANCE_ERROR);
-        }
-
-        double runDistance = Double.parseDouble(runDetails[WorkoutConstant.RUN_DISTANCE_INDEX]);
-        if (runDistance > WorkoutConstant.MAX_RUN_DISTANCE) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.DISTANCE_TOO_LONG_ERROR);
-        }
-
-        if (runDistance <= WorkoutConstant.MIN_RUN_DISTANCE) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.ZERO_DISTANCE_ERROR);
         }
 
         if (validateDateNotEmpty(runDetails[WorkoutConstant.RUN_DATE_INDEX])) {
@@ -236,6 +251,11 @@ public class Validation {
         if (!gymDetails[WorkoutConstant.GYM_NUMBER_OF_STATIONS_INDEX]
                 .matches(UiConstant.VALID_POSITIVE_INTEGER_REGEX)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_NUMBER_OF_STATIONS_ERROR);
+        }
+
+        int numberOfStations = Integer.parseInt(gymDetails[WorkoutConstant.GYM_NUMBER_OF_STATIONS_INDEX]);
+        if (numberOfStations > WorkoutConstant.MAX_GYM_STATION_NUMBER) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.MAX_STATIONS_ERROR);
         }
 
         if (validateDateNotEmpty(gymDetails[WorkoutConstant.GYM_DATE_INDEX])) {
@@ -268,62 +288,6 @@ public class Validation {
         }
     }
 
-    //@@author JustinSoh
-    /**
-     * Validates the time used in HH:MM format.
-     *
-     * @param time String representing the time to check.
-     * @throws CustomExceptions.InvalidInput If time is formatted wrongly.
-     */
-    public void validateRunTimeInput(String time) throws CustomExceptions.InvalidInput {
-        if (!time.matches(UiConstant.VALID_TIME_REGEX) &&
-                !time.matches(UiConstant.VALID_TIME_WITH_HOURS_REGEX)) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_RUN_TIME_ERROR);
-        }
-        String [] parts = time.split(UiConstant.SPLIT_BY_COLON);
-        int hours = WorkoutConstant.NO_HOURS_PRESENT;
-        int minutes;
-        int seconds;
-        boolean isHoursPresent = false;
-
-        if (parts.length == WorkoutConstant.NUMBER_OF_PARTS_FOR_RUN_TIME) {
-            minutes = Integer.parseInt(parts[0]);
-            seconds = Integer.parseInt(parts[1]);
-        } else if (parts.length == WorkoutConstant.NUMBER_OF_PARTS_FOR_RUN_TIME_WITH_HOURS) {
-            hours = Integer.parseInt(parts[0]);
-            minutes = Integer.parseInt(parts[1]);
-            seconds = Integer.parseInt(parts[2]);
-            isHoursPresent = true;
-        } else {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_RUN_TIME_ERROR);
-        }
-
-        if (hours == UiConstant.MIN_HOURS) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_HOUR_ERROR);
-        }
-
-        if (isHoursPresent) {
-            if (minutes > UiConstant.MAX_MINUTES) {
-                throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_MINUTE_ERROR);
-            }
-
-            if (seconds > UiConstant.MAX_SECONDS) {
-                throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_SECOND_ERROR);
-            }
-        }
-        // hour is not present
-        if (minutes > UiConstant.MAX_MINUTES) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_MINUTE_ERROR);
-        }
-
-        if (seconds < UiConstant.MIN_SECONDS || seconds > UiConstant.MAX_SECONDS) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_SECOND_ERROR);
-        }
-
-        if (minutes == 0 && seconds == 0) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.ZERO_TIME_ERROR);
-        }
-    }
     //@@author syj02
     /**
      * Validates Appointment details entered.
@@ -335,7 +299,7 @@ public class Validation {
     public void validateAppointmentDetails(String[] appointmentDetails)
             throws CustomExceptions.InvalidInput, CustomExceptions.InsufficientInput {
         if (isEmptyParameterPresent(appointmentDetails)) {
-            throw new CustomExceptions.InsufficientInput( ErrorConstant
+            throw new CustomExceptions.InsufficientInput(ErrorConstant
                     .INSUFFICIENT_APPOINTMENT_PARAMETERS_ERROR);
         }
         validateDateInput(appointmentDetails[HealthConstant.APPOINTMENT_DATE_INDEX]);
@@ -561,5 +525,38 @@ public class Validation {
             output.printException(ErrorConstant.NO_PERMISSIONS_ERROR);
             System.exit(1);
         }
+    }
+
+    /**
+     * Validates whether the specified date can be found in HealthList and throws error if it is.
+     *
+     * @param dateString The date of the Bmi input to be added
+     * @throws CustomExceptions.InvalidInput If the same date is found.
+     */
+    public void validateDateNotPresent(String dateString) throws CustomExceptions.InvalidInput {
+        Parser parser = new Parser();
+        LocalDate dateToVerify = parser.parseDate(dateString);
+        for (Bmi bmi :  HealthList.getBmis()) {
+            if (bmi.getDate().isEqual(dateToVerify)) {
+                throw new CustomExceptions.InvalidInput(ErrorConstant.DATE_ALREADY_EXISTS_ERROR);
+            }
+        }
+    }
+
+    /**
+     * Validates whether the current index provided is within the start and end
+     *
+     * @param index the index to be validated
+     * @param start the starting bound
+     * @param end the ending bound (exclusive - e.g. end = 5 means index must be < 5)
+     * @return true if the index is within the bounds, false otherwise
+     */
+    public static boolean validateIndexWithinBounds(int index, int start, int end)
+            throws CustomExceptions.OutOfBounds {
+
+        if (index < start || index >= end){
+            throw new CustomExceptions.OutOfBounds(ErrorConstant.INVALID_INDEX_BOUND_ERROR);
+        }
+        return true;
     }
 }

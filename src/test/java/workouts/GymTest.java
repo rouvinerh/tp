@@ -21,7 +21,7 @@ class GymTest {
 
     @AfterEach
     void cleanup() {
-        WorkoutList.clearWorkoutsRunGym();
+        WorkoutLists.clearWorkoutsRunGym();
     }
 
     /**
@@ -84,22 +84,6 @@ class GymTest {
 
 
     @Test
-    void getStations() {
-    }
-
-    @Test
-    void getStationByIndex() {
-    }
-
-    @Test
-    void addGymStationInput() {
-    }
-
-    @Test
-    void checkGymStationInput() {
-    }
-
-    @Test
     void toFileString_correctInput_expectedCorrectString(){
         String expected1 = "GYM:2:11-11-1997:bench press:4:4:10.0,20.0,30.0,40.0:squats:4:3:20.0,30.0,40.0,50.0";
         String expected2WithNoDate = "GYM:2:NA:bench press:4:4:10.0,20.0,30.0,40.0:squats:4:3:20.0,30.0,40.0,50.0";
@@ -122,6 +106,7 @@ class GymTest {
             fail("Should not throw an exception");
         }
     }
+
 
 
 }

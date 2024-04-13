@@ -2,6 +2,8 @@
 
 ![Logo](img/logo.jpg)
 
+<!-- @@author L5-Z -->
+
 ## Introduction
 
 **PulsePilot** is a desktop application designed for **efficiently tracking health-related information** through a **Command Line Interface (CLI)**. For users who can type quickly, the CLI allows for faster data entry compared to traditional Graphical User Interface (GUI) applications on phones or computers.
@@ -89,6 +91,9 @@ This profile will be used to store all your health and workout data.
 
 ## Commands
 
+<!-- @@author rouvinerh -->
+
+
 ### Workout: Run
 
 Adds a new run session to track.
@@ -121,6 +126,8 @@ Expected Output:
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<!-- @@author JustinSoh -->
 
 ### Workout: Gym
 
@@ -170,6 +177,16 @@ Expected Output:
 ![Adding Gyms](img/output/adding_gym.png)
 
 > ⚠️ **Minimum and Maximum inputs:**
+> Minimum number of stations: 0, Maximum number of stations: 50
+> **Note that exceeding these bounds will trigger an error!**
+
+If you want to exit the gym station input prompt and go back to the main menu to use other commands, use `back` to do so. PulsePilot will delete the latest gym added and you can then use the other commands.
+
+Expected Output:
+
+![Going Back](img/output/gym_station_back.png)
+
+> ⚠️ **Minimum and Maximum inputs:**
 > Minimum Weight: 0kg, Maximum Weight: 2850kg
 > 
 > 0kg is meant for **bodyweight exercises!**
@@ -178,6 +195,8 @@ Expected Output:
 ###### [Back to table of contents](#table-of-contents)
 
 ___
+
+<!-- @@author j013n3 -->
 
 ### Health: BMI
 
@@ -247,6 +266,8 @@ Expected Output:
 
 ___
 
+<!-- @@author syj02 -->
+
 ### Health: Prediction
 
 Predicts user's next period start date.
@@ -295,6 +316,8 @@ Expected Output:
 
 ---
 
+<!-- @@author rouvinerh -->
+
 ### History
 
 Prints all tracked instances of `run`, `gym`, `workouts`,  `bmi`, `period`, `appointment`.
@@ -332,9 +355,9 @@ Format: <code style="color: #D85D43;">latest /item:TYPE</code>
 * `TYPE` is either `run`, `gym`, `bmi`, `period` or `appointment`.
   - `run` shows the latest run
   - `gym` shows the latest gym
-  - `bmi` shows the latest BMI by date
+  - `bmi` shows the latest BMI
   - `period` shows the latest Period
-  - `appointment` show the earliest upcoming Appointment
+  - `appointment` shows the latest Appointment, which returns the **largest** date and time sorted by their numerical values.
 
 Examples:
 * <code style="color: #D85D43;">latest /item:appointment</code>
@@ -371,6 +394,8 @@ Expected output:
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<!-- @@author L5-Z -->
 
 ### Help
 
@@ -521,6 +546,8 @@ Avoid using extra characters in the commands, such as blank space, newline, etc.
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<!-- @@author JustinSoh -->
 
 ## Command Summary
 

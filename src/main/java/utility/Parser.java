@@ -13,6 +13,7 @@ import ui.Output;
 
 import workouts.Gym;
 import workouts.Run;
+import workouts.WorkoutLists;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -80,20 +81,14 @@ public class Parser {
 
     //@@author L5-Z
     /**
-     * Converts a LocalDate object to a formatted String representation.
+     * Converts a LocalDate object to a formatted String representation. Returns "NA" if date is null.
+     *
      * @param date LocalDate object representing the date.
      * @return Formatted String representation of the date in the format "dd-MM-yyyy".
-     *
-     * @throws DateTimeParseException If there is an error parsing the date.
      */
     public String parseFormattedDate(LocalDate date) {
-        DateTimeFormatter formatter = null;
-        try {
-            formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        } catch (DateTimeParseException e) {
-            output.printException(ErrorConstant.PARSING_DATE_ERROR);
-        }
-        if (date == null || formatter == null) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        if (date == null) {
             return "NA";
         }
         return date.format(formatter);
@@ -153,11 +148,35 @@ public class Parser {
      * @return A list of strings containing the filter string and index to delete.
      */
     public String[] parseDeleteInput(String userInput) {
-
         try {
             String[] deleteDetails = splitDeleteInput(userInput);
             validation.validateDeleteInput(deleteDetails);
             return deleteDetails;
+        } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
+            output.printException(e.getMessage());
+            return null;
+        }
+    }
+
+    //@@author JustinSoh
+    /**
+     * Function validates and parses the user input for the history
+     *
+     * @param userInput String representing the user input.
+     * @return The filter string, set to either 'gym', 'run', 'workouts', 'bmi', 'appointment' or 'period'.
+     */
+    public String parseHistory(String userInput) {
+        try {
+            if (countForwardSlash(userInput) > UiConstant.NUM_OF_SLASHES_FOR_LATEST_AND_HISTORY) {
+                throw new CustomExceptions.InvalidInput(ErrorConstant.TOO_MANY_SLASHES_ERROR);
+            }
+            String filter = extractSubstringFromSpecificIndex(userInput, UiConstant.ITEM_FLAG);
+
+            if (filter.isBlank()) {
+                throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_HISTORY_FILTER_ERROR);
+            }
+            validation.validateHistoryFilter(filter.toLowerCase());
+            return filter.toLowerCase();
         } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
             output.printException(e.getMessage());
             return null;
@@ -171,7 +190,7 @@ public class Parser {
      * @param userInput String representing the user input.
      * @return The filter string, set to either 'gym', 'run', 'bmi' or 'period'.
      */
-    public String parseHistoryAndLatestInput(String userInput) {
+    public String parseLatest(String userInput) {
         try {
             if (countForwardSlash(userInput) > UiConstant.NUM_OF_SLASHES_FOR_LATEST_AND_HISTORY) {
                 throw new CustomExceptions.InvalidInput(ErrorConstant.TOO_MANY_SLASHES_ERROR);
@@ -179,9 +198,9 @@ public class Parser {
             String filter = extractSubstringFromSpecificIndex(userInput, UiConstant.ITEM_FLAG);
 
             if (filter.isBlank()) {
-                throw new CustomExceptions.InsufficientInput(ErrorConstant.INVALID_HISTORY_FILTER_ERROR);
+                throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_LATEST_FILTER_ERROR);
             }
-            validation.validateFilter(filter.toLowerCase());
+            validation.validateLatestFilter(filter.toLowerCase());
             return filter.toLowerCase();
         } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
             output.printException(e.getMessage());
@@ -316,8 +335,9 @@ public class Parser {
      * Prints period prediction if possible.
      *
      * @throws CustomExceptions.InsufficientInput If prediction cannot be made.
+     * @throws CustomExceptions.OutOfBounds If period list is empty
      */
-    public void parsePredictionInput() throws CustomExceptions.InsufficientInput {
+    public void parsePredictionInput() throws CustomExceptions.InsufficientInput, CustomExceptions.OutOfBounds {
         if (HealthList.getPeriodSize() >= HealthConstant.MIN_SIZE_FOR_PREDICTION) {
             HealthList.printLatestThreeCycles();
             LocalDate nextPeriodStartDate = HealthList.predictNextPeriodStartDate();
@@ -518,6 +538,7 @@ public class Parser {
 
     /**
      * Retrieves the gym station details and adds a GymStation object to Gym.
+     * Exits to the main menu if the user inputs 'back'.
      *
      * @param numberOfStations The number of stations in one gym session.
      * @param gym              The Gym object.
@@ -526,10 +547,18 @@ public class Parser {
         for (int i = 0; i < numberOfStations; i++) {
             try {
                 output.printGymStationPrompt(i + 1);
-                String userInput = this.in.nextLine();
+                String userInput = this.in.nextLine().trim();
+
+                if (userInput.equals(WorkoutConstant.BACK)) {
+                    output.printGymStationExit();
+                    WorkoutLists.deleteGym(WorkoutLists.getGymSize() - 1);
+                    return;
+                }
+
                 if (countForwardSlash(userInput) > WorkoutConstant.NUM_OF_SLASHES_FOR_GYM_STATION) {
                     throw new CustomExceptions.InvalidInput(ErrorConstant.TOO_MANY_SLASHES_ERROR);
                 }
+
                 String[] validGymStationInputs = validation.splitAndValidateGymStationInput(userInput);
 
                 int numberOfSets = Integer.parseInt(validGymStationInputs[WorkoutConstant.GYM_STATION_SET_INDEX]);
@@ -543,11 +572,12 @@ public class Parser {
 
                 LogFile.writeLog("Added Gym Station: " +
                         validGymStationInputs[WorkoutConstant.GYM_STATION_NAME_INDEX], false);
-            } catch (CustomExceptions.InsufficientInput | CustomExceptions.InvalidInput e) {
+            } catch (CustomExceptions.InsufficientInput | CustomExceptions.InvalidInput |
+                     CustomExceptions.OutOfBounds e) {
+                i -= 1;
                 output.printException(e.getMessage());
             }
         }
-
         output.printAddGym(gym);
         LogFile.writeLog("Added Gym", false);
     }
@@ -618,12 +648,10 @@ public class Parser {
      * @param gymDetails the array of strings containing the gym details
      * @param baseCounter the base counter to start adding the station
      * @return the new base counter after adding the station
-     * @throws CustomExceptions.FileReadError if there is an error in the file input
      * @throws CustomExceptions.InvalidInput if the input is invalid
      */
     private int addStationFromFile(Gym gym, String[] gymDetails, int baseCounter)
-            throws CustomExceptions.FileReadError,
-            CustomExceptions.InvalidInput {
+            throws CustomExceptions.InvalidInput {
 
         String currentStationName;
         String numberOfSetsStr;
@@ -632,41 +660,40 @@ public class Parser {
 
         int numberOfSets;
         int reps;
-        ArrayList<Double> weights = new ArrayList<>();
         try {
             currentStationName = gymDetails[baseCounter];
             numberOfSetsStr = gymDetails[baseCounter + WorkoutConstant.SETS_OFFSET];
             repsStr = gymDetails[baseCounter + WorkoutConstant.REPS_OFFSET];
             weightStrings = gymDetails[baseCounter + WorkoutConstant.WEIGHTS_OFFSET];
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_GYM_FORMAT_ERROR);
+            throw new CustomExceptions.InvalidInput(ErrorConstant.LOAD_GYM_FORMAT_ERROR);
         }
 
         if(currentStationName.isBlank() ||
                 numberOfSetsStr.isBlank() ||
                 repsStr.isBlank() ||
                 weightStrings.isBlank()){
-            throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_GYM_FORMAT_ERROR);
+            throw new CustomExceptions.InvalidInput(ErrorConstant.LOAD_GYM_FORMAT_ERROR);
         }
 
         if (currentStationName.length() > WorkoutConstant.MAX_GYM_STATION_NAME_LENGTH) {
-            throw new CustomExceptions.FileReadError(ErrorConstant.INVALID_GYM_STATION_NAME_ERROR);
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_GYM_STATION_NAME_ERROR);
         }
 
         if (!currentStationName.matches(UiConstant.VALID_GYM_STATION_NAME_REGEX)) {
-            throw new CustomExceptions.FileReadError(ErrorConstant.INVALID_GYM_STATION_NAME_ERROR);
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_GYM_STATION_NAME_ERROR);
         }
 
         try {
             numberOfSets = Integer.parseInt(numberOfSetsStr);
             reps = Integer.parseInt(repsStr);
         } catch (NumberFormatException e) {
-            throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_GYM_FORMAT_ERROR);
+            throw new CustomExceptions.InvalidInput(ErrorConstant.LOAD_GYM_FORMAT_ERROR);
         }
 
         ArrayList<Double> validatedWeights = validation.validateWeightsArray(weightStrings);
         if (validatedWeights.size() != numberOfSets) {
-            throw new CustomExceptions.FileReadError(ErrorConstant.LOAD_NUMBER_OF_SETS_ERROR);
+            throw new CustomExceptions.InvalidInput(ErrorConstant.LOAD_NUMBER_OF_SETS_ERROR);
         }
 
         gym.addStation(currentStationName, numberOfSets, reps, validatedWeights);

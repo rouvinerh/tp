@@ -50,6 +50,7 @@ else date is not present
     deactivate WorkoutList #DarkSalmon
     WorkoutList --> Run:
     deactivate WorkoutList #FFBBBB
+    destroy WorkoutList
 end
 Run --> Parser:
 deactivate Run #FFBBBB

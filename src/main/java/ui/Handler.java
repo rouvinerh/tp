@@ -1,8 +1,10 @@
 //@@author L5-Z
 package ui;
 
+import health.Appointment;
+import health.Bmi;
 import health.HealthList;
-import motivationalquotes.Quote;
+import health.Period;
 import storage.DataFile;
 import utility.CustomExceptions;
 import constants.ErrorConstant;
@@ -15,8 +17,10 @@ import utility.Filters.HealthFilters;
 import utility.Parser;
 import utility.Filters.WorkoutFilters;
 import utility.Validation;
-import workouts.WorkoutList;
+import workouts.Workout;
+import workouts.WorkoutLists;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import storage.LogFile;
 
@@ -58,7 +62,7 @@ public class Handler {
      */
     public void processInput() {
         while (in.hasNextLine()) {
-            String userInput = in.nextLine();
+            String userInput = in.nextLine().trim();
             String instruction = userInput.toUpperCase().split(UiConstant.SPLIT_BY_WHITESPACE)[0];
             LogFile.writeLog("User Input: " + userInput, false);
             assert userInput != null : "Object cannot be null";
@@ -135,7 +139,7 @@ public class Handler {
         } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
             output.printException(e.getMessage());
         } catch (IllegalArgumentException e) {
-            output.printException("Invalid workout type! Please input either /e:run or /e:gym!");
+            output.printException(ErrorConstant.INVALID_WORKOUT_TYPE_ERROR);
         }
     }
 
@@ -147,7 +151,7 @@ public class Handler {
      * @param userInput The user input string.
      */
     public void handleHistory(String userInput) {
-        String filter = parser.parseHistoryAndLatestInput(userInput);
+        String filter = parser.parseHistory(userInput);
         if (filter != null) {
             output.printHistory(filter);
             LogFile.writeLog("Viewed history for " + filter, false);
@@ -179,11 +183,11 @@ public class Handler {
                 break;
 
             case GYM:
-                WorkoutList.deleteGym(index);
+                WorkoutLists.deleteGym(index);
                 break;
 
             case RUN:
-                WorkoutList.deleteRun(index);
+                WorkoutLists.deleteRun(index);
                 break;
 
             case APPOINTMENT:
@@ -229,7 +233,7 @@ public class Handler {
             default:
                 break;
             }
-        } catch (CustomExceptions.InvalidInput |  CustomExceptions.InsufficientInput e) {
+        } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput | CustomExceptions.OutOfBounds e) {
             output.printException(e.getMessage());
         } catch (IllegalArgumentException e) {
             output.printException(ErrorConstant.INVALID_HEALTH_INPUT_ERROR);
@@ -244,7 +248,7 @@ public class Handler {
      * @param userInput String representing user input.
      */
     public void handleLatest(String userInput) {
-        String filter = parser.parseHistoryAndLatestInput(userInput);
+        String filter = parser.parseLatest(userInput);
         if (filter != null) {
             output.printLatest(filter);
             LogFile.writeLog("Viewed latest for " + filter, false);
@@ -259,7 +263,7 @@ public class Handler {
     public void userInduction() {
         String name;
         while (true) {
-            name = this.in.nextLine();
+            name = this.in.nextLine().trim();
             if (validation.validateIfUsernameIsValid(name)) {
                 System.err.println(ErrorConstant.INVALID_USERNAME_ERROR);
             } else {
@@ -278,7 +282,6 @@ public class Handler {
         LogFile.writeLog("Name Entered: " + name, false);
         System.out.println("FTL jump completed.");
     }
-
 
     //@@author L5-Z
     /**
@@ -304,12 +307,6 @@ public class Handler {
         }
 
         System.out.println("Terminal primed. Command inputs are now accepted...");
-
-        // Motivational Quote
-        Quote quoteProvider = new Quote();
-        System.out.println("Here's your motivational quote:");
-        System.out.println(quoteProvider.getRandomQuote());
-
         output.printLine();
     }
 
@@ -319,17 +316,22 @@ public class Handler {
      */
     public void terminateBot() {
         LogFile.writeLog("User terminating PulsePilot", false);
+
         try {
             LogFile.writeLog("Attempting to save data file", false);
 
+            String userName = DataFile.userName; // need to make it non static
+            ArrayList<Workout> workoutList = WorkoutLists.getWorkouts();
+            ArrayList<Bmi> bmiList = HealthList.getBmis();
+            ArrayList<Appointment> appointmentList = HealthList.getAppointments();
+            ArrayList<Period> periodList = HealthList.getPeriods();
+            dataFile.saveDataFile(userName, bmiList, appointmentList, periodList, workoutList);
 
-            dataFile.saveDataFile(DataFile.userName, HealthList.getBmis(), HealthList.getAppointments(),
-                    HealthList.getPeriods(), WorkoutList.getWorkouts());
-            LogFile.writeLog("File saved", false);
         } catch (CustomExceptions.FileWriteError e) {
             LogFile.writeLog("File write error", true);
             output.printException(e.getMessage());
         }
+
         output.printGoodbyeMessage();
         // Yet to implement : Reply.printReply("Saved tasks as: " + Constant.FILE_NAME);
         LogFile.writeLog("Bot exited gracefully", false);

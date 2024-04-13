@@ -31,6 +31,8 @@ public class Appointment extends Health {
     private final Parser parser = new Parser();
     private final HealthList healthList = new HealthList();
 
+    //@@author syj02
+
     /**
      * Constructor for Appointment object.
      *
@@ -65,7 +67,6 @@ public class Appointment extends Health {
         return this.time;
     }
 
-    //@@author syj02
     /**
      * Retrieves the description of the appointment of String type.
      *

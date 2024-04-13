@@ -4,26 +4,36 @@ mainframe sd setCycleLength
 participant "healthList:HealthList" as HealthList
 participant "period:Period" as Period
 
+
 activate HealthList #FFBBBB
-
-opt PERIODS is not empty
-
-HealthList -> HealthList: PERIODS.get(previousPeriod)
+HealthList -> HealthList: PERIODS.add(period)
 activate HealthList #DarkSalmon
-HealthList --> HealthList: previousPeriod
-deactivate HealthList #FFBBBB
+HealthList --> HealthList:
+deactivate HealthList #DarkSalmon
 
+HealthList -> HealthList: PERIODS.sort()
+activate HealthList #DarkSalmon
+HealthList --> HealthList:
+deactivate HealthList #DarkSalmon
+
+loop while (i > 0)
+
+HealthList -> HealthList: PERIODS.get(i-1)
+activate HealthList #DarkSalmon
+HealthList --> HealthList:
+deactivate HealthList #DarkSalmon
+HealthList -> HealthList: PERIODS.get(i)
+activate HealthList #DarkSalmon
+HealthList --> HealthList:
+deactivate HealthList #DarkSalmon
 
 HealthList -> Period: setCycleLength()
 activate Period #FFBBBB
 Period --> HealthList:
 deactivate Period #FFBBBB
+deactivate HealthList #FFBBBB
 
 end
 
-HealthList -> HealthList: add(period)
-activate HealthList #DarkSalmon
-HealthList --> HealthList:
-deactivate HealthList #DarkSalmon
 
 @enduml

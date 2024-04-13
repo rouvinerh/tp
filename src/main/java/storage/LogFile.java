@@ -1,6 +1,9 @@
 package storage;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
@@ -71,5 +74,18 @@ public class LogFile {
         } else {
             logger.log(Level.INFO, input);
         }
+    }
+
+    public static String readLogContent() {
+        StringBuilder logContent = new StringBuilder();
+        try {
+            List<String> lines = Files.readAllLines(Path.of(UiConstant.LOG_FILE_PATH));
+            for (String line : lines) {
+                logContent.append(line).append(System.lineSeparator());
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading log file: " + e.getMessage());
+        }
+        return logContent.toString();
     }
 }

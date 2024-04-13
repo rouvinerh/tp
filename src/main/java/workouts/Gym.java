@@ -1,12 +1,9 @@
 package workouts;
 
 import utility.CustomExceptions;
-import constants.ErrorConstant;
-import utility.Parser;
 import constants.UiConstant;
 import constants.WorkoutConstant;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -14,15 +11,12 @@ import java.util.ArrayList;
  */
 public class Gym extends Workout {
     //@@author JustinSoh
-    protected LocalDate date = null;
+
     protected ArrayList<GymStation> stations = new ArrayList<>();
-    private final Parser parser = new Parser();
-    private final WorkoutList workoutList = new WorkoutList();
     /**
      * Constructor that adds a Gym object to WorkoutList.
      */
     public Gym() {
-        workoutList.addGym(this);
     }
 
     /**
@@ -31,8 +25,7 @@ public class Gym extends Workout {
      * @param stringDate String representing the date parameter specified.
      */
     public Gym(String stringDate) {
-        this.date = parser.parseDate(stringDate);
-        workoutList.addGym(this);
+        super(stringDate);
     }
 
     /**
@@ -64,10 +57,6 @@ public class Gym extends Workout {
         return stations;
     }
 
-    private void appendIntoStations(GymStation station) {
-        stations.add(station);
-    }
-
     public GymStation getStationByIndex(int index) throws CustomExceptions.OutOfBounds {
         if (index >= stations.size() || index < 0) {
             throw new CustomExceptions.OutOfBounds(WorkoutConstant.INVALID_GYM_STATION_INDEX);
@@ -75,30 +64,15 @@ public class Gym extends Workout {
         return stations.get(index);
     }
 
-
-    @Override
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
     /**
      * Retrieves the string representation of a Gym object.
      *
      * @return A formatted string representing the Gym object, inclusive of the date and gym stations done.
      */
+
     @Override
     public String toString() {
-        String printedDate;
-        if (date != null) {
-            printedDate = date.toString();
-            return String.format(" (Date: %s)", printedDate);
-        } else {
-            return " (Date: NA)";
-        }
+        return String.format(" (Date: %s)", super.getDate());
     }
 
 
@@ -112,13 +86,7 @@ public class Gym extends Workout {
         StringBuilder fileString = new StringBuilder();
         String type = WorkoutConstant.GYM.toUpperCase();
         String numOfStation = String.valueOf(stations.size());
-        String date;
-        if(this.getDate() == null){
-            date = ErrorConstant.NO_DATE_SPECIFIED_ERROR;
-        } else {
-            date = parser.parseFormattedDate(this.getDate());
-        }
-
+        String date = super.getDateForFile();
         fileString.append(type);
         fileString.append(UiConstant.SPLIT_BY_COLON);
         fileString.append(numOfStation);
@@ -158,12 +126,7 @@ public class Gym extends Workout {
      */
     public String getHistoryFormatForSpecificGymStation(int index) {
 
-        StringBuilder gymDate = new StringBuilder();
-        if (date != null) {
-            gymDate.append(date);
-        } else {
-            gymDate.append(ErrorConstant.NO_DATE_SPECIFIED_ERROR);
-        }
+        String gymDate = super.getDate();
 
         // Get the string format for a specific gym station
         GymStation station = getStations().get(index);
@@ -190,5 +153,13 @@ public class Gym extends Workout {
 
         }
     }
+
+    // Private methods
+
+
+    private void appendIntoStations(GymStation station) {
+        stations.add(station);
+    }
+
 
 }
