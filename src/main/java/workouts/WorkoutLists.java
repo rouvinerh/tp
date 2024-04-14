@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 /**
  * WorkoutLists class contains a static list of workouts, runs and gyms.
- * You cannot add a new object to the list directly
+ * You cannot add a new object to the list directly.
  * It will automatically be added when you create a new Run/Gym object.
  * To retrieve the list of workouts/gym/run, you can use the static 'get' methods provided.
  */
@@ -118,7 +118,7 @@ public class WorkoutLists {
     }
 
     /**
-     * Deletes Run object based on the {@code index} that will be validated
+     * Deletes Run object based on the {@code index} that will be validated.
      *
      * @param index Index of the Run object to be deleted.
      * @throws CustomExceptions.OutOfBounds If the index is invalid.

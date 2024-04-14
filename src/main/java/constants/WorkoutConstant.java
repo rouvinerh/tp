@@ -24,7 +24,6 @@ public class WorkoutConstant {
     public static final int NUMBER_OF_PARTS_FOR_RUN_TIME = 2;
     public static final int NUMBER_OF_PARTS_FOR_RUN_TIME_WITH_HOURS = 3;
     public static final int MAX_GYM_STATION_NAME_LENGTH = 25;
-    public static final double MIN_GYM_WEIGHT = 0.000;
     public static final double MAX_RUN_DISTANCE = 5000.00;
     public static final double MIN_RUN_DISTANCE = 0;
     public static final double MAX_PACE = 30;
@@ -49,7 +48,6 @@ public class WorkoutConstant {
     public static final int GYM_STATION_SET_INDEX = 1;
     public static final int GYM_STATION_REPS_INDEX = 2;
     public static final int GYM_STATION_WEIGHTS_INDEX = 3;
-    public static final int MIN_GYM_STATION_WEIGHTS_ARRAY_LENGTH = 1;
 
     public static final int RUN_TIME_INDEX = 0;
     public static final int RUN_DISTANCE_INDEX = 1;
@@ -108,7 +106,6 @@ public class WorkoutConstant {
             + COLON + TWO_DIGIT_PLACE_FORMAT;
 
     public static final String RUN_PACE_FORMAT = "%d:%02d/km";
-    public static final String INVALID_GYM_INPUT = "Invalid gym parameters!";
 
     public static final int NUM_OF_SLASHES_FOR_GYM_WITH_DATE = 3;
     public static final int NUM_OF_SLASHES_FOR_GYM_WITHOUT_DATE = 2;

@@ -91,7 +91,7 @@ public class DataFileTest {
 
             int index = 1;
             for (Bmi bmi : bmiArrayList) {
-                assertEquals("BMI:" + bmi.getHeight() + ":" + bmi.getWeight() + ":" + bmi.getBmiValue() + ":" +
+                assertEquals("BMI:" + bmi.getHeight() + ":" + bmi.getWeight() + ":" + bmi.getBmiValueString() + ":" +
                         bmi.getDate(), lines.get(index++));
             }
 

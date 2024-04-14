@@ -21,9 +21,9 @@ public class Run extends Workout {
     /**
      * Constructs a new Run object with the time and distance from user input.
      *
-     * @param stringTime     The time taken for the run.
+     * @param stringTime The time taken for the run.
      * @param stringDistance The distance of the run.
-     * @throws CustomExceptions.InvalidInput If there is invalid input.
+     * @throws CustomExceptions.InvalidInput If there is invalid input in any parameters found.
      */
     public Run(String stringTime, String stringDistance) throws CustomExceptions.InvalidInput {
         times = processRunTime(stringTime);
@@ -35,10 +35,10 @@ public class Run extends Workout {
     /**
      * Overloaded constructor that takes in time, distance and the optional date parameter from user input.
      *
-     * @param stringTime     The time taken for the run.
+     * @param stringTime The time taken for the run.
      * @param stringDistance The distance of the run.
-     * @param stringDate     The date of the run.
-     * @throws CustomExceptions.InvalidInput If there is invalid input.
+     * @param stringDate The date of the run.
+     * @throws CustomExceptions.InvalidInput If there is invalid input in any parameters found.
      */
     public Run(String stringTime, String stringDistance, String stringDate) throws CustomExceptions.InvalidInput {
         super(stringDate);
@@ -50,9 +50,9 @@ public class Run extends Workout {
     }
 
     /**
-     * Returns string format of time taken for run depending on {@code isHourPresent}
-     * If there isn't an hour present, returns only mm:ss
-     * If not returns hh:mm:ss
+     * Returns string format of time taken for run.
+     * If there isn't an hour present, returns only mm:ss.
+     * If not returns hh:mm:ss.
      *
      * @return Formatted string of the time for the run.
      */
@@ -71,17 +71,18 @@ public class Run extends Workout {
     }
 
     /**
-     * Retrieves the run distance in two decimal format.
+     * Retrieves the run distance in two decimal place format.
      *
-     * @return Run distance.
+     * @return Run distance as String.
      */
     public String getDistance() {
         return String.format(WorkoutConstant.TWO_DECIMAL_PLACE_FORMAT, distance);
     }
+
     /**
      * Retrieves run pace.
      *
-     * @return Run pace.
+     * @return Run pace as String.
      */
     public String getPace() {
         return pace;
@@ -142,7 +143,7 @@ public class Run extends Workout {
      * Checks the hour, minute and second values for run time.
      *
      * @param runTimeParts The run time values.
-     * @throws CustomExceptions.InvalidInput If the run time specified is not allowed.
+     * @throws CustomExceptions.InvalidInput If the run time specified is not invalid.
      */
     private void checkRunTimeValues(Integer[] runTimeParts) throws CustomExceptions.InvalidInput {
         int hours = runTimeParts[WorkoutConstant.RUN_TIME_HOUR_INDEX];
@@ -171,11 +172,9 @@ public class Run extends Workout {
     }
 
     /**
-     * Method parses the time format in either hh:mm:ss or mm:ss.
-     * Sets {@code isHourPresent} variable to true if hours have been specified.
-     * Otherwise, set to false.
+     * Method splits and validates run time input.
      *
-     * @param inputTime String variable representing time taken in either hh:mm:ss or mm:ss format
+     * @param inputTime String variable representing time taken in either hh:mm:ss or mm:ss format.
      * @return A list of integers representing the hours (if present), minutes and seconds.
      * @throws CustomExceptions.InvalidInput if the input time is not in the correct format.
      */
@@ -203,7 +202,7 @@ public class Run extends Workout {
      * Checks the validity of distance value specified for the run. Returns the distance as a double if valid.
      *
      * @param stringDistance The string representation of the distance.
-     * @return The run distance as a {@code Double}.
+     * @return The run distance as a Double.
      * @throws CustomExceptions.InvalidInput If the distance is outside the valid range.
      */
     protected Double checkDistance(String stringDistance) throws CustomExceptions.InvalidInput {
@@ -221,8 +220,8 @@ public class Run extends Workout {
     /**
      * Method calculates the pace of the run, and formats it into minutes per km.
      *
-     * @return Formatted string the pace of the run.
-     * @throws CustomExceptions.InvalidInput If the total time taken or pace calculated is too large or small.
+     * @return The pace of the run as a String.
+     * @throws CustomExceptions.InvalidInput If the pace calculated is too large or small.
      */
     protected String calculatePace() throws CustomExceptions.InvalidInput {
         int totalSeconds = calculateTotalSeconds();

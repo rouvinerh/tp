@@ -16,34 +16,12 @@ import java.util.Objects;
  * and the methods to calculate period and cycle length and predict the next period.
  */
 public class Period extends Health {
-    /**
-     * The start date of period i.e. the first day of period flow which is also the first day of cycle.
-     */
-    protected LocalDate startDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private long periodLength;
+    private long cycleLength;
 
-    /**
-     * The end date of period i.e. the last day of period flow.
-     */
-    protected LocalDate endDate;
-
-    /**
-     * The number of days between the first day and last day of period flow.
-     */
-    protected long periodLength;
-
-    /**
-     * The number of days between the first day and last day of the period cycle.
-     */
-    protected long cycleLength;
-
-    /**
-     * A parser object to access Parser Class.
-     */
     private final Parser parser = new Parser();
-
-    /**
-     * A healthlist object to access HealthList Class which manages and stores health data.
-     */
     private final HealthList healthList = new HealthList();
 
     //@@author syj02
@@ -76,6 +54,15 @@ public class Period extends Health {
     }
 
     /**
+     * Gets cycle length.
+     *
+     * @return Cycle length as {@code long}.
+     */
+    public long getCycleLength() {
+        return cycleLength;
+    }
+
+    /**
      * Updates the end date of the period and calculates the period length.
      *
      * @param stringEndDate A {@code String} representing the new end date of the period.
@@ -100,7 +87,6 @@ public class Period extends Health {
      * Retrieves the end date of the period of {@code LocalDate} type.
      *
      * @return The end date of period.
-     * @throws AssertionError if the end date is null.
      */
     public LocalDate getEndDate() {
         return endDate;

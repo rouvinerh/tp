@@ -184,8 +184,8 @@ public class HealthList extends ArrayList<Health> {
         Bmi deletedBmi = BMIS.get(index);
         Output.printLine();
         System.out.printf((HealthConstant.LOG_DELETE_BMI_FORMAT) + System.lineSeparator(),
-                deletedBmi.bmiValue,
-                deletedBmi.date);
+                deletedBmi.getBmiValueDouble(),
+                deletedBmi.getDate());
         Output.printLine();
         BMIS.remove(index);
         LogFile.writeLog(HealthConstant.BMI_REMOVED_MESSAGE_PREFIX + index, false);
@@ -234,9 +234,9 @@ public class HealthList extends ArrayList<Health> {
         Appointment deletedAppointment = APPOINTMENTS.get(index);
         Output.printLine();
         System.out.printf((HealthConstant.LOG_DELETE_APPOINTMENT_FORMAT) + System.lineSeparator(),
-                deletedAppointment.date,
-                deletedAppointment.time,
-                deletedAppointment.description);
+                deletedAppointment.getDate(),
+                deletedAppointment.getTime(),
+                deletedAppointment.getDescription());
         Output.printLine();
         APPOINTMENTS.remove(index);
         LogFile.writeLog(HealthConstant.APPOINTMENT_REMOVED_MESSAGE_PREFIX + index, false);

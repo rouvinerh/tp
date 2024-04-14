@@ -429,7 +429,7 @@ public class DataFile {
 
                 dataFile.write(DataType.BMI + UiConstant.SPLIT_BY_COLON + bmiEntry.getHeight() +
                         UiConstant.SPLIT_BY_COLON + bmiEntry.getWeight() +
-                        UiConstant.SPLIT_BY_COLON + bmiEntry.getBmiValue() +
+                        UiConstant.SPLIT_BY_COLON + bmiEntry.getBmiValueString() +
                         UiConstant.SPLIT_BY_COLON + formattedDate + System.lineSeparator());
             }
         }

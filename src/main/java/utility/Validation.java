@@ -28,7 +28,7 @@ public class Validation {
      * Validates that the input date string is correctly formatted in DD-MM-YYYY and is a valid date.
      *
      * @param date The string date from user input.
-     * @throws CustomExceptions.InvalidInput If the year is before 1967, the
+     * @throws CustomExceptions.InvalidInput If the date is invalid.
      */
     public void validateDateInput(String date) throws CustomExceptions.InvalidInput {
         if (!date.matches(UiConstant.VALID_DATE_REGEX)) {
@@ -118,6 +118,7 @@ public class Validation {
      *
      * @param bmiDetails An array of strings with split BMI details.
      * @throws CustomExceptions.InvalidInput If there are any errors in the details entered.
+     * @throws CustomExceptions.InsufficientInput If there are empty parameters specified.
      */
     public void validateBmiInput(String[] bmiDetails) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
@@ -152,6 +153,7 @@ public class Validation {
      *
      * @param periodDetails An array of strings with split period details.
      * @throws CustomExceptions.InvalidInput If there are any errors in the details entered.
+     * @throws CustomExceptions.InsufficientInput If there are empty parameters specified.
      */
     public void validatePeriodInput(String[] periodDetails, boolean isParser) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
@@ -252,7 +254,7 @@ public class Validation {
      * @param time The {@code String} time to check.
      * @throws CustomExceptions.InvalidInput If time is formatted wrongly or is not valid.
      */
-    public void validateTimeInput(String time) throws CustomExceptions.InvalidInput {
+    protected void validateTimeInput(String time) throws CustomExceptions.InvalidInput {
         if (!time.matches(UiConstant.VALID_TIME_REGEX)) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_ACTUAL_TIME_ERROR);
         }
@@ -298,8 +300,7 @@ public class Validation {
 
     //@@author rouvinerh
     /**
-     * Validates whether the list of input details contains any empty strings. If it does, return false.
-     * Otherwise, return true.
+     * Checks whether the list of input details contains any empty strings.
      *
      * @param input A list of strings representing command inputs.
      * @return False if it contains empty strings. Otherwise, returns true.
@@ -340,12 +341,13 @@ public class Validation {
     /**
      * Checks whether date is set to {@code null} or 'NA'. Both cases mean date is not specified.
      *
-     * @param date The date string to check
+     * @param date The date string to check.
      * @return Returns true if date is specified, otherwise returns false.
      */
     public boolean validateDateNotEmpty (String date) {
         return date != null && !date.equals("NA");
     }
+
     //@@author j013n3
     /**
      * Validates whether the start date is before or equal to the end date of the latest period in the HealthList.
@@ -452,7 +454,7 @@ public class Validation {
         return index >= start && index < end;
     }
 
-    public static boolean validateIntegerIsPositive(String value) throws CustomExceptions.InvalidInput {
+    public static boolean validateIntegerIsPositive(String value) {
         return value.matches(UiConstant.VALID_POSITIVE_INTEGER_REGEX);
     }
 }

@@ -11,7 +11,7 @@ public class GymSet {
     private int numberOfRepetitions;
 
     /**
-     * Constructs a new GymSet object using the weight and reps for 1 set of a gym station.
+     * Constructs a new GymSet object using the weight and reps.
      *
      * @param weight The weight done for the set.
      * @param numberOfRepetitions The number of reps done for the set.

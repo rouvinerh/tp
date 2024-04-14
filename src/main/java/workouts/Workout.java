@@ -31,8 +31,7 @@ public class Workout {
 
 
     /**
-     * Returns the date of the workout. If the date is not specified (null)
-     * It will return {@code ErrorConstant.NO_DATE_SPECIFIED_ERROR} as the dateString.
+     * Returns the date of the workout. If the date is not specified, returns "NA".
      *
      * @return validatedDate as a string representing the date of the workout.
      */
@@ -47,6 +46,11 @@ public class Workout {
         return validatedDate;
     }
 
+    /**
+     * Formats date read from file.
+     *
+     * @return Formatted date in dd-MM-yyyy format.
+     */
     public String getDateForFile(){
         Parser parser = new Parser();
         return parser.parseFormattedDate(this.date);

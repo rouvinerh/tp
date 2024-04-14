@@ -179,7 +179,6 @@ public class IntegrationTest {
      * 12. Print latest appointment (prints appointment2) - latest appointment should be appointment1 still
      * 13. Add an appointment (appointment3) that is the latest (2026)
      * 14. Print latest appointment (prints appointment2) - latest appointment should be appointment 3
-     *
      */
     @Test
     void addHealthAndShowLatest_correctInput_expectCorrectLatestOutput() {
