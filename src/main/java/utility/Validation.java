@@ -132,15 +132,12 @@ public class Validation {
 
         double height = Double.parseDouble(bmiDetails[HealthConstant.BMI_HEIGHT_INDEX]);
         double weight = Double.parseDouble(bmiDetails[HealthConstant.BMI_WEIGHT_INDEX]);
-
         if (height <= HealthConstant.MIN_HEIGHT || weight <= HealthConstant.MIN_WEIGHT) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.ZERO_HEIGHT_AND_WEIGHT_ERROR);
         }
-
         if (height > HealthConstant.MAX_HEIGHT) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.MAX_HEIGHT_ERROR);
         }
-
         if (weight > HealthConstant.MAX_WEIGHT) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.MAX_WEIGHT_ERROR);
         }
@@ -161,42 +158,26 @@ public class Validation {
         if (isEmptyParameterPresent(periodDetails)) {
             throw new CustomExceptions.InsufficientInput(ErrorConstant.INSUFFICIENT_PERIOD_PARAMETERS_ERROR);
         }
-
         try {
             validateDateInput(periodDetails[HealthConstant.PERIOD_START_DATE_INDEX]);
         } catch (CustomExceptions.InvalidInput e) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_START_DATE_ERROR
-                    + e.getMessage());
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_START_DATE_ERROR + e.getMessage());
         }
-
         try {
             if (validateDateNotEmpty(periodDetails[HealthConstant.PERIOD_END_DATE_INDEX])) {
                 validateDateInput(periodDetails[HealthConstant.PERIOD_END_DATE_INDEX]);
             }
         } catch (CustomExceptions.InvalidInput e) {
-            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_END_DATE_ERROR
-                    + e.getMessage());
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_END_DATE_ERROR + e.getMessage());
         }
 
-        if (isParser) {
-            int sizeOfPeriodList = HealthList.getPeriodsSize();
-            if (sizeOfPeriodList >= UiConstant.MINIMUM_PERIOD_COUNT) {
-                LocalDate latestPeriodEndDate = Objects.requireNonNull(HealthList.getPeriod(0)).getEndDate();
-                validateStartDatesTally(latestPeriodEndDate, periodDetails);
-                validateDateAfterLatestPeriodInput(periodDetails[HealthConstant.PERIOD_START_DATE_INDEX],
-                        latestPeriodEndDate);
-            }
-        }
-
+        validateIfOnlyFromParser(isParser, periodDetails);
         validateDateNotAfterToday(periodDetails[HealthConstant.PERIOD_START_DATE_INDEX]);
-
         Parser parser = new Parser();
         LocalDate startDate = parser.parseDate(periodDetails[HealthConstant.PERIOD_START_DATE_INDEX]);
-
         if (validateDateNotEmpty(periodDetails[HealthConstant.PERIOD_END_DATE_INDEX])) {
             validateDateNotAfterToday(periodDetails[HealthConstant.PERIOD_END_DATE_INDEX]);
             LocalDate endDate = parser.parseDate(periodDetails[HealthConstant.PERIOD_END_DATE_INDEX]);
-
             if (startDate.isAfter(endDate)) {
                 throw new CustomExceptions.InvalidInput(ErrorConstant.PERIOD_END_BEFORE_START_ERROR);
             }
@@ -323,7 +304,7 @@ public class Validation {
      * @param input A list of strings representing command inputs.
      * @return False if it contains empty strings. Otherwise, returns true.
      */
-    public boolean isEmptyParameterPresent(String[] input) {
+    protected boolean isEmptyParameterPresent(String[] input) {
         for (String s : input) {
             if (s != null && s.isEmpty()) {
                 return true;
@@ -338,7 +319,7 @@ public class Validation {
      * @param dateString A string representing the date.
      * @throws CustomExceptions.InvalidInput If the date specified is after today.
      */
-    public void validateDateNotAfterToday(String dateString) throws CustomExceptions.InvalidInput {
+    protected void validateDateNotAfterToday(String dateString) throws CustomExceptions.InvalidInput {
         Parser parser = new Parser();
         LocalDate date = parser.parseDate(dateString);
         if (date.isAfter(LocalDate.now())) {
@@ -398,7 +379,7 @@ public class Validation {
         Parser parser = new Parser();
         LocalDate startDate = parser.parseDate(periodDetails[HealthConstant.PERIOD_START_DATE_INDEX]);
         LocalDate latestPeriodStartDate =
-                Objects.requireNonNull(HealthList.getPeriod(0)).getStartDate(); // index of latest period == 0
+                Objects.requireNonNull(HealthList.getPeriod(HealthConstant.FIRST_ITEM)).getStartDate();
 
         if (latestPeriodEndDate == null) {
             if (!startDate.equals(latestPeriodStartDate)) {
@@ -407,6 +388,25 @@ public class Validation {
             if (periodDetails[HealthConstant.PERIOD_END_DATE_INDEX] == null) {
                 throw new CustomExceptions.InvalidInput(ErrorConstant.END_DATE_NOT_FOUND_ERROR );
             }
+        }
+    }
+
+    /**
+     * Validates input data if it comes from Parser and validates the input using two other methods from Validation.
+     *
+     * @param isParser       a boolean indicating whether the input comes from Parser
+     * @param periodDetails  an array of strings containing period details
+     * @throws CustomExceptions.InvalidInput if the input data is invalid
+     */
+    public void validateIfOnlyFromParser(boolean isParser, String[] periodDetails)
+            throws CustomExceptions.InvalidInput {
+        int sizeOfPeriodList = HealthList.getPeriodsSize();
+        if (isParser && sizeOfPeriodList >= UiConstant.MINIMUM_PERIOD_COUNT) {
+            LocalDate latestPeriodEndDate =
+                    Objects.requireNonNull(HealthList.getPeriod(HealthConstant.FIRST_ITEM)).getEndDate();
+            validateStartDatesTally(latestPeriodEndDate, periodDetails);
+            validateDateAfterLatestPeriodInput(periodDetails[HealthConstant.PERIOD_START_DATE_INDEX],
+                    latestPeriodEndDate);
         }
     }
 
@@ -455,5 +455,4 @@ public class Validation {
     public static boolean validateIntegerIsPositive(String value) throws CustomExceptions.InvalidInput {
         return value.matches(UiConstant.VALID_POSITIVE_INTEGER_REGEX);
     }
-
 }
