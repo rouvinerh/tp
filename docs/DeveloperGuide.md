@@ -342,7 +342,7 @@ This is represented as enumerations. Attempts to use an invalid filter results i
 
 ### Constants Package
 
-This package contains all of the different constants used throughout PulsePilot to prevent the usage of magic strings and numbers.
+This package contains all the different constants used throughout PulsePilot to prevent the usage of magic strings and numbers.
 
 The constants are broken down into the following 4 classes:
 

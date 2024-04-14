@@ -38,6 +38,9 @@ public class DataFileTest {
     private final String originalDataFilePath = "./pulsepilot_data.txt";
     private final String originalHashFilePath = "./pulsepilot_hash.txt";
 
+    /**
+     * Sets up the test environment by setting the file paths to the test files.
+     */
     @BeforeEach
     void setUp() {
         // Set the file paths to the test files
@@ -46,6 +49,9 @@ public class DataFileTest {
         UiConstant.hashFilePath = testHashFilePath;
     }
 
+    /**
+     * Tears down the test environment by deleting the test files and resetting the file paths.
+     */
     @AfterEach
     void tearDown() {
         // Delete the test files after each test
@@ -58,10 +64,23 @@ public class DataFileTest {
         UiConstant.hashFilePath = originalHashFilePath;
     }
 
+    /**
+     * Cleans up the WorkoutList and HealthList before each test.
+     */
     private void cleanup(){
         WorkoutLists.clearWorkoutsRunGym();
         HealthList.clearHealthLists();
     }
+
+    /**
+     * Asserts that the contents of the data file match the expected values.
+     *
+     * @param name                 the user's name
+     * @param bmiArrayList         the list of BMI entries
+     * @param appointmentArrayList the list of appointments
+     * @param periodArrayList      the list of periods
+     * @param workoutArrayList     the list of workouts
+     */
     private void assertDataFileContents(String name, ArrayList<Bmi> bmiArrayList,
                                         ArrayList<Appointment> appointmentArrayList,
                                         ArrayList<Period> periodArrayList,
@@ -102,6 +121,10 @@ public class DataFileTest {
     }
 
 
+    /**
+     * Tests the saveDataFile method with valid data.
+     * Verifies that the data file is written correctly.
+     */
     @Test
     void saveDataFile_validData_writesCorrectly() throws IOException, CustomExceptions.FileWriteError,
             CustomExceptions.InvalidInput {
@@ -166,6 +189,10 @@ public class DataFileTest {
         }
     }
 
+    /**
+     * Tests the saveDataFile method with empty data.
+     * Verifies that the data file is written correctly.
+     */
     @Test
     void saveDataFile_emptyData_writesCorrectly() throws CustomExceptions.FileWriteError {
         // Arrange
@@ -187,6 +214,10 @@ public class DataFileTest {
         assertDataFileContents(name, bmiArrayList, appointmentArrayList, periodArrayList, workoutArrayList);
     }
 
+    /**
+     * Tests the loadDataFile method when the data file does not exist.
+     * Verifies that a new file is created.
+     */
     @Test
     void loadDataFile_nonExistentFile_createsNew() throws
             CustomExceptions.InvalidInput, CustomExceptions.FileWriteError {
@@ -219,6 +250,10 @@ public class DataFileTest {
         assertTrue(new File(testHashFilePath).exists());
     }
 
+    /**
+     * Tests the generateFileHash method with a valid file.
+     * Verifies that the correct hash is generated.
+     */
     @Test
     void generateFileHash_validFile_returnsCorrectHash() throws NoSuchAlgorithmException, IOException,
             CustomExceptions.InvalidInput, CustomExceptions.FileWriteError {
@@ -252,6 +287,10 @@ public class DataFileTest {
         assertFalse(hash.isEmpty());
     }
 
+    /**
+     * Tests the loadDataFile method with an existing file.
+     * Verifies that the data is loaded correctly.
+     */
     @Test
     void loadDataFile_existingFile_readsCorrectly() throws CustomExceptions.FileReadError,
             CustomExceptions.FileWriteError, CustomExceptions.InvalidInput {
@@ -307,8 +346,8 @@ public class DataFileTest {
     }
 
     /**
-     * Tests the behaviour of verifyIntegrity when an invalid File object is passed.
-     * Expects FileCreateError exception to be thrown.
+     * Tests the verifyIntegrity method with an invalid file.
+     * Expects a FileCreateError exception to be thrown.
      */
     @Test
     void verifyIntegrity_invalidFileName_expectsFileCreateErrorException() {
@@ -317,6 +356,10 @@ public class DataFileTest {
         assertThrows(CustomExceptions.FileCreateError.class, () -> dataFile.verifyIntegrity(testFile));
     }
 
+    /**
+     * Tests the readHashFromFile method with a valid hash file.
+     * Verifies that the correct hash is read.
+     */
     @Test
     void readHashFromFile_validHashFile_returnsCorrectHash() throws IOException {
         // Arrange
@@ -334,6 +377,10 @@ public class DataFileTest {
         assertEquals(expectedHash, actualHash);
     }
 
+    /**
+     * Tests the processName method with an invalid username.
+     * Expects an InvalidInput exception to be thrown.
+     */
     @Test
     void processName_invalidUsername_throwsInvalidInputException() {
         // Arrange
@@ -344,6 +391,10 @@ public class DataFileTest {
         assertThrows(CustomExceptions.InvalidInput.class, () -> dataFile.processName(invalidUsername));
     }
 
+    /**
+     * Tests the processAppointment method with missing appointment details.
+     * Expects an InvalidInput exception to be thrown.
+     */
     @Test
     void processAppointment_missingAppointmentDetails_throwsInvalidInputException() {
         // Arrange
@@ -354,6 +405,10 @@ public class DataFileTest {
         assertThrows(CustomExceptions.InvalidInput.class, () -> dataFile.processAppointment(input));
     }
 
+    /**
+     * Tests the processPeriod method with invalid period input.
+     * Expects an InvalidInput exception to be thrown.
+     */
     @Test
     void processPeriod_invalidPeriodInput_throwsInvalidInputException() {
         // Arrange
@@ -364,6 +419,10 @@ public class DataFileTest {
         assertThrows(CustomExceptions.InvalidInput.class, () -> dataFile.processPeriod(input));
     }
 
+    /**
+     * Tests the processBmi method with invalid BMI input.
+     * Expects an InvalidInput exception to be thrown.
+     */
     @Test
     void processBmi_invalidBmiInput_throwsInvalidInputException() {
         // Arrange
@@ -374,6 +433,10 @@ public class DataFileTest {
         assertThrows(CustomExceptions.InvalidInput.class, () -> dataFile.processBmi(input));
     }
 
+    /**
+     * Tests the processRun method with invalid run input.
+     * Expects an InvalidInput exception to be thrown.
+     */
     @Test
     void processRun_invalidRunInput_throwsInvalidInputException() {
         // Arrange
@@ -384,6 +447,10 @@ public class DataFileTest {
         assertThrows(CustomExceptions.InvalidInput.class, () -> dataFile.processRun(input));
     }
 
+    /**
+     * Tests the processGym method with invalid gym input.
+     * Expects an InvalidInput exception to be thrown.
+     */
     @Test
     void processGym_invalidGymInput_throwsInvalidInputException() {
         // Arrange
@@ -395,6 +462,10 @@ public class DataFileTest {
         assertThrows(CustomExceptions.InvalidInput.class, () -> dataFile.processGym(rawInput));
     }
 
+    /**
+     * Tests the processFail method.
+     * Verifies that the error is logged and the files are deleted.
+     */
     @Test
     void processFail_logsErrorAndDeletesFiles() {
         // Arrange

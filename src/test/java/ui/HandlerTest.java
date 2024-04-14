@@ -17,6 +17,10 @@ import java.io.PrintStream;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Tests the functionality of the `Handler` class.
+ * It includes tests for processing various user inputs and verifying the expected output.
+ */
 class HandlerTest {
     private final ByteArrayInputStream inContent = new ByteArrayInputStream("".getBytes());
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -24,6 +28,10 @@ class HandlerTest {
     private final InputStream originalIn = System.in;
     private final PrintStream originalOut = System.out;
     private final PrintStream originalErr = System.err;
+
+    /**
+     * Sets up the test environment by redirecting the standard input, output, and error streams.
+     */
     @BeforeEach
     public void setUpStreams() {
         System.setOut(new PrintStream(outContent));
@@ -31,6 +39,10 @@ class HandlerTest {
         System.setErr(new PrintStream(errContent));
     }
 
+    /**
+     * Restores the original standard input, output, and error streams, and cleans up the
+     * `WorkoutLists` and `HealthList` after each test.
+     */
     @AfterEach
     public void restoreStreams() {
         System.setOut(originalOut);
@@ -41,7 +53,8 @@ class HandlerTest {
     }
 
     /**
-     * Tests the processInput function's behaviour to the EXIT command.
+     * Tests the `processInput` function's behaviour when the user enters the 'EXIT' command.
+     * Verifies that the program terminates.
      */
     @Test
     void processInput_exitCommand_terminatesProgram() {
@@ -53,8 +66,9 @@ class HandlerTest {
     }
 
     /**
-     * Tests the processInput function's behaviour to the NEW command to add a Run
-     * object.
+     * Tests the `processInput` function's behaviour when the user enters the 'WORKOUT' command
+     * to add a new run exercise.
+     * Verifies that the run is added successfully.
      */
     @Test
     void processInput_workoutCommand_addRunExercise() {
@@ -67,8 +81,9 @@ class HandlerTest {
     }
 
     /**
-     * Tests the processInput function's behaviour to the HEALTH command to add
-     * a BMI object.
+     * Tests the `processInput` function's behaviour when the user enters the 'HEALTH' command
+     * to add a new BMI data point.
+     * Verifies that the BMI data is added successfully.
      */
     @Test
     void processInput_healthCommand_addBMIHealthData() {
@@ -80,8 +95,9 @@ class HandlerTest {
     }
 
     /**
-     * Tests the processInput function's behaviour to the HEALTH command to add
-     * an appointment object.
+     * Tests the `processInput` function's behaviour when the user enters the 'HEALTH' command
+     * to add a new appointment.
+     * Verifies that the appointment is added successfully.
      */
     @Test
     void processInput_healthCommand_addAppointment() {
@@ -94,8 +110,9 @@ class HandlerTest {
 
 
     /**
-     * Tests the processInput function's behaviour to the HISTORY command to print
-     * all run objects.
+     * Tests the `processInput` function's behaviour when the user enters the 'HISTORY' command
+     * to print the history of runs.
+     * Verifies that the run history is printed correctly.
      */
     @Test
     void processInput_historyCommand_printsHistoryRun() {
@@ -109,8 +126,9 @@ class HandlerTest {
     }
 
     /**
-     * Tests the processInput function's behaviour to the LATEST command to print
-     * the latest run object.
+     * Tests the `processInput` function's behaviour when the user enters the 'LATEST' command
+     * to print the latest run.
+     * Verifies that the latest run is printed correctly.
      */
     @Test
     void processInput_latestCommand_printsLatestRun() {
@@ -124,8 +142,8 @@ class HandlerTest {
     }
 
     /**
-     * Tests the processInput function's behaviour to the HELP command to print
-     * the help message.
+     * Tests the `processInput` function's behaviour when the user enters the 'HELP' command.
+     * Verifies that the help message is printed correctly.
      */
     @Test
     void processInput_helpCommand_printsHelp() {
@@ -138,8 +156,8 @@ class HandlerTest {
 
 
     /**
-     * Tests the processInput function's behaviour to an invalid command, which prints
-     * an error.
+     * Tests the `processInput` function's behaviour when the user enters an invalid command.
+     * Verifies that an error message is printed.
      */
     @Test
     void processInput_invalidCommand_printsInvalidCommandException() {
@@ -155,8 +173,9 @@ class HandlerTest {
     }
 
     /**
-     * Tests the behaviour of processInput when and invalid run command with invalid distance is passed in.
-     * Expects invalid distance error to be printed.
+     * Tests the `processInput` function's behaviour when the user enters an invalid run command
+     * with an invalid distance.
+     * Verifies that an error message is printed.
      */
     @Test
     void processInput_invalidRunCommand_printsInvalidDistanceError() {
@@ -174,7 +193,9 @@ class HandlerTest {
     }
 
     /**
-     * Tests the processInput function's behaviour when the HEALTH command is given with invalid parameters.
+     * Tests the `processInput` function's behaviour when the user enters the 'HEALTH' command
+     * with insufficient parameters.
+     * Verifies that an error message is printed.
      */
     @Test
     void processInput_healthCommand_insufficientParameters() {
@@ -185,8 +206,9 @@ class HandlerTest {
     }
 
     /**
-     * Tests the processInput function's behaviour when the DELETE command is given with valid BMI added.
-     * Expects delete BMI message to be printed.
+     * Tests the `processInput` function's behaviour when the user enters the 'DELETE' command
+     * with a valid BMI entry.
+     * Verifies that the BMI entry is deleted successfully.
      */
     @Test
     void processInput_deleteCommandWithValidBmi_validDeleteMessage() {
@@ -200,8 +222,9 @@ class HandlerTest {
     }
 
     /**
-     * Tests the processInput function's behaviour when the DELETE command is given with no BMI objects added.
-     * Expects error message to be printed.
+     * Tests the `processInput` function's behaviour when the user enters the 'DELETE' command
+     * with no BMI objects added.
+     * Verifies that an error message is printed.
      */
     @Test
     void processInput_deleteCommandWithInvalidBmiIndex_expectErrorMessage() {
@@ -215,8 +238,9 @@ class HandlerTest {
     }
 
     /**
-     * Tests the processInput function's behaviour when the DELETE command is given with valid BMI added.
-     * Expects delete BMI message to be printed.
+     * Tests the `processInput` function's behaviour when the user enters the 'DELETE' command
+     * with a valid appointment.
+     * Verifies that the appointment is deleted successfully.
      */
     @Test
     void processInput_deleteCommandWithValidAppointment_validDeleteMessage() {
@@ -230,8 +254,9 @@ class HandlerTest {
     }
 
     /**
-     * Tests the processInput function's behaviour when the DELETE command is given with valid BMI added.
-     * Expects delete BMI message to be printed.
+     * Tests the `processInput` function's behaviour when the user enters the 'DELETE' command
+     * with an invalid appointment index.
+     * Verifies that an error message is printed.
      */
     @Test
     void processInput_deleteCommandWithInvalidAppointmentIndex_validDeleteMessage() {
@@ -245,8 +270,9 @@ class HandlerTest {
     }
 
     /**
-     * Tests the processInput function's behaviour when the DELETE command is given with valid BMI added.
-     * Expects delete BMI message to be printed.
+     * Tests the `processInput` function's behaviour when the user enters the 'DELETE' command
+     * with a valid run.
+     * Verifies that the run is deleted successfully.
      */
     @Test
     void processInput_deleteCommandWithValidRun_validDeleteMessage() {
@@ -260,8 +286,9 @@ class HandlerTest {
     }
 
     /**
-     * Tests the processInput function's behaviour when the DELETE command is given with valid BMI added.
-     * Expects delete BMI message to be printed.
+     * Tests the `processInput` function's behaviour when the user enters the 'DELETE' command
+     * with an invalid run index.
+     * Verifies that an error message is printed.
      */
     @Test
     void processInput_deleteCommandWithInvalidRunIndex_validDeleteMessage() {
@@ -274,6 +301,11 @@ class HandlerTest {
         assertTrue(errContent.toString().contains("\u001b[31mException Caught!"));
     }
 
+    /**
+     * Tests the `processInput` function's behaviour when the user enters the 'DELETE' command
+     * with a valid period.
+     * Verifies that the period is deleted successfully.
+     */
     @Test
     void processInput_deleteCommandWithValidPeriod_validDeleteMessage() {
         String input = "health /h:period /start:09-03-2022 /end:16-03-2022"
@@ -286,8 +318,9 @@ class HandlerTest {
     }
 
     /**
-     * Tests the processInput function's behaviour when the DELETE command is given with valid BMI added.
-     * Expects delete BMI message to be printed.
+     * Tests the `processInput` function's behaviour when the user enters the 'DELETE' command
+     * with an invalid period index.
+     * Verifies that an error message is printed.
      */
     @Test
     void processInput_deleteCommandWithInvalidPeriodIndex_validDeleteMessage() {
@@ -300,6 +333,11 @@ class HandlerTest {
         assertTrue(errContent.toString().contains("\u001b[31mException Caught!"));
     }
 
+    /**
+     * Tests the `processInput` function's behaviour when the user enters the 'DELETE' command
+     * with a valid gym.
+     * Verifies that the gym is deleted successfully.
+     */
     @Test
     void processInput_deleteCommandWithValidGym_validDeleteMessage() {
         String input = "workout /e:gym /n:1 /date:25-03-2023"
@@ -314,8 +352,9 @@ class HandlerTest {
     }
 
     /**
-     * Tests the processInput function's behaviour when the DELETE command is given with valid BMI added.
-     * Expects delete BMI message to be printed.
+     * Tests the `processInput` function's behaviour when the user enters the 'DELETE' command
+     * with an invalid gym index.
+     * Verifies that an error message is printed.
      */
     @Test
     void processInput_deleteCommandWithInvalidGymIndex_validDeleteMessage() {
@@ -331,8 +370,9 @@ class HandlerTest {
     }
 
     /**
-     * Tests the behaviour of processInput when a gym command is entered, one station is added, and then the user
-     * types 'back' to exit.
+     * Tests the `processInput` function's behaviour when the user enters a gym command, adds one
+     * station, and then types 'back' to exit.
+     * Verifies that the gym is not added and a delete message is printed.
      */
     @Test
     void processInput_workoutCommandWithGymStationExit_expectsNoGymAddedAndDeleteMessage() {
@@ -348,8 +388,8 @@ class HandlerTest {
     }
 
     /**
-     * Tests the behaviour of userInduction when valid username is entered.
-     * Expects welcome greeting to be printed.
+     * Tests the `userInduction` function's behaviour when the user enters a valid username.
+     * Verifies that the welcome greeting is printed.
      */
     @Test
     void userInduction_validUsername_printGreeting() {
@@ -370,8 +410,8 @@ class HandlerTest {
     }
 
     /**
-     * Tests the behaviour of handleWorkout when an invalid string is passed.
-     * Expects error message stating invalid workout to be printed.
+     * Tests the `handleWorkout` function's behaviour when an invalid string is passed.
+     * Verifies that an error message is printed.
      */
     @Test
     void handleWorkout_invalidInput_expectsErrorMessagePrinted() {
@@ -381,8 +421,8 @@ class HandlerTest {
     }
 
     /**
-     * Tests the behaviour of handleHealth when an invalid string is passed.
-     * Expects error message stating invalid workout to be printed.
+     * Tests the `handleHealth` function's behaviour when an invalid string is passed.
+     * Verifies that an error message is printed.
      */
     @Test
     void handleHealth_invalidInput_expectsErrorMessagePrinted() {
