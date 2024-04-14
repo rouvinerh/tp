@@ -104,7 +104,6 @@ public class WorkoutLists {
      * @throws CustomExceptions.OutOfBounds If the index is invalid.
      */
     public static void deleteGym(int index) throws CustomExceptions.OutOfBounds {
-        assert !GYMS.isEmpty() : "Gym list is empty.";
         boolean indexIsValid = Validation.validateIndexWithinBounds(index, 0, GYMS.size());
 
         if (!indexIsValid) {

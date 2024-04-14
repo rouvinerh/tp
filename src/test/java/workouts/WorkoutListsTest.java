@@ -1,5 +1,6 @@
 package workouts;
 
+import constants.ErrorConstant;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,10 +8,9 @@ import utility.CustomExceptions;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 class WorkoutListsTest {
     @BeforeEach
@@ -52,27 +52,60 @@ class WorkoutListsTest {
 
 
     /**
-     * Tests the behavior of getting the workout list with {@code RUN} , {@code ALL}
+     * Tests the behavior of getting the workout list with {@code RUN} , {@code GYM}, {@code ALL}
      * Verifies whether the method is able to correct retrieve the list of workouts.
-     *
      */
     @Test
-    void getWorkouts_properInput_expectRetrievalRun() {
+    void getWorkouts_properInput_expectRetrieval() {
         try {
 
-            ArrayList<Run> inputList = new ArrayList<>();
-            inputList.add(new Run("40:10", "10.3", "15-03-2024"));
-            inputList.add(new Run("30:10", "20.3", "30-03-2023"));
+            // Setup
+            ArrayList<Gym> inputGymList = new ArrayList<>();
+            ArrayList<Run> inputRunList = new ArrayList<>();
+
+            Gym gym1 = new Gym("15-11-2023");
+            gym1.addStation("Bench Press", "1", "50", "1.0");
+            gym1.addStation("Shoulder Press", "2", "10", "1.0,2.0");
+
+            Gym gym2 = new Gym("16-11-2023");
+            gym2.addStation("Squat Press", "1", "50", "1.0");
+            gym2.addStation("Lat Press", "2", "10", "1.0,2.0");
+            gym2.addStation("Bicep curls", "1", "10", "1.0");
+
+            Run run1 = new Run("40:10", "10.3", "15-03-2024");
+            Run run2 = new Run("30:10", "20.3", "30-03-2023");
+
+
+            inputGymList.add(gym1);
+            inputGymList.add(gym2);
+            inputRunList.add(run1);
+            inputRunList.add(run2);
+
 
 
             ArrayList<Run> runList = WorkoutLists.getRuns();
-            for(int i = 0; i < inputList.size(); i++) {
-                Run expected = inputList.get(i);
-                Run actual = (Run) runList.get(i);
+            for(int i = 0; i < inputRunList.size(); i++) {
+                Run expected = inputRunList.get(i);
+                Run actual = runList.get(i);
                 assertEquals(expected, actual);
             }
 
-        } catch (CustomExceptions.InvalidInput e) {
+            ArrayList<Gym> gymList = WorkoutLists.getGyms();
+            for(int i = 0; i < inputGymList.size(); i++) {
+                Gym expected = inputGymList.get(i);
+                Gym actual = gymList.get(i);
+                assertEquals(expected, actual);
+            }
+
+            ArrayList<? extends Workout> allList = WorkoutLists.getWorkouts();
+            assertEquals(gym1, (Gym) allList.get(0));
+            assertEquals(gym2, (Gym) allList.get(1));
+            assertEquals(run1, (Run) allList.get(2));
+            assertEquals(run2, (Run) allList.get(3));
+
+
+
+        } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
             fail("Should not throw an exception.");
         }
     }
@@ -135,7 +168,6 @@ class WorkoutListsTest {
     /**
      * Test deleting of runs with invalid index.
      * Expected behaviour is for an OutOfBounds error to be thrown.
-     *
      * @throws CustomExceptions.InvalidInput If there are invalid Run input parameters.
      */
     @Test
@@ -148,16 +180,16 @@ class WorkoutListsTest {
 
     /**
      * Test deleting of gyms with valid list and valid index.
-     * Expected behaviour is to have one gym left in the list.
+     * Expected behaviour is to delete the first gym and be left with one in the list.
+     * The gym left should be the second gym in the list.
      *
-     * @throws CustomExceptions.InvalidInput If there are invalid Run input parameters.
      * @throws CustomExceptions.OutOfBounds If the index is invalid.
      */
     @Test
-    void deleteGym_properList_listOfSizeOne() throws CustomExceptions.InvalidInput, CustomExceptions.OutOfBounds {
+    void deleteGym_ValidIndex_listOfSizeOne() throws CustomExceptions.OutOfBounds {
         Gym gym1 = new Gym();
-        ArrayList<Double> array1 = new ArrayList<>(Arrays.asList(1.0));
-        ArrayList<Double> array2 = new ArrayList<>(Arrays.asList(1.0,2.0));
+        new ArrayList<>(List.of(1.0));
+        new ArrayList<>(Arrays.asList(1.0,2.0));
         try {
             gym1.addStation("Bench Press", "1", "50", "1.0");
             gym1.addStation("Shoulder Press", "2", "10", "1.0,2.0");
@@ -170,9 +202,12 @@ class WorkoutListsTest {
             fail("Should not throw an exception");
         }
 
-        int index = 1;
+        int index = 0;
         WorkoutLists.deleteGym(index);
         assertEquals(1, WorkoutLists.getGymSize());
+        // check to make sure that after deleting the first gym, the second gym becomes first
+        assertEquals("Squat Press" , WorkoutLists.getGyms().get(0).getStationByIndex(0).getStationName());
+
     }
 
     /**
@@ -181,18 +216,17 @@ class WorkoutListsTest {
      */
     @Test
     void deleteGym_emptyList_throwsAssertionError() {
-        assertThrows (AssertionError.class, () ->
+        Exception exception = assertThrows (CustomExceptions.OutOfBounds.class, () ->
                 WorkoutLists.deleteGym(0));
+        assertTrue(exception.getMessage().contains(ErrorConstant.INVALID_INDEX_DELETE_ERROR));
     }
 
     /**
-     * Test deleting of runs with invalid index.
+     * Test deleting of gym with invalid index.
      * Expected behaviour is for an OutOfBounds error to be thrown.
-     *
-     * @throws CustomExceptions.InvalidInput If there are invalid Run input parameters.
      */
     @Test
-    void deleteGym_properListInvalidIndex_throwOutOfBoundsForGym() throws CustomExceptions.InvalidInput {
+    void deleteGym_InvalidIndex_throwOutOfBoundsForGym() {
         Gym gym1 = new Gym();
         try {
             gym1.addStation("Bench Press", "1", "50", "1.0");
@@ -201,9 +235,19 @@ class WorkoutListsTest {
         } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
             fail("Should not throw an exception");
         }
+
+        // test for invalid index
         int invalidIndex = 5;
-        assertThrows (CustomExceptions.OutOfBounds.class, () ->
+        Exception exception = assertThrows (CustomExceptions.OutOfBounds.class, () ->
                 WorkoutLists.deleteGym(invalidIndex));
+        assertTrue(exception.getMessage().contains(ErrorConstant.INVALID_INDEX_DELETE_ERROR));
+
+        // test for below 0 index
+        int invalidIndex2 = -1;
+        exception = assertThrows (CustomExceptions.OutOfBounds.class, () ->
+                WorkoutLists.deleteGym(invalidIndex2));
+        assertTrue(exception.getMessage().contains(ErrorConstant.INVALID_INDEX_DELETE_ERROR));
+
 
     }
 }

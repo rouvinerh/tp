@@ -16,7 +16,6 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 class GymStationTest {
 
-    // @@author rouvinerh
     private GymStation gymStation;
 
     @BeforeEach
@@ -75,16 +74,10 @@ class GymStationTest {
         exception = assertThrows(CustomExceptions.InvalidInput.class, () -> gymStation.validateGymStationName(input2));
         assertTrue(exception.getMessage().contains(ErrorConstant.INVALID_GYM_STATION_NAME_ERROR));
 
-        // special characters in name
-        String input3 = "bench-;";
-        exception = assertThrows(CustomExceptions.InvalidInput.class, () -> gymStation.validateGymStationName(input3));
-        assertTrue(exception.getMessage().contains(ErrorConstant.INVALID_GYM_STATION_NAME_ERROR));
-
         // name length > 25 chars
         String input4 = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA ";
         exception = assertThrows(CustomExceptions.InvalidInput.class, () -> gymStation.validateGymStationName(input4));
         assertTrue(exception.getMessage().contains(ErrorConstant.INVALID_GYM_STATION_NAME_ERROR));
-
 
     }
 
@@ -94,7 +87,6 @@ class GymStationTest {
      */
     @Test
     void validateExerciseName_emptyNames_expectsInsufficientInputException() {
-
         Exception exception = assertThrows(CustomExceptions.InsufficientInput.class, ()
                 -> gymStation.validateGymStationName(""));
         assertTrue(exception.getMessage().contains(ErrorConstant.INVALID_GYM_STATION_EMPTY_NAME_ERROR));

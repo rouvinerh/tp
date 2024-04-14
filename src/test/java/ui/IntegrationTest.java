@@ -307,6 +307,16 @@ public class IntegrationTest {
 
     }
 
+    @Test
+    void initialiseBotWithNoDataFile_properInput_expectNoErrors() {
+
+        StringBuilder input = new StringBuilder();
+        input.append("testingName");
+        input.append(System.lineSeparator());
+        Handler newHandler = new Handler();
+        newHandler.initialiseBot();
+    }
+
 
     /**
      * Tests the behaviour of having the same expected output when saving and loading a Gym object.
@@ -510,4 +520,7 @@ public class IntegrationTest {
         String expectedErr = errContent.toString();
         assertEquals(expectedErr, resultErr);
     }
+
+
+
 }

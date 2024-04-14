@@ -320,7 +320,7 @@ public class Handler {
         try {
             LogFile.writeLog("Attempting to save data file", false);
 
-            String userName = DataFile.userName; // need to make it non static
+            String userName = DataFile.userName;
             ArrayList<Workout> workoutList = WorkoutLists.getWorkouts();
             ArrayList<Bmi> bmiList = HealthList.getBmis();
             ArrayList<Appointment> appointmentList = HealthList.getAppointments();

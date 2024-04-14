@@ -28,7 +28,7 @@ class GymTest {
 
     /**
      * Tests the behavior of adding a new station to the gym.
-     * Verifies whether the newly added station is correctly reflected in {@Code GymSet}.
+     * Verifies whether the newly added station is correctly reflected in the gym class.
      * Expected Behaviour is to add stations and sets to the gym.
      */
     @Test
@@ -80,56 +80,6 @@ class GymTest {
             fail("Should not throw an exception");
         }
     }
-
-    /**
-     * Test to see if getStationByIndex handles invalid index correctly by throwing an OutOfBounds exception.
-     */
-    @Test
-    void getStationByIndex_invalidIndex_throwOutOfBoundsError(){
-        Gym newGym = new Gym();
-        Exception exception;
-        try {
-            newGym.addStation("ExerciseOne", "1", "10", "1.0");
-            newGym.addStation("ExerciseTwo", "2", "20", "1.0,2.0");
-            newGym.addStation("ExerciseThree", "3", "30", "1.0,2.0,3.0");
-
-            exception = assertThrows(CustomExceptions.OutOfBounds.class, () -> newGym.getStationByIndex(-1));
-            assertTrue(exception.getMessage().contains(ErrorConstant.INVALID_INDEX_SEARCH_ERROR));
-
-            exception = assertThrows(CustomExceptions.OutOfBounds.class, () -> newGym.getStationByIndex(3));
-            assertTrue(exception.getMessage().contains(ErrorConstant.INVALID_INDEX_SEARCH_ERROR));
-
-        } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
-            fail("Should not throw an exception");
-        }
-    }
-
-
-    // Test for toFileString method
-    @Test
-    void toFileString_correctInput_expectedCorrectString(){
-        String expected1 = "GYM:2:11-11-1997:bench press:4:4:10.0,20.0,30.0,40.0:squats:4:3:20.0,30.0,40.0,50.0";
-        String expected2WithNoDate = "GYM:2:NA:bench press:4:4:10.0,20.0,30.0,40.0:squats:4:3:20.0,30.0,40.0,50.0";
-
-        try {
-            Gym newGym = new Gym("11-11-1997");
-            Gym newGym2 = new Gym();
-
-            newGym.addStation("bench press", "4", "4", "10.0,20.0,30.0,40.0");
-            newGym.addStation("squats", "4", "3", "20.0,30.0,40.0,50.0");
-            newGym2.addStation("bench press", "4", "4", "10.0,20.0,30.0,40.0");
-            newGym2.addStation("squats", "4", "3", "20.0,30.0,40.0,50.0");
-
-            String output = newGym.toFileString();
-            String output2 = newGym2.toFileString();
-            assertEquals(expected1, output);
-            assertEquals(expected2WithNoDate, output2);
-        } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
-            fail("Should not throw an exception");
-        }
-    }
-
-
 
     /**
      * Tests the behaviour of incorrect inputs being passed to
@@ -190,5 +140,78 @@ class GymTest {
         exception = assertThrows(CustomExceptions.InvalidInput.class, () ->
                 gym.addStation("Bench Press", "1", "3", "10,20"));
         assertTrue(exception.getMessage().contains((ErrorConstant.INVALID_WEIGHTS_NUMBER_ERROR)));
+    }
+
+    /**
+     * Test to see if getStationByIndex handles invalid index correctly by throwing an OutOfBounds exception.
+     */
+    @Test
+    void getStationByIndex_invalidIndex_throwOutOfBoundsError(){
+        Gym newGym = new Gym();
+        Exception exception;
+        try {
+            newGym.addStation("ExerciseOne", "1", "10", "1.0");
+            newGym.addStation("ExerciseTwo", "2", "20", "1.0,2.0");
+            newGym.addStation("ExerciseThree", "3", "30", "1.0,2.0,3.0");
+
+            exception = assertThrows(CustomExceptions.OutOfBounds.class, () -> newGym.getStationByIndex(-1));
+            assertTrue(exception.getMessage().contains(ErrorConstant.INVALID_INDEX_SEARCH_ERROR));
+
+            exception = assertThrows(CustomExceptions.OutOfBounds.class, () -> newGym.getStationByIndex(3));
+            assertTrue(exception.getMessage().contains(ErrorConstant.INVALID_INDEX_SEARCH_ERROR));
+
+        } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
+            fail("Should not throw an exception");
+        }
+    }
+
+    /**
+     * Test to see if getStationByIndex returns the correct station when given a valid index.
+     */
+    @Test
+    void getStationByIndex_correctIndex_expectCorrectStation(){
+        Gym newGym = new Gym();
+        try {
+            newGym.addStation("ExerciseOne", "1", "10", "1.0");
+            newGym.addStation("ExerciseTwo", "2", "20", "1.0,2.0");
+            newGym.addStation("ExerciseThree", "3", "30", "1.0,2.0,3.0");
+
+            GymStation station1 = newGym.getStationByIndex(1);
+            assertEquals("ExerciseTwo", station1.getStationName());
+            assertEquals(2, station1.getSets().size());
+            assertEquals(1.0, station1.getSets().get(0).getWeight());
+            assertEquals(2.0, station1.getSets().get(1).getWeight());
+
+        } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput | CustomExceptions.OutOfBounds e) {
+            fail("Should not throw an exception");
+        }
+    }
+
+
+    /**
+     * Test to see if toFileString method in Gym works with correct input.
+     * Expects correct string to be returned.
+     */
+    @Test
+    void toFileString_correctInput_expectedCorrectString(){
+        String expected1 = "GYM:2:11-11-1997:bench press:4:4:10.0,20.0,30.0,40.0:squats:4:3:20.0,30.0,40.0,50.0";
+        String expected2WithNoDate = "GYM:2:NA:bench press:4:4:10.0,20.0,30.0,40.0:squats:4:3:20.0,30.0,40.0,50.0";
+
+        try {
+            Gym newGym = new Gym("11-11-1997");
+            Gym newGym2 = new Gym();
+
+            newGym.addStation("bench press", "4", "4", "10.0,20.0,30.0,40.0");
+            newGym.addStation("squats", "4", "3", "20.0,30.0,40.0,50.0");
+            newGym2.addStation("bench press", "4", "4", "10.0,20.0,30.0,40.0");
+            newGym2.addStation("squats", "4", "3", "20.0,30.0,40.0,50.0");
+
+            String output = newGym.toFileString();
+            String output2 = newGym2.toFileString();
+            assertEquals(expected1, output);
+            assertEquals(expected2WithNoDate, output2);
+        } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
+            fail("Should not throw an exception");
+        }
     }
 }
