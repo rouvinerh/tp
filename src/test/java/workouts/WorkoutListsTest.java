@@ -10,7 +10,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class WorkoutListsTest {
     @BeforeEach
@@ -186,7 +189,7 @@ class WorkoutListsTest {
      * @throws CustomExceptions.OutOfBounds If the index is invalid.
      */
     @Test
-    void deleteGym_ValidIndex_listOfSizeOne() throws CustomExceptions.OutOfBounds {
+    void deleteGym_validIndex_listOfSizeOne() throws CustomExceptions.OutOfBounds {
         Gym gym1 = new Gym();
         new ArrayList<>(List.of(1.0));
         new ArrayList<>(Arrays.asList(1.0,2.0));
@@ -226,7 +229,7 @@ class WorkoutListsTest {
      * Expected behaviour is for an OutOfBounds error to be thrown.
      */
     @Test
-    void deleteGym_InvalidIndex_throwOutOfBoundsForGym() {
+    void deleteGym_invalidIndex_throwOutOfBoundsForGym() {
         Gym gym1 = new Gym();
         try {
             gym1.addStation("Bench Press", "1", "50", "1.0");

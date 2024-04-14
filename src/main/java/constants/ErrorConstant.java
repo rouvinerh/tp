@@ -112,7 +112,7 @@ public class ErrorConstant {
             System.lineSeparator() +
             INVALID_GYM_STATION_FORMAT_ERROR;
 
-    public static final String INVALID_GYM_STATION_NAME_ERROR = "Gym station name can only have letters and cannot" +
+    public static final String INVALID_GYM_STATION_NAME_ERROR = "Gym station name can only have letters and cannot " +
             "be more than 25 characters!" +
             System.lineSeparator() +
             "Please input a shorter name." +
