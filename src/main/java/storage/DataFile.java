@@ -28,17 +28,14 @@ import utility.Filters.DataType;
 
 /**
  * Represents a DataFile object used to read and write data stored in PulsePilot to a file.
- * <p>
- * This class handles the reading and writing of various data related to PulsePilot, including user's name,
+ * Handles the reading and writing of various data related to PulsePilot, including user's name,
  * health data like BMI, appointments, periods, and workout data like runs and gym sessions.
- * It provides methods to load, save, and process different types of data as well as prevent tampering.
+ * It provides methods to load, save, and process different types of data as well as prevent tampering via hashing.
  */
 public class DataFile {
 
     public static String userName = null;
     private static DataFile instance = null;
-
-
 
     private final Output output;
     private final Validation validation;
@@ -54,10 +51,10 @@ public class DataFile {
     }
 
     /**
-     * Generates the SHA-256 hash value of the pulsepilot_data.txt file.
+     * Generates the SHA-256 hash value of the {@code pulsepilot_data.txt} file.
      *
      * @param file The file for which to generate the hash.
-     * @return A String representing the SHA-256 hash value of the pulsepilot_data.txt file.
+     * @return A String representing the SHA-256 hash value of the {@code pulsepilot_data.txt} file.
      * @throws NoSuchAlgorithmException If the SHA-256 algorithm is not available.
      * @throws IOException              If an I/O error occurs while reading the file.
      */
@@ -87,7 +84,7 @@ public class DataFile {
      * If the data file does not exist, creates a new file and logs the event.
      *
      * @param dataFile The data file to verify integrity.
-     * @return An integer representing whether the file was found (0) or not found (1).
+     * @return Returns 0 if the file is found. Else, returns 1.
      * @throws CustomExceptions.FileCreateError If there is an error creating the data file.
      */
     public int verifyIntegrity(File dataFile) throws CustomExceptions.FileCreateError {
@@ -104,13 +101,11 @@ public class DataFile {
         }
     }
 
-
-
     /**
      * Initializes the data file to be used. Or loads the existing data file, verifies its integrity, and processes
-     * its content. The function exits if the file cannot be created or loaded.
+     * its content. Exits if the file cannot be created or loaded.
      *
-     * @return An integer representing whether the file was found (0) or not found (1).
+     * @return Returns 0 if the file is found. Else, returns 1.
      */
     public int loadDataFile() {
         int status = UiConstant.FILE_NOT_FOUND;
@@ -186,7 +181,7 @@ public class DataFile {
     }
 
     /**
-     * Writes the hash value to a hash file.
+     * Writes the hash value to the hash file.
      *
      * @param hash     The hash value to write.
      * @throws IOException If an I/O error occurs.

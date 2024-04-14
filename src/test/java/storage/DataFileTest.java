@@ -144,14 +144,18 @@ public class DataFileTest {
         ));
 
 
-        ArrayList<Double> array1 = new ArrayList<>(Arrays.asList(10.0,20.0,30.0,40.0));
-        ArrayList<Double> array2 = new ArrayList<>(Arrays.asList(20.0,30.0,40.0,50.0));
         Gym newGym = new Gym("11-11-1997");
         Gym newGym2 = new Gym();
-        newGym.addStation("bench press", 4, 4, array1);
-        newGym.addStation("squats", 4, 3, array2);
-        newGym2.addStation("bench press", 4, 4, array1);
-        newGym2.addStation("squats", 4, 3, array2);
+
+        try {
+            newGym.addStation("bench press", "4", "4", "10.0,20.0,30.0,40.0");
+            newGym.addStation("squats", "4", "3", "20.0,30.0,40.0,50.0");
+            newGym2.addStation("bench press", "4", "4", "10.0,20.0,30.0,40.0");
+            newGym2.addStation("squats", "4", "3", "20.0,30.0,40.0,50.0");
+        } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
+            fail("Should not throw an exception");
+        }
+
 
         ArrayList<Workout> workoutArrayList = new ArrayList<>(List.of(
                 new Run("30:00", "5.00", "01-04-2023"),
@@ -309,8 +313,11 @@ public class DataFileTest {
 
         ));
         Gym gym1 = new Gym();
-        ArrayList<Double> array1 = new ArrayList<>(Arrays.asList(1.0));
-        gym1.addStation("Squat Press", 1, 50, array1);
+        try {
+            gym1.addStation("Squat Press", "1", "50", "1.0");
+        } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
+            fail("Should not throw an exception");
+        }
         ArrayList<Workout> workoutArrayList = new ArrayList<>(Arrays.asList(
                 new Run("40:10", "10.32", "15-03-2024"),
                 new Run("40:10", "10.32"),

@@ -62,7 +62,7 @@ The purpose of this guide is to provide an explanation for all the functions and
 
 ### Overview of Components
 
-This part of the guide provides a high-level overview of each package and its classes via a class or sequence diagrams. A brief description of each class is given as well.
+This part of the guide provides a high-level overview of each package and its classes via a class or sequence diagram. A brief description of each class is given as well.
 
 PulsePilot follows an **Object-Oriented Design** approach, with separate packages for handling different components of the application, such as user input, output, workout logging, and health data management.
 
@@ -70,7 +70,7 @@ The **_Architecture Diagram_** is given below:
 
 ![Architecture Diagram](img/architecture_diagram.png)
 
-The `seedu.pulsepilot` package contains the `Main` method, the entry point of the application. It is responsible for the initialising, processing of user input and termination of PulsePilot.
+The `seedu.pulsepilot` package contains the `Main` method, which is the entry point of the application. It is responsible for initialising and processing of user input, and the termination of PulsePilot.
 
 - `Ui`: The user interface of PulsePilot used for handling user input and printing messages. 
 - `Storage`: Contains the data storage components for PulsePilot.
@@ -88,13 +88,13 @@ The `seedu.pulsepilot` package contains the `Main` method, the entry point of th
 
 ### UI Package
 
-The `UI` package contains the `Handler` and `Output` classes, which are responsible for handling user input and printing of output fo the screen respectively.
+The `UI` package contains the `Handler` and `Output` classes, which are responsible for handling user input and printing of output to the screen respectively.
 
 #### Handler
 
-The main entry point of the application is the `Handler` class, used to determine the command used. The user's input is then passed to the right handler method to carry out the action.
+The main entry point of the application is the `Handler` class, used to determine the command used. The user's input is then passed to the corresponding handler method to carry out the action.
 
-The sequence diagram below shows how the application is initialised and processes the user's input using the `Handler` class:
+The sequence diagram below shows how the application is initialised and then processes the user's input using the `Handler` class:
 
 ![Handler Sequence Diagram](img/sequence_diagrams/handler_sequence_diagram.png)
 
@@ -133,9 +133,9 @@ The `Workout` package is responsible for tracking run and gym workouts from the 
 
 #### Workouts List
 
-`WorkoutList` is a class that contains the `ArrayList` objects of `Run`, `Gym` and `Workout`. The class diagram is as follows:
+`WorkoutLists` is a class that contains the `ArrayList` objects of `Run`, `Gym` and `Workout`. The class diagram is as follows:
 
-![WorkoutList Class Diagram](img/class_diagrams/workoutlist_class_diagram.png)
+![WorkoutLists Class Diagram](img/class_diagrams/workoutlist_class_diagram.png)
 
 The class contains methods to retrieve the different objects. Additionally, it contains the methods for **deleting** an object from PulsePilot, which is used for the `delete` command implementation.
 
@@ -195,7 +195,7 @@ The class diagram for gym is as follows:
 `Run` is a class that represents a run workout the user has recorded. It contains the following attributes:
 
 - `times`: An `Integer[]` variable representing the hours, minutes and seconds taken for a run.
-- `distance`: The distance run in **kilometers** represented as a `double`.
+- `distance`: The distance ran in **kilometers** represented as a `double`.
 - `date`: An **optional** `LocalDate` parameter representing the date of the workout. Implemented via an overloaded `Run()` constructor.
 - `pace`: The pace of the run in minutes/km represented as a `String`.
 - `isHourPresent`: A `boolean` variable to indicate if an hour has been indicated, since PulsePilot accepts both `HH:MM:SS` and `MM:SS` formats.
@@ -204,13 +204,11 @@ The class diagram for gym is as follows:
 
 ---
 
-<!-- @@author j013n3 -->
+<!-- @@author syj02 -->
 
 ### Health Package
 
 The `Health` package is responsible for tracking user's BMI, period cycle, and medical appointments.
-
----
 
 #### Health List
 
@@ -222,7 +220,7 @@ The class contains methods to retrieve the different objects. Additionally, it c
 
 - **Deleting** an object from PulsePilot, which is used for the `delete` command implementation.
 - Showing the **latest** object added to PulsePilot, which is used for the `latest` command implementation.
-- Showing the **history or list** of objects added to bot, which is used for the `history` command implementation.
+- Showing the **history or list** of objects added to PulsePilot, which is used for the `history` command implementation.
 
 The `clearHealthLists()` method is used to clear all the data stored within each `ArrayList`, which is mainly used for unit testing.
 
@@ -232,7 +230,7 @@ The `clearHealthLists()` method is used to clear all the data stored within each
 
 #### BMI
 
-`Bmi` is a class that represents the BMI (Body Mass Index) calculated using the height and weight specified. It contains the following attributes:
+`Bmi` is a class that represents the Body Mass Index (BMI) calculated using the height and weight specified. It contains the following attributes:
 
 - `height`: The height of the user in metres represented as a `double`.
 - `weight`: The weight of the user in kilograms represented as a `double`.
@@ -248,8 +246,8 @@ The `clearHealthLists()` method is used to clear all the data stored within each
 
 `Period` is a class that represents the menstrual cycle of the user. It contains the following attributes:
 
-- `startDate`: The date of the first day of the menstrual flow (aka period flow), also the first day of the menstrual cycle, represented using a `LocalDate`.
-- `endDate`: The date of the last day of the menstrual flow, represented using a `LocalDate`.
+- `startDate`: The date of the first day of menstrual flow (aka period flow), which is also the first day of menstrual cycle, represented using a `LocalDate`.
+- `endDate`: The date of the last day of menstrual flow, represented using a `LocalDate`.
 - `periodLength`: The number of days of menstrual flow (i.e. between the first and last day of flow, inclusive of the first day), represented as `long`.
 - `cycleLength`: The number of days in a menstrual cycle (i.e. between the first and last day of the cycle, inclusive of the first day), represented as a `long`. The cycle ends on the day before the first day of the next menstrual flow/cycle.
 
@@ -257,14 +255,12 @@ The `clearHealthLists()` method is used to clear all the data stored within each
 
 ---
 
-<!-- @@author syj02 -->
-
 #### Appointment
 
 `Appointment` is a class that represents the past and upcoming medical appointments of the user. It contains the following attributes:
 
 - `date`: The date of the medical appointment, represented using a `LocalDate`.
-- `time`: The time of the medical appointment, represented using a `LocalTime`.
+- `time`: The time of the medical appointment in 24-hour format, represented using a `LocalTime`.
 - `description`: The details of the appointment, which can include things like the healthcare professional to consult, the type of appointment such as consultation, checkup, rehabilitation, therapy etc. This parameter is represented as a `String`.
 
 ###### [Back to table of contents](#table-of-contents)
@@ -393,13 +389,17 @@ The user's input is processed to add a run as follows:
 
 3. `validation.validateRunInput()` is called to validate each parameter. If no exceptions caused by invalid parameters are thrown, the validated parameters are used to create the new `Run` object.
 
-4. The `Run` constructor adds the newly created object into `workoutList.WORKOUTS` and `workoutList.RUNS` via `addWorkout()` and `addRun()`. The running pace in minutes/km (i.e. `5:00/km`) is calculated and stored as well.
+4. The `Run` constructor checks whether the distance given and pace calculated is within the valid range. If not, it throws an exception.
 
-5. The new `Run` object is passed to `output.printAddRun()` and a message acknowledging the successful adding is printed to the screen.
+5. Afterwards, the `Workout` constructor is implicitly called since `Run` inherits from `Workout`. `workout.addIntoWorkoutList()` is called, which calls `workoutLists.addRun()` to add the `Run`.  
+
+5. The new `Run` object is then passed to `output.printAddRun()` and a message acknowledging the successful adding is printed to the screen.
+
+An overloaded `Run` and `Workout` constructor is used to allow for `date` to be optional. 
 
 This is the sequence diagram for adding a run:
 
-![Run Sequence Diagram](img/sequence_diagrams/run_sequence_diagram.png)
+[Run Sequence Diagram](img/sequence_diagrams/run_sequence_diagram.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -434,15 +434,17 @@ After adding a `Gym` object, the user is then prompted for input for the gym sta
 
 2. `output.printGymStationPrompt()` is used to print the prompt for the user, and user input is retrieved.
 
-3. User input is passed to `validation.splitAndValidateGymStationInput()`, which as the name suggests, splits and validates the parameters from the user, returning a `String[]` variable.
+3. User input is split using `Parser.splitGymStationInput()` which as the name suggests, splits the parameters from the user, returning a `String[]` variable.
 
-4. After splitting the input, the weights parameter is validated via `validation.validateWeightsArray()`, returning a `ArrayList<Double>` variable containing the valid weights.
+4. After splitting the input, the parameters are passed to  to `newGym.addStation()`. 
 
-5. After all parameters are validated, it is passed to `newGym.addStation()` to add a `GymStation` object to the existing `Gym` object. The `GymStation` object is appended to an `ArrayList<GymStation>` variable.
+5. `newGym.addStation()` will then create a `GymStation` object during which the input is checked within the `GymStation` object. 
 
-6. Steps 2 to 5 repeat until all stations have been added.
+6. If the values are valid, the `GymStation` object is appended to an `ArrayList<GymStation>` stored in the `newGym` object. 
 
-7. The final `Gym` object is passed to `output.printAddGym()` and a message acknowledging the successful adding is printed to the screen.
+7. Steps 2 to 6 repeats until all stations have been added.
+
+8. The final `Gym` object is passed to `output.printAddGym()` and a message acknowledging the successful adding is printed to the screen.
 
 This is the sequence diagram for adding a `GymStation` object:
 
@@ -458,19 +460,17 @@ This is the sequence diagram for adding a `GymStation` object:
 
 User input is passed to `handler.processInput()`, which determines the command used is `health`. The input is then passed to `handler.handleHealth()` as shown in the Handler architecture above. Either `Bmi`, `Period` or `Appointment` object is added, or a menstrual cycle prediction is made.
 
----
-
 #### Add BMI
 
 The user's input is processed to add a `Bmi` as follows:
 
-1. `handler.handleHealth()` determines the type of health to add is `Bmi`, and calls the `parser.parseBmiInput()` method to process the user's BMI input.
+1. `handler.handleHealth()` determines the type of health to add is `bmi`, and calls the `parser.parseBmiInput()` method to process the user's BMI input.
 
 2. `parser.parseBmiInput()` splits the input using `parser.splitBmiInput()` using the flags, returning a `String[]` variable.
 
 3. `validation.validateBmiInput()` is called to validate each parameter. If no exceptions caused by invalid parameters are thrown, the validated parameters are used to create the new `Bmi` object.
 
-4. The `Bmi` constructor adds the newly created object into `HealthList.BMIS` via `healthlist.addBMI()`. The BMI value and BMI category is determined from `Bmi.calculateBmiValue()` and `Bmi.getBmiCategory()` methods respectively and stored.
+4. The `Bmi` constructor adds the newly created object into `HealthList.BMIS` via `healthlist.addBMI()`. The BMI value and BMI category are determined from `Bmi.calculateBmiValue()` and `Bmi.getBmiCategory()` methods respectively and then stored.
 
 5. The `Bmi` object is passed to `Output.printAddBmi()` and a message acknowledging the successful adding is printed to the screen.
 
@@ -486,7 +486,7 @@ This is the sequence diagram for adding a BMI entry:
 
 The user's input is processed to add a `Period` as follows:
 
-1. `handler.handleHealth()` determines the type of health add is `Period`, and calls the `parser.parsePeriodInput()` method to process the user's period input.
+1. `handler.handleHealth()` determines the type of health add is `period`, and calls the `parser.parsePeriodInput()` method to process the user's period input.
 
 2. `parser.parsePeriodInput()` splits the input using `parser.splitPeriodInput()` using the flags, returning a `String[]` variable.
     - Method also extracts the optional end date parameter if present.
@@ -513,7 +513,7 @@ The user's input is processed to make a period prediction if there are **at leas
 
 2. If the size of `PeriodList` is larger or equals to 4, `printLatestThreeCycles()` is called to print the latest three cycles. Else, an exception is thrown.
 
-3. `period.predictNextPeriodStartDate()` calls `period.nextCyclePrediction()` which further calls `period.getLastThreeCycleLengths()` to calculate the `sumOfCycleLengths` of latest three cycles. `sumOfCycleLengths` divided by `3` to find the average cycle length.
+3. `period.predictNextPeriodStartDate()` calls `period.nextCyclePrediction()` which further calls `period.getLastThreeCycleLengths()` to calculate the `sumOfCycleLengths` of latest three cycles. The `sumOfCycleLengths` is divided by `3` to find the average cycle length.
 
 4. The static `Period.printNextCyclePrediction()` method prints the predicted start date to the screen.
 
@@ -523,13 +523,11 @@ The user's input is processed to make a period prediction if there are **at leas
 
 ---
 
-<!-- @@author syj02 -->
-
 #### Add Appointment
 
 The user's input is processed to add an Appointment  as follows:
 
-1. `handler.handleHealth()` determines the type of health which is appointment, and calls the `parser.parseAppointmentInput()` method to process the user's appointment input.
+1. `handler.handleHealth()` determines the type of health which is `appointment`, and calls the `parser.parseAppointmentInput()` method to process the user's appointment input.
 
 2. `parser.parseAppointmentInput()` splits the input using `parser.splitAppointmentDetails()` using the flags, returning a `String[]` variable.
 
@@ -615,8 +613,8 @@ Deleting an item follows this sequence:
     - `run`: `WorkoutList.deleteRun()`
     - `gym`: `WorkoutList.deleteGym()`
     - `bmi`: `HealthList.deleteBmi()`
-    - `period`: `healthList.deletePeriod()`
-    - `appointment`: `healthlist.deleteAppointment()`
+    - `period`: `HealthList.deletePeriod()`
+    - `appointment`: `Healthlist.deleteAppointment()`
 
 
 ![Delete Sequence](img/sequence_diagrams/delete_sequence.png)

@@ -1,5 +1,6 @@
 package health;
 
+import constants.UiConstant;
 import storage.LogFile;
 import utility.CustomExceptions;
 import constants.ErrorConstant;
@@ -10,9 +11,9 @@ import java.util.Comparator;
 import ui.Output;
 
 /**
- * The HealthList class extends the ArrayList class.
- * It contains the individual lists of Bmi objects, Appointment objects and Period objects, and the functionalities to
- * add the objects to their respective lists, get the lists, and display the latest object and lists of objects.
+ * The HealthList class inherits from {@code ArrayList<Health>}.
+ * It contains the individual lists of {@code Bmi}, {@code Appointment}, and {@code Period} objects.
+ * Methods to get, add and print {@code Health} objects are listed here.
  */
 public class HealthList extends ArrayList<Health> {
 
@@ -22,17 +23,17 @@ public class HealthList extends ArrayList<Health> {
     static LogFile logFile = LogFile.getInstance();
 
     /**
-     * The list of Bmi records.
+     * The list of {@code Bmi} objects stored within an {@code ArrayList}.
      */
     private static final ArrayList<Bmi> BMIS = new ArrayList<>();
 
     /**
-     * The list of Period records.
+     * The list of {@code Period} objects stored within an {@code ArrayList}.
      */
     private static final ArrayList<Period> PERIODS = new ArrayList<>();
 
     /**
-     * The list of Appointment records.
+     * The list of {@code Appointment} objects stored within an {@code ArrayList}.
      */
     private static final ArrayList<Appointment> APPOINTMENTS = new ArrayList<>();
 
@@ -43,10 +44,10 @@ public class HealthList extends ArrayList<Health> {
     //@@author j013n3
 
     /**
-     * Adds a Bmi object to the bmis list.
+     * Adds a {@code Bmi} object to {@code BMIS}.
      *
-     * @param bmi Bmi object.
-     * @throws AssertionError If Bmi object is null.
+     * @param bmi {@code Bmi} object.
+     * @throws AssertionError If {@code Bmi} object is null.
      */
     protected void addBmi(Bmi bmi) {
         assert bmi != null : ErrorConstant.NULL_BMI_ERROR;
@@ -58,10 +59,10 @@ public class HealthList extends ArrayList<Health> {
     //@@author syj02
 
     /**
-     * Adds a Period object to the periods list.
+     * Adds a {@code Period} object to {@code PERIODS}.
      *
-     * @param period Period object to be added.
-     * @throws AssertionError If period object is null.
+     * @param period {@code Period} object to be added.
+     * @throws AssertionError If {@code Period} object is null.
      */
     protected void addPeriod(Period period) {
         assert period != null : ErrorConstant.NULL_PERIOD_ERROR;
@@ -71,8 +72,8 @@ public class HealthList extends ArrayList<Health> {
         PERIODS.sort(Comparator.comparing(Period::getStartDate).reversed());
 
         int size = PERIODS.size();
-        if (size > 1) {
-            for (int i = size - 1 ; i > 0; i--) {
+        if (size > HealthConstant.MIN_SIZE_FOR_COMPARISON) {
+            for (int i = size - 1; i > HealthConstant.FIRST_ITEM; i--) {
                 Period newerPeriod = PERIODS.get(i -  1);
                 Period olderPeriod = PERIODS.get(i);
                 olderPeriod.setCycleLength(newerPeriod.getStartDate());
@@ -81,12 +82,12 @@ public class HealthList extends ArrayList<Health> {
     }
 
     /**
-     * Adds an Appointment to the list of Appointments whenever addAppointment is called.
-     * Sorts all Appointment objects in the list by date and time of the appointments with
+     * Adds an {@code Appointment} to {@code APPOINTMENTS}.
+     * Sorts all {@code Appointment} objects in {@code APPOINTMENTS} by date and time of the appointments with
      * the earliest appointment at the top.
      *
-     * @param appointment Appointment object.
-     * @throws AssertionError If Appointment object is null.
+     * @param appointment {@code Appointment} object.
+     * @throws AssertionError If {@code Appointment} object is null.
      */
     protected void addAppointment(Appointment appointment) {
         assert appointment != null : ErrorConstant.NULL_APPOINTMENT_ERROR;
@@ -97,49 +98,49 @@ public class HealthList extends ArrayList<Health> {
     //@@author j013n3
 
     /**
-     * Retrieves the list of bmis recorded of ArrayList type.
+     * Retrieves all {@code Bmi} objects within {@code BMIS}.
      *
-     * @return The bmis array list.
+     * @return The {@code BMIS} array list.
      */
     public static ArrayList<Bmi> getBmis() {
         return BMIS;
     }
 
     /**
-     * Retrieves the list of periods recorded of ArrayList type.
+     * Retrieves all {@code Period} objects within {@code PERIODS}.
      *
-     * @return The periods array list.
+     * @return The {@code PERIODS} array list.
      */
     public static ArrayList<Period> getPeriods() {
         return PERIODS;
     }
 
     /**
-     * Retrieves the list of appointments recorded of ArrayList type.
+     * Retrieves all {@code Appointment} objects within {@code APPOINTMENTS}.
      *
-     * @return The appointments array list.
+     * @return The {@code APPOINTMENTS} array list.
      */
     public static ArrayList<Appointment> getAppointments() {
         return APPOINTMENTS;
     }
 
     /**
-     * Retrieves the Period object at the specified index of Period type.
+     * Retrieves the {@code Period} object at a specified index.
      *
-     * @param index The index of the Period object.
-     * @return The Period object at the specified index, or null if the index is out of bounds.
+     * @param index The index of the {@code Period} object.
+     * @return The {@code Period} object at the specified index, or null if the index is out of bounds.
      */
     public static Period getPeriod(int index) {
-        if (index < 0 || index >= PERIODS.size()) {
+        if (index < HealthConstant.FIRST_ITEM || index >= PERIODS.size()) {
             return null;
         }
         return PERIODS.get(index);
     }
 
     /**
-     * Retrieves the number of periods recorded of int type.
+     * Retrieves the number of {@code Period} objects recorded.
      *
-     * @return The number of periods recorded.
+     * @return The number of {@code Period} objects recorded.
      */
     public static int getPeriodSize() {
         return PERIODS.size();
@@ -148,18 +149,18 @@ public class HealthList extends ArrayList<Health> {
     //@@author l5_z
 
     /**
-     * Retrieves size of bmis list of int type.
+     * Retrieves size of {@code BMIS} list.
      *
-     * @return Size of bmis list.
+     * @return Size of {@code BMIS} list.
      */
     public static int getBmisSize() {
         return BMIS.size();
     }
 
     /**
-     * Retrieves size of periods list of int type.
+     * Retrieves size of {@code PERIODS} list.
      *
-     * @return Size of periods list.
+     * @return Size of {@code PERIODS} list.
      */
     public static int getPeriodsSize() {
         return PERIODS.size();
@@ -168,13 +169,13 @@ public class HealthList extends ArrayList<Health> {
     //@@l5_z
 
     /**
-     * Deletes Bmi object based on index.
+     * Deletes {@code Bmi} object based on a specified index and prints delete message if successful.
      *
-     * @param index Index of the Bmi object to be deleted.
-     * @throws CustomExceptions.OutOfBounds If the index of the Bmi object given does not exist.
+     * @param index Index of the {@code Bmi} object to be deleted.
+     * @throws CustomExceptions.OutOfBounds If the index of the {@code Bmi} object given does not exist.
      */
     public static void deleteBmi(int index) throws CustomExceptions.OutOfBounds {
-        if (index < 0) {
+        if (index < HealthConstant.FIRST_ITEM) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.BMI_EMPTY_ERROR);
         } else if (index >= BMIS.size()) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.INVALID_INDEX_DELETE_ERROR);
@@ -182,7 +183,7 @@ public class HealthList extends ArrayList<Health> {
         assert !BMIS.isEmpty() : ErrorConstant.EMPTY_BMI_LIST_ERROR;
         Bmi deletedBmi = BMIS.get(index);
         Output.printLine();
-        System.out.printf((HealthConstant.LOG_DELETE_BMI_FORMAT) + "%n",
+        System.out.printf((HealthConstant.LOG_DELETE_BMI_FORMAT) + System.lineSeparator(),
                 deletedBmi.bmiValue,
                 deletedBmi.date);
         Output.printLine();
@@ -191,23 +192,25 @@ public class HealthList extends ArrayList<Health> {
     }
 
     /**
-     * Deletes Period object based on index.
+     * Deletes {@code Period} object based on a specified index and prints delete message if successful.
      *
-     * @param index Index of the Period object to be deleted.
-     * @throws CustomExceptions.OutOfBounds If the index of the Period object given does not exist.
+     * @param index Index of the {@code Period} object to be deleted.
+     * @throws CustomExceptions.OutOfBounds If the index of the {@code Period} object given does not exist.
      */
     public static void deletePeriod(int index) throws CustomExceptions.OutOfBounds {
-        if (index < 0) {
+        if (index < HealthConstant.FIRST_ITEM) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.PERIOD_EMPTY_ERROR);
         } else if(index >= PERIODS.size()) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.INVALID_INDEX_DELETE_ERROR);
         }
         assert !PERIODS.isEmpty() : ErrorConstant.EMPTY_PERIOD_LIST_ERROR;
         Period deletedPeriod = PERIODS.get(index);
+        String endDateUnit = (deletedPeriod.getEndDate() == null) ?
+                ErrorConstant.NO_DATE_SPECIFIED_ERROR : deletedPeriod.getEndDate().toString();
         Output.printLine();
-        System.out.printf((HealthConstant.LOG_DELETE_PERIOD_FORMAT) + "%n",
+        System.out.printf((HealthConstant.LOG_DELETE_PERIOD_FORMAT) + System.lineSeparator(),
                 deletedPeriod.getStartDate(),
-                deletedPeriod.getEndDate());
+                endDateUnit);
         PERIODS.remove(index);
         Output.printLine();
         LogFile.writeLog(HealthConstant.PERIOD_REMOVED_MESSAGE_PREFIX + index, false);
@@ -216,13 +219,13 @@ public class HealthList extends ArrayList<Health> {
     //@@author syj02
 
     /**
-     * Deletes Appointment object based on index.
+     * Deletes {@code Appointment} object based on a specified index and prints delete message if successful.
      *
-     * @param index Index of the Appointment object to be deleted.
-     * @throws CustomExceptions.OutOfBounds If the index of the Appointment object given does not exist.
+     * @param index Index of the {@code Appointment} object to be deleted.
+     * @throws CustomExceptions.OutOfBounds If the index of the {@code Appointment} object given does not exist.
      */
     public static void deleteAppointment(int index) throws CustomExceptions.OutOfBounds {
-        if (index < 0) {
+        if (index < HealthConstant.FIRST_ITEM) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.APPOINTMENT_EMPTY_ERROR);
         } else if (index >= APPOINTMENTS.size()) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.INVALID_INDEX_DELETE_ERROR);
@@ -230,7 +233,7 @@ public class HealthList extends ArrayList<Health> {
         assert !APPOINTMENTS.isEmpty() : ErrorConstant.EMPTY_APPOINTMENT_LIST_ERROR;
         Appointment deletedAppointment = APPOINTMENTS.get(index);
         Output.printLine();
-        System.out.printf((HealthConstant.LOG_DELETE_APPOINTMENT_FORMAT) + "%n",
+        System.out.printf((HealthConstant.LOG_DELETE_APPOINTMENT_FORMAT) + System.lineSeparator(),
                 deletedAppointment.date,
                 deletedAppointment.time,
                 deletedAppointment.description);
@@ -243,35 +246,35 @@ public class HealthList extends ArrayList<Health> {
     }
 
     /**
-     * Prints the latest Bmi object added.
+     * Prints the latest {@code Bmi} object added.
      *
-     * @throws AssertionError If bmis list is empty.
+     * @throws AssertionError If {@code BMIS} is empty.
      */
     public static void printLatestBmi() throws CustomExceptions.OutOfBounds {
         if (BMIS.isEmpty()) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.BMI_EMPTY_ERROR);
         }
         assert !BMIS.isEmpty() : ErrorConstant.EMPTY_BMI_LIST_ERROR;
-        System.out.println(BMIS.get(0));
+        System.out.println(BMIS.get(HealthConstant.FIRST_ITEM));
     }
 
     /**
-     * Prints the latest Period object added.
+     * Prints the latest {@code Period} object added.
      *
-     * @throws AssertionError If periods list is empty.
+     * @throws AssertionError If {@code PERIODS} is empty.
      */
     public static void printLatestPeriod() throws CustomExceptions.OutOfBounds {
         if (PERIODS.isEmpty()) {
             throw new CustomExceptions.OutOfBounds(ErrorConstant.PERIOD_EMPTY_ERROR);
         }
         assert !PERIODS.isEmpty() : ErrorConstant.EMPTY_PERIOD_LIST_ERROR;
-        System.out.println(PERIODS.get(0));
+        System.out.println(PERIODS.get(HealthConstant.FIRST_ITEM));
     }
 
     /**
-     * Prints the latest Appointment object added.
+     * Prints the latest {@code Appointment} object added.
      *
-     * @throws AssertionError If appointments list is empty.
+     * @throws AssertionError If {@code APPOINTMENTS} is empty.
      */
     public static void printLatestAppointment() throws CustomExceptions.OutOfBounds {
         if (APPOINTMENTS.isEmpty()) {
@@ -283,9 +286,9 @@ public class HealthList extends ArrayList<Health> {
     }
 
     /**
-     * Prints all the Bmi entries recorded.
+     * Prints all the {@code Bmi} objects recorded.
      *
-     * @throws AssertionError If bmis list is empty.
+     * @throws AssertionError If {@code BMIS} list is empty.
      */
     public static void printBmiHistory() throws CustomExceptions.OutOfBounds {
         if (BMIS.isEmpty()) {
@@ -295,7 +298,7 @@ public class HealthList extends ArrayList<Health> {
         int index = 1;
         System.out.println(HealthConstant.BMI_HISTORY_HEADER);
         for (Bmi bmi : BMIS) {
-            System.out.print(index + ". ");
+            System.out.print(index + UiConstant.FULL_STOP + UiConstant.SPLIT_BY_WHITESPACE);
             System.out.println(bmi);
             index += 1;
         }
@@ -305,9 +308,9 @@ public class HealthList extends ArrayList<Health> {
     //@@author j013n3
 
     /**
-     * Prints all Period entries tracked.
+     * Prints all the {@code Period} objects recorded.
      *
-     * @throws AssertionError If periods list is empty.
+     * @throws AssertionError If {@code PERIODS} list is empty.
      */
     public static void printPeriodHistory() throws CustomExceptions.OutOfBounds {
         if (PERIODS.isEmpty()) {
@@ -317,7 +320,7 @@ public class HealthList extends ArrayList<Health> {
         int index = 1;
         System.out.println(HealthConstant.PERIOD_HISTORY_HEADER);
         for (Period period : PERIODS) {
-            System.out.print(index + ". ");
+            System.out.print(index + UiConstant.FULL_STOP + UiConstant.SPLIT_BY_WHITESPACE);
             System.out.println(period);
             index += 1;
         }
@@ -326,9 +329,9 @@ public class HealthList extends ArrayList<Health> {
     //@@author syj02
 
     /**
-     * Prints all Appointment entries tracked.
+     * Prints all the {@code Appointment} objects recorded.
      *
-     * @throws AssertionError If appointments list is empty.
+     * @throws AssertionError If {@code APPOINTMENTS} list is empty.
      */
     public static void printAppointmentHistory() throws CustomExceptions.OutOfBounds {
         if (APPOINTMENTS.isEmpty()) {
@@ -338,7 +341,7 @@ public class HealthList extends ArrayList<Health> {
         int index = 1;
         System.out.println(HealthConstant.APPOINTMENT_HISTORY_HEADER);
         for (Appointment appointment : APPOINTMENTS) {
-            System.out.print(index + ". ");
+            System.out.print(index + UiConstant.FULL_STOP + UiConstant.SPLIT_BY_WHITESPACE);
             System.out.println(appointment);
             index += 1;
         }
@@ -347,9 +350,9 @@ public class HealthList extends ArrayList<Health> {
     //@@l5_z
 
     /**
-     * Clears the periods, bmis, and appointments lists.
+     * Clears {@code PERIODS}, {@code BMIS} and {@code APPOINTMENTS} lists.
      *
-     * @throws AssertionError If periods, bmis, and appointments lists are not empty.
+     * @throws AssertionError If {@code PERIODS}, {@code BMIS} and {@code APPOINTMENTS} lists are not empty.
      */
     public static void clearHealthLists() {
         PERIODS.clear();
@@ -363,13 +366,13 @@ public class HealthList extends ArrayList<Health> {
     //@@author j013n3
 
     /**
-     * Prints the last three Period objects added to the periods list.
+     * Prints the last three {@code Period} objects added to {@code PERIODS}.
      */
     public static void printLatestThreeCycles() {
         Output.printLine();
-        int startIndex = 0;
+        int startIndex = HealthConstant.FIRST_ITEM;
         int endIndex = HealthConstant.LATEST_THREE_CYCLE_LENGTHS;
-        assert startIndex >= 0 : ErrorConstant.START_INDEX_NEGATIVE_ERROR;
+        assert startIndex >= HealthConstant.FIRST_ITEM : ErrorConstant.START_INDEX_NEGATIVE_ERROR;
 
         for (int i = startIndex; i < endIndex; i++) {
             System.out.println(PERIODS.get(i));
@@ -381,8 +384,8 @@ public class HealthList extends ArrayList<Health> {
      * Predicts the start date of the next period based on the average cycle length of the last three cycles.
      *
      * @return The predicted start date of the next period.
-     * @throws AssertionError If periods lists is empty.
-     * @throws CustomExceptions.OutOfBounds If period list is empty.
+     * @throws AssertionError If {@code PERIODS} is empty.
+     * @throws CustomExceptions.OutOfBounds If {@code PERIODS} is empty.
      */
     public static LocalDate predictNextPeriodStartDate() throws CustomExceptions.OutOfBounds {
         if (PERIODS.isEmpty()) {
@@ -390,7 +393,7 @@ public class HealthList extends ArrayList<Health> {
         }
         assert !PERIODS.isEmpty() : ErrorConstant.EMPTY_PERIOD_LIST_ERROR;
 
-        Period latestPeriod = PERIODS.get(0);
+        Period latestPeriod = PERIODS.get(HealthConstant.FIRST_ITEM);
         return latestPeriod.nextCyclePrediction();
     }
 }

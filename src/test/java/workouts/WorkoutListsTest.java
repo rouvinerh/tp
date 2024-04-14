@@ -158,14 +158,17 @@ class WorkoutListsTest {
         Gym gym1 = new Gym();
         ArrayList<Double> array1 = new ArrayList<>(Arrays.asList(1.0));
         ArrayList<Double> array2 = new ArrayList<>(Arrays.asList(1.0,2.0));
+        try {
+            gym1.addStation("Bench Press", "1", "50", "1.0");
+            gym1.addStation("Shoulder Press", "2", "10", "1.0,2.0");
 
-        gym1.addStation("Bench Press", 1, 50, array1);
-        gym1.addStation("Shoulder Press", 2, 10, array2);
-
-        Gym gym2 = new Gym();
-        gym2.addStation("Squat Press", 1, 50, array1);
-        gym2.addStation("Lat Press", 2, 10, array2);
-        gym2.addStation("Bicep curls", 1, 10, array1);
+            Gym gym2 = new Gym();
+            gym2.addStation("Squat Press", "1", "50", "1.0");
+            gym2.addStation("Lat Press", "2", "10", "1.0,2.0");
+            gym2.addStation("Bicep curls", "1", "10", "1.0");
+        } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
+            fail("Should not throw an exception");
+        }
 
         int index = 1;
         WorkoutLists.deleteGym(index);
@@ -189,14 +192,18 @@ class WorkoutListsTest {
      * @throws CustomExceptions.InvalidInput If there are invalid Run input parameters.
      */
     @Test
-    void deleteGym_properListInvalidIndex_throwOutOfBoundsForRun() throws CustomExceptions.InvalidInput {
+    void deleteGym_properListInvalidIndex_throwOutOfBoundsForGym() throws CustomExceptions.InvalidInput {
         Gym gym1 = new Gym();
-        ArrayList<Double> array1 = new ArrayList<>(Arrays.asList(1.0));
-        ArrayList<Double> array2 = new ArrayList<>(Arrays.asList(1.0,2.0));
-        gym1.addStation("Bench Press", 1, 50, array1);
-        gym1.addStation("Shoulder Press", 2, 10, array2);
+        try {
+            gym1.addStation("Bench Press", "1", "50", "1.0");
+            gym1.addStation("Shoulder Press", "2", "10", "2.0,3.0");
+
+        } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
+            fail("Should not throw an exception");
+        }
         int invalidIndex = 5;
         assertThrows (CustomExceptions.OutOfBounds.class, () ->
                 WorkoutLists.deleteGym(invalidIndex));
+
     }
 }

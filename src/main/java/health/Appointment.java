@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 /**
- * The Appointment class extends the Health class.
+ * The {@code Appointment} class inherits from the {@code Health} class.
  * It contains information about the date, time, and description of the appointment.
  */
 public class Appointment extends Health {
@@ -28,13 +28,20 @@ public class Appointment extends Health {
      */
     protected String description;
 
+    /**
+     * A parser object to access Parser Class.
+     */
     private final Parser parser = new Parser();
+
+    /**
+     * A healthlist object to access HealthList Class which manages and stores health data.
+     */
     private final HealthList healthList = new HealthList();
 
     //@@author syj02
 
     /**
-     * Constructor for Appointment object.
+     * Constructor for {@code Appointment} object.
      *
      * @param stringDate A string representing the date of the appointment.
      * @param stringTime A string representing the time of the appointment.
@@ -48,7 +55,7 @@ public class Appointment extends Health {
     }
 
     /**
-     * Retrieves the date of the appointment of LocalDate type.
+     * Retrieves the date of the appointment of {@code LocalDate} type.
      *
      * @return The date of appointment.
      */
@@ -58,7 +65,7 @@ public class Appointment extends Health {
     }
 
     /**
-     * Retrieves the time of the appointment of LocalTime type.
+     * Retrieves the time of the appointment of {@code LocalTime} type.
      *
      * @return The time of appointment.
      */
@@ -68,7 +75,7 @@ public class Appointment extends Health {
     }
 
     /**
-     * Retrieves the description of the appointment of String type.
+     * Retrieves the description of the appointment of {@code String} type.
      *
      * @return The description of appointment.
      */
@@ -77,9 +84,9 @@ public class Appointment extends Health {
     }
 
     /**
-     * Returns the string representation of an Appointment object.
+     * Returns the string representation of an {@code Appointment} object.
      *
-     * @return A formatted string representing an Appointment object.
+     * @return A formatted string representing an {@code Appointment} object.
      */
     @Override
     public String toString() {

@@ -1,7 +1,11 @@
 package workouts;
 
+import constants.ErrorConstant;
 import constants.UiConstant;
 import constants.WorkoutConstant;
+import utility.CustomExceptions;
+import utility.Validation;
+
 import java.util.ArrayList;
 
 /**
@@ -9,23 +13,41 @@ import java.util.ArrayList;
  */
 public class GymStation {
     //@@author JustinSoh
-    protected String stationName;
-    protected ArrayList<GymSet> sets = new ArrayList<>();
-    protected int numberOfSets;
+    private final String stationName;
+    private final ArrayList<GymSet> sets = new ArrayList<>();
+    private final int numberOfSets;
 
     /**
      * Constructs a new GymStation object that contains the name, weight, number of repetitions and number of sets done
      * in one station.
      *
-     * @param name                String name of the station
-     * @param numberOfSets        Number of sets done.
-     * @param numberOfRepetitions Number of reps done.
-     * @param weightsList         Weight used.
+     * @param exerciseName        The name of the gym station.
+     *                            The name should not be empty and should not exceed the maximum length.
+     *                            The name should also follow the pattern (UiConstant.VALID_GYM_STATION_NAME_REGEX)
+     * @param numberOfSetsStr     The number of sets done.
+     *                            The number of sets should be a positive integer.
+     *                            The number of sets should not be empty.
+     *                            The number of sets should match the number of weights provided in the weights string
+     * @param numberOfRepetitions The number of repetitions done for each set.
+     * @param weightsString       The weights done for each set.
+     *                            The weights should be in the format "weight1,weight2,weight3..."
+     * @throws CustomExceptions.InvalidInput if an invalid input is passed in
+     * @throws CustomExceptions.InsufficientInput if input is empty
      */
-    protected GymStation(String name, int numberOfSets, int numberOfRepetitions, ArrayList<Double> weightsList) {
-        this.stationName = name;
-        this.numberOfSets = numberOfSets;
-        processSets(weightsList, numberOfRepetitions);
+    protected GymStation(String exerciseName, String numberOfSetsStr, String numberOfRepetitions, String weightsString)
+            throws CustomExceptions.InsufficientInput, CustomExceptions.InvalidInput {
+        
+        // Check input validity
+        this.stationName  = validateGymStationName(exerciseName);
+        this.numberOfSets = validateNumberOfSets(numberOfSetsStr);
+        int validNumberOfReps = validateNumberOfRepetitions(numberOfRepetitions);
+        ArrayList<Double> validWeights = processWeightsArray(weightsString);
+
+        // Verify if the number of weights matches the number of sets
+        checkIfNumberOfWeightsMatchesSets(validWeights, this.numberOfSets);
+
+        // Process the sets and weights and add them into the gym set object
+        processSets(validWeights, validNumberOfReps);
     }
 
     /**
@@ -125,13 +147,15 @@ public class GymStation {
         return weightString.toString();
     }
 
+
+    // Protected Functions
     /**
      * Retrieves the string representation of a GymStation object for writing into a file.
      * Formats the string in the following format
      * "[Exercise Name]:[Number of Sets]:[Repetitions]:[Weights1, Weight2,Weight3 ...]"
      * @return A formatted string representing a GymStation object with the format above.
      */
-    public String toFileString(){
+    protected String toFileString(){
         StringBuilder fileString = new StringBuilder();
         String stationName = getStationName();
         String numOfSets = String.valueOf(getNumberOfSets());
@@ -145,6 +169,145 @@ public class GymStation {
         fileString.append(UiConstant.SPLIT_BY_COLON);
         fileString.append(gymWeightString);
         return fileString.toString();
+    }
+
+    /**
+     * Validates the weight string such that it only has numbers.
+     *
+     * @param weightsString The string representing the weights in the format "weight1,weight2,weight3..."
+     * @return ArrayList of integers representing the weights in the format [weight1, weight2, weight3 ...]
+     * @throws CustomExceptions.InvalidInput If an invalid weights string is passed in.
+     */
+    protected ArrayList<Double> processWeightsArray(String weightsString)
+            throws CustomExceptions.InvalidInput {
+        validateWeightString(weightsString);
+        String[] weightsArray = weightsString.split(UiConstant.SPLIT_BY_COMMAS);
+        ArrayList<Double> validatedWeightsArray = new ArrayList<>();
+
+        for (String weight: weightsArray){
+            boolean isValidWeight = validateWeight(weight);
+            if (isValidWeight){
+                validatedWeightsArray.add(Double.parseDouble(weight));
+            }
+        }
+        return validatedWeightsArray;
+    }
+
+    /**
+     * Validates the gym station name ensuring that
+     * - it is not empty
+     * - follows the correct pattern (UiConstant.VALID_GYM_STATION_NAME_REGEX)
+     * - does not exceed the maximum length. (WorkoutConstant.MAX_GYM_STATION_NAME_LENGTH)
+     *
+     * @param exerciseName The string representing the gym station name
+     * @return String representing the gym station name
+     * @throws CustomExceptions.InvalidInput if an invalid gym station name is passed in
+     * @throws CustomExceptions.InsufficientInput if an empty gym station name is passed in
+     */
+    protected String validateGymStationName(String exerciseName) throws CustomExceptions.InvalidInput,
+            CustomExceptions.InsufficientInput {
+
+        validateExerciseNameNotEmpty(exerciseName);
+        validateExerciseNamePattern(exerciseName);
+        validateExerciseNameLength(exerciseName);
+        return exerciseName;
+    }
+
+    /**
+     * Validates the number of sets ensuring that it is a positive integer.
+     *
+     * @param numberOfSets The string representing the number of sets
+     * @return int representing the number of sets
+     * @throws CustomExceptions.InvalidInput if an invalid number of sets is passed in
+     */
+    protected int validateNumberOfSets(String numberOfSets) throws CustomExceptions.InvalidInput {
+        boolean isSetsValid = Validation.validateIntegerIsPositive(numberOfSets);
+        if (!isSetsValid) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_SETS_POSITIVE_DIGIT_ERROR);
+        }
+
+        return Integer.parseInt(numberOfSets);
+    }
+
+    /**
+     * Validates the number of repetitions ensuring that it is a positive integer.
+     *
+     * @param numberOfRepetitions The string representing the number of repetitions
+     * @return int representing the number of repetitions
+     * @throws CustomExceptions.InvalidInput if an invalid number of repetitions is passed in
+     */
+    private int validateNumberOfRepetitions(String numberOfRepetitions) throws CustomExceptions.InvalidInput {
+        boolean isRepsValid = Validation.validateIntegerIsPositive(numberOfRepetitions);
+        if (!isRepsValid) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_REPS_POSITIVE_DIGIT_ERROR);
+        }
+        return Integer.parseInt(numberOfRepetitions);
+    }
+
+    /**
+     * Validates the weight string ensuring that
+     * - The weight does not exceed the maximum weight (@code WorkoutConstant.MAX_GYM_WEIGHT)
+     * - The weight is a multiple of 0.125 (as that is the increment of weights in a gym)
+     *
+     * @param weight The string representing the weight
+     * @return boolean true if the weight is valid
+     * @throws CustomExceptions.InvalidInput if an invalid weight is passed in
+     */
+    private boolean validateWeight(String weight) throws CustomExceptions.InvalidInput {
+        double weightDouble = Double.parseDouble(weight);
+        validateWeightDoesNotExceedMax(weightDouble);
+        validateWeightIsMultiple(weightDouble);
+        return true;
+    }
+
+
+    // Private Methods
+    private void validateExerciseNameNotEmpty(String exerciseName) throws CustomExceptions.InsufficientInput {
+        if (exerciseName.isEmpty()) {
+            throw new CustomExceptions.InsufficientInput(ErrorConstant.INVALID_GYM_STATION_EMPTY_NAME_ERROR);
+        }
+    }
+
+    private void validateExerciseNamePattern(String exerciseName) throws CustomExceptions.InvalidInput {
+        if (!exerciseName.matches(UiConstant.VALID_GYM_STATION_NAME_REGEX)) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_GYM_STATION_NAME_ERROR);
+        }
+    }
+
+    private void validateExerciseNameLength(String exerciseName) throws CustomExceptions.InvalidInput {
+        if (exerciseName.length() > WorkoutConstant.MAX_GYM_STATION_NAME_LENGTH) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_GYM_STATION_NAME_ERROR);
+        }
+    }
+
+
+    private void validateWeightDoesNotExceedMax(double weight) throws CustomExceptions.InvalidInput {
+        if (weight > WorkoutConstant.MAX_GYM_WEIGHT) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_WEIGHT_MAX_ERROR);
+        }
+    }
+
+    private void validateWeightIsMultiple(double weight) throws CustomExceptions.InvalidInput {
+        if (weight % WorkoutConstant.WEIGHT_MULTIPLE != 0 ){
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_WEIGHTS_VALUE_ERROR);
+        }
+    }
+
+    private void checkIfNumberOfWeightsMatchesSets(ArrayList<Double> weights, int numberOfSets)
+            throws CustomExceptions.InvalidInput {
+        if (weights.size() != numberOfSets){
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_WEIGHTS_NUMBER_ERROR);
+        }
+    }
+
+    private void validateWeightString(String weightsString) throws CustomExceptions.InvalidInput {
+        if (weightsString.isBlank()) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_WEIGHTS_EMPTY_ERROR);
+        }
+
+        if (!weightsString.matches(UiConstant.VALID_WEIGHTS_ARRAY_REGEX)) {
+            throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_WEIGHTS_ARRAY_FORMAT_ERROR);
+        }
     }
 
 

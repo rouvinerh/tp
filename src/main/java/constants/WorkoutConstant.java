@@ -16,13 +16,8 @@ public class WorkoutConstant {
     public static final String SETS_FLAG = "/s:";
     public static final String REPS_FLAG = "/r:";
     public static final String WEIGHTS_FLAG = "/w:";
-
     public static final String COLON = ":";
     // Integers
-    public static final int RUN_TIME_FIRST_PART = 0;
-    public static final int RUN_TIME_SECOND_PART = 1;
-    public static final int RUN_TIME_THIRD_PART = 2;
-
     public static final int NUMBER_OF_RUN_PARAMETERS = 3;
     public static final int NUMBER_OF_GYM_PARAMETERS = 2;
     public static final int NUMBER_OF_GYM_STATION_PARAMETERS = 4;
@@ -34,11 +29,15 @@ public class WorkoutConstant {
     public static final double MIN_RUN_DISTANCE = 0;
     public static final double MAX_PACE = 30;
     public static final double MIN_PACE = 1;
-    public static final double MIN_RUN_TIME_IN_SECONDS = 0;
-    public static final double MAX_RUN_TIME_IN_SECONDS = 360000; // 100 hours in seconds
     public static final double MAX_GYM_WEIGHT = 2850.000;
     public static final double WEIGHT_MULTIPLE = 0.125;
     public static final int MAX_GYM_STATION_NUMBER = 50;
+    public static final int RUN_TIME_HOUR_INDEX = 0;
+    public static final int RUN_TIME_MINUTE_INDEX = 1;
+    public static final int RUN_TIME_SECOND_INDEX = 2;
+    public static final int RUN_TIME_NO_HOURS_MINUTE_INDEX = 0;
+    public static final int RUN_TIME_NO_HOURS_SECOND_INDEX = 1;
+
 
     // INDEX
     public static final Integer STATION_NAME_INDEX = 0;
@@ -109,9 +108,7 @@ public class WorkoutConstant {
             + COLON + TWO_DIGIT_PLACE_FORMAT;
 
     public static final String RUN_PACE_FORMAT = "%d:%02d/km";
-    public static final String INVALID_RUN_TIME = "Invalid run time!";
     public static final String INVALID_GYM_INPUT = "Invalid gym parameters!";
-    public static final String INVALID_GYM_STATION_INDEX = "Invalid gym station index!";
 
     public static final int NUM_OF_SLASHES_FOR_GYM_WITH_DATE = 3;
     public static final int NUM_OF_SLASHES_FOR_GYM_WITHOUT_DATE = 2;

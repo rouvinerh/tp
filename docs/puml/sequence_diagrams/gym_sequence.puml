@@ -4,7 +4,8 @@ skinparam sequenceReferenceBackgroundColor lightblue
 participant "handler:Handler" as Handler
 participant "parser:Parser" as Parser
 participant "validation:Validation" as Validation
-participant "newGym:Gym" as Run
+participant "newGym:Gym" as Gym
+participant "workout:Workout" as Workout
 participant "workoutList:WorkoutList" as WorkoutList
 
 Handler -> Parser: parseGymInput()
@@ -21,39 +22,42 @@ activate Validation #FFBBBB
 Validation --> Parser: 
 deactivate Validation
 
-Parser -> Run **: new
-activate Run #FFBBBB   
-Run -> WorkoutList **: new
-activate WorkoutList #FFBBBB
-WorkoutList --> Run:
-deactivate WorkoutList #FFBBBB
+Parser -> Gym **: new
 
-alt date is present
-    Run -> WorkoutList: addGym(date)
+
+    activate Gym #FFBBBB   
+    Gym -> Workout **: new()
+    activate Workout #FFBBBB
+    Workout --> Gym: 
+    deactivate Workout #FFBBBB
+
+    Gym -> Workout: addIntoWorkoutList()
+    activate Workout #FFBBBB
+    Workout -> WorkoutList **: new
     activate WorkoutList #FFBBBB
-    WorkoutList -> WorkoutList: addWorkout(date)
-    activate WorkoutList #DarkSalmon
-    WorkoutList --> WorkoutList:
-    deactivate WorkoutList #DarkSalmon
-    WorkoutList --> Run:
+    WorkoutList --> Workout:
     deactivate WorkoutList #FFBBBB
- 
-else date is not present
-    Run -> WorkoutList: addGym()
+
+    Workout -> WorkoutList: addGym()
     activate WorkoutList #FFBBBB
-    WorkoutList -> WorkoutList: addWorkout()
-    activate WorkoutList #DarkSalmon
-    WorkoutList --> WorkoutList:
-    deactivate WorkoutList #DarkSalmon
-    WorkoutList --> Run:
+    WorkoutList --> Workout:
     deactivate WorkoutList #FFBBBB
     destroy WorkoutList
-end
+    
+    Workout --> Gym :
+    deactivate Workout #FFBBBB
+    destroy Workout
+
+Gym --> Parser:
+deactivate Gym #FFBBBB
 
 Parser -> Parser: parseGymStationInput()
 activate Parser #FFBBBB
 ref over Parser: parseGymStationInput
 Parser --> Parser:
 deactivate Parser #FFBBBB
+Parser --> Handler 
 
+deactivate Parser #salmon
+deactivate Handler #salmon
 @enduml

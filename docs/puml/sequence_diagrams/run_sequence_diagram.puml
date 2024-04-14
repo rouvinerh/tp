@@ -1,62 +1,46 @@
 @startuml
 skinparam sequenceReferenceBackgroundColor lightblue
-
 participant "handler:Handler" as Handler
-
 participant "parser:Parser" as Parser
 participant "validation:Validation" as Validation
 participant "newRun:Run" as Run
-participant "workoutList:WorkoutList" as WorkoutList
+participant "workout:Workout" as Workout
+participant "workoutLists:WorkoutLists" as WorkoutLists
 participant "output:Output" as Output
-
 Handler -> Parser: parseRunInput()
 activate Handler #salmon
 activate Parser #salmon
-
 Parser -> Parser: splitRunInput()
 activate Parser #FFBBBB
 Parser --> Parser: runDetails[]
 deactivate Parser #FFBBBB
-
-Parser -> Validation: validateRunInput()
+Parser -> Validation: validateRunInput(runDetails)
 activate Validation #FFBBBB
 Validation --> Parser: 
 deactivate Validation
-
 Parser -> Run **: new
-activate Run #FFBBBB   
-Run -> WorkoutList **: new
-activate WorkoutList #FFBBBB
-WorkoutList --> Run:
-deactivate WorkoutList #FFBBBB
-
-alt date is present
-    Run -> WorkoutList: addRun(date)
-    activate WorkoutList #FFBBBB
-    WorkoutList -> WorkoutList: addWorkout(date)
-    activate WorkoutList #DarkSalmon
-    WorkoutList --> WorkoutList:
-    deactivate WorkoutList #DarkSalmon
-    WorkoutList --> Run:
-    deactivate WorkoutList #FFBBBB
-
- 
-else date is not present
-    Run -> WorkoutList: addRun()
-    activate WorkoutList #FFBBBB
-    WorkoutList -> WorkoutList: addWorkout()
-    activate WorkoutList #DarkSalmon
-    WorkoutList --> WorkoutList:
-    deactivate WorkoutList #DarkSalmon
-    WorkoutList --> Run:
-    deactivate WorkoutList #FFBBBB
-    destroy WorkoutList
-end
+activate Run #salmon
+Run -> Workout **: new
+activate Workout #salmon
+Workout --> Run
+deactivate Workout #salmon
+Run -> Workout: addIntoWorkoutList(Run)
+activate Workout #salmon
+Workout -> WorkoutLists **: new
+activate WorkoutLists #salmon
+WorkoutLists --> Workout: 
+deactivate WorkoutLists #salmon
+Workout -> WorkoutLists: addRun()
+activate WorkoutLists #salmon
+WorkoutLists --> Workout: 
+destroy WorkoutLists
+Workout --> Run:
+destroy Workout
 Run --> Parser:
 deactivate Run #FFBBBB
 Parser -> Output: printAddRun()
-activate Output #FFBBBB
+activate Output #salmon
 Output --> Parser:
-deactivate Output #FFBBBB
+deactivate Output #salmon
 destroy Run
 @enduml

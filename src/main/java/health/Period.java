@@ -11,9 +11,9 @@ import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 /**
- * The Period class extends the Health class.
+ * The {@code Period} class inherits from {@code Health} class.
  * It contains information about the start date, end date, time, period length, and cycle length of the period,
- * and the functionalities to calculate period and cycle length and predict the next period.
+ * and the methods to calculate period and cycle length and predict the next period.
  */
 public class Period extends Health {
     /**
@@ -36,14 +36,20 @@ public class Period extends Health {
      */
     protected long cycleLength;
 
+    /**
+     * A parser object to access Parser Class.
+     */
     private final Parser parser = new Parser();
 
+    /**
+     * A healthlist object to access HealthList Class which manages and stores health data.
+     */
     private final HealthList healthList = new HealthList();
 
     //@@author syj02
 
     /**
-     * Constructs a new Period object with only the start date provided.
+     * Constructs a new {@code Period} object with only the start date provided.
      *
      * @param stringStartDate A string representing the start date of the period.
      */
@@ -56,7 +62,7 @@ public class Period extends Health {
     }
 
     /**
-     * Constructor for Period object.
+     * Constructor for {@code Period} object.
      *
      * @param stringStartDate A string representing the start date of the period.
      * @param stringEndDate   A string representing the end date of the period.
@@ -72,7 +78,7 @@ public class Period extends Health {
     /**
      * Updates the end date of the period and calculates the period length.
      *
-     * @param stringEndDate A string representing the new end date of the period.
+     * @param stringEndDate A {@code String} representing the new end date of the period.
      */
     public void updateEndDate(String stringEndDate) {
         this.endDate = parser.parseDate(stringEndDate);
@@ -80,7 +86,7 @@ public class Period extends Health {
     }
 
     /**
-     * Retrieves the start date of the period of LocalDate type.
+     * Retrieves the start date of the period of {@code LocalDate} type.
      *
      * @return The start date of period.
      * @throws AssertionError if the start date is null.
@@ -91,7 +97,7 @@ public class Period extends Health {
     }
 
     /**
-     * Retrieves the end date of the period of LocalDate type.
+     * Retrieves the end date of the period of {@code LocalDate} type.
      *
      * @return The end date of period.
      * @throws AssertionError if the end date is null.
@@ -101,12 +107,12 @@ public class Period extends Health {
     }
 
     /**
-     * Retrieves the length of the period of long type.
+     * Retrieves the length of the period of {@code long} type.
      *
      * @return The period length.
      */
     public long getPeriodLength() {
-        assert periodLength > 0 : ErrorConstant.LENGTH_MUST_BE_POSITIVE_ERROR;
+        assert periodLength > HealthConstant.MIN_LENGTH : ErrorConstant.LENGTH_MUST_BE_POSITIVE_ERROR;
         return periodLength;
     }
 
@@ -120,10 +126,10 @@ public class Period extends Health {
     public long getLastThreeCycleLengths() {
         long sumOfCycleLengths = 0;
 
-        int startIndexForPrediction = HealthConstant.LAST_CYCLE_INDEX; // == 1
-        assert startIndexForPrediction >= 0 : ErrorConstant.START_INDEX_NEGATIVE_ERROR;
+        int startIndexForPrediction = HealthConstant.LAST_CYCLE_INDEX;
+        assert startIndexForPrediction >= HealthConstant.FIRST_ITEM : ErrorConstant.START_INDEX_NEGATIVE_ERROR;
 
-        int endIndexForPrediction = HealthConstant.FIRST_CYCLE_INDEX; // == 3
+        int endIndexForPrediction = HealthConstant.FIRST_CYCLE_INDEX;
         assert endIndexForPrediction >= startIndexForPrediction : ErrorConstant.END_INDEX_SMALLER_THAN_START_ERROR;
 
         for (int i = startIndexForPrediction; i <= endIndexForPrediction; i++) {
@@ -180,9 +186,9 @@ public class Period extends Health {
                     + nextPeriodStartDate
                     + HealthConstant.COUNT_DAYS_MESSAGE
                     + daysUntilNextPeriod
-                    + ((daysUntilNextPeriod == 1) ?
-                    UiConstant.SPLIT_BY_WHITESPACE + HealthConstant.DAY_MESSAGE + UiConstant.FULL_STOP
-                    : UiConstant.SPLIT_BY_WHITESPACE + HealthConstant.DAYS_MESSAGE + UiConstant.FULL_STOP));
+                    + UiConstant.SPLIT_BY_WHITESPACE
+                    + HealthConstant.DAYS_MESSAGE
+                    + UiConstant.FULL_STOP);
         }
 
         if (today.isEqual(nextPeriodStartDate)) {
@@ -196,28 +202,27 @@ public class Period extends Health {
                     + nextPeriodStartDate
                     + HealthConstant.PERIOD_IS_LATE
                     + -daysUntilNextPeriod
-                    + ((-daysUntilNextPeriod == 1) ?
-                    UiConstant.SPLIT_BY_WHITESPACE + HealthConstant.DAY_MESSAGE + UiConstant.FULL_STOP
-                    : UiConstant.SPLIT_BY_WHITESPACE + HealthConstant.DAYS_MESSAGE + UiConstant.FULL_STOP));
+                    + UiConstant.SPLIT_BY_WHITESPACE
+                    + HealthConstant.DAYS_MESSAGE
+                    + UiConstant.FULL_STOP);
         }
         Output.printLine();
     }
 
     /**
-     * Returns the string representation of a Period object.
+     * Returns the string representation of a {@code Period} object.
      *
-     * @return A formatted string representing a Period object.
+     * @return A formatted string representing a {@code Period} object.
      */
     @Override
     public String toString() {
-        String periodLengthUnit = (periodLength == 1) ? HealthConstant.DAY_MESSAGE : HealthConstant.DAYS_MESSAGE;
         String endDateUnit = (getEndDate() == null) ? ErrorConstant.NO_DATE_SPECIFIED_ERROR : getEndDate().toString();
         return String.format(HealthConstant.PRINT_PERIOD_FORMAT,
                 getStartDate(),
                 endDateUnit,
                 getPeriodLength(),
-                periodLengthUnit)
-                + (this.cycleLength > 0 ? System.lineSeparator()
+                HealthConstant.DAYS_MESSAGE)
+                + (this.cycleLength > HealthConstant.MIN_LENGTH ? System.lineSeparator()
                 + String.format(HealthConstant.PRINT_CYCLE_FORMAT, this.cycleLength) : UiConstant.EMPTY_STRING);
     }
 }

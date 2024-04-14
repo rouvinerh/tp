@@ -496,7 +496,7 @@ public class Output {
                 break;
             }
         } catch (IllegalArgumentException e) {
-            printException(ErrorConstant.INVALID_LATEST_FILTER_ERROR);
+            printException(ErrorConstant.INVALID_LATEST_OR_DELETE_FILTER);
         }
     }
 
