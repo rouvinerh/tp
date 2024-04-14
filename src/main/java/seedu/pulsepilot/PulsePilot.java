@@ -8,6 +8,8 @@ import ui.Handler;
 public class PulsePilot {
     /**
      * Main entry-point for PulsePilot.
+     *
+     * @param args Command-line arguments.
      */
     public static void main(String[] args) {
 

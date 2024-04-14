@@ -44,6 +44,8 @@ public class Gym extends Workout {
      * @param numberOfSet String of the number of sets done.
      * @param numberOfRepetitions String of the number of repetitions done.
      * @param weights String of weights separated by commas. (e.g. "10,20,30,40")
+     * @throws CustomExceptions.InsufficientInput If any of the input fields are empty.
+     * @throws CustomExceptions.InvalidInput If the input fields are invalid.
      */
     public void addStation(String name,
                            String numberOfSet,

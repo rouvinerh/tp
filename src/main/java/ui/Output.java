@@ -569,6 +569,7 @@ public class Output {
      *
      * @param status Integer representing whether the storage file has been loaded. If set to 0, file is present. Else,
      *               file is not present.
+     * @param name String representing the name of the user.
      */
     protected void printGreeting(int status, String name) {
         if (status == UiConstant.FILE_FOUND) {

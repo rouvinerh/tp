@@ -239,6 +239,7 @@ public class Parser {
      * @param input The user input string.
      * @return An array of strings containing the extracted Bmi parameters.
      * @throws CustomExceptions.InsufficientInput If the height, weight or date parameters are missing.
+     * @throws CustomExceptions.InvalidInput If the input is invalid.
      */
     protected String[] splitBmiInput(String input) throws CustomExceptions.InsufficientInput,
             CustomExceptions.InvalidInput {
@@ -307,6 +308,7 @@ public class Parser {
      * @param input The user input string.
      * @return An array of strings containing the extracted Period parameters.
      * @throws CustomExceptions.InsufficientInput If the user input is invalid or blank.
+     * @throws CustomExceptions.InvalidInput If the user input is invalid.
      */
     protected String[] splitPeriodInput(String input) throws CustomExceptions.InsufficientInput,
             CustomExceptions.InvalidInput {
@@ -361,6 +363,7 @@ public class Parser {
      * @param input The user input string.
      * @return An array of strings containing the extracted Appointment parameters.
      * @throws CustomExceptions.InsufficientInput If the user input is invalid or blank.
+     * @throws CustomExceptions.InvalidInput If the user input is invalid.
      */
     protected String[] splitAppointmentDetails(String input)
             throws CustomExceptions.InsufficientInput, CustomExceptions.InvalidInput {
@@ -433,6 +436,7 @@ public class Parser {
      * @param input The user input string.
      * @return The Gym parameters split from the user input.
      * @throws CustomExceptions.InsufficientInput If the number of stations is missing.
+     * @throws CustomExceptions.InvalidInput If the parameters specified are invalid.
      */
     protected String[] splitGymInput(String input) throws CustomExceptions.InsufficientInput,
             CustomExceptions.InvalidInput {
@@ -716,6 +720,7 @@ public class Parser {
      * @param input The line read from the file.
      * @return New gym object created from the input.
      * @throws CustomExceptions.InvalidInput  If there is invalid input from the file.
+     * @throws CustomExceptions.InsufficientInput If there is insufficient input from the file.
      * @throws CustomExceptions.FileReadError If the file data is invalid or cannot be read.
      */
     public Gym parseGymFileInput(String input)

@@ -246,9 +246,9 @@ public class HealthList extends ArrayList<Health> {
     }
 
     /**
-     * Prints the latest {@code Bmi} object added.
+     * Prints the latest Bmi object added.
      *
-     * @throws AssertionError If {@code BMIS} is empty.
+     * @throws CustomExceptions.OutOfBounds if BMIS is empty.
      */
     public static void printLatestBmi() throws CustomExceptions.OutOfBounds {
         if (BMIS.isEmpty()) {
@@ -259,9 +259,9 @@ public class HealthList extends ArrayList<Health> {
     }
 
     /**
-     * Prints the latest {@code Period} object added.
+     * Prints the latest Period object added.
      *
-     * @throws AssertionError If {@code PERIODS} is empty.
+     * @throws CustomExceptions.OutOfBounds If PERIODS is empty.
      */
     public static void printLatestPeriod() throws CustomExceptions.OutOfBounds {
         if (PERIODS.isEmpty()) {
@@ -272,9 +272,9 @@ public class HealthList extends ArrayList<Health> {
     }
 
     /**
-     * Prints the latest {@code Appointment} object added.
+     * Prints the latest Appointment object added.
      *
-     * @throws AssertionError If {@code APPOINTMENTS} is empty.
+     * @throws CustomExceptions.OutOfBounds If Appointment list is empty.
      */
     public static void printLatestAppointment() throws CustomExceptions.OutOfBounds {
         if (APPOINTMENTS.isEmpty()) {
@@ -286,9 +286,9 @@ public class HealthList extends ArrayList<Health> {
     }
 
     /**
-     * Prints all the {@code Bmi} objects recorded.
+     * Prints all the Bmi objects recorded.
      *
-     * @throws AssertionError If {@code BMIS} list is empty.
+     * @throws CustomExceptions.OutOfBounds if BMI list is empty.
      */
     public static void printBmiHistory() throws CustomExceptions.OutOfBounds {
         if (BMIS.isEmpty()) {
@@ -308,9 +308,9 @@ public class HealthList extends ArrayList<Health> {
     //@@author j013n3
 
     /**
-     * Prints all the {@code Period} objects recorded.
+     * Prints all the Period objects recorded.
      *
-     * @throws AssertionError If {@code PERIODS} list is empty.
+     * @throws CustomExceptions.OutOfBounds If PERIODS list is empty.
      */
     public static void printPeriodHistory() throws CustomExceptions.OutOfBounds {
         if (PERIODS.isEmpty()) {
@@ -329,9 +329,9 @@ public class HealthList extends ArrayList<Health> {
     //@@author syj02
 
     /**
-     * Prints all the {@code Appointment} objects recorded.
+     * Prints all the Appointment objects recorded.
      *
-     * @throws AssertionError If {@code APPOINTMENTS} list is empty.
+     * @throws utility.CustomExceptions.OutOfBounds If APPOINTMENTS list is empty.
      */
     public static void printAppointmentHistory() throws CustomExceptions.OutOfBounds {
         if (APPOINTMENTS.isEmpty()) {
