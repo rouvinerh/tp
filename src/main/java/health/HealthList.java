@@ -205,10 +205,12 @@ public class HealthList extends ArrayList<Health> {
         }
         assert !PERIODS.isEmpty() : ErrorConstant.EMPTY_PERIOD_LIST_ERROR;
         Period deletedPeriod = PERIODS.get(index);
+        String endDateUnit = (deletedPeriod.getEndDate() == null) ?
+                ErrorConstant.NO_DATE_SPECIFIED_ERROR : deletedPeriod.getEndDate().toString();
         Output.printLine();
         System.out.printf((HealthConstant.LOG_DELETE_PERIOD_FORMAT) + System.lineSeparator(),
                 deletedPeriod.getStartDate(),
-                deletedPeriod.getEndDate());
+                endDateUnit);
         PERIODS.remove(index);
         Output.printLine();
         LogFile.writeLog(HealthConstant.PERIOD_REMOVED_MESSAGE_PREFIX + index, false);
