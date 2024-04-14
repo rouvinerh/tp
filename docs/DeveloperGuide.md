@@ -7,7 +7,7 @@
 * [Acknowledgements](#acknowledgements)
 * [Introduction](#introduction)
 * [Design](#design)
-* [Implementation of Commands](#commands-and-implementation)
+* [Implementation of Commands](#implementation-of-commands)
 * [Appendix: DG Requirements](#appendix-requirements)
     * [Product Scope](#target-user-profile)
     * [User Stories](#user-stories)
@@ -73,7 +73,7 @@ The **_Architecture Diagram_** is given below:
 The `seedu.pulsepilot` package contains the `Main` method, which is the entry point of the application. It is responsible for initialising and processing of user input, and the termination of PulsePilot.
 
 - `Ui`: The user interface of PulsePilot used for handling user input and printing messages. 
-- `Storage`: Contains the data storage components for PulsePilot.
+- `Storage`: Contains the data storage and logging components for PulsePilot.
 - `Health`: Stores health-related information.
 - `Workouts`: Stores workout-related information.
 - `Utility`: Contains utility functions, such as input parsing and validation.
@@ -105,9 +105,14 @@ The sequence diagram below shows how the application is initialised and then pro
 3. When PulsePilot exits gracefully via the `exit` command, `terminateBot()` is called to write to the data and hash files.
     - If a user exits without calling terminateBot(), **data will be lost!** Likewise, this is covered [here](#storage-of-data).
 
-The `Handler` class creates other classes when it is used as shown in this sequence diagram:
+The `Handler` class creates other classes:
 
-![Handler Class Creation](img/sequence_diagrams/handler_class_creation.png)
+- `Scanner` as `in` to read user input.
+- `Validation` as `validation` for validating user input.
+- `Parser` as `parser` for parsing user input.
+- Static `LogFile` as `logFile` to write logs.
+- `DataFile` as `dataFile` to write data stored.
+- `Output` as `output` to print messages to the user.
 
 The creation of the above classes will be left out of other sequence diagrams to prevent cluttering the diagram. **It is assumed in other class diagrams for `Handler` that the classes have already been created.**
 
@@ -137,7 +142,7 @@ The `Workout` package is responsible for tracking run and gym workouts from the 
 
 ![WorkoutLists Class Diagram](img/class_diagrams/workoutlist_class_diagram.png)
 
-The class contains methods to retrieve the different objects. Additionally, it contains the methods for **deleting** an object from PulsePilot, which is used for the `delete` command implementation.
+The class contains methods to retrieve all or the latest added object, and delete objects. 
 
 The `clearWorkoutsRunGym()` method is used to clear all the data stored within each `ArrayList`, which is mainly used for unit testing.
 
@@ -198,7 +203,6 @@ The class diagram for gym is as follows:
 - `distance`: The distance ran in **kilometers** represented as a `double`.
 - `date`: An **optional** `LocalDate` parameter representing the date of the workout. Implemented via an overloaded `Run()` constructor.
 - `pace`: The pace of the run in minutes/km represented as a `String`.
-- `isHourPresent`: A `boolean` variable to indicate if an hour has been indicated, since PulsePilot accepts both `HH:MM:SS` and `MM:SS` formats.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -219,8 +223,7 @@ The `Health` package is responsible for tracking user's BMI, period cycle, and m
 The class contains methods to retrieve the different objects. Additionally, it contains the methods for:
 
 - **Deleting** an object from PulsePilot, which is used for the `delete` command implementation.
-- Showing the **latest** object added to PulsePilot, which is used for the `latest` command implementation.
-- Showing the **history or list** of objects added to PulsePilot, which is used for the `history` command implementation.
+
 
 The `clearHealthLists()` method is used to clear all the data stored within each `ArrayList`, which is mainly used for unit testing.
 
@@ -235,7 +238,6 @@ The `clearHealthLists()` method is used to clear all the data stored within each
 - `height`: The height of the user in metres represented as a `double`.
 - `weight`: The weight of the user in kilograms represented as a `double`.
 - `bmiValue`: The calculate BMI value of the user derived from the height and weight given, also represented as a `double`.
-- `bmiCategory`: The category that the BMI value of the user falls in (i.e. Underweight, Normal, Overweight, etc), represented as a `String`.
 - `date`: A `LocalDate` parameter representing the date of the recorded/added BMI value.
 
 ###### [Back to table of contents](#table-of-contents)
@@ -301,7 +303,7 @@ Each variable is then checked to ensure that it follows the format needed. This 
 
 #### Custom Exceptions
 
-The `CustomExceptions` class inherits from the `Exception` class from Java. This class is in charge of printing formatted errors.
+The `CustomExceptions` class inherits from the `Exception` class from Java. This class is responsible for printing formatted errors.
 
 The exceptions are further broken down into the following:
 
@@ -330,11 +332,13 @@ This is represented as enumerations. Attempts to use an invalid filter results i
 
 ### Storage Package
 
-`Storage` contains `DataFile` and `LogFile`. This component handles all logging of commands used and writing of data stored within PulsePilot to an external data file. The reading of the data file is also done here, allowing PulsePilot to resume a previous saved state.
+`Storage` package contains `DataFile` and `LogFile`. This component handles all logging of commands used and writing of data stored within PulsePilot to an external data file. The reading of the data file is also done here, allowing PulsePilot to resume a previous saved state.
 
 - `DataFile` is responsible for the writing of data to `pulsepilot_data.txt`, and generating the hash for it in `pulsepilot_hash.txt`. It also checks whether the data has been tampered with or files are missing, and creates or deletes files if needed.
 
 - `LogFile` writes the logs to `pulsepilot_log.txt`, tracking each command and error thrown.
+
+This package also checks whether the application has read and write permissions over its current directory. If not, it throws an exception and exits.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -357,7 +361,7 @@ The constants are broken down into the following 4 classes:
 
 <!-- @@author rouvinerh -->
 
-## Commands and Implementation
+## Implementation of Commands
 
 **NOTE**: Not every single line of code is explained here, as any developer can read the source code to find out all the specifics. This helps to keep the guide shorter and easier to read.
 
@@ -399,7 +403,7 @@ An overloaded `Run` and `Workout` constructor is used to allow for `date` to be 
 
 This is the sequence diagram for adding a run:
 
-[Run Sequence Diagram](img/sequence_diagrams/run_sequence_diagram.png)
+![Run Sequence Diagram](img/sequence_diagrams/run_sequence_diagram.png)
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -420,7 +424,7 @@ The user's input is processed to add a gym is as follows:
 
 4. The `Gym` constructor adds the newly created object into `workoutList.WORKOUTS` and `workoutList.GYMS` via `addWorkout()` and `addGym()`.  
 
-5. Afterwards, `parseGymStationInput()` is called to retrieve input for each gym station.
+5. Afterwards, `parser.parseGymStationInput()` is called to retrieve input for each gym station.
 
 This is the sequence diagram for adding a `Gym` thus far:
 
@@ -436,11 +440,11 @@ After adding a `Gym` object, the user is then prompted for input for the gym sta
 
 3. User input is split using `Parser.splitGymStationInput()` which as the name suggests, splits the parameters from the user, returning a `String[]` variable.
 
-4. After splitting the input, the parameters are passed to  to `newGym.addStation()`. 
+4. After splitting the input, the parameters are passed to  to `newGym.addStation()`.
 
-5. `newGym.addStation()` will then create a `GymStation` object during which the input is checked within the `GymStation` object. 
+5. `newGym.addStation()` will then create a `GymStation` object during which the input is checked within the `GymStation` class.
 
-6. If the values are valid, the `GymStation` object is appended to an `ArrayList<GymStation>` stored in the `newGym` object. 
+6. If the values are valid, the `GymStation` object is appended to an `ArrayList<GymStation>` stored in the `newGym` object.
 
 7. Steps 2 to 6 repeats until all stations have been added.
 
@@ -470,7 +474,7 @@ The user's input is processed to add a `Bmi` as follows:
 
 3. `validation.validateBmiInput()` is called to validate each parameter. If no exceptions caused by invalid parameters are thrown, the validated parameters are used to create the new `Bmi` object.
 
-4. The `Bmi` constructor adds the newly created object into `HealthList.BMIS` via `healthlist.addBMI()`. The BMI value and BMI category are determined from `Bmi.calculateBmiValue()` and `Bmi.getBmiCategory()` methods respectively and then stored.
+4. The `Bmi` constructor adds the newly created object into `HealthList.BMIS` via `healthlist.addBmi()`. The BMI value and BMI category are determined from `Bmi.calculateBmiValue()` methods respectively and then stored.
 
 5. The `Bmi` object is passed to `Output.printAddBmi()` and a message acknowledging the successful adding is printed to the screen.
 
@@ -493,17 +497,16 @@ The user's input is processed to add a `Period` as follows:
 
 3. `validation.validatePeriodInput()` is called to validate each parameter. If no exceptions caused by invalid parameters are thrown, the validated parameters are used to create the new `Period` object.
 
-4. If end date is absent, the `Period` constructor adds the newly created object into `healthlist.PERIODS`. Else, the static `HealthList.getPeriod()` method is called to retrieve the latest period input and update end date using `period.updateEndDate()` method.
-   - If the size of `HealthList.PERIODS` is greater than `1`, `HealthList.PERIODS` will be iterated through to set cycle length using `period.setCycleLength()` method.
-
+4. The `Period` constructor adds the newly created object into `healthlist.PERIODS`.
 
 5. The `Period` object is passed to `output.printAddPeriod()` and a message acknowledging the successful adding is printed to the screen.
+
+Overloaded constructor is used to add the optional end date.
 
 This is the sequence diagram for adding a period from `parser.parsePeriodInput()`:
 
 ![Period Sequence Diagram](img/sequence_diagrams/period_sequence.png)
 
-![Set Cycle Length Diagram](img/sequence_diagrams/set_Cycle_Length.png)
 
 ##### Make Period Prediction
 
@@ -615,7 +618,6 @@ Deleting an item follows this sequence:
     - `bmi`: `HealthList.deleteBmi()`
     - `period`: `HealthList.deletePeriod()`
     - `appointment`: `Healthlist.deleteAppointment()`
-
 
 ![Delete Sequence](img/sequence_diagrams/delete_sequence.png)
 

@@ -37,7 +37,7 @@ public class HealthList extends ArrayList<Health> {
      */
     private static final ArrayList<Appointment> APPOINTMENTS = new ArrayList<>();
 
-    protected HealthList() {
+    public HealthList() {
 
     }
 

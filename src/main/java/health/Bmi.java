@@ -42,7 +42,6 @@ public class Bmi extends Health {
 
         this.bmiValue = calculateBmiValue();
         healthList.addBmi(this);
-
     }
 
     /**

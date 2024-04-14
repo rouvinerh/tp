@@ -20,7 +20,7 @@ public class WorkoutLists {
     private static final ArrayList<Run> RUNS = new ArrayList<>();
     private static final ArrayList<Gym> GYMS = new ArrayList<>();
 
-    protected WorkoutLists() {
+    public WorkoutLists() {
 
     }
 

@@ -130,7 +130,7 @@ public class Period extends Health {
      *
      * @return The length of the period.
      */
-    public long calculatePeriodLength() {
+    protected long calculatePeriodLength() {
         if (endDate == null || startDate == null) {
             return 0;
         } else {
