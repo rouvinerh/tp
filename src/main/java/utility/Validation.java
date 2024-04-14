@@ -304,7 +304,7 @@ public class Validation {
      * @param input A list of strings representing command inputs.
      * @return False if it contains empty strings. Otherwise, returns true.
      */
-    public boolean isEmptyParameterPresent(String[] input) {
+    protected boolean isEmptyParameterPresent(String[] input) {
         for (String s : input) {
             if (s != null && s.isEmpty()) {
                 return true;
@@ -319,7 +319,7 @@ public class Validation {
      * @param dateString A string representing the date.
      * @throws CustomExceptions.InvalidInput If the date specified is after today.
      */
-    public void validateDateNotAfterToday(String dateString) throws CustomExceptions.InvalidInput {
+    protected void validateDateNotAfterToday(String dateString) throws CustomExceptions.InvalidInput {
         Parser parser = new Parser();
         LocalDate date = parser.parseDate(dateString);
         if (date.isAfter(LocalDate.now())) {

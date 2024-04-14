@@ -28,7 +28,7 @@ class GymTest {
 
     /**
      * Tests the behavior of adding a new station to the gym.
-     * Verifies whether the newly added station is correctly reflected in {@Code GymSet}.
+     * Verifies whether the newly added station is correctly reflected in {@code GymSet}.
      * Expected Behaviour is to add stations and sets to the gym.
      */
     @Test

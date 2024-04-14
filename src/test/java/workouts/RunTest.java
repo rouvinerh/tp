@@ -1,11 +1,13 @@
 package workouts;
 
+import constants.ErrorConstant;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import utility.CustomExceptions;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RunTest {
 
@@ -55,25 +57,31 @@ class RunTest {
 
     /**
      * Tests the behaviour of checkRunTime when invalid inputs are passed.
-     * Expects InvalidInput exception to be thrown for all test cases.
+     * Expects InvalidInput exception to be thrown with the correct error message
      */
     @Test
-    void checkRunTime_invalidInputs_throwsInvalidInputException() {
+    void processRunTime_invalidInputs_expectInvalidInputExceptionWithCorrectErrorMessage() {
+        Exception exceptionThrown;
         // hours set to 00
         String input1 = "00:30:00";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> new Run(input1, "15.3"));
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () -> new Run(input1, "15.3"));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_HOUR_ERROR));
 
         // invalid minutes
         String input2 = "60:00";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> new Run(input2, "15.3"));
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () -> new Run(input2, "15.3"));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_MINUTE_ERROR));
 
         // invalid seconds
         String input3 = "05:60";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> new Run(input3, "15.3"));
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () -> new Run(input3, "15.3"));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_SECOND_ERROR));
 
         // 00:00 as time
         String input4 = "00:00";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> new Run(input4, "15.3"));
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () -> new Run(input4, "15.3"));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.ZERO_TIME_ERROR));
+
     }
 
     /**
@@ -102,11 +110,16 @@ class RunTest {
      */
     @Test
     void checkDistance_invalidDistance_throwsInvalidInputException() {
+        Exception exceptionThrown;
         // more than max of 5000
-        assertThrows(CustomExceptions.InvalidInput.class, () -> new Run("03:30:00", "5001.00"));
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                new Run("03:30:00", "5001.00"));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.DISTANCE_TOO_LONG_ERROR));
 
         // less than min of 0
-        assertThrows(CustomExceptions.InvalidInput.class, () -> new Run("03:30:00", "0.00"));
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                new Run("03:30:00", "0.00"));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.ZERO_DISTANCE_ERROR));
     }
 
     /**
@@ -136,10 +149,15 @@ class RunTest {
      */
     @Test
     void calculatePace_invalidTimeAndDistance_throwInvalidInputException() {
+        Exception exceptionThrown;
         // exceed max pace of 30:00/km
-        assertThrows(CustomExceptions.InvalidInput.class, () -> new Run("03:30:00", "5.00"));
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                new Run("03:30:00", "5.00"));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.MAX_PACE_ERROR));
 
         // below min pace of 1:00/km
-        assertThrows(CustomExceptions.InvalidInput.class, () -> new Run("02:00", "10.00"));
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                new Run("02:00", "10.00"));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.MIN_PACE_ERROR));
     }
 }
