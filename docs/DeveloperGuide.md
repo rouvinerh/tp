@@ -858,6 +858,18 @@ bench press /s:2 /r:4 /w:10
 
 **Expected Result**: Gym not added. Error message stating that number of weight values must be the same as the number of sets is printed in red.
 
+5. Test Case: 
+
+This test case for gym has **multiple lines of inputs**.
+
+```
+workout /e:gym /n:2
+bench press /s:2 /r:4 /w:10,20
+back
+```
+
+**Expected Results**: The `Gym` object was not added because the `back` command was invoked. A message will be displayed stating that the latest Gym object has been removed and you have been redirected to the main menu.
+
 ###### [Back to table of contents](#table-of-contents)
 
 ---
