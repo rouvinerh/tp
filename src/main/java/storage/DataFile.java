@@ -261,6 +261,7 @@ public class DataFile {
      * Processes the username from the data file.
      *
      * @param name The username read from the data file.
+     * @throws CustomExceptions.InvalidInput If the username is invalid.
      */
     public void processName(String name) throws CustomExceptions.InvalidInput {
         if (validation.validateIfUsernameIsValid(name)) {
@@ -273,6 +274,8 @@ public class DataFile {
      * Processes an appointment entry from the input string array and adds it to the health list.
      *
      * @param input The input string array containing appointment data.
+     * @throws CustomExceptions.InsufficientInput If there is insufficient input data.
+     * @throws CustomExceptions.InvalidInput If there is an error in the input data format.
      */
     public void processAppointment(String[] input) throws CustomExceptions.InsufficientInput,
             CustomExceptions.InvalidInput {
@@ -289,8 +292,11 @@ public class DataFile {
      * Processes a period entry from the input string array and adds it to the health list.
      *
      * @param input The input string array containing period data.
+     * @throws CustomExceptions.InsufficientInput If there is insufficient input data.
+     * @throws CustomExceptions.InvalidInput If there is an error in the input data format.
      */
-    public void processPeriod(String[] input) throws CustomExceptions.InsufficientInput, CustomExceptions.InvalidInput {
+    public void processPeriod(String[] input) throws CustomExceptions.InsufficientInput,
+            CustomExceptions.InvalidInput {
         String startDate = input[1].trim(); // start
         String endDate = input[2].trim(); // end, skip 3 duration
         String[] checkPeriodInput = {startDate, endDate};
@@ -307,6 +313,8 @@ public class DataFile {
      * Processes a BMI entry from the input string array and adds it to the health list.
      *
      * @param input The input string array containing BMI data.
+     * @throws CustomExceptions.InsufficientInput If there is insufficient input data.
+     * @throws CustomExceptions.InvalidInput If there is an error in the input data format.
      */
     public void processBmi(String[] input) throws CustomExceptions.InsufficientInput, CustomExceptions.InvalidInput {
         String height = input[1].trim(); // height
@@ -322,6 +330,7 @@ public class DataFile {
      *
      * @param input The input string array containing run data.
      * @throws CustomExceptions.InvalidInput If there is an error in the input data format.
+     * @throws CustomExceptions.InsufficientInput If there is insufficient input data.
      */
     public void processRun(String[] input) throws CustomExceptions.InvalidInput, CustomExceptions.InsufficientInput {
         String distance = input[1].trim(); // distance
@@ -343,6 +352,7 @@ public class DataFile {
      * @param rawInput The raw input string containing gym data.
      * @throws CustomExceptions.InvalidInput  If there is an error in the input data format.
      * @throws CustomExceptions.FileReadError If there is an error reading the gym file.
+     * @throws CustomExceptions.InsufficientInput If there is insufficient input data.
      */
     public void processGym(String rawInput) throws CustomExceptions.InvalidInput, CustomExceptions.FileReadError,
             CustomExceptions.InsufficientInput {

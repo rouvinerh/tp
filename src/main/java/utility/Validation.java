@@ -152,6 +152,7 @@ public class Validation {
      * Validates the period details entered.
      *
      * @param periodDetails An array of strings with split period details.
+     * @param isParser A boolean indicating whether the input comes from Parser.
      * @throws CustomExceptions.InvalidInput If there are any errors in the details entered.
      * @throws CustomExceptions.InsufficientInput If there are empty parameters specified.
      */
@@ -447,7 +448,7 @@ public class Validation {
      *
      * @param index The index to be validated.
      * @param start The starting bound.
-     * @param end the ending bound (exclusive - e.g. end = 5 means index must be < 5).
+     * @param end the ending bound (exclusive - e.g. end = 5 means index must be less than 5).
      * @return true if the index is within the bounds, false otherwise.
      */
     public static boolean validateIndexWithinBounds(int index, int start, int end) {

@@ -29,6 +29,7 @@ public class Bmi extends Health {
      *
      * @param height A string representing the user's height.
      * @param weight A string representing the user's weight.
+     * @param date A string representing the date of the record.
      * @throws AssertionError If height or weight values are not positive.
      */
     public Bmi(String height, String weight, String date) {
@@ -42,7 +43,6 @@ public class Bmi extends Health {
 
         this.bmiValue = calculateBmiValue();
         healthList.addBmi(this);
-
     }
 
     /**
