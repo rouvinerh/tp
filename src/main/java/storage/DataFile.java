@@ -148,7 +148,7 @@ public class DataFile {
     /**
      * Handles the failure of file hash verification.
      * This method is called when the hash value of the data file does not match the expected value.
-     * It logs the error, prints the exception, deletes the data file and hash file, and exits the application.
+     * It logs the error, prints the exception and  deletes the data file and hash file.
      *
      * @param errorString The error message to be logged and printed.
      */
