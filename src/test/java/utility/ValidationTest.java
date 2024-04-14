@@ -1,5 +1,6 @@
 package utility;
 
+import constants.ErrorConstant;
 import health.Bmi;
 import health.Period;
 import health.HealthList;
@@ -13,8 +14,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.time.LocalDate;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class ValidationTest {
@@ -44,6 +45,26 @@ public class ValidationTest {
         HealthList.clearHealthLists();
     }
 
+    /**
+     * Tests the behaviour of isEmptyParameterPresent when an array of Strings is passed that has no empty strings.
+     * Expects it to return false.
+     */
+    @Test
+    void isEmptyParameterPresent_nonEmptyStrings_returnsFalse() {
+        String[] input = {"1", "2", "3", "4"};
+        assertFalse(validation.isEmptyParameterPresent(input));
+    }
+
+    /**
+     * Tests the behaviour of isEmptyParameterPresent when an array of Strings is passed that has empty strings.
+     * Expects it to return true.
+     */
+    @Test
+    void isEmptyParameterPresent_nonEmptyStrings_returnsTrue() {
+        String[] input = {"1", "2", "3", ""};
+        assertTrue(validation.isEmptyParameterPresent(input));
+    }
+
 
     /**
      * Tests the behaviour of the validateDateInput function with a correctly formatted string.
@@ -52,77 +73,76 @@ public class ValidationTest {
     @Test
     public void validateDateInput_validDate_noExceptionThrown() {
         String validDate = "09-11-2024";
-        assertDoesNotThrow(() -> {
-            validation.validateDateInput(validDate);
-        });
+        assertDoesNotThrow(() -> validation.validateDateInput(validDate));
     }
 
     /**
      * Tests the behaviour of the validateDateInput function when invalid inputs
      * are passed to it.
-     * Expects InvalidInput exception to be thrown.
+     * Expects InvalidInput exception to be thrown with the correct error message printed.
      */
     @Test
-    public void validateDateInput_invalidDateInput_expectsInvalidInputException() {
+    public void validateDateInput_invalidDateInput_expectsInvalidInputExceptionWithCorrectErrorMessage() {
         // invalid day format
         String input1 = "9-11-2024";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> {
-            validation.validateDateInput(input1);
-        });
+        Exception exceptionThrown;
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateDateInput(input1));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_DATE_ERROR));
 
         // invalid month format
         String input2 = "09-1-2024";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> {
-            validation.validateDateInput(input2);
-        });
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateDateInput(input2));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_DATE_ERROR));
 
         // invalid year format
         String input3 = "09-01-24";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> {
-            validation.validateDateInput(input3);
-        });
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateDateInput(input3));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_DATE_ERROR));
 
         // illegal day number
         String input4 = "32-01-24";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> {
-            validation.validateDateInput(input4);
-        });
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateDateInput(input4));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_DATE_ERROR));
 
         // day zero
         String input5 = "00-11-2024";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> {
-            validation.validateDateInput(input5);
-        });
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateDateInput(input5));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_DATE_ERROR));
 
         // illegal month number
         String input6 = "09-13-2024";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> {
-            validation.validateDateInput(input6);
-        });
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateDateInput(input6));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_DATE_ERROR));
 
         // invalid delimiter
         String input7 = "09/12/2024";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> {
-            validation.validateDateInput(input7);
-        });
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateDateInput(input7));
 
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_DATE_ERROR));
         // missing year
         String input8 = "09-12";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> {
-            validation.validateDateInput(input8);
-        });
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateDateInput(input8));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_DATE_ERROR));
 
         // leap year
         String input9 = "29-02-2023";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> {
-            validation.validateDateInput(input9);
-        });
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateDateInput(input9));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_LEAP_YEAR_ERROR));
 
         // year before 1967
         String input10 = "29-02-0000";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> {
-            validation.validateDateInput(input10);
-        });
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateDateInput(input10));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_YEAR_ERROR));
     }
 
     /**
@@ -136,29 +156,73 @@ public class ValidationTest {
     }
 
     /**
-     * Tests the behaviour of the validateDeleteInput function when invalid inputs
-     * are passed to it.
-     * Expects InvalidInput exception to be thrown.
+     * Tests the behaviour of the validateDeleteInput function when invalid inputs are passed to it.
+     * Expects either InvalidInput or InsufficientInput exception to be thrown with the correct error message printed.
      */
     @Test
-    void validateDeleteInput_invalidInput_expectsInvalidInputException() {
+    void validateDeleteInput_incorrectInput_expectsExceptionThrownWithCorrectErrorMessage() {
         // invalid item
+        Exception exceptionThrown;
         String[] input1 = {"free!", "2"};
-        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateDeleteInput(input1));
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateDeleteInput(input1));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_LATEST_OR_DELETE_FILTER));
 
         // invalid index
-        String[] input2 = {"item", "-a"};
-        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateDeleteInput(input2));
+        String[] input2 = {"gym", "-a"};
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateDeleteInput(input2));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_INDEX_ERROR));
     }
 
     /**
-     * Tests the behaviour of an empty string being passed to validateDeleteInput.
-     * Expects InsufficientInput exception to be thrown.
+     * Tests the behaviour of correct filter strings being passed to validateHistoryFilter.
+     * Expects no exception to be thrown.
      */
     @Test
-    void validateDeleteInput_emptyString_expectsInsufficientInputException() {
-        String[] input = {"item", ""};
-        assertThrows(CustomExceptions.InsufficientInput.class, () -> validation.validateDeleteInput(input));
+    void validateHistoryFilter_correctFilter_expectsNoExceptionThrown() {
+        assertDoesNotThrow(() -> validation.validateHistoryFilter("gym"));
+        assertDoesNotThrow(() -> validation.validateHistoryFilter("run"));
+        assertDoesNotThrow(() -> validation.validateHistoryFilter("bmi"));
+        assertDoesNotThrow(() -> validation.validateHistoryFilter("period"));
+        assertDoesNotThrow(() -> validation.validateHistoryFilter("appointment"));
+        assertDoesNotThrow(() -> validation.validateHistoryFilter("workouts"));
+    }
+
+    /**
+     * Tests the behaviour of incorrect filter strings being passed to validateHistoryFilter.
+     * Expects InvalidInput exception to be thrown with correct error message.
+     */
+    @Test
+    void validateHistoryFilter_incorrectFilter_expectsInvalidInputExceptionWithCorrectErrorMessage() {
+        Exception exceptionThrown;
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateHistoryFilter("foo"));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_HISTORY_FILTER_ERROR));
+    }
+
+    /**
+     * Tests the behaviour of correct filter strings being passed to validateDeleteAndLatestFilter.
+     * Expects no exception to be thrown.
+     */
+    @Test
+    void validateDeleteAndLatestFilter_correctFilter_expectsNoExceptionThrown() {
+        assertDoesNotThrow(() -> validation.validateDeleteAndLatestFilter("gym"));
+        assertDoesNotThrow(() -> validation.validateDeleteAndLatestFilter("run"));
+        assertDoesNotThrow(() -> validation.validateDeleteAndLatestFilter("bmi"));
+        assertDoesNotThrow(() -> validation.validateDeleteAndLatestFilter("period"));
+        assertDoesNotThrow(() -> validation.validateDeleteAndLatestFilter("appointment"));
+    }
+
+    /**
+     * Tests the behaviour of incorrect filter strings being passed to validateDeleteAndLatestFilter.
+     * Expects InvalidInput exception to be thrown with correct error message.
+     */
+    @Test
+    void validateDeleteAndLatestFilter_incorrectFilter_expectsInvalidInputExceptionWithCorrectErrorMessage() {
+        Exception exceptionThrown;
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateDeleteAndLatestFilter("foo"));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_LATEST_OR_DELETE_FILTER));
     }
 
     /**
@@ -172,76 +236,117 @@ public class ValidationTest {
     }
 
     /**
-     * Tests the behaviour of the validateBmiInput function when invalid inputs
-     * are passed to it.
-     * Expects InvalidInput exception to be thrown.
+     * Tests the behaviour of the validateBmiInput function when invalid inputs are passed to it.
+     * Expects either InsufficientInput or InvalidInput exception to be thrown with the correct error message
+     * printed.
      */
     @Test
-    void validateBmiInput_oneDecimalPointWeight_expectsInvalidInputException() {
+    void validateBmiInput_incorrectInputs_expectsExceptionThrownWithCorrectErrorMessage() {
+        Exception exceptionThrown;
         // 1 decimal point weight
-        String[] input1 = {"1.71", "70.0", "29-04-2024"};
-        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateBmiInput(input1));
+        String[] input1 = {"1.71", "70.0", "29-04-2023"};
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateBmiInput(input1));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_HEIGHT_WEIGHT_INPUT_ERROR));
 
         // 1 decimal point height
-        String[] input2 = {"1.7", "70.03", "29-04-2024"};
-        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateBmiInput(input2));
+        String[] input2 = {"1.7", "70.03", "29-04-2023"};
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateBmiInput(input2));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_HEIGHT_WEIGHT_INPUT_ERROR));
 
-        // date in future
-        String[] input3 = {"1.70", "70.03", "28-03-2025"};
-        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateBmiInput(input3));
+        // height = 0
+        String[] input3 = {"0.00", "70.03", "29-04-2023"};
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateBmiInput(input3));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.ZERO_HEIGHT_AND_WEIGHT_ERROR));
+
+        // height > 2.75
+        String[] input4 = {"3.00", "70.03", "29-04-2023"};
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateBmiInput(input4));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.MAX_HEIGHT_ERROR));
+
+        // weight > 650
+        String[] input5 = {"2.00", "1000.00", "29-04-2023"};
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateBmiInput(input5));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.MAX_WEIGHT_ERROR));
+
+        // specified date already added
+        Bmi bmi = new Bmi("1.70", "70.00", "14-04-2024");
+        String[] input6 = {"1.70", "70.03", "14-04-2024"};
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateBmiInput(input6));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.DATE_ALREADY_EXISTS_ERROR));
+
+        // empty strings
+        String[] input7 = {"", "70.0", "29-04-2023"};
+        exceptionThrown = assertThrows(CustomExceptions.InsufficientInput.class, () ->
+                validation.validateBmiInput(input7));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INSUFFICIENT_BMI_PARAMETERS_ERROR));
+
     }
 
     /**
-     * Tests the behaviour of an empty string being passed to validateBmiInput.
-     * Expects InsufficientInput exception to be thrown.
+     * Tests the behaviour of validateDateNotAfterToday when a date string before 2024 is given.
+     * Expects no exceptions to be thrown.
      */
     @Test
-    void validateBmiInput_emptyString_expectsInsufficientInputException() {
-        String[] input = {"", "", ""};
-        assertThrows(CustomExceptions.InsufficientInput.class, () -> validation.validateBmiInput(input));
+    void validateDateNotAfterToday_dateBeforeToday_noExceptionThrown() {
+        String input = "14-04-2023";
+        assertDoesNotThrow(() -> validation.validateDateNotAfterToday(input));
     }
 
     /**
-     * Tests the behaviour of correct parameters being passed into validatePeriod.
-     * Expects no exception to be thrown.
+     * Tests the behaviour of validateDateNotAfterToday when a date string after 2024 is given.
+     * Expects InvalidInput exception to be thrown with correct error message printed.
      */
     @Test
-    void validatePeriodInput_correctParameters_noExceptionThrown() {
+    void validateDateNotAfterToday_dateAfterToday_expectsExceptionThrownWithCorrectErrorMessage() {
+        String input = "14-04-2025";
+        Exception exceptionThrown;
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateDateNotAfterToday(input));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.DATE_IN_FUTURE_ERROR));
+    }
+
+    //@@author j013n3
+    /**
+     * Tests the behaviour of correct parameters being passed into validatePeriodInput.
+     * Expects no exception thrown.
+     */
+    @Test
+    void validatePeriodInput_correctParameters_expectsExceptionThrownWithCorrectErrorMessage() {
         boolean isParser = true;
-        String[] input = {"23-03-2024", "30-03-2024"};
+        String[] input = {"22-03-2024", "28-03-2024"};
         assertDoesNotThrow(() -> validation.validatePeriodInput(input, isParser));
     }
 
     /**
-     * Tests the behaviour of a string with an empty string being passed into validatePeriod.
-     * Expects InsufficientInput exception to be thrown.
+     * Tests the behaviour of incorrect parameters being passed into validatePeriodInput.
+     * Expects either InvalidInput or InsufficientInput exception to be thrown with correct error message printed.
      */
     @Test
-    void validatePeriodInput_emptyString_expectsInsufficientInputException() {
+    void validatePeriodInput_incorrectParameters_expectsExceptionThrownWithCorrectErrorMessage() {
         boolean isParser = true;
-        String[] input = {"", "29-03-2024"};
-        assertThrows(CustomExceptions.InsufficientInput.class, () -> validation.validatePeriodInput(input, isParser));
-    }
+        Exception exceptionThrown;
+        // empty strings
+        String[] input1 = {"", "29-03-2024"};
 
-    /**
-     * Tests the behaviour of the validatePeriodInput function when invalid inputs
-     * are passed to it.
-     * Expects InvalidInput exception to be thrown.
-     */
-    @Test
-    void validatePeriodInput_invalidParameters_expectsInvalidInputException() {
-        boolean isParser = true;
-        // date after Today
-        String[] input1 = {"28-04-2025", "29-13-2025"};
-        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validatePeriodInput(input1, isParser));
+        exceptionThrown = assertThrows(CustomExceptions.InsufficientInput.class, () ->
+                validation.validatePeriodInput(input1, isParser));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INSUFFICIENT_PERIOD_PARAMETERS_ERROR));
 
         // end date before start date
         String[] input2 = {"28-03-2024", "22-03-2024"};
-        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validatePeriodInput(input2, isParser));
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validatePeriodInput(input2, isParser));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.PERIOD_END_BEFORE_START_ERROR));
     }
 
+
+    //@@author rouvinerh
     /**
-     * Tests the behaviour of correct parameters being passed into validateAppointment.
+     * Tests the behaviour of correct parameters being passed into validateAppointmentDetails.
      * Expects no exception to be thrown.
      */
     @Test
@@ -251,31 +356,31 @@ public class ValidationTest {
     }
 
     /**
-     * Tests the behaviour of an empty string being passed into validateAppointment.
-     * Expects InsufficientInput exception to be thrown.
+     * Tests the behaviour of incorrect parameters being passed into validateAppointmentDetails.
+     * Expects either InvalidInput or InsufficientInput exception to be thrown with correct error message printed.
      */
     @Test
-    void validateAppointmentInput_emptyParameters_expectsInsufficientInputException() {
-        String[] input = {"29-04-2024", "19:30", ""};
-        assertThrows(CustomExceptions.InsufficientInput.class, () -> validation.validateAppointmentDetails(input));
-    }
-
-    /**
-     * Tests the behaviour of the validateAppointmentInput function when
-     * invalid inputs are passed to it.
-     * Expects InvalidInput exception to be thrown.
-     */
-    @Test
-    void validateAppointmentInput_invalidDescriptions_expectsInvalidInputException() {
+    void validateAppointmentInput_incorrectParameters_expectsInvalidInputException() {
         // description too long
+        Exception exceptionThrown;
         String[] input1 = {"28-04-2024", "22:30",
                            "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
                            "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"};
-        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateAppointmentDetails(input1));
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateAppointmentDetails(input1));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.DESCRIPTION_LENGTH_ERROR));
 
         // description contains non-alphanumeric characters
-        String[] input2 = {"28-04-2024", "22:30", "doctor | ; whoami"};
-        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateAppointmentDetails(input2));
+        String[] input2 = {"28-04-2024", "22:30", "doctor | ;"};
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateAppointmentDetails(input2));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_DESCRIPTION_ERROR));
+
+        // empty strings
+        String[] input3 = {"", "22:30", "doctor"};
+        exceptionThrown = assertThrows(CustomExceptions.InsufficientInput.class, () ->
+                validation.validateAppointmentDetails(input3));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INSUFFICIENT_APPOINTMENT_PARAMETERS_ERROR));
     }
 
     /**
@@ -289,66 +394,41 @@ public class ValidationTest {
     }
 
     /**
-     * Tests the behaviour of the validateTimeInput function when
-     * invalid inputs are passed to it.
-     * Expects InvalidInput exception to be thrown.
+     * Tests the behaviour of incorrect parameters being passed into validateTimeInput.
+     * Expects InvalidInput exception to be thrown with correct error message printed.
      */
     @Test
-    void validateTimeInput_invalidInput_expectsInvalidInputException() {
+    void validateTimeInput_invalidInput_expectsInvalidInputExceptionWithCorrectErrorMessage() {
+        Exception exceptionThrown;
         // invalid delimiter
         String input1 = "23-50";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateTimeInput(input1));
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateTimeInput(input1));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_ACTUAL_TIME_ERROR));
 
         // illegal hours
         String input2 = "24:50";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateTimeInput(input2));
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateTimeInput(input2));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_ACTUAL_TIME_HOUR_ERROR));
 
         // illegal minutes
         String input3 = "21:60";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateTimeInput(input3));
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateTimeInput(input3));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_ACTUAL_TIME_MINUTE_ERROR));
 
         // time contains letters
         String input4 = "12:2a";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateTimeInput(input4));
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateTimeInput(input4));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_ACTUAL_TIME_ERROR));
 
         // invalid format
         String input5 = "21:55:44";
-        assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateTimeInput(input5));
-    }
-
-    /**
-     * Tests the behaviour of correct filter strings being passed to validateFilter.
-     * Expects no exceptions to be thrown.
-     */
-    @Test
-    void validateDeleteFilter_correctFilters_expectsNoExceptionsThrown() {
-        String input1 = "run";
-        assertDoesNotThrow(() -> validation.validateHistoryFilter(input1));
-
-        String input2 = "gym";
-        assertDoesNotThrow(() -> validation.validateHistoryFilter(input2));
-
-        String input3 = "bmi";
-        assertDoesNotThrow(() -> validation.validateHistoryFilter(input3));
-
-        String input4 = "period";
-        assertDoesNotThrow(() -> validation.validateHistoryFilter(input4));
-
-        String input5 = "appointment";
-        assertDoesNotThrow(() -> validation.validateHistoryFilter(input5));
-
-        String input6 = "workouts";
-        assertDoesNotThrow(() -> validation.validateHistoryFilter(input6));
-    }
-
-    /**
-     * Tests the behaviour of an incorrect filter string being passed to validateFilter.
-     */
-    @Test
-    void validateDeleteFilter_incorrectFilter_expectsInvalidInputException() {
-        String input = "fake";
-        assertThrows(CustomExceptions.InvalidInput.class, () ->
-                validation.validateHistoryFilter(input));
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateTimeInput(input5));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_ACTUAL_TIME_ERROR));
     }
 
     /**
@@ -367,69 +447,60 @@ public class ValidationTest {
     }
 
     /**
-     * Tests the behaviour of empty strings being passed to validateRunInput.
-     * Expects an InsufficientInput exception to be thrown.
+     * Tests the behaviour of incorrect parameters being passed into validateRunInput.
+     * Expects either InvalidInput or InsufficientInput exception to be thrown with correct error message printed.
      */
     @Test
-    void validateRunInput_emptyStrings_expectsInsufficientInputException() {
-        String[] input = {"20:25", ""};
-        assertThrows(CustomExceptions.InsufficientInput.class, () ->
-                validation.validateRunInput(input));
-    }
-
-    /**
-     * Tests the behaviour of invalid parameters being passed to validateRunInput.
-     * Expects an InvalidInput exception to be thrown.
-     */
-    @Test
-    void validateRunInput_invalidInputs_expectsInvalidInputException() {
+    void validateRunInput_incorrectParameters_expectsExceptionThrownWithCorrectErrorMessage() {
+        Exception exceptionThrown;
         // invalid distance
         String[] input1 = {"20:25", "5"};
-        assertThrows(CustomExceptions.InvalidInput.class, () ->
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
                 validation.validateRunInput(input1));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_RUN_DISTANCE_ERROR));
 
         // date in future
-        String[] input2 = {"20:25", "5.25", "31-3-2025"};
-        assertThrows(CustomExceptions.InvalidInput.class, () ->
+        String[] input2 = {"20:25", "5.25", "31-03-2025"};
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
                 validation.validateRunInput(input2));
-
-        // dist exceed max
-        String[] input3 = {"20:25", "5000.25", "31-3-2025"};
-        assertThrows(CustomExceptions.InvalidInput.class, () ->
-                validation.validateRunInput(input3));
-
-        // dist below min
-        String[] input4 = {"20:25", "0.00", "31-3-2025"};
-        assertThrows(CustomExceptions.InvalidInput.class, () ->
-                validation.validateRunInput(input4));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.DATE_IN_FUTURE_ERROR));
 
         // has non integer values in time
-        String[] input5 = {"2a:03", "5.00"};
-        assertThrows(CustomExceptions.InvalidInput.class, () ->
-                validation.validateRunInput(input5));
+        String[] input3 = {"2a:03", "5.00"};
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateRunInput(input3));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_RUN_TIME_ERROR));
 
         // invalid delimiter
-        String[] input6 = {"25-03", "5.00"};
-        assertThrows(CustomExceptions.InvalidInput.class, () ->
-                validation.validateRunInput(input6));
+        String[] input4 = {"25-03", "5.00"};
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateRunInput(input4));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_RUN_TIME_ERROR));
 
         // too many parts
-        String[] input7 = {"25:03:04:22", "5.00"};
-        assertThrows(CustomExceptions.InvalidInput.class, () ->
-                validation.validateRunInput(input7));
+        String[] input5 = {"25:03:04:22", "5.00"};
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateRunInput(input5));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_RUN_TIME_ERROR));
 
         // invalid format test 1
-        String[] input8 = {"1:2:3", "5.00"};
-        assertThrows(CustomExceptions.InvalidInput.class, () ->
-                validation.validateRunInput(input8));
+        String[] input6 = {"1:2:3", "5.00"};
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateRunInput(input6));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_RUN_TIME_ERROR));
 
         // invalid format
-        String[] input9 = {"100:00:00", "5.00"};
-        assertThrows(CustomExceptions.InvalidInput.class, () ->
-                validation.validateRunInput(input9));
+        String[] input7 = {"100:00:00", "5.00"};
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateRunInput(input7));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_RUN_TIME_ERROR));
+
+        // empty strings
+        String[] input8 = {"20:25", ""};
+        exceptionThrown = assertThrows(CustomExceptions.InsufficientInput.class, () ->
+                validation.validateRunInput(input8));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INSUFFICIENT_RUN_PARAMETERS_ERROR));
     }
-
-
 
     /**
      * Tests the behaviour of valid input being passed to validateGymInput.
@@ -445,42 +516,36 @@ public class ValidationTest {
     }
 
     /**
-     * Tests the behaviour of empty strings being passed to validateGymInput.
-     * Expects InsufficientInput exception to be thrown.
+     * Tests the behaviour of incorrect parameters being passed into validateRunInput.
+     * Expects either InvalidInput or InsufficientInput exception to be thrown with correct error message printed.
      */
     @Test
-    void validateGymInput_emptyString_expectsInsufficientInputException() {
-        String[] input = {"", null};
-        assertThrows(CustomExceptions.InsufficientInput.class, () ->
-                validation.validateGymInput(input));
-
-
-    }
-
-    /**
-     * Tests the behaviour of invalid parameters being passed to validateGymInput.
-     * Expects InvalidInput exception to be thrown.
-     */
-    @Test
-    void validateGymInput_invalidInput_expectsInvalidInputException() {
+    void validateGymInput_invalidInput_expectsExceptionThrownWithCorrectErrorMessage() {
+        Exception exceptionThrown;
         // non integer number of sets
         String[] input1 = {"a", null};
-        assertThrows(CustomExceptions.InvalidInput.class, () ->
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
                 validation.validateGymInput(input1));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_NUMBER_OF_STATIONS_ERROR));
 
         // number of sets exceeds maximum allowed
         String[] input2 = {"51", null};
-        assertThrows(CustomExceptions.InvalidInput.class, () ->
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
                 validation.validateGymInput(input2));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.MAX_STATIONS_ERROR));
 
         // number of sets below minimum allowed
         String[] input3 = {"-1", null};
-        assertThrows(CustomExceptions.InvalidInput.class, () ->
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
                 validation.validateGymInput(input3));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_NUMBER_OF_STATIONS_ERROR));
+
+        // empty strings
+        String[] input4 = {"", null};
+        exceptionThrown = assertThrows(CustomExceptions.InsufficientInput.class, () ->
+                validation.validateGymInput(input4));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INSUFFICIENT_GYM_PARAMETERS_ERROR));
     }
-
-
-
 
     /**
      * Tests the behaviour of a valid start date being passed to validateDateAfterLatestPeriod.
@@ -488,10 +553,9 @@ public class ValidationTest {
      */
     @Test
     void validateDateAfterLatestPeriodInput_validInput_noExceptionThrown() {
-        LocalDate latestPeriodEndDate1 = null;
         String input1 =  "10-04-2024";
         assertDoesNotThrow(() ->
-                validation.validateDateAfterLatestPeriodInput(input1, latestPeriodEndDate1));
+                validation.validateDateAfterLatestPeriodInput(input1, null));
 
         LocalDate latestPeriodEndDate2 = LocalDate.of(2024, 3, 9);
         String input2 = "11-04-2024";
@@ -504,7 +568,7 @@ public class ValidationTest {
      * Expects InvalidInput exception to be thrown.
      */
     @Test
-    void validateDateAfterLatestPeriodInput_invalidDateInput_expectsInvalidExceptionThrown() {
+    void validateDateAfterLatestPeriodInput_invalidDateInput_expectsInvalidInputException() {
         LocalDate latestPeriodEndDate = LocalDate.of(2024, 3, 9);
 
         //date is before latestPeriodEndDate
@@ -525,37 +589,36 @@ public class ValidationTest {
     @Test
     void validateStartDatesTally_validInput_noExceptionThrown() {
         Period period = new Period("01-01-2024");
-
-        LocalDate latestPeriodEndDate1 = null;
         String[] input1 = {"01-01-2024", "05-01-2024"};
         assertDoesNotThrow(() ->
-                validation.validateStartDatesTally(latestPeriodEndDate1, input1));
+                validation.validateStartDatesTally(null, input1));
 
-        LocalDate latestPeriodEndDate2 = LocalDate.of(2024,01,01);
+        LocalDate latestPeriodEndDate2 = LocalDate.of(2024,1,1);
         String[] input2 = {"01-01-2024", "05-02-2024"};
         assertDoesNotThrow(() ->
                 validation.validateStartDatesTally(latestPeriodEndDate2, input2));
     }
 
     /**
-     * Tests the behaviour of invalid start dates being passed to validateStartDatesTally.
-     * Expects InvalidInput exception to be thrown.
+     * Tests the behaviour of incorrect parameters being passed into validateRunInput.
+     * Expects InvalidInput exception to be thrown with correct error message printed.
      */
     @Test
-    void validateStartDatesTally_invalidInput_expectsInvalidExceptionThrown() {
+    void validateStartDatesTally_invalidInput_expectsInvalidInputExceptionWithCorrectMessage() {
         Period period = new Period("01-01-2024");
+        Exception exceptionThrown;
 
         //start dates do not tally
-        LocalDate latestPeriodEndDate1 = null;
         String[] input1 = {"01-01-2023", "05-01-2024"};
-        assertThrows(CustomExceptions.InvalidInput.class, () ->
-                validation.validateStartDatesTally(latestPeriodEndDate1, input1));
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateStartDatesTally(null, input1));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_START_DATE_INPUT_ERROR));
 
         //end date is missing from user input
-        LocalDate latestPeriodEndDate2 = null;
         String[] input2 = {"01-01-2024", null};
-        assertThrows(CustomExceptions.InvalidInput.class, () ->
-                validation.validateStartDatesTally(latestPeriodEndDate2, input2));
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateStartDatesTally(null, input2));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.END_DATE_NOT_FOUND_ERROR));
     }
 
     /**
