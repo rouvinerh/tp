@@ -15,7 +15,10 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 
 public class ValidationTest {
@@ -71,7 +74,7 @@ public class ValidationTest {
      * Expects no exception to be thrown.
      */
     @Test
-    public void validateDateInput_validDate_noExceptionThrown() {
+    void validateDateInput_validDate_noExceptionThrown() {
         String validDate = "09-11-2024";
         assertDoesNotThrow(() -> validation.validateDateInput(validDate));
     }
@@ -82,7 +85,7 @@ public class ValidationTest {
      * Expects InvalidInput exception to be thrown with the correct error message printed.
      */
     @Test
-    public void validateDateInput_invalidDateInput_expectsInvalidInputExceptionWithCorrectErrorMessage() {
+    void validateDateInput_invalidDateInput_expectsInvalidInputExceptionWithCorrectErrorMessage() {
         // invalid day format
         String input1 = "9-11-2024";
         Exception exceptionThrown;
@@ -173,6 +176,12 @@ public class ValidationTest {
         exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
                 validation.validateDeleteInput(input2));
         assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_INDEX_ERROR));
+
+        // empty strings
+        String[] input3 = {"gym", ""};
+        exceptionThrown = assertThrows(CustomExceptions.InsufficientInput.class, () ->
+                validation.validateDeleteInput(input3));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INSUFFICIENT_DELETE_PARAMETERS_ERROR));
     }
 
     /**
@@ -196,7 +205,8 @@ public class ValidationTest {
     @Test
     void validateHistoryFilter_incorrectFilter_expectsInvalidInputExceptionWithCorrectErrorMessage() {
         Exception exceptionThrown;
-        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateHistoryFilter("foo"));
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateHistoryFilter("foo"));
         assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_HISTORY_FILTER_ERROR));
     }
 
@@ -273,7 +283,7 @@ public class ValidationTest {
         assertTrue(exceptionThrown.toString().contains(ErrorConstant.MAX_WEIGHT_ERROR));
 
         // specified date already added
-        Bmi bmi = new Bmi("1.70", "70.00", "14-04-2024");
+        new Bmi("1.70", "70.00", "14-04-2024");
         String[] input6 = {"1.70", "70.03", "14-04-2024"};
         exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
                 validation.validateBmiInput(input6));
@@ -305,7 +315,8 @@ public class ValidationTest {
     void validateDateNotAfterToday_dateAfterToday_expectsExceptionThrownWithCorrectErrorMessage() {
         String input = "14-04-2025";
         Exception exceptionThrown;
-        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () -> validation.validateDateNotAfterToday(input));
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validateDateNotAfterToday(input));
         assertTrue(exceptionThrown.toString().contains(ErrorConstant.DATE_IN_FUTURE_ERROR));
     }
 
@@ -341,6 +352,13 @@ public class ValidationTest {
         exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
                 validation.validatePeriodInput(input2, isParser));
         assertTrue(exceptionThrown.toString().contains(ErrorConstant.PERIOD_END_BEFORE_START_ERROR));
+
+        // invalid start date
+        // end date before start date
+        String[] input3 = {"28-13-2024", "22-03-2024"};
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
+                validation.validatePeriodInput(input3, isParser));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.INVALID_START_DATE_ERROR));
     }
 
 
@@ -565,21 +583,23 @@ public class ValidationTest {
 
     /**
      * Tests the behaviour of invalid start dates being passed to validateDateAfterLatestPeriod.
-     * Expects InvalidInput exception to be thrown.
+     * Expects InvalidInput exception to be thrown with correct error message printed.
      */
     @Test
-    void validateDateAfterLatestPeriodInput_invalidDateInput_expectsInvalidInputException() {
+    void validateDateAfterLatestPeriodInput_invalidDateInput_expectsInvalidInputExceptionWithCorrectMessage() {
         LocalDate latestPeriodEndDate = LocalDate.of(2024, 3, 9);
-
+        Exception exceptionThrown;
         //date is before latestPeriodEndDate
         String input1 = "09-02-2024";
-        assertThrows(CustomExceptions.InvalidInput.class, () ->
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
                 validation.validateDateAfterLatestPeriodInput(input1, latestPeriodEndDate));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.CURRENT_START_BEFORE_PREVIOUS_END));
 
         //date same as latestPeriodEndDate
         String input2 = "09-03-2024";
-        assertThrows(CustomExceptions.InvalidInput.class, () ->
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
                 validation.validateDateAfterLatestPeriodInput(input2, latestPeriodEndDate));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.CURRENT_START_BEFORE_PREVIOUS_END));
     }
 
     /**
@@ -588,7 +608,7 @@ public class ValidationTest {
      */
     @Test
     void validateStartDatesTally_validInput_noExceptionThrown() {
-        Period period = new Period("01-01-2024");
+        new Period("01-01-2024");
         String[] input1 = {"01-01-2024", "05-01-2024"};
         assertDoesNotThrow(() ->
                 validation.validateStartDatesTally(null, input1));
@@ -605,7 +625,7 @@ public class ValidationTest {
      */
     @Test
     void validateStartDatesTally_invalidInput_expectsInvalidInputExceptionWithCorrectMessage() {
-        Period period = new Period("01-01-2024");
+        new Period("01-01-2024");
         Exception exceptionThrown;
 
         //start dates do not tally
@@ -627,8 +647,8 @@ public class ValidationTest {
      */
     @Test
     void validateDateNotPresent_validInput_noExceptionThrown() {
-        Bmi bmi1 = new Bmi("1.75", "70.00", "02-02-2024");
-        Bmi bmi2 = new Bmi("1.75", "71.00", "02-03-2024");
+        new Bmi("1.75", "70.00", "02-02-2024");
+        new Bmi("1.75", "71.00", "02-03-2024");
 
         //date not found in list
         String input1 = "03-03-2024";
@@ -638,17 +658,17 @@ public class ValidationTest {
 
     /**
      * Tests the behaviour of a date that is found the list being passed to validateDateNotPresent.
-     * Expects InvalidException to be thrown.
+     * Expects InvalidException to be thrown with correct error message printed.
      */
     @Test
-    void validateDateNotPresent_invalidInput_expectsInvalidExceptionThrown() {
-        Bmi bmi1 = new Bmi("1.75", "70.00", "02-02-2024");
-        Bmi bmi2 = new Bmi("1.75", "71.00", "02-03-2024");
-
+    void validateDateNotPresent_invalidInput_expectsInvalidInputExceptionWithCorrectMessage() {
+        new Bmi("1.75", "70.00", "02-02-2024");
+        new Bmi("1.75", "71.00", "02-03-2024");
+        Exception exceptionThrown;
         //date found in list
         String input1 = "02-02-2024";
-        assertThrows(CustomExceptions.InvalidInput.class, () ->
+        exceptionThrown = assertThrows(CustomExceptions.InvalidInput.class, () ->
                 validation.validateDateNotPresent(input1));
+        assertTrue(exceptionThrown.toString().contains(ErrorConstant.DATE_ALREADY_EXISTS_ERROR));
     }
-
 }
