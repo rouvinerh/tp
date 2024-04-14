@@ -109,7 +109,7 @@ class PeriodTest {
                 + " day(s)"
                 + System.lineSeparator()
                 + "Cycle Length: "
-                + firstPeriod.cycleLength
+                + firstPeriod.getCycleLength()
                 + " day(s)"
                 + System.lineSeparator();
 
@@ -251,7 +251,7 @@ class PeriodTest {
                 + " day(s)"
                 + System.lineSeparator()
                 + "Cycle Length: "
-                + thirdPeriod.cycleLength
+                + thirdPeriod.getCycleLength()
                 + " day(s)"
                 + System.lineSeparator()
                 + "Period Start: "
@@ -264,7 +264,7 @@ class PeriodTest {
                 + " day(s)"
                 + System.lineSeparator()
                 + "Cycle Length: "
-                + secondPeriod.cycleLength
+                + secondPeriod.getCycleLength()
                 + " day(s)"
                 + System.lineSeparator();
 

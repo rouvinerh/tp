@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * Tests the functionality of the `Handler` class.
+ * Tests the functionality of the Handler class.
  * It includes tests for processing various user inputs and verifying the expected output.
  */
 class HandlerTest {
@@ -41,7 +41,7 @@ class HandlerTest {
 
     /**
      * Restores the original standard input, output, and error streams, and cleans up the
-     * `WorkoutLists` and `HealthList` after each test.
+     * WorkoutLists and HealthList after each test.
      */
     @AfterEach
     public void restoreStreams() {
@@ -53,7 +53,7 @@ class HandlerTest {
     }
 
     /**
-     * Tests the `processInput` function's behaviour when the user enters the 'EXIT' command.
+     * Tests the processInput function's behaviour when the user enters the 'EXIT' command.
      * Verifies that the program terminates.
      */
     @Test
@@ -66,7 +66,7 @@ class HandlerTest {
     }
 
     /**
-     * Tests the `processInput` function's behaviour when the user enters the 'WORKOUT' command
+     * Tests the processInput function's behaviour when the user enters the 'WORKOUT' command
      * to add a new run exercise.
      * Verifies that the run is added successfully.
      */
@@ -81,7 +81,7 @@ class HandlerTest {
     }
 
     /**
-     * Tests the `processInput` function's behaviour when the user enters the 'HEALTH' command
+     * Tests the processInput function's behaviour when the user enters the 'HEALTH' command
      * to add a new BMI data point.
      * Verifies that the BMI data is added successfully.
      */
@@ -95,7 +95,7 @@ class HandlerTest {
     }
 
     /**
-     * Tests the `processInput` function's behaviour when the user enters the 'HEALTH' command
+     * Tests the processInput function's behaviour when the user enters the 'HEALTH' command
      * to add a new appointment.
      * Verifies that the appointment is added successfully.
      */
@@ -110,7 +110,7 @@ class HandlerTest {
 
 
     /**
-     * Tests the `processInput` function's behaviour when the user enters the 'HISTORY' command
+     * Tests the processInput function's behaviour when the user enters the 'HISTORY' command
      * to print the history of runs.
      * Verifies that the run history is printed correctly.
      */
@@ -126,7 +126,7 @@ class HandlerTest {
     }
 
     /**
-     * Tests the `processInput` function's behaviour when the user enters the 'LATEST' command
+     * Tests the processInput function's behaviour when the user enters the 'LATEST' command
      * to print the latest run.
      * Verifies that the latest run is printed correctly.
      */
@@ -142,7 +142,7 @@ class HandlerTest {
     }
 
     /**
-     * Tests the `processInput` function's behaviour when the user enters the 'HELP' command.
+     * Tests the processInput function's behaviour when the user enters the 'HELP' command.
      * Verifies that the help message is printed correctly.
      */
     @Test
@@ -156,7 +156,7 @@ class HandlerTest {
 
 
     /**
-     * Tests the `processInput` function's behaviour when the user enters an invalid command.
+     * Tests the processInput function's behaviour when the user enters an invalid command.
      * Verifies that an error message is printed.
      */
     @Test
@@ -173,7 +173,7 @@ class HandlerTest {
     }
 
     /**
-     * Tests the `processInput` function's behaviour when the user enters an invalid run command
+     * Tests the processInput function's behaviour when the user enters an invalid run command
      * with an invalid distance.
      * Verifies that an error message is printed.
      */
@@ -193,7 +193,7 @@ class HandlerTest {
     }
 
     /**
-     * Tests the `processInput` function's behaviour when the user enters the 'HEALTH' command
+     * Tests the processInput function's behaviour when the user enters the 'HEALTH' command
      * with insufficient parameters.
      * Verifies that an error message is printed.
      */
@@ -206,7 +206,7 @@ class HandlerTest {
     }
 
     /**
-     * Tests the `processInput` function's behaviour when the user enters the 'DELETE' command
+     * Tests the processInput function's behaviour when the user enters the 'DELETE' command
      * with a valid BMI entry.
      * Verifies that the BMI entry is deleted successfully.
      */
@@ -222,7 +222,7 @@ class HandlerTest {
     }
 
     /**
-     * Tests the `processInput` function's behaviour when the user enters the 'DELETE' command
+     * Tests the processInput function's behaviour when the user enters the 'DELETE' command
      * with no BMI objects added.
      * Verifies that an error message is printed.
      */
@@ -238,7 +238,7 @@ class HandlerTest {
     }
 
     /**
-     * Tests the `processInput` function's behaviour when the user enters the 'DELETE' command
+     * Tests the processInput function's behaviour when the user enters the 'DELETE' command
      * with a valid appointment.
      * Verifies that the appointment is deleted successfully.
      */
@@ -254,7 +254,7 @@ class HandlerTest {
     }
 
     /**
-     * Tests the `processInput` function's behaviour when the user enters the 'DELETE' command
+     * Tests the processInput function's behaviour when the user enters the 'DELETE' command
      * with an invalid appointment index.
      * Verifies that an error message is printed.
      */
@@ -270,7 +270,7 @@ class HandlerTest {
     }
 
     /**
-     * Tests the `processInput` function's behaviour when the user enters the 'DELETE' command
+     * Tests the processInput function's behaviour when the user enters the 'DELETE' command
      * with a valid run.
      * Verifies that the run is deleted successfully.
      */
@@ -286,7 +286,7 @@ class HandlerTest {
     }
 
     /**
-     * Tests the `processInput` function's behaviour when the user enters the 'DELETE' command
+     * Tests the processInput function's behaviour when the user enters the 'DELETE' command
      * with an invalid run index.
      * Verifies that an error message is printed.
      */
@@ -302,7 +302,7 @@ class HandlerTest {
     }
 
     /**
-     * Tests the `processInput` function's behaviour when the user enters the 'DELETE' command
+     * Tests the processInput function's behaviour when the user enters the 'DELETE' command
      * with a valid period.
      * Verifies that the period is deleted successfully.
      */
@@ -318,7 +318,7 @@ class HandlerTest {
     }
 
     /**
-     * Tests the `processInput` function's behaviour when the user enters the 'DELETE' command
+     * Tests the processInput function's behaviour when the user enters the 'DELETE' command
      * with an invalid period index.
      * Verifies that an error message is printed.
      */
@@ -334,7 +334,7 @@ class HandlerTest {
     }
 
     /**
-     * Tests the `processInput` function's behaviour when the user enters the 'DELETE' command
+     * Tests the processInput function's behaviour when the user enters the 'DELETE' command
      * with a valid gym.
      * Verifies that the gym is deleted successfully.
      */
@@ -352,7 +352,7 @@ class HandlerTest {
     }
 
     /**
-     * Tests the `processInput` function's behaviour when the user enters the 'DELETE' command
+     * Tests the processInput function's behaviour when the user enters the 'DELETE' command
      * with an invalid gym index.
      * Verifies that an error message is printed.
      */
@@ -370,7 +370,7 @@ class HandlerTest {
     }
 
     /**
-     * Tests the `processInput` function's behaviour when the user enters a gym command, adds one
+     * Tests the processInput function's behaviour when the user enters a gym command, adds one
      * station, and then types 'back' to exit.
      * Verifies that the gym is not added and a delete message is printed.
      */
@@ -388,7 +388,7 @@ class HandlerTest {
     }
 
     /**
-     * Tests the `userInduction` function's behaviour when the user enters a valid username.
+     * Tests the userInduction function's behaviour when the user enters a valid username.
      * Verifies that the welcome greeting is printed.
      */
     @Test
@@ -410,7 +410,7 @@ class HandlerTest {
     }
 
     /**
-     * Tests the `handleWorkout` function's behaviour when an invalid string is passed.
+     * Tests the handleWorkout function's behaviour when an invalid string is passed.
      * Verifies that an error message is printed.
      */
     @Test
@@ -421,7 +421,7 @@ class HandlerTest {
     }
 
     /**
-     * Tests the `handleHealth` function's behaviour when an invalid string is passed.
+     * Tests the handleHealth function's behaviour when an invalid string is passed.
      * Verifies that an error message is printed.
      */
     @Test

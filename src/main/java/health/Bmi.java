@@ -13,43 +13,17 @@ import java.time.LocalDate;
  * to calculate and categories the BMI values.
  */
 public class Bmi extends Health {
-    /**
-     * The height of the user in meters.
-     */
-    protected double height;
+    private double bmiValue;
 
-    /**
-     * The weight of the user in kilograms.
-     */
-    protected double weight;
+    private LocalDate date;
 
-    /**
-     * The Bmi of the user.
-     */
-    protected double bmiValue;
-
-    /**
-     * The BMI category.
-     */
-    protected String bmiCategory;
-
-    /**
-     * The date of user input.
-     */
-    protected LocalDate date;
-
-    /**
-     * A healthlist object to access HealthList Class which manages and stores health data.
-     */
-    protected HealthList healthList = new HealthList();
-
-    /**
-     * A parser object to access Parser Class.
-     */
+    private HealthList healthList = new HealthList();
+    private double height;
+    private double weight;
     private Parser parser = new Parser();
 
-    //@@author j013n3
 
+    //@@author j013n3
     /**
      * Constructor for {@code Bmi} object.
      *
@@ -67,7 +41,6 @@ public class Bmi extends Health {
         this.date = parser.parseDate(date);
 
         this.bmiValue = calculateBmiValue();
-        this.bmiCategory = getBmiCategory(bmiValue);
         healthList.addBmi(this);
 
     }
@@ -95,8 +68,17 @@ public class Bmi extends Health {
      *
      * @return The BMI value recorded in the {@code Bmi} object.
      */
-    public String getBmiValue() {
+    public String getBmiValueString() {
         return String.format(HealthConstant.TWO_DECIMAL_PLACE_FORMAT, bmiValue);
+    }
+
+    /**
+     * Retrieves BMI value recorded in {@code Bmi} object of {@code Double} type.
+     *
+     * @return The BMI value recorded in the {@code Bmi} object.
+     */
+    public Double getBmiValueDouble() {
+        return this.bmiValue;
     }
 
     /**
@@ -108,7 +90,6 @@ public class Bmi extends Health {
      */
     public static String getBmiCategory(double bmiValue) {
         assert bmiValue > HealthConstant.MIN_BMI: ErrorConstant.NEGATIVE_BMI_ERROR;
-
         if (bmiValue < HealthConstant.UNDERWEIGHT_BMI_THRESHOLD) {
             return HealthConstant.UNDERWEIGHT_MESSAGE;
         } else if (bmiValue < HealthConstant.NORMAL_BMI_THRESHOLD) {

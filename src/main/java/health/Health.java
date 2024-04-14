@@ -6,14 +6,9 @@ import java.time.LocalDate;
  * The Health class represents a Health object to track user's health information.
  */
 public class Health {
-    /**
-     * The date of Health object.
-     */
-    protected LocalDate date = null;
 
-    /**
-     * Constructor for Health object.
-     */
+    private LocalDate date = null;
+
     public Health() {
     }
 

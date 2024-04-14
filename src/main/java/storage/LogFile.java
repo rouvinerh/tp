@@ -13,7 +13,7 @@ import java.util.logging.SimpleFormatter;
 import constants.UiConstant;
 import utility.Validation;
 
-//@@ author L5-Z
+//@@author L5-Z
 /**
  * Represents a Logfile object used to write information and error logs for PulsePilot.
  */
@@ -76,6 +76,11 @@ public class LogFile {
         }
     }
 
+    /**
+     * Reads the log file content.
+     *
+     * @return Log file contents.
+     */
     public static String readLogContent() {
         StringBuilder logContent = new StringBuilder();
         try {

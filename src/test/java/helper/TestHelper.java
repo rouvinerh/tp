@@ -9,9 +9,10 @@ import constants.UiConstant;
  * Contains methods to help create the output string for testing
  * Methods that starts with add are used when objects of that type is created
  * Methods that starts with latest are used when the latest object is printed
- * Methods that starts with error are used when an error are thrown
+ * Methods that starts with error are used when an error is thrown.
  */
 public class TestHelper {
+    //@@author JustinSoh
     /**
      * Helper method to help create the output string when BMI is added
      * @param weight weight of the user
@@ -27,22 +28,20 @@ public class TestHelper {
                                              double bmiValue,
                                              String bmiCategory){
 
-        StringBuilder outputString = new StringBuilder();
-        outputString.append(UiConstant.PARTITION_LINE);
-        outputString.append(System.lineSeparator());
-        outputString.append(HealthConstant.BMI_ADDED_MESSAGE_PREFIX);
-        outputString.append(height);
-        outputString.append(UiConstant.LINE);
-        outputString.append(weight);
-        outputString.append(UiConstant.LINE);
-        outputString.append(date);
-        outputString.append(System.lineSeparator());
-        outputString.append(String.format(HealthConstant.PRINT_BMI_FORMAT,
-                date, bmiValue, bmiCategory));
-        outputString.append(System.lineSeparator());
-        outputString.append(UiConstant.PARTITION_LINE);
-        outputString.append(System.lineSeparator());
-        return outputString.toString();
+        return UiConstant.PARTITION_LINE +
+                System.lineSeparator() +
+                HealthConstant.BMI_ADDED_MESSAGE_PREFIX +
+                height +
+                UiConstant.LINE +
+                weight +
+                UiConstant.LINE +
+                date +
+                System.lineSeparator() +
+                String.format(HealthConstant.PRINT_BMI_FORMAT,
+                        date, bmiValue, bmiCategory) +
+                System.lineSeparator() +
+                UiConstant.PARTITION_LINE +
+                System.lineSeparator();
     }
 
     /**
@@ -135,21 +134,19 @@ public class TestHelper {
      * @return String representing the output
      */
     public static String addAppointmentString(String date, String time, String description) {
-        StringBuilder outputString = new StringBuilder();
-        outputString.append(UiConstant.PARTITION_LINE);
-        outputString.append(System.lineSeparator());
-        outputString.append(HealthConstant.APPOINTMENT_ADDED_MESSAGE_PREFIX);
-        outputString.append(date);
-        outputString.append(UiConstant.LINE);
-        outputString.append(time);
-        outputString.append(UiConstant.LINE);
-        outputString.append(description);
-        outputString.append(System.lineSeparator());
-        outputString.append(String.format(HealthConstant.PRINT_APPOINTMENT_FORMAT, date, time, description));
-        outputString.append(System.lineSeparator());
-        outputString.append(UiConstant.PARTITION_LINE);
-        outputString.append(System.lineSeparator());
-        return outputString.toString();
+        return UiConstant.PARTITION_LINE +
+                System.lineSeparator() +
+                HealthConstant.APPOINTMENT_ADDED_MESSAGE_PREFIX +
+                date +
+                UiConstant.LINE +
+                time +
+                UiConstant.LINE +
+                description +
+                System.lineSeparator() +
+                String.format(HealthConstant.PRINT_APPOINTMENT_FORMAT, date, time, description) +
+                System.lineSeparator() +
+                UiConstant.PARTITION_LINE +
+                System.lineSeparator();
     }
 
     /**
@@ -220,23 +217,19 @@ public class TestHelper {
     }
 
     public static String printGreetingsFoundString(String name){
-        StringBuilder output = new StringBuilder();
-        output.append(UiConstant.FILE_FOUND_MESSAGE);
-        output.append(name);
-        output.append(System.lineSeparator());
-        output.append(UiConstant.SUCCESSFUL_LOAD);
-        output.append(System.lineSeparator());
-        output.append(UiConstant.PARTITION_LINE);
-        output.append(System.lineSeparator());
-        return output.toString();
+        return UiConstant.FILE_FOUND_MESSAGE +
+                name +
+                System.lineSeparator() +
+                UiConstant.SUCCESSFUL_LOAD +
+                System.lineSeparator() +
+                UiConstant.PARTITION_LINE +
+                System.lineSeparator();
     }
 
-    public static String printGreetingNotFoundString(String name){
-        StringBuilder output = new StringBuilder();
-        output.append(UiConstant.FILE_MISSING_MESSAGE);
-        output.append(System.lineSeparator());
-        output.append(UiConstant.PARTITION_LINE);
-        output.append(System.lineSeparator());
-        return output.toString();
+    public static String printGreetingNotFoundString(){
+        return UiConstant.FILE_MISSING_MESSAGE +
+                System.lineSeparator() +
+                UiConstant.PARTITION_LINE +
+                System.lineSeparator();
     }
 }

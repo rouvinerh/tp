@@ -18,20 +18,17 @@ public class Gym extends Workout {
     //@@author JustinSoh
 
     private final ArrayList<GymStation> stations = new ArrayList<>();
+
     /**
-     * Constructs a new Gym Object
+     * Constructs a new Gym.
      * When a new Gym object is created, it is automatically added to a list of workouts.
-     * This is done through the super() call in the constructor.
-     *
      */
     public Gym() {
-        super();
         super.addIntoWorkoutList(this);
     }
 
     /**
      * Overloaded constructor that takes the optional date parameter.
-     * It also takes in the date parameter specified.
      *
      * @param stringDate String representing the date parameter specified.
      */
@@ -42,7 +39,6 @@ public class Gym extends Workout {
 
     /**
      * Adds a new GymStation object into the Gym object.
-     * It also logs the addition of the gym station into the log file.
      *
      * @param name String containing the name of the gym station.
      * @param numberOfSet String of the number of sets done.
@@ -98,11 +94,9 @@ public class Gym extends Workout {
 
     /**
      * Converts the Gym object into a string format suitable for writing into a file.
-     * This method serializes the Gym object, including all its GymStation objects, into a string. The resulting string
-     * follows a specific format to ensure that it can be correctly deserialized later.
      * For more examples, refer to the GymTest method {@code toFileString_correctInput_expectedCorrectString()}.
      *
-     * @return A string representing the Gym object and its GymStation objects isuitable for writing into a file.
+     * @return A string representing the Gym object and its GymStation objects unsuitable for writing into a file.
      */
     public String toFileString(){
         StringBuilder formattedString = new StringBuilder();
@@ -126,7 +120,8 @@ public class Gym extends Workout {
     }
 
     /**
-     * Used when printing all the workouts. This method takes in parameters {@code index}
+     * Used when printing all the workouts. This method takes in parameters {@code index}.
+     *
      * @param index indicates which particular gymStation is being queried.
      * @return A string representing the history format for gym.
      */
@@ -144,7 +139,6 @@ public class Gym extends Workout {
         return String.format(WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT,
                 prefix, date, gymStationString, gymSetString, UiConstant.DASH);
     }
-
 
     private void appendIntoStations(GymStation station) {
         stations.add(station);

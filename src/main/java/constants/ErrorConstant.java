@@ -14,7 +14,7 @@ public class ErrorConstant {
     // Invalid Input Header for Exception Class
     public static final String INVALID_INPUT_HEADER = "Invalid Input Exception: ";
 
-    public static final String INSUFFICIENT_INPUT_HEADER = "Invalid Input Exception: ";
+    public static final String INSUFFICIENT_INPUT_HEADER = "Insufficient Input Exception: ";
 
     public static final String OUT_OF_BOUND_HEADER = "Out of Bounds Error: ";
 
@@ -42,8 +42,6 @@ public class ErrorConstant {
     public static final String LOAD_GYM_FORMAT_ERROR = LOAD_ERROR + "Format of gym entry is incorrect/corrupted";
     public static final String LOAD_GYM_TYPE_ERROR = LOAD_ERROR + "Format of gym type is incorrect/corrupted";
     public static final String LOAD_NUMBER_OF_STATION_ERROR = LOAD_ERROR + "Number of stations is corrupted";
-    public static final String LOAD_NUMBER_OF_SETS_ERROR = LOAD_ERROR
-            + "Number of weights doesn't match number of sets";
 
     // Input Errors
     public static final String INVALID_COMMAND_ERROR = "Invalid command. Enter 'help' to view " +
@@ -217,7 +215,7 @@ public class ErrorConstant {
     public static final String INVALID_DESCRIPTION_ERROR = "Appointment description can only " +
             "contain alphanumeric characters, spaces, inverted commas and quotes!";
 
-    public static final String INSUFFICIENT_HISTORY_FILTER_ERROR = "Missing filter used!"
+    public static final String INSUFFICIENT_HISTORY_FILTER_ERROR = "Filter is missing!"
             + System.lineSeparator()
             + "Please use the 'latest' command followed by the '/item:' flag and one of the following options:"
             + System.lineSeparator()
@@ -310,4 +308,7 @@ public class ErrorConstant {
     public static final String NO_PERMISSIONS_ERROR = "Cannot read or write to current directory. Exiting.";
     public static final String INVALID_WORKOUT_TYPE_ERROR = "Invalid workout type! Please input" +
             " either /e:run or /e:gym!";
+    public static final String FILE_READ_HEADER = "File Read Error: ";
+    public static final String FILE_WRITE_HEADER = "File Write Error: ";
+    public static final String FILE_CREATE_HEADER = "File Create Error: ";
 }

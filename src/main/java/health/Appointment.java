@@ -12,30 +12,11 @@ import java.time.LocalTime;
  * It contains information about the date, time, and description of the appointment.
  */
 public class Appointment extends Health {
-    /**
-     * The date of the appointment.
-     */
 
-    protected LocalDate date;
-
-    /**
-     * The time of the appointment.
-     */
-    protected LocalTime time;
-
-    /**
-     * The description of the appointment.
-     */
-    protected String description;
-
-    /**
-     * A parser object to access Parser Class.
-     */
+    private LocalDate date;
+    private LocalTime time;
+    private String description;
     private final Parser parser = new Parser();
-
-    /**
-     * A healthlist object to access HealthList Class which manages and stores health data.
-     */
     private final HealthList healthList = new HealthList();
 
     //@@author syj02
@@ -55,7 +36,7 @@ public class Appointment extends Health {
     }
 
     /**
-     * Retrieves the date of the appointment of {@code LocalDate} type.
+     * Retrieves the date of the appointment of LocalDate type.
      *
      * @return The date of appointment.
      */

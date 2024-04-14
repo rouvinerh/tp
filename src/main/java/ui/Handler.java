@@ -71,7 +71,6 @@ public class Handler {
                 Command command = Command.valueOf(instruction);
                 switch (command) {
                 case EXIT:
-                    LogFile.writeLog("User ran command: exit", false);
                     System.out.println(UiConstant.EXIT_MESSAGE);
                     return;
 
@@ -112,7 +111,6 @@ public class Handler {
     }
 
     //@@author JustinSoh
-
     /**
      * Handles workout command.
      * Adds a Run or Gym object to PulsePilot.
@@ -146,7 +144,7 @@ public class Handler {
     //@@author rouvinerh
     /**
      * Handles history command.
-     * Show history of all exercises, run or gym.
+     * Show history of all valid objects recorded.
      *
      * @param userInput The user input string.
      */
@@ -160,7 +158,7 @@ public class Handler {
 
     /**
      * Handles the delete command.
-     * Deletes an item stored within PulsePilot.
+     * Deletes an item recorded.
      *
      * @param userInput The user input string.
      * @throws CustomExceptions.InvalidInput If the user input is invalid.
@@ -204,10 +202,10 @@ public class Handler {
 
     //@@author syj02
     /**
-     * Handles user input related to health data. Parses the user input to determine
-     * the type of health data and processes it accordingly.
+     * Handles Health command.
+     * Parses the user input to determine the type of health data and processes it accordingly.
      *
-     * @param userInput A string containing health data information of user.
+     * @param userInput The user input string.
      */
     public void handleHealth(String userInput) {
         try {
@@ -243,9 +241,9 @@ public class Handler {
     //@@author JustinSoh
 
     /**
-     * Prints the latest run, gym, BMI entry or Period tracked.
+     * Prints the latest valid object recorded.
      *
-     * @param userInput String representing user input.
+     * @param userInput The user input string.
      */
     public void handleLatest(String userInput) {
         String filter = parser.parseLatest(userInput);
@@ -273,7 +271,7 @@ public class Handler {
 
         DataFile.userName = name;
         System.out.println("Welcome aboard, Captain " + name);
-        output.printLine();
+        Output.printLine();
 
         System.out.println("Tips: Enter 'help' to view the pilot manual!");
         System.out.println("Initiating FTL jump sequence...");
@@ -307,7 +305,7 @@ public class Handler {
         }
 
         System.out.println("Terminal primed. Command inputs are now accepted...");
-        output.printLine();
+        Output.printLine();
     }
 
     /**

@@ -86,8 +86,8 @@ public class Output {
     /**
      * Returns the formatted string for printing runs.
      *
-     * @param index          The index of the run.
-     * @return A string
+     * @param index The index of the run.
+     * @return Formatted string for the run.
      */
     private String getFormattedRunWithIndex(int index, Run currentRun) {
         return String.format(WorkoutConstant.RUN_DATA_INDEX_FORMAT, index, currentRun);
@@ -233,9 +233,8 @@ public class Output {
      * Prints all the Run objects added to the list.
      *
      * @throws CustomExceptions.OutOfBounds  If index is out of bounds.
-     * @throws CustomExceptions.InvalidInput If user input is invalid.
      */
-    protected void printRunHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
+    protected void printRunHistory() throws CustomExceptions.OutOfBounds {
         printLine();
         System.out.println("Your run history:");
         ArrayList<Run> runList = WorkoutLists.getRuns();
@@ -270,6 +269,9 @@ public class Output {
     }
 
 
+    /**
+     * Prints all Gym entries.
+     */
     private void printGymList(ArrayList<Gym> gymList){
         for (int i = 0; i < gymList.size(); i++) {
             int index = i + 1;
@@ -285,21 +287,26 @@ public class Output {
     /**
      * Prints a message when the Gym list is empty.
      */
-
     private void printGymEmptyMessage(){
         printException(ErrorConstant.GYM_EMPTY_ERROR);
     }
 
+    /**
+     * Prints a message when the Run list is empty.
+     */
     private void printRunEmptyMessage(){
         printException(ErrorConstant.RUN_EMPTY_ERROR);
     }
 
+    /**
+     * Prints a message when workouts list is empty.
+     */
     private void printWorkoutEmptyMessage(){
         printException(ErrorConstant.WORKOUTS_EMPTY_ERROR);
     }
+
     /**
      * Prints all the information for all Gym objects within the list.
-     *
      */
     protected void printGymHistory() {
         printLine();
@@ -325,13 +332,11 @@ public class Output {
 
     //@@author j013n3
     /**
-     * Prints all Bmi objects recorded.
+     * Prints all Bmi entries recorded.
      *
      * @throws CustomExceptions.OutOfBounds  If there is access to a Bmi object that does not exist.
-     * @throws CustomExceptions.InvalidInput If there is invalid input.
      */
-    protected void printBmiHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
-
+    protected void printBmiHistory() throws CustomExceptions.OutOfBounds {
         try {
             printLine();
             HealthList.printBmiHistory();
@@ -343,13 +348,11 @@ public class Output {
     }
 
     /**
-     * Prints all Period objects recorded.
+     * Prints all Period entries recorded.
      *
      * @throws CustomExceptions.OutOfBounds  If there is access to a Period object that does not exist.
-     * @throws CustomExceptions.InvalidInput If there is invalid input.
      */
-    protected void printPeriodHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
-
+    protected void printPeriodHistory() throws CustomExceptions.OutOfBounds {
         try {
             printLine();
             HealthList.printPeriodHistory();
@@ -362,13 +365,11 @@ public class Output {
 
     //@@author syj02
     /**
-     * Prints all Appointment objects recorded.
+     * Prints all Appointment entries recorded.
      *
      * @throws CustomExceptions.OutOfBounds  If there is access to an Appointment object that does not exist.
-     * @throws CustomExceptions.InvalidInput If there is invalid input.
      */
-    protected void printAppointmentHistory() throws CustomExceptions.OutOfBounds, CustomExceptions.InvalidInput {
-
+    protected void printAppointmentHistory() throws CustomExceptions.OutOfBounds {
         try {
             printLine();
             HealthList.printAppointmentHistory();
@@ -381,7 +382,7 @@ public class Output {
 
     //@@author rouvinerh
     /**
-     * Prints the latest Run recorded.
+     * Prints the latest Run entry recorded.
      */
     protected void printLatestRun() {
 
@@ -400,10 +401,9 @@ public class Output {
     }
 
     /**
-     * Prints the latest Gym recorded.
+     * Prints the latest Gym entry recorded.
      */
     protected void printLatestGym() {
-
         try {
             printLine();
             Gym latestGym = WorkoutLists.getLatestGym();
@@ -452,7 +452,6 @@ public class Output {
      * Prints the latest Appointment entry recorded.
      */
     protected void printLatestAppointment(){
-
         try {
             printLine();
             HealthList.printLatestAppointment();
@@ -464,9 +463,9 @@ public class Output {
     }
 
     /**
-     * Handler function to print the latest entry of Run, Gym, Period, or BMI objects recorded.
+     * Prints the output for the latest command.
      *
-     * @param filter String used to determine the latest Run, Gym, Period, or BMI objects is to be printed.
+     * @param filter The type of item, which is set to Run, Gym, Bmi, Period, or Appointment.
      */
     protected void printLatest(String filter) {
         try {
@@ -501,9 +500,9 @@ public class Output {
     }
 
     /**
-     * Handler function to print all entries of Run, Gym, Period, or BMI objects recorded.
+     * Prints the output for the history command.
      *
-     * @param filter String used to determine if all Run, Gym, Period, or BMI objects are to be printed.
+     * @param filter The type of item, which is set to Workouts, Run, Gym, Bmi, Period, or Appointment.
      */
     public void printHistory(String filter) {
         try {
@@ -547,7 +546,7 @@ public class Output {
     /**
      * Prints a specified message and the exception error message.
      *
-     * @param message The custom message to be printed.
+     * @param message The custom error to be printed.
      */
     public void printException(String message) {
         System.err.println("\u001b[31mException Caught!" + System.lineSeparator() + message + "\u001b[0m");

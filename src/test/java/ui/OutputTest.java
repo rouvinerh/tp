@@ -107,7 +107,7 @@ class OutputTest {
         cleanup();
 
         output.printGreeting(UiConstant.FILE_NOT_FOUND, "Captain Voyager");
-        expected = TestHelper.printGreetingNotFoundString("Captain Voyager");
+        expected = TestHelper.printGreetingNotFoundString();
         assertEquals(expected, outContent.toString());
         cleanup();
     }

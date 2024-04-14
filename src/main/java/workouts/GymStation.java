@@ -31,10 +31,10 @@ public class GymStation {
      * @param numberOfRepetitions The number of repetitions done for each set.
      * @param weightsString       The weights done for each set.
      *                            The weights should be in the format "weight1,weight2,weight3..."
-     * @throws CustomExceptions.InvalidInput if an invalid input is passed in
-     * @throws CustomExceptions.InsufficientInput if input is empty
+     * @throws CustomExceptions.InvalidInput If an invalid input is passed in.
+     * @throws CustomExceptions.InsufficientInput If input is empty.
      */
-    protected GymStation(String exerciseName, String numberOfSetsStr, String numberOfRepetitions, String weightsString)
+    public GymStation(String exerciseName, String numberOfSetsStr, String numberOfRepetitions, String weightsString)
             throws CustomExceptions.InsufficientInput, CustomExceptions.InvalidInput {
         
         // Check input validity
@@ -56,7 +56,7 @@ public class GymStation {
      * @param weightsList     The weight done for the particular set.
      * @param numberOfRepetitions The number of repetitions done for the particular set.
      */
-    public void processSets(ArrayList<Double> weightsList, int numberOfRepetitions) {
+    private void processSets(ArrayList<Double> weightsList, int numberOfRepetitions) {
         for (int i = 0; i < numberOfSets; i++) {
             GymSet newSet = new GymSet(weightsList.get(i), numberOfRepetitions);
             sets.add(newSet);
@@ -110,38 +110,36 @@ public class GymStation {
     }
 
     /**
-     * Retrieves the string representation of a GymStation object with a specified delimiter
+     * Retrieves the string representation of a GymStation object with commas.
      * E.g. toRepString(",") returns "1,2,3"
-     * E.g. toRepString(":") returns "1:2:3"
-     * @param delimiter The delimiter to separate the repetitions.
+     *
      * @return A formatted string representing a GymStation object with the specified delimiter.
      */
-    public String toRepString(String delimiter) {
+    private String toRepString() {
         StringBuilder repString = new StringBuilder();
         for (int i = 0; i < sets.size(); i++) {
             String currentRep = String.valueOf(sets.get(i).getNumberOfRepetitions());
             repString.append(currentRep);
             if (i != sets.size() - 1) {
-                repString.append(delimiter);
+                repString.append(UiConstant.SPLIT_BY_COMMAS);
             }
         }
         return repString.toString();
     }
 
     /**
-     * Retrieves the string representation of a GymStation object with a specified delimiter
+     * Retrieves the string representation of a GymStation object with commas.
      * E.g. toWeightString(",") returns "10,20,30"
-     * E.g. toWeightString(":") returns "10:20:30"
-     * @param delimiter The delimiter to separate the weights.
+     *
      * @return A formatted string representing a GymStation object with the specified delimiter.
      */
-    public String toWeightString(String delimiter){
+    private String toWeightString(){
         StringBuilder weightString = new StringBuilder();
         for (int i = 0; i < sets.size(); i++) {
             String currentRep = String.valueOf(sets.get(i).getWeight());
             weightString.append(currentRep);
             if (i != sets.size() - 1) {
-                weightString.append(delimiter);
+                weightString.append(UiConstant.SPLIT_BY_COMMAS);
             }
         }
         return weightString.toString();
@@ -159,8 +157,8 @@ public class GymStation {
         StringBuilder fileString = new StringBuilder();
         String stationName = getStationName();
         String numOfSets = String.valueOf(getNumberOfSets());
-        String gymRepString = toRepString(UiConstant.SPLIT_BY_COMMAS).split(UiConstant.SPLIT_BY_COMMAS)[0];
-        String gymWeightString = toWeightString(UiConstant.SPLIT_BY_COMMAS);
+        String gymRepString = toRepString().split(UiConstant.SPLIT_BY_COMMAS)[0];
+        String gymWeightString = toWeightString();
         fileString.append(stationName);
         fileString.append(UiConstant.SPLIT_BY_COLON);
         fileString.append(numOfSets);
@@ -206,7 +204,6 @@ public class GymStation {
      */
     protected String validateGymStationName(String exerciseName) throws CustomExceptions.InvalidInput,
             CustomExceptions.InsufficientInput {
-
         validateExerciseNameNotEmpty(exerciseName);
         validateExerciseNamePattern(exerciseName);
         validateExerciseNameLength(exerciseName);
