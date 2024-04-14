@@ -35,7 +35,10 @@ alt endFlag is present
     activate HealthList #FFBBBB
     HealthList --> Period:
     deactivate HealthList #FFBBBB
-
+    Parser -> "output:Output": printAddPeriod()
+    activate "output:Output" #FFBBBB
+    "output:Output" --> Parser:
+    deactivate  "output:Output"
 
     else end date not present in latest period
     Parser -> HealthList1: getPeriod(latestPeriodIndex)
@@ -49,6 +52,10 @@ alt endFlag is present
     deactivate HealthList1 #FFBBBB
     deactivate "period:Period" #FFBBBB
     destroy "period:Period"
+    Parser -> "output:Output": printAddPeriod()
+    activate "output:Output" #FFBBBB
+    "output:Output" --> Parser:
+    deactivate  "output:Output"
     end
 
 else endFlag is not present
@@ -59,13 +66,13 @@ else endFlag is not present
     HealthList --> Period:
     deactivate HealthList #FFBBBB
     deactivate Period #FFBBBB
-    destroy HealthList
+    Parser -> "output:Output": printAddPeriod()
+    activate "output:Output" #FFBBBB
+    "output:Output" --> Parser:
+    deactivate  "output:Output"
 
 end
-Parser -> "output:Output": printAddPeriod()
-activate "output:Output" #FFBBBB
-"output:Output" --> Parser:
-deactivate  "output:Output"
-destroy Period
+
+destroy HealthList
 
 @enduml

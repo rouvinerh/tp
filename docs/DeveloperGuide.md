@@ -474,7 +474,7 @@ The user's input is processed to add a `Bmi` as follows:
 
 3. `validation.validateBmiInput()` is called to validate each parameter. If no exceptions caused by invalid parameters are thrown, the validated parameters are used to create the new `Bmi` object.
 
-4. The `Bmi` constructor adds the newly created object into `HealthList.BMIS` via `healthlist.addBmi()`. The BMI value and BMI category are determined from `Bmi.calculateBmiValue()` methods respectively and then stored.
+4. The `Bmi` constructor adds the newly created object into `HealthList.BMIS` via `healthlist.addBmi()`. The BMI value is determined from `Bmi.calculateBmiValue()` method and then stored.
 
 5. The `Bmi` object is passed to `Output.printAddBmi()` and a message acknowledging the successful adding is printed to the screen.
 
