@@ -382,7 +382,7 @@ The constants are broken down into the following 4 classes:
 
 ## Implementation of Commands
 
-**NOTE**: Not every single line of code is explained here, as any developer can read the source code to find out all the specifics. This helps to keep the guide shorter and easier to read.
+**NOTE**: Not every single line of code is explained here, as any developer can read the source code to find out all the specifics.
 
 * [Workout](#workout)
     * [Add Run](#add-run)
@@ -401,14 +401,13 @@ The constants are broken down into the following 4 classes:
 
 ### Workout
 
-User input is passed to `Handler.processInput()`, which determines the command used is `workout`. The input is then passed to `Handler.handleWorkout()`.
+User input is passed to `handler.processInput()`, determining the command used is `workout`. Then, `Handler.handleHealth()` determines type of `workout` command used.
 
 #### Add Run
 
 The user's input is processed to add a run as follows:
 
-1. `parser.parseRunInput()` splits the input using `parser.splitRunInput()` using the flags, returning a `String[]` variable.
-    - Method also extracts the optional `date` parameter if present.
+1. `parser.parseRunInput()` splits the input using `parser.splitRunInput()` using the flags, returning a `String[]` variable. Extracts the optional `date` parameter if present.
 
 2. `validation.validateRunInput()` is called to validate each parameter. If no exceptions caused by invalid parameters are thrown, the validated parameters are used to create the new `Run` object.
 
@@ -418,8 +417,6 @@ The user's input is processed to add a run as follows:
 
 5. The new `Run` object is then passed to `output.printAddRun()` and a message acknowledging the successful adding is printed to the screen.
 
-An overloaded `Run` and `Workout` constructor is used to allow for `date` to be optional. 
-
 This is the sequence diagram for adding a run:
 
 ![Run Sequence Diagram](img/sequence_diagrams/run_sequence_diagram.png)
@@ -428,16 +425,13 @@ This is the sequence diagram for adding a run:
 
 ---
 
-<div style="page-break-after: always;"></div>
-
 <!-- @@author JustinSoh -->
 
 #### Add Gym
 
 The user's input is processed to add a gym is as follows:
 
-1. `parser.parseGymInput()` splits the input using `parser.splitGymInput()` using the flags, returning a `String[]` variable.
-    - Method also extracts the optional `date` parameter if present.
+1. `parser.parseGymInput()` splits the input using `parser.splitGymInput()` using the flags, returning a `String[]` variable. Extracts the optional `date` parameter if present.
 
 2. `validation.validateGymInput()` is called to validate each parameter. If no exceptions caused by invalid parameters are thrown, the validated parameters are used to create the new `Gym` object.
 
@@ -485,7 +479,7 @@ If the user types `back` at any given point when taking in `GymStation` input, t
 
 ### Health
 
-User input is passed to `handler.processInput()`, which determines the command used is `workout`. The input is then passed to `Handler.handleHealth()`. as Either `Bmi`, `Period` or `Appointment` object is added, or a menstrual cycle prediction is made.
+User input is passed to `handler.processInput()`, determining the command used is `health`. Then, `Handler.handleHealth()` determines type of `health` command used.
 
 #### Add BMI
 
@@ -807,16 +801,7 @@ Simultaneously, PulsePilot facilitates access to this vital data for various hea
 
 ##### Launching
 
-1. Ensure that you have Java 11 installed.
-2. Download the latest `pulsepilot.jar` from [here](https://github.com/AY2324S2-CS2113T-T09-4/tp/releases/tag/v2.1).
-3. Copy the file to the folder you want to use as the home folder for PulsePilot.
-4. Open a command terminal (either `cmd.exe` or `bash`);
-     - `cd` to the folder with `pulsepilot.jar` in it.
-     -  Run `java -jar pulsepilot.jar`.
-5. The application will display a welcome message if started successfully. 
-6. `pulsepilot_log.txt`, `pulsepilot_data.txt` and `pulsepilot_log.txt.lck` will be created.
-    - The `.lck` file is known as a Lock File, covered the [glossary](#glossary).
-7. Bot will begin with user induction to retrieve the username as shown below:
+With Java 11 and the latest `pulsepilot.jar` installed from [here](https://github.com/AY2324S2-CS2113T-T09-4/tp/releases/tag/v2.1), PulsePilot should show the following output when first started:
 
 ![Opening Prompt from PulsePilot](img/output/start_prompt.png)
 
@@ -824,7 +809,7 @@ Simultaneously, PulsePilot facilitates access to this vital data for various hea
 
 1. Exit PulsePilot using the `exit` command.
 2. A farewell message is printed as shown below:
-3. `pulsepilot_hash.txt` is created upon `exit`, and `pulsepilot_data.txt` will be written to.
+3. `pulsepilot_hash.txt` is created and `pulsepilot_data.txt` will be written to upon exit.
 
 ![Shutdown](img/output/shutdown.png)
 

@@ -140,8 +140,6 @@ Expected Output:
 
 ---
 
-<div style="page-break-after: always;"></div>
-
 <!-- @@author JustinSoh -->
 
 ### Workout: Gym
