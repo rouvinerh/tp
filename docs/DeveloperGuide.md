@@ -72,12 +72,11 @@ The **_Architecture Diagram_** is given below:
 
 The `seedu.pulsepilot` package contains the `Main` method, which is the entry point of the application. It is responsible for initialising and processing of user input, and the termination of PulsePilot.
 
-- `Ui`: The user interface of PulsePilot used for handling user input and printing messages. 
+- `Ui`: The user interface of PulsePilot used for handling user input and printing messages.
 - `Storage`: Contains the data storage and logging components for PulsePilot.
 - `Health`: Stores health-related information.
 - `Workouts`: Stores workout-related information.
 - `Utility`: Contains utility functions, such as input parsing and validation.
-- `PulsePilot`: The main entry point for the application.
 - `Constants`: Contains all constants used in PulsePilot.
 
 ###### [Back to table of contents](#table-of-contents)
@@ -100,7 +99,7 @@ The sequence diagram below shows how the application is initialised and then pro
 
 1. PulsePilot is started via `handler.initialiseBot()`, which checks whether the data file is present and its integrity if applicable. How this is done will be covered [here](#storage-of-data).
 
-2. `handler.processInput()` is then used to get the user's input for commands.
+2. `handler.processInput()` is then used to get the user's input, determining what command being used and passes the input to the right `handler` method.
 
 3. When PulsePilot exits gracefully via the `exit` command, `terminateBot()` is called to write to the data and hash files.
     - If a user exits without calling terminateBot(), **data will be lost!** Likewise, this is covered [here](#storage-of-data).
@@ -142,7 +141,7 @@ The `Workout` package is responsible for tracking run and gym workouts from the 
 
 ![WorkoutLists Class Diagram](img/class_diagrams/workoutlist_class_diagram.png)
 
-The class contains methods to retrieve all or the latest added object, and delete objects. 
+The class contains methods to retrieve all or the latest added object, and delete objects.
 
 The `clearWorkoutsRunGym()` method is used to clear all the data stored within each `ArrayList`, which is mainly used for unit testing.
 
@@ -158,7 +157,9 @@ The `clearWorkoutsRunGym()` method is used to clear all the data stored within e
 
 - `date`: An **optional** `LocalDate` attribute representing the date of the workout. Implemented via an overloaded `Gym()` constructor.
 
-**A `Gym` object contains 1 or more `GymStation` objects.**
+**A `Gym` object contains 0 or more `GymStation` objects.** A `Gym` with 0 `GymStation` objects can exist through using `workout /e:gym` and then `back`, but is deleted right after.
+
+
 
 The class diagram for gym is as follows:
 
@@ -176,7 +177,7 @@ The class diagram for gym is as follows:
 -  `ArrayList<GymSet>`: An `ArrayList` of `GymSet` object, representing the varying number of sets done at one station.
 - `numberOfSets`: The number of sets done as an `int`.
 
-**A `GymStation` object contains 1 or more `GymSet` objects.**
+**A `GymStation` object contains 1 or more `GymSet` objects.** 
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -307,7 +308,7 @@ The `CustomExceptions` class inherits from the `Exception` class from Java. This
 
 The exceptions are further broken down into the following:
 
-- `OutOfBounds`: When an access with an illegal index is made.
+- `OutOfBounds`: When access with an illegal index is made.
 - `InvalidInput`: When user enters input that does not conform with required format or is malformed.
 - `FileReadError`: Unable to read the files for `Storage`.
 - `FileWriteError`: Unable to write files for `Storage`.
@@ -386,16 +387,14 @@ User input is passed to `Handler.processInput()`, which determines the command u
 
 The user's input is processed to add a run as follows:
 
-1. `handler.handleWorkout()` determines the type of workout to add is `run`, and calls the `parser.parseRunInput()` method to process the user's run input.
-
-2. `parser.parseRunInput()` splits the input using `parser.splitRunInput()` using the flags, returning a `String[]` variable.
+1. `parser.parseRunInput()` splits the input using `parser.splitRunInput()` using the flags, returning a `String[]` variable.
     - Method also extracts the optional `date` parameter if present.
 
-3. `validation.validateRunInput()` is called to validate each parameter. If no exceptions caused by invalid parameters are thrown, the validated parameters are used to create the new `Run` object.
+2. `validation.validateRunInput()` is called to validate each parameter. If no exceptions caused by invalid parameters are thrown, the validated parameters are used to create the new `Run` object.
 
-4. The `Run` constructor checks whether the distance given and pace calculated is within the valid range. If not, it throws an exception.
+3. The `Run` constructor checks whether the distance given and pace calculated is within the valid range. If not, it throws an exception.
 
-5. Afterwards, the `Workout` constructor is implicitly called since `Run` inherits from `Workout`. `workout.addIntoWorkoutList()` is called, which calls `workoutLists.addRun()` to add the `Run`.  
+4. Afterwards, a `Workout` object is implicitly created since `Run` inherits from `Workout`. `workout.addIntoWorkoutList()` is called, creating a new `WorkoutLists` object, and `workoutLists.addRun()` is used to add the `Run`.  
 
 5. The new `Run` object is then passed to `output.printAddRun()` and a message acknowledging the successful adding is printed to the screen.
 
@@ -415,16 +414,14 @@ This is the sequence diagram for adding a run:
 
 The user's input is processed to add a gym is as follows:
 
-1. `handler.handleWorkout()` determines the type of workout which is `gym`, and calls the `parser.parseGymInput()` method to process the user's gym input.
-
-2. `parser.parseGymInput()` splits the input using `parser.splitGymInput()` using the flags, returning a `String[]` variable.
+1. `parser.parseGymInput()` splits the input using `parser.splitGymInput()` using the flags, returning a `String[]` variable.
     - Method also extracts the optional `date` parameter if present.
 
-3. `validation.validateGymInput()` is called to validate each parameter. If no exceptions caused by invalid parameters are thrown, the validated parameters are used to create the new `Gym` object.
+2. `validation.validateGymInput()` is called to validate each parameter. If no exceptions caused by invalid parameters are thrown, the validated parameters are used to create the new `Gym` object.
 
-4. The `Gym` constructor adds the newly created object into `workoutList.WORKOUTS` and `workoutList.GYMS` via `addWorkout()` and `addGym()`.  
+3. Afterwards, a `Workout` object is implicitly created since `Gym` inherits from `Workout`. `workout.addIntoWorkoutList()` is called, creating a new `WorkoutLists` object, and `workoutLists.addGym()` is used to add the `Gym`.
 
-5. Afterwards, `parser.parseGymStationInput()` is called to retrieve input for each gym station.
+4. Afterwards, `parser.parseGymStationInput()` is called to retrieve input for each gym station.
 
 This is the sequence diagram for adding a `Gym` thus far:
 
@@ -434,13 +431,13 @@ This is the sequence diagram for adding a `Gym` thus far:
 
 After adding a `Gym` object, the user is then prompted for input for the gym station. The gym station input is processed as follows:
 
-1. `parser.parseGymStationInput()` is called, which starts a loop that iterates `NUMBER_OF_STATION` times, adding a `GymStation` object each time.
+1. `parser.parseGymStationInput()` is called, which starts a loop that iterates `NUMBER_OF_STATION` times.
 
 2. `output.printGymStationPrompt()` is used to print the prompt for the user, and user input is retrieved.
 
 3. User input is split using `Parser.splitGymStationInput()` which as the name suggests, splits the parameters from the user, returning a `String[]` variable.
 
-4. After splitting the input, the parameters are passed to  to `newGym.addStation()`.
+4. After splitting the input, the parameters are passed to `newGym.addStation()`.
 
 5. `newGym.addStation()` will then create a `GymStation` object during which the input is checked within the `GymStation` class.
 
@@ -453,6 +450,8 @@ After adding a `Gym` object, the user is then prompted for input for the gym sta
 This is the sequence diagram for adding a `GymStation` object:
 
 ![Gym Station Sequence](img/sequence_diagrams/gym_station_sequence_diagram.png)
+
+If the user types `back` at any given point when taking in `GymStation` input, this method returns and the `Gym` object is deleted.
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -468,15 +467,13 @@ User input is passed to `handler.processInput()`, which determines the command u
 
 The user's input is processed to add a `Bmi` as follows:
 
-1. `handler.handleHealth()` determines the type of health to add is `bmi`, and calls the `parser.parseBmiInput()` method to process the user's BMI input.
+1. `parser.parseBmiInput()` splits the user's input string using `parser.splitBmiInput()` using the flags, returning a `String[]` variable.
 
-2. `parser.parseBmiInput()` splits the input using `parser.splitBmiInput()` using the flags, returning a `String[]` variable.
+2. `validation.validateBmiInput()` is called to validate each parameter. If no exceptions caused by invalid parameters are thrown, the validated parameters are used to create the new `Bmi` object.
 
-3. `validation.validateBmiInput()` is called to validate each parameter. If no exceptions caused by invalid parameters are thrown, the validated parameters are used to create the new `Bmi` object.
+3. The `Bmi` constructor creates a `HealthList` object, and adds the newly created object into `HealthList.BMIS` via `healthlist.addBmi()`. The BMI value and BMI category are determined from `Bmi.calculateBmiValue()` methods , and only the BMI Value is stored.
 
-4. The `Bmi` constructor adds the newly created object into `HealthList.BMIS` via `healthlist.addBmi()`. The BMI value and BMI category are determined from `Bmi.calculateBmiValue()` methods respectively and then stored.
-
-5. The `Bmi` object is passed to `Output.printAddBmi()` and a message acknowledging the successful adding is printed to the screen.
+4. The `Bmi` object is passed to `Output.printAddBmi()` and a message acknowledging the successful adding is printed to the screen.
 
 This is the sequence diagram for adding a BMI entry:
 
@@ -490,29 +487,26 @@ This is the sequence diagram for adding a BMI entry:
 
 The user's input is processed to add a `Period` as follows:
 
-1. `handler.handleHealth()` determines the type of health add is `period`, and calls the `parser.parsePeriodInput()` method to process the user's period input.
-
-2. `parser.parsePeriodInput()` splits the input using `parser.splitPeriodInput()` using the flags, returning a `String[]` variable.
+1. `parser.parsePeriodInput()` splits the input using `parser.splitPeriodInput()` using the flags, returning a `String[]` variable.
     - Method also extracts the optional end date parameter if present.
 
-3. `validation.validatePeriodInput()` is called to validate each parameter. If no exceptions caused by invalid parameters are thrown, the validated parameters are used to create the new `Period` object.
+2. `validation.validatePeriodInput()` is called to validate each parameter. If no exceptions caused by invalid parameters are thrown, the validated parameters are used to create the new `Period` object.
 
-4. The `Period` constructor adds the newly created object into `healthlist.PERIODS`.
+3. The `Period` constructor adds the newly created object into `healthlist.PERIODS`.
 
-5. The `Period` object is passed to `output.printAddPeriod()` and a message acknowledging the successful adding is printed to the screen.
+4. The `Period` object is passed to `output.printAddPeriod()` and a message acknowledging the successful adding is printed to the screen.
 
 Overloaded constructor is used to add the optional end date.
 
-This is the sequence diagram for adding a period from `parser.parsePeriodInput()`:
+This is the sequence diagram for adding a period entry:
 
 ![Period Sequence Diagram](img/sequence_diagrams/period_sequence.png)
-
 
 ##### Make Period Prediction
 
 The user's input is processed to make a period prediction if there are **at least 4 `Period` objects recorded** as follows:
 
-1. `handler.handleHealth()` determines the type of health which is `prediction`, and calls the `parser.parsePredictionInput()` method to process the user's prediction input.
+1. The `parser.parsePredictionInput()` method to process the user's prediction input.
 
 2. If the size of `PeriodList` is larger or equals to 4, `printLatestThreeCycles()` is called to print the latest three cycles. Else, an exception is thrown.
 
@@ -530,15 +524,13 @@ The user's input is processed to make a period prediction if there are **at leas
 
 The user's input is processed to add an Appointment  as follows:
 
-1. `handler.handleHealth()` determines the type of health which is `appointment`, and calls the `parser.parseAppointmentInput()` method to process the user's appointment input.
+1. `parser.parseAppointmentInput()` splits the input using `parser.splitAppointmentDetails()` using the flags, returning a `String[]` variable.
 
-2. `parser.parseAppointmentInput()` splits the input using `parser.splitAppointmentDetails()` using the flags, returning a `String[]` variable.
+2. `validation.validateAppointmentDetails()` is called to validate each parameter. If no exceptions caused by invalid parameters are thrown, the validated parameters are used to create the new `Appointment` object.
 
-3. `validation.validateAppointmentDetails()` is called to validate each parameter. If no exceptions caused by invalid parameters are thrown, the validated parameters are used to create the new `Appointment` object.
+3. The `Appointment` constructor creates a new `HealthList` object and adds the newly created object into `HealthList.APPOINTMENTS` via `healthlist.addAppointment()`.
 
-4. The `Appointment` constructor adds the newly created object into `HealthList.APPOINTMENTS` via `healthlist.addAppointment()`.
-
-5. The new `Appointment` object is passed to `Output.printAddAppointment()` and a message acknowledging the successful adding is printed to the screen.
+4. The new `Appointment` object is passed to `Output.printAddAppointment()` and a message acknowledging the successful adding is printed to the screen.
 
 This is the sequence diagram for adding an Appointment from `parseAppointmentInput()`:
 
@@ -552,11 +544,9 @@ This is the sequence diagram for adding an Appointment from `parseAppointmentInp
 
 ### View History
 
-1. User input is passed to `handler.processInput()`, which determines the command used is `history`, thus passing the user's input to `handler.handleHistory()`.
+1.  `parser.parseHistory()` is called to extract and validate the filter string entered via the `item` flag from user input.
 
-2. `handler.handleHistory()` uses `parser.parseHistory()` method to extract and validate the filter string entered via the `item` flag.
-    - If the user input is valid, it will return the `filter` string.
-    - Else, returns `null`.
+2. `validation.validateHistoryFilter()` is called to check whether the filter string is valid. If not, it throws an exception.
 
 3. `handler.handleHistory()` will then call `output.printHistory(filter)` which uses the `filter` string to determine which method to use, as shown below:
 
@@ -577,11 +567,9 @@ This is the sequence diagram for `history`:
 
 ### View Latest
 
-1. User input is passed to `handler.processInput()`, which determines the command used is `latest`, thus passing the user's input to `handler.handleLatest()`.
+1.  `parser.parseLatest()` is called to extract and validate the filter string entered via the `item` flag from user input.
 
-2. `handler.handleLatest()` uses `parser.parseLatest()` method to extract and validate the filter string entered via the `item` flag.
-    - If the user input is valid, it will return the `filter` string.
-    - Else, returns `null`.
+2. `validation.validateDeleteAndLatestFilter()` is called to check whether the filter string is valid. If not, it throws an exception. Both `delete` and `latest` have the same set of filters.
 
 3. `handler.handleHistory()` will then call `output.printLatest(filter)` which uses the `filter` string to determine which method to use, as shown below:
 
@@ -605,13 +593,11 @@ This is the sequence diagram for `latest`:
 
 Deleting an item follows this sequence:
 
-1. User input is passed to `handler.processInput()`, determining that the command used is `delete`, thus passing the user's input to `handler.handleDelete()`.
+1. User input is passed to `parser.parseDeleteInput()`, and the input is split by `Parser.splitDeleteInput()` using the flags, returning a `String[] deleteDetails` variable containing the `filter` string and `index` integer for the item to delete.
 
-2. User input is passed to `parser.parseDeleteInput()`, and the input is split by `Parser.splitDeleteInput()` using the flags, returning a `String[] deleteDetails` variable containing the `filter` string and `index` integer for the item to delete.
+2. Split `deleteDetails` are passed to `validation.validateDeleteInput()`. If no exceptions caused by invalid parameters are thrown, `String[] validDeleteDetails` is returned.
 
-3. Split `deleteDetails` are passed to `validation.validateDeleteInput()`. If no exceptions caused by invalid parameters are thrown, `String[] validDeleteDetails` is returned.
-
-4. `validDeleteDetails` is passed back to `Handler`, which calls the respective `deleteItem()` method from either `HealthList` or `WorkoutList` depending on the details passed. 
+3. `validDeleteDetails` is passed back to `Handler`, which calls the respective `deleteItem()` method from either `HealthList` or `WorkoutList` depending on the details passed.
 
     - `run`: `WorkoutList.deleteRun()`
     - `gym`: `WorkoutList.deleteGym()`
@@ -630,13 +616,13 @@ Deleting an item follows this sequence:
 
 ### Storage of Data
 
-The storage is split into `DataFile` for the reading and saving of user data, and `LogFile` for writing logs. `DataFile` is covered here, since the storing and reading of user data is more important to a developer.
+The storage is split into `DataFile` for the reading and saving of user data, and `LogFile` for writing logs.
 
 #### Saving Data
 
 Saving of data happens only when the `exit` command is used:
 
-1. Upon `exit`, `handler.terminateBot()` is called, which calls `dataFile.saveDataFile()`.
+1. Upon `exit` command being used, `handler.terminateBot()` is called, which calls `dataFile.saveDataFile()`.
 
 2. The name of the user, health data and workout data are written to `pulsepilot_data.txt` via `dataFile.writeName()`, `dataFile.writeHealthData()` and `dataFile.writeWorkoutData()`.
 
@@ -650,10 +636,15 @@ The reading of files has been implemented as follows:
 
 1. The file hash from `pulsepilot_hash.txt` is read, and the SHA-256 hash of `pulsepilot_data.txt` is calculated.
     - If the hashes do not match, the files have been tampered with. The data and hash file are deleted (if present), and PulsePilot exits.
+    - If one of the files is missing, PulsePilot attempts to delete both, and exits. User must run bot again to re-create both files.
 
 2. The first line is read and split to get the user's name.
 
 3. Subsequent lines contain the health and workout data stored, which is split and added to `HealthList` and `WorkoutList` respectively.
+
+#### Log File
+
+`pulsepilot_log.txt` is created when the bot starts if not present, and logs are added to it each time the user interacts with it. If the file is already present, PulsePilot appends to it. 
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -678,7 +669,7 @@ The reading of files has been implemented as follows:
 PulsePilot is built for both patients and healthcare professionals.
 
 - Patients can upload data related to their well-being via the health tracker and progress on recovery exercises through the workout tracker.
-- Healthcare professionals can use PulsePilot to easily monitor their patient's recovery progress and general well-being outside of the hospital using the storage features the app provides.
+- Healthcare professionals can use PulsePilot to easily monitor their patient's recovery progress and general well-being outside the hospital using the storage features the app provides.
 - For users that are familiar with the CLI and can type fast.
 
 ###### [Back to table of contents](#table-of-contents)
@@ -699,19 +690,19 @@ Simultaneously, PulsePilot facilitates access to this vital data for various hea
 
 ### User Stories
 
-| Version | As a ...              | So that I can ...                                     | I want to ...                         |
-|---------|-----------------------|-------------------------------------------------------|---------------------------------------|
-| 1.0     | Gym enthusiast        | Track my progress in the gym                                 | Record my gym session details                    |
-| 1.0     | Runner                | See my relative speed for each run                    | See my running pace                   |
-| 1.0     | Runner                | Track my running progress over time                   | Record my runs                           |
-| 1.0     | Health conscious user | Track change in my weight over time                   | Calculate my BMI                      |
-| 1.0     | Female user           | Monitor any deviations from my normal menstrual cycle | Track my menstrual cycle              |
-| 2.0     | Runner                | Quickly view my most recent run details               | See my latest run                     |
-| 2.0     | Gym enthusiast        | Quickly view my most recent gym session               | See my latest gym session             |
-| 2.0     | Gym enthusiast        | Accurately track my progress and strength gains       | Enter varying weights for sets        |
+| Version | As a ...              | So that I can ...                                     | I want to ...                     |
+|---------|-----------------------|-------------------------------------------------------|-----------------------------------|
+| 1.0     | Gym enthusiast        | Track my progress in the gym                          | Record my gym session details     |
+| 1.0     | Runner                | See my relative speed for each run                    | See my running pace               |
+| 1.0     | Runner                | Track my running progress over time                   | Record my runs                    |
+| 1.0     | Health conscious user | Track change in my weight over time                   | Calculate my BMI                  |
+| 1.0     | Female user           | Monitor any deviations from my normal menstrual cycle | Track my menstrual cycle          |
+| 2.0     | Runner                | Quickly view my most recent run details               | See my latest run                 |
+| 2.0     | Gym enthusiast        | Quickly view my most recent gym session               | See my latest gym session         |
+| 2.0     | Gym enthusiast        | Accurately track my progress and strength gains       | Enter varying weights for sets    |
 | 2.0     | Female user           | Plan ahead and better manage my health                | Predict my next period start date |
-| 2.0     | Injured user          | Remember the appointments I have                      | Track my medical appointments         |
-| 2.0     | Careless user          | Remove erroneous entries caused by typos                      | Be able to delete items tracked         |
+| 2.0     | Injured user          | Remember the appointments I have                      | Track my medical appointments     |
+| 2.0     | Careless user         | Remove erroneous entries caused by typos              | Be able to delete items tracked   |
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -731,12 +722,12 @@ Simultaneously, PulsePilot facilitates access to this vital data for various hea
 
 ### Glossary
 
-| Term    | Explanation                                                                                                                                              |
-|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Flags    | The strings used by PulsePilot to differentiate parameters. For example, `/date:` is the date flag, used to specify the date for a given command. |
-| UI  | The User Interface (UI), which is the point of contact between users and our application. This component handles the user input, and prints messages or errors.                                                  |
-| Storage | Responsible for saving data, and reading the data file to resume a previous save state. For our application, this also involves checking the integrity of the file and throwing errors if needed.                                                                     |
-| Lock File | A `.lck` file, created to prevent multiple processes or users from accessing a file.                                                                      |
+| Term      | Explanation                                                                                                                                                                                       |
+|-----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Flags     | The strings used by PulsePilot to differentiate parameters. For example, `/date:` is the date flag, used to specify the date for a given command.                                                 |
+| UI        | The User Interface (UI), which is the point of contact between users and our application. This component handles the user input, and prints messages or errors.                                   |
+| Storage   | Responsible for saving data, and reading the data file to resume a previous save state. For our application, this also involves checking the integrity of the file and throwing errors if needed. |
+| Lock File | A `.lck` file, created to prevent multiple processes or users from accessing a file.                                                                                                              |
 
 ###### [Back to table of contents](#table-of-contents)
 
