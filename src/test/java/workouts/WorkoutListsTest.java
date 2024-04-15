@@ -104,10 +104,10 @@ class WorkoutListsTest {
             }
 
             ArrayList<? extends Workout> allList = WorkoutLists.getWorkouts();
-            assertEquals(gym1, (Gym) allList.get(0));
-            assertEquals(gym2, (Gym) allList.get(1));
-            assertEquals(run1, (Run) allList.get(2));
-            assertEquals(run2, (Run) allList.get(3));
+            assertEquals(gym1, allList.get(0));
+            assertEquals(gym2, allList.get(1));
+            assertEquals(run1, allList.get(2));
+            assertEquals(run2, allList.get(3));
 
         } catch (CustomExceptions.InvalidInput | CustomExceptions.InsufficientInput e) {
             fail("Should not throw an exception.");
@@ -117,7 +117,7 @@ class WorkoutListsTest {
 
     /**
      * Tests the behavior of getting the latest run from the run list.
-     * Expected behavior is for actual to equal to the secondRun
+     * Expected behavior is for actual to equal to the secondRun.
      */
     @Test
     void getLatestRun_properList_correctRetrieval() {

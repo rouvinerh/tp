@@ -8,9 +8,8 @@ import constants.WorkoutConstant;
 
 /**
  * Represents a Run object that extends the Workout class.
- * It takes in the time and distance of the run as input.
- * It also calculates the pace of the run based on the time and distance.
- * It also formats the time and distance into a readable format.
+ * It takes in the time and distance of the run as input, calculates the pace of the run based on the time and distance,
+ * and formats the time and distance into a readable String format when printed.
  */
 public class Run extends Workout {
     //@@author rouvinerh
@@ -106,6 +105,7 @@ public class Run extends Workout {
      * Retrieves the string representation of a Run object when printing all history.
      * Uses WorkoutConstant.HISTORY_WORKOUTS_DATA_FORMAT to format the string.
      * Ensures that the format of the string is consistent when printing gym and run objects.
+     *
      * @return a formatted string representing a Run object.
      */
     public String getFormatForAllHistory() {

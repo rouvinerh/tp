@@ -57,7 +57,7 @@ class RunTest {
 
     /**
      * Tests the behaviour of checkRunTime when invalid inputs are passed.
-     * Expects InvalidInput exception to be thrown with the correct error message
+     * Expects InvalidInput exception to be thrown with the correct error message.
      */
     @Test
     void processRunTime_invalidInputs_expectInvalidInputExceptionWithCorrectErrorMessage() {
