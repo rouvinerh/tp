@@ -405,7 +405,7 @@ class OutputTest {
 
     /**
      * Tests the behaviour of printAppointmentHistory when two Appointment objects are added.
-     * Expects two Appointment objects to be pritned.
+     * Expects two Appointment objects to be printed.
      *
      * @throws CustomExceptions.OutOfBounds  If there is out of bounds access.
      * @throws CustomExceptions.InvalidInput If there is invalid input.
@@ -499,8 +499,7 @@ class OutputTest {
 
 
     /**
-     * Tests the behaviour of the printGymHistory function, which should print both Gyms
-     * added.
+     * Tests the behaviour of the printGymHistory function, which should print both Gyms added.
      */
     @Test
     void printGymHistory_correctInput_expectPrintGymHistory() {
@@ -561,7 +560,7 @@ class OutputTest {
     }
 
     /**
-     * Test the behaviour of the printRunHistory function, which should print both Runs and Gyms
+     * Test the behaviour of the printRunHistory function, which should print both Runs and Gyms.
      */
     @Test
     void printWorkoutHistory() {
