@@ -152,6 +152,8 @@ Examples:
 
 ###### [Back to table of contents](#table-of-contents)
 
+---
+
 #### Adding Gym Stations
 
 Upon entry of the <code style="color: #D85D43;">workout /e:gym</code> command, the bot will prompt for further details for each station done:
