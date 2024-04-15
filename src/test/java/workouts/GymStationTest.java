@@ -89,8 +89,7 @@ class GymStationTest {
 
     /**
      * Tests the behaviour of a correct weights array being passed to validateWeightsArray.
-     * Expects no exception to be thrown, and the correct ArrayList of integers to be
-     * returned.
+     * Expects no exception to be thrown, and the correct ArrayList of integers to be returned.
      *
      * @throws CustomExceptions.InvalidInput If the input string does not have the right format.
      */
