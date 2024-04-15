@@ -88,7 +88,7 @@ class RunTest {
      * Test the behaviour of checkDistance when valid distance is passed.
      * Expects the 2 decimal place string distance to be returned.
      *
-     * @throws CustomExceptions.InvalidInput If distance is outside valid range
+     * @throws CustomExceptions.InvalidInput If distance is outside valid range.
      */
     @Test
     void checkDistance_validDistance_returnTwoDecimalPlaceDistance() throws CustomExceptions.InvalidInput {
