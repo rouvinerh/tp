@@ -14,7 +14,7 @@ Below is the breakdown of what I have done.
 
 - Implemented the `WorkoutList` class, to help track and manage newly created `Run` and `Gym` objects.
 
-- Incremented the `Workout`, `Gym`, `GymStation`, and `GymSet` class
+- Implemented the `Workout`, `Gym`, `GymStation`, and `GymSet` class
 
 
 #### Enhancements Implemented
