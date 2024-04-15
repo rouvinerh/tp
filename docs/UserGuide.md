@@ -116,7 +116,6 @@ Format: <code style="color: #D85D43;">workout /e:run /d:DISTANCE /t:TIME [/date:
 * `DATE` is in `DD-MM-YYYY` format (i.e. `19-03-2024`). The date is **optional**, and if not specified, defaults to `NA`.
 
 > ⚠️ If `HH` is set to `00`, the bot will throw an error. Please use `MM:SS` if the `HH` field is not needed!
-
 > ⚠️ Date specified cannot be later than the current date!
 
 Examples:
@@ -253,8 +252,6 @@ Expected Output:
 ###### [Back to table of contents](#table-of-contents)
 
 ___
-
-<div style="page-break-after: always;"></div>
 
 ### Health: Period
 

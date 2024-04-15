@@ -99,9 +99,9 @@ The `UI` package contains the `Handler` and `Output` classes, which are responsi
 
 #### Handler
 
-The main entry point of the application is the `Handler` class, used to determine the command used. The user's input is then passed to the corresponding handler method to carry out the action.
+The main entry point of the application is the `Handler` class. The user's input is read here and passed to the corresponding handler method.
 
-The sequence diagram below shows how the application is initialised and then processes the user's input using the `Handler` class:
+The sequence diagram below shows how it works:
 
 ![Handler Sequence Diagram](img/sequence_diagrams/handler_sequence_diagram.png)
 
@@ -401,7 +401,7 @@ The constants are broken down into the following 4 classes:
 
 ### Workout
 
-User input is passed to `Handler.processInput()`, which determines the command used is `workout`. The input is then passed to `Handler.handleWorkout()` as shown in the `Handler` architecture above. Either a `Run` or `Gym` object is then added.
+User input is passed to `Handler.processInput()`, which determines the command used is `workout`. The input is then passed to `Handler.handleWorkout()`.
 
 #### Add Run
 
@@ -485,7 +485,7 @@ If the user types `back` at any given point when taking in `GymStation` input, t
 
 ### Health
 
-User input is passed to `handler.processInput()`, which determines the command used is `health`. The input is then passed to `handler.handleHealth()` as shown in the Handler architecture above. Either `Bmi`, `Period` or `Appointment` object is added, or a menstrual cycle prediction is made.
+User input is passed to `handler.processInput()`, which determines the command used is `workout`. The input is then passed to `Handler.handleHealth()`. as Either `Bmi`, `Period` or `Appointment` object is added, or a menstrual cycle prediction is made.
 
 #### Add BMI
 
@@ -824,7 +824,7 @@ Simultaneously, PulsePilot facilitates access to this vital data for various hea
 
 1. Exit PulsePilot using the `exit` command.
 2. A farewell message is printed as shown below:
-3. `pulsepilot_hash.txt` is created upon `exit`, and `pulsepilot_data.txt` will be written to. The `.lck` file from start up will be deleted as well.
+3. `pulsepilot_hash.txt` is created upon `exit`, and `pulsepilot_data.txt` will be written to.
 
 ![Shutdown](img/output/shutdown.png)
 
@@ -1046,8 +1046,6 @@ health /h:prediction
 ###### [Back to table of contents](#table-of-contents)
 
 ---
-
-<div style="page-break-after: always;"></div>
 
 #### Latest Testing
 
