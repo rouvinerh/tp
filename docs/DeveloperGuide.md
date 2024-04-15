@@ -401,7 +401,7 @@ The constants are broken down into the following 4 classes:
 
 ### Workout
 
-User input is passed to `Handler.processInput()`, which determines the command used is `workout`. The input is then passed to `Handler.handleWorkout()` which determines the type of `workout` command used.
+User input is passed to `handler.processInput()`, determining the command used is `workout`. Then, `Handler.handleHealth()` determines type of `workout` command used.
 
 #### Add Run
 
@@ -424,8 +424,6 @@ This is the sequence diagram for adding a run:
 ###### [Back to table of contents](#table-of-contents)
 
 ---
-
-<div style="page-break-after: always;"></div>
 
 <!-- @@author JustinSoh -->
 
@@ -481,7 +479,7 @@ If the user types `back` at any given point when taking in `GymStation` input, t
 
 ### Health
 
-User input is passed to `handler.processInput()`, which determines the command used is `workout`. The input is then passed to `Handler.handleHealth()` which determines the type of health command used.
+User input is passed to `handler.processInput()`, determining the command used is `health`. Then, `Handler.handleHealth()` determines type of `health` command used.
 
 #### Add BMI
 
