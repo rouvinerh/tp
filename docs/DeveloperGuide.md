@@ -17,6 +17,8 @@
 
 ---
 
+<div style="page-break-after: always;"></div>
+
 <!-- @@author syj02 -->
 
 ## Acknowledgements
@@ -32,6 +34,8 @@ The purpose of this guide is to provide an explanation for all the functions and
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 ## Design
 
@@ -60,6 +64,8 @@ The purpose of this guide is to provide an explanation for all the functions and
 
 ---
 
+<div style="page-break-after: always;"></div>
+
 ### Overview of Components
 
 This part of the guide provides a high-level overview of each package and its classes via a class or sequence diagram. A brief description of each class is given as well.
@@ -82,6 +88,8 @@ The `seedu.pulsepilot` package contains the `Main` method, which is the entry po
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 <!-- @@author L5-Z -->
 
@@ -128,6 +136,8 @@ The class diagram for `Output` has been omitted, since a developer can read the 
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 <!-- @@author rouvinerh -->
 
@@ -209,6 +219,8 @@ The class diagram for gym is as follows:
 
 ---
 
+<div style="page-break-after: always;"></div>
+
 <!-- @@author syj02 -->
 
 ### Health Package
@@ -270,6 +282,8 @@ The `clearHealthLists()` method is used to clear all the data stored within each
 
 ---
 
+<div style="page-break-after: always;"></div>
+
 <!-- @@author rouvinerh -->
 
 ### Utility Package
@@ -329,6 +343,8 @@ This is represented as enumerations. Attempts to use an invalid filter results i
 
 ---
 
+<div style="page-break-after: always;"></div>
+
 <!-- @@author L5-Z -->
 
 ### Storage Package
@@ -360,6 +376,8 @@ The constants are broken down into the following 4 classes:
 
 ---
 
+<div style="page-break-after: always;"></div>
+
 <!-- @@author rouvinerh -->
 
 ## Implementation of Commands
@@ -372,12 +390,14 @@ The constants are broken down into the following 4 classes:
 * [Health](#health)
     * [Add BMI](#add-bmi)
     * [Add Period](#add-period)
-    * [Make Period Prediction](#make-period-prediction)
+        * [Make Period Prediction](#make-period-prediction)
     * [Add Appointment](#add-appointment)
 * [View History](#view-history)
 * [View Latest](#view-latest)
 * [Delete Item](#delete-item)
 * [Storage of Data](#storage-of-data)
+
+<div style="page-break-after: always;"></div>
 
 ### Workout
 
@@ -407,6 +427,8 @@ This is the sequence diagram for adding a run:
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 <!-- @@author JustinSoh -->
 
@@ -457,6 +479,8 @@ If the user types `back` at any given point when taking in `GymStation` input, t
 
 ---
 
+<div style="page-break-after: always;"></div>
+
 <!-- @@author j013n3 -->
 
 ### Health
@@ -482,6 +506,8 @@ This is the sequence diagram for adding a BMI entry:
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 #### Add Period
 
@@ -520,6 +546,8 @@ The user's input is processed to make a period prediction if there are **at leas
 
 ---
 
+<div style="page-break-after: always;"></div>
+
 #### Add Appointment
 
 The user's input is processed to add an Appointment  as follows:
@@ -539,6 +567,8 @@ This is the sequence diagram for adding an Appointment from `parseAppointmentInp
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 <!-- @@author JustinSoh -->
 
@@ -565,6 +595,8 @@ This is the sequence diagram for `history`:
 
 ---
 
+<div style="page-break-after: always;"></div>
+
 ### View Latest
 
 1.  `parser.parseLatest()` is called to extract and validate the filter string entered via the `item` flag from user input.
@@ -586,6 +618,8 @@ This is the sequence diagram for `latest`:
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 <!-- @@author rouvinerh -->
 
@@ -611,6 +645,8 @@ Deleting an item follows this sequence:
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 <!-- @@author L5-Z -->
 
@@ -644,11 +680,13 @@ The reading of files has been implemented as follows:
 
 #### Log File
 
-`pulsepilot_log.txt` is created when the bot starts if not present, and logs are added to it each time the user interacts with it. If the file is already present, PulsePilot appends to it. 
+`pulsepilot_log.txt` is created when the bot starts if not present, and logs are added to it each time the user interacts with it. If the file is already present, PulsePilot appends to it.
 
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 <!-- @@author JustinSoh -->
 
@@ -661,6 +699,8 @@ The reading of files has been implemented as follows:
 * [Non-Functional Requirements](#non-functional-requirements)
 * [Glossary](#glossary)
 * [Manual Testing](#manual-testing)
+
+<div style="page-break-after: always;"></div>
 
 ### Product scope
 
@@ -688,6 +728,8 @@ Simultaneously, PulsePilot facilitates access to this vital data for various hea
 
 ---
 
+<div style="page-break-after: always;"></div>
+
 ### User Stories
 
 | Version | As a ...              | So that I can ...                                     | I want to ...                     |
@@ -708,6 +750,8 @@ Simultaneously, PulsePilot facilitates access to this vital data for various hea
 
 ---
 
+<div style="page-break-after: always;"></div>
+
 ### Non-Functional Requirements
 
 - **Usability**: The application should have a user-friendly command-line interface with clear instructions and prompts for user input.
@@ -719,6 +763,8 @@ Simultaneously, PulsePilot facilitates access to this vital data for various hea
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 ### Glossary
 
@@ -735,10 +781,11 @@ Simultaneously, PulsePilot facilitates access to this vital data for various hea
 
 <!-- @@author rouvinerh -->
 
+<div style="page-break-after: always;"></div>
+
 ### Manual Testing
 
 * [Launching and Termination](#launching-and-termination)
-    * [Launching](#launching)
 * [Run](#run-testing)
 * [Gym](#gym-testing)
 * [Period](#period-testing)
@@ -753,6 +800,8 @@ Simultaneously, PulsePilot facilitates access to this vital data for various hea
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 #### Launching and Termination
 
@@ -783,6 +832,8 @@ Simultaneously, PulsePilot facilitates access to this vital data for various hea
 
 ---
 
+<div style="page-break-after: always;"></div>
+
 #### Run Testing
 
 **Adding a run:**
@@ -802,6 +853,8 @@ Simultaneously, PulsePilot facilitates access to this vital data for various hea
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 <!-- @@author JustinSoh -->
 
@@ -863,6 +916,8 @@ back
 
 ---
 
+<div style="page-break-after: always;"></div>
+
 <!-- @@author j013n3 -->
 
 #### BMI Testing
@@ -881,6 +936,8 @@ back
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 #### Period Testing
 
@@ -921,6 +978,8 @@ health /h:period /start:10-04-2024 /end:16-04-2024
 
 ---
 
+<div style="page-break-after: always;"></div>
+
 <!-- @@author syj02 -->
 
 #### Prediction Testing
@@ -950,6 +1009,7 @@ health /h:prediction
 
 ---
 
+<div style="page-break-after: always;"></div>
 
 #### Appointment Testing
 
@@ -965,6 +1025,8 @@ health /h:prediction
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 <!-- @@author rouvinerh -->
 
@@ -984,6 +1046,8 @@ health /h:prediction
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 #### Latest Testing
 
@@ -1010,6 +1074,8 @@ latest /item:appointment
 
 ---
 
+<div style="page-break-after: always;"></div>
+
 #### Delete Testing
 
 **Deleting a run:**
@@ -1034,6 +1100,8 @@ delete /item:run /index:1
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 <!-- @@author L5-Z -->
 

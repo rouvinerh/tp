@@ -8,6 +8,8 @@
 
 **PulsePilot** is a desktop application designed for **efficiently tracking health-related information** through a **Command Line Interface (CLI)**. For users who can type quickly, the CLI allows for faster data entry compared to traditional Graphical User Interface (GUI) applications on phones or computers.
 
+<div style="page-break-after: always;"></div>
+
 ## Table of Contents
 
 * [Quick Start](#quick-start)
@@ -32,6 +34,8 @@
 * [Frequently Asked Questions (FAQ)](#faq)
 * [Command Summary](#command-summary)
 
+<div style="page-break-after: always;"></div>
+
 ## Quick Start
 
 1. Ensure that you have Java 11 installed.
@@ -50,6 +54,8 @@
 
 ---
 
+<div style="page-break-after: always;"></div>
+
 ## Notes About Command Format
 
 * Parameters in `UPPER_CASE` are to be **supplied by the user**.
@@ -67,6 +73,8 @@
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 ## User Induction
 
@@ -89,6 +97,8 @@ This profile will be used to store all your health and workout data.
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 ## Commands
 
@@ -131,6 +141,8 @@ Expected Output:
 
 ---
 
+<div style="page-break-after: always;"></div>
+
 <!-- @@author JustinSoh -->
 
 ### Workout: Gym
@@ -149,10 +161,6 @@ Format: <code style="color: #D85D43;">workout /e:gym /n:NUMBER_OF_STATIONS [/dat
 Examples: 
 - <code style="color: #D85D43;">workout /e:gym /n:2 /date:25-03-2023</code>
 - <code style="color: #D85D43;">workout /e:gym /n:4</code>
-
-###### [Back to table of contents](#table-of-contents)
-
----
 
 #### Adding Gym Stations
 
@@ -202,6 +210,8 @@ Expected Output:
 
 ___
 
+<div style="page-break-after: always;"></div>
+
 <!-- @@author j013n3 -->
 
 ### Health: BMI
@@ -244,6 +254,8 @@ Expected Output:
 
 ___
 
+<div style="page-break-after: always;"></div>
+
 ### Health: Period
 
 Tracks the start and end of user's menstrual cycle.
@@ -279,6 +291,8 @@ Expected Output:
 
 ___
 
+<div style="page-break-after: always;"></div>
+
 <!-- @@author syj02 -->
 
 ### Health: Prediction
@@ -296,6 +310,8 @@ Expected Output:
 ###### [Back to table of contents](#table-of-contents)
 
 ___
+
+<div style="page-break-after: always;"></div>
 
 ### Health: Appointment
 
@@ -324,6 +340,8 @@ Expected Output:
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 <!-- @@author rouvinerh -->
 
@@ -355,6 +373,8 @@ Expected Output:
 
 --- 
 
+<div style="page-break-after: always;"></div>
+
 ### Latest
 
 Prints the **most recently added** instance of `run`, `gym`, `bmi`, `period`, `appointment`.
@@ -378,6 +398,8 @@ Expected Output:
 ###### [Back to table of contents](#table-of-contents)
 
 --- 
+
+<div style="page-break-after: always;"></div>
 
 ### Delete
 
@@ -403,6 +425,8 @@ Expected output:
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 <!-- @@author L5-Z -->
 
@@ -436,6 +460,8 @@ Expected Output:
 
 ---
 
+<div style="page-break-after: always;"></div>
+
 ## Logging
 
 When you exit PulsePilot, the latest logs are written to the `pulsepilot_log.txt` file.
@@ -455,6 +481,8 @@ Your data is saved to the `pulsepilot_data.txt` when you exit PulsePilot. Every 
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 ## Known Issues
 
@@ -477,6 +505,8 @@ This is a visual bug, and it can be safely ignored by the user.
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 ## FAQ
 
@@ -555,6 +585,8 @@ Avoid using extra characters in the commands, such as blank space, newline, etc.
 ###### [Back to table of contents](#table-of-contents)
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 <!-- @@author JustinSoh -->
 
