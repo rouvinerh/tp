@@ -157,7 +157,9 @@ The `clearWorkoutsRunGym()` method is used to clear all the data stored within e
 
 - `date`: An **optional** `LocalDate` attribute representing the date of the workout. Implemented via an overloaded `Gym()` constructor.
 
-**A `Gym` object contains 1 or more `GymStation` objects.**
+**A `Gym` object contains 0 or more `GymStation` objects.** A `Gym` with 0 `GymStation` objects can exist through using `workout /e:gym` and then `back`, but is deleted right after.
+
+
 
 The class diagram for gym is as follows:
 
@@ -175,7 +177,7 @@ The class diagram for gym is as follows:
 -  `ArrayList<GymSet>`: An `ArrayList` of `GymSet` object, representing the varying number of sets done at one station.
 - `numberOfSets`: The number of sets done as an `int`.
 
-**A `GymStation` object contains 1 or more `GymSet` objects.**
+**A `GymStation` object contains 1 or more `GymSet` objects.** 
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -448,6 +450,8 @@ After adding a `Gym` object, the user is then prompted for input for the gym sta
 This is the sequence diagram for adding a `GymStation` object:
 
 ![Gym Station Sequence](img/sequence_diagrams/gym_station_sequence_diagram.png)
+
+If the user types `back` at any given point when taking in `GymStation` input, this method returns and the `Gym` object is deleted.
 
 ###### [Back to table of contents](#table-of-contents)
 
