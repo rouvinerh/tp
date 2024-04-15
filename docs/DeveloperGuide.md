@@ -72,12 +72,11 @@ The **_Architecture Diagram_** is given below:
 
 The `seedu.pulsepilot` package contains the `Main` method, which is the entry point of the application. It is responsible for initialising and processing of user input, and the termination of PulsePilot.
 
-- `Ui`: The user interface of PulsePilot used for handling user input and printing messages. 
+- `Ui`: The user interface of PulsePilot used for handling user input and printing messages.
 - `Storage`: Contains the data storage and logging components for PulsePilot.
 - `Health`: Stores health-related information.
 - `Workouts`: Stores workout-related information.
 - `Utility`: Contains utility functions, such as input parsing and validation.
-- `PulsePilot`: The main entry point for the application.
 - `Constants`: Contains all constants used in PulsePilot.
 
 ###### [Back to table of contents](#table-of-contents)
@@ -142,7 +141,7 @@ The `Workout` package is responsible for tracking run and gym workouts from the 
 
 ![WorkoutLists Class Diagram](img/class_diagrams/workoutlist_class_diagram.png)
 
-The class contains methods to retrieve all or the latest added object, and delete objects. 
+The class contains methods to retrieve all or the latest added object, and delete objects.
 
 The `clearWorkoutsRunGym()` method is used to clear all the data stored within each `ArrayList`, which is mainly used for unit testing.
 
@@ -307,7 +306,7 @@ The `CustomExceptions` class inherits from the `Exception` class from Java. This
 
 The exceptions are further broken down into the following:
 
-- `OutOfBounds`: When an access with an illegal index is made.
+- `OutOfBounds`: When access with an illegal index is made.
 - `InvalidInput`: When user enters input that does not conform with required format or is malformed.
 - `FileReadError`: Unable to read the files for `Storage`.
 - `FileWriteError`: Unable to write files for `Storage`.
@@ -440,7 +439,7 @@ After adding a `Gym` object, the user is then prompted for input for the gym sta
 
 3. User input is split using `Parser.splitGymStationInput()` which as the name suggests, splits the parameters from the user, returning a `String[]` variable.
 
-4. After splitting the input, the parameters are passed to  to `newGym.addStation()`.
+4. After splitting the input, the parameters are passed to `newGym.addStation()`.
 
 5. `newGym.addStation()` will then create a `GymStation` object during which the input is checked within the `GymStation` class.
 
@@ -678,7 +677,7 @@ The reading of files has been implemented as follows:
 PulsePilot is built for both patients and healthcare professionals.
 
 - Patients can upload data related to their well-being via the health tracker and progress on recovery exercises through the workout tracker.
-- Healthcare professionals can use PulsePilot to easily monitor their patient's recovery progress and general well-being outside of the hospital using the storage features the app provides.
+- Healthcare professionals can use PulsePilot to easily monitor their patient's recovery progress and general well-being outside the hospital using the storage features the app provides.
 - For users that are familiar with the CLI and can type fast.
 
 ###### [Back to table of contents](#table-of-contents)
@@ -699,19 +698,19 @@ Simultaneously, PulsePilot facilitates access to this vital data for various hea
 
 ### User Stories
 
-| Version | As a ...              | So that I can ...                                     | I want to ...                         |
-|---------|-----------------------|-------------------------------------------------------|---------------------------------------|
-| 1.0     | Gym enthusiast        | Track my progress in the gym                                 | Record my gym session details                    |
-| 1.0     | Runner                | See my relative speed for each run                    | See my running pace                   |
-| 1.0     | Runner                | Track my running progress over time                   | Record my runs                           |
-| 1.0     | Health conscious user | Track change in my weight over time                   | Calculate my BMI                      |
-| 1.0     | Female user           | Monitor any deviations from my normal menstrual cycle | Track my menstrual cycle              |
-| 2.0     | Runner                | Quickly view my most recent run details               | See my latest run                     |
-| 2.0     | Gym enthusiast        | Quickly view my most recent gym session               | See my latest gym session             |
-| 2.0     | Gym enthusiast        | Accurately track my progress and strength gains       | Enter varying weights for sets        |
+| Version | As a ...              | So that I can ...                                     | I want to ...                     |
+|---------|-----------------------|-------------------------------------------------------|-----------------------------------|
+| 1.0     | Gym enthusiast        | Track my progress in the gym                          | Record my gym session details     |
+| 1.0     | Runner                | See my relative speed for each run                    | See my running pace               |
+| 1.0     | Runner                | Track my running progress over time                   | Record my runs                    |
+| 1.0     | Health conscious user | Track change in my weight over time                   | Calculate my BMI                  |
+| 1.0     | Female user           | Monitor any deviations from my normal menstrual cycle | Track my menstrual cycle          |
+| 2.0     | Runner                | Quickly view my most recent run details               | See my latest run                 |
+| 2.0     | Gym enthusiast        | Quickly view my most recent gym session               | See my latest gym session         |
+| 2.0     | Gym enthusiast        | Accurately track my progress and strength gains       | Enter varying weights for sets    |
 | 2.0     | Female user           | Plan ahead and better manage my health                | Predict my next period start date |
-| 2.0     | Injured user          | Remember the appointments I have                      | Track my medical appointments         |
-| 2.0     | Careless user          | Remove erroneous entries caused by typos                      | Be able to delete items tracked         |
+| 2.0     | Injured user          | Remember the appointments I have                      | Track my medical appointments     |
+| 2.0     | Careless user         | Remove erroneous entries caused by typos              | Be able to delete items tracked   |
 
 ###### [Back to table of contents](#table-of-contents)
 
@@ -731,12 +730,12 @@ Simultaneously, PulsePilot facilitates access to this vital data for various hea
 
 ### Glossary
 
-| Term    | Explanation                                                                                                                                              |
-|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Flags    | The strings used by PulsePilot to differentiate parameters. For example, `/date:` is the date flag, used to specify the date for a given command. |
-| UI  | The User Interface (UI), which is the point of contact between users and our application. This component handles the user input, and prints messages or errors.                                                  |
-| Storage | Responsible for saving data, and reading the data file to resume a previous save state. For our application, this also involves checking the integrity of the file and throwing errors if needed.                                                                     |
-| Lock File | A `.lck` file, created to prevent multiple processes or users from accessing a file.                                                                      |
+| Term      | Explanation                                                                                                                                                                                       |
+|-----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Flags     | The strings used by PulsePilot to differentiate parameters. For example, `/date:` is the date flag, used to specify the date for a given command.                                                 |
+| UI        | The User Interface (UI), which is the point of contact between users and our application. This component handles the user input, and prints messages or errors.                                   |
+| Storage   | Responsible for saving data, and reading the data file to resume a previous save state. For our application, this also involves checking the integrity of the file and throwing errors if needed. |
+| Lock File | A `.lck` file, created to prevent multiple processes or users from accessing a file.                                                                                                              |
 
 ###### [Back to table of contents](#table-of-contents)
 

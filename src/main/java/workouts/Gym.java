@@ -96,7 +96,7 @@ public class Gym extends Workout {
 
     /**
      * Converts the Gym object into a string format suitable for writing into a file.
-     * For more examples, refer to the GymTest method {@code toFileString_correctInput_expectedCorrectString()}.
+     * For more examples, refer to the GymTest method toFileString_correctInput_expectedCorrectString().
      *
      * @return A string representing the Gym object and its GymStation objects unsuitable for writing into a file.
      */
@@ -122,7 +122,7 @@ public class Gym extends Workout {
     }
 
     /**
-     * Used when printing all the workouts. This method takes in parameters {@code index}.
+     * Used when printing all the workouts. This method takes in parameters index.
      *
      * @param index indicates which particular gymStation is being queried.
      * @return A string representing the history format for gym.

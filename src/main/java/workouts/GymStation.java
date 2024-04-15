@@ -348,8 +348,6 @@ public class GymStation {
             throw new CustomExceptions.InvalidInput(ErrorConstant.INVALID_WEIGHTS_ARRAY_FORMAT_ERROR);
         }
     }
-
-
 }
 
 
