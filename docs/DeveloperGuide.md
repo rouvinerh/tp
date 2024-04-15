@@ -501,8 +501,6 @@ This is the sequence diagram for adding a BMI entry:
 
 ---
 
-<div style="page-break-after: always;"></div>
-
 #### Add Period
 
 The user's input is processed to add a `Period` as follows:
