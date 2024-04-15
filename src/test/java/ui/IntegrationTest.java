@@ -269,7 +269,7 @@ public class IntegrationTest {
                 "23:01",
                 "knee surgery 2");
 
-        String latestAppointmentString2 = TestHelper.latestAppointmentOutputString("2024-03-25",
+        TestHelper.latestAppointmentOutputString("2024-03-25",
                 "23:01",
                 "knee surgery 2");
 
@@ -417,7 +417,7 @@ public class IntegrationTest {
     }
 
     /**
-     * Tests the behaviour of the bot when 4 Period objects are added, expects the four periods to be reflected
+     * Tests the behaviour of the bot when 4 Period objects are added, expects the four periods to be reflected.
      * accordingly with a valid prediction on when the next cycle is.
      */
     @Test
