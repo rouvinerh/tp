@@ -163,6 +163,7 @@ public class Run extends Workout {
         if (runDistance <= WorkoutConstant.MIN_RUN_DISTANCE) {
             throw new CustomExceptions.InvalidInput(ErrorConstant.ZERO_DISTANCE_ERROR);
         }
+        assert runDistance > 0: ErrorConstant.ZERO_DISTANCE_ERROR;
         return runDistance;
     }
 
@@ -186,6 +187,7 @@ public class Run extends Workout {
         int minutes = (int) paceInDecimal;
         double remainingSeconds = paceInDecimal - minutes;
         int seconds = (int) Math.round(remainingSeconds * UiConstant.NUM_SECONDS_IN_MINUTE);
+        assert paceInDecimal >= 1: ErrorConstant.MIN_PACE_ERROR;
 
         return String.format(WorkoutConstant.RUN_PACE_FORMAT, minutes, seconds);
     }
@@ -206,6 +208,7 @@ public class Run extends Workout {
             totalSeconds = this.times[WorkoutConstant.RUN_TIME_MINUTE_INDEX] * UiConstant.NUM_SECONDS_IN_MINUTE
                     + this.times[WorkoutConstant.RUN_TIME_SECOND_INDEX];
         }
+        assert totalSeconds > 0: ErrorConstant.ZERO_TIME_ERROR;
         return totalSeconds;
     }
 
