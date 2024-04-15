@@ -109,7 +109,6 @@ public class Period extends Health {
      */
     public long getLastThreeCycleLengths() {
         long sumOfCycleLengths = 0;
-
         int startIndexForPrediction = HealthConstant.LAST_CYCLE_INDEX;
         assert startIndexForPrediction >= HealthConstant.FIRST_ITEM : ErrorConstant.START_INDEX_NEGATIVE_ERROR;
 
@@ -119,7 +118,6 @@ public class Period extends Health {
         for (int i = startIndexForPrediction; i <= endIndexForPrediction; i++) {
             sumOfCycleLengths += Objects.requireNonNull(HealthList.getPeriod(i)).cycleLength;
         }
-
         return sumOfCycleLengths;
     }
 

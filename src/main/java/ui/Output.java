@@ -298,7 +298,7 @@ public class Output {
         printLine();
     }
 
-    //@@author j013n3
+    //@@author rouvinerh
     /**
      * Prints all Period entries recorded.
      *
@@ -314,7 +314,7 @@ public class Output {
         }
     }
 
-    //@@author syj02
+    //@@author rouvinerh
     /**
      * Prints all Appointment entries recorded.
      *
@@ -330,7 +330,6 @@ public class Output {
         }
     }
 
-    //@@author rouvinerh
     /**
      * Prints the latest Run entry recorded.
      */
@@ -445,7 +444,7 @@ public class Output {
         }
     }
 
-    //@@author j013n3
+    //@@author rouvinerh
     /**
      * Prints all Bmi entries recorded.
      *
